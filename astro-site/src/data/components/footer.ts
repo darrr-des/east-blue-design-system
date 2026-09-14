@@ -301,11 +301,19 @@ export const footer: ComponentData = {
               {
                 "key": "Preamble",
                 "value": "#6780A9",
-                "token": "—"
+                "token": "—",
+                "variants": {
+                  "alignment:left|logotype:group|label:false|description:default": { "hide": true },
+                  "alignment:left|logotype:single|label:false|description:none": { "hide": true },
+                  "alignment:left|logotype:group|label:false|description:link": { "hide": true },
+                  "alignment:left|logotype:single|label:false|description:link": { "hide": true },
+                  "alignment:center|logotype:none|label:false|description:link": { "hide": true },
+                  "alignment:center|logotype:group|label:false|description:none": { "hide": true }
+                }
               },
               {
                 "key": "Disclaimer",
-                "value": "—",
+                "value": "#10346F",
                 "token": "—",
                 "variants": {
                   "alignment:left|logotype:group|label:false|description:default": {
@@ -332,6 +340,19 @@ export const footer: ComponentData = {
                 }
               },
               {
+                "key": "Powered by label",
+                "value": "#90A8D0",
+                "token": "—",
+                "variants": {
+                  "alignment:left|logotype:group|label:false|description:default": { "hide": true },
+                  "alignment:left|logotype:single|label:false|description:none": { "hide": true },
+                  "alignment:left|logotype:group|label:false|description:link": { "hide": true },
+                  "alignment:center|logotype:group|label:true|description:none": { "hide": true },
+                  "alignment:center|logotype:none|label:false|description:link": { "hide": true },
+                  "alignment:center|logotype:group|label:false|description:none": { "hide": true }
+                }
+              },
+              {
                 "key": "Logos",
                 "value": "Raster — no colour to bind",
                 "token": "—"
@@ -345,12 +366,37 @@ export const footer: ComponentData = {
               {
                 "key": "Preamble",
                 "value": "Secondary/Bold/Small Caption",
-                "mono": true
+                "mono": true,
+                "variants": {
+                  "alignment:left|logotype:group|label:false|description:default": { "hide": true },
+                  "alignment:left|logotype:single|label:false|description:none": { "hide": true },
+                  "alignment:left|logotype:group|label:false|description:link": { "hide": true },
+                  "alignment:left|logotype:single|label:false|description:link": { "hide": true },
+                  "alignment:center|logotype:none|label:false|description:link": { "hide": true },
+                  "alignment:center|logotype:group|label:false|description:none": { "hide": true }
+                }
               },
               {
                 "key": "Disclaimer",
-                "value": "BarkAda SemiBold · 12 / 18 — no text style bound",
-                "mono": true
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "variants": {
+                  "alignment:center|logotype:group|label:true|description:none": { "hide": true },
+                  "alignment:center|logotype:group|label:false|description:none": { "hide": true }
+                }
+              },
+              {
+                "key": "Powered by label",
+                "value": "Primary/Multi-line Label/Fine",
+                "mono": true,
+                "variants": {
+                  "alignment:left|logotype:group|label:false|description:default": { "hide": true },
+                  "alignment:left|logotype:single|label:false|description:none": { "hide": true },
+                  "alignment:left|logotype:group|label:false|description:link": { "hide": true },
+                  "alignment:center|logotype:group|label:true|description:none": { "hide": true },
+                  "alignment:center|logotype:none|label:false|description:link": { "hide": true },
+                  "alignment:center|logotype:group|label:false|description:none": { "hide": true }
+                }
               }
             ]
           },
@@ -399,9 +445,15 @@ export const footer: ComponentData = {
                 "mono": true
               },
               {
-                "key": "Padding V",
-                "value": "24px top and bottom — 16px on the two variants that show a preamble or a Link description",
-                "mono": true
+                "key": "Padding V (measured)",
+                "value": "24px top · 24px bottom",
+                "mono": true,
+                "variants": {
+                  "alignment:left|logotype:single|label:false|description:none": { "value": "24px top · 32px bottom" },
+                  "alignment:left|logotype:group|label:false|description:link": { "value": "12px top · 24px bottom" },
+                  "alignment:center|logotype:group|label:true|description:none": { "value": "16px top · 16px bottom" },
+                  "alignment:center|logotype:none|label:false|description:link": { "value": "24px top · 48px bottom" }
+                }
               },
               {
                 "key": "Gap",
@@ -415,14 +467,18 @@ export const footer: ComponentData = {
               },
               {
                 "key": "Alignment",
-                "value": "Leading — derived; the logo group is centred even at Alignment=Left",
-                "mono": true
+                "value": "Center — derived from layer bounds",
+                "mono": true,
+                "variants": {
+                  "alignment:left": { "value": "Leading — derived from layer bounds" },
+                  "alignment:left|logotype:group|label:false|description:default": { "value": "Leading text; logo group centred (x 86, 188 wide) — derived" }
+                }
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBFooter</span><span class=\"syn-punc\">(</span>\n    alignment<span class=\"syn-punc\">: .</span>center<span class=\"syn-punc\">,</span>\n    logoType<span class=\"syn-punc\">: .</span>group<span class=\"syn-punc\">,</span>\n    showLabel<span class=\"syn-punc\">: </span>false<span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">: .</span>none\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBFooter</span><span class=\"syn-punc\">(</span>\n    alignment <span class=\"syn-eq\">=</span> EBFooterAlignment<span class=\"syn-punc\">.</span>Center<span class=\"syn-punc\">,</span>\n    logoType <span class=\"syn-eq\">=</span> EBFooterLogoType<span class=\"syn-punc\">.</span>Group<span class=\"syn-punc\">,</span>\n    showLabel <span class=\"syn-eq\">=</span> false<span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> EBFooterDescription<span class=\"syn-punc\">.</span>None\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBFooter()\n    .ebAlignment(.center)\n    .ebLogoType(.group)\n    .ebDescription(.none)",
+        "compose": "EBFooter(\n    alignment = EBFooterAlignment.Center,\n    logoType = EBFooterLogoType.Group,\n    description = EBFooterDescription.None\n)"
       }
     ],
     "colorsTables": [
@@ -491,6 +547,14 @@ export const footer: ComponentData = {
             ]
           },
           {
+            "role": "Powered by label",
+            "token": "Left · Single · Description=Link",
+            "values": [
+              "—",
+              "#90A8D0"
+            ]
+          },
+          {
             "role": "Logos",
             "token": "Raster IMAGE fills — nothing to bind",
             "values": [
@@ -505,233 +569,407 @@ export const footer: ComponentData = {
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:header:2.3.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.header.*  <span class=\"cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>4227:11068</code>, in panel order. Only seven of the 36 combinations are built, so the native API should accept a combination only if Figma draws it — see the Variants Inventory. The disclaimer copy, the partner marks and the Help Center action have no Figma property behind them.",
       "rows": [
         {
-          "figma": "<code>label: yes | no</code>",
-          "swift": "<code>poweredByLabel?: String</code>",
-          "compose": "<code>poweredByLabel: String?</code>"
+          "figma": "Alignment — Center, Left",
+          "swift": "<code>.ebAlignment(.center / .leading)</code>",
+          "compose": "<code>alignment = EBFooterAlignment.Center / Start</code>"
         },
         {
-          "figma": "<code>gcash x partner</code> + <code>with partner</code> + <code>grouped logos</code>",
-          "swift": "<code>partnerLogos?: .none | .single | .grouped | .gcashX</code>",
-          "compose": "<code>partnerLogos: EBPartnerLogos?</code>"
+          "figma": "LogoType — None, Single, Group",
+          "swift": "<code>.ebLogoType(.none / .single / .group)</code>",
+          "compose": "<code>logoType = EBFooterLogoType.None / Single / Group</code>"
         },
         {
-          "figma": "(baked in each variant)",
-          "swift": "<code>partnerLogo slot</code>",
-          "compose": "<code>partnerLogo: Image?</code>"
+          "figma": "Label — True, False",
+          "swift": "<code>.ebPreamble(String)</code> — omit for <code>False</code>",
+          "compose": "<code>preamble: String? = null</code>"
         },
         {
-          "figma": "<code>description: none | default | with link</code>",
-          "swift": "<code>disclaimer?: String</code>",
-          "compose": "<code>disclaimer: String?</code>"
+          "figma": "Description — None, Default, Link",
+          "swift": "<code>.ebDescription(.none / .default / .link)</code>",
+          "compose": "<code>description = EBFooterDescription.None / Default / Link</code>"
         },
         {
-          "figma": "(baked in each variant)",
-          "swift": "<code>helpLink?: { label, action }</code>",
-          "compose": "<code>helpLink: EBHelpLink?</code>"
+          "figma": "— no Figma property (disclaimer copy, baked per variant)",
+          "swift": "<code>disclaimer: String?</code>",
+          "compose": "<code>disclaimer: String? = null</code>"
         },
         {
-          "figma": "<code>alignment: left | center</code>",
-          "swift": "(removed — consumer owns layout)",
-          "compose": "(n/a)"
+          "figma": "— no Figma property (raster marks inside <code>Logos - Footer</code>)",
+          "swift": "<code>logos: [Image]</code>",
+          "compose": "<code>logos: List&lt;Painter&gt; = emptyList()</code>"
+        },
+        {
+          "figma": "— no Figma property (the Help Center action on Link)",
+          "swift": "<code>.onHelpCenter { }</code>",
+          "compose": "<code>onHelpCenter: (() -&gt; Unit)? = null</code>"
         }
-      ]
+      ],
+      "filePaths": {
+        "swift": "ios/Components/Header/EBFooter.swift",
+        "compose": "android/components/header/EBFooter.kt"
+      }
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "Left · Group · Default",
+        "swift": "<span class=\"cmt\">// Alignment=Left, LogoType=Group, Label=False, Description=Default — 4227:11075, 360 × 150.</span>\n<span class=\"typ\">EBFooter</span>(disclaimer: <span class=\"str\">\"I acknowledge receipt of this statement prior to the consummation of the credit transaction by availing of this loan.\"</span>, logos: [gcash, cimb])\n    .<span class=\"fn\">ebAlignment</span>(.<span class=\"prp\">leading</span>)\n    .<span class=\"fn\">ebLogoType</span>(.<span class=\"prp\">group</span>)\n    .<span class=\"fn\">ebDescription</span>(.<span class=\"prp\">default</span>)",
+        "compose": "<span class=\"cmt\">// Alignment=Left, LogoType=Group, Label=False, Description=Default — 4227:11075, 360 × 150.</span>\n<span class=\"typ\">EBFooter</span>(\n    disclaimer = <span class=\"str\">\"I acknowledge receipt of this statement prior to the consummation of the credit transaction by availing of this loan.\"</span>,\n    logos = listOf(gcash, cimb),\n    alignment = <span class=\"typ\">EBFooterAlignment</span>.<span class=\"prp\">Start</span>,\n    logoType = <span class=\"typ\">EBFooterLogoType</span>.<span class=\"prp\">Group</span>,\n    description = <span class=\"typ\">EBFooterDescription</span>.<span class=\"prp\">Default</span>\n)"
+      },
+      {
+        "subheading": "Left · Single · None",
+        "swift": "<span class=\"cmt\">// Alignment=Left, LogoType=Single, Label=False, Description=None — 4227:11069, 360 × 182. Figma still draws a disclaimer here; see the open Changelog row.</span>\n<span class=\"typ\">EBFooter</span>(disclaimer: <span class=\"str\">\"Fuse Lending, Inc. SEC Reg. No. CS201617622, …\"</span>, logos: [fuse])\n    .<span class=\"fn\">ebAlignment</span>(.<span class=\"prp\">leading</span>)\n    .<span class=\"fn\">ebLogoType</span>(.<span class=\"prp\">single</span>)\n    .<span class=\"fn\">ebDescription</span>(.<span class=\"prp\">none</span>)",
+        "compose": "<span class=\"cmt\">// Alignment=Left, LogoType=Single, Label=False, Description=None — 4227:11069, 360 × 182. Figma still draws a disclaimer here; see the open Changelog row.</span>\n<span class=\"typ\">EBFooter</span>(\n    disclaimer = <span class=\"str\">\"Fuse Lending, Inc. SEC Reg. No. CS201617622, …\"</span>,\n    logos = listOf(fuse),\n    alignment = <span class=\"typ\">EBFooterAlignment</span>.<span class=\"prp\">Start</span>,\n    logoType = <span class=\"typ\">EBFooterLogoType</span>.<span class=\"prp\">Single</span>,\n    description = <span class=\"typ\">EBFooterDescription</span>.<span class=\"prp\">None</span>\n)"
+      },
+      {
+        "subheading": "Left · Group · Link",
+        "swift": "<span class=\"cmt\">// Alignment=Left, LogoType=Group, Label=False, Description=Link — 4227:11085, 360 × 120.</span>\n<span class=\"typ\">EBFooter</span>(disclaimer: <span class=\"str\">\"Learn about the Product Information & Support: GCredit on Help Center\"</span>, logos: [gcash, cimb])\n    .<span class=\"fn\">ebAlignment</span>(.<span class=\"prp\">leading</span>)\n    .<span class=\"fn\">ebLogoType</span>(.<span class=\"prp\">group</span>)\n    .<span class=\"fn\">ebDescription</span>(.<span class=\"prp\">link</span>)\n    .<span class=\"fn\">onHelpCenter</span> { openHelpCenter() }",
+        "compose": "<span class=\"cmt\">// Alignment=Left, LogoType=Group, Label=False, Description=Link — 4227:11085, 360 × 120.</span>\n<span class=\"typ\">EBFooter</span>(\n    disclaimer = <span class=\"str\">\"Learn about the Product Information & Support: GCredit on Help Center\"</span>,\n    logos = listOf(gcash, cimb),\n    alignment = <span class=\"typ\">EBFooterAlignment</span>.<span class=\"prp\">Start</span>,\n    logoType = <span class=\"typ\">EBFooterLogoType</span>.<span class=\"prp\">Group</span>,\n    description = <span class=\"typ\">EBFooterDescription</span>.<span class=\"prp\">Link</span>,\n    onHelpCenter = { openHelpCenter() }\n)"
+      },
+      {
+        "subheading": "Left · Single · Link",
+        "swift": "<span class=\"cmt\">// Alignment=Left, LogoType=Single, Label=False, Description=Link — 4227:11089, 360 × 116. The “Powered by” label is part of the nested logo row, not the Label property.</span>\n<span class=\"typ\">EBFooter</span>(disclaimer: <span class=\"str\">\"Learn about the Product Information & Support: GCredit on Help Center\"</span>, logos: [partner])\n    .<span class=\"fn\">ebAlignment</span>(.<span class=\"prp\">leading</span>)\n    .<span class=\"fn\">ebLogoType</span>(.<span class=\"prp\">single</span>)\n    .<span class=\"fn\">ebDescription</span>(.<span class=\"prp\">link</span>)\n    .<span class=\"fn\">onHelpCenter</span> { openHelpCenter() }",
+        "compose": "<span class=\"cmt\">// Alignment=Left, LogoType=Single, Label=False, Description=Link — 4227:11089, 360 × 116. The “Powered by” label is part of the nested logo row, not the Label property.</span>\n<span class=\"typ\">EBFooter</span>(\n    disclaimer = <span class=\"str\">\"Learn about the Product Information & Support: GCredit on Help Center\"</span>,\n    logos = listOf(partner),\n    alignment = <span class=\"typ\">EBFooterAlignment</span>.<span class=\"prp\">Start</span>,\n    logoType = <span class=\"typ\">EBFooterLogoType</span>.<span class=\"prp\">Single</span>,\n    description = <span class=\"typ\">EBFooterDescription</span>.<span class=\"prp\">Link</span>,\n    onHelpCenter = { openHelpCenter() }\n)"
+      },
+      {
+        "subheading": "Center · Group · Label",
+        "swift": "<span class=\"cmt\">// Alignment=Center, LogoType=Group, Label=True, Description=None — 4227:11093, 360 × 95.</span>\n<span class=\"typ\">EBFooter</span>(logos: [gcash, pdax])\n    .<span class=\"fn\">ebAlignment</span>(.<span class=\"prp\">center</span>)\n    .<span class=\"fn\">ebLogoType</span>(.<span class=\"prp\">group</span>)\n    .<span class=\"fn\">ebPreamble</span>(<span class=\"str\">\"In partnership with\"</span>)",
+        "compose": "<span class=\"cmt\">// Alignment=Center, LogoType=Group, Label=True, Description=None — 4227:11093, 360 × 95.</span>\n<span class=\"typ\">EBFooter</span>(\n    logos = listOf(gcash, pdax),\n    alignment = <span class=\"typ\">EBFooterAlignment</span>.<span class=\"prp\">Center</span>,\n    logoType = <span class=\"typ\">EBFooterLogoType</span>.<span class=\"prp\">Group</span>,\n    preamble = <span class=\"str\">\"In partnership with\"</span>,\n    description = <span class=\"typ\">EBFooterDescription</span>.<span class=\"prp\">None</span>\n)"
+      },
+      {
+        "subheading": "Center · None · Link",
+        "swift": "<span class=\"cmt\">// Alignment=Center, LogoType=None, Label=False, Description=Link — 4227:11079, 360 × 108.</span>\n<span class=\"typ\">EBFooter</span>(disclaimer: <span class=\"str\">\"Get information and product support. Find GSave in the Help Center\"</span>)\n    .<span class=\"fn\">ebAlignment</span>(.<span class=\"prp\">center</span>)\n    .<span class=\"fn\">ebLogoType</span>(.<span class=\"prp\">none</span>)\n    .<span class=\"fn\">ebDescription</span>(.<span class=\"prp\">link</span>)\n    .<span class=\"fn\">onHelpCenter</span> { openHelpCenter() }",
+        "compose": "<span class=\"cmt\">// Alignment=Center, LogoType=None, Label=False, Description=Link — 4227:11079, 360 × 108.</span>\n<span class=\"typ\">EBFooter</span>(\n    disclaimer = <span class=\"str\">\"Get information and product support. Find GSave in the Help Center\"</span>,\n    alignment = <span class=\"typ\">EBFooterAlignment</span>.<span class=\"prp\">Center</span>,\n    logoType = <span class=\"typ\">EBFooterLogoType</span>.<span class=\"prp\">None</span>,\n    description = <span class=\"typ\">EBFooterDescription</span>.<span class=\"prp\">Link</span>,\n    onHelpCenter = { openHelpCenter() }\n)"
+      },
+      {
+        "subheading": "Center · Group · None",
+        "swift": "<span class=\"cmt\">// Alignment=Center, LogoType=Group, Label=False, Description=None — 4227:11082, 360 × 80.</span>\n<span class=\"typ\">EBFooter</span>(logos: [gcash, cimb])\n    .<span class=\"fn\">ebAlignment</span>(.<span class=\"prp\">center</span>)\n    .<span class=\"fn\">ebLogoType</span>(.<span class=\"prp\">group</span>)\n    .<span class=\"fn\">ebDescription</span>(.<span class=\"prp\">none</span>)",
+        "compose": "<span class=\"cmt\">// Alignment=Center, LogoType=Group, Label=False, Description=None — 4227:11082, 360 × 80.</span>\n<span class=\"typ\">EBFooter</span>(\n    logos = listOf(gcash, cimb),\n    alignment = <span class=\"typ\">EBFooterAlignment</span>.<span class=\"prp\">Center</span>,\n    logoType = <span class=\"typ\">EBFooterLogoType</span>.<span class=\"prp\">Group</span>,\n    description = <span class=\"typ\">EBFooterDescription</span>.<span class=\"prp\">None</span>\n)"
+      }
+    ],
     "accessibility": [
       {
-        "requirement": "Logo alt text",
-        "ios": "Each partner logo must carry <code>.accessibilityLabel(\"GCash\")</code> / <code>.accessibilityLabel(\"CIMB\")</code>.",
-        "android": "Each logo <code>Image</code> must supply <code>contentDescription</code>."
+        "requirement": "Partner mark labels",
+        "ios": "The marks are raster images. Give each <code>.accessibilityLabel(\"CIMB\")</code> — the partner name, not \"logo\".",
+        "android": "Supply <code>contentDescription</code> with the partner name on every logo <code>Image</code>."
       },
       {
-        "requirement": "Help link role",
-        "ios": "Expose as Button with accessibility hint \"Opens help center\".",
-        "android": "Wrap in <code>Modifier.clickable</code> with <code>Role.Button</code> semantics."
+        "requirement": "Help Center action",
+        "ios": "On <code>Description=Link</code> the whole disclaimer is one text run in one colour — Figma draws no link span. Expose the action as a Button trait with the hint \"Opens Help Center\"; do not rely on colour.",
+        "android": "Use <code>Modifier.clickable(role = Role.Button)</code> on the disclaimer, with an <code>onClickLabel</code>."
       },
       {
-        "requirement": "Minimum touch target",
-        "ios": "Help-link hit area ≥44×44pt.",
-        "android": "Help-link hit area ≥48×48dp."
+        "requirement": "Touch target",
+        "ios": "A 2-line disclaimer is 36pt tall — under 44pt. Extend the hit area with <code>.contentShape</code>.",
+        "android": "Under 48dp. Apply <code>Modifier.minimumInteractiveComponentSize()</code>."
       },
       {
         "requirement": "Reading order",
-        "ios": "Label → logos → disclaimer → help link. VoiceOver follows DOM order.",
-        "android": "Same order — TalkBack follows composition order."
+        "ios": "Preamble or “Powered by” → logos → disclaimer, in drawn order. On Left · Group · Default the disclaimer is drawn first and reads first. Combine the preamble with its logos using <code>.accessibilityElement(children: .combine)</code>.",
+        "android": "Merge preamble and logos with <code>Modifier.semantics(mergeDescendants = true)</code>; composition order sets the rest."
       },
       {
-        "requirement": "Disclaimer readability",
-        "ios": "Ensure Dynamic Type scales disclaimer text; do not clip at large sizes.",
-        "android": "Support <code>fontScale</code>; wrap rather than truncate."
+        "requirement": "Contrast",
+        "ios": "Preamble #6780A9 and Powered by #90A8D0 are light blue-greys on #FFFFFF at 10–12pt. Check both against WCAG AA before shipping.",
+        "android": "Same fills — verify contrast; #90A8D0 at 12sp is the weakest."
+      },
+      {
+        "requirement": "Dynamic Type / font scaling",
+        "ios": "Every Figma variant is a fixed height, and the Left · Single · None disclaimer already runs 7 lines. Let the footer grow; never truncate regulatory copy.",
+        "android": "Use <code>sp</code> and wrap — no <code>maxLines</code> on the disclaimer."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use Footer at the bottom of a product screen that must carry partner branding or regulatory copy.",
+        "dontText": "Don’t use it as a general page footer or for navigation. It holds no links other than the single Help Center action."
+      },
+      {
+        "doText": "Pick one of the seven built variants. The set is curated by owner decision; each maps to a screen that exists.",
+        "dontText": "Don’t compose an unbuilt combination such as Left · None. Figma has no layout for it, so there is nothing to match."
+      },
+      {
+        "doText": "Pass the disclaimer copy the product or compliance team supplies, verbatim.",
+        "dontText": "Don’t edit, shorten or truncate regulatory text to fit the fixed Figma height."
+      },
+      {
+        "doText": "Use <code>Label=True</code> for “In partnership with” above a centred logo group.",
+        "dontText": "Don’t treat the “Powered by” text on Left · Single · Link as the Label property — it belongs to the nested logo row and is <code>Label=False</code>."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Variant names spell out all 6 axes verbatim; layer names default-hug groups like \"Logos - Footer Group\" repeat across variants."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Renamed in v2.1 — <code>FooterContent</code> and <code>Disclaimer</code> — and partner marks sit inside <code>Logos - Footer</code> instances. Variant names read all four axes in panel order."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Property names contain spaces (<code>gcash x partner</code>, <code>grouped logos</code>, <code>with partner</code>). Three axes describe the same thing."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Names are clean — four PascalCase axes, <code>Label</code> True/False since v2.2. But a value does not always mean the same thing: <code>Description=None</code> still draws a 7-line disclaimer on Left · Single (4227:11069), and <code>Description=Link</code> draws no link. The curated seven-variant set itself is an owner decision and is not re-raised."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Spacing, bg, label, description, and link-label are all bound to <code>main/footer/color/*</code> and <code>space/space-*</code> tokens. Typography pulls <code>Primary/Label/Fine</code>, <code>Secondary/Bold/Caption</code>, and <code>Secondary/Bold/Small Caption</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "All three text layers resolve <code>matched</code> on every variant — <code>Secondary/Bold/Small Caption</code>, <code>Secondary/Bold/Caption</code>, <code>Primary/Multi-line Label/Fine</code>. But the same Disclaimer layer carries three fills — #6780A9, #7085A9, #10346F — that follow no axis. Colour bindings cannot be read with the plugin, so whether any is tokenised is unconfirmed."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Disclaimer copy + help link live inside variants — not props. Alignment is a consumer concern. Partner logos are baked assets, not a slot."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "A vertical stack of preamble, logo row and text — one <code>EBFooter</code> view and composable. Heights are whole pixels since v2.3. Top and bottom offsets vary by variant (12 to 48) with no rule, so the native layout must reproduce each measured variant rather than one padding value."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Help-center link is styled text, not a Text Button instance — no pressed/focused/disabled states."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>Description=Link</code> implies a Help Center action, yet the disclaimer is one text segment in the same grey with no link colour, underline or pressed state. The tap target and its states are undesigned."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "CIMB, Fuse, PDAX, Bayad logos ship as raster <code>&lt;img&gt;</code> fills. Need vector source + a Partner Logos set."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Raster partner marks accepted by owner decision in v2.1 — third-party artwork the DS may not redraw. Delivered through <code>Logos - Footer</code> instances, so a mark updates from one source."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Cannot map until property names normalize, drawn text becomes slots, and partner logos resolve via a Slot."
+        "notes": "Property names are ready to map. No SwiftUI or Compose mappings are registered; the native library does not exist."
       }
     ],
     "codeConnect": [],
     "variants": {
       "total": 7,
-      "description": "Six boolean-ish axes combine to ~96 theoretical shapes — only <strong>7 built</strong>. Each shipped variant solves a specific product flow (GLoan, GCredit, GSave, PDAX, Bayad).",
+      "description": "<code>Alignment</code> (2) × <code>LogoType</code> (3) × <code>Label</code> (2) × <code>Description</code> (3) = 36 combinations; <strong>7 built</strong>, a curated set by owner decision (v2.3). Every variant is 360 wide. Offsets are measured from layer bounds — the plugin cannot read auto-layout padding.",
       "columns": [
-        "#",
-        "Node",
-        "description",
-        "label",
-        "gcash x partner",
-        "alignment",
-        "with partner",
-        "grouped logos",
-        "Use case"
+        "Alignment",
+        "LogoType",
+        "Label",
+        "Description",
+        "Node ID",
+        "Height",
+        "Top / bottom",
+        "Content"
       ],
       "rows": [
         {
           "cells": [
-            "1",
-            "<code>21:215191</code>",
-            "none",
-            "no",
-            "no",
-            "left",
-            "yes",
-            "no",
-            "GLoan — Powered-by Fuse + disclaimer + link"
+            "Left",
+            "Group",
+            "<code>False</code>",
+            "Default",
+            "<code>4227:11075</code>",
+            "150px",
+            "24 / 24",
+            "Disclaimer (3 lines, #6780A9) above a 188 × 32 logo group"
           ]
         },
         {
           "cells": [
-            "2",
-            "<code>21:215193</code>",
-            "default",
-            "no",
-            "yes",
-            "left",
-            "no",
-            "no",
-            "Credit acknowledgement + GCash × CIMB"
+            "Left",
+            "Single",
+            "<code>False</code>",
+            "None",
+            "<code>4227:11069</code>",
+            "182px",
+            "24 / 32",
+            "73 × 59 logo beside a 7-line disclaimer (#10346F)"
           ]
         },
         {
           "cells": [
-            "3",
-            "<code>21:215195</code>",
-            "with link",
-            "no",
-            "no",
-            "center",
-            "no",
-            "no",
-            "GSave — centered help-link only"
+            "Left",
+            "Group",
+            "<code>False</code>",
+            "Link",
+            "<code>4227:11085</code>",
+            "120px",
+            "12 / 24",
+            "2-line disclaimer (#7085A9) above a 312 × 32 logo group"
           ]
         },
         {
           "cells": [
-            "4",
-            "<code>21:215197</code>",
-            "none",
-            "no",
-            "yes",
-            "center",
-            "no",
-            "no",
-            "GCash × CIMB logos, centered, no text"
+            "Left",
+            "Single",
+            "<code>False</code>",
+            "Link",
+            "<code>4227:11089</code>",
+            "116px",
+            "24 / 24",
+            "“Powered by” label + 58.5 × 15.75 logo, then 2-line disclaimer (#7085A9)"
           ]
         },
         {
           "cells": [
-            "5",
-            "<code>21:215199</code>",
-            "with link",
-            "no",
-            "yes",
-            "left",
-            "no",
-            "no",
-            "GCredit — link + GCash × CIMB"
+            "Center",
+            "Group",
+            "<code>True</code>",
+            "None",
+            "<code>4227:11093</code>",
+            "95px",
+            "16 / 16",
+            "“In partnership with” preamble above a 206 × 32 logo group"
           ]
         },
         {
           "cells": [
-            "6",
-            "<code>21:215201</code>",
-            "with link",
-            "no",
-            "no",
-            "left",
-            "yes",
-            "no",
-            "Powered-by Bayad row + link"
+            "Center",
+            "None",
+            "<code>False</code>",
+            "Link",
+            "<code>4227:11079</code>",
+            "108px",
+            "24 / 48",
+            "2-line centred disclaimer (#10346F), no logos"
           ]
         },
         {
           "cells": [
-            "7",
-            "<code>21:215203</code>",
-            "none",
-            "yes",
-            "no",
-            "center",
-            "no",
-            "yes",
-            "\"In partnership with\" · GCash + PDAX grouped"
+            "Center",
+            "Group",
+            "<code>False</code>",
+            "None",
+            "<code>4227:11082</code>",
+            "80px",
+            "24 / 24",
+            "312 × 32 logo group only"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.3.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 4227:11068",
+      "rows": [
+        {
+          "body": "<strong>The Code tab still described the pre-v2.0 component.</strong> Property Mapping listed <code>label: yes | no</code>, <code>gcash x partner</code>, <code>with partner</code>, <code>grouped logos</code> and <code>description: with link</code>; the inventory pointed at retired <code>21:215*</code> nodes. Rebuilt on <code>Alignment</code> × <code>LogoType</code> × <code>Label</code> × <code>Description</code>, seven variants on <code>4227:*</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard contradicted the resolved record.</strong> C1, C2, C4, C5 and C6 were Requires Rework for problems closed in v2.0–v2.3 — the renames, the logo-axis collapse, raster marks (owner decision v2.1), <code>Alignment</code> retained (v2.1). Rescored C1, C4, C6 Ready; C2, C3, C5 Needs Refinement on new findings.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Installation, usage snippets and guidelines were empty.</strong> Added SPM + Gradle <code>com.eastblue.ds:header:2.3.1</code>, one snippet per built variant, and four do/don’t pairs.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Style tab: the Disclaimer text style was wrong.</strong> The row read “no text style bound” with a font spec. All five Disclaimer layers — 4227:11077, 11074, 11087, 11092, 11081 — carry <code>Secondary/Bold/Caption</code>, matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Style tab: the “Powered by” label was missing.</strong> On Left · Single · Link (4227:11089) a nested text layer draws “Powered by” in #90A8D0 with <code>Primary/Multi-line Label/Fine</code>, matched. Added to Colors, Typography and the preview; the earlier note that #90A8D0 appeared nowhere is withdrawn.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Style tab: Padding V was wrong on four variants.</strong> The row claimed 24/24 with 16 on two variants. Measured offsets are 24/24, 24/32, 12/24, 24/24, 16/16, 24/48 and 24/24. Now a per-variant row, labelled measured.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+          {
+          "body": "<strong>Style tab: Preamble rows showed on every variant.</strong> Only Center · Group · Label=True (4227:11093) draws a preamble; the Colors and Typography rows now hide elsewhere. The Layout Alignment row, which stated the logo group was centred on every Left variant, is now per variant — true only for Left · Group · Default — and still labelled derived.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+      {
+          "body": "<strong>Disclaimer takes three fills with no axis behind them</strong> — #6780A9 (Left · Group · Default), #7085A9 (both Left · Link), #10346F (Left · Single · None, Center · None · Link). <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong><code>Description=None</code> still draws a disclaimer</strong> on Left · Single (4227:11069) — seven lines of Fuse Lending copy. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong><code>Description=Link</code> draws no link.</strong> The disclaimer is a single text segment in the same fill as the other values, so the Help Center action has no visual affordance or pressed state. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Top and bottom offsets follow no rule</strong> — from 12 to 48 across seven variants. Auto-layout padding is not readable with the plugin; the designer should confirm whether 12 and 48 are intended. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Colour token bindings unconfirmed.</strong> The plugin cannot read variable bindings, so every token column reads <code>—</code>. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>v2.0.0 through v2.3.0 have no changelog entries.</strong> The Overview records eleven resolutions across those versions, but the changelog jumps from 1.0.0 to here. Their dates are not recorded anywhere readable, so they are not invented. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

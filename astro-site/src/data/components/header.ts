@@ -573,175 +573,389 @@ export const header: ComponentData = {
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:header:2.3.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.header.*  <span class=\"cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>4363:11467</code>, in panel order. <code>Image-Slot</code> is a SLOT, so it is absent from the Style tab’s demo panel but mapped here. The title text and the trailing action have no Figma property behind them.",
       "rows": [
         {
-          "figma": "<code>preamble: boolean</code>",
-          "swift": "<code>preamble?: String</code>",
-          "compose": "<code>preamble: String?</code>"
+          "figma": "TrailingMedia — None, Link, Icon, Edit",
+          "swift": "<code>.ebTrailingMedia(.none / .link / .icon / .edit)</code>",
+          "compose": "<code>trailingMedia = EBTrailingMedia.None / Link / Icon / Edit</code>"
         },
         {
-          "figma": "(implicit)",
-          "swift": "<code>title: String</code>",
-          "compose": "<code>title: String</code> (required)"
+          "figma": "hasLeadingMedia — False, True",
+          "swift": "presence of the <code>.ebLeadingMedia { }</code> closure",
+          "compose": "<code>leadingMedia: @Composable (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "<code>description: boolean</code>",
-          "swift": "<code>description?: String</code>",
-          "compose": "<code>description: String?</code>"
+          "figma": "hasPreamble — true, false",
+          "swift": "<code>.ebPreamble(String)</code> — omit to hide",
+          "compose": "<code>preamble: String? = null</code>"
         },
         {
-          "figma": "<code>icon</code> + <code>left illustration</code>",
-          "swift": "<code>leadingMedia?: icon | illustration</code>",
-          "compose": "<code>leadingMedia: EBLeadingMedia?</code>"
+          "figma": "hasDescription — true, false",
+          "swift": "<code>.ebDescription(String)</code> — omit to hide",
+          "compose": "<code>description: String? = null</code>"
         },
         {
-          "figma": "<code>right illustration</code> + <code>link</code> + <code>edit</code> + <code>counter</code>",
-          "swift": "<code>trailing?: illustration | link | edit | counter</code>",
-          "compose": "<code>trailing: EBHeaderTrailing?</code>"
+          "figma": "hasCounter — true, false",
+          "swift": "<code>.ebCounter(Int)</code> — omit to hide",
+          "compose": "<code>counter: Int? = null</code>"
+        },
+        {
+          "figma": "Image-Slot (slot) — 4 items, inside LeadingMedia",
+          "swift": "<code>.ebLeadingMedia { EBAvatar(user) }</code>",
+          "compose": "<code>leadingMedia = { EBAvatar(user) }</code>"
+        },
+        {
+          "figma": "— no Figma property (the title)",
+          "swift": "<code>EBSectionHeader(\"Heading\")</code>",
+          "compose": "<code>title: String</code>"
+        },
+        {
+          "figma": "— no Figma property (the Link and Edit action)",
+          "swift": "<code>.onTrailingAction { }</code>",
+          "compose": "<code>onTrailingAction: (() -&gt; Unit)? = null</code>"
         }
-      ]
+      ],
+      "filePaths": {
+        "swift": "ios/Components/Header/EBSectionHeader.swift",
+        "compose": "android/components/header/EBSectionHeader.kt"
+      }
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "None",
+        "swift": "<span class=\"cmt\">// TrailingMedia = None — content runs the full 312.</span>\n<span class=\"typ\">EBSectionHeader</span>(<span class=\"str\">\"Heading\"</span>)\n    .<span class=\"fn\">ebPreamble</span>(<span class=\"str\">\"Preamble\"</span>)\n    .<span class=\"fn\">ebDescription</span>(<span class=\"str\">\"Description goes here\"</span>)\n    .<span class=\"fn\">ebCounter</span>(9)",
+        "compose": "<span class=\"cmt\">// TrailingMedia = None — content runs the full 312.</span>\n<span class=\"typ\">EBSectionHeader</span>(\n    title = <span class=\"str\">\"Heading\"</span>,\n    preamble = <span class=\"str\">\"Preamble\"</span>,\n    description = <span class=\"str\">\"Description goes here\"</span>,\n    counter = 9,\n    trailingMedia = <span class=\"typ\">EBTrailingMedia</span>.<span class=\"prp\">None</span>\n)"
+      },
+      {
+        "subheading": "Link",
+        "swift": "<span class=\"cmt\">// TrailingMedia = Link — a 61 × 22 \"View All\" label; content narrows to 235.</span>\n<span class=\"typ\">EBSectionHeader</span>(<span class=\"str\">\"Heading\"</span>)\n    .<span class=\"fn\">ebPreamble</span>(<span class=\"str\">\"Preamble\"</span>)\n    .<span class=\"fn\">ebDescription</span>(<span class=\"str\">\"Description goes here\"</span>)\n    .<span class=\"fn\">ebCounter</span>(9)\n    .<span class=\"fn\">ebTrailingMedia</span>(.<span class=\"prp\">link</span>)\n    .<span class=\"fn\">onTrailingAction</span> { openDetails() }",
+        "compose": "<span class=\"cmt\">// TrailingMedia = Link — a 61 × 22 \"View All\" label; content narrows to 235.</span>\n<span class=\"typ\">EBSectionHeader</span>(\n    title = <span class=\"str\">\"Heading\"</span>,\n    preamble = <span class=\"str\">\"Preamble\"</span>,\n    description = <span class=\"str\">\"Description goes here\"</span>,\n    counter = 9,\n    trailingMedia = <span class=\"typ\">EBTrailingMedia</span>.<span class=\"prp\">Link</span>,\n    onTrailingAction = { openDetails() }\n)"
+      },
+      {
+        "subheading": "Icon",
+        "swift": "<span class=\"cmt\">// TrailingMedia = Icon — a 32 × 48 Icon-Slot; content narrows to 264.</span>\n<span class=\"typ\">EBSectionHeader</span>(<span class=\"str\">\"Heading\"</span>)\n    .<span class=\"fn\">ebPreamble</span>(<span class=\"str\">\"Preamble\"</span>)\n    .<span class=\"fn\">ebDescription</span>(<span class=\"str\">\"Description goes here\"</span>)\n    .<span class=\"fn\">ebCounter</span>(9)\n    .<span class=\"fn\">ebTrailingMedia</span>(.<span class=\"prp\">icon</span>)",
+        "compose": "<span class=\"cmt\">// TrailingMedia = Icon — a 32 × 48 Icon-Slot; content narrows to 264.</span>\n<span class=\"typ\">EBSectionHeader</span>(\n    title = <span class=\"str\">\"Heading\"</span>,\n    preamble = <span class=\"str\">\"Preamble\"</span>,\n    description = <span class=\"str\">\"Description goes here\"</span>,\n    counter = 9,\n    trailingMedia = <span class=\"typ\">EBTrailingMedia</span>.<span class=\"prp\">Icon</span>\n)"
+      },
+      {
+        "subheading": "Edit",
+        "swift": "<span class=\"cmt\">// TrailingMedia = Edit — 24px icon + \"Edit details\", 112 × 24; content narrows to 184.</span>\n<span class=\"typ\">EBSectionHeader</span>(<span class=\"str\">\"Heading\"</span>)\n    .<span class=\"fn\">ebPreamble</span>(<span class=\"str\">\"Preamble\"</span>)\n    .<span class=\"fn\">ebDescription</span>(<span class=\"str\">\"Description goes here\"</span>)\n    .<span class=\"fn\">ebCounter</span>(9)\n    .<span class=\"fn\">ebTrailingMedia</span>(.<span class=\"prp\">edit</span>)\n    .<span class=\"fn\">onTrailingAction</span> { openDetails() }",
+        "compose": "<span class=\"cmt\">// TrailingMedia = Edit — 24px icon + \"Edit details\", 112 × 24; content narrows to 184.</span>\n<span class=\"typ\">EBSectionHeader</span>(\n    title = <span class=\"str\">\"Heading\"</span>,\n    preamble = <span class=\"str\">\"Preamble\"</span>,\n    description = <span class=\"str\">\"Description goes here\"</span>,\n    counter = 9,\n    trailingMedia = <span class=\"typ\">EBTrailingMedia</span>.<span class=\"prp\">Edit</span>,\n    onTrailingAction = { openDetails() }\n)"
+      }
+    ],
     "accessibility": [
       {
         "requirement": "Heading trait",
-        "ios": "Apply <code>.accessibilityAddTraits(.isHeader)</code> to the title.",
+        "ios": "Apply <code>.accessibilityAddTraits(.isHeader)</code> to the title so rotor navigation lands on it.",
         "android": "Apply <code>Modifier.semantics { heading() }</code> to the title text."
       },
       {
-        "requirement": "Trailing action label",
-        "ios": "Link/Edit/Counter must each carry their own accessibility label. Counter should announce count (\"12 unread\").",
-        "android": "Same — each trailing slot owns its own semantics."
-      },
-      {
-        "requirement": "Minimum touch target",
-        "ios": "Trailing interactive element must be ≥44×44pt.",
-        "android": "Trailing interactive element must be ≥48×48dp."
-      },
-      {
         "requirement": "Reading order",
-        "ios": "Preamble → Title → Description → Trailing. VoiceOver follows DOM order.",
-        "android": "Same reading order — TalkBack follows composition order."
+        "ios": "Preamble → Title → Counter → Description → trailing action. Group the text stack with <code>.accessibilityElement(children: .combine)</code> and keep the action separate.",
+        "android": "Merge the text stack with <code>Modifier.semantics(mergeDescendants = true)</code>; the trailing action stays its own node."
+      },
+      {
+        "requirement": "Counter announcement",
+        "ios": "The 24px Counter is a number with no unit. Give it a label — \"9 items\" — rather than letting VoiceOver read \"9\".",
+        "android": "Set <code>contentDescription</code> on the Counter; a bare numeral is ambiguous."
+      },
+      {
+        "requirement": "Trailing action target",
+        "ios": "Link is 61 × 22 and Edit is 112 × 24 — both under 44pt tall. Extend the hit area with <code>.contentShape</code>; the header itself is not tappable.",
+        "android": "Both under 48dp. Use <code>Modifier.minimumInteractiveComponentSize()</code> on the action only."
+      },
+      {
+        "requirement": "Leading and trailing media",
+        "ios": "Slot content is decorative unless it carries meaning. Mark an avatar or icon <code>.accessibilityHidden(true)</code> when the title already names it.",
+        "android": "<code>contentDescription = null</code> for decorative slot content."
+      },
+      {
+        "requirement": "Dynamic Type / font scaling",
+        "ios": "The title is 22pt and the preamble 14pt. The frame is a fixed 100pt in Figma — let it grow when type scales rather than clipping.",
+        "android": "Use <code>sp</code> throughout and let the row height follow <code>fontScale</code>."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use Section Header to open a group of related content — a list, a card stack, a form section.",
+        "dontText": "Don’t use it as a page title. It is 100 tall with a 22pt title; screens take an app bar or a Page Banner."
+      },
+      {
+        "doText": "Pick one trailing action per header — <code>Link</code> for “View All”, <code>Edit</code> to change the section, <code>Icon</code> for a status or visual.",
+        "dontText": "Don’t stack actions. <code>TrailingMedia</code> is a single enum; there is no variant with two."
+      },
+      {
+        "doText": "Keep the title to one line. Content narrows to 122 wide with both leading media and <code>Edit</code>.",
+        "dontText": "Don’t pair a long title with <code>hasLeadingMedia</code> and <code>Edit</code> — the frame is a fixed 100 and nothing in the component handles a wrap."
+      },
+      {
+        "doText": "Turn <code>hasCounter</code> on only when the number summarises what follows.",
+        "dontText": "Don’t use the counter as a badge or status. It is a neutral <code>#EEF2F9</code> chip with no alert colour."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "\"Header\" prefix shared with 3 structurally different components. Rename to <strong>Section Header</strong>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Semantic throughout — <code>LeadingMedia</code>, <code>HeaderContent</code>, <code>Trailing Media</code>, and real <code>SLOT</code> nodes for media (v2.2). One quirk: <code>CounterSlot</code> holds the Title as well as the Counter, and <code>DescriptionRow</code> holds that row as well as the Description, so both names describe less than they contain."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "8 booleans → 3 props (<code>preamble</code>, <code>leadingMedia</code>, <code>trailing</code>). Drops 16 variants to ~6 canonical patterns."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>TrailingMedia</code> is a clean four-value enum (v2.1). But <code>hasLeadingMedia</code> is a <strong>variant</strong> with Title Case <code>False</code> / <code>True</code> values, while <code>hasPreamble</code>, <code>hasDescription</code> and <code>hasCounter</code> are <strong>boolean properties</strong>. Four booleans, two mechanisms, and the variant breaks the lowercase <code>true</code>/<code>false</code> convention."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Typography and color bound to DS tokens."
+        "notes": "All three text layers resolve <code>matched</code> — <code>Primary/Label/Small</code>, <code>Primary/Headlines/Section</code>, <code>Secondary/Bold/Caption</code> — so typography is verifiably bound. Colour bindings cannot be read with the Talk To Figma plugin; the Style tab’s token column is <code>—</code> rather than asserted."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Maps to a simple <code>EBSectionHeader</code> view/composable once slots collapse. Trailing actions should be real Button/Badge instances, not drawn."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "A text stack with an optional leading slot and a single trailing enum — maps to one <code>EBSectionHeader</code> view and composable. Content width follows a clean rule, 312 less each media and its 16 gap, verified against three variants."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Header itself is static; trailing actions inherit Button/Link state coverage once they become instances."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Closed by owner decision in v2.2 — the header is a static section label and is not tappable. The <code>Link</code> and <code>Edit</code> actions carry their own states."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Confirm leading/trailing \"illustration\" slots accept vector instances (Avatar / Icon / custom). Placeholder circle suggests unverified."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Leading media is an <code>Image-Slot</code> SLOT and trailing media an instance in every variant (v2.2). The Edit glyph is a <code>shape_full</code> BOOLEAN_OPERATION inside the shared icon, owned by the iconography team."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Cannot map until property model collapses and trailing slots resolve to real components."
+        "notes": "No longer blocked — the property collapse it waited on landed in v2.0. No SwiftUI or Compose mappings are registered yet; the native library does not exist."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 16,
-      "description": "Today: 8 independent boolean properties — <code>preamble</code>, <code>description</code>, <code>icon</code>, <code>left illustration</code>, <code>right illustration</code>, <code>link</code>, <code>edit</code>, <code>counter</code>. 2⁸ = <strong>256 theoretical combos</strong>, only <strong>16 built</strong> — most combinations are either invalid or unsupported.",
+      "total": 8,
+      "description": "<code>TrailingMedia</code> (4) × <code>hasLeadingMedia</code> (2) = 8 variants, a complete matrix. <code>hasPreamble</code>, <code>hasDescription</code> and <code>hasCounter</code> are boolean properties and <code>Image-Slot</code> is a SLOT — none add variants. Every variant is 360 × 100; only the content width moves.",
       "columns": [
-        "Group",
-        "Count",
-        "Slots enabled"
+        "TrailingMedia",
+        "hasLeadingMedia",
+        "Node ID",
+        "Content width",
+        "Trailing media"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>Text-only</strong>",
-            "4",
-            "preamble × description permutations"
+            "None",
+            "<code>False</code>",
+            "<code>4363:11464</code>",
+            "312px",
+            "—"
           ]
         },
         {
           "cells": [
-            "<strong>With right icon (top-aligned)</strong>",
-            "4",
-            "preamble × description × icon"
+            "None",
+            "<code>True</code>",
+            "<code>4368:11366</code>",
+            "250px",
+            "—"
           ]
         },
         {
           "cells": [
-            "<strong>With leading illustration</strong>",
-            "2",
-            "description × left illustration"
+            "Link",
+            "<code>False</code>",
+            "<code>4363:11461</code>",
+            "235px",
+            "61 × 22"
           ]
         },
         {
           "cells": [
-            "<strong>With trailing illustration</strong>",
-            "2",
-            "description × right illustration"
+            "Link",
+            "<code>True</code>",
+            "<code>4363:11463</code>",
+            "173px",
+            "61 × 22"
           ]
         },
         {
           "cells": [
-            "<strong>With link (View All)</strong>",
-            "2",
-            "description × link"
+            "Icon",
+            "<code>False</code>",
+            "<code>4363:11465</code>",
+            "264px",
+            "32 × 48"
           ]
         },
         {
           "cells": [
-            "<strong>With edit</strong>",
-            "1",
-            "edit only"
+            "Icon",
+            "<code>True</code>",
+            "<code>4363:11466</code>",
+            "202px",
+            "32 × 48"
           ]
         },
         {
           "cells": [
-            "<strong>With counter</strong>",
-            "1",
-            "counter only"
+            "Edit",
+            "<code>False</code>",
+            "<code>4363:11459</code>",
+            "184px",
+            "112 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Edit",
+            "<code>True</code>",
+            "<code>4363:11462</code>",
+            "122px",
+            "112 × 24"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.3.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 4363:11467",
+      "rows": [
+        {
+          "body": "<strong>The Code tab still described the pre-v2.0 component.</strong> Property Mapping listed eight booleans — <code>preamble</code>, <code>icon</code>, <code>left illustration</code>, <code>right illustration</code>, <code>link</code>, <code>edit</code>, <code>counter</code> — and the Variants Inventory counted 16 built of 256. v2.0 collapsed all of it to <code>TrailingMedia</code> × <code>hasLeadingMedia</code>, 8 variants.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard contradicted the resolved record on five criteria.</strong> C1 asked for a rename to Section Header (done v2.0), C2 for the boolean collapse (v2.0), C4 for real trailing instances (v2.2), C5 for state coverage (ruled out of scope v2.2), C6 for vector slots (v2.2). Rescored C1, C3, C4 and C6 Ready and C5 Not Applicable.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel.</strong> Five cards on retired <code>18430:*</code> nodes, named for content combinations — <code>Title only</code>, <code>Full stack</code>, <code>Title + trailing link</code> — became one card carrying <code>TrailingMedia</code>, <code>hasLeadingMedia</code>, <code>hasPreamble</code>, <code>hasDescription</code> and <code>hasCounter</code>. <code>Image-Slot</code> is a static row, since a slot takes no control.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved to style names.</strong> Preamble <code>Primary/Label/Small</code>, title <code>Primary/Headlines/Section</code>, description <code>Secondary/Bold/Caption</code> — all three <code>matched</code>, which is also the first verified evidence for C3.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Content width documented as a rule.</strong> 312 less the leading media (46 + 16 gap) and the trailing media (its width + 16) — checked against three measured variants (202, 173, 184) and now a live Layout row and an Inventory column.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The preview centres content vertically; Figma does not.</strong> Figma top-anchors all three blocks at <code>y=24</code>, leaving 24 above and 16 below a full stack. Centred at the owner’s direction so boolean-off states stop reading top-heavy; the 4px difference is recorded on the Style tab.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Installation, Usage Snippets and Usage Guidelines were empty.</strong> All written — one snippet per <code>TrailingMedia</code> value — and the Gradle artifact and package derive from the <code>Header</code> family.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Spec rows no longer overlap.</strong> A long value ran under its key and a wrapped value floated its key between lines. Fixed site-wide in the row layout; verified across every component at four widths.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Four booleans, two mechanisms.</strong> <code>hasLeadingMedia</code> is a variant with Title Case <code>False</code> / <code>True</code> values; <code>hasPreamble</code>, <code>hasDescription</code> and <code>hasCounter</code> are boolean properties. The variant also breaks the lowercase <code>true</code>/<code>false</code> convention.",
+          "delta": {
+            "kind": "open",
+            "label": "C2 Open"
+          }
+        },
+        {
+          "body": "<strong>Vertical padding is 24 above, 16 below.</strong> All three blocks are top-anchored in a fixed 100 frame. Setting the row’s counter-axis alignment to center would balance it and make the preview and the component agree.",
+          "delta": {
+            "kind": "open",
+            "label": "C1 Open"
+          }
+        },
+        {
+          "body": "<strong>Two frames are named for less than they hold.</strong> <code>CounterSlot</code> contains the Title as well as the Counter; <code>DescriptionRow</code> contains that row as well as the Description.",
+          "delta": {
+            "kind": "open",
+            "label": "C1 Open"
+          }
+        },
+        {
+          "body": "<strong>Trailing actions are under the minimum touch target.</strong> Link is 61 × 22 and Edit 112 × 24 — both under 44pt and 48dp tall.",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Colour bindings unread.</strong> The plugin returns no variable bindings, so the Style tab’s colour table carries <code>—</code> for every token path.",
+          "delta": {
+            "kind": "open",
+            "label": "C3 Open"
+          }
+        },
+        {
+          "body": "<strong>v2.0.0 through v2.3.0 have no changelog entries.</strong> The Overview tab records nine resolutions across those four versions, but the changelog jumps from 1.0.0 to here. Their dates are not recorded anywhere readable, so they are not invented.",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

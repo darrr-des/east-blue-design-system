@@ -507,143 +507,281 @@ export const headerTransaction: ComponentData = {
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:header:2.3.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.header.*  <span class=\"cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>4368:12856</code>. <code>Surface</code> is the only variant axis. Text and instance-swap property definitions are not readable with the review tooling, so the text layers and the <code>Placeholder</code> are listed as the content a developer passes. The <code>_space_*</code> instances are annotation, not content, and have no parameter.",
       "rows": [
         {
-          "figma": "(implicit)",
+          "figma": "Surface — Brand, Default",
+          "swift": "<code>.ebSurface(.brand / .default)</code>",
+          "compose": "<code>surface = EBHeroSurface.Brand / Default</code>"
+        },
+        {
+          "figma": "— <code>Placeholder</code> instance, 32 × 32 (swap target)",
+          "swift": "trailing <code>@ViewBuilder leading</code> closure",
+          "compose": "<code>leading: @Composable (() -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "— <code>Title</code> text layer",
           "swift": "<code>title: String</code>",
           "compose": "<code>title: String</code>"
         },
         {
-          "figma": "(placeholder)",
-          "swift": "<code>avatar: Avatar</code> (instance)",
-          "compose": "<code>avatar: EBAvatar</code>"
+          "figma": "— <code>SenderDetails › Label</code> text layer",
+          "swift": "<code>label: String</code>",
+          "compose": "<code>label: String</code>"
         },
         {
-          "figma": "<code>email: boolean</code>",
-          "swift": "<code>metadata: [LabelValuePair]</code>",
-          "compose": "<code>metadata: [EBLabelValue]</code>"
+          "figma": "— <code>SenderDetails › Value</code> text layer",
+          "swift": "<code>value: String</code>",
+          "compose": "<code>value: String</code>"
         },
         {
-          "figma": "(implicit)",
-          "swift": "<code>description?: String</code>",
-          "compose": "<code>description: String?</code>"
-        },
-        {
-          "figma": "(implicit brand)",
-          "swift": "<code>surface: brand | default</code>",
-          "compose": "<code>.ebSurface(.brand)</code> modifier"
+          "figma": "— <code>Description</code> text layer",
+          "swift": "<code>description: String?</code>",
+          "compose": "<code>description: String? = null</code>"
         }
-      ]
+      ],
+      "filePaths": {
+        "swift": "ios/Components/Header/EBDetailHero.swift",
+        "compose": "android/components/header/EBDetailHero.kt"
+      }
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "Default",
+        "swift": "<span class=\"cmt\">// Surface=Default — 4464:13247, 360 × 218. #FFFFFF surface, #E5EBF4 separator.</span>\n<span class=\"typ\">EBDetailHero</span>(\n    title: <span class=\"str\">\"Add Label Here\"</span>,\n    label: <span class=\"str\">\"label:\"</span>,\n    value: <span class=\"str\">\"add text here\"</span>,\n    description: <span class=\"str\">\"Add description here.\"</span>\n) {\n    <span class=\"typ\">Image</span>(<span class=\"str\">\"merchant-logo\"</span>)  <span class=\"cmt\">// swapped into the 32 × 32 Placeholder</span>\n}\n.<span class=\"fn\">ebSurface</span>(.<span class=\"prp\">default</span>)",
+        "compose": "<span class=\"cmt\">// Surface=Default — 4464:13247, 360 × 218. #FFFFFF surface, #E5EBF4 separator.</span>\n<span class=\"typ\">EBDetailHero</span>(\n    title = <span class=\"str\">\"Add Label Here\"</span>,\n    label = <span class=\"str\">\"label:\"</span>,\n    value = <span class=\"str\">\"add text here\"</span>,\n    description = <span class=\"str\">\"Add description here.\"</span>,\n    surface = <span class=\"typ\">EBHeroSurface</span>.<span class=\"prp\">Default</span>,\n    leading = { <span class=\"typ\">Image</span>(painterResource(R.drawable.merchant_logo), contentDescription = <span class=\"str\">\"Merchant\"</span>) }\n)"
+      },
+      {
+        "subheading": "Brand",
+        "swift": "<span class=\"cmt\">// Surface=Brand — 4464:16379, 360 × 218. #1972F9 surface, #F6F9FD @ 24% separator.</span>\n<span class=\"typ\">EBDetailHero</span>(\n    title: <span class=\"str\">\"Add Label Here\"</span>,\n    label: <span class=\"str\">\"label:\"</span>,\n    value: <span class=\"str\">\"add text here\"</span>,\n    description: <span class=\"str\">\"Add description here.\"</span>\n) {\n    <span class=\"typ\">Image</span>(<span class=\"str\">\"merchant-logo\"</span>)  <span class=\"cmt\">// swapped into the 32 × 32 Placeholder</span>\n}\n.<span class=\"fn\">ebSurface</span>(.<span class=\"prp\">brand</span>)",
+        "compose": "<span class=\"cmt\">// Surface=Brand — 4464:16379, 360 × 218. #1972F9 surface, #F6F9FD @ 24% separator.</span>\n<span class=\"typ\">EBDetailHero</span>(\n    title = <span class=\"str\">\"Add Label Here\"</span>,\n    label = <span class=\"str\">\"label:\"</span>,\n    value = <span class=\"str\">\"add text here\"</span>,\n    description = <span class=\"str\">\"Add description here.\"</span>,\n    surface = <span class=\"typ\">EBHeroSurface</span>.<span class=\"prp\">Brand</span>,\n    leading = { <span class=\"typ\">Image</span>(painterResource(R.drawable.merchant_logo), contentDescription = <span class=\"str\">\"Merchant\"</span>) }\n)"
+      }
+    ],
     "accessibility": [
       {
         "requirement": "Heading trait",
-        "ios": "Apply to the title line.",
-        "android": "<code>Modifier.semantics { heading() }</code> on the title."
+        "ios": "Apply <code>.accessibilityAddTraits(.isHeader)</code> to the Title — it names the subject of the screen.",
+        "android": "Apply <code>Modifier.semantics { heading() }</code> to the Title."
       },
       {
-        "requirement": "Avatar a11y",
-        "ios": "If decorative, mark <code>.accessibilityHidden(true)</code>. If identifying, label with person's name.",
-        "android": "Same — <code>contentDescription</code> empty when decorative, or person's name when identifying."
+        "requirement": "Leading content",
+        "ios": "Whatever is swapped into the Placeholder is decorative when the Title already names it — <code>.accessibilityHidden(true)</code>. Label it only when it adds information, such as a merchant logo with no name in the Title.",
+        "android": "<code>contentDescription = null</code> when decorative; a name when it identifies."
       },
       {
-        "requirement": "Label-value pairs",
-        "ios": "Group each pair with <code>.accessibilityElement(children: .combine)</code> so VoiceOver reads \"email, juan@gmail.com\" as one utterance.",
-        "android": "Use <code>Modifier.semantics(mergeDescendants = true)</code> per row."
+        "requirement": "Label-value pair",
+        "ios": "Combine <code>SenderDetails</code> with <code>.accessibilityElement(children: .combine)</code> so “label:” and its value read as one phrase.",
+        "android": "Use <code>Modifier.semantics(mergeDescendants = true)</code> on the pair."
       },
       {
-        "requirement": "Contrast on brand surface",
-        "ios": "White text on #005CE5 = 8.5:1 ✓. Muted #C8D8F5 on #005CE5 = 2.1:1 — fails AA body text. Use only for secondary labels ≥14pt bold.",
-        "android": "Same ratios — reserve muted color for label text, not body copy."
+        "requirement": "Separator",
+        "ios": "The separator is decorative — hide it from VoiceOver.",
+        "android": "No semantics on the divider."
+      },
+      {
+        "requirement": "Contrast — Brand",
+        "ios": "Measured on #1972F9. Title, white 22pt bold: 4.36:1 — passes AA large text. Value, white 14pt bold: 4.36:1 — below 4.5:1. Label (14pt) and Description (12pt) at #F6F9FD 72% composite to #B8D3FC: 2.86:1 — below 4.5:1.",
+        "android": "Same fills, same ratios. See the open Changelog row."
+      },
+      {
+        "requirement": "Contrast — Default",
+        "ios": "Title and Value #0A2757 on #FFFFFF: 14.58:1. Label and Description #6780A9: 4.01:1 — below 4.5:1 at 14pt and 12pt.",
+        "android": "Same ratios."
+      },
+      {
+        "requirement": "Dynamic Type / font scaling",
+        "ios": "Both variants are a fixed 218pt with a 2-line Description. Let the hero grow; don’t clip the Description.",
+        "android": "Use <code>sp</code> and let height follow <code>fontScale</code>."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use Detail Hero at the top of a detail screen to introduce the transaction, recipient or merchant.",
+        "dontText": "Don’t use it as a screen title bar or section label — that is Page Banner or Section Header."
+      },
+      {
+        "doText": "Swap your own avatar, logo or icon into the 32 × 32 Placeholder.",
+        "dontText": "Don’t ship the grey #C2CFE5 placeholder circle."
+      },
+      {
+        "doText": "Carry one label-value pair — the subject’s key detail.",
+        "dontText": "Don’t extend it with more rows. Compose the rest of the detail as list rows beneath it (confirmed scope, v2.2)."
+      },
+      {
+        "doText": "Reproduce the spacing the <code>_space_*</code> instances annotate: 8 · 12 · 16 · 8.",
+        "dontText": "Don’t render the spacers. They are yellow, blue and purple annotation blocks with Roboto labels."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "\"Header - Transaction\" misfiled. Rename to <strong>Detail Hero</strong>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Renamed Detail Hero (v2.0). <code>Title</code>, <code>SenderDetails</code> › <code>Label</code> + <code>Value</code>, <code>Description</code> — identical in both variants (v2.2–v2.3). The <code>_space_*</code> instances are an owner-confirmed annotation convention (v2.2); the lowercase <code>separator</code> line is the one layer left off the PascalCase pass."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>email=yes|no</code> should become <code>metadata: [LabelValuePair]</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One PascalCase axis, <code>Surface = Brand | Default</code>, matching Page Banner and Brand App Bar. The <code>email</code> boolean is retired (v2.0)."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Surface, title, description tokens bound."
+        "notes": "All four text layers resolve <code>matched</code> on both variants — <code>Primary/Headlines/Section</code>, <code>Primary/Label/Light/Small</code>, <code>Primary/Label/Small</code>, <code>Secondary/Bold/Caption</code>. The #1972F9 surface and 72% / 24% alphas are owner-attested token bindings (v2.1); the plugin cannot verify colour bindings."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Avatar should be a real instance; metadata should be structured, not drawn."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "A leading-aligned vertical stack — leading slot, title, divider, label-value, description — maps to one <code>EBDetailHero</code> view and composable. Heights are whole pixels: 24 + 32 + 8 + 26 + 12 + 16 + 32 + 8 + 36 + 24 = 218."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Avatar pressed state not defined — needed if tappable."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Static by design (v2.2) — nothing in the hero is tappable."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Avatar is a drawn placeholder, not a vector Avatar instance."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "No baked assets. The leading content is a <code>Placeholder</code> instance swapped by the consumer — owner-confirmed as intended (v2.2)."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked on rehome + avatar-instance decisions."
+        "notes": "No longer blocked — the rehome and placeholder decisions were settled in v2.0–v2.2. No SwiftUI or Compose mappings are registered; the native library does not exist."
       }
     ],
     "codeConnect": [],
     "variants": {
       "total": 2,
-      "description": "",
+      "description": "<code>Surface</code> (2) = 2 variants. Both are 360 × 218, content 312 wide at 24 / 24.",
       "columns": [
-        "#",
-        "Node",
-        "email",
-        "Dimensions"
+        "Surface",
+        "Node ID",
+        "Dimensions",
+        "Surface fill",
+        "Separator",
+        "Title / Value"
       ],
       "rows": [
         {
           "cells": [
-            "1",
-            "<code>18430:2906</code>",
-            "no",
-            "360 × 220"
+            "Brand",
+            "<code>4464:16379</code>",
+            "360 × 218",
+            "#1972F9",
+            "#F6F9FD @ 24%",
+            "#FFFFFF"
           ]
         },
         {
           "cells": [
-            "2",
-            "<code>18430:2898</code>",
-            "yes",
-            "360 × 191"
+            "Default",
+            "<code>4464:13247</code>",
+            "360 × 218",
+            "#FFFFFF",
+            "#E5EBF4",
+            "#0A2757"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.3.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 4368:12856",
+      "rows": [
+        {
+          "body": "<strong>The Code tab still described the 1.0.0 component.</strong> Property Mapping listed <code>email: boolean</code>, an <code>avatar: EBAvatar</code> instance and a <code>metadata: [LabelValuePair]</code> list; the inventory showed <code>18430:*</code> nodes at 360 × 220 and 360 × 191. Rebuilt on <code>Surface = Brand | Default</code>, two variants on <code>4464:*</code>, both 360 × 218.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard contradicted the resolved record.</strong> C1, C2 and C4 asked for the rename, the <code>email</code> retirement and an Avatar instance — done or decided in v2.0–v2.2. C5 and C6 asked for avatar states and a vector Avatar, ruled out by the static-by-design and swap-target decisions. Rescored C1–C4 and C6 Ready, C5 Not Applicable.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Contrast figures used colours the component does not have.</strong> The Accessibility row measured white and a muted #C8D8F5 on #005CE5. The Brand surface is #1972F9 and the muted text is #F6F9FD at 72%; real ratios are now listed.",
+          "delta": {
+            "kind": "resolved",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Installation, usage snippets and guidelines were empty.</strong> Added SPM + Gradle <code>com.eastblue.ds:header:2.3.1</code>, a snippet per surface, and four do/don’t pairs including not rendering the <code>_space_*</code> annotations.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel.</strong> The retired <code>email</code> control is dropped; one <code>Surface</code> control drives colours, and all four text layers resolve to DS styles.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Secondary text fails AA contrast.</strong> Brand: Label and Description at #F6F9FD 72% on #1972F9 are 2.86:1; Value white is 4.36:1. Default: Label and Description #6780A9 are 4.01:1. Body text needs 4.5:1. The surface colour and alphas are owner decisions and not re-raised; the legibility outcome is new. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong><code>separator</code> is the one lowercase layer name</strong> left after the v2.2 naming pass. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>v2.0.0 through v2.3.0 have no changelog entries.</strong> The Overview records eleven resolutions across those versions, but the changelog jumps from 1.0.0 to here. Their dates are not recorded anywhere readable, so they are not invented. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

@@ -256,6 +256,12 @@ body {
 .pb-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0; }
 .pb-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 
+/* ── Inline Text preview — Label and Value are Proxima Soft at 0.25, the
+   Badge label at 0.5, Description and Link BarkAda at 0 (set 4419:24515). */
+.itx-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.itx-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.itx-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
 /* ── Detail Hero preview ─────────────────────────────────────────────
    Title carries 0 tracking, the sender label and value 0.25, and the
    description is BarkAda at 0 — all read off the layers of set
@@ -281,6 +287,7 @@ body {
    are RECTANGLE nodes with IMAGE fills — raster, not vector, so there is
    nothing to reproduce faithfully. */
 .ft-text { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.ft-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
 .ft-placeholder { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 
 /* ── Progress Bar preview ────────────────────────────────────────────
@@ -4205,7 +4212,9 @@ input.demo-panel-input.demo-panel-select,
   font-weight: 500;
   color: #959cab;
   flex: 0 1 auto;
-  min-width: 0;
+  /* Shrink to the longest word, never through it — "Alignment" was
+     splitting to "Align / ment" beside a long value. */
+  min-width: min-content;
   overflow-wrap: break-word;
 }
 .spec-prop-val {

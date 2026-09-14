@@ -437,149 +437,264 @@ export const headerCentered: ComponentData = {
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:header:2.1.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.header.*  <span class=\"cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>4368:12839</code>. <code>Surface</code> is the only variant axis. The three text layers have no readable Figma property behind them — component property definitions are not exposed by the review tooling — so they are listed as the content a developer passes.",
       "rows": [
         {
-          "figma": "(implicit)",
+          "figma": "Surface — Brand, Default",
+          "swift": "<code>.ebSurface(.brand / .default)</code>",
+          "compose": "<code>surface = EBBannerSurface.Brand / Default</code>"
+        },
+        {
+          "figma": "— <code>Title</code> text layer (“Label”)",
           "swift": "<code>title: String</code>",
           "compose": "<code>title: String</code>"
         },
         {
-          "figma": "<code>description: boolean</code>",
-          "swift": "<code>description?: String</code>",
-          "compose": "<code>description: String?</code>"
+          "figma": "— <code>SubtitleRow › Label</code> text layer (“Label:”)",
+          "swift": "<code>label: String?</code> — omit to hide",
+          "compose": "<code>label: String? = null</code>"
         },
         {
-          "figma": "<code>type: dark | light</code>",
-          "swift": "<code>surface: brand | default</code>",
-          "compose": "<code>.ebSurface(.brand)</code> modifier"
+          "figma": "— <code>SubtitleRow › Value</code> text layer (“ Add Content”)",
+          "swift": "<code>value: String?</code>",
+          "compose": "<code>value: String? = null</code>"
         }
-      ]
+      ],
+      "filePaths": {
+        "swift": "ios/Components/Header/EBPageBanner.swift",
+        "compose": "android/components/header/EBPageBanner.kt"
+      }
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "Default",
+        "swift": "<span class=\"cmt\">// Surface=Default — 4368:12846, 360 × 104. #FFFFFF surface, 1px #E5EBF4 bottom border.</span>\n<span class=\"typ\">EBPageBanner</span>(\n    title: <span class=\"str\">\"Label\"</span>,\n    label: <span class=\"str\">\"Label:\"</span>,\n    value: <span class=\"str\">\"Add Content\"</span>\n)\n    .<span class=\"fn\">ebSurface</span>(.<span class=\"prp\">default</span>)",
+        "compose": "<span class=\"cmt\">// Surface=Default — 4368:12846, 360 × 104. #FFFFFF surface, 1px #E5EBF4 bottom border.</span>\n<span class=\"typ\">EBPageBanner</span>(\n    title = <span class=\"str\">\"Label\"</span>,\n    label = <span class=\"str\">\"Label:\"</span>,\n    value = <span class=\"str\">\"Add Content\"</span>,\n    surface = <span class=\"typ\">EBBannerSurface</span>.<span class=\"prp\">Default</span>\n)"
+      },
+      {
+        "subheading": "Brand",
+        "swift": "<span class=\"cmt\">// Surface=Brand — 4368:12840, 360 × 104. #1972F9 surface, 1px #F6F9FD @ 24% bottom border.</span>\n<span class=\"typ\">EBPageBanner</span>(\n    title: <span class=\"str\">\"Label\"</span>,\n    label: <span class=\"str\">\"Label:\"</span>,\n    value: <span class=\"str\">\"Add Content\"</span>\n)\n    .<span class=\"fn\">ebSurface</span>(.<span class=\"prp\">brand</span>)",
+        "compose": "<span class=\"cmt\">// Surface=Brand — 4368:12840, 360 × 104. #1972F9 surface, 1px #F6F9FD @ 24% bottom border.</span>\n<span class=\"typ\">EBPageBanner</span>(\n    title = <span class=\"str\">\"Label\"</span>,\n    label = <span class=\"str\">\"Label:\"</span>,\n    value = <span class=\"str\">\"Add Content\"</span>,\n    surface = <span class=\"typ\">EBBannerSurface</span>.<span class=\"prp\">Brand</span>\n)"
+      }
+    ],
     "accessibility": [
       {
         "requirement": "Heading trait",
-        "ios": "<code>.accessibilityAddTraits(.isHeader)</code> on the title.",
-        "android": "<code>Modifier.semantics { heading() }</code> on the title."
+        "ios": "Apply <code>.accessibilityAddTraits(.isHeader)</code> to the Title — it names the surface below.",
+        "android": "Apply <code>Modifier.semantics { heading() }</code> to the Title."
       },
       {
-        "requirement": "Contrast",
-        "ios": "Brand surface: white on #005CE5 = 8.5:1 ✓. Default surface: #0A2757 on #FFFFFF = 15.4:1 ✓.",
-        "android": "Same contrast ratios apply."
+        "requirement": "Reading order",
+        "ios": "Title → Label → Value. Combine the SubtitleRow with <code>.accessibilityElement(children: .combine)</code> so “Label: Add Content” reads as one phrase.",
+        "android": "Merge the SubtitleRow with <code>Modifier.semantics(mergeDescendants = true)</code>."
       },
       {
-        "requirement": "Screen reader order",
-        "ios": "Title → Description. VoiceOver reads in DOM order.",
-        "android": "Same — TalkBack follows composition order."
+        "requirement": "Contrast — Brand",
+        "ios": "Measured on #1972F9: the 22pt bold Title in white is 4.36:1 (passes AA large text). The 14pt Value in white is also 4.36:1 and the Label at #F6F9FD 72% composites to #B8D3FC at 2.86:1 — both below the 4.5:1 AA minimum for body text.",
+        "android": "Same fills, same ratios. See the open Changelog row."
+      },
+      {
+        "requirement": "Contrast — Default",
+        "ios": "Title and Value #0A2757 on #FFFFFF are 14.58:1. The Label #6780A9 is 4.01:1 — below 4.5:1 at 14pt.",
+        "android": "Same ratios."
+      },
+      {
+        "requirement": "Dynamic Type / font scaling",
+        "ios": "Both variants are a fixed 104pt. Let the banner grow with Dynamic Type; the 312-wide centred Title should wrap rather than truncate.",
+        "android": "Use <code>sp</code> and let height follow <code>fontScale</code>."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use Page Banner to title the screen, modal or card below it.",
+        "dontText": "Don’t use it to label a section inside a scroll — that is Section Header — or to carry navigation, which is Title Bar - App."
+      },
+      {
+        "doText": "Keep the title short enough for one centred line in 312.",
+        "dontText": "Don’t left-align it. An Alignment axis was decided against in v2.1."
+      },
+      {
+        "doText": "Pass the subtitle as a label and a value, e.g. “Reference:” and “12345”.",
+        "dontText": "Don’t bake the separator space into the value. Figma’s Value reads “ Add Content” with a leading space; native layout should own the gap."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Rename to <strong>Page Banner</strong>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Renamed Page Banner (v2.0). <code>Content</code> › <code>Title</code> + <code>SubtitleRow</code> › <code>Label</code> + <code>Value</code>, identical in both variants (v2.1)."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Rename <code>type=dark|light</code> → <code>surface=brand|default</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One PascalCase axis, <code>Surface = Brand | Default</code>, matching Brand App Bar. No <code>Alignment</code> axis by decision (v2.1)."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Surface and text tokens bound."
+        "notes": "All three text layers resolve <code>matched</code> — <code>Primary/Headlines/Section</code>, <code>Secondary/Bold/Base</code> twice. The #1972F9 surface and the 72% / 24% alphas are owner-attested as token-bound (v2.1); the plugin cannot verify colour bindings."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Maps cleanly to a <code>EBPageBanner</code> view/composable."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Maps to one <code>EBPageBanner</code>. Two leftovers a developer could copy: the Brand Title is 304 wide at x 4 against 312 on Default — the centre is the same, 156, so it draws identically — and the Value string starts with a space that stands in for layout spacing."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
         "status": "na",
         "statusLabel": "Not Applicable",
-        "notes": "Static — no interactive states."
+        "notes": "Informational banner — no pressed or disabled state."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "na",
         "statusLabel": "Not Applicable",
-        "notes": "No assets."
+        "notes": "No icons or images — text and fills only."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Trivial once renamed."
+        "notes": "No longer blocked — the rename landed in v2.0. No SwiftUI or Compose mappings are registered; the native library does not exist."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 4,
-      "description": "<code>type</code> × <code>description</code> = <strong>4 variants</strong>.",
+      "total": 2,
+      "description": "<code>Surface</code> (2) = 2 variants. Both are 360 × 104 with a 312 × 46 <code>Content</code> frame at 24 / 24 and a 1px bottom border.",
       "columns": [
-        "#",
-        "Node",
-        "type",
-        "description",
-        "Dimensions"
+        "Surface",
+        "Node ID",
+        "Dimensions",
+        "Surface fill",
+        "Border",
+        "Title width"
       ],
       "rows": [
         {
           "cells": [
-            "1",
-            "<code>18430:2859</code>",
-            "dark",
-            "yes",
-            "360 × 104"
+            "Brand",
+            "<code>4368:12840</code>",
+            "360 × 104",
+            "#1972F9",
+            "#F6F9FD @ 24%",
+            "304px"
           ]
         },
         {
           "cells": [
-            "2",
-            "<code>18430:2865</code>",
-            "light",
-            "yes",
-            "360 × 104"
-          ]
-        },
-        {
-          "cells": [
-            "3",
-            "<code>18430:2871</code>",
-            "dark",
-            "no",
-            "360 × 84"
-          ]
-        },
-        {
-          "cells": [
-            "4",
-            "<code>18430:2873</code>",
-            "light",
-            "no",
-            "360 × 84"
+            "Default",
+            "<code>4368:12846</code>",
+            "360 × 104",
+            "#FFFFFF",
+            "#E5EBF4",
+            "312px"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.1.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 4368:12839",
+      "rows": [
+        {
+          "body": "<strong>The Code tab still described the 1.0.0 component.</strong> Property Mapping listed <code>type: dark | light</code> and <code>description: boolean</code>; the inventory counted 4 variants on retired <code>18430:*</code> nodes, two of them 360 × 84. Rebuilt on <code>Surface = Brand | Default</code>, two variants on <code>4368:*</code>, both 360 × 104.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard contradicted the resolved record.</strong> C1 and C2 were Requires Rework for the rename and the <code>Surface</code> axis, both done in v2.0. Rescored C1, C2 Ready; C4 Needs Refinement on the Title width and leading-space findings; C7 no longer blocked.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Contrast figures were measured against the wrong blue.</strong> The Accessibility row claimed white on #005CE5 at 8.5:1. The Brand surface is #1972F9; real ratios are now listed.",
+          "delta": {
+            "kind": "resolved",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Installation, usage snippets and guidelines were empty.</strong> Added SPM + Gradle <code>com.eastblue.ds:header:2.1.1</code>, a snippet per surface, and three do/don’t pairs.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel.</strong> Two cards named for the surfaces became one card with a <code>Surface</code> control; all three text layers resolve to DS styles.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Subtitle text fails AA contrast.</strong> Brand: Value white on #1972F9 4.36:1, Label #F6F9FD 72% 2.86:1. Default: Label #6780A9 on white 4.01:1. Body text needs 4.5:1. The surface colour itself is an owner decision and not re-raised. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Brand Title is 304 wide, Default 312.</strong> Both centre at 156, so nothing draws differently — a leftover width, like the Label alignment closed as inert in v2.1. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Value string carries a leading space</strong> (“ Add Content”) that stands in for the gap after “Label:”. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>v2.0.0 and v2.1.0 have no changelog entries.</strong> The Overview records eight resolutions across those versions, but the changelog jumps from 1.0.0 to here. Their dates are not recorded anywhere readable, so they are not invented. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

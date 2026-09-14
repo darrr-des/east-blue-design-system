@@ -371,123 +371,232 @@ export const headerWithLogo: ComponentData = {
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
-    },
-    "propertyMapping": {
-      "rows": [
+      "blocks": [
         {
-          "figma": "(standalone component)",
-          "swift": "<code>Title Bar / leading = logo</code>",
-          "compose": "<code>EBTitleBar { EBLogo() }</code>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
         },
         {
-          "figma": "<code>logo: dark | light</code>",
-          "swift": "<code>EBLogo.theme: dark | light</code>",
-          "compose": "<code>EBLogo(theme: .light)</code>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:header:2.1.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.header.*  <span class=\"cmt\">// Compose</span>"
         }
-      ]
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
-    "usageSnippets": [],
-    "accessibility": [
+    "propertyMapping": {
+      "description": "One row per property of set <code>4566:17590</code>. <code>Surface</code> is the only property; the nested <code>GCash Logo</code> instance exposes nothing on the bar, so the logo appearance follows the surface and is not a separate parameter.",
+      "rows": [
+        {
+          "figma": "Surface — Brand, Default",
+          "swift": "<code>.ebSurface(.brand / .default)</code>",
+          "compose": "<code>surface = EBAppBarSurface.Brand / Default</code>"
+        },
+        {
+          "figma": "— nested <code>GCash Logo</code> instance (no exposed property)",
+          "swift": "drawn by the component — not a parameter",
+          "compose": "drawn by the component — not a parameter"
+        }
+      ],
+      "filePaths": {
+        "swift": "ios/Components/Header/EBBrandAppBar.swift",
+        "compose": "android/components/header/EBBrandAppBar.kt"
+      }
+    },
+    "usageSnippets": [
       {
-        "requirement": "Logo a11y label",
-        "ios": "Logo carries <code>.accessibilityLabel(\"GCash\")</code> — identify as brand, not decorative.",
-        "android": "Logo carries <code>contentDescription = \"GCash\"</code>."
+        "subheading": "Default",
+        "swift": "<span class=\"cmt\">// Surface=Default — 4566:17726, 360 × 90. #FFFFFF surface, blue wordmark.</span>\n<span class=\"typ\">EBBrandAppBar</span>()\n    .<span class=\"fn\">ebSurface</span>(.<span class=\"prp\">default</span>)",
+        "compose": "<span class=\"cmt\">// Surface=Default — 4566:17726, 360 × 90. #FFFFFF surface, blue wordmark.</span>\n<span class=\"typ\">EBBrandAppBar</span>(\n    surface = <span class=\"typ\">EBAppBarSurface</span>.<span class=\"prp\">Default</span>\n)"
       },
       {
-        "requirement": "Not a button",
-        "ios": "The logo is not tappable by default; no button trait.",
-        "android": "No <code>clickable</code> modifier unless a screen wires one up."
-      },
-      {
-        "requirement": "Heading role",
-        "ios": "App bar owns heading trait on its overall container.",
-        "android": "Same — <code>semantics { heading() }</code> on the bar."
+        "subheading": "Brand",
+        "swift": "<span class=\"cmt\">// Surface=Brand — 4566:17591, 360 × 90. #005CE5 surface, white wordmark.</span>\n<span class=\"typ\">EBBrandAppBar</span>()\n    .<span class=\"fn\">ebSurface</span>(.<span class=\"prp\">brand</span>)",
+        "compose": "<span class=\"cmt\">// Surface=Brand — 4566:17591, 360 × 90. #005CE5 surface, white wordmark.</span>\n<span class=\"typ\">EBBrandAppBar</span>(\n    surface = <span class=\"typ\">EBAppBarSurface</span>.<span class=\"prp\">Brand</span>\n)"
       }
     ],
-    "usageGuidelines": [],
+    "accessibility": [
+      {
+        "requirement": "Logo label",
+        "ios": "The wordmark is vector paths with no text layer. Give the logo <code>.accessibilityLabel(\"GCash\")</code> so it is announced as the brand, not skipped as decoration.",
+        "android": "Set <code>contentDescription = \"GCash\"</code> on the logo."
+      },
+      {
+        "requirement": "Not interactive",
+        "ios": "The bar and logo carry no action in Figma — no button trait, no hint.",
+        "android": "No <code>clickable</code> modifier. A screen that needs actions uses Title Bar - App."
+      },
+      {
+        "requirement": "Surface contrast",
+        "ios": "The logo swaps with the surface — white wordmark on #005CE5, #002CB8 wordmark on #FFFFFF. Don’t place the Default bar on a blue screen or the Brand bar on white content that expects the blue mark.",
+        "android": "Same pairing — the surface and wordmark colours are one choice, not two."
+      },
+      {
+        "requirement": "Status bar",
+        "ios": "On the Brand surface, request light status-bar content so the system icons stay legible on #005CE5.",
+        "android": "On Brand, set light status-bar icons with <code>WindowInsetsControllerCompat.isAppearanceLightStatusBars = false</code>."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Brand App Bar on screens that lead with identity — splash, login, onboarding.",
+        "dontText": "Don’t use it where the screen needs a back control, title or actions. Use Title Bar - App; this bar has no slots by design."
+      },
+      {
+        "doText": "Choose <code>Surface</code> to match the screen behind it: Brand on blue flows, Default on white.",
+        "dontText": "Don’t recolour the logo separately. The wordmark treatment follows the surface."
+      },
+      {
+        "doText": "Keep the bar at its Figma size — 90 tall with the 110 × 26 logo 24 from the top.",
+        "dontText": "Don’t detach to add controls or resize the logo."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "\"Header\" prefix conflates with 3 other components. If kept, rename to <strong>Brand App Bar</strong>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Renamed Brand App Bar in v2.0, releasing the shared “Header” prefix. <code>LogoContainer</code> (v2.1) wraps a <code>GCash Logo</code> instance; no generic layer names."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "<code>logo=dark|light</code> names the asset, not the surface. Prefer <code>theme</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One PascalCase axis, <code>Surface = Brand | Default</code>, naming the surface rather than the asset (v2.0)."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Surface bound to brand token."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The bar has no text layers. Its fills — #005CE5 and #FFFFFF, plus the logo’s #002CB8, #007CFF and #6FBAF7 — cannot be checked for variable bindings with the Talk To Figma plugin, so coverage is unconfirmed rather than asserted. The previous “bound to brand token” note had no reading behind it."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Duplicates Title Bar scope. Merge rather than create a second app bar primitive."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "A fixed 360 × 90 surface with one centred logo — maps to a single <code>EBBrandAppBar</code> view and composable with one enum. Heights are whole pixels since v2.1. Staying separate from Title Bar is confirmed (v2.0)."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
         "status": "na",
         "statusLabel": "Not Applicable",
-        "notes": "Static bar."
+        "notes": "Static by design — no controls, confirmed intentional. Screens that need actions use Title Bar - App."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Logo is a vector instance."
+        "notes": "The wordmark is vector paths inside one shared <code>GCash Logo</code> instance that changes appearance with the surface (v2.0)."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked on merge-vs-rename decision."
+        "notes": "No longer blocked — the merge-vs-rename decision was settled in v2.0. No SwiftUI or Compose mappings are registered; the native library does not exist."
       }
     ],
     "codeConnect": [],
     "variants": {
       "total": 2,
-      "description": "",
+      "description": "<code>Surface</code> (2) = 2 variants. Both are 360 × 90 with the 110 × 26 <code>GCash Logo</code> at x 125, y 24.",
       "columns": [
-        "#",
-        "Node",
-        "logo",
-        "Dimensions"
+        "Surface",
+        "Node ID",
+        "Dimensions",
+        "Surface fill",
+        "Logo instance"
       ],
       "rows": [
         {
           "cells": [
-            "1",
-            "<code>18430:2876</code>",
-            "dark",
-            "360 × 88"
+            "Brand",
+            "<code>4566:17591</code>",
+            "360 × 90",
+            "#005CE5",
+            "<code>4566:17704</code>"
           ]
         },
         {
           "cells": [
-            "2",
-            "<code>18430:2887</code>",
-            "light",
-            "360 × 88"
+            "Default",
+            "<code>4566:17726</code>",
+            "360 × 90",
+            "#FFFFFF",
+            "<code>4566:17728</code>"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.1.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 4566:17590",
+      "rows": [
+        {
+          "body": "<strong>The Code tab still described the 1.0.0 assessment.</strong> Property Mapping pointed at a Title Bar <code>leading = logo</code> slot and <code>logo: dark | light</code>; the inventory listed retired <code>18430:*</code> nodes at 360 × 88. Rebuilt on <code>Surface = Brand | Default</code>, two variants on <code>4566:*</code> at 360 × 90.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard contradicted the resolved record.</strong> C1 asked for the Brand App Bar rename and C4 for a merge into Title Bar — both settled in v2.0. C7 was “blocked on merge decision”. Rescored C1, C2, C4 Ready; C7 Not Mapped with no blocker.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>C3 “Surface bound to brand token” had no reading behind it.</strong> The plugin cannot read variable bindings. Rescored Needs Refinement until a binding is confirmed.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Installation, usage snippets and guidelines were empty.</strong> Added SPM + Gradle <code>com.eastblue.ds:header:2.1.1</code>, a snippet per surface, three do/don’t pairs, and a status-bar row in Accessibility.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel.</strong> <code>Surface</code> control, colours for both surfaces including the three logo fills, and 360 × 90 layout with the logo at 125 / 24.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Colour token bindings unconfirmed</strong> for the surface (#005CE5 / #FFFFFF) and the three logo fills. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>v2.0.0 and v2.1.0 have no changelog entries.</strong> The Overview records six versioned resolutions across those two versions, but the changelog jumps from 1.0.0 to here. Their dates are not recorded anywhere readable, so they are not invented. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

@@ -50,7 +50,9 @@ var FT_VARIANTS = [
     ] },
   { key: 'left|single|false|link', node: '4227:11089', h: 116,
     blocks: [
-      { l: 1, x: 24, y: 24,  w: 312, h: 16 },
+      { t: 1, x: 24, y: 24,  w: 69,  h: 16, fill: '#90A8D0', align: 'left', lines: 1, size: 12, leading: 16, family: 'proxima',
+        text: 'Powered by' },
+      { l: 1, x: 101, y: 24, w: 58.5, h: 15.75 },
       { t: 1, x: 24, y: 56,  w: 312, h: 36, fill: '#7085A9', align: 'left', lines: 2,
         text: 'Learn about the Product Information & Support: GCredit on Help Center' }
     ] },
@@ -122,15 +124,15 @@ function _ftRender(variant, scale) {
              '" stroke-dasharray="3 3"/>';
       out += '<text class="ft-placeholder" x="' + (b.x + b.w / 2) + '" y="' + (b.y + b.h / 2) +
              '" font-size="9" fill="' + FT_LOGO_EDGE +
-             '" text-anchor="middle" dominant-baseline="central">raster logo ' + b.w + ' × ' + b.h + '</text>';
+             '" text-anchor="middle" dominant-baseline="central">' + (b.w >= 120 ? 'raster logo ' + b.w + ' × ' + b.h : 'logo') + '</text>';
       return;
     }
     var size = b.size || 12, leading = b.leading || 18;
     var anchor = b.align === 'center' ? 'middle' : 'start';
     var tx = b.align === 'center' ? (b.x + b.w / 2) : b.x;
     _ftWrap(b.text, b.lines).forEach(function (line, i) {
-      out += '<text class="ft-text" x="' + tx + '" y="' + (b.y + leading * i + leading / 2) +
-             '" font-size="' + size + '" font-weight="600" fill="' + b.fill +
+      out += '<text class="' + (b.family === 'proxima' ? 'ft-proxima' : 'ft-text') + '" x="' + tx + '" y="' + (b.y + leading * i + leading / 2) +
+             '" font-size="' + size + '" font-weight="' + (b.family === 'proxima' ? 700 : 600) + '" fill="' + b.fill +
              '" text-anchor="' + anchor + '" dominant-baseline="central">' + line + '</text>';
     });
   });
@@ -147,18 +149,20 @@ window._specCards = _specCards;
 /* ── DEV code ───────────────────────────────────────────────────────── */
 function _ftCap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
+/* Same API as the Code tab: Swift modifiers, Compose named arguments.
+   Label=True maps to a preamble string; Alignment=Left is leading / Start. */
 function buildSwiftSnippet(cardKey, card) {
-  return 'EBFooter(\n' +
-    '    alignment: .' + card.alignment + ',\n' +
-    '    logoType: .' + card.logotype + ',\n' +
-    '    showLabel: ' + card.label + ',\n' +
-    '    description: .' + card.description + '\n)';
+  return 'EBFooter()\n' +
+    '    .ebAlignment(.' + (card.alignment === 'left' ? 'leading' : 'center') + ')\n' +
+    '    .ebLogoType(.' + card.logotype + ')\n' +
+    (card.label === 'true' ? '    .ebPreamble("In partnership with")\n' : '') +
+    '    .ebDescription(.' + card.description + ')';
 }
 function buildComposeSnippet(cardKey, card) {
   return 'EBFooter(\n' +
-    '    alignment = EBFooterAlignment.' + _ftCap(card.alignment) + ',\n' +
+    '    alignment = EBFooterAlignment.' + (card.alignment === 'left' ? 'Start' : 'Center') + ',\n' +
     '    logoType = EBFooterLogoType.' + _ftCap(card.logotype) + ',\n' +
-    '    showLabel = ' + card.label + ',\n' +
+    (card.label === 'true' ? '    preamble = "In partnership with",\n' : '') +
     '    description = EBFooterDescription.' + _ftCap(card.description) + '\n)';
 }
 function getSnippet(cardKey, lang, card) {
