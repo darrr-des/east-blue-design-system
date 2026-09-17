@@ -1,35 +1,51 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
+// Panel mirrors the property panel of set 6420:91212, in its order: one
+// variant axis and three booleans. ⤷ BodySlot and ⤷ IllustrationSlot are
+// SLOTs (4 swap options each) and get no control.
 const inlineMessageDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Variant',
-        prop: 'variant',
+        label: 'Type',
+        prop: 'type',
         defaultValue: 'success',
         options: [
           { value: 'success', label: 'Success' },
           { value: 'loading', label: 'Loading' },
           { value: 'error', label: 'Error' },
+          { value: 'neutral', label: 'Neutral' },
         ],
       },
       {
-        label: 'Body content',
-        prop: 'hasBody',
+        label: 'hasReferenceNumber',
+        prop: 'hasreferencenumber',
+        control: 'toggle',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'Show' },
-          { value: 'false', label: 'Hide' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
-        label: 'Reference no.',
-        prop: 'hasRef',
+        label: 'hasBodyContent',
+        prop: 'hasbodycontent',
+        control: 'toggle',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'Show' },
-          { value: 'false', label: 'Hide' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasDownload',
+        prop: 'hasdownload',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -40,8 +56,8 @@ export const inlineMessage: ComponentData = {
   "meta": {
     "slug": "inline-message",
     "name": "Inline Message",
-    "node": "26416:18421",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26416-18421",
+    "node": "6420:91212",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6420-91212",
     "description": "A full-frame status surface — illustration, title, description, and an optional body — for confirm / processing / error / neutral outcomes. 4 variants across a single <code>Type</code> axis (Success / Loading / Error / Neutral), with an <code>Illustration Container</code> and a <code>Body Container</code> slot.",
     "badges": [
       {
@@ -183,70 +199,124 @@ export const inlineMessage: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Types",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "default",
-        "demoKey": "default",
+        "cardKey": "im-spec-main",
+        "demoKey": "main",
+        "title": "Inline Message",
+        "node": "6420:91212",
+        "description": "",
+        "previewHtml": "<div id=\"inline-message-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": inlineMessageDemoControls,
-        "title": "Default",
-        "node": "27:168911",
-        "description": "Result-state notification card with 3D illustration, title, description, optional content body, and optional reference number. Flip Variant for Success / Loading / Error; toggle Body content + Reference no. independently.",
-        "previewHtml": "<div id=\"im-spec-preview\"></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Variant",      "value": "Success", "prop": "variant" },
-              { "key": "Body content", "value": "Show",    "prop": "hasBody" },
-              { "key": "Reference no.","value": "Show",    "prop": "hasRef" }
+              {
+                "key": "Type",
+                "value": "Success",
+                "prop": "type"
+              },
+              { "key": "hasReferenceNumber", "value": "True", "prop": "hasreferencenumber" },
+              { "key": "hasBodyContent", "value": "True", "prop": "hasbodycontent" },
+              { "key": "hasDownload", "value": "True", "prop": "hasdownload" },
+              {
+                "key": "⤷ BodySlot",
+                "value": "Slot · 4 swap options — ships a placeholder",
+                "variants": { "hasbodycontent:false": { "hide": true } }
+              },
+              {
+                "key": "⤷ IllustrationSlot",
+                "value": "Slot · 4 swap options — ships a placeholder"
+              },
+              {
+                "key": "Reference row",
+                "value": "#name + #amount — baked, not a slot",
+                "variants": { "hasreferencenumber:false": { "hide": true } }
+              },
+              {
+                "key": "Resolved variant",
+                "value": "6420:91213 · 360 × 465",
+                "mono": true,
+                "prop": "variantNode",
+                "variants": {
+                  "type:success": {
+                    "value": "6420:91213 · 360 × 465"
+                  },
+                  "type:loading": {
+                    "value": "6420:91228 · 360 × 465"
+                  },
+                  "type:error": {
+                    "value": "6420:91243 · 360 × 465"
+                  },
+                  "type:neutral": {
+                    "value": "6420:91258 · 360 × 465"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",          "value": "#FFFFFF", "token": "inline-message/color/{variant}/bg" },
-              { "key": "Border",           "value": "#E5EBF4", "token": "inline-message/color/{variant}/border" },
-              { "key": "Header",           "value": "#0A2757", "token": "inline-message/color/{variant}/label-header" },
-              { "key": "Title",            "value": "#005CE5", "token": "inline-message/color/success/label-title",
+              {
+                "key": "Surface",
+                "value": "None — the Container has no fill"
+              },
+              {
+                "key": "Title",
+                "value": "#005CE5",
+                "token": "—",
                 "variants": {
-                  "variant:loading": { "value": "#CA970C", "token": "inline-message/color/loading/label-title" },
-                  "variant:error":   { "value": "#D61B2C", "token": "inline-message/color/error/label-title" }
+                  "type:success": {
+                    "value": "#005CE5"
+                  },
+                  "type:loading": {
+                    "value": "#CA970C"
+                  },
+                  "type:error": {
+                    "value": "#D61B2C"
+                  },
+                  "type:neutral": {
+                    "value": "#0A2757"
+                  }
                 }
               },
-              { "key": "Description",     "value": "#445C85", "token": "inline-message/color/{variant}/label-description" },
-              { "key": "Reference label",  "value": "#90A8D0", "token": "inline-message/color/{variant}/label-reference",
-                "variants": { "hasRef:false": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Card",            "value": "360 × 664", "mono": true },
-              { "key": "Card radius",     "value": "12 (no shadow)", "mono": true },
-              { "key": "Content section", "value": "360 × 284 · 48 top / 24 horiz / 24 bottom", "mono": true },
-              { "key": "Illustration",    "value": "106 × 106 (24 spacer below)", "mono": true },
-              { "key": "Receipt → desc gap", "value": "16", "mono": true },
-              { "key": "Description",     "value": "312 wide · 2 lines × 20", "mono": true },
-              { "key": "Download icon",   "value": "24 × 24 overlay at top 16 / right 18", "mono": true },
-              { "key": "Body content",    "value": "360 × 316 · border-top + bottom", "mono": true,
-                "variants": { "hasBody:false": { "hide": true } }
+              {
+                "key": "Description",
+                "value": "#445C85",
+                "token": "—"
               },
-              { "key": "Section title bar", "value": "44 · padding 12 vert · text x=48", "mono": true,
-                "variants": { "hasBody:false": { "hide": true } }
+              {
+                "key": "Download icon",
+                "value": "#005CE5",
+                "token": "—",
+                "variants": { "hasdownload:false": { "hide": true } }
               },
-              { "key": "Section container", "value": "bg #F6F9FD @ 24% · 12 vert / 48 horiz", "mono": true,
-                "variants": { "hasBody:false": { "hide": true } }
+              {
+                "key": "Reference label",
+                "value": "#90A8D0",
+                "token": "—",
+                "variants": { "hasreferencenumber:false": { "hide": true } }
               },
-              { "key": "List rows",       "value": "List Item instances — see List Item component", "mono": false,
-                "variants": { "hasBody:false": { "hide": true } }
+              {
+                "key": "Reference value",
+                "value": "#0A2757",
+                "token": "—",
+                "variants": { "hasreferencenumber:false": { "hide": true } }
               },
-              { "key": "Reference no.",   "value": "360 × 64 · 24 top / 16 row / 24 bottom", "mono": true,
-                "variants": { "hasRef:false": { "hide": true } }
+              {
+                "key": "Row divider",
+                "value": "#E5EBF4 — top edge only",
+                "token": "—"
+              },
+              {
+                "key": "Slot placeholder",
+                "value": "#9F3DFB at 9% · dashed 4/4",
+                "token": "—"
               }
             ]
           },
@@ -254,225 +324,124 @@ export const inlineMessage: ComponentData = {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Title",         "value": "Proxima Soft Bold · 22 / 26 · Primary/Headlines/Section", "mono": true },
-              { "key": "Description",   "value": "BarkAda Medium · 14 / 20 · Secondary/Default/Base",       "mono": true },
-              { "key": "Reference no.", "value": "Proxima Soft Semibold · 16 / 16 · +0.25", "mono": true,
-                "variants": { "hasRef:false": { "hide": true } }
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Section",
+                "mono": true
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Default/Base",
+                "mono": true
+              },
+              {
+                "key": "Reference label",
+                "value": "Primary/Label/Light/Base",
+                "mono": true,
+                "variants": { "hasreferencenumber:false": { "hide": true } }
+              },
+              {
+                "key": "Reference value",
+                "value": "Primary/Label/Large",
+                "mono": true,
+                "variants": { "hasreferencenumber:false": { "hide": true } }
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Size",
+                "value": "360 × 465 · radius 12",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Height rule",
+                "value": "Content 284 + BodySlot 117 + Reference 64 — the Container hugs",
+                "mono": true
+              },
+              {
+                "key": "Download icon",
+                "value": "24 × 24 at x 318, y 16",
+                "mono": true,
+                "variants": { "hasdownload:false": { "hide": true } }
+              },
+              {
+                "key": "IllustrationSlot",
+                "value": "106 × 106 at x 127, y 48 — placeholder is a 4-radius square",
+                "mono": true
+              },
+              {
+                "key": "Title",
+                "value": "328 wide at y 178 · centred",
+                "mono": true
+              },
+              {
+                "key": "Description",
+                "value": "312 wide at y 220 · two lines of 20",
+                "mono": true
+              },
+              {
+                "key": "BodySlot",
+                "value": "360 × 117 below Content · 1px top divider",
+                "mono": true,
+                "variants": { "hasbodycontent:false": { "hide": true } }
+              },
+              {
+                "key": "Reference row",
+                "value": "360 × 64 · 1px top divider · block at x 74",
+                "mono": true,
+                "variants": { "hasreferencenumber:false": { "hide": true } }
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBInlineMessage</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add your label here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add your description here.\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.success</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebReferenceNumber</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"1234567890\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBInlineMessage</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add your label here\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add your description here.\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBMessageIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Success</span><span class=\"syn-punc\">,</span>\n    referenceNumber <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"1234567890\"</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBInlineMessage(\n    title: \"Add your label here\",\n    description: \"Add your description here.\",\n    type: .success\n)",
+        "compose": "EBInlineMessage(\n    title = \"Add your label here\",\n    description = \"Add your description here.\",\n    type = EBInlineMessageType.Success\n)"
       }
-
     ],
     "colorsTables": [
       {
         "title": "Colors by Type",
-        "description": "Each type ships its own bg, border, bg-subtle, and label tokens. <code>bg-subtle</code> currently bakes in 24% alpha — flagged under C3.",
+        "description": "Read off <code>get_node_info</code> and <code>get_svg</code> on the four variants of set <code>6420:91212</code>. <strong>Only the title colour changes between Types</strong> — every other value is shared, and the illustration is a slot, so nothing else carries the status. <code>hasReferenceNumber</code>, <code>hasBodyContent</code> and <code>hasDownload</code> remove their rows; the Container hugs what is left. The <code>#E5EBF4</code> stroke on BodySlot and ReferenceNumber is a <strong>top edge only</strong>, not a box. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
-          "Token",
-          "Value"
+          "Title",
+          "Shared"
         ],
         "rows": [
           {
             "role": "Success",
-            "token": "bg",
-            "values": [
-              "main/inline-message/color/success/bg",
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "border",
-            "values": [
-              "main/inline-message/color/success/border",
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "bg-subtle alpha baked",
-            "values": [
-              "main/inline-message/color/success/bg-subtle",
-              "rgba(246,249,253,0.24)"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "title",
-            "values": [
-              "main/inline-message/color/success/label-title",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "description",
-            "values": [
-              "main/inline-message/color/success/label-description",
-              "#445C85"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "section header",
-            "values": [
-              "main/inline-message/color/success/label-header",
-              "#0A2757"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "reference label",
-            "values": [
-              "main/inline-message/color/success/label-reference",
-              "#90A8D0"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "reference number",
-            "values": [
-              "main/inline-message/color/success/label-number",
-              "#0A2757"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
-          "Value"
-        ],
-        "rows": [
-          {
-            "role": "Container width",
             "token": "—",
             "values": [
-              "360px"
+              "#005CE5",
+              "Description #445C85 · Reference #90A8D0 / #0A2757"
             ]
           },
           {
-            "role": "Corner radius",
-            "token": "radius/radius-4",
-            "values": [
-              "12px"
-            ]
-          },
-          {
-            "role": "Shadow",
-            "token": "Depth/D4",
-            "values": [
-              "0 0 8px #73819A1A"
-            ]
-          },
-          {
-            "role": "Top padding",
+            "role": "Loading",
             "token": "—",
             "values": [
-              "48px"
+              "#CA970C",
+              "as above"
             ]
           },
           {
-            "role": "Content padding (h)",
-            "token": "space/space-16",
-            "values": [
-              "16px"
-            ]
-          },
-          {
-            "role": "Section header padding",
-            "token": "space/space-36 + space/space-20",
-            "values": [
-              "36L / 20R / 12v"
-            ]
-          },
-          {
-            "role": "Section body padding",
-            "token": "space/space-48 + space/space-12",
-            "values": [
-              "48h / 12v"
-            ]
-          },
-          {
-            "role": "Reference number bottom padding",
-            "token": "space/space-24",
-            "values": [
-              "24px"
-            ]
-          },
-          {
-            "role": "Illustration size (Large)",
+            "role": "Error",
             "token": "—",
             "values": [
-              "106 × 106"
+              "#D61B2C",
+              "as above"
             ]
           },
           {
-            "role": "Download icon",
+            "role": "Neutral",
             "token": "—",
             "values": [
-              "24 × 24, abs top-right 18R / 16T"
-            ]
-          },
-          {
-            "role": "Checkmark bullet size",
-            "token": "—",
-            "values": [
-              "16 × 16 (List Item Asset)"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Spec"
-        ],
-        "rows": [
-          {
-            "role": "Title",
-            "token": "Primary/Headlines/Section",
-            "values": [
-              "Proxima Soft Bold · 22 / 26"
-            ]
-          },
-          {
-            "role": "Description",
-            "token": "Secondary/Default/Base",
-            "values": [
-              "BarkAda Medium · 14 / 20"
-            ]
-          },
-          {
-            "role": "Section header",
-            "token": "Primary/Multi-line Label/Base",
-            "values": [
-              "Proxima Soft Bold · 16 / 20 · +0.25"
-            ]
-          },
-          {
-            "role": "List content",
-            "token": "Secondary/Bold/Base",
-            "values": [
-              "BarkAda Semibold · 14 / 20"
-            ]
-          },
-          {
-            "role": "Reference label",
-            "token": "Primary/Label/Light/Base",
-            "values": [
-              "Proxima Soft Semibold · 16 / 16 · +0.25"
-            ]
-          },
-          {
-            "role": "Reference number",
-            "token": "Primary/Label/Large",
-            "values": [
-              "Proxima Soft Bold · 18 / 18 · +0.25"
+              "#0A2757",
+              "as above"
             ]
           }
         ]
@@ -485,45 +454,71 @@ export const inlineMessage: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>\n\n<span class=\"cmt\">// Requires: lottie-ios for loading animation</span>\n<span class=\"str\">\"https://github.com/airbnb/lottie-ios\"</span>"
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:inline-message:1.0.0\"</span>)\n    <span class=\"cmt\">// Requires: lottie-compose for loading animation</span>\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.airbnb.android:lottie-compose:6.4.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:inline-message:2.1.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.inlinemessage.*  <span class=\"cmt\">// Compose</span>"
         }
-      ]
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>6420:91212</code> — a single <code>Type</code> axis — then the two SLOTs, the download icon and the baked reference row. No property-panel screenshot was supplied, so a boolean or text property would be missing here.",
       "rows": [
         {
-          "figma": "type=Success/Loading/Error",
-          "swift": ".ebType(.success/.loading/.error)",
-          "compose": "type = EBInlineMessageType.*"
+          "figma": "Type — Success, Loading, Error, Neutral",
+          "swift": "<code>type: .success / .loading / .error / .neutral</code>",
+          "compose": "<code>type = EBInlineMessageType.Success / Loading / Error / Neutral</code>"
         },
         {
-          "figma": "assetSize=Large/Small",
-          "swift": ".assetSize(.large/.small)",
-          "compose": "assetSize = EBAssetSize.*"
+          "figma": "hasReferenceNumber — boolean",
+          "swift": "<code>.ebReference(String, value: String)</code> — omit for False",
+          "compose": "<code>reference: EBReference? = null</code>"
         },
         {
-          "figma": "title / description",
-          "swift": "title: String · description: String",
-          "compose": "title: String · description: String"
+          "figma": "hasBodyContent — boolean",
+          "swift": "<code>.ebBody { }</code> — omit for False",
+          "compose": "<code>body: @Composable (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "hasDownload",
-          "swift": "onDownload: (() -&gt; Void)?",
-          "compose": "onDownload: (() -&gt; Unit)?"
+          "figma": "hasDownload — boolean",
+          "swift": "<code>.onDownload { }</code> — omit for False",
+          "compose": "<code>onDownload: (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "hasBodyContent (proposed slot)",
-          "swift": "@ViewBuilder body",
-          "compose": "body: @Composable () -&gt; Unit"
+          "figma": "⤷ IllustrationSlot — SLOT, 106 × 106 (4 swap options)",
+          "swift": "<code>.ebIllustration { }</code>",
+          "compose": "<code>illustration: @Composable (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "hasReferenceNumber",
-          "swift": "referenceNumber: String?",
-          "compose": "referenceNumber: String?"
+          "figma": "⤷ BodySlot — SLOT, 360 × 117 (4 swap options)",
+          "swift": "trailing closure",
+          "compose": "<code>body: @Composable (() -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "— <code>#title</code> text layer",
+          "swift": "<code>title: String</code>",
+          "compose": "<code>title: String</code>"
+        },
+        {
+          "figma": "— <code>#description</code> text layer",
+          "swift": "<code>description: String?</code>",
+          "compose": "<code>description: String? = null</code>"
+        },
+        {
+          "figma": "— <code>Download Small</code> instance",
+          "swift": "<code>.onDownload { }</code>",
+          "compose": "<code>onDownload: (() -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "— <code>ReferenceNumber</code> row (<code>#name</code>, <code>#amount</code>)",
+          "swift": "baked in Figma — pass an <code>EBReferenceRow</code> yourself",
+          "compose": "baked in Figma — pass an <code>EBReferenceRow</code> yourself"
         }
       ],
       "filePaths": {
@@ -533,155 +528,260 @@ export const inlineMessage: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Success with body content + reference</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Payment Successful\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Your transfer of ₱500 is complete.\"</span>,\n    <span class=\"prp\">referenceNumber</span>: <span class=\"str\">\"1234567890\"</span>\n) {\n    <span class=\"typ\">EBListItem</span>(<span class=\"str\">\"Send amount: ₱500\"</span>) { <span class=\"typ\">EBListMarker</span>(<span class=\"prp\">variant</span>: .<span class=\"prp\">check</span>) }\n    <span class=\"typ\">EBListItem</span>(<span class=\"str\">\"Fee: ₱0\"</span>) { <span class=\"typ\">EBListMarker</span>(<span class=\"prp\">variant</span>: .<span class=\"prp\">check</span>) }\n}\n.<span class=\"fn\">ebType</span>(.<span class=\"prp\">success</span>)\n\n<span class=\"cmt\">// Loading (Lottie spinner)</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Processing your transaction\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"This usually takes a few seconds.\"</span>\n)\n.<span class=\"fn\">ebType</span>(.<span class=\"prp\">loading</span>)\n\n<span class=\"cmt\">// Error</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Transfer Failed\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Insufficient balance. Please top up and try again.\"</span>\n)\n.<span class=\"fn\">ebType</span>(.<span class=\"prp\">error</span>)",
-        "compose": "<span class=\"cmt\">// Success with body content + reference</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    type = <span class=\"typ\">EBInlineMessageType</span>.<span class=\"prp\">Success</span>,\n    title = <span class=\"str\">\"Payment Successful\"</span>,\n    description = <span class=\"str\">\"Your transfer of ₱500 is complete.\"</span>,\n    referenceNumber = <span class=\"str\">\"1234567890\"</span>\n) {\n    <span class=\"typ\">EBListItem</span>(content = <span class=\"str\">\"Send amount: ₱500\"</span>) { <span class=\"typ\">EBListMarker</span>(variant = <span class=\"typ\">EBListMarker</span>.<span class=\"prp\">Check</span>) }\n    <span class=\"typ\">EBListItem</span>(content = <span class=\"str\">\"Fee: ₱0\"</span>) { <span class=\"typ\">EBListMarker</span>(variant = <span class=\"typ\">EBListMarker</span>.<span class=\"prp\">Check</span>) }\n}\n\n<span class=\"cmt\">// Loading (Lottie spinner)</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    type = <span class=\"typ\">EBInlineMessageType</span>.<span class=\"prp\">Loading</span>,\n    title = <span class=\"str\">\"Processing your transaction\"</span>,\n    description = <span class=\"str\">\"This usually takes a few seconds.\"</span>\n)\n\n<span class=\"cmt\">// Error</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    type = <span class=\"typ\">EBInlineMessageType</span>.<span class=\"prp\">Error</span>,\n    title = <span class=\"str\">\"Transfer Failed\"</span>,\n    description = <span class=\"str\">\"Insufficient balance. Please top up and try again.\"</span>\n)"
+        "subheading": "Success",
+        "swift": "<span class=\"cmt\">// Type=Success — 6420:91213, 360 × 465. Title #005CE5; everything else is shared.</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    title: <span class=\"str\">\"Add your label here\"</span>,\n    description: <span class=\"str\">\"Add your description here.\"</span>,\n    type: .<span class=\"prp\">success</span>\n) {\n    <span class=\"typ\">EBReferenceRow</span>(<span class=\"str\">\"Reference no.\"</span>, value: <span class=\"str\">\"1234567890\"</span>)\n}\n.<span class=\"fn\">ebIllustration</span> { <span class=\"typ\">Image</span>(<span class=\"str\">\"status\"</span>) }\n.<span class=\"fn\">onDownload</span> { saveReceipt() }",
+        "compose": "<span class=\"cmt\">// Type=Success — 6420:91213, 360 × 465. Title #005CE5; everything else is shared.</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    title = <span class=\"str\">\"Add your label here\"</span>,\n    description = <span class=\"str\">\"Add your description here.\"</span>,\n    type = <span class=\"typ\">EBInlineMessageType</span>.<span class=\"prp\">Success</span>,\n    illustration = { <span class=\"typ\">Image</span>(painterResource(R.drawable.status), null) },\n    onDownload = { saveReceipt() },\n    body = { <span class=\"typ\">EBReferenceRow</span>(<span class=\"str\">\"Reference no.\"</span>, <span class=\"str\">\"1234567890\"</span>) }\n)"
+      },
+      {
+        "subheading": "Loading",
+        "swift": "<span class=\"cmt\">// Type=Loading — 6420:91228, 360 × 465. Title #CA970C; everything else is shared.</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    title: <span class=\"str\">\"Add your label here\"</span>,\n    description: <span class=\"str\">\"Add your description here.\"</span>,\n    type: .<span class=\"prp\">loading</span>\n) {\n    <span class=\"typ\">EBReferenceRow</span>(<span class=\"str\">\"Reference no.\"</span>, value: <span class=\"str\">\"1234567890\"</span>)\n}\n.<span class=\"fn\">ebIllustration</span> { <span class=\"typ\">Image</span>(<span class=\"str\">\"status\"</span>) }\n.<span class=\"fn\">onDownload</span> { saveReceipt() }",
+        "compose": "<span class=\"cmt\">// Type=Loading — 6420:91228, 360 × 465. Title #CA970C; everything else is shared.</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    title = <span class=\"str\">\"Add your label here\"</span>,\n    description = <span class=\"str\">\"Add your description here.\"</span>,\n    type = <span class=\"typ\">EBInlineMessageType</span>.<span class=\"prp\">Loading</span>,\n    illustration = { <span class=\"typ\">Image</span>(painterResource(R.drawable.status), null) },\n    onDownload = { saveReceipt() },\n    body = { <span class=\"typ\">EBReferenceRow</span>(<span class=\"str\">\"Reference no.\"</span>, <span class=\"str\">\"1234567890\"</span>) }\n)"
+      },
+      {
+        "subheading": "Error",
+        "swift": "<span class=\"cmt\">// Type=Error — 6420:91243, 360 × 465. Title #D61B2C; everything else is shared.</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    title: <span class=\"str\">\"Add your label here\"</span>,\n    description: <span class=\"str\">\"Add your description here.\"</span>,\n    type: .<span class=\"prp\">error</span>\n) {\n    <span class=\"typ\">EBReferenceRow</span>(<span class=\"str\">\"Reference no.\"</span>, value: <span class=\"str\">\"1234567890\"</span>)\n}\n.<span class=\"fn\">ebIllustration</span> { <span class=\"typ\">Image</span>(<span class=\"str\">\"status\"</span>) }\n.<span class=\"fn\">onDownload</span> { saveReceipt() }",
+        "compose": "<span class=\"cmt\">// Type=Error — 6420:91243, 360 × 465. Title #D61B2C; everything else is shared.</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    title = <span class=\"str\">\"Add your label here\"</span>,\n    description = <span class=\"str\">\"Add your description here.\"</span>,\n    type = <span class=\"typ\">EBInlineMessageType</span>.<span class=\"prp\">Error</span>,\n    illustration = { <span class=\"typ\">Image</span>(painterResource(R.drawable.status), null) },\n    onDownload = { saveReceipt() },\n    body = { <span class=\"typ\">EBReferenceRow</span>(<span class=\"str\">\"Reference no.\"</span>, <span class=\"str\">\"1234567890\"</span>) }\n)"
+      },
+      {
+        "subheading": "Neutral",
+        "swift": "<span class=\"cmt\">// Type=Neutral — 6420:91258, 360 × 465. Title #0A2757; everything else is shared.</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    title: <span class=\"str\">\"Add your label here\"</span>,\n    description: <span class=\"str\">\"Add your description here.\"</span>,\n    type: .<span class=\"prp\">neutral</span>\n) {\n    <span class=\"typ\">EBReferenceRow</span>(<span class=\"str\">\"Reference no.\"</span>, value: <span class=\"str\">\"1234567890\"</span>)\n}\n.<span class=\"fn\">ebIllustration</span> { <span class=\"typ\">Image</span>(<span class=\"str\">\"status\"</span>) }\n.<span class=\"fn\">onDownload</span> { saveReceipt() }",
+        "compose": "<span class=\"cmt\">// Type=Neutral — 6420:91258, 360 × 465. Title #0A2757; everything else is shared.</span>\n<span class=\"typ\">EBInlineMessage</span>(\n    title = <span class=\"str\">\"Add your label here\"</span>,\n    description = <span class=\"str\">\"Add your description here.\"</span>,\n    type = <span class=\"typ\">EBInlineMessageType</span>.<span class=\"prp\">Neutral</span>,\n    illustration = { <span class=\"typ\">Image</span>(painterResource(R.drawable.status), null) },\n    onDownload = { saveReceipt() },\n    body = { <span class=\"typ\">EBReferenceRow</span>(<span class=\"str\">\"Reference no.\"</span>, <span class=\"str\">\"1234567890\"</span>) }\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Role",
-        "ios": "Group the card as a single accessibility element with combined label",
-        "android": "<code>mergeDescendants = true</code> on the container"
+        "requirement": "Announce the outcome",
+        "ios": "This is the result of an action: post an announcement with the title and description when it appears, and mark the title <code>.accessibilityAddTraits(.isHeader)</code>.",
+        "android": "Set <code>liveRegion = LiveRegionMode.Assertive</code> for Error and <code>Polite</code> otherwise; <code>heading()</code> on the title."
       },
       {
-        "requirement": "Live region",
-        "ios": "Announce on type change: <code>.accessibilityLiveRegion</code>",
-        "android": "<code>liveRegion = LiveRegionMode.Polite</code>"
-      },
-      {
-        "requirement": "Illustrations",
-        "ios": "Decorative: <code>.accessibilityHidden(true)</code>",
-        "android": "<code>contentDescription = null</code>"
-      },
-      {
-        "requirement": "Loading progress",
-        "ios": "Announce \"Processing\" via <code>.accessibilityValue</code>",
-        "android": "<code>stateDescription = \"Processing\"</code>"
+        "requirement": "Not colour alone",
+        "ios": "Type changes the title colour and nothing else — the illustration is a slot the consumer fills. Make the copy say the outcome; never rely on blue versus red.",
+        "android": "Same — the four variants are otherwise identical."
       },
       {
         "requirement": "Download action",
-        "ios": "Separate button with <code>.accessibilityLabel(\"Download receipt\")</code>",
-        "android": "<code>contentDescription = \"Download receipt\"</code>"
+        "ios": "The 24 × 24 icon is the only control. Label it \"Download receipt\" and extend the hit area to 44pt.",
+        "android": "<code>IconButton</code> with <code>contentDescription</code>; 48dp target."
+      },
+      {
+        "requirement": "Reference number",
+        "ios": "Read the digits as a group, not a number — set <code>.accessibilityLabel</code> with spaced digits so VoiceOver does not say \"one billion\".",
+        "android": "Same; provide a spaced <code>contentDescription</code>."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Titles: Success 5.73:1, Error 5.18:1, Neutral 14.58:1 — but Loading #CA970C is 2.64:1, below AA for 22pt text. The reference label #90A8D0 is 2.41:1 at 16pt.",
+        "android": "Same ratios."
+      },
+      {
+        "requirement": "Loading semantics",
+        "ios": "Type=Loading is a static surface, not a spinner. If work is in flight, drive a real progress view and update the message when it resolves.",
+        "android": "Same — pair it with a progress indicator in the illustration slot."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use Inline Message as the final surface of a transaction flow — confirm, failure recovery, or pending processing. Include the reference number so users can escalate if needed.",
-        "dontText": "Use it for transient notifications — use Toast instead. Inline Message is persistent and occupies the screen."
+        "doText": "Use Inline Message as the full-screen result of a transaction — sent, processing, failed.",
+        "dontText": "Don’t use it for a transient confirmation; that is Toast."
       },
       {
-        "doText": "Let users tap the download icon to save a PDF receipt or share the reference number. Makes customer support escalations easier.",
-        "dontText": "Include the download affordance on the Loading variant — there's nothing to download until the transaction completes."
+        "doText": "Fill both slots: an illustration for the status and whatever detail the flow needs in the body.",
+        "dontText": "Don’t ship the purple Slot Block placeholders — they are authoring scaffolding."
+      },
+      {
+        "doText": "Say the outcome in the title, since Type only changes its colour.",
+        "dontText": "Don’t rely on the colour to carry the meaning, and don’t use Loading as a live spinner."
+      },
+      {
+        "doText": "Replace the baked reference row when the flow has no reference number.",
+        "dontText": "Don’t leave \"Reference no. 1234567890\" in place — it is sample content, not a slot."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Semantic: <code>content</code>, <code>body-content</code>, <code>section-1</code>, <code>reference-number</code>, <code>Download Small</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>Container</code>, <code>Content</code>, <code>ReceiptStatus</code>, <code>Description</code>, <code>ReferenceNumber</code> and <code>ReferenceBlock</code> are semantic, and the two slots follow the <code>⤷ …Slot</code> convention. The text layers keep the legacy hash prefix — <code>#title</code>, <code>#description</code>, <code>#name</code>, <code>#amount</code> — and <code>ReceiptStatus</code> names a receipt inside a component used for any outcome."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Type values clean. Body content should be a slot, not a boolean-gated hardcoded List."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "A single PascalCase <code>Type</code> axis with four Title Case values, plus three <code>has*</code> booleans on <code>True</code>/<code>False</code>. Complete at four variants."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>bg-subtle</code> uses alpha-composited value instead of a solid token."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All four text layers resolve <code>matched</code> — <code>Primary/Headlines/Section</code>, <code>Secondary/Default/Base</code>, <code>Primary/Label/Light/Base</code>, <code>Primary/Label/Large</code>. Colour bindings cannot be read with the plugin."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Custom card composable — no standard native primitive but straightforward to build."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "One view with a type enum, two slots and a download action. Two things a developer inherits from the file: the reference row is baked sample content behind <code>hasReferenceNumber</code> rather than a slot, and <code>Type</code> changes only the title colour, so the status has to be carried by copy and by whatever the consumer puts in the illustration slot."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Display surface — interactive states live on children (download button, list items)."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "A result surface. The only control is the download icon, whose states belong to the icon button."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "3D raster illustrations + Lottie animation — asset bundling required."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The download glyph is a DS icon instance, and the illustration is a real SLOT rather than a baked image. Both slots ship a <code>Slot Block</code> placeholder, which is the file-wide authoring convention."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Not mapped."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "One enum and two slots are ready to map; no SwiftUI or Compose mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 6,
-      "description": "",
+      "total": 4,
+      "description": "<code>Type</code> (4) = 4 variants, all built and all 360 × 465. Only <code>#title</code> changes colour between them.",
       "columns": [
-        "type",
-        "assetSize",
-        "Node ID"
+        "Type",
+        "Node ID",
+        "Dimensions",
+        "Title"
       ],
       "rows": [
         {
           "cells": [
             "Success",
-            "Large",
-            "27:168911"
-          ]
-        },
-        {
-          "cells": [
-            "Success",
-            "Small",
-            "27:169118"
+            "<code>6420:91213</code>",
+            "360 × 465",
+            "#005CE5"
           ]
         },
         {
           "cells": [
             "Loading",
-            "Large",
-            "27:168980"
-          ]
-        },
-        {
-          "cells": [
-            "Loading",
-            "Small",
-            "27:169187"
+            "<code>6420:91228</code>",
+            "360 × 465",
+            "#CA970C"
           ]
         },
         {
           "cells": [
             "Error",
-            "Large",
-            "27:169049"
+            "<code>6420:91243</code>",
+            "360 × 465",
+            "#D61B2C"
           ]
         },
         {
           "cells": [
-            "Error",
-            "Small",
-            "27:169256"
+            "Neutral",
+            "<code>6420:91258</code>",
+            "360 × 465",
+            "#0A2757"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.1.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 6420:91212",
+      "rows": [
+        {
+          "body": "<strong>Borders corrected to top-edge only.</strong> <code>get_svg</code> on <code>6420:91222</code> and <code>6420:91223</code> returns a 1px #E5EBF4 band across the top of each row, not a box; the preview had drawn a full rectangle. The illustration placeholder is also a 4-radius dashed square rather than a circle — the slot is fully rounded but the Slot Block inside it is not.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Documented against the 2026 Working File copy.</strong> The page pointed at <code>26416:18421</code> in Sticker Sheets v2, which the Working File does not contain. Meta, the spec card and the inventory now use <code>6420:91212</code> and its four variant nodes.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel.</strong> A single card on retired node <code>27:168911</code> is replaced by one card with the <code>Type</code> axis; both slots are listed without controls.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> 360 × 465 at radius 12, the 106 illustration slot at x 127, the download icon from <code>get_svg</code>, the 117-tall body slot and the 64-tall reference row — matching <code>export_node_as_image</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography now names text styles.</strong> <code>Primary/Headlines/Section</code>, <code>Secondary/Default/Base</code>, <code>Primary/Label/Light/Base</code> and <code>Primary/Label/Large</code>, all matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>The Code tab was rebuilt on the live axis.</strong> Install is <code>com.eastblue.ds:inline-message:2.1.1</code>, with one snippet per Type and a four-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong><code>Type</code> changes only the title colour.</strong> The four variants are otherwise identical, so the status rests on copy and on whatever the consumer swaps into the illustration slot. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>The reference row is baked sample content</strong> — \"Reference no. 1234567890\" in <code>#name</code> and <code>#amount</code>, not a slot, so a flow without a reference number has to detach. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Text layers keep the <code>#</code> prefix</strong> (<code>#title</code>, <code>#description</code>, <code>#name</code>, <code>#amount</code>) and <code>ReceiptStatus</code> names a receipt inside a general-purpose surface. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Loading title fails AA</strong> — #CA970C is 2.64:1 on white at 22pt; the reference label #90A8D0 is 2.41:1 at 16pt. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Panel confirmed from the property panel.</strong> Three booleans the variant names do not show — <code>hasReferenceNumber</code>, <code>hasBodyContent</code> and <code>hasDownload</code>, all True — plus <code>⤷ BodySlot</code> and <code>⤷ IllustrationSlot</code> with 4 swap options each. The Container hugs its rows: Content 284 + BodySlot 117 + Reference 64 = 465, so turning a boolean off removes that row.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

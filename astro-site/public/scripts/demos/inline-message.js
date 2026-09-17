@@ -1,206 +1,148 @@
-/* Inline Message — sized 1:1 to Figma node 27:168910 (success variant 27:168911).
+/* Inline Message — Style tab demo.
+ * Rebuilt from Figma component set 6420:91212 (GCash DS 2026 Working File).
+ * Offsets, fills and the download glyph are read off get_node_info and
+ * get_svg, and checked against export_node_as_image.
  *
- *   Total card:        360 × 664, bg #FFFFFF, radius 12, no shadow
- *   Content section:   360 × 284 (48 top / 24 horiz / 24 bottom, gap 16)
- *     - Receipt Status: illustration 106×106 + 24px spacer + title 26
- *     - Description:    312 wide, BarkAda Medium 14/20 #445C85, center-aligned
- *     - Download icon:  24×24 overlay at (top 16, right 18)
- *   Body content:      360 × 316, border-top + border-bottom #E5EBF4
- *     - section-1: 172 (title 44 + container 128)
- *     - section-2: 144 (title 44 + container 100)
- *     - Title bar: text "Header" Proxima Soft Bold 16/20 +0.25 #0A2757,
- *                  padding 12 vert · 48 left
- *     - Container bg: #F6F9FD @ 24% opacity, padding 12 vert · 48 horiz
- *     - List items: BarkAda Semibold 14/20 #445C85, 16px check icon + 8 gap
- *   Reference no.:    360 × 64, border-top #E5EBF4, 24 top spacer + 16 ref-block
- *     - "Reference no." Proxima Soft Semibold 16/16 +0.25 #90A8D0
- *     - "1234567890"     Proxima Soft Bold 18/18 +0.25 #0A2757, 4px gap
+ * Panel (set 6420:91212, from the property-panel screenshot):
+ *   Type               · Success, Loading, Error, Neutral  (variant)
+ *   hasReferenceNumber · True                              (boolean)
+ *   hasBodyContent     · True                              (boolean)
+ *   hasDownload        · True                              (boolean)
+ * Slots (no control): ⤷ BodySlot (4 items) · ⤷ IllustrationSlot (4 items)
+ *
+ * 4 variants, all built, each 360 × 465 at the panel defaults. Only the
+ * title colour changes between Types; everything else is shared.
+ *
+ * The Container hugs its rows — Content 284 + BodySlot 117 + Reference 64
+ * = 465 — so turning a boolean off removes that row's height. hasDownload
+ * changes nothing, since the icon sits inside Content.
  */
 
-var _itmIntent = {
-  success: { titleColor: '#005CE5', img: '/assets/inline-message/success.png' },
-  loading: { titleColor: '#CA970C', img: '/assets/inline-message/loading.png' },
-  error:   { titleColor: '#D61B2C', img: '/assets/inline-message/error.png' },
-};
+var IM_W = 360;
+var IM_CONTENT_H = 284, IM_BODY_H = 117, IM_REF_H = 64;
+var IM_TITLE = { success: '#005CE5', loading: '#CA970C', error: '#D61B2C', neutral: '#0A2757' };
+var IM_NODES = { success: '6420:91213', loading: '6420:91228', error: '6420:91243', neutral: '6420:91258' };
+var IM_DESC = '#445C85', IM_NAME = '#90A8D0', IM_AMOUNT = '#0A2757', IM_RULE = '#E5EBF4';
+/* Slot Block placeholder — 9% fill on a solid stroke, both #9F3DFB. */
+var IM_SLOT = '#9F3DFB';
+var IM_DOWNLOAD = 'M7.00195 4.10156C7.49883 4.10177 7.90234 4.50503 7.90234 5.00195C7.90213 5.4987 7.4987 5.90213 7.00195 5.90234H6.00195C5.39444 5.90234 4.90234 6.39444 4.90234 7.00195V16.002C4.90255 17.1616 5.84229 18.1016 7.00195 18.1016H17.002C18.1614 18.1014 19.1014 17.1614 19.1016 16.002V7.00195C19.1016 6.39457 18.6093 5.90255 18.002 5.90234H17.002C16.505 5.90234 16.1018 5.49883 16.1016 5.00195C16.1016 4.5049 16.5049 4.10156 17.002 4.10156H18.002C19.6034 4.10177 20.9023 5.40046 20.9023 7.00195V16.002C20.9021 18.1556 19.1556 19.9021 17.002 19.9023H7.00195C4.84817 19.9023 3.10177 18.1557 3.10156 16.002V7.00195C3.10156 5.40033 4.40033 4.10156 6.00195 4.10156H7.00195ZM12.001 4.10156C12.4979 4.10156 12.9011 4.50414 12.9014 5.00098V12.8271L14.3643 11.3643C14.7157 11.0131 15.2863 11.0131 15.6377 11.3643C15.9891 11.7156 15.9889 12.2862 15.6377 12.6377L12.6377 15.6377C12.2862 15.9892 11.7157 15.9892 11.3643 15.6377L8.36426 12.6387C8.01287 12.2873 8.01303 11.7167 8.36426 11.3652C8.71565 11.0138 9.2862 11.013 9.6377 11.3643L11.1006 12.8271V5.00195C11.1006 4.5049 11.5039 4.10156 12.001 4.10156Z';
 
-function _itmCheckIcon() {
-  /* Stroke color = main/list-item/color/default/icon-item → #90A8D0
-     (resolved from List Item Asset master 10276:2686 icon-placeholder fill) */
-  return '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;">' +
-    '<path d="M3 8.5l3 3 7-7" stroke="#90A8D0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
-  '</svg>';
+function _imOn(v, def) { return v == null ? def : v === 'true'; }
+
+/* Container height hugs the rows that are shown. */
+function _imHeight(card) {
+  return IM_CONTENT_H + (_imOn(card.hasbodycontent, true) ? IM_BODY_H : 0) +
+         (_imOn(card.hasreferencenumber, true) ? IM_REF_H : 0);
 }
 
-function _itmDownloadIcon() {
-  return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none">' +
-    '<path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" stroke="#005CE5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' +
-    '<path d="M12 4v11m0 0l-4-4m4 4l4-4" stroke="#005CE5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' +
-  '</svg>';
-}
+function _imRender(card) {
+  card = card || {};
+  var type = card.type || 'success';
+  var title = IM_TITLE[type] || IM_TITLE.success;
+  var body = _imOn(card.hasbodycontent, true), ref = _imOn(card.hasreferencenumber, true), dl = _imOn(card.hasdownload, true);
+  var H = _imHeight(card);
 
-function _itmListItem() {
-  /* List item: 16×16 check + 8 gap + text. Item is 20 tall per Figma. */
-  return '<div style="display:flex;gap:8px;align-items:center;height:20px;">' +
-    _itmCheckIcon() +
-    '<span style="flex:1;font-family:\'BarkAda\',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;">Content</span>' +
-  '</div>';
-}
+  var s = '<svg width="' + IM_W + '" height="' + H + '" viewBox="0 0 ' + IM_W + ' ' + H +
+          '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  s += '<rect width="' + IM_W + '" height="' + H + '" rx="12" fill="#FFFFFF"/>';
 
-function _itmSection(itemCount, withDivider) {
-  /* Section: 44px title bar + container (128 for 4 items, 100 for 3 items).
-     - Title bar: 12 vert padding, text starts at 48 left.
-     - Container: bg #F6F9FD @ 24% opacity, 12 vert / 48 horiz padding, items stacked.
-     - Items: 20 tall, 8px vertical gap (verified: 4 items × 20 + 3 gaps × 8 = 104).
-     - withDivider: emit a border-bottom only when this isn't the last section
-       (the body-content wrapper handles the bottom edge). */
-  var rows = [];
-  for (var i = 0; i < (itemCount || 4); i++) rows.push(_itmListItem());
-  return '<div style="background:#FFFFFF;' + (withDivider ? 'border-bottom:1px solid #E5EBF4;' : '') + '">' +
-    /* Title bar 44h — own border-bottom separates "Header" from the list rows */
-    '<div style="height:44px;box-sizing:border-box;padding:12px 0 12px 48px;border-bottom:1px solid #E5EBF4;">' +
-      '<p style="margin:0;font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:16px;line-height:20px;color:#0A2757;letter-spacing:0.25px;">Header</p>' +
-    '</div>' +
-    /* Container — light tinted bg, list items inside */
-    '<div style="background:rgba(246,249,253,0.24);padding:12px 48px;display:flex;flex-direction:column;gap:8px;">' +
-      rows.join('') +
-    '</div>' +
-  '</div>';
-}
+  /* Download Small, 24 × 24 at x 318, y 16 — inside Content, so it never
+     changes the height. */
+  if (dl) s += '<g transform="translate(318 16)"><path d="' + IM_DOWNLOAD + '" fill="#005CE5"/></g>';
 
-function _itmRender(opts) {
-  var type = opts.type || 'success';
-  var intent = _itmIntent[type] || _itmIntent.success;
-  var hasBody = opts.hasBodyContent !== false;
-  var hasRef = opts.hasReferenceNumber !== false;
+  /* ⤷ IllustrationSlot — 106 × 106 at x 127, y 48. The slot itself is fully
+     rounded, but the Slot Block placeholder it ships is a 4-radius square
+     with a 4/4 dash — that is what renders. */
+  s += '<rect x="127.5" y="48.5" width="105" height="105" rx="3.5" fill="' + IM_SLOT + '" fill-opacity="0.09"/>';
+  s += '<rect x="127.5" y="48.5" width="105" height="105" rx="3.5" stroke="' + IM_SLOT + '" stroke-dasharray="4 4"/>';
 
-  /* CARD — 360 wide, white, radius 12, NO shadow per Figma container */
-  var html =
-    '<div style="width:360px;font-family:\'Proxima Soft\',sans-serif;background:#FFFFFF;border-radius:12px;overflow:hidden;">' +
-      /* CONTENT — 284 tall: 48 top / 24 horiz / 24 bottom, gap 16 between receipt-status and description */
-      '<div style="position:relative;padding:48px 24px 24px;display:flex;flex-direction:column;gap:16px;align-items:center;">' +
-        /* Download icon overlay (top 16, right 18, 24×24 hit area with 20×20 glyph) */
-        '<div style="position:absolute;top:16px;right:18px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;">' +
-          _itmDownloadIcon() +
-        '</div>' +
-        /* Receipt Status — illustration 106×106 + 24 spacer + title 26 = 156 tall */
-        '<div style="display:flex;flex-direction:column;align-items:center;width:100%;">' +
-          '<img src="' + intent.img + '" alt="" style="width:106px;height:106px;display:block;object-fit:contain;" />' +
-          '<div style="height:24px;"></div>' +
-          '<p style="margin:0;width:100%;text-align:center;font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:22px;line-height:26px;color:' + intent.titleColor + ';">Add your label here</p>' +
-        '</div>' +
-        /* Description — 312 wide × 40 tall (2 lines × 20) */
-        '<p style="margin:0;width:100%;text-align:center;font-family:\'BarkAda\',sans-serif;font-weight:500;font-size:14px;line-height:20px;color:#445C85;">' +
-          'Add your description here.<br>This is just a filler sentence.' +
-        '</p>' +
-      '</div>';
+  s += '<text class="im-title" x="180" y="191" font-size="22" font-weight="700" fill="' + title +
+       '" text-anchor="middle" dominant-baseline="central">Add your label here</text>';
+  s += '<text class="im-desc" x="180" y="230" font-size="14" font-weight="500" fill="' + IM_DESC +
+       '" text-anchor="middle" dominant-baseline="central">Add your description here.</text>';
+  s += '<text class="im-desc" x="180" y="250" font-size="14" font-weight="500" fill="' + IM_DESC +
+       '" text-anchor="middle" dominant-baseline="central">This is just a filler sentence.</text>';
 
-  if (hasBody) {
-    /* BODY CONTENT — 316 tall (172 + 144).
-       Borders: top edge + bottom edge of body-content + 1 divider between sections.
-       The reference-number section relies on body-content's bottom border, so it
-       does NOT add its own border-top (avoids the doubled-line effect). */
-    html += '<div style="border-top:1px solid #E5EBF4;' + (hasRef ? 'border-bottom:1px solid #E5EBF4;' : '') + 'display:flex;flex-direction:column;">' +
-      _itmSection(4, true) +
-      _itmSection(3, false) +
-    '</div>';
+  /* ⤷ BodySlot — 360 × 117 below Content, a Slot Block placeholder */
+  var y = IM_CONTENT_H;
+  if (body) {
+    /* 1px #E5EBF4 on the top edge only — the frame's stroke is one-sided. */
+    s += '<rect x="0" y="' + y + '" width="360" height="1" fill="' + IM_RULE + '"/>';
+    s += '<rect x="0.5" y="' + (y + 0.5) + '" width="359" height="' + (IM_BODY_H - 1) + '" rx="3.5" fill="' + IM_SLOT + '" fill-opacity="0.09"/>';
+    s += '<rect x="0.5" y="' + (y + 0.5) + '" width="359" height="' + (IM_BODY_H - 1) + '" rx="3.5" stroke="' + IM_SLOT + '" stroke-dasharray="4 4"/>';
+    s += '<text class="im-slot" x="180" y="' + (y + IM_BODY_H / 2) + '" font-size="11" font-weight="700" fill="' + IM_SLOT +
+         '" text-anchor="middle" dominant-baseline="central">Remove &amp; Insert Content here</text>';
+    y += IM_BODY_H;
   }
 
-  if (hasRef) {
-    /* REFERENCE NO. — 64 tall, 24 top spacer, 16 ref-block, 24 bottom.
-       No border-top: when body-content is present it already has border-bottom;
-       when body-content is hidden we add the border-top inline below. */
-    var refBorder = !hasBody ? 'border-top:1px solid #E5EBF4;' : '';
-    html += '<div style="' + refBorder + 'height:64px;box-sizing:border-box;padding:24px 0;display:flex;align-items:center;justify-content:center;gap:4px;">' +
-      '<span style="font-family:\'Proxima Soft\',sans-serif;font-weight:600;font-size:16px;line-height:16px;color:#90A8D0;letter-spacing:0.25px;">Reference no.</span>' +
-      '<span style="font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:18px;line-height:18px;color:#0A2757;letter-spacing:0.25px;">1234567890</span>' +
-    '</div>';
+  /* ReferenceNumber — 360 × 64. Its 1px #E5EBF4 stroke is the top edge
+     only, so the row reads as a divider rather than a boxed card. */
+  if (ref) {
+    s += '<rect x="0" y="' + y + '" width="360" height="1" fill="' + IM_RULE + '"/>';
+    s += '<text class="im-name" x="74" y="' + (y + 32) + '" font-size="16" font-weight="600" fill="' + IM_NAME +
+         '" dominant-baseline="central">Reference no.</text>';
+    s += '<text class="im-amount" x="180" y="' + (y + 32) + '" font-size="18" font-weight="700" fill="' + IM_AMOUNT +
+         '" dominant-baseline="central">1234567890</text>';
   }
 
-  html += '</div>';
-  return html;
+  return s + '</svg>';
 }
 
-function _itmUpdate() {
-  var get = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
-  var preview = document.getElementById('im-demo-preview');
-  if (!preview) return;
-  preview.innerHTML = _itmRender({
-    type: (get('im-demo-type', 'success') || 'success').toLowerCase(),
-    assetSize: get('im-demo-size', 'Large'),
-    hasBodyContent: get('im-demo-body', 'true') === 'true',
-    hasReferenceNumber: get('im-demo-ref', 'true') === 'true',
-  });
-}
-// Legacy alias — captured HTML uses this name on its onchange handlers
-function updateInlineMessageDemo() { _itmUpdate(); }
-
-/* ── Spec card state — single dynamic card ─────────────────────── */
+/* ── Per-card state — Figma's default variant ──────────────────────── */
 var _specCards = {
-  'default': { variant: 'success', hasBody: 'true', hasRef: 'true' }
+  main: { type: 'success', hasreferencenumber: 'true', hasbodycontent: 'true', hasdownload: 'true' }
 };
 window._specCards = _specCards;
+function _imCap(v) { return v.charAt(0).toUpperCase() + v.slice(1); }
 
-var _intentLabel = { success: 'Success', loading: 'Loading', error: 'Error' };
-
-/* ── Code snippet builders ────────────────────────────────────────── */
-function buildSwiftSnippet(type, card) {
-  var v = (card && card.variant) || type || 'success';
-  var lines = [];
-  lines.push('EBInlineMessage("Add your label here")');
-  lines.push('    .ebDescription("Add your description here.")');
-  lines.push('    .ebIntent(.' + v + ')');
-  if (card && card.hasRef !== 'false') lines.push('    .ebReferenceNumber("1234567890")');
-  return lines.join('\n');
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function buildSwiftSnippet(cardKey, c) {
+  var l = ['EBInlineMessage(', '    title: "Add your label here",', '    description: "Add your description here.",',
+           '    type: .' + c.type, ')'];
+  if (_imOn(c.hasbodycontent, true)) l.push('.ebBody { EBReferenceRow("Reference no.", value: "1234567890") }');
+  if (_imOn(c.hasreferencenumber, true)) l.push('.ebReference("Reference no.", value: "1234567890")');
+  l.push('.ebIllustration { Image("status") }');
+  if (_imOn(c.hasdownload, true)) l.push('.onDownload { saveReceipt() }');
+  return l.join('\n');
 }
-
-function buildComposeSnippet(type, card) {
-  var v = (card && card.variant) || type || 'success';
-  var label = _intentLabel[v] || 'Success';
-  var lines = [];
-  lines.push('EBInlineMessage(');
-  lines.push('    title = "Add your label here",');
-  lines.push('    description = "Add your description here.",');
-  lines.push('    intent = EBMessageIntent.' + label + ',');
-  if (card && card.hasRef !== 'false') lines.push('    referenceNumber = "1234567890",');
-  var last = lines[lines.length - 1];
-  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
-  lines.push(')');
-  return lines.join('\n');
+function buildComposeSnippet(cardKey, c) {
+  var l = ['EBInlineMessage(', '    title = "Add your label here",', '    description = "Add your description here.",',
+           '    type = EBInlineMessageType.' + _imCap(c.type) + ',',
+           '    illustration = { Image(painterResource(R.drawable.status), null) },'];
+  if (_imOn(c.hasdownload, true)) l.push('    onDownload = { saveReceipt() },');
+  if (_imOn(c.hasbodycontent, true)) l.push('    body = { EBReferenceRow("Reference no.", "1234567890") },');
+  if (_imOn(c.hasreferencenumber, true)) l.push('    reference = EBReference("Reference no.", "1234567890"),');
+  l[l.length - 1] = l[l.length - 1].replace(/,$/, '');
+  l.push(')');
+  return l.join('\n');
 }
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
-/* ── Spec card update ─────────────────────────────────────────────── */
+/* ── Control handler ────────────────────────────────────────────────── */
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview — render inside the spec card root's preview slot */
-  var rootEl = document.getElementById('spec-card-' + cardStyle);
-  if (rootEl) {
-    var previewEl = rootEl.querySelector('.spec-card-preview');
-    if (previewEl) {
-      previewEl.innerHTML = _itmRender({
-        type: card.variant,
-        hasBodyContent: card.hasBody === 'true',
-        hasReferenceNumber: card.hasRef === 'true'
-      });
-    }
-  }
+  var host = document.getElementById('inline-message-spec-' + cardStyle);
+  if (host) host.innerHTML = _imRender(card);
 
-  /* Update properties text */
-  var spVariant = document.querySelector('[data-sp="' + cardStyle + '-variant"]');
-  if (spVariant) spVariant.textContent = _intentLabel[card.variant] || 'Success';
+  ['type', 'hasreferencenumber', 'hasbodycontent', 'hasdownload'].forEach(function (a) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
+    if (el) el.textContent = a === 'type' ? _imCap(card.type) : (card[a] === 'true' ? 'True' : 'False');
+  });
+  var sizeEl = document.querySelector('[data-sp="' + cardStyle + '-size-readout"]');
+  if (sizeEl) sizeEl.textContent = '360 × ' + _imHeight(card) + ' · radius 12';
+  var nodeEl = document.querySelector('[data-sp="' + cardStyle + '-variantNode"]');
+  if (nodeEl) nodeEl.textContent = IM_NODES[card.type] + ' · 360 × ' + _imHeight(card);
 
-  /* Update DEV code */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
     var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
       var code = getSnippet(cardStyle, lang, card);
@@ -211,20 +153,26 @@ function updateSpecCard(cardStyle, prop, value) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-function _itmInit() {
-  var ctx = document.getElementById('itm-context-preview');
-  if (ctx) ctx.innerHTML =
-    '<div style="display:flex;gap:24px;justify-content:center;align-items:flex-start;flex-wrap:wrap;padding:24px;background:#F8FAFC;border:1px dashed #C7D2FE;border-radius:8px;">' +
-      _itmRender({ type: 'success', hasBodyContent: false, hasReferenceNumber: false }) +
-      _itmRender({ type: 'loading', hasBodyContent: false, hasReferenceNumber: false }) +
-      _itmRender({ type: 'error', hasBodyContent: false, hasReferenceNumber: false }) +
-    '</div>';
-  _itmUpdate();
-
-  updateSpecCard('default', 'variant', _specCards['default'].variant);
+/* ── Overview tab shim — the old panel had type / size / body / ref. ── */
+function _imUpdate() {
+  var el = document.getElementById('im-demo-preview');
+  if (!el) return;
+  var t = document.getElementById('im-demo-type');
+  var v = t && IM_TITLE[t.value] ? t.value : 'success';
+  el.innerHTML = _imRender({ type: v });
 }
+window._imUpdate = _imUpdate;
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _itmInit);
-else _itmInit();
-document.addEventListener('astro:page-load', _itmInit);
+/* ── First paint ────────────────────────────────────────────────────── */
+function _imInit() {
+  _imUpdate();
+  Object.keys(_specCards).forEach(function (k) {
+    var host = document.getElementById('inline-message-spec-' + k);
+    if (host) host.innerHTML = _imRender(_specCards[k]);
+  });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _imInit);
+else _imInit();
+document.addEventListener('astro:page-load', _imInit);

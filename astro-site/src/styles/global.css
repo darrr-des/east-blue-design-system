@@ -282,6 +282,16 @@ body {
 /* ── Tab Item preview — the label is Proxima Soft Bold at 0.25 (set 26327:10941). */
 .ti-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
 
+/* ── Stepper preview — the Circular index is Proxima Soft Bold at 0.25
+   (set 4337:11140). */
+.stp-index { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Inline Message preview — title and reference rows are Proxima Soft,
+   the description BarkAda (set 6420:91212). */
+.im-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0; }
+.im-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.im-name, .im-amount, .im-slot { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
 /* ── Detail Hero preview ─────────────────────────────────────────────
    Title carries 0 tracking, the sender label and value 0.25, and the
    description is BarkAda at 0 — all read off the layers of set
