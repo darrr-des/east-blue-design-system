@@ -262,6 +262,26 @@ body {
 .itx-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
 .itx-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 
+/* ── Tooltip preview — Header and Button label Proxima Soft at 0.25,
+   Description BarkAda at 0 (set 6295:79647). */
+.tt-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.tt-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Toast preview — Titles Proxima Soft at 0.25 (SM at 0.5), description
+   BarkAda at 0 (set 4915:25141). */
+.ts-md { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.ts-sm { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.ts-sub { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Title Bar - App preview — Title and subtext Proxima Soft at 0.25 / 0.5,
+   Header at 0.221 (set 4784:34355). */
+.tb-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.tb-link { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.tb-header { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.221px; }
+
+/* ── Tab Item preview — the label is Proxima Soft Bold at 0.25 (set 26327:10941). */
+.ti-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
 /* ── Detail Hero preview ─────────────────────────────────────────────
    Title carries 0 tracking, the sender label and value 0.25, and the
    description is BarkAda at 0 — all read off the layers of set

@@ -1,45 +1,50 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/title-bar.js`.
+// Panel mirrors the variant axes of set 4784:34355, in variant-name order.
+// No property-panel screenshot was supplied, so a text or instance-swap
+// property would not appear here. All 16 combinations are built.
 const titleBarDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Leading icon',
-        prop: 'leadingIcon',
-        defaultValue: 'yes',
+        label: 'hasLeadingIcon',
+        prop: 'hasleadingicon',
+        control: 'toggle',
+        defaultValue: 'false',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
-        label: 'Trailing icon',
-        prop: 'trailingIcon',
-        defaultValue: 'no',
+        label: 'hasTrailingElement',
+        prop: 'hastrailingelement',
+        control: 'toggle',
+        defaultValue: 'false',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
-        label: 'Leading control',
-        prop: 'leadingControl',
-        defaultValue: 'no',
+        label: 'hasSubtext',
+        prop: 'hassubtext',
+        control: 'toggle',
+        defaultValue: 'false',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
-        label: 'Subtext',
-        prop: 'subtext',
-        defaultValue: 'no',
+        label: 'hasTitleBlock',
+        prop: 'hastitleblock',
+        control: 'toggle',
+        defaultValue: 'false',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -206,45 +211,120 @@ export const titleBar: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "tb-spec-standard",
-        "demoKey": "standard",
+        "cardKey": "tb-spec-main",
+        "demoKey": "main",
+        "title": "Title Bar - App",
+        "node": "4784:34355",
+        "description": "",
+        "previewHtml": "<div id=\"title-bar-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": titleBarDemoControls,
-        "title": "Standard",
-        "node": "23:175149",
-        "description": "Standard title bar without title block. Status bar (44px) + title row with optional icons, control, and subtext. Height ranges from 84px to 100px depending on subtext.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "Standard",
-                "mono": false
+                "key": "hasLeadingIcon",
+                "value": "False",
+                "prop": "hasleadingicon"
               },
               {
-                "key": "Leading icon",
-                "value": "yes",
-                "mono": false,
-                "prop": "leadingIcon"
+                "key": "hasTrailingElement",
+                "value": "False",
+                "prop": "hastrailingelement"
               },
               {
-                "key": "Trailing icon",
-                "value": "no",
-                "mono": false,
-                "prop": "trailingIcon"
+                "key": "hasSubtext",
+                "value": "False",
+                "prop": "hassubtext"
               },
               {
-                "key": "Leading control",
-                "value": "no",
-                "mono": false,
-                "prop": "leadingControl"
+                "key": "hasTitleBlock",
+                "value": "False",
+                "prop": "hastitleblock"
               },
               {
-                "key": "Subtext",
-                "value": "no",
-                "mono": false,
-                "prop": "subtext"
+                "key": "Leading instance",
+                "value": "Left Arrow",
+                "variants": {
+                  "hastitleblock:true": {
+                    "value": "Left Arrow — layer named Leading Icon"
+                  },
+                  "hasleadingicon:false|hastitleblock:false": {
+                    "hide": true
+                  },
+                  "hasleadingicon:false|hastitleblock:true": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Trailing instance",
+                "value": "Information",
+                "variants": {
+                  "hastrailingelement:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Status Bar",
+                "value": "Status Bar - IOS — mock only"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "4784:34356 · 360 × 84",
+                "mono": true,
+                "variants": {
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "value": "4784:34356 · 360 × 84"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "value": "4784:34474 · 360 × 100"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "4784:34499 · 360 × 92"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "4784:34507 · 360 × 100"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "value": "4784:34535 · 360 × 92"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "value": "4784:34543 · 360 × 100"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "4784:34480 · 360 × 92"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "4784:34489 · 360 × 100"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "value": "4784:34361 · 360 × 156"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "value": "4784:34369 · 360 × 172"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "4784:34378 · 360 × 164"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "4784:34389 · 360 × 172"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "value": "4784:34426 · 360 × 164"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "value": "4784:34437 · 360 × 172"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "4784:34401 · 360 × 164"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "4784:34413 · 360 × 172"
+                  }
+                }
               }
             ]
           },
@@ -252,37 +332,54 @@ export const titleBar: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#1972F9", "token": "title-bar/color/bg" },
-              { "key": "Title", "value": "#FFFFFF", "token": "title-bar/color/label-title" },
-              { "key": "Header", "value": "#FFFFFF", "token": "title-bar/color/label-header" },
-              { "key": "URL chip", "value": "#F6F9FDCC (80% alpha)", "token": "title-bar/color/label-url" },
-              { "key": "Icon", "value": "#FFFFFF", "token": "title-bar/color/icon" },
-              { "key": "CTA label", "value": "#FFFFFF", "token": "title-bar/color/label-cta" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
               {
-                "key": "Bar height",
-                "value": "64px",
-                "mono": true
+                "key": "Surface",
+                "value": "#1972F9",
+                "token": "—"
               },
               {
-                "key": "Padding H",
-                "value": "24px",
-                "mono": true
+                "key": "Background",
+                "value": "#1972F9 + image at 5% luminosity",
+                "variants": {
+                  "hastitleblock:false": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
+                "key": "Title",
+                "value": "#FFFFFF",
+                "token": "—"
               },
               {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true
+                "key": "Subtext",
+                "value": "#F6F9FD @ 80%",
+                "token": "—",
+                "variants": {
+                  "hassubtext:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Icons",
+                "value": "#FFFFFF",
+                "token": "—",
+                "variants": {
+                  "hasleadingicon:false|hastrailingelement:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Header",
+                "value": "#FFFFFF",
+                "token": "—",
+                "variants": {
+                  "hastitleblock:false": {
+                    "hide": true
+                  }
+                }
               }
             ]
           },
@@ -291,85 +388,30 @@ export const titleBar: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Title style",
-                "value": "Primary/Headlines/Light/Area",
+                "key": "Title",
+                "value": "Primary/Label/Light/Base",
                 "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Semibold · 26 / 31 · +0.85",
-                "mono": true
-              },
-              {
-                "key": "URL style",
-                "value": "Primary/Label/Light/Fine",
-                "mono": true
-              },
-              {
-                "key": "URL font",
-                "value": "Proxima Soft Semibold · 12 / 12 · +0.5",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTitleBar</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>url<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"gcash.com\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTitleBar</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    url <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"gcash.com\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-standard-preview\"><div style=\"width:360px;max-width:100%;background:#1972F9;border-radius:4px;overflow:hidden;font-family:Proxima Soft,system-ui,sans-serif;color:#FFF;\"><div style=\"height:44px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;\"><span>9:41</span><span style=\"display:flex;gap:4px;align-items:center;\"><svg width=\"16\" height=\"12\" viewBox=\"0 0 16 12\"><rect x=\"0\" y=\"8\" width=\"3\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"4\" y=\"5\" width=\"3\" height=\"7\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"8\" y=\"2\" width=\"3\" height=\"10\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"12\" y=\"0\" width=\"3\" height=\"12\" rx=\"0.5\" fill=\"#FFF\"></rect></svg><svg width=\"14\" height=\"12\" viewBox=\"0 0 14 12\"><path d=\"M7 10.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z\" fill=\"#FFF\" transform=\"translate(0,-2)\"></path><path d=\"M3.5 7.5C4.8 6.2 5.9 5.5 7 5.5s2.2.7 3.5 2\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path><path d=\"M1 4.5C3 2.5 5 1.5 7 1.5s4 1 6 3\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path></svg><svg width=\"22\" height=\"12\" viewBox=\"0 0 22 12\"><rect x=\"0\" y=\"1\" width=\"19\" height=\"10\" rx=\"2\" stroke=\"#FFF\" stroke-width=\"1\" fill=\"none\"></rect><rect x=\"2\" y=\"3\" width=\"15\" height=\"6\" rx=\"1\" fill=\"#FFF\"></rect><rect x=\"20\" y=\"4\" width=\"2\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect></svg></span></div><div style=\"display:flex;align-items:center;padding:12px 20px;position:relative;min-height:16px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;margin-right:12px;\"><path d=\"M15 18l-6-6 6-6\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;width:max-content;max-width:60%;\"><div style=\"font-size:16px;font-weight:600;letter-spacing:0.25px;line-height:16px;\">Title</div></div></div></div></div>"
-      },
-      {
-        "cardKey": "tb-spec-titleblock",
-        "demoKey": "titleblock",
-        "demoControls": titleBarDemoControls,
-        "title": "With Title Block",
-        "node": "23:175159",
-        "description": "Title bar with expanded header block (72px) below the title row. Used for screens with prominent section headers. Adds \"Header\" text at 26px Semibold.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Variant",
-                "value": "With Title Block",
-                "mono": false
-              },
-              {
-                "key": "Leading icon",
-                "value": "yes",
-                "mono": false,
-                "prop": "leadingIcon"
-              },
-              {
-                "key": "Trailing icon",
-                "value": "no",
-                "mono": false,
-                "prop": "trailingIcon"
-              },
-              {
-                "key": "Leading control",
-                "value": "no",
-                "mono": false,
-                "prop": "leadingControl"
               },
               {
                 "key": "Subtext",
-                "value": "no",
-                "mono": false,
-                "prop": "subtext"
+                "value": "Primary/Label/Light/Fine",
+                "mono": true,
+                "variants": {
+                  "hassubtext:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Header",
+                "value": "Primary/Headlines/Light/Area",
+                "mono": true,
+                "variants": {
+                  "hastitleblock:false": {
+                    "hide": true
+                  }
+                }
               }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#1972F9", "token": "title-bar/color/bg" },
-              { "key": "Title", "value": "#FFFFFF", "token": "title-bar/color/label-title" },
-              { "key": "Header", "value": "#FFFFFF", "token": "title-bar/color/label-header" },
-              { "key": "URL chip", "value": "#F6F9FDCC (80% alpha)", "token": "title-bar/color/label-url" },
-              { "key": "Icon", "value": "#FFFFFF", "token": "title-bar/color/icon" },
-              { "key": "CTA label", "value": "#FFFFFF", "token": "title-bar/color/label-cta" }
             ]
           },
           {
@@ -377,214 +419,296 @@ export const titleBar: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Bar height",
-                "value": "64px",
+                "key": "Height",
+                "value": "84px",
+                "mono": true,
+                "variants": {
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "value": "84px"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "value": "100px"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "92px"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "100px"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "value": "92px"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "value": "100px"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "92px"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "100px"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "value": "156px"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "value": "172px"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "164px"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "172px"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "value": "164px"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "value": "172px"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "164px"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "172px"
+                  }
+                }
+              },
+              {
+                "key": "Width",
+                "value": "360px",
                 "mono": true
               },
               {
-                "key": "Padding H",
-                "value": "24px",
+                "key": "Status Bar",
+                "value": "360 × 44",
                 "mono": true
               },
               {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
+                "key": "TitleBar",
+                "value": "360 × 40",
+                "mono": true,
+                "variants": {
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "value": "360 × 40"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "value": "360 × 56"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "360 × 48"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "360 × 56"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "value": "360 × 48"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "value": "360 × 56"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "360 × 48"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "360 × 56"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "value": "360 × 40"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "value": "360 × 56"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "360 × 48"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "360 × 56"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "value": "360 × 48"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "value": "360 × 56"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "360 × 48"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "360 × 56"
+                  }
+                }
               },
               {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Light/Area",
-                "mono": true
+                "key": "TextContainer",
+                "value": "320px · Title centred at x 180",
+                "mono": true,
+                "variants": {
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "value": "320px · Title centred at x 180"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "value": "320px · Title centred at x 180"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "296px · Title centred at x 180"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "296px · Title centred at x 180"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "value": "296px · Title centred at x 180"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "value": "296px · Title centred at x 180"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "272px · Title centred at x 180"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "272px · Title centred at x 180"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "value": "320px · Title centred at x 180"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "value": "320px · Title centred at x 180"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "296px · Title centred at x 180"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "296px · Title centred at x 180"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "value": "296px · Title centred at x 180"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "value": "296px · Title centred at x 180"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "272px · Title centred at x 180"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "272px · Title centred at x 180"
+                  }
+                }
               },
               {
-                "key": "Title font",
-                "value": "Proxima Soft Semibold · 26 / 31 · +0.85",
-                "mono": true
+                "key": "Icons",
+                "value": "24 × 24 · x 20 and x 316",
+                "mono": true,
+                "variants": {
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "hide": true
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "hide": true
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "24 × 24 · 12px from TitleBar top"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "24 × 24 · 16px from TitleBar top"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:false": {
+                    "value": "24 × 24 · 12px from TitleBar top"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:false": {
+                    "value": "24 × 24 · 16px from TitleBar top"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:false": {
+                    "value": "24 × 24 · 12px from TitleBar top"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:false": {
+                    "value": "24 × 24 · 16px from TitleBar top"
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "hide": true
+                  },
+                  "hasleadingicon:false|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "hide": true
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "24 × 24 · 12px from TitleBar top"
+                  },
+                  "hasleadingicon:false|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "24 × 24 · 16px from TitleBar top"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:false|hastitleblock:true": {
+                    "value": "24 × 24 · 12px from TitleBar top"
+                  },
+                  "hasleadingicon:true|hastrailingelement:false|hassubtext:true|hastitleblock:true": {
+                    "value": "24 × 24 · 16px from TitleBar top"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:false|hastitleblock:true": {
+                    "value": "24 × 24 · 12px from TitleBar top"
+                  },
+                  "hasleadingicon:true|hastrailingelement:true|hassubtext:true|hastitleblock:true": {
+                    "value": "24 × 24 · 16px from TitleBar top"
+                  }
+                }
               },
               {
-                "key": "URL style",
-                "value": "Primary/Label/Light/Fine",
-                "mono": true
+                "key": "Subtext",
+                "value": "4px below Title",
+                "mono": true,
+                "variants": {
+                  "hassubtext:false": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "URL font",
-                "value": "Proxima Soft Semibold · 12 / 12 · +0.5",
-                "mono": true
+                "key": "TitleBlock",
+                "value": "360 × 72 · Header at x 24, y 29",
+                "mono": true,
+                "variants": {
+                  "hastitleblock:false": {
+                    "hide": true
+                  }
+                }
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTitleBar</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>url<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"gcash.com\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTitleBar</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    url <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"gcash.com\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-titleblock-preview\"><div style=\"width:360px;max-width:100%;background:#1972F9;border-radius:4px;overflow:hidden;font-family:Proxima Soft,system-ui,sans-serif;color:#FFF;\"><div style=\"height:44px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;\"><span>9:41</span><span style=\"display:flex;gap:4px;align-items:center;\"><svg width=\"16\" height=\"12\" viewBox=\"0 0 16 12\"><rect x=\"0\" y=\"8\" width=\"3\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"4\" y=\"5\" width=\"3\" height=\"7\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"8\" y=\"2\" width=\"3\" height=\"10\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"12\" y=\"0\" width=\"3\" height=\"12\" rx=\"0.5\" fill=\"#FFF\"></rect></svg><svg width=\"14\" height=\"12\" viewBox=\"0 0 14 12\"><path d=\"M7 10.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z\" fill=\"#FFF\" transform=\"translate(0,-2)\"></path><path d=\"M3.5 7.5C4.8 6.2 5.9 5.5 7 5.5s2.2.7 3.5 2\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path><path d=\"M1 4.5C3 2.5 5 1.5 7 1.5s4 1 6 3\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path></svg><svg width=\"22\" height=\"12\" viewBox=\"0 0 22 12\"><rect x=\"0\" y=\"1\" width=\"19\" height=\"10\" rx=\"2\" stroke=\"#FFF\" stroke-width=\"1\" fill=\"none\"></rect><rect x=\"2\" y=\"3\" width=\"15\" height=\"6\" rx=\"1\" fill=\"#FFF\"></rect><rect x=\"20\" y=\"4\" width=\"2\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect></svg></span></div><div style=\"display:flex;align-items:center;padding:12px 20px;position:relative;min-height:16px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;margin-right:12px;\"><path d=\"M15 18l-6-6 6-6\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;width:max-content;max-width:60%;\"><div style=\"font-size:16px;font-weight:600;letter-spacing:0.25px;line-height:16px;\">Title</div></div></div><div style=\"height:72px;padding:0 24px;display:flex;align-items:center;\"><div style=\"font-size:26px;font-weight:600;letter-spacing:0.85px;line-height:31px;\">Header</div></div></div></div>"
+        "swift": "EBTitleBar(\"Title\")",
+        "compose": "EBTitleBar(\n    title = \"Title\"\n)"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by State",
-        "description": "Single color scheme -- no appearance modes. All colors bound to <code>main/title-bar/color/</code> tokens. Display/navigation component with no state-driven color changes.",
+        "title": "Colors",
+        "description": "Read off <code>get_node_info</code> and <code>get_svg</code> on set <code>4784:34355</code>. One brand surface — a dark or transparent variant was ruled out in v2.2. The title-block variants add a <code>Background</code> rectangle carrying the same blue plus an image fill at 5% luminosity; that raster is not reproduced in the preview. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
           "Value"
         ],
         "rows": [
           {
-            "role": "Background",
-            "token": "main/title-bar/color/bg",
+            "role": "Surface",
+            "token": "—",
             "values": [
               "#1972F9"
             ]
           },
           {
-            "role": "Title label",
-            "token": "main/title-bar/color/label-title",
+            "role": "Background (title block)",
+            "token": "—",
+            "values": [
+              "#1972F9 + image @ 5% luminosity"
+            ]
+          },
+          {
+            "role": "Title, Header, icons, status bar",
+            "token": "—",
             "values": [
               "#FFFFFF"
-            ]
-          },
-          {
-            "role": "Header label",
-            "token": "main/title-bar/color/label-header",
-            "values": [
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "Subtext / URL",
-            "token": "main/title-bar/color/label-url",
-            "values": [
-              "#F6F9FDCC (80% opacity)"
-            ]
-          },
-          {
-            "role": "CTA text",
-            "token": "main/title-bar/color/label-cta",
-            "values": [
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "Icon",
-            "token": "main/title-bar/color/icon",
-            "values": [
-              "#FFFFFF"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [],
-        "rows": [
-          {
-            "role": "Status bar height",
-            "token": "44px",
-            "values": []
-          },
-          {
-            "role": "Title row padding H",
-            "token": "20px",
-            "values": []
-          },
-          {
-            "role": "Title row padding V",
-            "token": "12px",
-            "values": []
-          },
-          {
-            "role": "Leading icon size",
-            "token": "24 x 24",
-            "values": []
-          },
-          {
-            "role": "Trailing icon size",
-            "token": "24 x 24",
-            "values": []
-          },
-          {
-            "role": "Title block height",
-            "token": "72px",
-            "values": []
-          },
-          {
-            "role": "Title block padding H",
-            "token": "24px",
-            "values": []
-          },
-          {
-            "role": "Total height (no subtext, no block)",
-            "token": "~84px",
-            "values": []
-          },
-          {
-            "role": "Total height (with subtext, no block)",
-            "token": "~100px",
-            "values": []
-          },
-          {
-            "role": "Total height (with block)",
-            "token": "~156--172px",
-            "values": []
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Font",
-          "Size",
-          "Tracking",
-          "Line-height"
-        ],
-        "rows": [
-          {
-            "role": "Title",
-            "token": "Primary/Label/Light/Base",
-            "values": [
-              "Proxima Soft Semibold",
-              "16px",
-              "0.25px",
-              "16px"
             ]
           },
           {
             "role": "Subtext",
-            "token": "Primary/Label/Light/Fine",
+            "token": "—",
             "values": [
-              "Proxima Soft Semibold",
-              "12px",
-              "0.5px",
-              "12px"
-            ]
-          },
-          {
-            "role": "Header",
-            "token": "Primary/Headlines/Light/Area",
-            "values": [
-              "Proxima Soft Semibold",
-              "26px",
-              "0.85px",
-              "31px"
-            ]
-          },
-          {
-            "role": "CTA (control)",
-            "token": "Primary/Label/Light/Small",
-            "values": [
-              "Proxima Soft Semibold",
-              "14px",
-              "0.25px",
-              "14px"
+              "#F6F9FD @ 80%"
             ]
           }
         ]
@@ -596,12 +720,12 @@ export const titleBar: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "iOS -- Swift Package Manager",
-          "code": "<span class=\"cmt\">// In Xcode: File -> Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
         },
         {
-          "label": "Android -- Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:titlebar:1.0.0\"</span>)\n}"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:titlebar:2.5.1\"</span>)\n}"
         },
         {
           "label": "Import",
@@ -611,31 +735,47 @@ export const titleBar: ComponentData = {
       "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per variant axis of set <code>4784:34355</code>, then the instances and text layers. The four <code>has*</code> axes are <strong>variant</strong> properties — they appear in every variant name and multiply the set to 16 — not Figma boolean properties. No property-panel screenshot was supplied, so a text property would be missing here.",
       "rows": [
         {
-          "figma": "leading icon (yes/no)",
-          "swift": ".ebLeadingIcon(Image?)",
-          "compose": "leadingIcon: @Composable (() -> Unit)?"
+          "figma": "hasLeadingIcon — False, True",
+          "swift": "<code>.ebLeading { }</code> — omit for False",
+          "compose": "<code>onLeading: (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "trailing icon (yes/no)",
-          "swift": ".ebTrailingIcon(Image?)",
-          "compose": "trailingIcon: @Composable (() -> Unit)?"
+          "figma": "hasTrailingElement — False, True",
+          "swift": "<code>.ebTrailing(Image) { }</code> — omit for False",
+          "compose": "<code>trailing: @Composable (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "leading control (yes/no)",
-          "swift": ".ebLeadingControl(\"Done\")",
-          "compose": "leadingControlText: String?"
+          "figma": "hasSubtext — False, True",
+          "swift": "<code>.ebSubtext(String)</code> — omit for False",
+          "compose": "<code>subtext: String? = null</code>"
         },
         {
-          "figma": "subtext (yes/no)",
-          "swift": ".ebSubtext(\"m.gcash.com\")",
-          "compose": "subtext: String?"
+          "figma": "hasTitleBlock — False, True",
+          "swift": "<code>.ebTitleBlock(String)</code> — omit for False",
+          "compose": "<code>titleBlock: String? = null</code>"
         },
         {
-          "figma": "title block (yes/no)",
-          "swift": ".ebTitleBlock(\"Header\")",
-          "compose": "titleBlock: String?"
+          "figma": "— <code>Left Arrow</code> / <code>Leading Icon</code> instance",
+          "swift": "the back glyph, drawn by the component",
+          "compose": "the back glyph, drawn by the component"
+        },
+        {
+          "figma": "— <code>TrailingIcon</code> instance (Information)",
+          "swift": "the <code>Image</code> passed to <code>.ebTrailing</code>",
+          "compose": "content of <code>trailing</code>"
+        },
+        {
+          "figma": "— <code>Title</code> (TitleBar) text layer",
+          "swift": "<code>EBTitleBar(_ title: String)</code>",
+          "compose": "<code>title: String</code>"
+        },
+        {
+          "figma": "— <code>Status Bar</code> instance",
+          "swift": "not drawn — safe-area inset; set <code>.preferredColorScheme</code> / light status-bar content",
+          "compose": "not drawn — <code>WindowInsets.statusBars</code> padding"
         }
       ],
       "filePaths": {
@@ -645,162 +785,385 @@ export const titleBar: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Basic (title only)",
-        "swift": "<span class=\"typ\">EBTitleBar</span>(<span class=\"str\">\"Send Money\"</span>)",
-        "compose": "<span class=\"typ\">EBTitleBar</span>(\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Send Money\"</span>\n)"
+        "subheading": "Title only",
+        "swift": "<span class=\"cmt\">// hasLeadingIcon=False, hasTrailingElement=False, hasSubtext=False, hasTitleBlock=False — 4784:34356, 360 × 84.</span>\n<span class=\"typ\">EBTitleBar</span>(<span class=\"str\">\"Title\"</span>)",
+        "compose": "<span class=\"cmt\">// hasLeadingIcon=False, hasTrailingElement=False, hasSubtext=False, hasTitleBlock=False — 4784:34356, 360 × 84.</span>\n<span class=\"typ\">EBTitleBar</span>(\n    title = <span class=\"str\">\"Title\"</span>\n)"
       },
       {
-        "subheading": "With back arrow",
-        "swift": "<span class=\"typ\">EBTitleBar</span>(<span class=\"str\">\"Send Money\"</span>)\n    .<span class=\"fn\">ebLeadingIcon</span>(<span class=\"typ\">Image</span>(<span class=\"prp\">systemName</span>: <span class=\"str\">\"arrow.left\"</span>))",
-        "compose": "<span class=\"typ\">EBTitleBar</span>(\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Send Money\"</span>,\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.<span class=\"prp\">Default</span>.<span class=\"prp\">ArrowBack</span>, <span class=\"str\">\"Back\"</span>) }\n)"
+        "subheading": "Back + info",
+        "swift": "<span class=\"cmt\">// hasLeadingIcon=True, hasTrailingElement=True, hasSubtext=False, hasTitleBlock=False — 4784:34480, 360 × 92.</span>\n<span class=\"typ\">EBTitleBar</span>(<span class=\"str\">\"Title\"</span>)\n    .<span class=\"fn\">ebLeading</span> { dismiss() }\n    .<span class=\"fn\">ebTrailing</span>(<span class=\"typ\">Image</span>(<span class=\"str\">\"information\"</span>)) { showInfo() }",
+        "compose": "<span class=\"cmt\">// hasLeadingIcon=True, hasTrailingElement=True, hasSubtext=False, hasTitleBlock=False — 4784:34480, 360 × 92.</span>\n<span class=\"typ\">EBTitleBar</span>(\n    title = <span class=\"str\">\"Title\"</span>,\n    onLeading = { dismiss() },\n    trailing = { <span class=\"typ\">EBIconButton</span>(<span class=\"typ\">EBIcons</span>.<span class=\"prp\">Information</span>) { showInfo() } }\n)"
       },
       {
-        "subheading": "Full configuration",
-        "swift": "<span class=\"typ\">EBTitleBar</span>(<span class=\"str\">\"GCash\"</span>)\n    .<span class=\"fn\">ebLeadingIcon</span>(<span class=\"typ\">Image</span>(<span class=\"prp\">systemName</span>: <span class=\"str\">\"arrow.left\"</span>))\n    .<span class=\"fn\">ebTrailingIcon</span>(<span class=\"typ\">Image</span>(<span class=\"prp\">systemName</span>: <span class=\"str\">\"ellipsis\"</span>))\n    .<span class=\"fn\">ebSubtext</span>(<span class=\"str\">\"m.gcash.com\"</span>)\n    .<span class=\"fn\">ebTitleBlock</span>(<span class=\"str\">\"My Wallet\"</span>)",
-        "compose": "<span class=\"typ\">EBTitleBar</span>(\n    <span class=\"prp\">title</span> = <span class=\"str\">\"GCash\"</span>,\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.<span class=\"prp\">Default</span>.<span class=\"prp\">ArrowBack</span>, <span class=\"str\">\"Back\"</span>) },\n    <span class=\"prp\">trailingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.<span class=\"prp\">Default</span>.<span class=\"prp\">MoreVert</span>, <span class=\"str\">\"More\"</span>) },\n    <span class=\"prp\">subtext</span> = <span class=\"str\">\"m.gcash.com\"</span>,\n    <span class=\"prp\">titleBlock</span> = <span class=\"str\">\"My Wallet\"</span>\n)"
+        "subheading": "Back + subtext",
+        "swift": "<span class=\"cmt\">// hasLeadingIcon=True, hasTrailingElement=False, hasSubtext=True, hasTitleBlock=False — 4784:34543, 360 × 100.</span>\n<span class=\"typ\">EBTitleBar</span>(<span class=\"str\">\"Title\"</span>)\n    .<span class=\"fn\">ebSubtext</span>(<span class=\"str\">\"m.gcash.com\"</span>)\n    .<span class=\"fn\">ebLeading</span> { dismiss() }",
+        "compose": "<span class=\"cmt\">// hasLeadingIcon=True, hasTrailingElement=False, hasSubtext=True, hasTitleBlock=False — 4784:34543, 360 × 100.</span>\n<span class=\"typ\">EBTitleBar</span>(\n    title = <span class=\"str\">\"Title\"</span>,\n    subtext = <span class=\"str\">\"m.gcash.com\"</span>,\n    onLeading = { dismiss() }\n)"
       },
       {
-        "subheading": "With leading control",
-        "swift": "<span class=\"typ\">EBTitleBar</span>(<span class=\"str\">\"Edit Profile\"</span>)\n    .<span class=\"fn\">ebLeadingIcon</span>(<span class=\"typ\">Image</span>(<span class=\"prp\">systemName</span>: <span class=\"str\">\"arrow.left\"</span>))\n    .<span class=\"fn\">ebLeadingControl</span>(<span class=\"str\">\"Done\"</span>)",
-        "compose": "<span class=\"typ\">EBTitleBar</span>(\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Edit Profile\"</span>,\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.<span class=\"prp\">Default</span>.<span class=\"prp\">ArrowBack</span>, <span class=\"str\">\"Back\"</span>) },\n    <span class=\"prp\">leadingControlText</span> = <span class=\"str\">\"Done\"</span>\n)"
+        "subheading": "Full, with title block",
+        "swift": "<span class=\"cmt\">// hasLeadingIcon=True, hasTrailingElement=True, hasSubtext=True, hasTitleBlock=True — 4784:34413, 360 × 172.</span>\n<span class=\"typ\">EBTitleBar</span>(<span class=\"str\">\"Title\"</span>)\n    .<span class=\"fn\">ebSubtext</span>(<span class=\"str\">\"m.gcash.com\"</span>)\n    .<span class=\"fn\">ebLeading</span> { dismiss() }\n    .<span class=\"fn\">ebTrailing</span>(<span class=\"typ\">Image</span>(<span class=\"str\">\"information\"</span>)) { showInfo() }\n    .<span class=\"fn\">ebTitleBlock</span>(<span class=\"str\">\"Header\"</span>)",
+        "compose": "<span class=\"cmt\">// hasLeadingIcon=True, hasTrailingElement=True, hasSubtext=True, hasTitleBlock=True — 4784:34413, 360 × 172.</span>\n<span class=\"typ\">EBTitleBar</span>(\n    title = <span class=\"str\">\"Title\"</span>,\n    subtext = <span class=\"str\">\"m.gcash.com\"</span>,\n    onLeading = { dismiss() },\n    trailing = { <span class=\"typ\">EBIconButton</span>(<span class=\"typ\">EBIcons</span>.<span class=\"prp\">Information</span>) { showInfo() } },\n    titleBlock = <span class=\"str\">\"Header\"</span>\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Minimum touch target",
-        "ios": "44 x 44 pt (icons and control)",
-        "android": "48 x 48 dp (icons and control)"
+        "requirement": "Heading",
+        "ios": "Mark the Title with <code>.accessibilityAddTraits(.isHeader)</code>; when the title block is shown, the Header is the heading and the bar Title is hidden from VoiceOver to avoid reading it twice.",
+        "android": "<code>Modifier.semantics { heading() }</code> on the visible heading only."
       },
       {
-        "requirement": "Back button label",
-        "ios": "<code>.accessibilityLabel(\"Back\")</code>",
-        "android": "<code>contentDescription = \"Navigate back\"</code>"
+        "requirement": "Leading and trailing actions",
+        "ios": "Label the back arrow “Back” and the Information icon by what it opens. Both are 24 × 24 — extend to 44pt.",
+        "android": "<code>contentDescription</code> on both; use <code>IconButton</code> for the 48dp target."
       },
       {
-        "requirement": "Trailing icon label",
-        "ios": "<code>.accessibilityLabel(\"More options\")</code>",
-        "android": "<code>contentDescription = \"More options\"</code>"
+        "requirement": "Status bar",
+        "ios": "Never draw the status bar. Request light content so system icons stay white on #1972F9.",
+        "android": "Draw behind the status bar with <code>WindowInsets</code> and set light icons."
       },
       {
-        "requirement": "Heading semantics",
-        "ios": "<code>.accessibilityAddTraits(.isHeader)</code> on title",
-        "android": "<code>semantics { heading() }</code> on title"
+        "requirement": "Contrast",
+        "ios": "On #1972F9: Title white 16pt is 4.36:1 and Subtext #F6F9FD 80% at 12pt is 3.19:1 — both below 4.5:1. The 26pt Header passes as large text (4.36:1 ≥ 3:1).",
+        "android": "Same ratios."
+      },
+      {
+        "requirement": "Dynamic Type / font scaling",
+        "ios": "The bar is 40–56 tall in Figma. Let the title truncate to one line with an accessible full label; let the title block grow.",
+        "android": "Use <code>sp</code>; single-line title with ellipsis, full text in <code>contentDescription</code>."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use EBTitleBar as the top-level navigation element on every screen. Keep the title short and descriptive.",
-        "dontText": "Nest a title bar inside scrollable content or use it as a section header within a page -- use a section heading component instead."
+        "doText": "Use Title Bar - App at the top of every app screen that needs a title or navigation.",
+        "dontText": "Don’t use it for brand-only screens — that is Brand App Bar."
       },
       {
-        "doText": "Use the title block for high-level section headers like \"My Wallet\" or \"Dashboard\" where the large text reinforces the current context.",
-        "dontText": "Show both trailing icon and leading control simultaneously -- they occupy the same trailing slot. Use one or the other."
+        "doText": "Use the title block for landing screens that introduce a section.",
+        "dontText": "Don’t combine the title block with a long subtext; the bar is already 172 tall."
+      },
+      {
+        "doText": "Treat the 44px status bar as a safe-area inset.",
+        "dontText": "Don’t reproduce the mock iOS status bar in code."
+      },
+      {
+        "doText": "Keep the title to one line — 272px with both icons.",
+        "dontText": "Don’t put actions other than the single trailing element in the bar."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Semantic layer names: <code>title</code>, <code>Title Bar</code>, <code>title-block</code>, <code>Leading Icon</code>, <code>Placeholder</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "v2.4 recorded naming as complete, but the leading instance is <code>Left Arrow</code> on the eight bar-only variants and <code>Leading Icon</code> on the eight title-block variants, and the subtext text layer is named <code>Link</code> rather than for its role."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "All 5 boolean properties use <code>yes/no</code> instead of <code>true/false</code>. <code>leading control</code> has implicit dependency on other properties."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Four <code>has*</code> axes on <code>True</code>/<code>False</code>, a complete 16-variant matrix. They are variant properties rather than Figma boolean properties — the Overview calls them genuine booleans — which is why the set has 16 variants. <code>hasTitleBlock</code> as a boolean is an owner decision (v2.4)."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All 6 color roles bound to <code>main/title-bar/color/</code> tokens."
+        "notes": "All three text layers resolve <code>matched</code> — <code>Primary/Label/Light/Base</code>, <code>Primary/Label/Light/Fine</code>, <code>Primary/Headlines/Light/Area</code>. Colour bindings cannot be read with the plugin."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Maps to <code>NavigationBar</code> (iOS) / <code>TopAppBar</code> (Android, Material 3)."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "One <code>EBTitleBar</code> with four optionals. But TitleBar grows from 40 to 48 when either icon appears, so the title shifts 4px down — native bars keep a fixed height. The <code>Background</code> rectangle is 1px short on 4784:34361 and 364.24 wide at x −2.12 on 4784:34413 and 4784:34437."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Navigation bar -- no interaction states needed beyond individual tap targets on icons and control."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "The bar has no states; the back arrow and trailing icon carry their own."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Trailing icon uses <code>icon-placeholder</code> RECTANGLE instead of a swappable icon instance."
+        "notes": "Left Arrow and Information are vector DS icons. The title-block <code>Background</code> carries a raster IMAGE fill at 5% luminosity, which native code would have to ship as a bitmap."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "No SwiftUI or Compose mappings are registered; the native library does not exist."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "All booleans use <code>yes/no</code> -- must be renamed to <code>true/false</code> before Code Connect mapping"
-      },
-      {
-        "aspect": "Asset quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Trailing icon placeholder RECTANGLE needs replacement with icon instance"
-      },
-      {
-        "aspect": "State coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Navigation bar -- no interaction states needed"
-      },
-      {
-        "aspect": "Native component file",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "EBTitleBar.swift / EBTitleBar.kt not yet created"
-      }
-    ],
+    "codeConnect": [],
     "variants": {
-      "total": 20,
-      "description": "5 boolean properties (<code>leading icon</code>, <code>trailing icon</code>, <code>leading control</code>, <code>subtext</code>, <code>title block</code>) with implicit constraints yield <strong>20 variants</strong>: 10 without title block + 10 with title block.",
+      "total": 16,
+      "description": "<code>hasLeadingIcon</code> × <code>hasTrailingElement</code> × <code>hasSubtext</code> × <code>hasTitleBlock</code> = 16 variants, a complete matrix. Height is 44 status bar + TitleBar (40, 48 with an icon, 56 with subtext) + 72 with the title block.",
       "columns": [
-        "title block",
-        "Combinations covered",
-        "Count"
+        "hasLeadingIcon",
+        "hasTrailingElement",
+        "hasSubtext",
+        "hasTitleBlock",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>no</strong>",
-            "10 combos of leading/trailing icon + leading control + subtext",
-            "10"
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4784:34356</code>",
+            "360 × 84"
           ]
         },
         {
           "cells": [
-            "<strong>yes</strong>",
-            "Same 10 combos with title block enabled",
-            "10"
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>4784:34474</code>",
+            "360 × 100"
+          ]
+        },
+        {
+          "cells": [
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4784:34499</code>",
+            "360 × 92"
+          ]
+        },
+        {
+          "cells": [
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>4784:34507</code>",
+            "360 × 100"
+          ]
+        },
+        {
+          "cells": [
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4784:34535</code>",
+            "360 × 92"
+          ]
+        },
+        {
+          "cells": [
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>4784:34543</code>",
+            "360 × 100"
+          ]
+        },
+        {
+          "cells": [
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4784:34480</code>",
+            "360 × 92"
+          ]
+        },
+        {
+          "cells": [
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>4784:34489</code>",
+            "360 × 100"
+          ]
+        },
+        {
+          "cells": [
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>4784:34361</code>",
+            "360 × 156"
+          ]
+        },
+        {
+          "cells": [
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>4784:34369</code>",
+            "360 × 172"
+          ]
+        },
+        {
+          "cells": [
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>4784:34378</code>",
+            "360 × 164"
+          ]
+        },
+        {
+          "cells": [
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>4784:34389</code>",
+            "360 × 172"
+          ]
+        },
+        {
+          "cells": [
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>4784:34426</code>",
+            "360 × 164"
+          ]
+        },
+        {
+          "cells": [
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>4784:34437</code>",
+            "360 × 172"
+          ]
+        },
+        {
+          "cells": [
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>4784:34401</code>",
+            "360 × 164"
+          ]
+        },
+        {
+          "cells": [
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>4784:34413</code>",
+            "360 × 172"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.5.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 4784:34355",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the variant axes.</strong> Two cards on retired <code>23:*</code> nodes carried five yes/no controls, including <code>Leading control</code>, which no longer exists. Now one card with the four <code>has*</code> toggles resolving all 16 variants.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from Figma.</strong> TitleBar heights (40 / 48 / 56), icon offsets, the centred title, the mock status bar and the 72px title block now follow the set; the Left Arrow and Information glyphs come from the library.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography now names text styles.</strong> Title <code>Primary/Label/Light/Base</code>, subtext <code>Primary/Label/Light/Fine</code>, Header <code>Primary/Headlines/Light/Area</code> — all matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>The Code tab still described the 1.0.0 component.</strong> Property Mapping listed five yes/no properties including <code>leading control</code>. Rebuilt on the four live axes with <code>com.eastblue.ds:titlebar:2.5.1</code> and four snippets.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard rescored against v2.0–v2.5.</strong> C2 and C3 Ready; C1, C4, C6 Needs Refinement on new findings; C5 Not Applicable; C7 Not Mapped.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Leading instance named two ways</strong> — <code>Left Arrow</code> on bar-only variants, <code>Leading Icon</code> on title-block variants — and the subtext layer is <code>Link</code>. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>TitleBar height changes with icons</strong> (40 → 48), and the <code>Background</code> rectangle is 1px short on 4784:34361 and overflows to 364.24 wide on 4784:34413 and 4784:34437. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Title-block Background is a raster image fill</strong> at 5% luminosity. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>Title and subtext fail AA</strong> on #1972F9 — 4.36:1 at 16pt and 3.19:1 at 12pt. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Overview calls the four axes genuine Figma booleans.</strong> They are variant properties, which is why the set has 16 variants. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Property panel not confirmed, and v2.0.0–v2.5.0 have no changelog entries.</strong> The panel is built from variant names; the Overview records eleven resolutions across those versions but their dates are not recorded, so they are not invented. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "",

@@ -1,38 +1,70 @@
 import type { ComponentData, DemoControlSection } from '../types';
-import { buildMultiModeColorsTable, buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/toast.js`.
+// Panel mirrors the variant axes of set 4915:25141, in variant-name order.
+// No property-panel screenshot was supplied, so a text or instance-swap
+// property would not appear here. Only 22 of the 96 combinations are built;
+// the demo script snaps to the nearest built variant. Text-Slot and
+// Component-Slot are SLOTs and get no control.
 const toastDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
+        label: 'Appearance',
+        prop: 'appearance',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'destructive', label: 'Destructive' },
+          { value: 'pending', label: 'Pending' },
+        ],
+      },
+      {
         label: 'Theme',
         prop: 'theme',
         defaultValue: 'dark',
         options: [
-          { value: 'dark', label: 'dark' },
-          { value: 'light', label: 'light' },
-          { value: 'default', label: 'default' },
+          { value: 'dark', label: 'Dark' },
+          { value: 'light', label: 'Light' },
         ],
       },
       {
-        label: 'With Icon',
-        prop: 'withIcon',
-        defaultValue: 'yes',
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'md',
         options: [
-          { value: 'yes', label: 'yes' },
-          { value: 'no', label: 'no' },
+          { value: 'md', label: 'MD' },
+          { value: 'sm', label: 'SM' },
         ],
       },
       {
-        label: 'Large Label',
-        prop: 'largeLabel',
-        defaultValue: 'yes',
+        label: 'hasLeadingIcon',
+        prop: 'hasleadingicon',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: 'yes', label: 'yes' },
-          { value: 'no', label: 'no' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasTrailingAction',
+        prop: 'hastrailingaction',
+        control: 'toggle',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasDescription',
+        prop: 'hasdescription',
+        control: 'toggle',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -244,45 +276,336 @@ export const toast: ComponentData = {
     "recommendations": []
   },
   "style": {
-    "heading": "Types",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "default",
-        "demoKey": "dark",
+        "cardKey": "ts-spec-main",
+        "demoKey": "main",
+        "title": "Toast",
+        "node": "4915:25141",
+        "description": "",
+        "previewHtml": "<div id=\"toast-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": toastDemoControls,
-        "title": "Default",
-        "node": "27:53136",
-        "description": "Confirms a completed action — transfer sent, settings saved, upload finished. Default theme places a checkmark glyph on a dark navy surface.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-1\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><svg class=\"eb-preview-toast__icon eb-preview-toast__icon--large\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" fill=\"none\"></circle><path d=\"M7.50 12.20 L10.80 16.50 L17.00 7.50\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Theme",       "value": "dark", "mono": true, "prop": "theme" },
-              { "key": "With Icon",   "value": "yes",  "mono": true, "prop": "withIcon" },
-              { "key": "Large Label", "value": "yes",  "mono": true, "prop": "largeLabel" }
+              {
+                "key": "Appearance",
+                "value": "Default",
+                "prop": "appearance"
+              },
+              {
+                "key": "Theme",
+                "value": "Dark",
+                "prop": "theme"
+              },
+              {
+                "key": "Size",
+                "value": "MD",
+                "prop": "size"
+              },
+              {
+                "key": "hasLeadingIcon",
+                "value": "True",
+                "prop": "hasleadingicon"
+              },
+              {
+                "key": "hasTrailingAction",
+                "value": "False",
+                "prop": "hastrailingaction"
+              },
+              {
+                "key": "hasDescription",
+                "value": "False",
+                "prop": "hasdescription"
+              },
+              {
+                "key": "Leading icon",
+                "value": "Checkmark (Circular)",
+                "variants": {
+                  "appearance:pending": {
+                    "value": "Information"
+                  },
+                  "appearance:destructive": {
+                    "value": "Close"
+                  },
+                  "hasleadingicon:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Text-Slot",
+                "value": "Slot · Subtext Message",
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Component-Slot",
+                "value": "Slot · Button - XSmall",
+                "variants": {
+                  "hastrailingaction:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Resolved variant",
+                "value": "4915:25142 · 312 × 38",
+                "mono": true,
+                "variants": {
+                  "appearance:default|theme:dark|size:md|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25142 · 312 × 38"
+                  },
+                  "appearance:default|theme:light|size:md|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25148 · 312 × 38"
+                  },
+                  "appearance:destructive|theme:dark|size:md|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25154 · 312 × 38"
+                  },
+                  "appearance:pending|theme:dark|size:md|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25160 · 312 × 38"
+                  },
+                  "appearance:pending|theme:light|size:md|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25166 · 312 × 38"
+                  },
+                  "appearance:destructive|theme:dark|size:md|hasleadingicon:false|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25172 · 312 × 38"
+                  },
+                  "appearance:default|theme:dark|size:md|hasleadingicon:false|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25175 · 312 × 38"
+                  },
+                  "appearance:default|theme:light|size:md|hasleadingicon:false|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25178 · 312 × 38"
+                  },
+                  "appearance:destructive|theme:dark|size:sm|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25181 · 312 × 38"
+                  },
+                  "appearance:default|theme:dark|size:sm|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25186 · 312 × 38"
+                  },
+                  "appearance:default|theme:light|size:sm|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25192 · 312 × 38"
+                  },
+                  "appearance:destructive|theme:dark|size:sm|hasleadingicon:false|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25197 · 312 × 38"
+                  },
+                  "appearance:pending|theme:dark|size:sm|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25200 · 312 × 38"
+                  },
+                  "appearance:pending|theme:light|size:sm|hasleadingicon:true|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25205 · 312 × 38"
+                  },
+                  "appearance:default|theme:dark|size:sm|hasleadingicon:false|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25210 · 312 × 38"
+                  },
+                  "appearance:default|theme:light|size:sm|hasleadingicon:false|hastrailingaction:false|hasdescription:false": {
+                    "value": "4915:25213 · 312 × 38"
+                  },
+                  "appearance:default|theme:dark|size:md|hasleadingicon:false|hastrailingaction:true|hasdescription:true": {
+                    "value": "4915:25216 · 312 × 59"
+                  },
+                  "appearance:default|theme:light|size:md|hasleadingicon:false|hastrailingaction:true|hasdescription:true": {
+                    "value": "4915:25224 · 312 × 59"
+                  },
+                  "appearance:destructive|theme:light|size:md|hasleadingicon:false|hastrailingaction:true|hasdescription:true": {
+                    "value": "4915:25232 · 312 × 59"
+                  },
+                  "appearance:default|theme:dark|size:md|hasleadingicon:false|hastrailingaction:true|hasdescription:false": {
+                    "value": "4915:25240 · 312 × 41"
+                  },
+                  "appearance:default|theme:light|size:md|hasleadingicon:false|hastrailingaction:true|hasdescription:false": {
+                    "value": "4915:25245 · 312 × 41"
+                  },
+                  "appearance:destructive|theme:light|size:md|hasleadingicon:false|hastrailingaction:true|hasdescription:false": {
+                    "value": "4915:25250 · 312 × 41"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Background", "value": "#0A2757", "token": "toast/color/default/bg",
+              {
+                "key": "Surface",
+                "value": "#0A2757",
+                "token": "—",
                 "variants": {
-                  "theme:light":   { "value": "#FFFFFF", "token": "toast/color/light/bg" },
-                  "theme:default": { "value": "#0A2757", "token": "toast/color/default/bg" }
+                  "theme:light": {
+                    "value": "#FFFFFF"
+                  },
+                  "appearance:destructive|theme:dark": {
+                    "value": "#D61B2C"
+                  },
+                  "appearance:destructive|theme:light": {
+                    "value": "#D61B2C"
+                  }
                 }
               },
-              { "key": "Label", "value": "#FFFFFF", "token": "toast/color/default/label",
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "token": "—",
                 "variants": {
-                  "theme:light": { "value": "#0A2757", "token": "toast/color/light/label" }
+                  "appearance:destructive": {
+                    "value": "#F4C7C9"
+                  }
                 }
               },
-              { "key": "Icon", "value": "#FFFFFF", "token": "toast/color/default/icon",
+              {
+                "key": "Title",
+                "value": "#FFFFFF",
+                "token": "—",
                 "variants": {
-                  "theme:light":   { "value": "#0A2757", "token": "toast/color/light/icon" },
-                  "withIcon:no":   { "hide": true }
+                  "theme:light": {
+                    "value": "#0A2757"
+                  },
+                  "appearance:destructive|theme:dark": {
+                    "value": "#FFFFFF"
+                  },
+                  "appearance:destructive|theme:light": {
+                    "value": "#FFFFFF"
+                  }
+                }
+              },
+              {
+                "key": "Icon",
+                "value": "#FFFFFF",
+                "token": "—",
+                "variants": {
+                  "hasleadingicon:false|appearance:default|theme:dark": { "hide": true },
+                  "hasleadingicon:false|appearance:default|theme:light": { "hide": true },
+                  "hasleadingicon:false|appearance:destructive|theme:dark": { "hide": true },
+                  "hasleadingicon:false|appearance:destructive|theme:light": { "hide": true },
+                  "hasleadingicon:false|appearance:pending|theme:dark": { "hide": true },
+                  "hasleadingicon:false|appearance:pending|theme:light": { "hide": true },
+                  "theme:light": {
+                    "value": "#0A2757"
+                  },
+                  "appearance:destructive|theme:dark": {
+                    "value": "#FFFFFF"
+                  },
+                  "appearance:destructive|theme:light": {
+                    "value": "#FFFFFF"
+                  },
+                  "hasleadingicon:false|theme:dark": {
+                    "hide": true
+                  },
+                  "hasleadingicon:false|theme:light": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "#F6F9FD @ 72%",
+                "token": "—",
+                "variants": {
+                  "theme:light": {
+                    "value": "#6780A9"
+                  },
+                  "appearance:destructive|theme:light": {
+                    "value": "#F6F9FD @ 80%"
+                  },
+                  "hasdescription:false|theme:dark": {
+                    "hide": true
+                  },
+                  "hasdescription:false|theme:light": {
+                    "hide": true
+                  },
+                  "hasdescription:false|appearance:destructive|theme:light": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Button surface",
+                "value": "#FFFFFF",
+                "token": "—",
+                "variants": {
+                  "theme:light": {
+                    "value": "#005CE5"
+                  },
+                  "appearance:destructive|theme:light": {
+                    "value": "None — no fill"
+                  },
+                  "hastrailingaction:false|theme:dark": {
+                    "hide": true
+                  },
+                  "hastrailingaction:false|theme:light": {
+                    "hide": true
+                  },
+                  "hastrailingaction:false|appearance:destructive|theme:dark": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Button label",
+                "value": "#005CE5",
+                "token": "—",
+                "variants": {
+                  "theme:light": {
+                    "value": "#FFFFFF"
+                  },
+                  "appearance:destructive|theme:light": {
+                    "value": "#FFFFFF"
+                  },
+                  "hastrailingaction:false|theme:dark": {
+                    "hide": true
+                  },
+                  "hastrailingaction:false|theme:light": {
+                    "hide": true
+                  },
+                  "hastrailingaction:false|appearance:destructive|theme:dark": {
+                    "hide": true
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Label/Light/Small",
+                "mono": true,
+                "variants": {
+                  "size:sm": {
+                    "value": "Primary/Multi-line Label/Light/Fine"
+                  },
+                  "hastrailingaction:true": {
+                    "value": "Primary/Multi-line Label/Small"
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Small Caption",
+                "mono": true,
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Button label",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "variants": {
+                  "hastrailingaction:false": {
+                    "hide": true
+                  }
                 }
               }
             ]
@@ -291,385 +614,780 @@ export const toast: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Width",         "value": "312", "mono": true },
-              { "key": "Padding",       "value": "12 × 12", "mono": true },
-              { "key": "Corner radius", "value": "8",   "mono": true },
-              { "key": "Icon size",     "value": "24 × 24", "mono": true,
-                "variants": { "largeLabel:no": { "value": "16 × 16" }, "withIcon:no": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Font",  "value": "Proxima Soft Semibold", "mono": true },
-              { "key": "Style", "value": "Primary/Label/Light/Small", "mono": true,
-                "variants": { "largeLabel:no": { "value": "Primary/Multi-line Label/Light/Fine" } }
-              },
-              { "key": "Size",  "value": "14 / 14 · +0.25", "mono": true,
-                "variants": { "largeLabel:no": { "value": "12 / 14 · +0.5" } }
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Action successful\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"checkmark\"</span><span class=\"syn-punc\">))</span>",
-        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    message <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Action successful\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Check</span><span class=\"syn-punc\">, null) }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "error",
-        "demoKey": "error",
-        "demoControls": toastDemoControls,
-        "title": "Error",
-        "node": "27:53154",
-        "description": "Surfaces a failure that needs the user's attention — failed transfer, invalid input, expired session. Red surface with a leading X glyph.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-2\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--destructive eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><svg class=\"eb-preview-toast__icon eb-preview-toast__icon--large\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" fill=\"none\"></circle><path d=\"M8 8 L16 16 M16 8 L8 16\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Theme",       "value": "default", "mono": true, "prop": "theme" },
-              { "key": "With Icon",   "value": "yes",     "mono": true, "prop": "withIcon" },
-              { "key": "Large Label", "value": "yes",     "mono": true, "prop": "largeLabel" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#D61B2C", "token": "toast/color/destructive/bg" },
-              { "key": "Label",      "value": "#FFFFFF", "token": "toast/color/destructive/label" },
-              { "key": "Icon", "value": "#FFFFFF", "token": "toast/color/destructive/icon",
-                "variants": { "withIcon:no": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",         "value": "312", "mono": true },
-              { "key": "Padding",       "value": "12 × 12", "mono": true },
-              { "key": "Corner radius", "value": "8",   "mono": true },
-              { "key": "Icon size",     "value": "24 × 24", "mono": true,
-                "variants": { "largeLabel:no": { "value": "16 × 16" }, "withIcon:no": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Font",  "value": "Proxima Soft Semibold", "mono": true },
-              { "key": "Style", "value": "Primary/Label/Light/Small", "mono": true,
-                "variants": { "largeLabel:no": { "value": "Primary/Multi-line Label/Light/Fine" } }
-              },
-              { "key": "Size",  "value": "14 / 14 · +0.25", "mono": true,
-                "variants": { "largeLabel:no": { "value": "12 / 14 · +0.5" } }
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Something went wrong\"</span><span class=\"syn-punc\">,</span>\n    intent<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>error\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Something went wrong\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastIntent</span><span class=\"syn-punc\">.</span>Error\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "pending",
-        "demoKey": "pending",
-        "demoControls": toastDemoControls,
-        "title": "Pending",
-        "node": "3424:1308",
-        "description": "Acknowledges in-flight work the user kicked off — submitting a form, syncing a balance, processing a payment. A spinner glyph signals the action is still running.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-3\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><div class=\"eb-preview-toast__icon-placeholder eb-preview-toast__icon-placeholder--large\"></div></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Theme",       "value": "dark", "mono": true, "prop": "theme" },
-              { "key": "With Icon",   "value": "yes",  "mono": true, "prop": "withIcon" },
-              { "key": "Large Label", "value": "yes",  "mono": true, "prop": "largeLabel" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#0A2757", "token": "toast/color/pending/bg",
+              {
+                "key": "Height",
+                "value": "38px",
+                "mono": true,
                 "variants": {
-                  "theme:light": { "value": "#FFFFFF", "token": "toast/color/light/bg" }
+                  "hastrailingaction:true": {
+                    "value": "41px"
+                  },
+                  "hastrailingaction:true|hasdescription:true": {
+                    "value": "59px"
+                  }
                 }
               },
-              { "key": "Label", "value": "#FFFFFF", "token": "toast/color/pending/label",
+              {
+                "key": "Width",
+                "value": "312px",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "8px",
+                "mono": true
+              },
+              {
+                "key": "Padding",
+                "value": "12px all sides",
+                "mono": true,
                 "variants": {
-                  "theme:light": { "value": "#0A2757", "token": "toast/color/light/label" }
+                  "hastrailingaction:true": {
+                    "value": "16px H · 8px V"
+                  },
+                  "hastrailingaction:true|hasdescription:true": {
+                    "value": "16px H · 12px V"
+                  }
                 }
               },
-              { "key": "Icon", "value": "#FFC857", "token": "toast/color/pending/icon",
-                "variants": { "withIcon:no": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",         "value": "312", "mono": true },
-              { "key": "Padding",       "value": "12 × 12", "mono": true },
-              { "key": "Corner radius", "value": "8",   "mono": true },
-              { "key": "Icon size",     "value": "24 × 24", "mono": true,
-                "variants": { "largeLabel:no": { "value": "16 × 16" }, "withIcon:no": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Font",  "value": "Proxima Soft Semibold", "mono": true },
-              { "key": "Style", "value": "Primary/Label/Light/Small", "mono": true,
-                "variants": { "largeLabel:no": { "value": "Primary/Multi-line Label/Light/Fine" } }
+              {
+                "key": "Leading icon",
+                "value": "24 × 24 · 8px to Title",
+                "mono": true,
+                "variants": {
+                  "size:sm": {
+                    "value": "16 × 16 · 8px to Title"
+                  },
+                  "hasleadingicon:false|size:md": {
+                    "hide": true
+                  },
+                  "hasleadingicon:false|size:sm": {
+                    "hide": true
+                  }
+                }
               },
-              { "key": "Size",  "value": "14 / 14 · +0.25", "mono": true,
-                "variants": { "largeLabel:no": { "value": "12 / 14 · +0.5" } }
+              {
+                "key": "Title width",
+                "value": "256px",
+                "mono": true,
+                "variants": {
+                  "size:sm": {
+                    "value": "264px"
+                  },
+                  "hasleadingicon:false|size:md": {
+                    "value": "288px"
+                  },
+                  "hasleadingicon:false|size:sm": {
+                    "value": "288px"
+                  },
+                  "hastrailingaction:true|hasleadingicon:false|size:md": {
+                    "value": "188px"
+                  }
+                }
+              },
+              {
+                "key": "Text-Slot",
+                "value": "188 × 15 · 4px below Title",
+                "mono": true,
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Component-Slot",
+                "value": "68 × 35 · 24px after text",
+                "mono": true,
+                "variants": {
+                  "hastrailingaction:false": {
+                    "hide": true
+                  },
+                  "hastrailingaction:true|hasdescription:false": {
+                    "value": "68 × 25 · 24px after text"
+                  }
+                }
+              },
+              {
+                "key": "Button",
+                "value": "68 × 24",
+                "mono": true,
+                "variants": {
+                  "hastrailingaction:false": {
+                    "hide": true
+                  },
+                  "hastrailingaction:true|appearance:destructive": {
+                    "value": "67 × 24"
+                  }
+                }
+              },
+              {
+                "key": "Fill layer",
+                "value": "ToastRow",
+                "mono": true,
+                "variants": {
+                  "hastrailingaction:true|hasdescription:true": {
+                    "value": "Component frame"
+                  },
+                  "hastrailingaction:true|hasdescription:false|theme:light": {
+                    "value": "Component frame"
+                  }
+                }
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Processing your request…\"</span><span class=\"syn-punc\">,</span>\n    intent<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>pending\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Processing your request…\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastIntent</span><span class=\"syn-punc\">.</span>Pending\n<span class=\"syn-punc\">)</span>"
-      },
-      
+        "swift": "EBToast(\n    \"Add the popup message here\",\n    appearance: .default,\n    theme: .dark,\n    size: .md\n)",
+        "compose": "EBToast(\n    message = \"Add the popup message here\",\n    appearance = EBToastAppearance.Default,\n    theme = EBToastTheme.Dark,\n    size = EBToastSize.MD\n)"
+      }
     ],
-    colorsTables: [
-      // Card 1 — Default · with icon · large label
-      buildMultiModeColorsTable({
-        title: 'Default — Colors by Theme',
-        description: 'Information toast. Theme axis flips surface + label between Dark (navy) and Light (white).',
-        modes: ['Theme · Dark', 'Theme · Light'],
-        rows: [
-          { role: 'Surface bg', token: 'main/toast/default/{theme}/bg',     values: ['#0A2757', '#FFFFFF'] },
-          { role: 'Border',     token: 'main/toast/default/{theme}/border', values: ['#E5EBF4', '#E5EBF4'] },
-          { role: 'Label',      token: 'main/toast/default/{theme}/label',  values: ['#FFFFFF', '#0A2757'] },
-          { role: 'Icon',       token: 'main/toast/default/{theme}/icon',   values: ['#FFFFFF', '#0A2757'] },
+    "colorsTables": [
+      {
+        "title": "Colors by Appearance & Theme",
+        "description": "Read off <code>get_node_info</code> and <code>get_svg</code> on set <code>4915:25141</code>. <strong>Destructive is the same red whatever its Theme value</strong> — its message variants are named <code>Theme=Dark</code> and its action variants <code>Theme=Light</code>. The Button belongs to its own component. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Default · Dark",
+          "Default · Light",
+          "Pending · Dark",
+          "Pending · Light",
+          "Destructive"
         ],
-      }),
-      // Card 2 — Error
-      buildStatelessColorsTable({
-        title: 'Error — Colors',
-        description: 'Critical/error toast. Single appearance regardless of theme.',
-        rows: [
-          { role: 'Surface bg', token: 'main/toast/error/bg',     value: '#D61B2C' },
-          { role: 'Border',     token: 'main/toast/error/border', value: '#F4C7C9' },
-          { role: 'Label',      token: 'main/toast/error/label',  value: '#FFFFFF' },
-          { role: 'Icon',       token: 'main/toast/error/icon',   value: '#FFFFFF' },
-        ],
-      }),
-      // Card 3 — Pending · with icon · large label
-      buildMultiModeColorsTable({
-        title: 'Pending — Colors by Theme',
-        description: 'In-progress / loading state toast. Same surface palette as Default; spinner replaces the static icon.',
-        modes: ['Theme · Dark', 'Theme · Light'],
-        rows: [
-          { role: 'Surface bg',  token: 'main/toast/pending/{theme}/bg',      values: ['#0A2757', '#FFFFFF'] },
-          { role: 'Border',      token: 'main/toast/pending/{theme}/border',  values: ['#E5EBF4', '#E5EBF4'] },
-          { role: 'Label',       token: 'main/toast/pending/{theme}/label',   values: ['#FFFFFF', '#0A2757'] },
-          { role: 'Spinner',     token: 'main/toast/pending/{theme}/spinner', values: ['#FFFFFF', '#0A2757'] },
-        ],
-      }),
-      // Card 4 — Default · no icon, small label
-      buildMultiModeColorsTable({
-        title: 'Default (No Icon) — Colors by Theme',
-        description: 'Same theme palette as the with-icon variant; only the icon role drops out.',
-        modes: ['Theme · Dark', 'Theme · Light'],
-        rows: [
-          { role: 'Surface bg', token: 'main/toast/default/{theme}/bg',     values: ['#0A2757', '#FFFFFF'] },
-          { role: 'Border',     token: 'main/toast/default/{theme}/border', values: ['#E5EBF4', '#E5EBF4'] },
-          { role: 'Label',      token: 'main/toast/default/{theme}/label',  values: ['#FFFFFF', '#0A2757'] },
-        ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Surface",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#FFFFFF",
+              "#0A2757",
+              "#FFFFFF",
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Border",
+            "token": "—",
+            "values": [
+              "#E5EBF4",
+              "#E5EBF4",
+              "#E5EBF4",
+              "#E5EBF4",
+              "#F4C7C9"
+            ]
+          },
+          {
+            "role": "Title & icon",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#0A2757",
+              "#FFFFFF",
+              "#0A2757",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Description",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 72%",
+              "#6780A9",
+              "–",
+              "–",
+              "#F6F9FD @ 80%"
+            ]
+          },
+          {
+            "role": "Button surface",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#005CE5",
+              "–",
+              "–",
+              "None"
+            ]
+          },
+          {
+            "role": "Button label",
+            "token": "—",
+            "values": [
+              "#005CE5",
+              "#FFFFFF",
+              "–",
+              "–",
+              "#FFFFFF"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:toast:2.4.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.toast.*  <span class=\"cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
-      "description": "The proposed schema collapses Toast + Toast - With Button into one API. Action becomes an optional slot, theme splits into appearance + theme, and Large Label becomes size.",
+      "description": "One row per variant axis of set <code>4915:25141</code>, in variant-name order, then the two SLOTs and the text layers. No property-panel screenshot was supplied and component property definitions are not readable, so a text property on the set would be missing here. Only 22 of 96 combinations are built — the native API should accept only those.",
       "rows": [
         {
-          "figma": "<code>Type: default | pending | error</code>",
-          "swift": "<code>appearance: neutral | pending | destructive</code>",
-          "compose": "<code>appearance: EBToastAppearance</code>"
+          "figma": "Appearance — Default, Destructive, Pending",
+          "swift": "<code>appearance: .default / .destructive / .pending</code>",
+          "compose": "<code>appearance = EBToastAppearance.Default / Destructive / Pending</code>"
         },
         {
-          "figma": "<code>Theme: default | light | dark</code> (overloaded)",
-          "swift": "<code>theme: light | dark</code> (neutral + pending only)",
-          "compose": "<code>.ebToastTheme(.dark)</code>"
+          "figma": "Theme — Dark, Light",
+          "swift": "<code>theme: .dark / .light</code> — ignored for Destructive",
+          "compose": "<code>theme = EBToastTheme.Dark / Light</code>"
         },
         {
-          "figma": "<code>Large Label: yes | no</code>",
-          "swift": "<code>size: small | base</code>",
-          "compose": "<code>.controlSize(.small / .regular)</code>"
+          "figma": "Size — MD, SM",
+          "swift": "<code>size: .md / .sm</code>",
+          "compose": "<code>size = EBToastSize.MD / SM</code>"
         },
         {
-          "figma": "<code>With Icon: yes | no</code>",
-          "swift": "<code>leadingIcon?: Icon</code> (slot)",
-          "compose": "<code>leadingIcon: Image?</code>"
+          "figma": "hasLeadingIcon — True, False",
+          "swift": "<code>showsIcon: Bool = true</code> — the glyph follows Appearance",
+          "compose": "<code>showsIcon: Boolean = true</code>"
         },
         {
-          "figma": "(implicit)",
-          "swift": "<code>message: String</code>",
+          "figma": "hasTrailingAction — True, False",
+          "swift": "<code>.ebAction(String) { }</code> — omit for False",
+          "compose": "<code>actionLabel: String? = null</code> + <code>onAction: (() -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "hasDescription — True, False",
+          "swift": "<code>.ebDescription(String)</code> — omit for False",
+          "compose": "<code>description: String? = null</code>"
+        },
+        {
+          "figma": "— Text-Slot (SLOT · Subtext Message)",
+          "swift": "the description text",
+          "compose": "the description text"
+        },
+        {
+          "figma": "— Component-Slot (SLOT · Button - XSmall)",
+          "swift": "the action button",
+          "compose": "the action button"
+        },
+        {
+          "figma": "— Title text layer",
+          "swift": "<code>EBToast(_ message: String)</code>",
           "compose": "<code>message: String</code>"
-        },
-        {
-          "figma": "(separate component)",
-          "swift": "<code>action?: ToastAction</code>",
-          "compose": "<code>action: EBToastAction?</code>"
-        },
-        {
-          "figma": "(not modeled)",
-          "swift": "<code>duration: short | long</code>",
-          "compose": "<code>duration: EBToastDuration</code>"
-        },
-        {
-          "figma": "(not modeled)",
-          "swift": "<code>onDismiss?: () -&gt; Void</code>",
-          "compose": "<code>onDismiss: (() -&gt; Void)?</code>"
         }
-      ]
+      ],
+      "filePaths": {
+        "swift": "ios/Components/Toast/EBToast.swift",
+        "compose": "android/components/toast/EBToast.kt"
+      }
     },
-    "usageSnippets": [],
-    "accessibility": [
+    "usageSnippets": [
       {
-        "requirement": "Live region — error",
-        "ios": "Post <code>UIAccessibility.Notification.announcement</code> with <code>.high</code> priority on present.",
-        "android": "<code>Modifier.semantics { liveRegion = LiveRegionMode.Assertive }</code> on the Snackbar container."
+        "subheading": "Default · Dark · MD",
+        "swift": "<span class=\"cmt\">// Appearance=Default, Theme=Dark, Size=MD, hasLeadingIcon=True, hasTrailingAction=False, hasDescription=False — 4915:25142, 312 × 38.</span>\n<span class=\"typ\">EBToast</span>(\n    <span class=\"str\">\"Add the popup message here\"</span>,\n    appearance: .<span class=\"prp\">default</span>,\n    theme: .<span class=\"prp\">dark</span>,\n    size: .<span class=\"prp\">md</span>\n)",
+        "compose": "<span class=\"cmt\">// Appearance=Default, Theme=Dark, Size=MD, hasLeadingIcon=True, hasTrailingAction=False, hasDescription=False — 4915:25142, 312 × 38.</span>\n<span class=\"typ\">EBToast</span>(\n    message = <span class=\"str\">\"Add the popup message here\"</span>,\n    appearance = <span class=\"typ\">EBToastAppearance</span>.<span class=\"prp\">Default</span>,\n    theme = <span class=\"typ\">EBToastTheme</span>.<span class=\"prp\">Dark</span>,\n    size = <span class=\"typ\">EBToastSize</span>.<span class=\"prp\">MD</span>\n)"
       },
       {
-        "requirement": "Live region — neutral / pending",
-        "ios": "Post announcement with default priority.",
-        "android": "<code>LiveRegionMode.Polite</code>."
+        "subheading": "Pending · Light · SM",
+        "swift": "<span class=\"cmt\">// Appearance=Pending, Theme=Light, Size=SM, hasLeadingIcon=True, hasTrailingAction=False, hasDescription=False — 4915:25205, 312 × 38.</span>\n<span class=\"typ\">EBToast</span>(\n    <span class=\"str\">\"Add the popup message here\"</span>,\n    appearance: .<span class=\"prp\">pending</span>,\n    theme: .<span class=\"prp\">light</span>,\n    size: .<span class=\"prp\">sm</span>\n)",
+        "compose": "<span class=\"cmt\">// Appearance=Pending, Theme=Light, Size=SM, hasLeadingIcon=True, hasTrailingAction=False, hasDescription=False — 4915:25205, 312 × 38.</span>\n<span class=\"typ\">EBToast</span>(\n    message = <span class=\"str\">\"Add the popup message here\"</span>,\n    appearance = <span class=\"typ\">EBToastAppearance</span>.<span class=\"prp\">Pending</span>,\n    theme = <span class=\"typ\">EBToastTheme</span>.<span class=\"prp\">Light</span>,\n    size = <span class=\"typ\">EBToastSize</span>.<span class=\"prp\">SM</span>\n)"
       },
       {
-        "requirement": "Minimum duration",
-        "ios": "Short ≥ 3s, long ≥ 5s; extend for longer messages per iOS HIG.",
-        "android": "<code>SnackbarDuration.Short / Long</code> (Material 3 defaults)."
+        "subheading": "Destructive · MD, no icon",
+        "swift": "<span class=\"cmt\">// Appearance=Destructive, Theme=Dark, Size=MD, hasLeadingIcon=False, hasTrailingAction=False, hasDescription=False — 4915:25172, 312 × 38.</span>\n<span class=\"typ\">EBToast</span>(\n    <span class=\"str\">\"Add the popup message here\"</span>,\n    appearance: .<span class=\"prp\">destructive</span>,\n    theme: .<span class=\"prp\">dark</span>,\n    size: .<span class=\"prp\">md</span>,\n    showsIcon: <span class=\"prp\">false</span>\n)",
+        "compose": "<span class=\"cmt\">// Appearance=Destructive, Theme=Dark, Size=MD, hasLeadingIcon=False, hasTrailingAction=False, hasDescription=False — 4915:25172, 312 × 38.</span>\n<span class=\"typ\">EBToast</span>(\n    message = <span class=\"str\">\"Add the popup message here\"</span>,\n    appearance = <span class=\"typ\">EBToastAppearance</span>.<span class=\"prp\">Destructive</span>,\n    theme = <span class=\"typ\">EBToastTheme</span>.<span class=\"prp\">Dark</span>,\n    size = <span class=\"typ\">EBToastSize</span>.<span class=\"prp\">MD</span>,\n    showsIcon = <span class=\"prp\">false</span>\n)"
       },
       {
-        "requirement": "Action button label",
-        "ios": "Action slot owns its own <code>accessibilityLabel</code>.",
-        "android": "Action slot owns its own <code>contentDescription</code>."
+        "subheading": "Default · Dark · action + description",
+        "swift": "<span class=\"cmt\">// Appearance=Default, Theme=Dark, Size=MD, hasLeadingIcon=False, hasTrailingAction=True, hasDescription=True — 4915:25216, 312 × 59.</span>\n<span class=\"typ\">EBToast</span>(\n    <span class=\"str\">\"Add label here\"</span>,\n    appearance: .<span class=\"prp\">default</span>,\n    theme: .<span class=\"prp\">dark</span>,\n    size: .<span class=\"prp\">md</span>,\n    showsIcon: <span class=\"prp\">false</span>\n)\n.<span class=\"fn\">ebDescription</span>(<span class=\"str\">\"Add description here.\"</span>)\n.<span class=\"fn\">ebAction</span>(<span class=\"str\">\"Label\"</span>) { retry() }",
+        "compose": "<span class=\"cmt\">// Appearance=Default, Theme=Dark, Size=MD, hasLeadingIcon=False, hasTrailingAction=True, hasDescription=True — 4915:25216, 312 × 59.</span>\n<span class=\"typ\">EBToast</span>(\n    message = <span class=\"str\">\"Add label here\"</span>,\n    appearance = <span class=\"typ\">EBToastAppearance</span>.<span class=\"prp\">Default</span>,\n    theme = <span class=\"typ\">EBToastTheme</span>.<span class=\"prp\">Dark</span>,\n    size = <span class=\"typ\">EBToastSize</span>.<span class=\"prp\">MD</span>,\n    showsIcon = <span class=\"prp\">false</span>,\n    description = <span class=\"str\">\"Add description here.\"</span>,\n    actionLabel = <span class=\"str\">\"Label\"</span>,\n    onAction = { retry() }\n)"
       },
       {
-        "requirement": "Dismiss gesture",
-        "ios": "Swipe horizontally to dismiss; respect reduce-motion for the slide-out animation.",
-        "android": "Swipe to dismiss built into <code>Snackbar</code>; honor <code>TalkBackUserTouchExplorationEnabled</code> to extend duration."
+        "subheading": "Destructive · action",
+        "swift": "<span class=\"cmt\">// Appearance=Destructive, Theme=Light, Size=MD, hasLeadingIcon=False, hasTrailingAction=True, hasDescription=False — 4915:25250, 312 × 41.</span>\n<span class=\"typ\">EBToast</span>(\n    <span class=\"str\">\"Add label here\"</span>,\n    appearance: .<span class=\"prp\">destructive</span>,\n    theme: .<span class=\"prp\">light</span>,\n    size: .<span class=\"prp\">md</span>,\n    showsIcon: <span class=\"prp\">false</span>\n)\n.<span class=\"fn\">ebAction</span>(<span class=\"str\">\"Retry\"</span>) { retry() }",
+        "compose": "<span class=\"cmt\">// Appearance=Destructive, Theme=Light, Size=MD, hasLeadingIcon=False, hasTrailingAction=True, hasDescription=False — 4915:25250, 312 × 41.</span>\n<span class=\"typ\">EBToast</span>(\n    message = <span class=\"str\">\"Add label here\"</span>,\n    appearance = <span class=\"typ\">EBToastAppearance</span>.<span class=\"prp\">Destructive</span>,\n    theme = <span class=\"typ\">EBToastTheme</span>.<span class=\"prp\">Light</span>,\n    size = <span class=\"typ\">EBToastSize</span>.<span class=\"prp\">MD</span>,\n    showsIcon = <span class=\"prp\">false</span>,\n    actionLabel = <span class=\"str\">\"Retry\"</span>,\n    onAction = { retry() }\n)"
       }
     ],
-    "usageGuidelines": [],
+    "accessibility": [
+      {
+        "requirement": "Announcement",
+        "ios": "A toast is never focused, so announce it: post <code>AccessibilityNotification.Announcement</code> with the Title (and Description).",
+        "android": "Set <code>Modifier.semantics { liveRegion = LiveRegionMode.Polite }</code>; <code>Assertive</code> for Destructive."
+      },
+      {
+        "requirement": "Duration with an action",
+        "ios": "A VoiceOver user needs time to reach the action. Keep an action toast up until dismissed or acted on when VoiceOver is running.",
+        "android": "Use <code>SnackbarDuration.Indefinite</code> when TalkBack is on and an action is present."
+      },
+      {
+        "requirement": "Action target",
+        "ios": "The Button is 68 × 24 — under 44pt tall. Extend the hit area; the toast body is not a target.",
+        "android": "Apply <code>Modifier.minimumInteractiveComponentSize()</code> to the action."
+      },
+      {
+        "requirement": "Icon",
+        "ios": "The glyph repeats the Appearance. Hide it (<code>.accessibilityHidden(true)</code>) and let the message carry the meaning.",
+        "android": "<code>contentDescription = null</code> on the icon."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Title on Dark 14.58:1, on Light 14.58:1, on Destructive 5.18:1. Description on Dark 7.79:1; on Light #6780A9 4.01:1 and on Destructive #F6F9FD 80% 3.54:1 — both below 4.5:1 at 10pt.",
+        "android": "Same ratios."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Toast for brief, non-blocking feedback after an action — sent, saved, copied.",
+        "dontText": "Don’t use it for errors that need a decision; use a Modal or Inline Message."
+      },
+      {
+        "doText": "Use Pending for an in-flight operation and replace it with Default or Destructive when it resolves.",
+        "dontText": "Don’t auto-hide Pending (v2.4 contract)."
+      },
+      {
+        "doText": "Pick one of the 22 built variants. An action toast is MD without a leading icon.",
+        "dontText": "Don’t combine a leading icon with an action or use SM with an action — Figma draws neither."
+      },
+      {
+        "doText": "Keep the message to one line: 256px at MD with an icon, 188px beside an action.",
+        "dontText": "Don’t put two sentences in a toast."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Two components for one primitive — consolidate with Toast - With Button."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Most layers follow the v2.2 pass. But the Title text layer is named <code>LeadingIcon</code> on both Destructive action variants (4915:25232, 4915:25250), <code>#content</code> survives on 4915:25240, SM Destructive and Pending drop the <code>LeadingIcon</code> wrapper, and the fill sits on <code>ToastRow</code> in some variants and on the component frame in others."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>theme</code> overloaded with status; <code>Large Label</code> is a size flag; booleans on <code>yes/no</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Names are clean PascalCase with Title Case values. But <code>Theme</code> means nothing for Destructive — the same red is <code>Theme=Dark</code> on its message variants and <code>Theme=Light</code> on its action variants — so a consumer switching one boolean also has to switch Theme."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All colors bound to <code>main/toast/color/{mode}/*</code>. Spacing + typography fully tokenized."
+        "notes": "All five text layers resolve <code>matched</code> — <code>Primary/Label/Light/Small</code>, <code>Primary/Multi-line Label/Light/Fine</code>, <code>Primary/Multi-line Label/Small</code>, <code>Secondary/Bold/Small Caption</code>, <code>Primary/Label/Small</code>. Colour bindings cannot be read with the plugin. Description opacity differs — 72% on Dark, 80% on Destructive."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No SwiftUI first-party primitive; Compose has Snackbar. Needs documented mapping + ToastManager pattern."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Maps to one <code>EBToast</code>, documented in v2.4. But 22 of 96 combinations are built, and three heights (38, 41, 59) and two paddings (12 and 16/8) come from two separate layouts the booleans switch between, so the native view is effectively two layouts behind one API."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No auto-duration, swipe, or tap-to-dismiss contract; pending has no animation."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Dismiss, auto-hide and stacking are documented (v2.4). The action’s pressed state belongs to the Button."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Pending uses <code>icon-placeholder</code> gray circle instead of a real spinner."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Checkmark (Circular), Information and Close are DS icon instances at 24 and 16; the description and action are SLOTs composing Subtext Message and Button - XSmall."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked on family consolidation and axis cleanup."
+        "notes": "No SwiftUI or Compose mappings are registered; the native library does not exist."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 16,
-      "description": "Effective axes today: <code>Type</code> (3) × <code>Theme</code> (3, coupled to Type) × <code>With Icon</code> (2) × <code>Large Label</code> (2). Built variants collapse the illegal combinations — Error only pairs with <code>theme=default</code>; Pending only pairs with <code>theme=dark | light</code> + <code>with icon=yes</code>. = <strong>16 built variants</strong>.",
+      "total": 22,
+      "description": "<code>Appearance</code> (3) × <code>Theme</code> (2) × <code>Size</code> (2) × <code>hasLeadingIcon</code> × <code>hasTrailingAction</code> × <code>hasDescription</code> = 96 combinations; <strong>22 built</strong>. Message toasts are 312 × 38; action toasts 312 × 41, or 312 × 59 with a description. Pending has no icon-less variant, and actions exist only at MD without an icon.",
       "columns": [
-        "Group",
-        "Count",
-        "Axes"
+        "Appearance",
+        "Theme",
+        "Size",
+        "hasLeadingIcon",
+        "hasTrailingAction",
+        "hasDescription",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>Default / Dark</strong>",
-            "4",
-            "withIcon=yes/no × largeLabel=yes/no"
+            "Default",
+            "Dark",
+            "MD",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25142</code>",
+            "312 × 38"
           ]
         },
         {
           "cells": [
-            "<strong>Default / Light</strong>",
-            "4",
-            "withIcon=yes/no × largeLabel=yes/no"
+            "Default",
+            "Light",
+            "MD",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25148</code>",
+            "312 × 38"
           ]
         },
         {
           "cells": [
-            "<strong>Error / Default</strong>",
-            "4",
-            "withIcon=yes/no × largeLabel=yes/no"
+            "Destructive",
+            "Dark",
+            "MD",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25154</code>",
+            "312 × 38"
           ]
         },
         {
           "cells": [
-            "<strong>Pending / Dark</strong>",
-            "2",
-            "withIcon=yes (forced) × largeLabel=yes/no"
+            "Pending",
+            "Dark",
+            "MD",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25160</code>",
+            "312 × 38"
           ]
         },
         {
           "cells": [
-            "<strong>Pending / Light</strong>",
-            "2",
-            "withIcon=yes (forced) × largeLabel=yes/no"
+            "Pending",
+            "Light",
+            "MD",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25166</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "MD",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25172</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25175</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25178</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "SM",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25181</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "SM",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25186</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "SM",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25192</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "SM",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25197</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Dark",
+            "SM",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25200</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Light",
+            "SM",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25205</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "SM",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25210</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "SM",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>False</code>",
+            "<code>4915:25213</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>4915:25216</code>",
+            "312 × 59"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>4915:25224</code>",
+            "312 × 59"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Light",
+            "MD",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>True</code>",
+            "<code>4915:25232</code>",
+            "312 × 59"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>4915:25240</code>",
+            "312 × 41"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>4915:25245</code>",
+            "312 × 41"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Light",
+            "MD",
+            "<code>False</code>",
+            "<code>True</code>",
+            "<code>False</code>",
+            "<code>4915:25250</code>",
+            "312 × 41"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.4.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 4915:25141",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the variant axes.</strong> Three cards on retired <code>27:*</code> nodes carried the pre-v2.0 <code>theme</code>, <code>With Icon</code> and <code>Large Label</code> controls. Now one card with <code>Appearance</code>, <code>Theme</code>, <code>Size</code> and the three <code>has*</code> booleans, snapping to the 22 built variants.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from Figma.</strong> The Pending grey placeholder circle (replaced by an Information icon in v2.2) is gone; icons use the library glyphs at 24 and 16, and the action layouts, Button colours and “Retry” label match the set.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography now names text styles.</strong> Five layers resolve, all matched — <code>Primary/Label/Light/Small</code>, <code>Primary/Multi-line Label/Light/Fine</code>, <code>Primary/Multi-line Label/Small</code>, <code>Secondary/Bold/Small Caption</code>, <code>Primary/Label/Small</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>The Code tab still described the 1.0.0 component.</strong> Property Mapping listed <code>Type</code>, the overloaded <code>Theme</code>, <code>Large Label</code> and <code>With Icon</code>; install was empty. Rebuilt on the six live axes with <code>com.eastblue.ds:toast:2.4.1</code> and five snippets.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard rescored against v2.0–v2.4.</strong> C3, C5, C6 Ready; C1, C2, C4 Needs Refinement on new findings; C7 Not Mapped.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Title layer named <code>LeadingIcon</code></strong> on the two Destructive action variants (4915:25232, 4915:25250); <code>#content</code> remains on 4915:25240. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Destructive ignores Theme</strong> — the same red is <code>Theme=Dark</code> on its message variants and <code>Theme=Light</code> on its action variants. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Structure differs across variants.</strong> The fill sits on <code>ToastRow</code> or on the component frame depending on the variant, and SM Destructive and Pending have no <code>LeadingIcon</code> wrapper. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Description fails AA</strong> on Light (#6780A9, 4.01:1) and Destructive (#F6F9FD 80%, 3.54:1) at 10pt; opacity is 72% on Dark and 80% on Destructive. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Property panel not confirmed.</strong> The Style panel is built from variant names; a text property on the set would be missing. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>v2.0.0 through v2.4.0 have no changelog entries.</strong> The Overview records thirteen resolutions across those versions, but the changelog jumps from 1.0.0 to here. Their dates are not recorded anywhere readable, so they are not invented. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

@@ -1,8 +1,8 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/tooltip.js`. Values mirror the Figma
-// component set (node 6295:79647).
+// Panel mirrors the property panel of set 6295:79647, in its order: three
+// variant axes, two text properties, four booleans. The three ⤷ …Slot
+// layers are SLOTs and get no control.
 const tooltipDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -10,7 +10,7 @@ const tooltipDemoControls: DemoControlSection[] = [
       {
         label: 'Text',
         prop: 'text',
-        defaultValue: 'both',
+        defaultValue: 'header',
         options: [
           { value: 'header', label: 'Header' },
           { value: 'description', label: 'Description' },
@@ -28,36 +28,67 @@ const tooltipDemoControls: DemoControlSection[] = [
           { value: 'right', label: 'Right' },
         ],
       },
-    ],
-  },
-  {
-    heading: 'Slots',
-    rows: [
       {
-        label: '\u2937 AssetSlot',
-        prop: 'asset',
-        defaultValue: 'on',
+        label: 'Appearance',
+        prop: 'appearance',
+        defaultValue: 'opaque',
         options: [
-          { value: 'on', label: 'Filled' },
-          { value: 'off', label: 'Empty' },
+          { value: 'opaque', label: 'Opaque' },
+          { value: 'translucent', label: 'Translucent' },
         ],
       },
       {
-        label: '\u2937 CloseSlot',
-        prop: 'close',
-        defaultValue: 'on',
+        label: 'Header',
+        prop: 'header',
+        control: 'input',
+        options: [],
+        defaultValue: 'Header',
+      },
+      {
+        label: 'Description',
+        prop: 'description',
+        control: 'input',
+        options: [],
+        defaultValue: 'Description goes here',
+      },
+      {
+        label: 'hasDismiss',
+        prop: 'hasdismiss',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: 'on', label: 'Filled' },
-          { value: 'off', label: 'Empty' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
-        label: '\u2937 ActionSlot',
-        prop: 'action',
-        defaultValue: 'on',
+        label: 'hasArrow',
+        prop: 'hasarrow',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: 'on', label: 'Filled' },
-          { value: 'off', label: 'Empty' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasLeadingAsset',
+        prop: 'hasleadingasset',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasAction',
+        prop: 'hasaction',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -199,12 +230,13 @@ export const tooltip: ComponentData = {
       "heading": "Styles",
       "specCards": [
         {
-          "cardKey": "tt-spec-opaque",
-          "demoKey": "opaque",
+          "cardKey": "tt-spec-main",
+          "demoKey": "main",
+          "title": "Tooltip",
+          "node": "6295:79647",
+          "description": "",
+          "previewHtml": "<div id=\"tooltip-spec-main\" class=\"spec-preview-body\"></div>",
           "demoControls": tooltipDemoControls,
-          "title": "Opaque — light surface",
-          "node": "6295:79678",
-          "description": "The default surface: white container, weak border, dark header and secondary description. Used over ordinary screen content.",
           "sections": [
             {
               "label": "Properties",
@@ -212,7 +244,7 @@ export const tooltip: ComponentData = {
               "rows": [
                 {
                   "key": "Text",
-                  "value": "Both",
+                  "value": "Header",
                   "prop": "text"
                 },
                 {
@@ -222,7 +254,106 @@ export const tooltip: ComponentData = {
                 },
                 {
                   "key": "Appearance",
-                  "value": "Opaque"
+                  "value": "Opaque",
+                  "prop": "appearance"
+                },
+                {
+                  "key": "Header",
+                  "value": "Header",
+                  "prop": "header",
+                  "variants": { "text:description": { "hide": true } }
+                },
+                {
+                  "key": "Description",
+                  "value": "Description goes here",
+                  "prop": "description",
+                  "variants": { "text:header": { "hide": true } }
+                },
+                { "key": "hasDismiss", "value": "True", "prop": "hasdismiss" },
+                { "key": "hasArrow", "value": "True", "prop": "hasarrow" },
+                { "key": "hasLeadingAsset", "value": "True", "prop": "hasleadingasset" },
+                { "key": "hasAction", "value": "True", "prop": "hasaction" },
+                { "key": "⤷ CloseSlot", "value": "Slot · Close icon" },
+                { "key": "⤷ AssetSlot", "value": "Slot · Icon Placeholder" },
+                { "key": "⤷ ActionSlot", "value": "Slot · Button - XSmall" },
+                {
+                  "key": "Resolved variant",
+                  "value": "6295:79648 · 336 × 134",
+                  "mono": true,
+                  "variants": {
+                    "text:header|placement:top|appearance:opaque": {
+                      "value": "6295:79648 · 336 × 134"
+                    },
+                    "text:description|placement:top|appearance:opaque": {
+                      "value": "6295:79663 · 336 × 134"
+                    },
+                    "text:both|placement:top|appearance:opaque": {
+                      "value": "6295:79678 · 336 × 134"
+                    },
+                    "text:header|placement:top|appearance:translucent": {
+                      "value": "6295:79694 · 336 × 134"
+                    },
+                    "text:description|placement:top|appearance:translucent": {
+                      "value": "6295:79709 · 336 × 134"
+                    },
+                    "text:both|placement:top|appearance:translucent": {
+                      "value": "6295:79724 · 336 × 134"
+                    },
+                    "text:header|placement:bottom|appearance:opaque": {
+                      "value": "6295:79740 · 336 × 134"
+                    },
+                    "text:description|placement:bottom|appearance:opaque": {
+                      "value": "6295:79755 · 336 × 134"
+                    },
+                    "text:both|placement:bottom|appearance:opaque": {
+                      "value": "6295:79770 · 336 × 134"
+                    },
+                    "text:header|placement:bottom|appearance:translucent": {
+                      "value": "6295:79786 · 336 × 134"
+                    },
+                    "text:description|placement:bottom|appearance:translucent": {
+                      "value": "6295:79801 · 336 × 134"
+                    },
+                    "text:both|placement:bottom|appearance:translucent": {
+                      "value": "6295:79816 · 336 × 134"
+                    },
+                    "text:header|placement:left|appearance:opaque": {
+                      "value": "6295:79832 · 348 × 122"
+                    },
+                    "text:description|placement:left|appearance:opaque": {
+                      "value": "6295:79847 · 348 × 122"
+                    },
+                    "text:both|placement:left|appearance:opaque": {
+                      "value": "6295:79862 · 348 × 122"
+                    },
+                    "text:header|placement:left|appearance:translucent": {
+                      "value": "6295:79878 · 348 × 122"
+                    },
+                    "text:description|placement:left|appearance:translucent": {
+                      "value": "6295:79893 · 348 × 122"
+                    },
+                    "text:both|placement:left|appearance:translucent": {
+                      "value": "6295:79908 · 348 × 122"
+                    },
+                    "text:header|placement:right|appearance:opaque": {
+                      "value": "6295:79924 · 348 × 122"
+                    },
+                    "text:description|placement:right|appearance:opaque": {
+                      "value": "6295:79939 · 348 × 122"
+                    },
+                    "text:both|placement:right|appearance:opaque": {
+                      "value": "6295:79954 · 348 × 122"
+                    },
+                    "text:header|placement:right|appearance:translucent": {
+                      "value": "6295:79970 · 348 × 122"
+                    },
+                    "text:description|placement:right|appearance:translucent": {
+                      "value": "6295:79985 · 348 × 122"
+                    },
+                    "text:both|placement:right|appearance:translucent": {
+                      "value": "6295:80000 · 348 × 122"
+                    }
+                  }
                 }
               ]
             },
@@ -231,91 +362,88 @@ export const tooltip: ComponentData = {
               "slug": "colors",
               "rows": [
                 {
-                  "key": "Container bg",
-                  "value": "#FFFFFF",
-                  "token": "bg/color-bg-main"
+                  "key": "Opacity",
+                  "value": "100%",
+                  "mono": true,
+                  "variants": {
+                    "appearance:translucent": {
+                      "value": "80% — on the whole variant"
+                    }
+                  }
                 },
                 {
-                  "key": "Container border",
+                  "key": "Surface",
+                  "value": "#FFFFFF",
+                  "token": "—",
+                  "variants": {
+                    "appearance:translucent": {
+                      "value": "#0A2757"
+                    }
+                  }
+                },
+                {
+                  "key": "Border",
                   "value": "#E5EBF4",
-                  "token": "border/color-border-weak"
+                  "token": "—",
+                  "variants": {
+                    "appearance:translucent": {
+                      "value": "#0A2757"
+                    }
+                  }
                 },
                 {
                   "key": "Header",
                   "value": "#0A2757",
-                  "token": "text/color-text-primary"
+                  "token": "—",
+                  "variants": {
+                    "appearance:translucent": {
+                      "value": "#FFFFFF"
+                    },
+                    "text:description": {
+                      "hide": true
+                    },
+                    "text:description|appearance:translucent": {
+                      "hide": true
+                    }
+                  }
                 },
                 {
                   "key": "Description",
                   "value": "#6780A9",
-                  "token": "text/color-text-secondary"
+                  "token": "—",
+                  "variants": {
+                    "appearance:translucent": {
+                      "value": "#F6F9FD @ 80%"
+                    },
+                    "text:header": {
+                      "hide": true
+                    },
+                    "text:header|appearance:translucent": {
+                      "hide": true
+                    }
+                  }
                 },
                 {
                   "key": "Close glyph",
                   "value": "#0A2757",
-                  "token": "text/color-text-primary"
+                  "token": "—",
+                  "variants": { "hasdismiss:false": { "hide": true },
+                    "appearance:translucent": {
+                      "value": "#FFFFFF"
+                    }
+                  }
                 },
                 {
-                  "key": "Pointer",
-                  "value": "#FFFFFF",
-                  "token": "bg/color-bg-main"
-                }
-              ]
-            },
-            {
-              "label": "Layout",
-              "slug": "layout",
-              "rows": [
-                {
-                  "key": "Container width",
-                  "value": "336",
-                  "mono": true
+                  "key": "Asset placeholder",
+                  "value": "#D7E0EF",
+                  "token": "—",
+                  "variants": { "hasleadingasset:false": { "hide": true } }
                 },
                 {
-                  "key": "Container height",
-                  "value": "122",
-                  "prop": "height",
-                  "mono": true
-                },
-                {
-                  "key": "Padding",
-                  "value": "16",
-                  "mono": true
-                },
-                {
-                  "key": "Details → Action gap",
-                  "value": "16",
-                  "mono": true
-                },
-                {
-                  "key": "⤷ AssetSlot",
-                  "value": "46 × 46",
-                  "mono": true
-                },
-                {
-                  "key": "Asset → text gap",
-                  "value": "12",
-                  "mono": true
-                },
-                {
-                  "key": "⤷ CloseSlot",
-                  "value": "16 × 16",
-                  "mono": true
-                },
-                {
-                  "key": "⤷ ActionSlot",
-                  "value": "304 × 28",
-                  "mono": true
-                },
-                {
-                  "key": "Corner radius",
-                  "value": "radius/radius-2 (6px)",
-                  "mono": true
-                },
-                {
-                  "key": "Pointer",
-                  "value": "24 × 12 top/bottom · 12 × 24 left/right",
-                  "mono": true
+                  "key": "Button",
+                  "value": "#005CE5",
+                  "token": "—",
+                  "variants": { "hasaction:false": { "hide": true } }
                 }
               ]
             },
@@ -325,109 +453,29 @@ export const tooltip: ComponentData = {
               "rows": [
                 {
                   "key": "Header",
-                  "value": "Primary/Header/Small"
-                },
-                {
-                  "key": "Font",
-                  "value": "Proxima Soft Bold",
-                  "mono": true
-                },
-                {
-                  "key": "Size / line",
-                  "value": "18 / 23",
-                  "mono": true
-                },
-                {
-                  "key": "Tracking",
-                  "value": "+0.25",
-                  "mono": true
+                  "value": "Primary/Headlines/Block",
+                  "mono": true,
+                  "variants": {
+                    "text:description": {
+                      "hide": true
+                    }
+                  }
                 },
                 {
                   "key": "Description",
-                  "value": "Primary/Body/Fine"
+                  "value": "Secondary/Bold/Caption",
+                  "mono": true,
+                  "variants": {
+                    "text:header": {
+                      "hide": true
+                    }
+                  }
                 },
                 {
-                  "key": "Font ",
-                  "value": "BarkAda SemiBold",
-                  "mono": true
-                },
-                {
-                  "key": "Size / line ",
-                  "value": "12 / 18",
-                  "mono": true
-                },
-                {
-                  "key": "Tracking ",
-                  "value": "0",
-                  "mono": true
-                }
-              ]
-            }
-          ],
-          "swift": "EBTooltip(\n    header: \"Header\",\n    description: \"Description goes here\",\n    placement: .top,\n    appearance: .opaque\n    , onDismiss: { … }\n)\n.ebLeadingAsset { Image(\"illustration\") }\n.ebAction { EBButton(\"Next\").controlSize(.mini) }",
-          "compose": "EBTooltip(\n    header = \"Header\",\n    description = \"Description goes here\",\n    placement = EBTooltipPlacement.Top,\n    appearance = EBTooltipAppearance.Opaque,\n    leadingAsset = { Image(painterResource(R.drawable.illustration), null) },\n    action = { EBButton(\"Next\", size = EBButtonSize.XSmall) },\n    onDismiss = { … },\n)"
-        },
-        {
-          "cardKey": "tt-spec-translucent",
-          "demoKey": "translucent",
-          "demoControls": tooltipDemoControls,
-          "title": "Translucent — inverse surface",
-          "node": "6295:79724",
-          "description": "Inverse surface for placement over imagery and dimmed walkthrough backdrops. Naming only — no blur or alpha is attached to the fill.",
-          "sections": [
-            {
-              "label": "Properties",
-              "slug": "props",
-              "rows": [
-                {
-                  "key": "Text",
-                  "value": "Both",
-                  "prop": "text"
-                },
-                {
-                  "key": "Placement",
-                  "value": "Top",
-                  "prop": "placement"
-                },
-                {
-                  "key": "Appearance",
-                  "value": "Translucent"
-                }
-              ]
-            },
-            {
-              "label": "Colors",
-              "slug": "colors",
-              "rows": [
-                {
-                  "key": "Container bg",
-                  "value": "#0A2757",
-                  "token": "bg/color-bg-inverse"
-                },
-                {
-                  "key": "Container border",
-                  "value": "#0A2757",
-                  "token": "bg/color-bg-inverse"
-                },
-                {
-                  "key": "Header",
-                  "value": "#FFFFFF",
-                  "token": "text/color-text-inverse"
-                },
-                {
-                  "key": "Description",
-                  "value": "#F6F9FD @ 80%",
-                  "token": "text/color-text-inverse-weak"
-                },
-                {
-                  "key": "Close glyph",
-                  "value": "#FFFFFF",
-                  "token": "text/color-text-inverse"
-                },
-                {
-                  "key": "Pointer",
-                  "value": "#0A2757",
-                  "token": "bg/color-bg-inverse"
+                  "key": "Button label",
+                  "value": "Primary/Label/Base",
+                  "mono": true,
+                  "variants": { "hasaction:false": { "hide": true } }
                 }
               ]
             },
@@ -436,135 +484,145 @@ export const tooltip: ComponentData = {
               "slug": "layout",
               "rows": [
                 {
-                  "key": "Container width",
-                  "value": "336",
-                  "mono": true
+                  "key": "Variant",
+                  "value": "336 × 134 — all booleans True",
+                  "mono": true,
+                  "variants": {
+                    "placement:left": {
+                      "value": "348 × 122"
+                    },
+                    "placement:right": {
+                      "value": "348 × 122"
+                    }
+                  }
                 },
                 {
-                  "key": "Container height",
-                  "value": "122",
-                  "prop": "height",
-                  "mono": true
+                  "key": "Container",
+                  "value": "336 × 122 · radius 6",
+                  "mono": true,
+                  "variants": {"text:header|hasleadingasset:true|hasaction:false":{"value":"336 × 78 · radius 6 — assumed hug"},"text:header|hasleadingasset:false|hasaction:true":{"value":"336 × 100 · radius 6 — assumed hug"},"text:header|hasleadingasset:false|hasaction:false":{"value":"336 × 56 · radius 6 — assumed hug"},"text:description|hasleadingasset:true|hasaction:false":{"value":"336 × 78 · radius 6 — assumed hug"},"text:description|hasleadingasset:false|hasaction:true":{"value":"336 × 94 · radius 6 — assumed hug"},"text:description|hasleadingasset:false|hasaction:false":{"value":"336 × 50 · radius 6 — assumed hug"},"text:both|hasleadingasset:true|hasaction:false":{"value":"336 × 78 · radius 6 — assumed hug"},"text:both|hasleadingasset:false|hasaction:true":{"value":"336 × 121 · radius 6 — assumed hug"},"text:both|hasleadingasset:false|hasaction:false":{"value":"336 × 77 · radius 6 — assumed hug"}}
                 },
                 {
                   "key": "Padding",
-                  "value": "16",
+                  "value": "16px",
                   "mono": true
                 },
                 {
-                  "key": "Details → Action gap",
-                  "value": "16",
-                  "mono": true
+                  "key": "Details",
+                  "value": "304 × 46",
+                  "mono": true,
+                  "variants": { "text:header|hasleadingasset:false": { "value": "304 × 24 — assumed hug" }, "text:description|hasleadingasset:false": { "value": "304 × 18 — assumed hug" }, "text:both|hasleadingasset:false": { "value": "304 × 45 — assumed hug" } }
                 },
                 {
-                  "key": "⤷ AssetSlot",
-                  "value": "46 × 46",
-                  "mono": true
+                  "key": "AssetSlot",
+                  "value": "46 × 46 · 12px to text",
+                  "mono": true,
+                  "variants": { "hasleadingasset:false": { "hide": true } }
                 },
                 {
-                  "key": "Asset → text gap",
-                  "value": "12",
-                  "mono": true
+                  "key": "Text Container",
+                  "value": "246 × 24 · centred in 46",
+                  "mono": true,
+                  "variants": {
+                    "text:description": {
+                      "value": "246 × 18 · centred in 46"
+                    },
+                    "text:both": {
+                      "value": "246 × 45 · Header 23, 4px, Description 18"
+                    }
+                  }
                 },
                 {
-                  "key": "⤷ CloseSlot",
-                  "value": "16 × 16",
-                  "mono": true
+                  "key": "CloseSlot",
+                  "value": "16 × 16 · x 304, 3.5px above Details",
+                  "mono": true,
+                  "variants": { "hasdismiss:false": { "hide": true } }
                 },
                 {
-                  "key": "⤷ ActionSlot",
-                  "value": "304 × 28",
-                  "mono": true
+                  "key": "ActionSlot",
+                  "value": "304 × 28 · 16px below Details",
+                  "mono": true,
+                  "variants": { "hasaction:false": { "hide": true } }
                 },
                 {
-                  "key": "Corner radius",
-                  "value": "radius/radius-2 (6px)",
-                  "mono": true
+                  "key": "Button",
+                  "value": "59 × 28 · ends 3px short of the slot",
+                  "mono": true,
+                  "variants": { "hasaction:false": { "hide": true } }
                 },
                 {
                   "key": "Pointer",
-                  "value": "24 × 12 top/bottom · 12 × 24 left/right",
-                  "mono": true
-                }
-              ]
-            },
-            {
-              "label": "Typography",
-              "slug": "typo",
-              "rows": [
-                {
-                  "key": "Header",
-                  "value": "Primary/Header/Small"
+                  "value": "24 × 12 · x 14.5, above the container",
+                  "mono": true,
+                  "variants": { "placement:top|hasarrow:false": { "hide": true }, "placement:bottom|hasarrow:false": { "hide": true }, "placement:left|hasarrow:false": { "hide": true }, "placement:right|hasarrow:false": { "hide": true },
+                    "placement:bottom": {
+                      "value": "24 × 12 · x 14.5, below the container"
+                    },
+                    "placement:left": {
+                      "value": "12 × 24 · y 6, left of the container"
+                    },
+                    "placement:right": {
+                      "value": "12 × 24 · y 6, right of the container"
+                    }
+                  }
                 },
                 {
-                  "key": "Font",
-                  "value": "Proxima Soft Bold",
-                  "mono": true
-                },
-                {
-                  "key": "Size / line",
-                  "value": "18 / 23",
-                  "mono": true
-                },
-                {
-                  "key": "Tracking",
-                  "value": "+0.25",
-                  "mono": true
-                },
-                {
-                  "key": "Description",
-                  "value": "Primary/Body/Fine"
-                },
-                {
-                  "key": "Font ",
-                  "value": "BarkAda SemiBold",
-                  "mono": true
-                },
-                {
-                  "key": "Size / line ",
-                  "value": "12 / 18",
-                  "mono": true
-                },
-                {
-                  "key": "Tracking ",
-                  "value": "0",
-                  "mono": true
+                  "key": "Pointer overlap",
+                  "value": "1px into the container",
+                  "mono": true,
+                  "variants": { "hasarrow:false": { "hide": true } }
                 }
               ]
             }
           ],
-          "swift": "EBTooltip(\n    header: \"Header\",\n    description: \"Description goes here\",\n    placement: .top,\n    appearance: .translucent\n    , onDismiss: { … }\n)\n.ebLeadingAsset { Image(\"illustration\") }\n.ebAction { EBButton(\"Next\").controlSize(.mini) }",
-          "compose": "EBTooltip(\n    header = \"Header\",\n    description = \"Description goes here\",\n    placement = EBTooltipPlacement.Top,\n    appearance = EBTooltipAppearance.Translucent,\n    leadingAsset = { Image(painterResource(R.drawable.illustration), null) },\n    action = { EBButton(\"Next\", size = EBButtonSize.XSmall) },\n    onDismiss = { … },\n)"
+          "swift": "EBTooltip(\n    header: \"Header\",\n    placement: .top,\n    appearance: .opaque\n)\n.ebLeadingAsset { Image(\"illustration\") }\n.ebAction { EBButton(\"Next\").controlSize(.mini) }\n.onDismiss { }",
+          "compose": "EBTooltip(\n    header = \"Header\",\n    placement = EBTooltipPlacement.Top,\n    appearance = EBTooltipAppearance.Opaque,\n    leadingAsset = { Image(painterResource(R.drawable.illustration), null) },\n    action = { EBButton(\"Next\", size = EBButtonSize.XSmall) { } },\n    onDismiss = { }\n)"
         }
       ],
       "colorsTables": [
         {
-          "title": "Colors by Appearance Mode",
-          "description": "Tooltip owns the container, pointer and text colours. The CTA button and close glyph are DS components documented on their own pages.",
+          "title": "Colors by Appearance",
+          "description": "Read off <code>get_node_info</code> and <code>get_svg</code> on set <code>6295:79647</code>. <strong>Translucent is 80% opacity on the whole variant</strong> — surface, text, asset placeholder and Button alike — not a translucent fill, so every colour on it blends with the backdrop. The Button and close glyph belong to their own components. Token paths could not be read; the plugin returns no variable bindings.",
           "columns": [
             "Opaque",
             "Translucent"
           ],
           "rows": [
             {
-              "role": "Container bg",
-              "token": "bg/color-bg-main · bg/color-bg-inverse",
+              "role": "Variant opacity",
+              "token": "—",
+              "values": [
+                "100%",
+                "80%"
+              ]
+            },
+            {
+              "role": "Surface",
+              "token": "—",
               "values": [
                 "#FFFFFF",
                 "#0A2757"
               ]
             },
             {
-              "role": "Container border",
-              "token": "border/color-border-weak · bg/color-bg-inverse",
+              "role": "Border",
+              "token": "—",
               "values": [
                 "#E5EBF4",
                 "#0A2757"
               ]
             },
             {
+              "role": "Pointer fill / stroke",
+              "token": "—",
+              "values": [
+                "#FFFFFF / #E5EBF4",
+                "#0A2757 / #0A2757"
+              ]
+            },
+            {
               "role": "Header",
-              "token": "text/color-text-primary · text/color-text-inverse",
+              "token": "—",
               "values": [
                 "#0A2757",
                 "#FFFFFF"
@@ -572,7 +630,7 @@ export const tooltip: ComponentData = {
             },
             {
               "role": "Description",
-              "token": "text/color-text-secondary · text/color-text-inverse-weak",
+              "token": "—",
               "values": [
                 "#6780A9",
                 "#F6F9FD @ 80%"
@@ -580,105 +638,26 @@ export const tooltip: ComponentData = {
             },
             {
               "role": "Close glyph",
-              "token": "text/color-text-primary · text/color-text-inverse",
+              "token": "—",
               "values": [
                 "#0A2757",
                 "#FFFFFF"
               ]
             },
             {
-              "role": "Pointer fill",
-              "token": "matches container bg",
-              "values": [
-                "#FFFFFF",
-                "#0A2757"
-              ]
-            },
-            {
-              "role": "Pointer stroke",
-              "token": "matches container border",
-              "values": [
-                "#E5EBF4",
-                "#0A2757"
-              ]
-            }
-          ]
-        },
-        {
-          "title": "Layout",
-          "description": "Measured from the component set. Height is a hug, not a fixed value.",
-          "columns": [
-            "Value"
-          ],
-          "rows": [
-            {
-              "role": "Container width",
+              "role": "Asset placeholder",
               "token": "—",
               "values": [
-                "336 (348 including a left/right pointer)"
+                "#D7E0EF",
+                "#D7E0EF"
               ]
             },
             {
-              "role": "Padding",
-              "token": "space/space-16",
-              "values": [
-                "16"
-              ]
-            },
-            {
-              "role": "Details → Action gap",
-              "token": "space/space-16",
-              "values": [
-                "16"
-              ]
-            },
-            {
-              "role": "Asset → text gap",
-              "token": "space/space-12",
-              "values": [
-                "12"
-              ]
-            },
-            {
-              "role": "Text → close gap",
-              "token": "space/space-16",
-              "values": [
-                "16"
-              ]
-            },
-            {
-              "role": "Corner radius",
-              "token": "radius/radius-2",
-              "values": [
-                "6"
-              ]
-            },
-            {
-              "role": "⤷ AssetSlot",
+              "role": "Button surface",
               "token": "—",
               "values": [
-                "46 × 46"
-              ]
-            },
-            {
-              "role": "⤷ CloseSlot",
-              "token": "—",
-              "values": [
-                "16 × 16"
-              ]
-            },
-            {
-              "role": "⤷ ActionSlot",
-              "token": "—",
-              "values": [
-                "304 × 28"
-              ]
-            },
-            {
-              "role": "Pointer",
-              "token": "—",
-              "values": [
-                "24 × 12 top/bottom · 12 × 24 left/right"
+                "#005CE5",
+                "#005CE5"
               ]
             }
           ]
@@ -690,171 +669,222 @@ export const tooltip: ComponentData = {
         "planned": true,
         "blocks": [
           {
-            "label": "Swift Package Manager",
-            "code": "https://github.com/gcash/east-blue-ios"
+            "label": "iOS — Swift Package Manager",
+            "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
           },
           {
-            "label": "Gradle",
-            "code": "implementation(\"com.gcash.eastblue:components:1.0.0\")"
+            "label": "Android — Gradle (Kotlin DSL)",
+            "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:tooltip:1.0.1\"</span>)\n}"
           },
           {
-            "label": "Import — SwiftUI",
-            "code": "import EastBlue"
-          },
-          {
-            "label": "Import — Compose",
-            "code": "import com.gcash.eastblue.components.EBTooltip"
+            "label": "Import",
+            "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.tooltip.*  <span class=\"cmt\">// Compose</span>"
           }
         ],
-        "footnote": "Native components are not yet implemented — all snippets show the planned API."
+        "footnote": "Package not yet published. These are the planned distribution paths."
       },
       "propertyMapping": {
-        "description": "Three enums and three slots. Placement drives the pointer edge only; anchoring and collision handling are the caller’s responsibility.",
+        "description": "One row per property of set <code>6295:79647</code>, in panel order: three variant axes, two text properties, four booleans, then the three SLOTs. Which layer each boolean hides is not readable with the plugin; each is mapped to the element its name describes.",
         "rows": [
           {
-            "figma": "Text = Header | Description | Both",
-            "swift": "header: String? / description: String?",
-            "compose": "header: String? / description: String?"
+            "figma": "Text — Header, Description, Both",
+            "swift": "which of <code>header:</code> / <code>description:</code> is shown",
+            "compose": "<code>header: String? = null</code>, <code>description: String? = null</code> — at least one"
           },
           {
-            "figma": "Placement = Top | Bottom | Left | Right",
-            "swift": "placement: .top / .bottom / .leading / .trailing",
-            "compose": "placement: EBTooltipPlacement"
+            "figma": "Placement — Top, Bottom, Left, Right",
+            "swift": "<code>placement: .top / .bottom / .left / .right</code>",
+            "compose": "<code>placement = EBTooltipPlacement.Top / Bottom / Left / Right</code>"
           },
           {
-            "figma": "Appearance = Opaque | Translucent",
-            "swift": "appearance: .opaque / .translucent",
-            "compose": "appearance: EBTooltipAppearance"
+            "figma": "Appearance — Opaque, Translucent",
+            "swift": "<code>appearance: .opaque / .translucent</code>",
+            "compose": "<code>appearance = EBTooltipAppearance.Opaque / Translucent</code>"
           },
           {
-            "figma": "⤷ AssetSlot",
-            "swift": ".ebLeadingAsset { … }",
-            "compose": "leadingAsset: @Composable (() -> Unit)?"
-          },
-          {
-            "figma": "⤷ CloseSlot",
-            "swift": "onDismiss: (() -> Void)?",
-            "compose": "onDismiss: (() -> Unit)?"
-          },
-          {
-            "figma": "⤷ ActionSlot",
-            "swift": ".ebAction { … }",
-            "compose": "action: @Composable (() -> Unit)?"
-          }
-        ],
+              "figma": "Header — text property",
+              "swift": "<code>header: String?</code>",
+              "compose": "<code>header: String? = null</code>"
+            },
+            {
+              "figma": "Description — text property",
+              "swift": "<code>description: String?</code>",
+              "compose": "<code>description: String? = null</code>"
+            },
+            {
+              "figma": "hasDismiss — boolean",
+              "swift": "<code>.onDismiss { }</code> — omit to hide the close",
+              "compose": "<code>onDismiss: (() -&gt; Unit)? = null</code>"
+            },
+            {
+              "figma": "hasArrow — boolean",
+              "swift": "<code>showsArrow: Bool = true</code>",
+              "compose": "<code>showsArrow: Boolean = true</code>"
+            },
+            {
+              "figma": "hasLeadingAsset — boolean",
+              "swift": "<code>.ebLeadingAsset { }</code> — omit for False",
+              "compose": "<code>leadingAsset: @Composable (() -&gt; Unit)? = null</code>"
+            },
+            {
+              "figma": "hasAction — boolean",
+              "swift": "<code>.ebAction { }</code> — omit for False",
+              "compose": "<code>action: @Composable (() -&gt; Unit)? = null</code>"
+            },
+            {
+              "figma": "⤷ CloseSlot — SLOT, 16 × 16",
+              "swift": "the close control — defaults to the DS close icon",
+              "compose": "the close control — defaults to the DS close icon"
+            },
+            {
+              "figma": "⤷ AssetSlot — SLOT, 46 × 46",
+              "swift": "content of <code>.ebLeadingAsset { }</code>",
+              "compose": "content of <code>leadingAsset</code>"
+            },
+            {
+              "figma": "⤷ ActionSlot — SLOT, 304 × 28",
+              "swift": "content of <code>.ebAction { }</code>",
+              "compose": "content of <code>action</code>"
+            }
+          ],
         "filePaths": {
-          "swift": "Sources/EastBlue/Components/EBTooltip.swift",
-          "compose": "components/src/main/kotlin/com/gcash/eastblue/components/EBTooltip.kt"
+          "swift": "ios/Components/Tooltip/EBTooltip.swift",
+          "compose": "android/components/tooltip/EBTooltip.kt"
         }
       },
       "usageSnippets": [
         {
-          "subheading": "Walkthrough coach-mark — header, description, asset and CTA",
-          "swift": "EBTooltip(\n    header: \"Header\",\n    description: \"Description goes here\",\n    placement: .top,\n    appearance: .opaque,\n    onDismiss: { step.skip() }\n)\n.ebLeadingAsset { Image(\"illustration\") }\n.ebAction { EBButton(\"Next\").controlSize(.mini) }",
-          "compose": "EBTooltip(\n    header = \"Header\",\n    description = \"Description goes here\",\n    placement = EBTooltipPlacement.Top,\n    appearance = EBTooltipAppearance.Opaque,\n    leadingAsset = { Image(painterResource(R.drawable.illustration), null) },\n    action = { EBButton(\"Next\", size = EBButtonSize.XSmall) },\n    onDismiss = { step.skip() },\n)"
+          "subheading": "Header · Top · Opaque",
+          "swift": "<span class=\"cmt\">// Text=Header, Placement=Top, Appearance=Opaque — 6295:79648, 336 × 134.</span>\n<span class=\"typ\">EBTooltip</span>(\n    header: <span class=\"str\">\"Header\"</span>,\n    placement: .<span class=\"prp\">top</span>,\n    appearance: .<span class=\"prp\">opaque</span>\n)\n.<span class=\"fn\">ebLeadingAsset</span> { <span class=\"typ\">Image</span>(<span class=\"str\">\"illustration\"</span>) }\n.<span class=\"fn\">ebAction</span> { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Next\"</span>).<span class=\"fn\">controlSize</span>(.<span class=\"prp\">mini</span>) }\n.<span class=\"fn\">onDismiss</span> { dismissStep() }",
+          "compose": "<span class=\"cmt\">// Text=Header, Placement=Top, Appearance=Opaque — 6295:79648, 336 × 134.</span>\n<span class=\"typ\">EBTooltip</span>(\n    header = <span class=\"str\">\"Header\"</span>,\n    placement = <span class=\"typ\">EBTooltipPlacement</span>.<span class=\"prp\">Top</span>,\n    appearance = <span class=\"typ\">EBTooltipAppearance</span>.<span class=\"prp\">Opaque</span>,\n    leadingAsset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.illustration), contentDescription = null) },\n    action = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Next\"</span>, size = <span class=\"typ\">EBButtonSize</span>.<span class=\"prp\">XSmall</span>) { nextStep() } },\n    onDismiss = { dismissStep() }\n)"
         },
         {
-          "subheading": "Inline hint — description only, no slots",
-          "swift": "EBTooltip(\n    description: \"Description goes here\",\n    placement: .bottom,\n    appearance: .translucent\n)",
-          "compose": "EBTooltip(\n    description = \"Description goes here\",\n    placement = EBTooltipPlacement.Bottom,\n    appearance = EBTooltipAppearance.Translucent,\n)"
+          "subheading": "Description · Bottom · Opaque",
+          "swift": "<span class=\"cmt\">// Text=Description, Placement=Bottom, Appearance=Opaque — 6295:79755, 336 × 134.</span>\n<span class=\"typ\">EBTooltip</span>(\n    description: <span class=\"str\">\"Description goes here\"</span>,\n    placement: .<span class=\"prp\">bottom</span>,\n    appearance: .<span class=\"prp\">opaque</span>\n)\n.<span class=\"fn\">ebLeadingAsset</span> { <span class=\"typ\">Image</span>(<span class=\"str\">\"illustration\"</span>) }\n.<span class=\"fn\">ebAction</span> { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Next\"</span>).<span class=\"fn\">controlSize</span>(.<span class=\"prp\">mini</span>) }\n.<span class=\"fn\">onDismiss</span> { dismissStep() }",
+          "compose": "<span class=\"cmt\">// Text=Description, Placement=Bottom, Appearance=Opaque — 6295:79755, 336 × 134.</span>\n<span class=\"typ\">EBTooltip</span>(\n    description = <span class=\"str\">\"Description goes here\"</span>,\n    placement = <span class=\"typ\">EBTooltipPlacement</span>.<span class=\"prp\">Bottom</span>,\n    appearance = <span class=\"typ\">EBTooltipAppearance</span>.<span class=\"prp\">Opaque</span>,\n    leadingAsset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.illustration), contentDescription = null) },\n    action = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Next\"</span>, size = <span class=\"typ\">EBButtonSize</span>.<span class=\"prp\">XSmall</span>) { nextStep() } },\n    onDismiss = { dismissStep() }\n)"
+        },
+        {
+          "subheading": "Both · Left · Translucent",
+          "swift": "<span class=\"cmt\">// Text=Both, Placement=Left, Appearance=Translucent — 6295:79908, 348 × 122.</span>\n<span class=\"typ\">EBTooltip</span>(\n    header: <span class=\"str\">\"Header\"</span>,\n    description: <span class=\"str\">\"Description goes here\"</span>,\n    placement: .<span class=\"prp\">left</span>,\n    appearance: .<span class=\"prp\">translucent</span>\n)\n.<span class=\"fn\">ebLeadingAsset</span> { <span class=\"typ\">Image</span>(<span class=\"str\">\"illustration\"</span>) }\n.<span class=\"fn\">ebAction</span> { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Next\"</span>).<span class=\"fn\">controlSize</span>(.<span class=\"prp\">mini</span>) }\n.<span class=\"fn\">onDismiss</span> { dismissStep() }",
+          "compose": "<span class=\"cmt\">// Text=Both, Placement=Left, Appearance=Translucent — 6295:79908, 348 × 122.</span>\n<span class=\"typ\">EBTooltip</span>(\n    header = <span class=\"str\">\"Header\"</span>,\n    description = <span class=\"str\">\"Description goes here\"</span>,\n    placement = <span class=\"typ\">EBTooltipPlacement</span>.<span class=\"prp\">Left</span>,\n    appearance = <span class=\"typ\">EBTooltipAppearance</span>.<span class=\"prp\">Translucent</span>,\n    leadingAsset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.illustration), contentDescription = null) },\n    action = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Next\"</span>, size = <span class=\"typ\">EBButtonSize</span>.<span class=\"prp\">XSmall</span>) { nextStep() } },\n    onDismiss = { dismissStep() }\n)"
+        },
+        {
+          "subheading": "Both · Right · Translucent",
+          "swift": "<span class=\"cmt\">// Text=Both, Placement=Right, Appearance=Translucent — 6295:80000, 348 × 122.</span>\n<span class=\"typ\">EBTooltip</span>(\n    header: <span class=\"str\">\"Header\"</span>,\n    description: <span class=\"str\">\"Description goes here\"</span>,\n    placement: .<span class=\"prp\">right</span>,\n    appearance: .<span class=\"prp\">translucent</span>\n)\n.<span class=\"fn\">ebLeadingAsset</span> { <span class=\"typ\">Image</span>(<span class=\"str\">\"illustration\"</span>) }\n.<span class=\"fn\">ebAction</span> { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Next\"</span>).<span class=\"fn\">controlSize</span>(.<span class=\"prp\">mini</span>) }\n.<span class=\"fn\">onDismiss</span> { dismissStep() }",
+          "compose": "<span class=\"cmt\">// Text=Both, Placement=Right, Appearance=Translucent — 6295:80000, 348 × 122.</span>\n<span class=\"typ\">EBTooltip</span>(\n    header = <span class=\"str\">\"Header\"</span>,\n    description = <span class=\"str\">\"Description goes here\"</span>,\n    placement = <span class=\"typ\">EBTooltipPlacement</span>.<span class=\"prp\">Right</span>,\n    appearance = <span class=\"typ\">EBTooltipAppearance</span>.<span class=\"prp\">Translucent</span>,\n    leadingAsset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.illustration), contentDescription = null) },\n    action = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Next\"</span>, size = <span class=\"typ\">EBButtonSize</span>.<span class=\"prp\">XSmall</span>) { nextStep() } },\n    onDismiss = { dismissStep() }\n)"
         }
       ],
       "accessibility": [
         {
-          "requirement": "Announced as a single unit",
-          "ios": "Group header + description with <code>.accessibilityElement(children: .combine)</code>",
-          "android": "Wrap content in <code>Modifier.semantics(mergeDescendants = true)</code>"
+          "requirement": "Announcement",
+          "ios": "When a tooltip appears, post <code>UIAccessibility.post(notification: .layoutChanged, argument: tooltip)</code> so VoiceOver moves to it. Read Header, then Description.",
+          "android": "Use <code>Modifier.semantics { paneTitle = header }</code> or <code>liveRegion = LiveRegionMode.Polite</code> so TalkBack announces it."
         },
         {
-          "requirement": "Dismiss is reachable",
-          "ios": "The close control needs a 44 × 44 hit target — the 16 × 16 glyph is the visual only",
-          "android": "Expand the touch target to 48 × 48 with <code>Modifier.minimumInteractiveComponentSize()</code>"
+          "requirement": "Dismiss",
+          "ios": "The close glyph is 16 × 16 — under 44pt. Extend its hit area and label it “Close”. Support the escape gesture (<code>.accessibilityAction(.escape)</code>).",
+          "android": "Label the close “Close” and apply <code>Modifier.minimumInteractiveComponentSize()</code>; back dismisses."
         },
         {
-          "requirement": "Focus order during walkthroughs",
-          "ios": "Move focus to the tooltip on present with <code>.accessibilitySortPriority</code>",
-          "android": "Request focus on the tooltip container when the step begins"
+          "requirement": "Pointer and asset",
+          "ios": "The pointer and the Icon Placeholder are decorative — <code>.accessibilityHidden(true)</code>. An asset that carries meaning needs its own label.",
+          "android": "<code>contentDescription = null</code> on decorative content."
         },
         {
-          "requirement": "Contrast",
-          "ios": "Translucent pairs #FFFFFF on #0A2757 — passes AA at both text sizes",
-          "android": "Same — verify against the underlying backdrop when placed over imagery"
+          "requirement": "Focus order in walkthroughs",
+          "ios": "Focus the tooltip, not the dimmed screen behind it. Next → Close, then return focus to the highlighted target on dismiss.",
+          "android": "Trap focus inside the tooltip while it is shown; restore it to the target on dismiss."
+        },
+        {
+          "requirement": "Contrast — Opaque",
+          "ios": "Header #0A2757 on #FFFFFF 14.58:1. Description #6780A9 4.01:1 at 12pt — below 4.5:1. Button label white on #005CE5 5.73:1.",
+          "android": "Same ratios."
+        },
+        {
+          "requirement": "Contrast — Translucent",
+          "ios": "The whole variant is 80% opaque, so ratios depend on what is behind it. Over white: Header 7.86:1, Description 5.51:1, Button label 4.00:1 — below 4.5:1. Over black: 10.09, 6.58 and 4.93:1. Use Translucent over a dimmed backdrop.",
+          "android": "Same — measure against the real backdrop."
         }
       ],
       "usageGuidelines": [
         {
-          "doText": "Use Placement to point at the anchor element, and keep the tooltip within the safe area.",
-          "dontText": "Do not rely on Placement for positioning — it sets the pointer edge only, not the tooltip’s location."
+          "doText": "Use Tooltip for walkthrough steps and short contextual hints anchored to one target.",
+          "dontText": "Don’t use it for errors or confirmations — use Inline Message, Alert or Toast."
         },
         {
-          "doText": "Empty ⤷ AssetSlot and ⤷ ActionSlot for short inline hints — the container hugs down to the text.",
-          "dontText": "Do not stack more than a header and one short description; Tooltip is not a modal."
+          "doText": "Pick <code>Placement</code> so the pointer faces the target. The pointer sits 14.5px in on Top/Bottom and 6px down on Left/Right.",
+          "dontText": "Don’t reposition the pointer to the centre; Figma has no centred placement."
         },
         {
-          "doText": "Use Translucent over imagery and dimmed walkthrough backdrops.",
-          "dontText": "Do not expect Translucent to blur what is behind it — the name describes the palette, not an effect."
+          "doText": "Use Translucent over a dimmed walkthrough backdrop.",
+          "dontText": "Don’t place Translucent over white content — the 80% variant opacity washes out the Button label to 4.00:1."
+        },
+        {
+          "doText": "Keep Header to one line and Description to one or two; the Text Container is 246 wide.",
+          "dontText": "Don’t put long body copy in a tooltip — link to a detail screen from ActionSlot instead."
         }
       ],
       "scorecard": [
         {
           "id": "C1",
           "criterion": "Layer Structure & Naming",
-          "status": "ready",
-          "statusLabel": "Ready",
-          "notes": "Semantic names throughout — <code>Container</code>, <code>Details</code>, <code>Text Container</code>, <code>#header</code>, <code>#description</code>, and three <code>⤷ …Slot</code> slots."
+          "status": "refine",
+          "statusLabel": "Needs Refinement",
+          "notes": "<code>Container</code>, <code>Details</code> and the three <code>⤷ …Slot</code> layers are semantic. But the text layers keep the <code>#</code> prefix (<code>#header</code>, <code>#description</code>) that Page Banner, Detail Hero and Inline Text dropped, <code>pointer-adjustment</code> and <code>pointer</code> are lowercase, and <code>Text Container</code> has a space."
         },
         {
           "id": "C2",
           "criterion": "Variant & Property Naming",
           "status": "ready",
           "statusLabel": "Ready",
-          "notes": "Three clean enums with consistent casing. <code>Placement</code> replaced four booleans; <code>Appearance</code> values both name visual treatments."
+          "notes": "Three PascalCase enums — <code>Text</code>, <code>Placement</code>, <code>Appearance</code> — with Title Case values and a complete 24-variant matrix."
         },
         {
           "id": "C3",
           "criterion": "Token Coverage",
-          "status": "na",
-          "statusLabel": "Not Applicable",
-          "notes": "Tooltip owns the container, pointer and text colours listed under Styles. The CTA button and close icon carry their own tokens and are audited on their own pages."
+          "status": "refine",
+          "statusLabel": "Needs Refinement",
+          "notes": "All text layers resolve <code>matched</code> — <code>Primary/Headlines/Block</code>, <code>Secondary/Bold/Caption</code>, <code>Primary/Label/Base</code>. But Translucent is a 0.8 opacity on the whole variant rather than a token-bound translucent surface, so it also fades the nested Button. Colour bindings cannot be read with the plugin."
         },
         {
           "id": "C4",
           "criterion": "Native Mappability",
-          "status": "ready",
-          "statusLabel": "Ready",
-          "notes": "Maps to a popover or overlay with three enums and three composable slots. The container hugs its content, matching native layout behaviour."
+          "status": "refine",
+          "statusLabel": "Needs Refinement",
+          "notes": "Maps to one <code>EBTooltip</code> with three enums and three optional slots. Two offsets a developer would copy: the close sits 3.5px above <code>Details</code> (a half-pixel y of 12.5), and the Button ends 3px short of <code>ActionSlot</code>’s edge."
         },
         {
           "id": "C5",
           "criterion": "Interaction State Coverage",
           "status": "na",
           "statusLabel": "Not Applicable",
-          "notes": "A presentation surface with no states of its own. Pressed and disabled belong to the Button and close icon."
+          "notes": "A presentation surface. Pressed and disabled belong to the Button and close icon in the slots."
         },
         {
           "id": "C6",
           "criterion": "Asset & Icon Quality",
           "status": "ready",
           "statusLabel": "Ready",
-          "notes": "The pointer is a vector that recolours and rotates; the close is an icon instance. Both raster assets flagged on the predecessors are gone."
+          "notes": "The pointer is a vector path per placement, the close a DS icon, the CTA a real <code>Button - XSmall</code>, and the asset a swappable SLOT."
         },
         {
           "id": "C7",
           "criterion": "Code Connect Linkability",
           "status": "empty",
           "statusLabel": "Not Mapped",
-          "notes": "No CLI mappings registered yet — left open for engineering."
+          "notes": "Three enums and three named slots are ready to map. No SwiftUI or Compose mappings are registered; the native library does not exist."
         }
       ],
       "codeConnect": [],
-      "variants": {
+      "variants": { "hasarrow:false": { "hide": true },
         "total": 24,
-        "description": "3 <code>Text</code> × 4 <code>Placement</code> × 2 <code>Appearance</code> = <strong>24 variants</strong>, a complete matrix with no gaps. Top and Bottom measure 336 × 134; Left and Right measure 348 × 122, the extra 12 being the pointer.",
+        "description": "<code>Text</code> (3) × <code>Placement</code> (4) × <code>Appearance</code> (2) = 24 variants, a complete matrix. Top and Bottom are 336 × 134; Left and Right 348 × 122. The container is 336 × 122 on all 24.",
         "columns": [
           "Text",
           "Placement",
           "Appearance",
-          "Node"
+          "Node ID",
+          "Dimensions"
         ],
         "rows": [
           {
@@ -862,23 +892,8 @@ export const tooltip: ComponentData = {
               "Header",
               "Top",
               "Opaque",
-              "<code>6295:79648</code>"
-            ]
-          },
-          {
-            "cells": [
-              "Description",
-              "Top",
-              "Opaque",
-              "<code>6295:79663</code>"
-            ]
-          },
-          {
-            "cells": [
-              "Both",
-              "Top",
-              "Opaque",
-              "<code>6295:79678</code>"
+              "<code>6295:79648</code>",
+              "336 × 134"
             ]
           },
           {
@@ -886,7 +901,17 @@ export const tooltip: ComponentData = {
               "Header",
               "Top",
               "Translucent",
-              "<code>6295:79694</code>"
+              "<code>6295:79694</code>",
+              "336 × 134"
+            ]
+          },
+          {
+            "cells": [
+              "Description",
+              "Top",
+              "Opaque",
+              "<code>6295:79663</code>",
+              "336 × 134"
             ]
           },
           {
@@ -894,7 +919,17 @@ export const tooltip: ComponentData = {
               "Description",
               "Top",
               "Translucent",
-              "<code>6295:79709</code>"
+              "<code>6295:79709</code>",
+              "336 × 134"
+            ]
+          },
+          {
+            "cells": [
+              "Both",
+              "Top",
+              "Opaque",
+              "<code>6295:79678</code>",
+              "336 × 134"
             ]
           },
           {
@@ -902,7 +937,8 @@ export const tooltip: ComponentData = {
               "Both",
               "Top",
               "Translucent",
-              "<code>6295:79724</code>"
+              "<code>6295:79724</code>",
+              "336 × 134"
             ]
           },
           {
@@ -910,23 +946,8 @@ export const tooltip: ComponentData = {
               "Header",
               "Bottom",
               "Opaque",
-              "<code>6295:79740</code>"
-            ]
-          },
-          {
-            "cells": [
-              "Description",
-              "Bottom",
-              "Opaque",
-              "<code>6295:79755</code>"
-            ]
-          },
-          {
-            "cells": [
-              "Both",
-              "Bottom",
-              "Opaque",
-              "<code>6295:79770</code>"
+              "<code>6295:79740</code>",
+              "336 × 134"
             ]
           },
           {
@@ -934,7 +955,17 @@ export const tooltip: ComponentData = {
               "Header",
               "Bottom",
               "Translucent",
-              "<code>6295:79786</code>"
+              "<code>6295:79786</code>",
+              "336 × 134"
+            ]
+          },
+          {
+            "cells": [
+              "Description",
+              "Bottom",
+              "Opaque",
+              "<code>6295:79755</code>",
+              "336 × 134"
             ]
           },
           {
@@ -942,7 +973,17 @@ export const tooltip: ComponentData = {
               "Description",
               "Bottom",
               "Translucent",
-              "<code>6295:79801</code>"
+              "<code>6295:79801</code>",
+              "336 × 134"
+            ]
+          },
+          {
+            "cells": [
+              "Both",
+              "Bottom",
+              "Opaque",
+              "<code>6295:79770</code>",
+              "336 × 134"
             ]
           },
           {
@@ -950,7 +991,8 @@ export const tooltip: ComponentData = {
               "Both",
               "Bottom",
               "Translucent",
-              "<code>6295:79816</code>"
+              "<code>6295:79816</code>",
+              "336 × 134"
             ]
           },
           {
@@ -958,23 +1000,8 @@ export const tooltip: ComponentData = {
               "Header",
               "Left",
               "Opaque",
-              "<code>6295:79832</code>"
-            ]
-          },
-          {
-            "cells": [
-              "Description",
-              "Left",
-              "Opaque",
-              "<code>6295:79847</code>"
-            ]
-          },
-          {
-            "cells": [
-              "Both",
-              "Left",
-              "Opaque",
-              "<code>6295:79862</code>"
+              "<code>6295:79832</code>",
+              "348 × 122"
             ]
           },
           {
@@ -982,7 +1009,17 @@ export const tooltip: ComponentData = {
               "Header",
               "Left",
               "Translucent",
-              "<code>6295:79878</code>"
+              "<code>6295:79878</code>",
+              "348 × 122"
+            ]
+          },
+          {
+            "cells": [
+              "Description",
+              "Left",
+              "Opaque",
+              "<code>6295:79847</code>",
+              "348 × 122"
             ]
           },
           {
@@ -990,7 +1027,17 @@ export const tooltip: ComponentData = {
               "Description",
               "Left",
               "Translucent",
-              "<code>6295:79893</code>"
+              "<code>6295:79893</code>",
+              "348 × 122"
+            ]
+          },
+          {
+            "cells": [
+              "Both",
+              "Left",
+              "Opaque",
+              "<code>6295:79862</code>",
+              "348 × 122"
             ]
           },
           {
@@ -998,7 +1045,8 @@ export const tooltip: ComponentData = {
               "Both",
               "Left",
               "Translucent",
-              "<code>6295:79908</code>"
+              "<code>6295:79908</code>",
+              "348 × 122"
             ]
           },
           {
@@ -1006,23 +1054,8 @@ export const tooltip: ComponentData = {
               "Header",
               "Right",
               "Opaque",
-              "<code>6295:79924</code>"
-            ]
-          },
-          {
-            "cells": [
-              "Description",
-              "Right",
-              "Opaque",
-              "<code>6295:79939</code>"
-            ]
-          },
-          {
-            "cells": [
-              "Both",
-              "Right",
-              "Opaque",
-              "<code>6295:79954</code>"
+              "<code>6295:79924</code>",
+              "348 × 122"
             ]
           },
           {
@@ -1030,7 +1063,17 @@ export const tooltip: ComponentData = {
               "Header",
               "Right",
               "Translucent",
-              "<code>6295:79970</code>"
+              "<code>6295:79970</code>",
+              "348 × 122"
+            ]
+          },
+          {
+            "cells": [
+              "Description",
+              "Right",
+              "Opaque",
+              "<code>6295:79939</code>",
+              "348 × 122"
             ]
           },
           {
@@ -1038,7 +1081,17 @@ export const tooltip: ComponentData = {
               "Description",
               "Right",
               "Translucent",
-              "<code>6295:79985</code>"
+              "<code>6295:79985</code>",
+              "348 × 122"
+            ]
+          },
+          {
+            "cells": [
+              "Both",
+              "Right",
+              "Opaque",
+              "<code>6295:79954</code>",
+              "348 × 122"
             ]
           },
           {
@@ -1046,61 +1099,100 @@ export const tooltip: ComponentData = {
               "Both",
               "Right",
               "Translucent",
-              "<code>6295:80000</code>"
+              "<code>6295:80000</code>",
+              "348 × 122"
             ]
           }
-        ],
-        "summary": {
-          "columns": [
-            "Placement",
-            "Text",
-            "Appearance",
-            "Container",
-            "Count"
-          ],
-          "rows": [
-            {
-              "cells": [
-                "<strong>Top</strong>",
-                "Header · Description · Both",
-                "Opaque · Translucent",
-                "336 × 134",
-                "6"
-              ]
-            },
-            {
-              "cells": [
-                "<strong>Bottom</strong>",
-                "Header · Description · Both",
-                "Opaque · Translucent",
-                "336 × 134",
-                "6"
-              ]
-            },
-            {
-              "cells": [
-                "<strong>Left</strong>",
-                "Header · Description · Both",
-                "Opaque · Translucent",
-                "348 × 122",
-                "6"
-              ]
-            },
-            {
-              "cells": [
-                "<strong>Right</strong>",
-                "Header · Description · Both",
-                "Opaque · Translucent",
-                "348 × 122",
-                "6"
-              ]
-            }
-          ]
-        },
-        "collapseLabel": "View full Text × Placement × Appearance breakdown (24 rows)"
+        ]
       }
     },
     "changelog": [
+      {
+        "version": "1.0.1",
+        "date": "September 2026",
+        "kind": "patch",
+        "kindLabel": "Patch",
+        "header": "Style + Code tabs rebuilt against the live component · node 6295:79647",
+        "rows": [
+          {
+            "body": "<strong>Style tab rebuilt to one card with the Figma property panel.</strong> Two cards split by Appearance each carried a Filled/Empty control for all three slots. Now one card with <code>Text</code>, <code>Placement</code>, <code>Appearance</code>, the <code>Header</code> and <code>Description</code> text properties, and <code>hasDismiss</code>, <code>hasArrow</code>, <code>hasLeadingAsset</code>, <code>hasAction</code>; the slots are listed, not controlled.",
+            "delta": {
+              "kind": "resolved",
+              "label": "Docs"
+            }
+          },
+          {
+            "body": "<strong>Translucent was drawn as a solid #0A2757 surface.</strong> Figma applies 80% opacity to the whole variant — Button and asset placeholder included. The preview and colours now show it.",
+            "delta": {
+              "kind": "resolved",
+              "label": "Docs"
+            }
+          },
+          {
+            "body": "<strong>Preview geometry corrected.</strong> The asset placeholder is a solid #D7E0EF circle, not a dashed outline; the close sits 3.5px above Details; the Bottom pointer uses Figma’s own path rather than a rotated Top one.",
+            "delta": {
+              "kind": "resolved",
+              "label": "Docs"
+            }
+          },
+          {
+            "body": "<strong>Typography named text styles incorrectly and repeated font specs.</strong> The Header row read <code>Primary/Header/Small</code> and Description <code>Primary/Body/Fine</code>. They resolve <code>Primary/Headlines/Block</code> and <code>Secondary/Bold/Caption</code>, matched; the Button label <code>Primary/Label/Base</code>.",
+            "delta": {
+              "kind": "resolved",
+              "label": "C3"
+            }
+          },
+          {
+            "body": "<strong>Token paths had no reading behind them.</strong> <code>bg/color-bg-main</code>, <code>border/color-border-weak</code>, <code>space/space-16</code> and others were listed; the plugin reads no bindings. Removed.",
+            "delta": {
+              "kind": "resolved",
+              "label": "C3"
+            }
+          },
+          {
+            "body": "<strong>Code tab install pointed at a retired package.</strong> <code>com.gcash.eastblue:components</code> → <code>com.eastblue.ds:tooltip:1.0.1</code>; scorecard rescored against the live component.",
+            "delta": {
+              "kind": "resolved",
+              "label": "Docs"
+            }
+          },
+          {
+            "body": "<strong>Translucent is variant opacity, not a translucent surface.</strong> The 0.8 fades the nested Button too; over white its label drops to 4.00:1. <span class=\"tag-open tag-c3\">Open</span>",
+            "delta": {
+              "kind": "open",
+              "label": "C3"
+            }
+          },
+          {
+            "body": "<strong>Text layers keep the <code>#</code> prefix</strong> (<code>#header</code>, <code>#description</code>) that sibling components dropped; <code>pointer-adjustment</code> and <code>pointer</code> are lowercase. <span class=\"tag-open tag-c1\">Open</span>",
+            "delta": {
+              "kind": "open",
+              "label": "C1"
+            }
+          },
+          {
+            "body": "<strong>Close sits 3.5px above Details</strong> at a half-pixel y, and the Button ends 3px short of ActionSlot. <span class=\"tag-open tag-c4\">Open</span>",
+            "delta": {
+              "kind": "open",
+              "label": "C4"
+            }
+          },
+          {
+            "body": "<strong>Description fails AA on Opaque</strong> — #6780A9 on white is 4.01:1 at 12pt. <span class=\"tag-open tag-c3\">Open</span>",
+            "delta": {
+              "kind": "open",
+              "label": "A11y"
+            }
+          },
+          {
+          "body": "<strong>Boolean bindings not readable.</strong> <code>hasDismiss</code>, <code>hasArrow</code>, <code>hasLeadingAsset</code> and <code>hasAction</code> are documented as hiding the element each names, and the card is assumed to hug when one is off; neither the binding nor the resulting size could be read. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        }
+        ]
+      },
       {
         "version": "1.0.0",
         "date": "August 2026",

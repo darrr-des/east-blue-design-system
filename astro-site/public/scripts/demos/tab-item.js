@@ -1,232 +1,298 @@
-/* Auto-extracted from assessment-src/components/tab-item.html.
- * Powers the live-preview dropdowns/toggles for the tab-item component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs tab-item
+/* Tab Item — Style tab demo.
+ * Rebuilt from Figma component set 26327:10941 (Sticker Sheets v2).
+ * Sizes, offsets and fills read off get_node_info; what actually draws
+ * checked against get_svg and export_node_as_image.
+ *
+ * Panel (set 26327:10941, from the property-panel screenshot):
+ *   State              · Default, Hover, Disabled   (variant)
+ *   Orientation        · Horizontal, Vertical       (variant)
+ *   Size               · Medium, Large              (variant)
+ *   Placement          · Leading, Trailing          (variant)
+ *   isSelected         · true, false                (variant)
+ *   hasIcon            · True                       (boolean)
+ *   hasCounter         · False                      (boolean)
+ *   hasNotificationDot · False                      (boolean)
+ * Slots (no control): Icon Slot (23 swap options) · Icon Slot2 (1)
+ *
+ * 24 of the 48 variant combinations are built; the panel snaps to the
+ * nearest built one.
+ *
+ * At the panel defaults only the label and the 2px underline draw, which
+ * is what get_svg and export_node_as_image return: hasCounter and
+ * hasNotificationDot are False, and hasIcon is True over an Icon Slot with
+ * nothing swapped in.
+ *
+ * The frame HUGS its visible children — confirmed in Figma: label only is
+ * 65 Hug × 48 Hug, and the same tab with the counter on is 97 Hug × 48.
+ * So the size follows the booleans: 12 padding, an 8 gap between parts,
+ * a 24 icon slot and a 24 counter. The red dot is absolutely placed and
+ * changes nothing. (A hidden child keeps its last coordinates, which is
+ * why get_node_info reports the counter past the right edge.)
  */
-/* ── Tab Item Component JS ─────────────────────────────────────────── */
-var _tiDemo = { active: 'yes', orient: 'vertical', size: 'small', leadicon: 'no', counter: 'no', dot: 'no' };
 
-function _tiBuildSvg(opts) {
-  var active = opts.active === 'yes';
-  var vertical = opts.orient === 'vertical';
-  var large = opts.size === 'large';
-  var leadIcon = opts.leadicon === 'yes';
-  var counter = opts.counter === 'yes';
-  var dot = opts.dot === 'yes';
+var TI_AXES = ['state', 'orientation', 'size', 'placement', 'isselected'];
 
-  var labelColor = active ? '#005CE5' : '#6780A9';
-  var borderColor = active ? '#005CE5' : '#E5EBF4';
-  var fontSize = large ? 14 : 12;
+/* key = state|orientation|size|placement|isselected */
+var TI_VARIANTS = [
+  ['default|vertical|medium|leading|true',    '26327:10942', 65, 92],
+  ['hover|vertical|medium|leading|true',      '26347:4682',  65, 92],
+  ['default|vertical|medium|leading|false',   '26327:10951', 65, 92],
+  ['disabled|vertical|medium|leading|false',  '26347:4673',  65, 92],
+  ['default|vertical|large|leading|true',     '26327:10960', 70, 92],
+  ['hover|vertical|large|leading|true',       '26347:4691',  70, 92],
+  ['default|vertical|large|leading|false',    '26327:10969', 70, 92],
+  ['disabled|vertical|large|leading|false',   '26347:4700',  70, 92],
+  ['default|horizontal|medium|leading|true',  '26327:10978', 97, 48],
+  ['hover|horizontal|medium|leading|true',    '26347:4741',  97, 48],
+  ['default|horizontal|medium|leading|false', '26327:10986', 97, 48],
+  ['disabled|horizontal|medium|leading|false','26347:4709',  97, 48],
+  ['default|horizontal|medium|trailing|true', '26327:11034', 97, 48],
+  ['hover|horizontal|medium|trailing|true',   '26347:4749',  97, 48],
+  ['default|horizontal|medium|trailing|false','26327:10994', 97, 48],
+  ['disabled|horizontal|medium|trailing|false','26347:4717', 97, 48],
+  ['default|horizontal|large|leading|true',   '26327:11002', 102, 50],
+  ['hover|horizontal|large|leading|true',     '26347:4757',  102, 50],
+  ['default|horizontal|large|leading|false',  '26327:11018', 102, 50],
+  ['disabled|horizontal|large|leading|false', '26347:4773',  102, 50],
+  ['default|horizontal|large|trailing|true',  '26327:11010', 102, 50],
+  ['hover|horizontal|large|trailing|true',    '26347:4765',  102, 50],
+  ['default|horizontal|large|trailing|false', '26327:11026', 102, 50],
+  ['disabled|horizontal|large|trailing|false','26347:4781',  102, 50]
+].map(function (v) { return { key: v[0], node: v[1], w: v[2], h: v[3] }; });
 
-  var w, h, s;
-  if (vertical) {
-    w = 72; h = 84;
-    s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-    s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="#FFFFFF"/>';
-    // Icon
-    s += '<circle cx="' + (w / 2) + '" cy="28" r="16" fill="#C2C6CF"/>';
-    // Label
-    s += '<text x="' + (w / 2) + '" y="' + (h - 22) + '" text-anchor="middle" fill="' + labelColor + '" font-size="' + fontSize + '" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
-    // Border
-    s += '<rect x="0" y="' + (h - 2) + '" width="' + w + '" height="2" fill="' + borderColor + '"/>';
-    // Red dot
-    if (dot) s += '<circle cx="' + (w - 8) + '" cy="8" r="3" fill="#D81E1E"/>';
-    s += '</svg>';
-    return s;
-  }
-
-  // Horizontal
-  w = large ? 130 : 120;
-  h = 48;
-  s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-  s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="#FFFFFF"/>';
-  var x = 12;
-  if (leadIcon) {
-    s += '<circle cx="' + (x + 10) + '" cy="' + (h / 2) + '" r="10" fill="#B3B3B3"/>';
-    x += 24;
-  }
-  s += '<text x="' + x + '" y="' + (h / 2 + 5) + '" fill="' + labelColor + '" font-size="' + fontSize + '" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
-  x += 38;
-  if (counter) {
-    s += '<rect x="' + x + '" y="' + (h / 2 - 9) + '" width="22" height="18" rx="9" fill="#ECF1FA"/>';
-    s += '<text x="' + (x + 11) + '" y="' + (h / 2 + 4) + '" text-anchor="middle" fill="#0F3390" font-size="10" font-weight="700" font-family="\'Proxima Soft\', system-ui">0</text>';
-  }
-  s += '<rect x="0" y="' + (h - 2) + '" width="' + w + '" height="2" fill="' + borderColor + '"/>';
-  if (dot) s += '<circle cx="' + (w - 8) + '" cy="8" r="3" fill="#D81E1E"/>';
-  s += '</svg>';
-  return s;
+/* Label colour follows State + isSelected; the underline follows it too,
+   and is #E5EBF4 whenever the tab is not selected. */
+function _tiColors(state, selected) {
+  if (state === 'disabled') return { label: '#C2CFE5', rule: '#E5EBF4' };
+  if (selected !== 'true') return { label: '#6780A9', rule: '#E5EBF4' };
+  return state === 'hover' ? { label: '#2340A9', rule: '#2340A9' } : { label: '#005CE5', rule: '#005CE5' };
 }
 
-function updateTabItemDemo() {
-  _tiDemo.active = document.getElementById('ti-demo-active').value;
-  _tiDemo.orient = document.getElementById('ti-demo-orient').value;
-  _tiDemo.size = document.getElementById('ti-demo-size').value;
-  _tiDemo.leadicon = document.getElementById('ti-demo-leadicon').value;
-  _tiDemo.counter = document.getElementById('ti-demo-counter').value;
-  _tiDemo.dot = document.getElementById('ti-demo-dot').value;
-  var el = document.getElementById('ti-demo-preview');
-  if (el) el.innerHTML = _tiBuildSvg(_tiDemo);
+/* Label box, measured per orientation / size / placement. */
+function _tiLabel(v) {
+  var p = v.key.split('|'), orient = p[1], size = p[2], place = p[3];
+  if (orient === 'vertical') {
+    return size === 'medium'
+      ? { x: 12, w: 41, cy: 68, fs: 16 }
+      : { x: 12, w: 46, cy: 68, fs: 18 };
+  }
+  if (size === 'medium') {
+    return place === 'leading' ? { x: 44, w: 41, cy: 24, fs: 16 } : { x: 12, w: 41, cy: 24, fs: 16 };
+  }
+  return place === 'leading' ? { x: 44, w: 46, cy: 26, fs: 18 } : { x: 12, w: 46, cy: 26, fs: 18 };
 }
 
-/* Spec card: render active + inactive side by side */
-function _tiSideBySide(baseOpts) {
-  var act = Object.assign({}, baseOpts, { active: 'yes' });
-  var inact = Object.assign({}, baseOpts, { active: 'no' });
-  return '<div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">' +
-    _tiBuildSvg(act) + _tiBuildSvg(inact) +
-    '</div>';
-}
+function _tiKey(card) { return TI_AXES.map(function (a) { return card[a]; }).join('|'); }
 
-function _tiInitSpecCards() {
-  var cards = [
-    ['ti-preview-vs', { orient: 'vertical', size: 'small' }],
-    ['ti-preview-vl', { orient: 'vertical', size: 'large' }],
-    ['ti-preview-hs', { orient: 'horizontal', size: 'small', leadicon: 'yes', counter: 'yes' }],
-    ['ti-preview-hl', { orient: 'horizontal', size: 'large', leadicon: 'yes', counter: 'yes' }]
-  ];
-  cards.forEach(function(c) {
-    var el = document.getElementById(c[0]);
-    if (el) el.innerHTML = _tiSideBySide(c[1]);
+function _tiResolve(card, changed) {
+  var key = _tiKey(card);
+  for (var i = 0; i < TI_VARIANTS.length; i++) if (TI_VARIANTS[i].key === key) return TI_VARIANTS[i];
+  var parts = key.split('|'), ci = changed ? TI_AXES.indexOf(changed) : -1;
+  var best = null, bestScore = -1;
+  TI_VARIANTS.forEach(function (v) {
+    var vp = v.key.split('|');
+    if (ci >= 0 && vp[ci] !== parts[ci]) return;
+    var score = 0;
+    for (var j = 0; j < vp.length; j++) if (vp[j] === parts[j]) score++;
+    if (score > bestScore) { bestScore = score; best = v; }
   });
+  return best || TI_VARIANTS[0];
 }
 
-/* ── Tab Item Spec Cards ────────────────────────────────────────── */
+var TI_PAD = 12, TI_GAP = 8, TI_COUNTER = 24;
+
+/* Hug layout, from the measured parts: horizontal lays icon, label and
+   counter in a row; vertical stacks a 32 icon above the label row. */
+function _tiLayout(v, card) {
+  var p = v.key.split('|'), vert = p[1] === 'vertical', med = p[2] === 'medium', lead = p[3] === 'leading';
+  var on = function (x, def) { return x == null ? def : x === 'true'; };
+  var icon = on(card && card.hasicon, true), counter = on(card && card.hascounter, false), dot = on(card && card.hasnotificationdot, false);
+  var labelW = med ? 41 : 46, labelH = med ? 24 : 26, fs = med ? 16 : 18;
+  var iconS = vert ? 32 : 24;
+  var o = { icon: icon, counter: counter, dot: dot, fs: fs, iconS: iconS };
+
+  if (vert) {
+    var rowW = labelW + (counter ? TI_GAP + TI_COUNTER : 0);
+    o.w = TI_PAD * 2 + rowW;
+    o.h = TI_PAD * 2 + (icon ? iconS + 12 : 0) + labelH;
+    o.iconX = (o.w - iconS) / 2;
+    o.iconY = TI_PAD;
+    o.labelX = TI_PAD;
+    o.labelW = labelW;
+    o.labelCy = TI_PAD + (icon ? iconS + 12 : 0) + labelH / 2;
+    o.counterX = TI_PAD + labelW + TI_GAP;
+    o.counterY = o.labelCy - 12;
+  } else {
+    var parts = [];
+    if (icon && lead) parts.push(iconS);
+    parts.push(labelW);
+    if (icon && !lead) parts.push(iconS);
+    if (counter) parts.push(TI_COUNTER);
+    o.w = TI_PAD * 2 + parts.reduce(function (a, b) { return a + b; }, 0) + TI_GAP * (parts.length - 1);
+    o.h = med ? 48 : 50;
+    var x = TI_PAD;
+    if (icon && lead) { o.iconX = x; x += iconS + TI_GAP; }
+    o.labelX = x; o.labelW = labelW; x += labelW + TI_GAP;
+    if (icon && !lead) { o.iconX = x; x += iconS + TI_GAP; }
+    if (counter) o.counterX = x;
+    o.iconY = (o.h - iconS) / 2;
+    o.labelCy = o.h / 2;
+    o.counterY = (o.h - 24) / 2;
+  }
+  o.dotX = o.w - TI_PAD + 4 - 6;
+  o.dotY = 4;
+  return o;
+}
+
+function _tiRender(v, card) {
+  card = card || {};
+  var p = v.key.split('|'), c = _tiColors(p[0], p[4]), g = _tiLayout(v, card);
+
+  var s = '<svg width="' + g.w + '" height="' + g.h + '" viewBox="0 0 ' + g.w + ' ' + g.h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  s += '<rect width="' + g.w + '" height="' + g.h + '" fill="#FFFFFF"/>';
+
+  /* Icon Slot ships empty — hasIcon=True shows the slot, not a glyph. */
+  if (g.icon) {
+    s += '<rect x="' + (g.iconX + 0.5) + '" y="' + (g.iconY + 0.5) + '" width="' + (g.iconS - 1) + '" height="' + (g.iconS - 1) +
+         '" rx="' + (g.iconS / 2) + '" stroke="#C2CFE5" stroke-dasharray="3 2"/>';
+  }
+  s += '<text class="ti-label" x="' + (g.labelX + g.labelW / 2) + '" y="' + g.labelCy + '" font-size="' + g.fs +
+       '" font-weight="700" fill="' + c.label + '" text-anchor="middle" dominant-baseline="central">Label</text>';
+  if (g.counter) {
+    s += '<rect x="' + g.counterX + '" y="' + g.counterY + '" width="24" height="24" rx="12" fill="#EEF2F9"/>';
+    s += '<text class="ti-label" x="' + (g.counterX + 12) + '" y="' + (g.counterY + 12) +
+         '" font-size="14" font-weight="700" fill="#072592" text-anchor="middle" dominant-baseline="central">0</text>';
+  }
+  if (g.dot) s += '<circle cx="' + (g.dotX + 3) + '" cy="' + (g.dotY + 3) + '" r="3" fill="#D61B2C"/>';
+  s += '<rect y="' + (g.h - 2) + '" width="' + g.w + '" height="2" fill="' + c.rule + '"/>';
+  return s + '</svg>';
+}
+
+/* Size readout for the Layout row — the same hug maths. */
+function _tiSize(v, card) { var g = _tiLayout(v, card); return g.w + ' × ' + g.h + ' — Hug'; }
+window._tiSize = _tiSize;
+
+/* ── Per-card state — Figma's default variant ──────────────────────── */
 var _specCards = {
-  vs: { selected: 'true', orient: 'vertical',   size: 'small', leadingIcon: 'false', counter: 'false', redDot: 'false' },
-  vl: { selected: 'true', orient: 'vertical',   size: 'large', leadingIcon: 'false', counter: 'false', redDot: 'false' },
-  hs: { selected: 'true', orient: 'horizontal', size: 'small', leadingIcon: 'true',  counter: 'true',  redDot: 'false' },
-  hl: { selected: 'true', orient: 'horizontal', size: 'large', leadingIcon: 'true',  counter: 'true',  redDot: 'false' }
+  main: {
+    state: 'default', orientation: 'vertical', size: 'medium', placement: 'leading', isselected: 'true',
+    hasicon: 'true', hascounter: 'false', hasnotificationdot: 'false'
+  }
 };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  var sel = card.selected === 'true' ? 'true' : 'false';
-  var orient = card.orient === 'horizontal' ? '.horizontal' : '.vertical';
-  var sizeName = card.size === 'large' ? '.large' : '.small';
-  var lines = ['EBTabItem("Label", value: .one)'];
-  lines.push('    .selected(' + sel + ')');
-  lines.push('    .orientation(' + orient + ')');
-  lines.push('    .size(' + sizeName + ')');
-  if (card.orient === 'horizontal' && card.leadingIcon === 'true') {
-    lines.push('    .leadingIcon(Image("icon"))');
-  }
-  if (card.orient === 'horizontal' && card.counter === 'true') {
-    lines.push('    .counter(0)');
-  }
-  if (card.redDot === 'true') {
-    lines.push('    .showBadge(true)');
-  }
-  return lines.join('\n');
-}
+var TI_LABEL = { isselected: { 'true': 'true', 'false': 'false' } };
+function _tiCap(v) { return v.charAt(0).toUpperCase() + v.slice(1); }
+function _tiShow(a, v) { return a === 'isselected' ? v : _tiCap(v); }
 
-function buildComposeSnippet(type, card) {
-  var sel = card.selected === 'true' ? 'true' : 'false';
-  var orient = card.orient === 'horizontal' ? 'EBTabOrientation.Horizontal' : 'EBTabOrientation.Vertical';
-  var sizeName = card.size === 'large' ? 'EBTabSize.Large' : 'EBTabSize.Small';
-  var lines = ['EBTabItem('];
-  lines.push('    label = "Label",');
-  lines.push('    selected = ' + sel + ',');
-  lines.push('    orientation = ' + orient + ',');
-  lines.push('    size = ' + sizeName);
-  if (card.orient === 'horizontal' && card.leadingIcon === 'true') {
-    lines[lines.length - 1] += ',';
-    lines.push('    leadingIcon = painterResource(R.drawable.icon)');
-  }
-  if (card.orient === 'horizontal' && card.counter === 'true') {
-    lines[lines.length - 1] += ',';
-    lines.push('    counter = 0');
-  }
-  if (card.redDot === 'true') {
-    lines[lines.length - 1] += ',';
-    lines.push('    showBadge = true');
-  }
-  lines.push(')');
-  return lines.join('\n');
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function buildSwiftSnippet(cardKey, c) {
+  var l = ['EBTabItem("Label", isSelected: ' + c.isselected + ')'];
+  if (c.hasicon === 'false') l.push('    .ebIconHidden()');
+  if (c.hascounter === 'true') l.push('    .ebCounter(0)');
+  if (c.hasnotificationdot === 'true') l.push('    .ebNotificationDot(true)');
+  l.push('    .ebOrientation(.' + c.orientation + ')');
+  l.push('    .ebControlSize(.' + (c.size === 'medium' ? 'medium' : 'large') + ')');
+  if (c.orientation === 'horizontal') l.push('    .ebIconPlacement(.' + c.placement + ')');
+  if (c.state === 'disabled') l.push('    .disabled(true)');
+  return l.join('\n');
 }
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function buildComposeSnippet(cardKey, c) {
+  var l = ['EBTabItem(', '    label = "Label",', '    isSelected = ' + c.isselected + ',',
+           '    orientation = EBTabOrientation.' + _tiCap(c.orientation) + ',',
+           '    size = EBTabSize.' + _tiCap(c.size) + ','];
+  if (c.orientation === 'horizontal') l.push('    placement = EBTabPlacement.' + _tiCap(c.placement) + ',');
+  if (c.hasicon === 'false') l.push('    showsIcon = false,');
+  if (c.hascounter === 'true') l.push('    counter = 0,');
+  if (c.hasnotificationdot === 'true') l.push('    showsNotificationDot = true,');
+  if (c.state === 'disabled') l.push('    enabled = false,');
+  l.push('    onClick = { }');
+  l.push(')');
+  return l.join('\n');
+}
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
+
+/* ── Control handler ────────────────────────────────────────────────── */
+function _tiSync(cardStyle, card) {
+  TI_AXES.concat(['hasicon', 'hascounter', 'hasnotificationdot']).forEach(function (a) {
+    var el = document.querySelector('[onchange*="updateSpecCard(\'' + cardStyle + '\', \'' + a + '\'"]');
+    if (!el) return;
+    if (el.type === 'checkbox') {
+      el.checked = card[a] === 'true';
+      if (el.parentElement) el.parentElement.classList.toggle('is-on', el.checked);
+    } else { el.value = card[a]; }
+  });
+}
 
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview SVG by cardKey id */
-  var previewMap = {
-    vs: { previewId: 'ti-preview-vs', cardKey: 'ti-spec-vs' },
-    vl: { previewId: 'ti-preview-vl', cardKey: 'ti-spec-vl' },
-    hs: { previewId: 'ti-preview-hs', cardKey: 'ti-spec-hs' },
-    hl: { previewId: 'ti-preview-hl', cardKey: 'ti-spec-hl' }
-  };
+  var v = _tiResolve(card, prop);
+  v.key.split('|').forEach(function (val, i) { card[TI_AXES[i]] = val; });
+  _tiSync(cardStyle, card);
 
-  var active = card.selected === 'true' ? 'yes' : 'no';
-  var opts = {
-    active: active,
-    orient: card.orient,
-    size: card.size,
-    leadicon: card.leadingIcon === 'true' ? 'yes' : 'no',
-    counter: card.counter === 'true' ? 'yes' : 'no',
-    dot: card.redDot === 'true' ? 'yes' : 'no'
-  };
+  var host = document.getElementById('tab-item-spec-' + cardStyle);
+  if (host) host.innerHTML = _tiRender(v, card);
 
-  /* Update spec-card-preview wrapper inside the card */
-  var cardEl = document.getElementById('spec-card-' + cardStyle.replace(/^/, ''));
-  /* Use cardKey from data: 'ti-spec-{cardStyle}' */
-  var fullCardEl = document.getElementById('spec-card-ti-spec-' + cardStyle);
-  if (fullCardEl) {
-    var preview = fullCardEl.querySelector('.spec-card-preview');
-    if (preview) preview.innerHTML = _tiBuildSvg(opts);
-  }
+  var sizeEl = document.querySelector('[data-sp="' + cardStyle + '-size-readout"]');
+  if (sizeEl) sizeEl.textContent = _tiSize(v, card);
+  var nodeEl = document.querySelector('[data-sp="' + cardStyle + '-variantNode"]');
+  if (nodeEl) nodeEl.textContent = v.node + ' · ' + _tiSize(v, card);
 
-  /* Update Properties row — data-sp="${cardStyle}-${prop}" */
-  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
-  if (spEl) {
-    var displayMap = {
-      selected:    { 'true': 'Active', 'false': 'Inactive' },
-      leadingIcon: { 'true': 'true',   'false': 'false' },
-      counter:     { 'true': 'true',   'false': 'false' },
-      redDot:      { 'true': 'true',   'false': 'false' }
-    };
-    var hexEl = spEl.querySelector('.spec-prop-hex');
-    var displayValue = (displayMap[prop] && displayMap[prop][value]) || value;
-    if (hexEl) hexEl.textContent = displayValue;
-    else spEl.textContent = displayValue;
-  }
 
-  /* Colors section is server-rendered from tab-item.ts; Plan A's
-     `_patchSpecCardRows` (assessment.js) handles selected:true/false
-     overrides. Demo no longer rebuilds it. */
+  TI_AXES.concat(['hasicon', 'hascounter', 'hasnotificationdot']).forEach(function (a) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
+    if (el) el.textContent = a.indexOf('has') === 0 ? (card[a] === 'true' ? 'True' : 'False') : _tiShow(a, card[a]);
+  });
 
-  /* Update DEV code — locate via `[data-code-content="${cardStyle}"]`.
-     Always run, even when DEV view is hidden. Use highlightSyntax. */
-  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
-  if (codeEl) {
-    var lang = codeEl.getAttribute('data-lang') || 'swift';
-    var raw = getSnippet(cardStyle, lang, card);
-    codeEl.setAttribute('data-final', raw);
-    codeEl.textContent = raw;
-    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
+/* ── Overview tab shim ───────────────────────────────────────────────
+   The Overview still carries the retired panel (orientation / size /
+   active / leading icon / counter / red dot); it renders the nearest
+   built variant for the orientation, size and selected controls it has. */
+function updateTabItemDemo() {
+  var val = function (id, f) { var el = document.getElementById(id); return el ? el.value : f; };
+  var el = document.getElementById('ti-demo-preview');
+  if (!el) return;
+  var card = {
+    state: 'default',
+    orientation: val('ti-demo-orient', 'vertical') === 'horizontal' ? 'horizontal' : 'vertical',
+    size: val('ti-demo-size', 'medium') === 'large' ? 'large' : 'medium',
+    placement: 'leading',
+    isselected: val('ti-demo-active', 'true') === 'false' ? 'false' : 'true'
+  };
+  el.innerHTML = _tiRender(_tiResolve(card, null), card);
+}
+window.updateTabItemDemo = updateTabItemDemo;
+
+/* ── First paint ────────────────────────────────────────────────────── */
 function _tiInit() {
   updateTabItemDemo();
-  _tiInitSpecCards();
-  /* Initialize each spec card so preview, properties, and DEV code reflect current state */
-  ['vs', 'vl', 'hs', 'hl'].forEach(function(k) {
-    var card = _specCards[k];
-    ['selected', 'leadingIcon', 'counter', 'redDot'].forEach(function(p) {
-      if (card[p] !== undefined) updateSpecCard(k, p, card[p]);
-    });
+  Object.keys(_specCards).forEach(function (k) {
+    var host = document.getElementById('tab-item-spec-' + k);
+    if (host) host.innerHTML = _tiRender(_tiResolve(_specCards[k], null), _specCards[k]);
   });
 }
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _tiInit);
-} else {
-  _tiInit();
-}
-
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tiInit);
+else _tiInit();
 document.addEventListener('astro:page-load', _tiInit);

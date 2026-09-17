@@ -1,18 +1,38 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
+// Panel mirrors the property panel of set 26327:11046: three variant axes
+// and nothing else. Figma has no active-tab property — the first Tab Item
+// is the selected one in every variant.
 const tabsDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Active tab',
-        prop: 'active',
-        defaultValue: '0',
+        label: 'Orientation',
+        prop: 'orientation',
+        defaultValue: 'vertical',
         options: [
-          { value: '0', label: 'Tab 1' },
-          { value: '1', label: 'Tab 2' },
-          { value: '2', label: 'Tab 3' },
-          { value: '3', label: 'Tab 4' },
+          { value: 'vertical', label: 'Vertical' },
+          { value: 'horizontal', label: 'Horizontal' },
+        ],
+      },
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'medium',
+        options: [
+          { value: 'medium', label: 'Medium' },
+          { value: 'large', label: 'Large' },
+        ],
+      },
+      {
+        label: 'Tabs Count',
+        prop: 'count',
+        defaultValue: '4',
+        options: [
+          { value: '4', label: '4' },
+          { value: '3', label: '3' },
+          { value: '2', label: '2' },
         ],
       },
     ],
@@ -152,33 +172,133 @@ export const tabs: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "tabs-spec-4",
-        "demoKey": "tabs-4",
+        "cardKey": "tabs-spec-main",
+        "demoKey": "main",
+        "title": "Tabs",
+        "node": "26327:11046",
+        "description": "",
+        "previewHtml": "<div id=\"tabs-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": tabsDemoControls,
-        "title": "4 tabs — default",
-        "node": "18482:33250",
-        "description": "4 Tab Items in an equal-width flex row. 248px total width.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Tab count",  "value": "4" },
-              { "key": "Active tab", "value": "Tab 1", "prop": "active" }
+              {
+                "key": "Orientation",
+                "value": "Vertical",
+                "prop": "orientation"
+              },
+              {
+                "key": "Size",
+                "value": "Medium",
+                "prop": "size"
+              },
+              {
+                "key": "Tabs Count",
+                "value": "4",
+                "prop": "count"
+              },
+              {
+                "key": "Cells",
+                "value": "Tab Item instances — Orientation and Size forward down"
+              },
+              {
+                "key": "Selected tab",
+                "value": "The first cell — no active-tab property"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "26327:11047 · 260 × 92",
+                "mono": true,
+                "prop": "variantNode",
+                "variants": {
+                  "orientation:vertical|size:medium|count:4": {
+                    "value": "26327:11047 · 260 × 92"
+                  },
+                  "orientation:vertical|size:large|count:4": {
+                    "value": "26327:11052 · 280 × 92"
+                  },
+                  "orientation:horizontal|size:large|count:4": {
+                    "value": "26327:11057 · 408 × 50"
+                  },
+                  "orientation:horizontal|size:medium|count:4": {
+                    "value": "26327:11062 · 388 × 48"
+                  },
+                  "orientation:vertical|size:medium|count:3": {
+                    "value": "26327:11067 · 195 × 92"
+                  },
+                  "orientation:vertical|size:large|count:3": {
+                    "value": "26327:11071 · 210 × 92"
+                  },
+                  "orientation:horizontal|size:large|count:3": {
+                    "value": "26327:11075 · 306 × 50"
+                  },
+                  "orientation:horizontal|size:medium|count:3": {
+                    "value": "26327:11079 · 291 × 48"
+                  },
+                  "orientation:vertical|size:medium|count:2": {
+                    "value": "26327:11083 · 130 × 92"
+                  },
+                  "orientation:vertical|size:large|count:2": {
+                    "value": "26327:11086 · 140 × 92"
+                  },
+                  "orientation:horizontal|size:large|count:2": {
+                    "value": "26327:11089 · 204 × 50"
+                  },
+                  "orientation:horizontal|size:medium|count:2": {
+                    "value": "26327:11092 · 194 × 48"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Label", "value": "#005CE5", "token": "tab/color/active/label",
-                "variants": { "active:false": { "value": "#6780A9", "token": "tab/color/inactive/label" } }
+              {
+                "key": "Surface",
+                "value": "None — the container has no fill"
               },
-              { "key": "Border", "value": "#005CE5", "token": "tab/color/active/border",
-                "variants": { "active:false": { "value": "#E5EBF4", "token": "tab/color/inactive/border" } }
+              {
+                "key": "Selected label",
+                "value": "#005CE5",
+                "token": "—"
+              },
+              {
+                "key": "Selected underline",
+                "value": "#005CE5",
+                "token": "—"
+              },
+              {
+                "key": "Unselected label",
+                "value": "#6780A9",
+                "token": "—"
+              },
+              {
+                "key": "Unselected underline",
+                "value": "#E5EBF4",
+                "token": "—"
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Tab label",
+                "value": "Primary/Label/Base",
+                "mono": true,
+                "variants": {
+                  "size:large": {
+                    "value": "Primary/Label/Large"
+                  }
+                }
               }
             ]
           },
@@ -186,174 +306,70 @@ export const tabs: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Tab height",       "value": "44px",  "mono": true },
-              { "key": "Padding H",        "value": "16px",  "mono": true },
-              { "key": "Gap",              "value": "24px",  "mono": true },
-              { "key": "Indicator height", "value": "3px",   "mono": true },
-              { "key": "Total width",      "value": "248px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text Style",  "value": "Primary/Label/Base", "mono": true },
-              { "key": "Font",        "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size",        "value": "16px", "mono": true },
-              { "key": "Tracking",    "value": "0.25px", "mono": true },
-              { "key": "Line-height", "value": "16px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"tabs-preview-tabs-4\"><svg width=\"248\" height=\"84\" viewBox=\"0 0 248 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"248\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"31\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"31\" y=\"60\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"62\" height=\"2\" fill=\"#005CE5\"></rect><circle cx=\"93\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"93\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"62\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect><circle cx=\"155\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"155\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"124\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect><circle cx=\"217\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"217\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"186\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
-      },
-      {
-        "cardKey": "tabs-spec-3",
-        "demoKey": "tabs-3",
-        "demoControls": tabsDemoControls,
-        "title": "3 tabs",
-        "node": "18482:33255",
-        "description": "3 Tab Items in an equal-width flex row. 186px total width.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Tab count",  "value": "3" },
-              { "key": "Active tab", "value": "Tab 1", "prop": "active" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#005CE5", "token": "tab/color/active/label",
-                "variants": { "active:false": { "value": "#6780A9", "token": "tab/color/inactive/label" } }
+              {
+                "key": "Container size (Figma)",
+                "value": "260 × 92",
+                "mono": true,
+                "prop": "size-readout"
               },
-              { "key": "Border", "value": "#005CE5", "token": "tab/color/active/border",
-                "variants": { "active:false": { "value": "#E5EBF4", "token": "tab/color/inactive/border" } }
+              {
+                "key": "Cell",
+                "value": "65 × 92 each, flush",
+                "mono": true,
+                "prop": "item-readout"
+              },
+              {
+                "key": "Preview",
+                "value": "Drawn at the 4-tab width, 260 — 65 per cell",
+                "mono": true,
+                "prop": "preview-readout"
+              },
+              {
+                "key": "Gap",
+                "value": "0 — cells sit edge to edge",
+                "mono": true
+              },
+              {
+                "key": "Underline",
+                "value": "2px along the bottom of every cell",
+                "mono": true
+              },
+              {
+                "key": "Cell padding",
+                "value": "12px sides · 8px to the Icon Slot",
+                "mono": true
               }
             ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Tab height",       "value": "44px",  "mono": true },
-              { "key": "Padding H",        "value": "16px",  "mono": true },
-              { "key": "Gap",              "value": "24px",  "mono": true },
-              { "key": "Indicator height", "value": "3px",   "mono": true },
-              { "key": "Total width",      "value": "186px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text Style",  "value": "Primary/Label/Base", "mono": true },
-              { "key": "Font",        "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size",        "value": "16px", "mono": true },
-              { "key": "Tracking",    "value": "0.25px", "mono": true },
-              { "key": "Line-height", "value": "16px", "mono": true }
-            ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"tabs-preview-tabs-3\"><svg width=\"186\" height=\"84\" viewBox=\"0 0 186 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"186\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"31\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"31\" y=\"60\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"62\" height=\"2\" fill=\"#005CE5\"></rect><circle cx=\"93\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"93\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"62\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect><circle cx=\"155\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"155\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"124\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
-      },
-      {
-        "cardKey": "tabs-spec-2",
-        "demoKey": "tabs-2",
-        "demoControls": tabsDemoControls,
-        "title": "2 tabs",
-        "node": "18482:33259",
-        "description": "2 Tab Items in an equal-width flex row. 124px total width.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Tab count",  "value": "2" },
-              { "key": "Active tab", "value": "Tab 1", "prop": "active" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#005CE5", "token": "tab/color/active/label",
-                "variants": { "active:false": { "value": "#6780A9", "token": "tab/color/inactive/label" } }
-              },
-              { "key": "Border", "value": "#005CE5", "token": "tab/color/active/border",
-                "variants": { "active:false": { "value": "#E5EBF4", "token": "tab/color/inactive/border" } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Tab height",       "value": "44px",  "mono": true },
-              { "key": "Padding H",        "value": "16px",  "mono": true },
-              { "key": "Gap",              "value": "24px",  "mono": true },
-              { "key": "Indicator height", "value": "3px",   "mono": true },
-              { "key": "Total width",      "value": "124px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text Style",  "value": "Primary/Label/Base", "mono": true },
-              { "key": "Font",        "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size",        "value": "16px", "mono": true },
-              { "key": "Tracking",    "value": "0.25px", "mono": true },
-              { "key": "Line-height", "value": "16px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"tabs-preview-tabs-2\"><svg width=\"124\" height=\"84\" viewBox=\"0 0 124 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"124\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"31\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"31\" y=\"60\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"62\" height=\"2\" fill=\"#005CE5\"></rect><circle cx=\"93\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"93\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"62\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
+        "swift": "EBTabs(selection: $tab) {\n    EBTabItem(\"Label\").tag(0)\n    EBTabItem(\"Label\").tag(1)\n    EBTabItem(\"Label\").tag(2)\n    EBTabItem(\"Label\").tag(3)\n}\n    .ebOrientation(.vertical)\n    .ebControlSize(.medium)",
+        "compose": "EBTabs(\n    selectedIndex = selected,\n    labels = listOf(\"Label\", \"Label\", \"Label\", \"Label\"),\n    orientation = EBTabOrientation.Vertical,\n    size = EBTabSize.Medium,\n    onSelect = { selected = it }\n)"
       }
     ],
     "colorsTables": [
       {
-        "title": "Layout",
-        "columns": [],
+        "title": "Colors by Cell State",
+        "description": "The container paints nothing — every colour belongs to the nested <code>Tab Item</code> instances, read off set <code>26327:10941</code>. The first cell ships selected in all 12 variants. The preview draws every count at the 4-tab width so the group keeps one size; Figma's own widths are in the Layout rows and the Variants inventory. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Label",
+          "Underline"
+        ],
         "rows": [
           {
-            "role": "Total width (2 tabs)",
-            "token": "124px",
-            "values": []
+            "role": "Selected cell",
+            "token": "—",
+            "values": [
+              "#005CE5",
+              "#005CE5"
+            ]
           },
           {
-            "role": "Total width (3 tabs)",
-            "token": "186px",
-            "values": []
-          },
-          {
-            "role": "Total width (4 tabs)",
-            "token": "248px",
-            "values": []
-          },
-          {
-            "role": "Per-tab width",
-            "token": "62px (flex 1 0 0)",
-            "values": []
-          },
-          {
-            "role": "Gap between tabs",
-            "token": "0 (shared border-bottom)",
-            "values": []
-          },
-          {
-            "role": "Shadow",
-            "token": "Depth/D4 — 0 0 8px #73819A1A",
-            "values": []
+            "role": "Unselected cells",
+            "token": "—",
+            "values": [
+              "#6780A9",
+              "#E5EBF4"
+            ]
           }
         ]
       }
@@ -369,31 +385,42 @@ export const tabs: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:tabs:1.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:tabs:2.0.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.tabs.*  <span class=\"cmt\">// Compose</span>"
         }
-      ]
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>26327:11046</code> — three variant axes and nothing else. Selection is state, not a Figma property: the first <code>Tab Item</code> ships selected in all 12 variants, so the native API owns it.",
       "rows": [
         {
-          "figma": "items",
-          "swift": "items: [EBTabItem]",
-          "compose": "items: List&lt;EBTabItem&gt;"
+          "figma": "Orientation — Vertical, Horizontal",
+          "swift": "<code>.ebOrientation(.vertical / .horizontal)</code>",
+          "compose": "<code>orientation = EBTabOrientation.Vertical / Horizontal</code>"
         },
         {
-          "figma": "selectedIndex",
-          "swift": "@Binding selection: Int",
-          "compose": "selectedIndex: Int"
+          "figma": "Size — Medium, Large",
+          "swift": "<code>.ebControlSize(.medium / .large)</code>",
+          "compose": "<code>size = EBTabSize.Medium / Large</code>"
         },
         {
-          "figma": "onSelect",
-          "swift": "onSelect: (Int) -&gt; Void",
-          "compose": "onSelect: (Int) -&gt; Unit"
+          "figma": "Tabs Count — 4, 3, 2",
+          "swift": "the number of <code>EBTabItem</code> children (2–4)",
+          "compose": "<code>labels: List&lt;String&gt;</code> (2–4 entries)"
         },
         {
-          "figma": "scrollable",
-          "swift": ".scrollable(true)",
-          "compose": "scrollable: Boolean"
+          "figma": "— nested <code>Tab Item</code> instances",
+          "swift": "<code>EBTabItem</code> — see its own page",
+          "compose": "<code>EBTabItem</code> — see its own page"
+        },
+        {
+          "figma": "— no active-tab property",
+          "swift": "<code>selection: Binding&lt;Int&gt;</code>",
+          "compose": "<code>selectedIndex: Int</code> + <code>onSelect: (Int) -&gt; Unit</code>"
         }
       ],
       "filePaths": {
@@ -403,36 +430,64 @@ export const tabs: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"typ\">EBTabs</span>(\n    <span class=\"prp\">items</span>: [\n        <span class=\"typ\">EBTabItem</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Overview\"</span>, <span class=\"prp\">icon</span>: .<span class=\"fn\">image</span>(<span class=\"typ\">Image</span>(<span class=\"str\">\"overview\"</span>))),\n        <span class=\"typ\">EBTabItem</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Details\"</span>),\n        <span class=\"typ\">EBTabItem</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"History\"</span>)\n    ],\n    <span class=\"prp\">selection</span>: $selectedIndex\n)",
-        "compose": "<span class=\"typ\">EBTabs</span>(\n    <span class=\"prp\">items</span> = listOf(\n        <span class=\"typ\">EBTabItem</span>(label = <span class=\"str\">\"Overview\"</span>, icon = painterResource(R.drawable.overview)),\n        <span class=\"typ\">EBTabItem</span>(label = <span class=\"str\">\"Details\"</span>),\n        <span class=\"typ\">EBTabItem</span>(label = <span class=\"str\">\"History\"</span>)\n    ),\n    <span class=\"prp\">selectedIndex</span> = state,\n    <span class=\"prp\">onSelect</span> = { state = it }\n)"
+        "subheading": "Horizontal · Medium · 4 tabs",
+        "swift": "<span class=\"cmt\">// Orientation=Horizontal, Size=Medium, Tabs Count=4 — 26327:11062, 388 × 48.</span>\n<span class=\"typ\">EBTabs</span>(selection: $tab) {\n    <span class=\"typ\">EBTabItem</span>(<span class=\"str\">\"Label\"</span>).<span class=\"fn\">tag</span>(0)\n    <span class=\"typ\">EBTabItem</span>(<span class=\"str\">\"Label\"</span>).<span class=\"fn\">tag</span>(1)\n    <span class=\"typ\">EBTabItem</span>(<span class=\"str\">\"Label\"</span>).<span class=\"fn\">tag</span>(2)\n    <span class=\"typ\">EBTabItem</span>(<span class=\"str\">\"Label\"</span>).<span class=\"fn\">tag</span>(3)\n}\n    .<span class=\"fn\">ebOrientation</span>(.<span class=\"prp\">horizontal</span>)\n    .<span class=\"fn\">ebControlSize</span>(.<span class=\"prp\">medium</span>)",
+        "compose": "<span class=\"cmt\">// Orientation=Horizontal, Size=Medium, Tabs Count=4 — 26327:11062, 388 × 48.</span>\n<span class=\"typ\">EBTabs</span>(\n    selectedIndex = selected,\n    labels = listOf(<span class=\"str\">\"Label\"</span>, <span class=\"str\">\"Label\"</span>, <span class=\"str\">\"Label\"</span>, <span class=\"str\">\"Label\"</span>),\n    orientation = <span class=\"typ\">EBTabOrientation</span>.<span class=\"prp\">Horizontal</span>,\n    size = <span class=\"typ\">EBTabSize</span>.<span class=\"prp\">Medium</span>,\n    onSelect = { selected = it }\n)"
+      },
+      {
+        "subheading": "Horizontal · Large · 2 tabs",
+        "swift": "<span class=\"cmt\">// Orientation=Horizontal, Size=Large, Tabs Count=2 — 26327:11089, 204 × 50.</span>\n<span class=\"typ\">EBTabs</span>(selection: $tab) {\n    <span class=\"typ\">EBTabItem</span>(<span class=\"str\">\"Label\"</span>).<span class=\"fn\">tag</span>(0)\n    <span class=\"typ\">EBTabItem</span>(<span class=\"str\">\"Label\"</span>).<span class=\"fn\">tag</span>(1)\n}\n    .<span class=\"fn\">ebOrientation</span>(.<span class=\"prp\">horizontal</span>)\n    .<span class=\"fn\">ebControlSize</span>(.<span class=\"prp\">large</span>)",
+        "compose": "<span class=\"cmt\">// Orientation=Horizontal, Size=Large, Tabs Count=2 — 26327:11089, 204 × 50.</span>\n<span class=\"typ\">EBTabs</span>(\n    selectedIndex = selected,\n    labels = listOf(<span class=\"str\">\"Label\"</span>, <span class=\"str\">\"Label\"</span>),\n    orientation = <span class=\"typ\">EBTabOrientation</span>.<span class=\"prp\">Horizontal</span>,\n    size = <span class=\"typ\">EBTabSize</span>.<span class=\"prp\">Large</span>,\n    onSelect = { selected = it }\n)"
+      },
+      {
+        "subheading": "Vertical · Medium · 3 tabs",
+        "swift": "<span class=\"cmt\">// Orientation=Vertical, Size=Medium, Tabs Count=3 — 26327:11067, 195 × 92.</span>\n<span class=\"typ\">EBTabs</span>(selection: $tab) {\n    <span class=\"typ\">EBTabItem</span>(<span class=\"str\">\"Label\"</span>).<span class=\"fn\">tag</span>(0)\n    <span class=\"typ\">EBTabItem</span>(<span class=\"str\">\"Label\"</span>).<span class=\"fn\">tag</span>(1)\n    <span class=\"typ\">EBTabItem</span>(<span class=\"str\">\"Label\"</span>).<span class=\"fn\">tag</span>(2)\n}\n    .<span class=\"fn\">ebOrientation</span>(.<span class=\"prp\">vertical</span>)\n    .<span class=\"fn\">ebControlSize</span>(.<span class=\"prp\">medium</span>)",
+        "compose": "<span class=\"cmt\">// Orientation=Vertical, Size=Medium, Tabs Count=3 — 26327:11067, 195 × 92.</span>\n<span class=\"typ\">EBTabs</span>(\n    selectedIndex = selected,\n    labels = listOf(<span class=\"str\">\"Label\"</span>, <span class=\"str\">\"Label\"</span>, <span class=\"str\">\"Label\"</span>),\n    orientation = <span class=\"typ\">EBTabOrientation</span>.<span class=\"prp\">Vertical</span>,\n    size = <span class=\"typ\">EBTabSize</span>.<span class=\"prp\">Medium</span>,\n    onSelect = { selected = it }\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Tab list role",
-        "ios": "Automatic via <code>TabView</code>",
-        "android": "Automatic via <code>TabRow</code> (Material semantics)"
+        "requirement": "Tab list semantics",
+        "ios": "Group the row as one tab bar and mark the selected cell with <code>.accessibilityAddTraits(.isSelected)</code>; each cell keeps the button trait.",
+        "android": "Use <code>TabRow</code> with <code>Modifier.semantics { role = Role.Tab; selected = … }</code> per tab."
       },
       {
-        "requirement": "Selected state announced",
-        "ios": "<code>.accessibilityAddTraits(.isSelected)</code> on active tab",
-        "android": "<code>selected = true</code> in semantics"
+        "requirement": "Selection announcement",
+        "ios": "Announce the new section when selection changes; the panel below should move focus only if its content replaces the screen.",
+        "android": "Same — rely on the selected semantics rather than a manual announcement."
       },
       {
-        "requirement": "Keyboard / focus navigation",
-        "ios": "iOS handles via focus traits",
-        "android": "Compose handles via focus semantics"
+        "requirement": "Touch targets",
+        "ios": "Cells are 65–102 wide and 48–92 tall; the horizontal Medium row is exactly 48 — keep the full cell tappable and do not inset it.",
+        "android": "Same; 48dp is the minimum, so do not shrink the row."
+      },
+      {
+        "requirement": "Count cap",
+        "ios": "Two to four tabs. With four at Large the row is 408 wide, which overflows a 360 screen — scroll the container or drop to Medium.",
+        "android": "Same — <code>ScrollableTabRow</code> if the row exceeds the screen."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Selected #005CE5 is 5.73:1. Unselected #6780A9 is 4.01:1 at 16–18pt bold, below the 4.5:1 AA minimum — inherited from Tab Item.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use 2–4 tabs for primary navigation within a screen. Tabs should represent peer sections of equal importance.",
-        "dontText": "Use tabs for sequential flows (Step 1 / Step 2 / Step 3) — use a Stepper component instead."
+        "doText": "Use Tabs to switch between two and four sections of one screen.",
+        "dontText": "Don’t use it for navigation between screens — that is the app’s bottom bar."
       },
       {
-        "doText": "Keep tab labels short (one or two words). If labels exceed 12 characters, use icons only or switch to vertical orientation.",
-        "dontText": "Nest Tabs inside Tabs — creates navigation ambiguity and accessibility issues."
+        "doText": "Pick the count that matches your sections; the container width follows (4 × 97 = 388 at Horizontal Medium).",
+        "dontText": "Don’t author a fifth tab — the 2–4 cap is deliberate, and no scrollable variant exists."
+      },
+      {
+        "doText": "Check the row against a 360 screen: Horizontal Large with 4 tabs is 408 wide.",
+        "dontText": "Don’t let the row overflow silently; drop to Medium or scroll."
+      },
+      {
+        "doText": "Let the container own selection and forward Orientation and Size to the cells.",
+        "dontText": "Don’t detach a cell to mark it selected — Figma bakes the first cell as selected."
       }
     ],
     "scorecard": [
@@ -441,86 +496,267 @@ export const tabs: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>Tab 1</code>, <code>Tab 2</code>, ... <code>container</code>, <code>icon-label</code>. Semantic."
+        "notes": "The container holds nothing but <code>Tab Item</code> instances — no wrapper frames and no locally drawn tabs. The lowercase layer names inside the cells belong to Tab Item and are assessed there."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Component named singular \"Tab\"; <code>tabsCount</code> uses string values and shouldn't be a variant at all."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Renamed <strong>Tabs</strong> (v2.0) and a complete 2 × 2 × 3 matrix. But <code>Tabs Count</code> carries a space, where every other property in the file is single-token PascalCase, and a count as a variant axis means a fifth tab needs a new variant rather than another child."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Shadow and spacing bound to tokens. Colors live on the Tab Item atom."
+        "notes": "The container paints nothing; all colour and type belong to <code>Tab Item</code>, whose three text layers resolve <code>matched</code>. Colour bindings cannot be read with the plugin."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Maps cleanly to <code>TabView</code> / <code>TabRow</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Maps to one <code>EBTabs</code> over a list of items. Two things a developer needs from outside the set: selection is not a property (the first cell is baked selected), and Horizontal Large with 4 tabs is 408 wide, past a 360 screen, with no scrollable variant."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Active/inactive covered via Tab Item. No scrollable pattern for 5+ tabs."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "The container has no states of its own — Default, Hover and Disabled live on Tab Item."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Children are Tab Item instances."
+        "notes": "No assets. Every cell is a real instance, so atom changes propagate."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Not mapped."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Three clean axes to map once the native library exists; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 3,
-      "description": "After the recommended restructure these 3 variants collapse to 1 flexible container accepting a list.",
+      "total": 12,
+      "description": "<code>Orientation</code> (2) × <code>Size</code> (2) × <code>Tabs Count</code> (3) = 12 variants, a complete matrix. Width is the cell width times the count, with no gap: 65, 70, 97 and 102 per cell.",
       "columns": [
-        "tabsCount",
-        "Width",
-        "Node ID"
+        "Orientation",
+        "Size",
+        "Tabs Count",
+        "Node ID",
+        "Dimensions",
+        "Cell"
       ],
       "rows": [
         {
           "cells": [
-            "2",
-            "124px",
-            "18482:33259"
-          ]
-        },
-        {
-          "cells": [
-            "3",
-            "186px",
-            "18482:33255"
-          ]
-        },
-        {
-          "cells": [
+            "Vertical",
+            "Medium",
             "4",
-            "248px",
-            "18482:33250"
+            "<code>26327:11047</code>",
+            "260 × 92",
+            "65 × 92"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Large",
+            "4",
+            "<code>26327:11052</code>",
+            "280 × 92",
+            "70 × 92"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Large",
+            "4",
+            "<code>26327:11057</code>",
+            "408 × 50",
+            "102 × 50"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Medium",
+            "4",
+            "<code>26327:11062</code>",
+            "388 × 48",
+            "97 × 48"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Medium",
+            "3",
+            "<code>26327:11067</code>",
+            "195 × 92",
+            "65 × 92"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Large",
+            "3",
+            "<code>26327:11071</code>",
+            "210 × 92",
+            "70 × 92"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Large",
+            "3",
+            "<code>26327:11075</code>",
+            "306 × 50",
+            "102 × 50"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Medium",
+            "3",
+            "<code>26327:11079</code>",
+            "291 × 48",
+            "97 × 48"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Medium",
+            "2",
+            "<code>26327:11083</code>",
+            "130 × 92",
+            "65 × 92"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Large",
+            "2",
+            "<code>26327:11086</code>",
+            "140 × 92",
+            "70 × 92"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Large",
+            "2",
+            "<code>26327:11089</code>",
+            "204 × 50",
+            "102 × 50"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Medium",
+            "2",
+            "<code>26327:11092</code>",
+            "194 × 48",
+            "97 × 48"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 26327:11046",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel.</strong> Three cards on retired <code>18482:*</code> nodes were split by tab count and carried an <em>Active tab</em> control Figma does not have. Now one card with <code>Orientation</code>, <code>Size</code> and <code>Tabs Count</code>, resolving all 12 variants.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> Cells are Tab Item at its hug width laid flush — 4 × 97 = 388, 3 × 97 = 291, 2 × 102 = 204 — with the first cell selected, matching <code>export_node_as_image</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography now names text styles.</strong> The cell label resolves <code>Primary/Label/Base</code> at Medium and <code>Primary/Label/Large</code> at Large, both matched on Tab Item.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>The Code tab still described the 1.0.0 component.</strong> Rebuilt on the three live axes with <code>com.eastblue.ds:tabs:2.0.1</code>, three snippets and a 12-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard rescored against v2.0.</strong> C1, C3, C6 Ready; C2 and C4 Needs Refinement on new findings; C5 Not Applicable; C7 Not Mapped.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview drawn at a constant width.</strong> Asked for: every count is drawn at the 4-tab width — 388 at Horizontal Medium, 260 at Vertical Medium — and the cells share it, so the group keeps one size while the count changes. Figma hugs instead, narrowing to 291 or 194 as tabs are removed, and that is what the Layout rows and the Variants inventory report.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong><code>Tabs Count</code> carries a space</strong> where every other property in the file is single-token PascalCase, and a count as a variant axis means a fifth tab needs a new variant. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Horizontal Large with 4 tabs is 408 wide</strong> — past a 360 screen, with no scrollable variant. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Selection is not a property.</strong> The first cell is baked selected in all 12 variants, so the native API owns selection and the set cannot show a different active tab. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Unselected label fails AA</strong> — #6780A9 on white is 4.01:1, inherited from Tab Item. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",
