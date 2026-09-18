@@ -292,6 +292,24 @@ body {
 .im-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 .im-name, .im-amount, .im-slot { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
 
+/* ── Empty State preview — heading and button Proxima Soft at 0.25,
+   description BarkAda (set 26356:13970). */
+.es-heading { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.es-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.es-slot { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Callout (Alert page) preview — title Proxima Soft at 0.25, description
+   BarkAda (set 6663:104524). */
+.co-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.co-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.co-btn { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Service Item preview — Label and New badge are Primary (Proxima
+   Soft), Preamble and Description are Secondary (BarkAda). ─────────── */
+.si-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.si-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.si-pre, .si-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
 /* ── Detail Hero preview ─────────────────────────────────────────────
    Title carries 0 tracking, the sender label and value 0.25, and the
    description is BarkAda at 0 — all read off the layers of set

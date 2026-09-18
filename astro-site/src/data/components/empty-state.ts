@@ -2,35 +2,39 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/empty-state.js`.
+// Panel mirrors the property panel of set 26356:13970, in its order: two
+// variant axes and one boolean. ⤷ VisualSlot and ⤷ ActionSlot are SLOTs
+// (4 swap options each) and get no control.
 const emptyStateDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'hasIcon',
-        prop: 'icon',
-        defaultValue: 'true',
+        label: 'Style',
+        prop: 'style',
+        defaultValue: 'default',
         options: [
-          { value: 'true',  label: 'true' },
-          { value: 'false', label: 'false' },
+          { value: 'default', label: 'Default' },
+          { value: 'subtle', label: 'Subtle' },
         ],
       },
       {
-        label: 'hasAsset',
-        prop: 'asset',
-        defaultValue: 'true',
+        label: 'VisualType',
+        prop: 'visualtype',
+        defaultValue: 'icon',
         options: [
-          { value: 'true',  label: 'true' },
-          { value: 'false', label: 'false' },
+          { value: 'icon', label: 'Icon' },
+          { value: 'asset', label: 'Asset' },
         ],
       },
       {
         label: 'hasButton',
-        prop: 'button',
+        prop: 'hasbutton',
+        control: 'toggle',
         defaultValue: 'true',
         options: [
-          { value: 'true',  label: 'true' },
-          { value: 'false', label: 'false' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -190,26 +194,65 @@ export const emptyState: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "white",
-        "demoKey": "white",
+        "cardKey": "es-spec-main",
+        "demoKey": "main",
+        "title": "Empty State",
+        "node": "26356:13970",
+        "description": "An empty state serves as a placeholder when there are no results or information to be displayed.",
+        "previewHtml": "<div id=\"empty-state-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": emptyStateDemoControls,
-        "title": "White",
-        "node": "27:169326",
-        "description": "White background — use when the surface behind is dark or tinted. Asset placeholder uses <code>#EEF2F9</code>.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "White",
-                "mono": false
-              },
-              {
                 "key": "Style",
                 "value": "Default",
-                "mono": false
+                "prop": "style"
+              },
+              {
+                "key": "VisualType",
+                "value": "Icon",
+                "prop": "visualtype"
+              },
+              {
+                "key": "hasButton",
+                "value": "True",
+                "prop": "hasbutton"
+              },
+              {
+                "key": "⤷ VisualSlot",
+                "value": "Slot · 4 swap options — ships a placeholder"
+              },
+              {
+                "key": "⤷ ActionSlot",
+                "value": "Slot · 4 swap options — Button - Large/Medium",
+                "variants": {
+                  "hasbutton:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Resolved variant",
+                "value": "26356:13971 · 360 × 307",
+                "mono": true,
+                "prop": "variantNode",
+                "variants": {
+                  "style:default|visualtype:icon": {
+                    "value": "26356:13971 · 360 × 307"
+                  },
+                  "style:subtle|visualtype:icon": {
+                    "value": "26356:13979 · 360 × 307"
+                  },
+                  "style:default|visualtype:asset": {
+                    "value": "26356:13987 · 360 × 425"
+                  },
+                  "style:subtle|visualtype:asset": {
+                    "value": "26356:13995 · 360 × 425"
+                  }
+                }
               }
             ]
           },
@@ -217,36 +260,50 @@ export const emptyState: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "empty-state/color/default/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "empty-state/color/default/label-title" },
-              { "key": "Description", "value": "#6780A9", "token": "empty-state/color/default/description" },
-              { "key": "Placeholder", "value": "#EEF2F9", "token": "empty-state/color/default/placeholder" },
-              { "key": "CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
               {
-                "key": "Width",
-                "value": "328px",
-                "mono": true
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "token": "—",
+                "variants": {
+                  "style:subtle": {
+                    "value": "#F6F9FD"
+                  }
+                }
               },
               {
-                "key": "Padding",
-                "value": "16 horizontal · 24 vertical",
-                "mono": true
+                "key": "Heading",
+                "value": "#0A2757",
+                "token": "—"
               },
               {
-                "key": "Illustration size",
-                "value": "120 × 120",
-                "mono": true
+                "key": "Description",
+                "value": "#6780A9",
+                "token": "—"
               },
               {
-                "key": "Gap (illus ↔ title)",
-                "value": "16px",
-                "mono": true
+                "key": "Button",
+                "value": "#005CE5",
+                "token": "—",
+                "variants": {
+                  "hasbutton:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Button label",
+                "value": "#FFFFFF",
+                "token": "—",
+                "variants": {
+                  "hasbutton:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Slot placeholder",
+                "value": "#9F3DFB at 9% · dashed 4/4",
+                "token": "—"
               }
             ]
           },
@@ -255,65 +312,25 @@ export const emptyState: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Title style",
+                "key": "Heading",
                 "value": "Primary/Headlines/Block",
                 "mono": true
               },
               {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
+                "key": "Description",
                 "value": "Secondary/Bold/Caption",
                 "mono": true
               },
               {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
+                "key": "Button label",
+                "value": "Primary/Label/Large",
+                "mono": true,
+                "variants": {
+                  "hasbutton:false": {
+                    "hide": true
+                  }
+                }
               }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBEmptyStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"es-spec-white-host\"></div>"
-      },
-      {
-        "cardKey": "grey-blue",
-        "demoKey": "grey-blue",
-        "demoControls": emptyStateDemoControls,
-        "title": "Grey Blue",
-        "node": "27:169339",
-        "description": "Light blue-grey background (<code>#F6F9FD</code>) — use when the surface behind is white. Asset placeholder uses <code>#D7E0EF</code>.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Variant",
-                "value": "Grey Blue",
-                "mono": false
-              },
-              {
-                "key": "Style",
-                "value": "Default",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "empty-state/color/default/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "empty-state/color/default/label-title" },
-              { "key": "Description", "value": "#6780A9", "token": "empty-state/color/default/description" },
-              { "key": "Placeholder", "value": "#EEF2F9", "token": "empty-state/color/default/placeholder" },
-              { "key": "CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
             ]
           },
           {
@@ -321,243 +338,102 @@ export const emptyState: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Width",
-                "value": "328px",
+                "key": "Size",
+                "value": "360 × 307",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Height rule",
+                "value": "48 + Visual 64 + Header 97 + Action 50 + 48 — hugs",
+                "mono": true,
+                "variants": {
+                  "visualtype:asset": {
+                    "value": "24 + Visual 230 + Header 97 + Action 50 + 24 — hugs"
+                  }
+                }
+              },
+              {
+                "key": "VisualSlot",
+                "value": "64 × 64 at x 148 · radius 4",
+                "mono": true,
+                "variants": {
+                  "visualtype:asset": {
+                    "value": "360 × 230 · full width, square"
+                  }
+                }
+              },
+              {
+                "key": "Header",
+                "value": "360 × 97 · 24px inset · 8px gap",
                 "mono": true
               },
               {
-                "key": "Padding",
-                "value": "16 horizontal · 24 vertical",
-                "mono": true
+                "key": "ActionSlot",
+                "value": "312 × 50 button at x 24 · pill",
+                "mono": true,
+                "variants": {
+                  "hasbutton:false": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "Illustration size",
-                "value": "120 × 120",
-                "mono": true
-              },
-              {
-                "key": "Gap (illus ↔ title)",
-                "value": "16px",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
+                "key": "Vertical padding",
+                "value": "48px top and bottom",
+                "mono": true,
+                "variants": {
+                  "visualtype:asset": {
+                    "value": "24px top and bottom"
+                  }
+                }
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBEmptyStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"es-spec-grey-blue-host\"></div>"
+        "swift": "EBEmptyState(\n    heading: \"Header\",\n    description: \"Description goes here\",\n    style: .default\n)\n.ebVisual(.icon) { Image(\"empty\") }\n.ebAction(\"Label\") { retry() }",
+        "compose": "EBEmptyState(\n    heading = \"Header\",\n    description = \"Description goes here\",\n    style = EBEmptyStateStyle.Default,\n    visualType = EBEmptyStateVisual.Icon,\n    visual = { Image(painterResource(R.drawable.empty), null) },\n    actionLabel = \"Label\",\n    onAction = { retry() }\n)"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by Style",
+        "description": "Read off <code>get_node_info</code> on the four variants of set <code>26356:13970</code>. <code>Style</code> changes only the surface; heading, description and button are shared. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
-          "Token",
-          "Value"
+          "Default",
+          "Subtle"
         ],
         "rows": [
           {
-            "role": "Default (white)",
-            "token": "bg",
+            "role": "Surface",
+            "token": "—",
             "values": [
-              "main/empty-state/color/default/bg",
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "title",
-            "values": [
-              "main/empty-state/color/default/label-title",
-              "#0A2757"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "description",
-            "values": [
-              "main/empty-state/color/default/description",
-              "#6780A9"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "asset placeholder",
-            "values": [
-              "main/empty-state/color/default/placeholder",
-              "#EEF2F9"
-            ]
-          },
-          {
-            "role": "Subtle (grey blue)",
-            "token": "bg",
-            "values": [
-              "main/empty-state/color/subtle/bg",
+              "#FFFFFF",
               "#F6F9FD"
             ]
           },
           {
-            "role": "—",
-            "token": "title",
+            "role": "Heading",
+            "token": "—",
             "values": [
-              "main/empty-state/color/subtle/label-title",
+              "#0A2757",
               "#0A2757"
             ]
           },
           {
-            "role": "—",
-            "token": "description",
+            "role": "Description",
+            "token": "—",
             "values": [
-              "main/empty-state/color/subtle/description",
+              "#6780A9",
               "#6780A9"
             ]
           },
           {
-            "role": "—",
-            "token": "asset placeholder",
-            "values": [
-              "main/empty-state/color/subtle/placeholder",
-              "#D7E0EF"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
-          "Value"
-        ],
-        "rows": [
-          {
-            "role": "Container width",
+            "role": "Button / label",
             "token": "—",
             "values": [
-              "360px"
-            ]
-          },
-          {
-            "role": "Top padding",
-            "token": "—",
-            "values": [
-              "16px"
-            ]
-          },
-          {
-            "role": "Bottom padding",
-            "token": "space/space-24",
-            "values": [
-              "24px"
-            ]
-          },
-          {
-            "role": "Top header padding",
-            "token": "space/space-16 + space/space-24",
-            "values": [
-              "24h / 16b"
-            ]
-          },
-          {
-            "role": "Content padding",
-            "token": "space/space-24",
-            "values": [
-              "24h / 16t"
-            ]
-          },
-          {
-            "role": "Content gap (title ↔ description)",
-            "token": "—",
-            "values": [
-              "10px"
-            ]
-          },
-          {
-            "role": "Button top padding",
-            "token": "space/space-24",
-            "values": [
-              "24px"
-            ]
-          },
-          {
-            "role": "Icon slot size",
-            "token": "—",
-            "values": [
-              "64 × 64"
-            ]
-          },
-          {
-            "role": "Asset size",
-            "token": "—",
-            "values": [
-              "360 × 230"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Spec"
-        ],
-        "rows": [
-          {
-            "role": "Top heading",
-            "token": "Primary/Headlines/Block",
-            "values": [
-              "Proxima Soft Bold · 18 / 23 · +0.25"
-            ]
-          },
-          {
-            "role": "Top description",
-            "token": "Secondary/Bold/Caption",
-            "values": [
-              "BarkAda Semibold · 12 / 18"
-            ]
-          },
-          {
-            "role": "Main heading",
-            "token": "Primary/Headlines/Segment",
-            "values": [
-              "Proxima Soft Bold · 20 / 24"
-            ]
-          },
-          {
-            "role": "Description",
-            "token": "Secondary/Bold/Caption",
-            "values": [
-              "BarkAda Semibold · 12 / 18"
-            ]
-          },
-          {
-            "role": "Button label",
-            "token": "Primary/Label/Large",
-            "values": [
-              "Proxima Soft Bold · 18 / 18 · +0.25"
+              "#005CE5 / #FFFFFF",
+              "#005CE5 / #FFFFFF"
             ]
           }
         ]
@@ -574,41 +450,47 @@ export const emptyState: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:empty-state:1.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:empty-state:2.1.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.emptystate.*  <span class=\"cmt\">// Compose</span>"
         }
-      ]
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>26356:13970</code>, in panel order, then the two text layers. <code>hasButton</code> is a boolean property; <code>⤷ VisualSlot</code> and <code>⤷ ActionSlot</code> are SLOTs with 4 swap options each.",
       "rows": [
         {
-          "figma": "color=white/grey blue",
-          "swift": "style: EBEmptyStateStyle",
-          "compose": ".ebStyle(.default/.subtle)"
+          "figma": "Style — Default, Subtle",
+          "swift": "<code>style: .default / .subtle</code>",
+          "compose": "<code>style = EBEmptyStateStyle.Default / Subtle</code>"
         },
         {
-          "figma": "header1 / topHeading",
-          "swift": "title: String",
-          "compose": "title: String"
+          "figma": "VisualType — Icon, Asset",
+          "swift": "<code>.ebVisual(.icon / .asset) { }</code>",
+          "compose": "<code>visualType = EBEmptyStateVisual.Icon / Asset</code>"
         },
         {
-          "figma": "topDescription / description",
-          "swift": "description: String?",
-          "compose": "description: String?"
+          "figma": "hasButton — boolean",
+          "swift": "<code>.ebAction(String) { }</code> — omit for False",
+          "compose": "<code>actionLabel: String? = null</code> + <code>onAction: (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "hasIcon + icon placeholder",
-          "swift": "Figma Slot → ViewBuilder",
-          "compose": "@ViewBuilder icon"
+          "figma": "⤷ VisualSlot — SLOT (64 × 64 Icon, 360 × 230 Asset)",
+          "swift": "content of <code>.ebVisual { }</code>",
+          "compose": "<code>visual: @Composable () -&gt; Unit</code>"
         },
         {
-          "figma": "hasAsset + asset placeholder",
-          "swift": "Figma Slot → ViewBuilder",
-          "compose": "@ViewBuilder asset"
+          "figma": "⤷ ActionSlot — SLOT (Button - Large/Medium)",
+          "swift": "the button from <code>.ebAction</code>",
+          "compose": "the button from <code>actionLabel</code>"
         },
         {
-          "figma": "hasButton + buttonInstance",
-          "swift": "Figma Slot → ViewBuilder",
-          "compose": "@ViewBuilder action"
+          "figma": "— <code>#heading</code> / <code>#description</code>",
+          "swift": "<code>heading: String</code>, <code>description: String?</code>",
+          "compose": "<code>heading: String</code>, <code>description: String? = null</code>"
         }
       ],
       "filePaths": {
@@ -618,122 +500,227 @@ export const emptyState: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Empty transaction list — icon + title + description + action</span>\n<span class=\"typ\">EBEmptyState</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"No transactions yet\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Your transactions will show up here.\"</span>,\n    <span class=\"prp\">icon</span>: { <span class=\"typ\">Image</span>(systemName: <span class=\"str\">\"tray\"</span>) },\n    <span class=\"prp\">action</span>: { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Cash In\"</span>) { /* ... */ } }\n)\n.<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">default</span>)\n\n<span class=\"cmt\">// Full illustration — asset slot instead of icon</span>\n<span class=\"typ\">EBEmptyState</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"No favorites added\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Tap the heart on any contact to save them here.\"</span>,\n    <span class=\"prp\">asset</span>: { <span class=\"typ\">Image</span>(<span class=\"str\">\"empty-favorites\"</span>).resizable().scaledToFit() }\n)\n.<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">subtle</span>)",
-        "compose": "<span class=\"cmt\">// Empty transaction list — icon + title + description + action</span>\n<span class=\"typ\">EBEmptyState</span>(\n    title = <span class=\"str\">\"No transactions yet\"</span>,\n    description = <span class=\"str\">\"Your transactions will show up here.\"</span>,\n    style = <span class=\"typ\">EBEmptyStateStyle</span>.<span class=\"prp\">Default</span>,\n    icon = { <span class=\"typ\">Icon</span>(painterResource(R.drawable.tray), contentDescription = null) },\n    action = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Cash In\"</span>, onClick = { /* ... */ }) }\n)\n\n<span class=\"cmt\">// Full illustration — asset slot instead of icon</span>\n<span class=\"typ\">EBEmptyState</span>(\n    title = <span class=\"str\">\"No favorites added\"</span>,\n    description = <span class=\"str\">\"Tap the heart on any contact to save them here.\"</span>,\n    style = <span class=\"typ\">EBEmptyStateStyle</span>.<span class=\"prp\">Subtle</span>,\n    asset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.empty_favorites), contentDescription = null) }\n)"
+        "subheading": "Default · Icon",
+        "swift": "<span class=\"cmt\">// Style=Default, VisualType=Icon, hasButton=True — 26356:13971, 360 × 307.</span>\n<span class=\"typ\">EBEmptyState</span>(\n    heading: <span class=\"str\">\"No transactions yet\"</span>,\n    description: <span class=\"str\">\"Your activity will show up here.\"</span>,\n    style: .<span class=\"prp\">default</span>\n)\n.<span class=\"fn\">ebVisual</span>(.<span class=\"prp\">icon</span>) { <span class=\"typ\">Image</span>(<span class=\"str\">\"empty\"</span>) }\n.<span class=\"fn\">ebAction</span>(<span class=\"str\">\"Send money\"</span>) { startTransfer() }",
+        "compose": "<span class=\"cmt\">// Style=Default, VisualType=Icon, hasButton=True — 26356:13971, 360 × 307.</span>\n<span class=\"typ\">EBEmptyState</span>(\n    heading = <span class=\"str\">\"No transactions yet\"</span>,\n    description = <span class=\"str\">\"Your activity will show up here.\"</span>,\n    style = <span class=\"typ\">EBEmptyStateStyle</span>.<span class=\"prp\">Default</span>,\n    visualType = <span class=\"typ\">EBEmptyStateVisual</span>.<span class=\"prp\">Icon</span>,\n    visual = { <span class=\"typ\">Image</span>(painterResource(R.drawable.empty), null) },\n    actionLabel = <span class=\"str\">\"Send money\"</span>,\n    onAction = { startTransfer() }\n)"
+      },
+      {
+        "subheading": "Subtle · Icon, no button",
+        "swift": "<span class=\"cmt\">// Style=Subtle, VisualType=Icon, hasButton=False — 26356:13979, 360 × 257.</span>\n<span class=\"typ\">EBEmptyState</span>(\n    heading: <span class=\"str\">\"No transactions yet\"</span>,\n    description: <span class=\"str\">\"Your activity will show up here.\"</span>,\n    style: .<span class=\"prp\">subtle</span>\n)\n.<span class=\"fn\">ebVisual</span>(.<span class=\"prp\">icon</span>) { <span class=\"typ\">Image</span>(<span class=\"str\">\"empty\"</span>) }",
+        "compose": "<span class=\"cmt\">// Style=Subtle, VisualType=Icon, hasButton=False — 26356:13979, 360 × 257.</span>\n<span class=\"typ\">EBEmptyState</span>(\n    heading = <span class=\"str\">\"No transactions yet\"</span>,\n    description = <span class=\"str\">\"Your activity will show up here.\"</span>,\n    style = <span class=\"typ\">EBEmptyStateStyle</span>.<span class=\"prp\">Subtle</span>,\n    visualType = <span class=\"typ\">EBEmptyStateVisual</span>.<span class=\"prp\">Icon</span>,\n    visual = { <span class=\"typ\">Image</span>(painterResource(R.drawable.empty), null) }\n)"
+      },
+      {
+        "subheading": "Default · Asset",
+        "swift": "<span class=\"cmt\">// Style=Default, VisualType=Asset, hasButton=True — 26356:13987, 360 × 425.</span>\n<span class=\"typ\">EBEmptyState</span>(\n    heading: <span class=\"str\">\"No transactions yet\"</span>,\n    description: <span class=\"str\">\"Your activity will show up here.\"</span>,\n    style: .<span class=\"prp\">default</span>\n)\n.<span class=\"fn\">ebVisual</span>(.<span class=\"prp\">asset</span>) { <span class=\"typ\">Image</span>(<span class=\"str\">\"empty\"</span>) }\n.<span class=\"fn\">ebAction</span>(<span class=\"str\">\"Send money\"</span>) { startTransfer() }",
+        "compose": "<span class=\"cmt\">// Style=Default, VisualType=Asset, hasButton=True — 26356:13987, 360 × 425.</span>\n<span class=\"typ\">EBEmptyState</span>(\n    heading = <span class=\"str\">\"No transactions yet\"</span>,\n    description = <span class=\"str\">\"Your activity will show up here.\"</span>,\n    style = <span class=\"typ\">EBEmptyStateStyle</span>.<span class=\"prp\">Default</span>,\n    visualType = <span class=\"typ\">EBEmptyStateVisual</span>.<span class=\"prp\">Asset</span>,\n    visual = { <span class=\"typ\">Image</span>(painterResource(R.drawable.empty), null) },\n    actionLabel = <span class=\"str\">\"Send money\"</span>,\n    onAction = { startTransfer() }\n)"
+      },
+      {
+        "subheading": "Subtle · Asset",
+        "swift": "<span class=\"cmt\">// Style=Subtle, VisualType=Asset, hasButton=True — 26356:13995, 360 × 425.</span>\n<span class=\"typ\">EBEmptyState</span>(\n    heading: <span class=\"str\">\"No transactions yet\"</span>,\n    description: <span class=\"str\">\"Your activity will show up here.\"</span>,\n    style: .<span class=\"prp\">subtle</span>\n)\n.<span class=\"fn\">ebVisual</span>(.<span class=\"prp\">asset</span>) { <span class=\"typ\">Image</span>(<span class=\"str\">\"empty\"</span>) }\n.<span class=\"fn\">ebAction</span>(<span class=\"str\">\"Send money\"</span>) { startTransfer() }",
+        "compose": "<span class=\"cmt\">// Style=Subtle, VisualType=Asset, hasButton=True — 26356:13995, 360 × 425.</span>\n<span class=\"typ\">EBEmptyState</span>(\n    heading = <span class=\"str\">\"No transactions yet\"</span>,\n    description = <span class=\"str\">\"Your activity will show up here.\"</span>,\n    style = <span class=\"typ\">EBEmptyStateStyle</span>.<span class=\"prp\">Subtle</span>,\n    visualType = <span class=\"typ\">EBEmptyStateVisual</span>.<span class=\"prp\">Asset</span>,\n    visual = { <span class=\"typ\">Image</span>(painterResource(R.drawable.empty), null) },\n    actionLabel = <span class=\"str\">\"Send money\"</span>,\n    onAction = { startTransfer() }\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Role",
-        "ios": "Group as a single accessibility element with combined label",
-        "android": "<code>mergeDescendants = true</code> on the container"
+        "requirement": "Heading",
+        "ios": "Mark <code>#heading</code> <code>.accessibilityAddTraits(.isHeader)</code> — it names why the screen is empty.",
+        "android": "<code>Modifier.semantics { heading() }</code>."
       },
       {
-        "requirement": "Decorative icon / asset",
-        "ios": "<code>.accessibilityHidden(true)</code>",
-        "android": "<code>contentDescription = null</code>"
+        "requirement": "Visual",
+        "ios": "The icon or asset is decorative when the heading already explains the state — <code>.accessibilityHidden(true)</code>.",
+        "android": "<code>contentDescription = null</code>."
       },
       {
-        "requirement": "Action button",
-        "ios": "Separate accessibility element with its own label",
-        "android": "Standard Button semantics"
+        "requirement": "Action",
+        "ios": "The 312 × 50 button clears 44pt. Its label should say what happens, not \"Label\" or \"OK\".",
+        "android": "Clears 48dp; same guidance on the label."
       },
       {
-        "requirement": "Live region",
-        "ios": "Announce when empty state appears (e.g. after filtering returns 0 results)",
-        "android": "<code>liveRegion = LiveRegionMode.Polite</code>"
+        "requirement": "Announcement",
+        "ios": "When a search or filter returns nothing, announce the heading — the empty state replaces content the user expected.",
+        "android": "<code>liveRegion = LiveRegionMode.Polite</code> on the container."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Heading #0A2757 is 14.58:1 on Default and 13.80:1 on Subtle. Description #6780A9 is 4.01:1 on Default and 3.80:1 on Subtle at 12pt — both below 4.5:1.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use for first-run, no-results, and \"nothing here yet\" surfaces. Always include a primary action when the user can take a step to fill the empty state.",
-        "dontText": "Use as an error surface — use Inline Message (error type) or a Toast. Empty State assumes the absence of content is expected, not a failure."
+        "doText": "Use Empty State where a list, search or feed has nothing to show.",
+        "dontText": "Don’t use it for errors — that is Inline Message with Type=Error."
       },
       {
-        "doText": "Pick either icon or illustration. Don't stack both — the duplication adds visual noise without adding meaning.",
-        "dontText": "Leave the description blank — a one-line context sentence (\"Your transactions will show up here\") teaches the user what the feature does."
+        "doText": "Use Icon for compact areas and Asset for a full-screen moment.",
+        "dontText": "Don’t ship the purple Slot Block placeholder — swap in a real icon or illustration."
+      },
+      {
+        "doText": "Pick Subtle when the empty state sits inside a card on a white screen.",
+        "dontText": "Don’t put Subtle on a #F6F9FD page; it disappears."
+      },
+      {
+        "doText": "Offer one action that gets the user out of the empty state.",
+        "dontText": "Don’t add a button with nowhere useful to go — set <code>hasButton=False</code>."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Semantic: <code>header</code>, <code>content</code>, <code>asset-container</code>, <code>button-container</code>, <code>Icon-Slot</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>Header</code> and the two <code>⤷ …Slot</code> layers are semantic. The text layers keep the legacy <code>#</code> prefix — <code>#heading</code>, <code>#description</code>."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Color values don't match tokens; duplicate <code>header</code>/<code>header1</code>; 7 booleans = 256 combos."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Two PascalCase axes — <code>Style</code>, <code>VisualType</code> — and one <code>hasButton</code> boolean on <code>True</code>/<code>False</code>; a complete 2 × 2 matrix."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All colors bound — just mismatched in the property names."
+        "notes": "All three text layers resolve <code>matched</code> — <code>Primary/Headlines/Block</code>, <code>Secondary/Bold/Caption</code>, <code>Primary/Label/Large</code>. Colour bindings cannot be read with the plugin."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "VStack / Column with slots — straightforward native builds."
+        "notes": "A vertical stack that hugs — 48 + 64 + 97 + 50 + 48 = 307, 24 + 230 + 97 + 50 + 24 = 425 — maps to one <code>EBEmptyState</code> with a style enum, a visual slot and an optional action."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Display-only surface."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "A static surface; the button carries its own states."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Icon + asset are placeholders. Should be slots."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The visual and action are real SLOTs with 4 swap options each; the button is a <code>Button - Large/Medium</code> instance."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Blocked by C2 restructure."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Two enums, a boolean and two slots are ready to map; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 2,
-      "description": "Boolean props (<code>hasIcon</code>, <code>hasAsset</code>, <code>hasButton</code>, <code>header</code>, <code>header1</code>, <code>topDescription</code>, <code>topHeading</code>) multiply the effective prop combinations to 256. After restructure to slot-based API, this collapses to 2 <code>style</code> variants × optional slots — unlimited configurations without variant explosion.",
+      "total": 4,
+      "description": "<code>Style</code> (2) × <code>VisualType</code> (2) = 4 variants, all built. <code>hasButton</code> is a boolean and adds none; turning it off removes the 50px ActionSlot.",
       "columns": [
-        "color (current)",
-        "Proposed style",
-        "Node ID"
+        "Style",
+        "VisualType",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "<code>white</code>",
-            "default",
-            "27:169326"
+            "Default",
+            "Icon",
+            "<code>26356:13971</code>",
+            "360 × 307"
           ]
         },
         {
           "cells": [
-            "<code>grey blue</code>",
-            "subtle",
-            "27:169339"
+            "Subtle",
+            "Icon",
+            "<code>26356:13979</code>",
+            "360 × 307"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Asset",
+            "<code>26356:13987</code>",
+            "360 × 425"
+          ]
+        },
+        {
+          "cells": [
+            "Subtle",
+            "Asset",
+            "<code>26356:13995</code>",
+            "360 × 425"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.1.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 26356:13970",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel.</strong> Two cards on retired nodes <code>27:169326</code> and <code>27:169339</code>, named White and Grey Blue, became one card with <code>Style</code>, <code>VisualType</code> and <code>hasButton</code>; the two slots are listed without controls.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> The stack hugs exactly — 48 + 64 + 97 + 50 + 48 = 307 for Icon, 24 + 230 + 97 + 50 + 24 = 425 for Asset — so <code>hasButton=False</code> removes the 50px ActionSlot. The Slot Block placeholders use their 4/4 dash from <code>get_svg</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography now names text styles.</strong> <code>Primary/Headlines/Block</code>, <code>Secondary/Bold/Caption</code> and <code>Primary/Label/Large</code>, all matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>The Code tab was rebuilt on the live panel.</strong> Install is <code>com.eastblue.ds:empty-state:2.1.1</code>, with four snippets and a four-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard rescored.</strong> C2, C3, C4, C6 Ready; C1 Needs Refinement; C5 Not Applicable; C7 Not Mapped.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Text layers keep the <code>#</code> prefix</strong> — <code>#heading</code>, <code>#description</code>. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Description fails AA</strong> — #6780A9 is 4.01:1 on Default and 3.80:1 on Subtle at 12pt. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

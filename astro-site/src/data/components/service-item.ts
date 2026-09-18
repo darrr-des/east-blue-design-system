@@ -1,31 +1,23 @@
 import type { ComponentData, DemoControlSection } from '../types';
-import { buildMultiModeColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/service-item.js`.
+// Panel mirrors the property panel of set 4692:21582, in its order: four
+// variant axes, three booleans and two text properties. Asset-Slot and
+// Description-Slot are SLOTs (32 items each) and get no control.
 const serviceItemDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
-      {
-        label: 'Type',
-        prop: 'type',
-        defaultValue: 'default',
-        options: [
-          { value: 'default', label: 'Default' },
-          { value: 'new',     label: 'New' },
-          { value: 'add',     label: 'Add' },
-          { value: 'remove',  label: 'Remove' },
-        ],
-      },
       {
         label: 'State',
         prop: 'state',
         defaultValue: 'default',
         options: [
           { value: 'default',  label: 'Default' },
-          { value: 'inactive', label: 'Inactive' },
           { value: 'disabled', label: 'Disabled' },
+          { value: 'inactive', label: 'Inactive' },
+          { value: 'pressed',  label: 'Pressed' },
         ],
       },
       {
@@ -37,6 +29,33 @@ const serviceItemDemoControls: DemoControlSection[] = [
           { value: 'horizontal', label: 'Horizontal' },
         ],
       },
+      {
+        label: 'Badge',
+        prop: 'badge',
+        defaultValue: 'none',
+        options: [
+          { value: 'none', label: 'None' },
+          { value: 'new',  label: 'New' },
+        ],
+      },
+      {
+        label: 'Action',
+        prop: 'action',
+        defaultValue: 'none',
+        options: [
+          { value: 'none',   label: 'None' },
+          { value: 'add',    label: 'Add' },
+          { value: 'remove', label: 'Remove' },
+        ],
+      },
+      { label: 'hasPreamble',    prop: 'haspreamble',    control: 'toggle', defaultValue: 'false',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasDescription', prop: 'hasdescription', control: 'toggle', defaultValue: 'false',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasBorder',      prop: 'hasborder',      control: 'toggle', defaultValue: 'false',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'Label',    prop: 'label',    control: 'input', defaultValue: 'Label',    options: [] },
+      { label: 'Preamble', prop: 'preamble', control: 'input', defaultValue: 'Preamble', options: [] },
     ],
   },
 ];
@@ -143,179 +162,1213 @@ export const serviceItem: ComponentData = {
     recommendations: [],
   },
   style: {
-    heading: 'Types',
-    specCards: [
+    "heading": "Styles",
+    "specCards": [
       {
-        cardKey: 'default',
-        demoKey: 'default',
-        demoControls: serviceItemDemoControls,
-        title: 'Default',
-        node: '20210:2442',
-        description: 'Vertical: 64 × 72 — preamble (12 tall) above icon, 48 × 48 circular icon slot, then label + description. Horizontal: 120 × 64 — icon left, label/description right, preamble below. Type adds a "New" badge, a green +, or a red – over the icon. State dims the label for Inactive / Disabled.',
-        sections: [
+        "cardKey": "si-spec-main",
+        "demoKey": "main",
+        "title": "Service Item",
+        "node": "4692:21582",
+        "description": "A service tile — asset, label and optional preamble and description — with a New badge or Add / Remove edit overlay. Vertical is 64 wide and 72 tall bare (109 with Preamble and Description); Horizontal hugs its text, 120 × 64 bare and 138 × 80 with everything on.",
+        "previewHtml": "<div id=\"service-item-spec-main\" class=\"spec-preview-body\"></div>",
+        "demoControls": serviceItemDemoControls,
+        "sections": [
           {
-            label: 'Properties',
-            slug: 'props',
-            rows: [
-              { key: 'Type',        value: 'Default',  prop: 'type' },
-              { key: 'State',       value: 'Default',  prop: 'state' },
-              { key: 'Orientation', value: 'Vertical', prop: 'orientation' },
-            ],
-          },
-          {
-            label: 'Colors',
-            slug: 'colors',
-            rows: [
-              { key: 'Icon-slot bg',  value: '#F6F9FD', token: 'service-item/icon/bg' },
-              { key: 'Label',         value: '#072592', token: 'service-item/label/default',
-                variants: {
-                  'state:inactive': { value: '#C2CFE5', token: 'service-item/label/inactive' },
-                  'state:disabled': { value: '#C2CFE5', token: 'service-item/label/disabled' },
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "State",
+                "value": "Default",
+                "prop": "state"
+              },
+              {
+                "key": "Orientation",
+                "value": "Vertical",
+                "prop": "orientation"
+              },
+              {
+                "key": "Badge",
+                "value": "None",
+                "prop": "badge"
+              },
+              {
+                "key": "Action",
+                "value": "None",
+                "prop": "action"
+              },
+              {
+                "key": "hasPreamble",
+                "value": "False",
+                "prop": "haspreamble"
+              },
+              {
+                "key": "hasDescription",
+                "value": "False",
+                "prop": "hasdescription"
+              },
+              {
+                "key": "hasBorder",
+                "value": "False",
+                "prop": "hasborder"
+              },
+              {
+                "key": "Label",
+                "value": "Label",
+                "prop": "label"
+              },
+              {
+                "key": "Preamble",
+                "value": "Preamble",
+                "prop": "preamble"
+              },
+              {
+                "key": "⤷ Asset-Slot",
+                "value": "Slot · 32 items — 48 × 48, full radius"
+              },
+              {
+                "key": "⤷ Description-Slot",
+                "value": "Slot · 32 items — 15 tall",
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
                 }
               },
-              { key: 'New badge bg',  value: '#E11744', token: 'badge/error/bg',
-                variants: { 'type:default': { hide: true }, 'type:add': { hide: true }, 'type:remove': { hide: true } }
-              },
-              { key: 'New badge text', value: '#FFFFFF', token: 'badge/error/text',
-                variants: { 'type:default': { hide: true }, 'type:add': { hide: true }, 'type:remove': { hide: true } }
-              },
-              { key: 'Add overlay',   value: '#16A34A', token: 'service-item/action/add',
-                variants: { 'type:default': { hide: true }, 'type:new': { hide: true }, 'type:remove': { hide: true } }
-              },
-              { key: 'Remove overlay', value: '#E11744', token: 'service-item/action/remove',
-                variants: { 'type:default': { hide: true }, 'type:new': { hide: true }, 'type:add': { hide: true } }
-              },
-            ],
+              {
+                "key": "Resolved variant",
+                "value": "4692:21583 · 64 × 72",
+                "mono": true,
+                "prop": "variantNode"
+              }
+            ]
           },
           {
-            label: 'Layout',
-            slug: 'layout',
-            rows: [
-              { key: 'Tile',          value: '64 × 72', mono: true,
-                variants: { 'orientation:horizontal': { value: '120 × 64' } }
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "#072592",
+                "token": "—",
+                "swatch": "#072592",
+                "variants": {
+                  "state:inactive": {
+                    "value": "#6780A9",
+                    "swatch": "#6780A9"
+                  },
+                  "state:pressed": {
+                    "value": "#071969",
+                    "swatch": "#071969"
+                  },
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  }
+                }
               },
-              { key: 'Icon slot',     value: '48 × 48 (pill / radius 99999)', mono: true },
-              { key: 'Icon → label gap', value: '4', mono: true },
-              { key: 'Preamble',      value: '12 tall (above icon)', mono: true,
-                variants: { 'orientation:horizontal': { value: '12 tall (below content)' } }
+              {
+                "key": "Asset-Slot fill",
+                "value": "#F6F9FD",
+                "token": "—",
+                "swatch": "#F6F9FD",
+                "variants": {
+                  "state:pressed": {
+                    "value": "#EEF2F9",
+                    "swatch": "#EEF2F9"
+                  }
+                }
               },
-              { key: 'Modifier badge', value: '29 × 12 (top-right, offset −6 top)', mono: true,
-                variants: { 'type:default': { hide: true }, 'type:add': { hide: true }, 'type:remove': { hide: true } }
+              {
+                "key": "Preamble",
+                "value": "#90A8D0",
+                "token": "—",
+                "swatch": "#90A8D0",
+                "variants": {
+                  "haspreamble:false": {
+                    "hide": true
+                  }
+                }
               },
-              { key: 'Action overlay', value: '12 × 12 (top-right, offset −6 top)', mono: true,
-                variants: { 'type:default': { hide: true }, 'type:new': { hide: true } }
+              {
+                "key": "Description",
+                "value": "#445C85",
+                "token": "—",
+                "swatch": "#445C85",
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  },
+                  "state:inactive|hasdescription:true": {
+                    "value": "#90A8D0",
+                    "swatch": "#90A8D0"
+                  },
+                  "state:pressed|hasdescription:true": {
+                    "value": "#0A2757",
+                    "swatch": "#0A2757"
+                  },
+                  "state:disabled|hasdescription:true": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  }
+                }
               },
-            ],
+              {
+                "key": "Border",
+                "value": "#D7E0EF",
+                "token": "—",
+                "swatch": "#D7E0EF",
+                "variants": {
+                  "hasborder:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "New badge fill",
+                "value": "#D61B2C",
+                "token": "—",
+                "swatch": "#D61B2C",
+                "variants": {
+                  "badge:none": {
+                    "hide": true
+                  },
+                  "state:inactive|badge:new": {
+                    "value": "#F76464",
+                    "swatch": "#F76464"
+                  },
+                  "state:inactive|badge:none": {
+                    "hide": true
+                  },
+                  "state:pressed|badge:new": {
+                    "value": "#B50707",
+                    "swatch": "#B50707"
+                  },
+                  "state:pressed|badge:none": {
+                    "hide": true
+                  },
+                  "state:disabled|badge:new": {
+                    "value": "#F8E6E6",
+                    "swatch": "#F8E6E6"
+                  },
+                  "state:disabled|badge:none": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "New badge label",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF",
+                "variants": {
+                  "badge:none": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Add overlay fill",
+                "value": "#12AF80",
+                "token": "—",
+                "swatch": "#12AF80",
+                "variants": {
+                  "action:none": {
+                    "hide": true
+                  },
+                  "action:remove": {
+                    "hide": true
+                  },
+                  "state:inactive|action:add": {
+                    "value": "#6FE7AB",
+                    "swatch": "#6FE7AB"
+                  },
+                  "state:inactive|action:none": {
+                    "hide": true
+                  },
+                  "state:inactive|action:remove": {
+                    "hide": true
+                  },
+                  "state:pressed|action:add": {
+                    "value": "#048570",
+                    "swatch": "#048570"
+                  },
+                  "state:pressed|action:none": {
+                    "hide": true
+                  },
+                  "state:pressed|action:remove": {
+                    "hide": true
+                  },
+                  "state:disabled|action:add": {
+                    "value": "#E7F8F0",
+                    "swatch": "#E7F8F0"
+                  },
+                  "state:disabled|action:none": {
+                    "hide": true
+                  },
+                  "state:disabled|action:remove": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Remove overlay fill",
+                "value": "#D61B2C",
+                "token": "—",
+                "swatch": "#D61B2C",
+                "variants": {
+                  "action:none": {
+                    "hide": true
+                  },
+                  "action:add": {
+                    "hide": true
+                  },
+                  "state:inactive|action:remove": {
+                    "value": "#F76464",
+                    "swatch": "#F76464"
+                  },
+                  "state:inactive|action:none": {
+                    "hide": true
+                  },
+                  "state:inactive|action:add": {
+                    "hide": true
+                  },
+                  "state:pressed|action:remove": {
+                    "value": "#B50707",
+                    "swatch": "#B50707"
+                  },
+                  "state:pressed|action:none": {
+                    "hide": true
+                  },
+                  "state:pressed|action:add": {
+                    "hide": true
+                  },
+                  "state:disabled|action:remove": {
+                    "value": "#F8E6E6",
+                    "swatch": "#F8E6E6"
+                  },
+                  "state:disabled|action:none": {
+                    "hide": true
+                  },
+                  "state:disabled|action:add": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Overlay glyph",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF",
+                "variants": {
+                  "action:none": {
+                    "hide": true
+                  }
+                }
+              }
+            ]
           },
           {
-            label: 'Typography',
-            slug: 'typo',
-            rows: [
-              { key: 'Label',       value: 'Proxima Soft Bold · 12 / 12 · +0.5',     mono: true },
-              { key: 'Preamble',    value: 'Proxima Soft Semibold · 10 / 12 · +0.25', mono: true },
-              { key: 'Description', value: 'BarkAda Semibold · 10 / 12',              mono: true },
-            ],
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Size",
+                "value": "64 × 72",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Width",
+                "value": "Fixed 64",
+                "mono": true,
+                "variants": {
+                  "orientation:horizontal": {
+                    "value": "Hugs — 20 + Container + 8"
+                  }
+                }
+              },
+              {
+                "key": "Padding",
+                "value": "0 top · 6 bottom · 0 sides",
+                "mono": true,
+                "variants": {
+                  "orientation:horizontal": {
+                    "value": "8 top · 8 bottom · 20 left · 8 right"
+                  }
+                }
+              },
+              {
+                "key": "Asset-Slot",
+                "value": "48 × 48 · radius full",
+                "mono": true
+              },
+              {
+                "key": "Asset position",
+                "value": "x 8 · y 0",
+                "mono": true,
+                "variants": {
+                  "haspreamble:true": {
+                    "value": "x 8 · y 18 — 6 below Preamble"
+                  },
+                  "orientation:horizontal": {
+                    "value": "x 20 · y 8, first in Container"
+                  },
+                  "orientation:horizontal|haspreamble:true": {
+                    "value": "x 20 · y 8, first in Container"
+                  }
+                }
+              },
+              {
+                "key": "Container",
+                "value": "48 × 48 asset + 12 gap + text column (hugs)",
+                "mono": true,
+                "variants": {
+                  "orientation:vertical": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Label",
+                "value": "64 wide, centred · 6 below asset",
+                "mono": true,
+                "variants": {
+                  "orientation:horizontal": {
+                    "value": "Hugs, left-aligned · 12 right of asset · text column centred on asset"
+                  }
+                }
+              },
+              {
+                "key": "Description gap",
+                "value": "4 below label",
+                "mono": true,
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  },
+                  "orientation:horizontal|hasdescription:true": {
+                    "value": "2 below label"
+                  }
+                }
+              },
+              {
+                "key": "Preamble",
+                "value": "64 × 12 at top · text inset 4 · 6 above asset",
+                "mono": true,
+                "variants": {
+                  "haspreamble:false": {
+                    "hide": true
+                  },
+                  "orientation:horizontal|haspreamble:true": {
+                    "value": "Container width × 12 · 4 below Container · text inset 8"
+                  }
+                }
+              },
+              {
+                "key": "Border",
+                "value": "1 × full height, left edge",
+                "mono": true,
+                "variants": {
+                  "hasborder:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "New badge",
+                "value": "29 × 12 · radius 4 · at (41, −12) from frame top",
+                "mono": true,
+                "variants": {
+                  "badge:none": {
+                    "hide": true
+                  },
+                  "orientation:horizontal|badge:new": {
+                    "value": "29 × 12 · radius 4 · at (87, −2) from frame top"
+                  }
+                }
+              },
+              {
+                "key": "Add / Remove overlay",
+                "value": "12 × 12 circle · at (54, −6) from frame top",
+                "mono": true,
+                "variants": {
+                  "action:none": {
+                    "hide": true
+                  },
+                  "orientation:horizontal|action:add": {
+                    "value": "12 × 12 circle · at (104, −2) from frame top"
+                  },
+                  "orientation:horizontal|action:remove": {
+                    "value": "12 × 12 circle · at (104, −2) from frame top"
+                  }
+                }
+              }
+            ]
           },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Fine",
+                "mono": true
+              },
+              {
+                "key": "Preamble",
+                "value": "Secondary/Heavy/Fine",
+                "mono": true,
+                "variants": {
+                  "haspreamble:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Small Caption",
+                "mono": true,
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "New badge",
+                "value": "Primary/Label/Tiny",
+                "mono": true,
+                "variants": {
+                  "badge:none": {
+                    "hide": true
+                  }
+                }
+              }
+            ]
+          }
         ],
-        swift: '<span class="syn-type">EBServiceItem</span><span class="syn-punc">(</span>\n    icon<span class="syn-punc">: </span><span class="syn-type">Image</span><span class="syn-punc">(</span><span class="syn-str">"send"</span><span class="syn-punc">),</span>\n    label<span class="syn-punc">: </span><span class="syn-str">"Send"</span>\n<span class="syn-punc">)</span>\n    .<span class="syn-fn">ebOrientation</span><span class="syn-punc">(</span><span class="syn-dot">.vertical</span><span class="syn-punc">)</span>',
-        compose: '<span class="syn-type">EBServiceItem</span><span class="syn-punc">(</span>\n    icon <span class="syn-eq">=</span> <span class="syn-punc">{ </span><span class="syn-type">Icon</span><span class="syn-punc">(</span><span class="syn-type">Icons</span><span class="syn-punc">.</span>Send<span class="syn-punc">, </span><span class="syn-kw">null</span><span class="syn-punc">) }</span><span class="syn-punc">,</span>\n    label <span class="syn-eq">=</span> <span class="syn-str">"Send"</span><span class="syn-punc">,</span>\n    orientation <span class="syn-eq">=</span> <span class="syn-type">Orientation</span><span class="syn-punc">.</span><span class="syn-dot">Vertical</span>\n<span class="syn-punc">)</span>',
-        previewHtml: '<div id="si-spec-preview"></div>',
-      },
+        "swift": "EBServiceItem(\"Label\")\n    .ebOrientation(.vertical)\n    .ebAsset { Image(\"service\") }",
+        "compose": "EBServiceItem(\n    label = \"Label\",\n    orientation = EBServiceItemOrientation.Vertical,\n    asset = { Image(painterResource(R.drawable.service), null) },\n    onClick = { }\n)"
+      }
     ],
-    colorsTables: [
-      buildMultiModeColorsTable({
-        title: 'Label by State',
-        description: 'Label color is the only thing State changes. Today Inactive and Disabled render identically — flagged as C5.',
-        modes: ['Default', 'Inactive', 'Disabled'],
-        rows: [
-          { role: 'Label',        token: 'service-item/label/{state}', values: ['#072592', '#C2CFE5', '#C2CFE5'] },
-          { role: 'Icon-slot bg', token: 'service-item/icon/bg',       values: ['#F6F9FD', '#F6F9FD', '#F6F9FD'] },
+    "colorsTables": [
+      {
+        "title": "Colors by State",
+        "description": "Read off <code>get_node_info</code> across the 32 variants of set <code>4692:21582</code>. Orientation does not change any colour. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Default",
+          "Inactive",
+          "Pressed",
+          "Disabled"
         ],
-      }),
-      buildMultiModeColorsTable({
-        title: 'Type-overlay colors',
-        description: 'Each non-Default Type adds an overlay on the icon\'s top-right. Colors are bound to the global Badge / Action tokens, not service-item-local ones.',
-        modes: ['New', 'Add', 'Remove'],
-        rows: [
-          { role: 'Overlay fill', token: '{badge|action}/{type}', values: ['#E11744', '#16A34A', '#E11744'] },
-          { role: 'Overlay text/glyph', token: '{badge|action}/{type}/fg', values: ['#FFFFFF', '#FFFFFF', '#FFFFFF'] },
-        ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Label",
+            "token": "—",
+            "values": [
+              "#072592",
+              "#6780A9",
+              "#071969",
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Asset-Slot fill",
+            "token": "—",
+            "values": [
+              "#F6F9FD",
+              "#F6F9FD",
+              "#EEF2F9",
+              "#F6F9FD"
+            ]
+          },
+          {
+            "role": "New badge fill / label",
+            "token": "—",
+            "values": [
+              "#D61B2C / #FFFFFF",
+              "#F76464 / #FFFFFF",
+              "#B50707 / #FFFFFF",
+              "#F8E6E6 / #FFFFFF"
+            ]
+          },
+          {
+            "role": "Add overlay fill / glyph",
+            "token": "—",
+            "values": [
+              "#12AF80 / #FFFFFF",
+              "#6FE7AB / #FFFFFF",
+              "#048570 / #FFFFFF",
+              "#E7F8F0 / #FFFFFF"
+            ]
+          },
+          {
+            "role": "Remove overlay fill / glyph",
+            "token": "—",
+            "values": [
+              "#D61B2C / #FFFFFF",
+              "#F76464 / #FFFFFF",
+              "#B50707 / #FFFFFF",
+              "#F8E6E6 / #FFFFFF"
+            ]
+          },
+          {
+            "role": "Preamble",
+            "token": "—",
+            "values": [
+              "#90A8D0",
+              "#90A8D0",
+              "#90A8D0",
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Description",
+            "token": "—",
+            "values": [
+              "#445C85",
+              "#90A8D0",
+              "#0A2757",
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Border",
+            "token": "—",
+            "values": [
+              "#D7E0EF",
+              "#D7E0EF",
+              "#D7E0EF",
+              "#D7E0EF"
+            ]
+          }
+        ]
+      }
+    ]
   },
   code: {
-    installation: { planned: true, blocks: [] },
-    propertyMapping: {
-      description: 'After the Type-axis split, the native API has two independent slot params (<code>badge</code>, <code>action</code>) instead of one fused Type enum.',
-      rows: [
-        { figma: 'Type=Default', swift: '(no badge, no action)', compose: '(no badge, no action)' },
-        { figma: 'Type=New',     swift: 'badge: .new', compose: 'badge = Badge.New' },
-        { figma: 'Type=Add',     swift: 'action: .add', compose: 'action = Action.Add' },
-        { figma: 'Type=Remove',  swift: 'action: .remove', compose: 'action = Action.Remove' },
-        { figma: 'State=Default / Inactive / Disabled', swift: 'state: .default | .inactive | .disabled', compose: 'state: ServiceItemState' },
-        { figma: 'Orientation=Vertical / Horizontal', swift: 'orientation: .vertical | .horizontal', compose: 'orientation: Orientation' },
-        { figma: 'Icon (slot)', swift: 'icon: Image', compose: 'icon: @Composable () -> Unit' },
-        { figma: '#label', swift: 'label: String', compose: 'label: String' },
-        { figma: '#description', swift: 'description: String?', compose: 'description: String?' },
-        { figma: '#preamble', swift: 'preamble: String?', compose: 'preamble: String?' },
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:service-item:2.2.1\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.serviceitem.*  <span class=\"cmt\">// Compose</span>"
+        }
       ],
-      filePaths: {
-        swift: 'ios/Components/ServiceItem/EBServiceItem.swift',
-        compose: 'android/components/serviceitem/EBServiceItem.kt',
+      "footnote": "Package not yet published. These are the planned distribution paths."
+    },
+    "propertyMapping": {
+      "description": "One row per property of set <code>4692:21582</code>, in panel order. <code>Badge</code> and <code>Action</code> never combine — setting one clears the other. <code>Asset-Slot</code> and <code>Description-Slot</code> are SLOTs with 32 items each.",
+      "rows": [
+        {
+          "figma": "State — Default, Disabled, Inactive, Pressed",
+          "swift": "<code>.disabled(true)</code> · <code>.ebInactive(true)</code> — Pressed is the button’s pressed style",
+          "compose": "<code>enabled = false</code> · <code>inactive = true</code> — Pressed from <code>interactionSource</code>"
+        },
+        {
+          "figma": "Orientation — Vertical, Horizontal",
+          "swift": "<code>.ebOrientation(.vertical / .horizontal)</code>",
+          "compose": "<code>orientation = EBServiceItemOrientation.Vertical / Horizontal</code>"
+        },
+        {
+          "figma": "Badge — None, New",
+          "swift": "<code>.ebBadge(.new)</code> — omit for None",
+          "compose": "<code>badge = EBServiceItemBadge.New</code> — default <code>null</code>"
+        },
+        {
+          "figma": "Action — None, Add, Remove",
+          "swift": "<code>.ebEditAction(.add / .remove) { }</code> — omit for None",
+          "compose": "<code>editAction = EBServiceItemAction.Add / Remove</code> + <code>onEditAction</code>"
+        },
+        {
+          "figma": "hasPreamble — boolean",
+          "swift": "<code>.ebPreamble(String)</code> — omit for False",
+          "compose": "<code>preamble: String? = null</code>"
+        },
+        {
+          "figma": "hasDescription — boolean",
+          "swift": "<code>.ebDescription(String)</code> — omit for False",
+          "compose": "<code>description: (@Composable () -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "hasBorder — boolean",
+          "swift": "<code>.ebBorder(true)</code>",
+          "compose": "<code>showsBorder = true</code>"
+        },
+        {
+          "figma": "Label — text",
+          "swift": "<code>EBServiceItem(_ label: String)</code>",
+          "compose": "<code>label: String</code>"
+        },
+        {
+          "figma": "Preamble — text",
+          "swift": "the string passed to <code>.ebPreamble</code>",
+          "compose": "the value of <code>preamble</code>"
+        },
+        {
+          "figma": "⤷ Asset-Slot — SLOT (48 × 48)",
+          "swift": "content of <code>.ebAsset { }</code>",
+          "compose": "<code>asset: @Composable () -&gt; Unit</code>"
+        },
+        {
+          "figma": "⤷ Description-Slot — SLOT",
+          "swift": "content of <code>.ebDescription</code>",
+          "compose": "content of <code>description</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "ios/Components/ServiceItem/EBServiceItem.swift",
+        "compose": "android/components/serviceitem/EBServiceItem.kt"
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Vertical · default",
+        "swift": "<span class=\"cmt\">// State=Default, Orientation=Vertical, Badge=None, Action=None — 4692:21583, 64 × 72.</span>\n<span class=\"typ\">EBServiceItem</span>(<span class=\"str\">\"Send\"</span>)\n    .ebOrientation(.vertical)\n    .ebAsset { <span class=\"typ\">Image</span>(<span class=\"str\">\"send\"</span>) }",
+        "compose": "<span class=\"cmt\">// State=Default, Orientation=Vertical, Badge=None, Action=None — 4692:21583, 64 × 72.</span>\n<span class=\"typ\">EBServiceItem</span>(\n    label = <span class=\"str\">\"Send\"</span>,\n    orientation = <span class=\"typ\">EBServiceItemOrientation</span>.Vertical,\n    asset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.send), null) },\n    onClick = { openSend() }\n)"
       },
-    },
-    usageSnippets: [],
-    accessibility: [
-      { requirement: 'Tile role', ios: 'Wrap as <code>Button</code>; <code>.accessibilityLabel(label + (description.map { ", \\($0)" } ?? ""))</code>.', android: 'Use <code>Modifier.clickable</code> + <code>Role.Button</code>; <code>contentDescription</code> = label + ", " + description.' },
-      { requirement: 'New badge', ios: '<code>.accessibilityValue("new")</code> so VoiceOver reads "Send, new".', android: 'Append "new" to <code>stateDescription</code>.' },
-      { requirement: 'Add / Remove overlay', ios: 'Separate accessibility element — <code>.accessibilityLabel("Add Send to home")</code>. Hit area extended via <code>.contentShape(Rectangle())</code> + larger frame.', android: 'Wrap as separate <code>IconButton</code> with explicit <code>contentDescription</code>; <code>Modifier.minimumInteractiveComponentSize()</code>.' },
-      { requirement: 'Disabled', ios: '<code>.disabled(true)</code> + <code>.accessibilityValue("disabled")</code>.', android: '<code>enabled = false</code>; <code>stateDescription = "disabled"</code>.' },
-      { requirement: 'Inactive', ios: 'Still tappable; <code>.accessibilityHint("Currently unavailable")</code>.', android: 'Tappable; <code>contentDescription</code> appends "currently unavailable".' },
+      {
+        "subheading": "Vertical · New badge",
+        "swift": "<span class=\"cmt\">// State=Default, Orientation=Vertical, Badge=New, Action=None — 4692:21591, 64 × 72.</span>\n<span class=\"typ\">EBServiceItem</span>(<span class=\"str\">\"Borrow\"</span>)\n    .ebOrientation(.vertical)\n    .ebBadge(.new)\n    .ebAsset { <span class=\"typ\">Image</span>(<span class=\"str\">\"borrow\"</span>) }",
+        "compose": "<span class=\"cmt\">// State=Default, Orientation=Vertical, Badge=New, Action=None — 4692:21591, 64 × 72.</span>\n<span class=\"typ\">EBServiceItem</span>(\n    label = <span class=\"str\">\"Borrow\"</span>,\n    orientation = <span class=\"typ\">EBServiceItemOrientation</span>.Vertical,\n    badge = <span class=\"typ\">EBServiceItemBadge</span>.New,\n    asset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.borrow), null) },\n    onClick = { openBorrow() }\n)"
+      },
+      {
+        "subheading": "Edit mode · Add / Remove",
+        "swift": "<span class=\"cmt\">// State=Default, Orientation=Vertical, Badge=None, Action=Add — 4692:21601, 64 × 72.</span>\n<span class=\"typ\">EBServiceItem</span>(<span class=\"str\">\"Send\"</span>)\n    .ebOrientation(.vertical)\n    .ebEditAction(.add) { pin(.send) }\n    .ebAsset { <span class=\"typ\">Image</span>(<span class=\"str\">\"send\"</span>) }",
+        "compose": "<span class=\"cmt\">// State=Default, Orientation=Vertical, Badge=None, Action=Add — 4692:21601, 64 × 72.</span>\n<span class=\"typ\">EBServiceItem</span>(\n    label = <span class=\"str\">\"Send\"</span>,\n    orientation = <span class=\"typ\">EBServiceItemOrientation</span>.Vertical,\n    editAction = <span class=\"typ\">EBServiceItemAction</span>.Add,\n    onEditAction = { pin(Service.Send) },\n    asset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.send), null) },\n    onClick = { }\n)"
+      },
+      {
+        "subheading": "Horizontal · description",
+        "swift": "<span class=\"cmt\">// State=Default, Orientation=Horizontal, hasDescription=True — 4692:21655, 120 × 64 at default.</span>\n<span class=\"typ\">EBServiceItem</span>(<span class=\"str\">\"Pay Bills\"</span>)\n    .ebOrientation(.horizontal)\n    .ebDescription(<span class=\"str\">\"Due today\"</span>)\n    .ebAsset { <span class=\"typ\">Image</span>(<span class=\"str\">\"bills\"</span>) }",
+        "compose": "<span class=\"cmt\">// State=Default, Orientation=Horizontal, hasDescription=True — 4692:21655, 120 × 64 at default.</span>\n<span class=\"typ\">EBServiceItem</span>(\n    label = <span class=\"str\">\"Pay Bills\"</span>,\n    orientation = <span class=\"typ\">EBServiceItemOrientation</span>.Horizontal,\n    description = { <span class=\"typ\">Text</span>(<span class=\"str\">\"Due today\"</span>) },\n    asset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.bills), null) },\n    onClick = { openBills() }\n)"
+      },
+      {
+        "subheading": "Inactive and Disabled",
+        "swift": "<span class=\"cmt\">// State=Inactive / Disabled, Orientation=Vertical — 4692:21619 / 4692:21775, 64 × 72.</span>\n<span class=\"typ\">EBServiceItem</span>(<span class=\"str\">\"GInsure\"</span>)\n    .ebInactive(true)       // still tappable\n    .ebAsset { <span class=\"typ\">Image</span>(<span class=\"str\">\"insure\"</span>) }\n\n<span class=\"typ\">EBServiceItem</span>(<span class=\"str\">\"GLoan\"</span>)\n    .disabled(true)\n    .ebAsset { <span class=\"typ\">Image</span>(<span class=\"str\">\"loan\"</span>) }",
+        "compose": "<span class=\"cmt\">// State=Inactive / Disabled, Orientation=Vertical — 4692:21619 / 4692:21775, 64 × 72.</span>\n<span class=\"typ\">EBServiceItem</span>(label = <span class=\"str\">\"GInsure\"</span>, inactive = true,\n    asset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.insure), null) }, onClick = { explain() })\n\n<span class=\"typ\">EBServiceItem</span>(label = <span class=\"str\">\"GLoan\"</span>, enabled = false,\n    asset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.loan), null) }, onClick = { })"
+      }
     ],
-    usageGuidelines: [],
-    scorecard: [
-      { id: 'C1', criterion: 'Layer Structure & Naming', status: 'refine', statusLabel: 'Needs Refinement', notes: 'Clean layer naming inside (preamble / content / Icon / border). The 24-variant matrix is the concern, not the layer tree.' },
-      { id: 'C2', criterion: 'Variant & Property Naming', status: 'rework', statusLabel: 'Requires Rework', notes: '<code>State=Disbaled</code> typo + <code>Type</code> axis bundles badge with action overlays.' },
-      { id: 'C3', criterion: 'Token Coverage', status: 'refine', statusLabel: 'Needs Refinement', notes: 'Icon-slot fill and label color bound. New badge + Add/Remove action overlays use ad-hoc colors (#E11744, #16A34A) without registered tokens.' },
-      { id: 'C4', criterion: 'Native Mappability', status: 'refine', statusLabel: 'Needs Refinement', notes: 'Maps cleanly to a SwiftUI/Compose tile after the Type-axis split; description should be optional.' },
-      { id: 'C5', criterion: 'Interaction State Coverage', status: 'rework', statusLabel: 'Requires Rework', notes: 'No Pressed state. Inactive and Disabled render identically. Action-overlay tap-area unannotated.' },
-      { id: 'C6', criterion: 'Asset & Icon Quality', status: 'ready', statusLabel: 'Ready', notes: 'Icon slot accepts any vector instance — clean Slot architecture.' },
-      { id: 'C7', criterion: 'Code Connect Linkability', status: 'empty', statusLabel: 'Not Mapped', notes: 'Blocked on State typo + Type-axis split.' },
+    "accessibility": [
+      {
+        "requirement": "Tile role",
+        "ios": "Wrap as <code>Button</code>; label is <code>Label</code> plus the description when shown.",
+        "android": "<code>Modifier.clickable(role = Role.Button)</code>; <code>contentDescription</code> = label + description."
+      },
+      {
+        "requirement": "New badge",
+        "ios": "<code>.accessibilityValue(\"new\")</code> so VoiceOver reads “Send, new”.",
+        "android": "Append “new” to <code>stateDescription</code>."
+      },
+      {
+        "requirement": "Add / Remove overlay",
+        "ios": "Its own element — “Add Send” / “Remove Send” — with a 44 × 44pt target via <code>.contentShape</code> around the 12 × 12 glyph.",
+        "android": "Separate clickable with its own <code>contentDescription</code> and a 48 × 48dp minimum touch target."
+      },
+      {
+        "requirement": "Disabled vs Inactive",
+        "ios": "Disabled: <code>.disabled(true)</code>. Inactive stays tappable with <code>.accessibilityHint(\"Currently unavailable\")</code>.",
+        "android": "Disabled: <code>enabled = false</code>. Inactive stays clickable; <code>stateDescription = \"currently unavailable\"</code>."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Label #072592 is 12.44:1 on white; Pressed #071969 15.53:1. Inactive #6780A9 is 4.01:1 — below 4.5:1 at 12pt. Description is 6.74:1 (#445C85) and 14.58:1 Pressed (#0A2757), but the Inactive description (#90A8D0) is 2.41:1. White on the Inactive overlays is 3.02:1 (#F76464) and 1.53:1 (#6FE7AB); on the Disabled overlays 1.20:1 and 1.10:1. The Add overlay in Default (#12AF80) is 2.81:1.",
+        "android": "Same ratios."
+      }
     ],
-    codeConnect: [],
-    variants: {
-      total: 24,
-      description: '<code>Type × State × Orientation</code> = 4 × 3 × 2 = 24 variants. Note 6 of them have <code>State=Disbaled</code> misspelled. Once Type splits into <code>badge</code> + <code>action</code>, the matrix collapses to ~8 production variants + slot-driven combinations.',
-      columns: ['#', 'Type', 'State', 'Orientation', 'Size', 'Node'],
-      rows: [
-        { cells: ['1',  'Default', 'Default',  'Vertical',    '64 × 72',  '<code>20210:2442</code>'] },
-        { cells: ['2',  'New',     'Default',  'Vertical',    '64 × 72',  '<code>20210:2450</code>'] },
-        { cells: ['3',  'Add',     'Default',  'Vertical',    '64 × 72',  '<code>20210:2460</code>'] },
-        { cells: ['4',  'Remove',  'Default',  'Vertical',    '64 × 72',  '<code>20210:2469</code>'] },
-        { cells: ['5',  'Default', 'Inactive', 'Vertical',    '64 × 72',  '<code>20210:2478</code>'] },
-        { cells: ['6',  'New',     'Inactive', 'Vertical',    '64 × 72',  '<code>20210:2486</code>'] },
-        { cells: ['7',  'Add',     'Inactive', 'Vertical',    '64 × 72',  '<code>20210:2496</code>'] },
-        { cells: ['8',  'Remove',  'Inactive', 'Vertical',    '64 × 72',  '<code>20210:2505</code>'] },
-        { cells: ['9',  'Default', 'Disabled', 'Vertical',    '64 × 72',  '<code>20210:2634</code>'] },
-        { cells: ['10', 'New',     'Disabled', 'Vertical',    '64 × 72',  '<code>20210:2642</code>'] },
-        { cells: ['11', 'Add',     'Disabled', 'Vertical',    '64 × 72',  '<code>20210:2652</code>'] },
-        { cells: ['12', 'Remove',  'Disabled', 'Vertical',    '64 × 72',  '<code>20210:2661</code>'] },
-        { cells: ['13', 'Default', 'Default',  'Horizontal',  '120 × 64', '<code>20210:2514</code>'] },
-        { cells: ['14', 'New',     'Default',  'Horizontal',  '120 × 64', '<code>20210:2523</code>'] },
-        { cells: ['15', 'Add',     'Default',  'Horizontal',  '120 × 64', '<code>20210:2534</code>'] },
-        { cells: ['16', 'Remove',  'Default',  'Horizontal',  '120 × 64', '<code>20210:2544</code>'] },
-        { cells: ['17', 'Default', 'Inactive', 'Horizontal',  '120 × 64', '<code>20210:2554</code>'] },
-        { cells: ['18', 'New',     'Inactive', 'Horizontal',  '120 × 64', '<code>20210:2563</code>'] },
-        { cells: ['19', 'Add',     'Inactive', 'Horizontal',  '120 × 64', '<code>20210:2574</code>'] },
-        { cells: ['20', 'Remove',  'Inactive', 'Horizontal',  '120 × 64', '<code>20210:2584</code>'] },
-        { cells: ['21', 'Default', 'Disabled', 'Horizontal',  '120 × 64', '<code>20210:2594</code>'] },
-        { cells: ['22', 'New',     'Disabled', 'Horizontal',  '120 × 64', '<code>20210:2613</code>'] },
-        { cells: ['23', 'Add',     'Disabled', 'Horizontal',  '120 × 64', '<code>20210:2603</code>'] },
-        { cells: ['24', 'Remove',  'Disabled', 'Horizontal',  '120 × 64', '<code>20210:2624</code>'] },
+    "usageGuidelines": [
+      {
+        "doText": "Use Vertical in the home Menu Grid and Horizontal where a tile needs a description beside it.",
+        "dontText": "Don’t mix orientations in one grid."
+      },
+      {
+        "doText": "Show Add or Remove only in the customise-home edit mode.",
+        "dontText": "Don’t show a New badge and an edit overlay together — the set has no such variant."
+      },
+      {
+        "doText": "Use Inactive for a service the user can still open to learn why it is unavailable.",
+        "dontText": "Don’t use Disabled when tapping should explain something — Disabled takes no taps."
+      },
+      {
+        "doText": "Keep labels to one short line; the vertical tile is 64 wide.",
+        "dontText": "Don’t rely on the description in Vertical home grids — it adds height to every row."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Asset-Slot</code>, <code>Content</code>, <code>Label</code>, <code>Preamble</code>, <code>Description-Slot</code>, <code>Border</code>, <code>Container</code> — semantic throughout."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Four PascalCase axes, three <code>has…</code> booleans and two text properties. 32 variants; Badge × Action is exclusive by owner decision."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "All four text layers resolve <code>matched</code>. Colour bindings cannot be read with the plugin, and the Inactive and Disabled overlays fail contrast."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One <code>EBServiceItem</code> with an orientation, optional badge or edit action, and asset / description slots."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default, Pressed, Inactive and Disabled on every orientation and pairing; the overlay tap target is specified on the Overview."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Asset-Slot is a real SLOT. The Add and Remove glyphs are built from an ellipse and rectangles — parked as accepted debt."
+      },
+      {
+        "id": "C7",
+        "criterion": "Code Connect Linkability",
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Properties are ready to map; no mappings are registered."
+      }
+    ],
+    "codeConnect": [],
+    "variants": {
+      "total": 32,
+      "description": "<code>State</code> (4) × <code>Orientation</code> (2) × 4 Badge / Action pairings = 32 variants. <code>Badge=New</code> never pairs with an <code>Action</code> — badges are suppressed in edit mode by owner decision. The three booleans and two text properties add none. Dimensions are with the booleans off; with all three on, Vertical is 64 × 109 and Horizontal 138 × 80.",
+      "columns": [
+        "Orientation",
+        "State",
+        "Badge",
+        "Action",
+        "Node ID",
+        "Dimensions"
       ],
-    },
+      "rows": [
+        {
+          "cells": [
+            "Vertical",
+            "Default",
+            "None",
+            "None",
+            "<code>4692:21583</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Default",
+            "New",
+            "None",
+            "<code>4692:21591</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Default",
+            "None",
+            "Add",
+            "<code>4692:21601</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Default",
+            "None",
+            "Remove",
+            "<code>4692:21610</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Inactive",
+            "None",
+            "None",
+            "<code>4692:21619</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Inactive",
+            "New",
+            "None",
+            "<code>4692:21627</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Inactive",
+            "None",
+            "Add",
+            "<code>4692:21637</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Inactive",
+            "None",
+            "Remove",
+            "<code>4692:21646</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Pressed",
+            "None",
+            "None",
+            "<code>4703:18264</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Pressed",
+            "New",
+            "None",
+            "<code>4703:18387</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Pressed",
+            "None",
+            "Add",
+            "<code>4711:18442</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Pressed",
+            "None",
+            "Remove",
+            "<code>4711:18624</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Disabled",
+            "None",
+            "None",
+            "<code>4692:21775</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Disabled",
+            "New",
+            "None",
+            "<code>4692:21783</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Disabled",
+            "None",
+            "Add",
+            "<code>4692:21793</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Disabled",
+            "None",
+            "Remove",
+            "<code>4692:21802</code>",
+            "64.0 × 72.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Default",
+            "None",
+            "None",
+            "<code>4692:21655</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Default",
+            "New",
+            "None",
+            "<code>4692:21664</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Default",
+            "None",
+            "Add",
+            "<code>4692:21675</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Default",
+            "None",
+            "Remove",
+            "<code>4692:21685</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Inactive",
+            "None",
+            "None",
+            "<code>4692:21695</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Inactive",
+            "New",
+            "None",
+            "<code>4692:21704</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Inactive",
+            "None",
+            "Add",
+            "<code>4692:21715</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Inactive",
+            "None",
+            "Remove",
+            "<code>4692:21725</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Pressed",
+            "None",
+            "None",
+            "<code>4711:18705</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Pressed",
+            "New",
+            "None",
+            "<code>4711:18714</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Pressed",
+            "None",
+            "Add",
+            "<code>4711:18726</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Pressed",
+            "None",
+            "Remove",
+            "<code>4711:18739</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Disabled",
+            "None",
+            "None",
+            "<code>4692:21735</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Disabled",
+            "New",
+            "None",
+            "<code>4692:21754</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Disabled",
+            "None",
+            "Add",
+            "<code>4692:21744</code>",
+            "120.0 × 64.0"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Disabled",
+            "None",
+            "Remove",
+            "<code>4692:21765</code>",
+            "120.0 × 64.0"
+          ]
+        }
+      ]
+    }
   },
   changelog: [
+    {
+      "version": "2.2.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style + Code tabs rebuilt against the live component · node 4692:21582",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel.</strong> The card on retired node <code>20210:2442</code> with a fused <code>Type</code> control became one card with <code>State</code>, <code>Orientation</code>, <code>Badge</code>, <code>Action</code>, <code>hasPreamble</code>, <code>hasDescription</code>, <code>hasBorder</code> and the <code>Label</code> / <code>Preamble</code> text inputs. The two slots are listed without controls.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> Vertical 64 × 72 and Horizontal 120 × 64, with the New badge at (41, −12) / (87, −2) and the 12 × 12 overlays at (54, −6) / (104, −2) — both sit above the frame. Picking a badge with an action snaps to the built variant.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Colours corrected.</strong> New badge and Remove are #D61B2C (not #E11744), Add is #12AF80 (not #16A34A), Inactive label is #6780A9 (not #C2CFE5), and Pressed is added — #071969 label on an #EEF2F9 asset. Description follows State too: #445C85, Inactive #90A8D0, Pressed #0A2757, Disabled #C2CFE5.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Typography now names text styles.</strong> <code>Primary/Label/Fine</code>, <code>Secondary/Heavy/Fine</code>, <code>Secondary/Bold/Small Caption</code> and <code>Primary/Label/Tiny</code>, all matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>The Code tab was rebuilt on the live panel.</strong> Install is <code>com.eastblue.ds:service-item:2.2.1</code>, with an 11-row mapping, five snippets and a 32-row inventory replacing the 24-row one.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Scorecard rescored.</strong> C1, C2, C4, C5 Ready; C3, C6 Needs Refinement; C7 Not Mapped.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Boolean geometry read off the set with the layers shown.</strong> Vertical adds Preamble 12 + 6 gap on top and Description 4 + 15 below — 64 × 109 with both on. Horizontal hugs its text: 20 + Asset 48 + 12 + text column + 8, so a Description (50 wide) takes it to 138, and Preamble adds 4 + 12 below the Container — 138 × 80. The New badge and Add / Remove stay pinned to the frame’s top edge. Preamble in Horizontal is inset 8 inside a Container-wide row, not aligned to the asset’s left edge.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Inactive and Disabled overlays fail contrast</strong> — white on #F76464 is 3.02:1, on #6FE7AB 1.53:1, on #F8E6E6 1.20:1 and on #E7F8F0 1.10:1; Default Add (#12AF80) is 2.81:1. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Inactive text fails AA</strong> — the #6780A9 label is 4.01:1 on white at 12pt, and the #90A8D0 description 2.41:1 at 10pt. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>No changelog entries exist for v2.0 – v2.2.</strong> The Overview records those releases, but their dates are not on file. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       version: '1.0.0',
       date: '2026-05-19',
