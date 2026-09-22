@@ -1,40 +1,37 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — applies to both Collapsed and Expanded cards.
-// Wired to the legacy `updateAccSpecCard(cardType, prop, value)` function
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/accordion.js`.
+// Panel mirrors the property panel of set 16870:9288, in its order: two
+// variant axes and two booleans. Content-Body is an instance-swap slot
+// with 3 items and gets no control.
 const accordionDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'collapsed',
+        options: [
+          { value: 'collapsed', label: 'Collapsed' },
+          { value: 'expanded',  label: 'Expanded' },
+        ],
+      },
+      {
         label: 'State',
         prop: 'state',
         defaultValue: 'default',
         options: [
-          { value: 'default', label: 'Default' },
-          { value: 'pressed', label: 'Pressed' },
+          { value: 'default',  label: 'Default' },
           { value: 'disabled', label: 'Disabled' },
+          { value: 'pressed',  label: 'Pressed' },
         ],
       },
-      {
-        label: 'leadingIcon',
-        prop: 'leadingIcon',
-        defaultValue: 'true',
-        options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
-        ],
-      },
-      {
-        label: 'description',
-        prop: 'description',
-        defaultValue: 'false',
-        options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
-        ],
-      },
+      { label: 'Leading Icon', prop: 'leadingicon', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'Description',  prop: 'description', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
     ],
   },
 ];
@@ -165,38 +162,149 @@ export const accordion: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "acc-spec-collapsed",
-        "demoKey": "acc-collapsed",
+        "cardKey": "acc-spec-main",
+        "demoKey": "main",
+        "title": "Accordion",
+        "node": "16870:9288",
+        "description": "A disclosure row that expands to reveal content. Collapsed is the 56 header alone; Expanded adds the 56 Content-Body panel below it, 112 in total.",
+        "previewHtml": "<div id=\"accordion-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": accordionDemoControls,
-        "title": "Collapsed",
-        "node": "16870:9289",
-        "description": "Header row only — 56px fixed height. Trailing chevron points down. Tap anywhere in the row to expand.",
-        "previewHtml": "<div id=\"spec-acc-collapsed-preview\" style=\"width:320px;border:1px solid #E5EBF4;border-radius:0;overflow:hidden;font-family:'Proxima Soft', sans-serif;\"><div id=\"spec-acc-collapsed-header\" style=\"display:flex;align-items:center;gap:8px;padding:4px 16px;height:56px;background:#FFFFFF;box-sizing:border-box;\"><div id=\"spec-acc-collapsed-icon\" style=\"width:32px;height:32px;border-radius:6px;background:#C2C6CF;flex-shrink:0;display:flex;align-items:center;justify-content:center;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><rect x=\"3\" y=\"3\" width=\"10\" height=\"10\" rx=\"2\" fill=\"#fff\" opacity=\".8\"></rect></svg></div><div style=\"flex:1;min-width:0;\"><div id=\"spec-acc-collapsed-label\" style=\"font-size:16px;font-weight:700;color:#0A2757;line-height:20px;letter-spacing:0.25px;\">Label</div><div id=\"spec-acc-collapsed-desc\" style=\"font-family:'BarkAda',sans-serif;font-size:14px;font-weight:600;color:#90A8D0;line-height:20px;display:none;\">Description</div></div><div style=\"width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"><path id=\"spec-acc-collapsed-chev\" d=\"M5 7.5l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type",        "value": "Collapsed" },
-              { "key": "State",       "value": "Default", "prop": "state" },
-              { "key": "leadingIcon", "value": "true",    "prop": "leadingIcon" },
-              { "key": "description", "value": "false",   "prop": "description" }
+              {
+                "key": "Type",
+                "value": "Collapsed",
+                "prop": "type"
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "prop": "state"
+              },
+              {
+                "key": "Leading Icon",
+                "value": "True",
+                "prop": "leadingicon"
+              },
+              {
+                "key": "Description",
+                "value": "True",
+                "prop": "description"
+              },
+              {
+                "key": "⤷ Content-Body",
+                "value": "Instance swap · 3 items",
+                "variants": {
+                  "type:collapsed": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Resolved variant",
+                "value": "16870:9289 · Collapsed",
+                "mono": true,
+                "variants": {
+                  "type:expanded": {
+                    "value": "16870:9298 · Expanded"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "accordion/color/collapsed/bg" },
-              { "key": "Border",  "value": "#E5EBF4", "token": "accordion/color/collapsed/border" },
-              { "key": "Label", "value": "#0A2757", "token": "accordion/color/collapsed/label",
-                "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" } }
+              {
+                "key": "Header bg",
+                "value": "#FFFFFF",
+                "token": "surface/default",
+                "swatch": "#FFFFFF",
+                "variants": {
+                  "state:pressed": {
+                    "value": "#F4F7FB",
+                    "token": "surface/pressed",
+                    "swatch": "#F4F7FB"
+                  },
+                  "state:disabled": {
+                    "value": "#F8F9FB",
+                    "token": "surface/disabled",
+                    "swatch": "#F8F9FB"
+                  }
+                }
               },
-              { "key": "Description", "value": "#90A8D0", "token": "accordion/color/collapsed/description",
-                "variants": { "description:false": { "hide": true } }
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "token": "border/subtle",
+                "swatch": "#E5EBF4"
               },
-              { "key": "Chevron", "value": "#005CE5", "token": "accordion/color/collapsed/icon-chevron",
-                "variants": { "state:disabled": { "value": "#9BC5FD" } }
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "token": "text/primary",
+                "swatch": "#0A2757",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2C6CF — conflicts with #C2CFE5 on the old card",
+                    "token": "text/disabled",
+                    "swatch": "#C2C6CF"
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "#90A8D0",
+                "token": "text/secondary",
+                "swatch": "#90A8D0",
+                "variants": {
+                  "description:false": {
+                    "hide": true
+                  },
+                  "state:disabled|description:true": {
+                    "value": "Not documented — the preview reuses the disabled label colour",
+                    "token": "—"
+                  }
+                }
+              },
+              {
+                "key": "Chevron",
+                "value": "#005CE5",
+                "token": "icon-chevron",
+                "swatch": "#005CE5",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5 — conflicts with #9BC5FD on the old card",
+                    "token": "icon-chevron/disabled",
+                    "swatch": "#C2CFE5"
+                  }
+                }
+              },
+              {
+                "key": "Leading icon placeholder",
+                "value": "#C2C6CF",
+                "token": "icon/placeholder",
+                "swatch": "#C2C6CF",
+                "variants": {
+                  "leadingicon:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Content-Body bg",
+                "value": "#F6F9FD",
+                "token": "surface/content",
+                "swatch": "#F6F9FD",
+                "variants": {
+                  "type:collapsed": {
+                    "hide": true
+                  }
+                }
               }
             ]
           },
@@ -204,115 +312,104 @@ export const accordion: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Width",         "value": "396px (fill)", "mono": true },
-              { "key": "Header height", "value": "56px", "mono": true },
-              { "key": "Padding H",     "value": "16px", "mono": true },
-              { "key": "Padding V",     "value": "4px", "mono": true },
-              { "key": "Leading icon",  "value": "32×32px", "mono": true },
-              { "key": "Trailing icon", "value": "32×32px", "mono": true },
-              { "key": "Corner radius", "value": "0 (rectangular)", "mono": true },
-              { "key": "Border",        "value": "1px solid #E5EBF4", "mono": true }
+              {
+                "key": "Size",
+                "value": "396 × 56",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Width",
+                "value": "396 (fill)",
+                "mono": true
+              },
+              {
+                "key": "Header height",
+                "value": "56",
+                "mono": true
+              },
+              {
+                "key": "Content-Body height",
+                "value": "56 (slot)",
+                "mono": true,
+                "variants": {
+                  "type:collapsed": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Padding",
+                "value": "16 horizontal · 4 vertical",
+                "mono": true
+              },
+              {
+                "key": "Leading icon",
+                "value": "32 × 32 · 8 gap to the text",
+                "mono": true,
+                "variants": {
+                  "leadingicon:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Trailing chevron",
+                "value": "32 × 32 at the right edge",
+                "mono": true
+              },
+              {
+                "key": "Corner radius",
+                "value": "0",
+                "mono": true
+              },
+              {
+                "key": "Border",
+                "value": "1 · #E5EBF4",
+                "mono": true
+              },
+              {
+                "key": "Header / body divider",
+                "value": "1 · #E5EBF4",
+                "mono": true,
+                "variants": {
+                  "type:collapsed": {
+                    "hide": true
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Label style",       "value": "Primary/Multi-line Label/Base", "mono": true },
-              { "key": "Label font",        "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Label size",        "value": "16px", "mono": true },
-              { "key": "Label tracking",    "value": "0.25px", "mono": true },
-              { "key": "Label line-height", "value": "20px", "mono": true },
-              { "key": "Desc style",        "value": "Secondary/Bold/Base", "mono": true },
-              { "key": "Desc font",         "value": "BarkAda SemiBold", "mono": true },
-              { "key": "Desc size",         "value": "14px", "mono": true },
-              { "key": "Desc tracking",     "value": "0", "mono": true },
-              { "key": "Desc line-height",  "value": "20px", "mono": true }
+              {
+                "key": "Label",
+                "value": "Primary/Multi-line Label/Base",
+                "mono": true
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Base",
+                "mono": true,
+                "variants": {
+                  "description:false": {
+                    "hide": true
+                  }
+                }
+              }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>isExpanded<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.constant</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">false</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">) </span><span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Content\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    expanded <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span><span class=\"syn-punc\">,</span>\n    onExpandChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Content\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
-      },
-      {
-        "cardKey": "acc-spec-expanded",
-        "demoKey": "acc-expanded",
-        "demoControls": accordionDemoControls,
-        "title": "Expanded",
-        "node": "16870:9298",
-        "description": "Header row (56px) + content-body panel (56px SLOT) = 112px total height. Trailing chevron points up. Content-body background uses <code>surface/content</code> token.",
-        "previewHtml": "<div id=\"spec-acc-expanded-preview\" style=\"width:320px;border:1px solid #E5EBF4;border-radius:0;overflow:hidden;font-family:'Proxima Soft', sans-serif;\"><div id=\"spec-acc-expanded-header\" style=\"display:flex;align-items:center;gap:8px;padding:4px 16px;height:56px;background:#FFFFFF;border-bottom:1px solid #E5EBF4;box-sizing:border-box;\"><div id=\"spec-acc-expanded-icon\" style=\"width:32px;height:32px;border-radius:6px;background:#C2C6CF;flex-shrink:0;display:flex;align-items:center;justify-content:center;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><rect x=\"3\" y=\"3\" width=\"10\" height=\"10\" rx=\"2\" fill=\"#fff\" opacity=\".8\"></rect></svg></div><div style=\"flex:1;min-width:0;\"><div id=\"spec-acc-expanded-label\" style=\"font-size:16px;font-weight:700;color:#0A2757;line-height:20px;letter-spacing:0.25px;\">Label</div><div id=\"spec-acc-expanded-desc\" style=\"font-family:'BarkAda',sans-serif;font-size:14px;font-weight:600;color:#90A8D0;line-height:20px;display:none;\">Description</div></div><div style=\"width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"><path id=\"spec-acc-expanded-chev\" d=\"M5 12.5l5-5 5 5\" stroke=\"#005CE5\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div><div id=\"spec-acc-expanded-body\" style=\"height:56px;background:#F4F7FB;padding:12px 16px;box-sizing:border-box;\"><div style=\"height:8px;border-radius:4px;background:#C5D5E8;margin-bottom:8px;width:80%;\"></div><div style=\"height:8px;border-radius:4px;background:#C5D5E8;width:60%;\"></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Type",        "value": "Expanded" },
-              { "key": "State",       "value": "Default", "prop": "state" },
-              { "key": "leadingIcon", "value": "true",    "prop": "leadingIcon" },
-              { "key": "description", "value": "false",   "prop": "description" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "accordion/color/expanded/bg" },
-              { "key": "Border",  "value": "#E5EBF4", "token": "accordion/color/expanded/border" },
-              { "key": "Label", "value": "#0A2757", "token": "accordion/color/expanded/label",
-                "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" } }
-              },
-              { "key": "Description", "value": "#90A8D0", "token": "accordion/color/expanded/description",
-                "variants": { "description:false": { "hide": true } }
-              },
-              { "key": "Chevron", "value": "#005CE5", "token": "accordion/color/expanded/icon-chevron",
-                "variants": { "state:disabled": { "value": "#9BC5FD" } }
-              },
-              { "key": "Body bg", "value": "#F6F9FD", "token": "bg/color-bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",               "value": "396px (fill)", "mono": true },
-              { "key": "Header height",       "value": "56px", "mono": true },
-              { "key": "Content-body height", "value": "56px (SLOT)", "mono": true },
-              { "key": "Total height",        "value": "112px", "mono": true },
-              { "key": "Padding H",           "value": "16px", "mono": true },
-              { "key": "Padding V",           "value": "4px", "mono": true },
-              { "key": "Leading icon",        "value": "32×32px", "mono": true },
-              { "key": "Trailing icon",       "value": "32×32px", "mono": true },
-              { "key": "Corner radius",       "value": "0 (rectangular)", "mono": true },
-              { "key": "Border",              "value": "1px solid #E5EBF4", "mono": true },
-              { "key": "Divider",             "value": "1px solid #E5EBF4 (header/body)", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style",       "value": "Primary/Multi-line Label/Base", "mono": true },
-              { "key": "Label font",        "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Label size",        "value": "16px", "mono": true },
-              { "key": "Label tracking",    "value": "0.25px", "mono": true },
-              { "key": "Label line-height", "value": "20px", "mono": true },
-              { "key": "Desc style",        "value": "Secondary/Bold/Base", "mono": true },
-              { "key": "Desc font",         "value": "BarkAda SemiBold", "mono": true },
-              { "key": "Desc size",         "value": "14px", "mono": true },
-              { "key": "Desc tracking",     "value": "0", "mono": true },
-              { "key": "Desc line-height",  "value": "20px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>isExpanded<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.constant</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">) </span><span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Body content shown when expanded\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    expanded <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">,</span>\n    onExpandChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Body content shown when expanded\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "EBAccordion(\n    \"Label\",\n    isExpanded: .constant(false),\n    description: \"Description here...\",\n    leadingIcon: Image(\"icon\")\n) {\n    Text(\"Content-Body\")\n}",
+        "compose": "EBAccordion(\n    title = \"Label\",\n    expanded = false,\n    description = \"Description here...\",\n    leadingIcon = { Icon(painterResource(R.drawable.icon), null) },\n    onExpandChange = { }\n) {\n    Text(\"Content-Body\")\n}"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "All colors are bound to design tokens from the component variable collection.",
+        "description": "Carried from the earlier assessment of node <code>16870:9288</code>; the plugin has no channel this session, so these were not re-read. Expanded adds <code>surface/content</code> (#F6F9FD) for the Content-Body panel. Two roles contradict the old spec cards — see the Changelog.",
         "columns": [
           "Default",
           "Pressed",
@@ -343,107 +440,6 @@ export const accordion: ComponentData = {
             "values": [
               "—",
               "—",
-              "#F8F9FB"
-            ]
-          },
-          {
-            "role": "Border",
-            "token": "border/subtle",
-            "values": [
-              "#E5EBF4",
-              "#E5EBF4",
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "Label",
-            "token": "text/primary",
-            "values": [
-              "#0A2757",
-              "#0A2757",
-              "—"
-            ]
-          },
-          {
-            "role": "Label (disabled)",
-            "token": "text/disabled",
-            "values": [
-              "—",
-              "—",
-              "#C2C6CF"
-            ]
-          },
-          {
-            "role": "Description",
-            "token": "text/secondary",
-            "values": [
-              "#90A8D0",
-              "#90A8D0",
-              "—"
-            ]
-          },
-          {
-            "role": "Icon placeholder",
-            "token": "icon/placeholder",
-            "values": [
-              "#C2C6CF",
-              "#C2C6CF",
-              "#C2C6CF"
-            ]
-          },
-          {
-            "role": "Chevron",
-            "token": "icon-chevron",
-            "values": [
-              "#005CE5",
-              "#005CE5",
-              "#C2CFE5"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Colors by State",
-        "description": "Expanded adds the <code>surface/content</code> token for the content-body panel background.",
-        "columns": [
-          "Default",
-          "Pressed",
-          "Disabled"
-        ],
-        "rows": [
-          {
-            "role": "Header bg",
-            "token": "surface/default",
-            "values": [
-              "#FFFFFF",
-              "—",
-              "—"
-            ]
-          },
-          {
-            "role": "Pressed bg",
-            "token": "surface/pressed",
-            "values": [
-              "—",
-              "#F4F7FB",
-              "—"
-            ]
-          },
-          {
-            "role": "Disabled bg",
-            "token": "surface/disabled",
-            "values": [
-              "—",
-              "—",
-              "#F8F9FB"
-            ]
-          },
-          {
-            "role": "Content bg",
-            "token": "surface/content",
-            "values": [
-              "#F4F7FB",
-              "#F4F7FB",
               "#F8F9FB"
             ]
           },
@@ -766,6 +762,71 @@ export const accordion: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "1.4.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style tab rebuilt on the Figma property panel · node 16870:9288",
+      "rows": [
+        {
+          "body": "<strong>Two cards became one with the live panel.</strong> The Collapsed card (<code>16870:9289</code>) and the Expanded card (<code>16870:9298</code>) are now a single card whose controls mirror the property panel in its order — <code>Type</code>, <code>State</code>, <code>Leading Icon</code>, <code>Description</code> — with <code>Content-Body</code> listed as an instance swap with 3 items and no control.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Panel defaults corrected.</strong> <code>Leading Icon</code> and <code>Description</code> are both <code>True</code> on the component; the old controls had <code>description</code> defaulting to false.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn as markup-free SVG.</strong> The old previews were inline-styled HTML, against the house rule. Collapsed is 396 × 56 and Expanded 396 × 112.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography rows now name text styles only.</strong> <code>Primary/Multi-line Label/Base</code> and <code>Secondary/Bold/Base</code>; the font, size, tracking and line-height rows are gone.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Disabled label colour contradicts itself</strong> — the old spec cards said <code>#C2CFE5</code> (<code>text/color-text-disabled</code>) and the Colors by State table <code>#C2C6CF</code> (<code>text/disabled</code>). The card shows the conflict rather than picking one. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Disabled chevron colour contradicts itself</strong> — <code>#9BC5FD</code> on the old card against <code>#C2CFE5</code> in the table. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>The disabled Description colour is not documented</strong>, so the preview reuses the disabled label colour and the row says so. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Values were not re-read from Figma.</strong> The plugin had no channel for this pass, so geometry, colours and text styles are carried from v1.0 – v1.4 and still need a read against the live node — along with the Code tab. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.4.0",
       "date": "March 2026",

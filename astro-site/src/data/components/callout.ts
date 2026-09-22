@@ -2,6 +2,9 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
 // in `public/scripts/demos/callout.js`.
+// Panel mirrors the property panel of set 6663:104524 (named "Callout" in
+// Figma), in its order: four variant axes and four booleans. Leading-Slot
+// and Trailing-Slot are SLOTs (90 swap options each) and get no control.
 const calloutDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -9,37 +12,82 @@ const calloutDemoControls: DemoControlSection[] = [
       {
         label: 'Type',
         prop: 'type',
-        defaultValue: 'default',
+        defaultValue: 'neutral',
         options: [
-          { value: 'default', label: 'Default' },
+          { value: 'neutral', label: 'Neutral' },
           { value: 'information', label: 'Information' },
+          { value: 'warning', label: 'Warning' },
+          { value: 'error', label: 'Error' },
+          { value: 'success', label: 'Success' },
         ],
       },
       {
-        label: 'Label',
-        prop: 'label',
-        defaultValue: 'yes',
+        label: 'Style',
+        prop: 'style',
+        defaultValue: 'card',
         options: [
-          { value: 'yes', label: 'Yes' },
-          { value: 'no', label: 'No' },
+          { value: 'banner', label: 'Banner' },
+          { value: 'card', label: 'Card' },
         ],
       },
       {
-        label: 'Label Size',
-        prop: 'labelSize',
+        label: 'Content',
+        prop: 'content',
         defaultValue: 'default',
         options: [
           { value: 'default', label: 'Default' },
-          { value: 'small', label: 'Small' },
+          { value: 'header-only', label: 'Header Only' },
+          { value: 'description-only', label: 'Description Only' },
         ],
       },
       {
-        label: 'Description',
-        prop: 'description',
-        defaultValue: 'yes',
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'large',
         options: [
-          { value: 'yes', label: 'Yes' },
-          { value: 'no', label: 'No' },
+          { value: 'small', label: 'Small' },
+          { value: 'medium', label: 'Medium' },
+          { value: 'large', label: 'Large' },
+        ],
+      },
+      {
+        label: 'hasLeadingIcon',
+        prop: 'hasleadingicon',
+        control: 'toggle',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasActionButton',
+        prop: 'hasactionbutton',
+        control: 'toggle',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasTrailingIcon',
+        prop: 'hastrailingicon',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasAccentBorder',
+        prop: 'hasaccentborder',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -50,9 +98,9 @@ export const callout: ComponentData = {
   "meta": {
     "slug": "callout",
     "name": "Callout",
-    "node": "23:179895",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-179895",
-    "description": "A compact attention strip with neutral, info, warning, or danger intent, optional description, and an optional leading icon.",
+    "node": "6663:104524",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6663-104524",
+    "description": "An inline attention surface — title, description and optional leading icon, action button and trailing icon. 90 variants across <code>Type</code> (5) × <code>Style</code> (2) × <code>Content</code> (3) × <code>Size</code> (3), on node <code>6663:104524</code> in the 2026 Working File.",
     "badges": [
       {
         "kind": "keep",
@@ -225,48 +273,516 @@ export const callout: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Types",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "default",
-        "demoKey": "default",
+        "cardKey": "callout-spec-main",
+        "demoKey": "main",
+        "title": "Callout",
+        "node": "6663:104524",
+        "description": "",
+        "previewHtml": "<div id=\"callout-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": calloutDemoControls,
-        "title": "Default",
-        "node": "23:179902",
-        "description": "Compact attention strip. Flip Type / Label / Label size / Description to walk through every variant.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type",        "value": "Default", "prop": "type" },
-              { "key": "Label",       "value": "yes",     "prop": "label" },
-              { "key": "Label size",  "value": "Default", "prop": "labelSize",
-                "variants": { "label:no": { "hide": true } }
+              {
+                "key": "Type",
+                "value": "Neutral",
+                "prop": "type"
               },
-              { "key": "Description", "value": "yes",     "prop": "description" }
+              {
+                "key": "Style",
+                "value": "Card",
+                "prop": "style"
+              },
+              {
+                "key": "Content",
+                "value": "Default",
+                "prop": "content"
+              },
+              {
+                "key": "Size",
+                "value": "Large",
+                "prop": "size"
+              },
+              { "key": "hasLeadingIcon", "value": "False", "prop": "hasleadingicon" },
+              { "key": "hasActionButton", "value": "False", "prop": "hasactionbutton" },
+              { "key": "hasTrailingIcon", "value": "True", "prop": "hastrailingicon" },
+              { "key": "hasAccentBorder", "value": "True", "prop": "hasaccentborder" },
+              {
+                "key": "Leading-Slot",
+                "value": "Slot · 90 swap options — ships a placeholder",
+                "variants": { "hasleadingicon:false": { "hide": true } }
+              },
+              {
+                "key": "Button_New",
+                "value": "Text button — Learn more + chevron",
+                "variants": { "hasactionbutton:false": { "hide": true } }
+              },
+              {
+                "key": "Trailing-Slot",
+                "value": "Slot · 90 swap options — ships a placeholder",
+                "variants": { "hastrailingicon:false": { "hide": true } }
+              },
+              {
+                "key": "Resolved variant",
+                "value": "6663:104525 · 360 × 69",
+                "mono": true,
+                "prop": "variantNode",
+                "variants": {
+                  "type:neutral|style:card|content:default|size:large": {
+                    "value": "6663:104525 · 360 × 69"
+                  },
+                  "type:neutral|style:card|content:header-only|size:large": {
+                    "value": "6663:104590 · 360 × 56"
+                  },
+                  "type:neutral|style:card|content:header-only|size:small": {
+                    "value": "6682:111532 · 360 × 56"
+                  },
+                  "type:success|style:banner|content:description-only|size:small": {
+                    "value": "6801:110368 · 360 × 56"
+                  },
+                  "type:information|style:card|content:default|size:large": {
+                    "value": "6663:104538 · 360 × 69"
+                  },
+                  "type:warning|style:card|content:default|size:large": {
+                    "value": "6663:104551 · 360 × 69"
+                  },
+                  "type:error|style:card|content:default|size:large": {
+                    "value": "6663:104564 · 360 × 69"
+                  },
+                  "type:success|style:card|content:default|size:large": {
+                    "value": "6663:104577 · 360 × 69"
+                  },
+                  "type:information|style:card|content:header-only|size:large": {
+                    "value": "6663:104601 · 360 × 56"
+                  },
+                  "type:warning|style:card|content:header-only|size:large": {
+                    "value": "6663:104612 · 360 × 56"
+                  },
+                  "type:error|style:card|content:header-only|size:large": {
+                    "value": "6663:104623 · 360 × 56"
+                  },
+                  "type:success|style:card|content:header-only|size:large": {
+                    "value": "6663:104634 · 360 × 56"
+                  },
+                  "type:neutral|style:card|content:description-only|size:large": {
+                    "value": "6663:104645 · 360 × 56"
+                  },
+                  "type:information|style:card|content:description-only|size:large": {
+                    "value": "6663:104656 · 360 × 56"
+                  },
+                  "type:warning|style:card|content:description-only|size:large": {
+                    "value": "6663:104667 · 360 × 56"
+                  },
+                  "type:error|style:card|content:description-only|size:large": {
+                    "value": "6663:104678 · 360 × 56"
+                  },
+                  "type:success|style:card|content:description-only|size:large": {
+                    "value": "6663:104689 · 360 × 56"
+                  },
+                  "type:neutral|style:card|content:default|size:medium": {
+                    "value": "6679:107961 · 360 × 64"
+                  },
+                  "type:information|style:card|content:default|size:medium": {
+                    "value": "6679:107976 · 360 × 64"
+                  },
+                  "type:warning|style:card|content:default|size:medium": {
+                    "value": "6679:107991 · 360 × 64"
+                  },
+                  "type:error|style:card|content:default|size:medium": {
+                    "value": "6679:108006 · 360 × 64"
+                  },
+                  "type:success|style:card|content:default|size:medium": {
+                    "value": "6679:108021 · 360 × 64"
+                  },
+                  "type:neutral|style:card|content:header-only|size:medium": {
+                    "value": "6679:108036 · 360 × 56"
+                  },
+                  "type:information|style:card|content:header-only|size:medium": {
+                    "value": "6679:108049 · 360 × 56"
+                  },
+                  "type:warning|style:card|content:header-only|size:medium": {
+                    "value": "6679:108062 · 360 × 56"
+                  },
+                  "type:error|style:card|content:header-only|size:medium": {
+                    "value": "6679:108075 · 360 × 56"
+                  },
+                  "type:success|style:card|content:header-only|size:medium": {
+                    "value": "6679:108088 · 360 × 56"
+                  },
+                  "type:neutral|style:card|content:description-only|size:medium": {
+                    "value": "6679:108101 · 360 × 56"
+                  },
+                  "type:information|style:card|content:description-only|size:medium": {
+                    "value": "6679:108114 · 360 × 56"
+                  },
+                  "type:warning|style:card|content:description-only|size:medium": {
+                    "value": "6679:108127 · 360 × 56"
+                  },
+                  "type:error|style:card|content:description-only|size:medium": {
+                    "value": "6679:108140 · 360 × 56"
+                  },
+                  "type:success|style:card|content:description-only|size:medium": {
+                    "value": "6679:108153 · 360 × 56"
+                  },
+                  "type:neutral|style:card|content:default|size:small": {
+                    "value": "6682:111457 · 360 × 57"
+                  },
+                  "type:information|style:card|content:default|size:small": {
+                    "value": "6682:111472 · 360 × 57"
+                  },
+                  "type:warning|style:card|content:default|size:small": {
+                    "value": "6682:111487 · 360 × 57"
+                  },
+                  "type:error|style:card|content:default|size:small": {
+                    "value": "6682:111502 · 360 × 57"
+                  },
+                  "type:success|style:card|content:default|size:small": {
+                    "value": "6682:111517 · 360 × 57"
+                  },
+                  "type:information|style:card|content:header-only|size:small": {
+                    "value": "6682:111545 · 360 × 56"
+                  },
+                  "type:warning|style:card|content:header-only|size:small": {
+                    "value": "6682:111558 · 360 × 56"
+                  },
+                  "type:error|style:card|content:header-only|size:small": {
+                    "value": "6682:111571 · 360 × 56"
+                  },
+                  "type:success|style:card|content:header-only|size:small": {
+                    "value": "6682:111584 · 360 × 56"
+                  },
+                  "type:neutral|style:card|content:description-only|size:small": {
+                    "value": "6682:111597 · 360 × 56"
+                  },
+                  "type:information|style:card|content:description-only|size:small": {
+                    "value": "6682:111610 · 360 × 56"
+                  },
+                  "type:warning|style:card|content:description-only|size:small": {
+                    "value": "6682:111623 · 360 × 56"
+                  },
+                  "type:error|style:card|content:description-only|size:small": {
+                    "value": "6682:111636 · 360 × 56"
+                  },
+                  "type:success|style:card|content:description-only|size:small": {
+                    "value": "6682:111649 · 360 × 56"
+                  },
+                  "type:neutral|style:banner|content:default|size:large": {
+                    "value": "6801:109634 · 360 × 69"
+                  },
+                  "type:information|style:banner|content:default|size:large": {
+                    "value": "6801:109652 · 360 × 69"
+                  },
+                  "type:warning|style:banner|content:default|size:large": {
+                    "value": "6801:109670 · 360 × 69"
+                  },
+                  "type:error|style:banner|content:default|size:large": {
+                    "value": "6801:109688 · 360 × 69"
+                  },
+                  "type:success|style:banner|content:default|size:large": {
+                    "value": "6801:109706 · 360 × 69"
+                  },
+                  "type:neutral|style:banner|content:header-only|size:large": {
+                    "value": "6801:109724 · 360 × 56"
+                  },
+                  "type:information|style:banner|content:header-only|size:large": {
+                    "value": "6801:109740 · 360 × 56"
+                  },
+                  "type:warning|style:banner|content:header-only|size:large": {
+                    "value": "6801:109756 · 360 × 56"
+                  },
+                  "type:error|style:banner|content:header-only|size:large": {
+                    "value": "6801:109772 · 360 × 56"
+                  },
+                  "type:success|style:banner|content:header-only|size:large": {
+                    "value": "6801:109788 · 360 × 56"
+                  },
+                  "type:neutral|style:banner|content:description-only|size:large": {
+                    "value": "6801:109804 · 360 × 56"
+                  },
+                  "type:information|style:banner|content:description-only|size:large": {
+                    "value": "6801:109820 · 360 × 56"
+                  },
+                  "type:warning|style:banner|content:description-only|size:large": {
+                    "value": "6801:109836 · 360 × 56"
+                  },
+                  "type:error|style:banner|content:description-only|size:large": {
+                    "value": "6801:109852 · 360 × 56"
+                  },
+                  "type:success|style:banner|content:description-only|size:large": {
+                    "value": "6801:109868 · 360 × 56"
+                  },
+                  "type:neutral|style:banner|content:default|size:medium": {
+                    "value": "6801:109884 · 360 × 64"
+                  },
+                  "type:information|style:banner|content:default|size:medium": {
+                    "value": "6801:109902 · 360 × 64"
+                  },
+                  "type:warning|style:banner|content:default|size:medium": {
+                    "value": "6801:109920 · 360 × 64"
+                  },
+                  "type:error|style:banner|content:default|size:medium": {
+                    "value": "6801:109938 · 360 × 64"
+                  },
+                  "type:success|style:banner|content:default|size:medium": {
+                    "value": "6801:109956 · 360 × 64"
+                  },
+                  "type:neutral|style:banner|content:header-only|size:medium": {
+                    "value": "6801:109974 · 360 × 56"
+                  },
+                  "type:information|style:banner|content:header-only|size:medium": {
+                    "value": "6801:109990 · 360 × 56"
+                  },
+                  "type:warning|style:banner|content:header-only|size:medium": {
+                    "value": "6801:110006 · 360 × 56"
+                  },
+                  "type:error|style:banner|content:header-only|size:medium": {
+                    "value": "6801:110022 · 360 × 56"
+                  },
+                  "type:success|style:banner|content:header-only|size:medium": {
+                    "value": "6801:110038 · 360 × 56"
+                  },
+                  "type:neutral|style:banner|content:description-only|size:medium": {
+                    "value": "6801:110054 · 360 × 56"
+                  },
+                  "type:information|style:banner|content:description-only|size:medium": {
+                    "value": "6801:110070 · 360 × 56"
+                  },
+                  "type:warning|style:banner|content:description-only|size:medium": {
+                    "value": "6801:110086 · 360 × 56"
+                  },
+                  "type:error|style:banner|content:description-only|size:medium": {
+                    "value": "6801:110102 · 360 × 56"
+                  },
+                  "type:success|style:banner|content:description-only|size:medium": {
+                    "value": "6801:110118 · 360 × 56"
+                  },
+                  "type:neutral|style:banner|content:default|size:small": {
+                    "value": "6801:110134 · 360 × 57"
+                  },
+                  "type:information|style:banner|content:default|size:small": {
+                    "value": "6801:110152 · 360 × 57"
+                  },
+                  "type:warning|style:banner|content:default|size:small": {
+                    "value": "6801:110170 · 360 × 57"
+                  },
+                  "type:error|style:banner|content:default|size:small": {
+                    "value": "6801:110188 · 360 × 57"
+                  },
+                  "type:success|style:banner|content:default|size:small": {
+                    "value": "6801:110206 · 360 × 57"
+                  },
+                  "type:neutral|style:banner|content:header-only|size:small": {
+                    "value": "6801:110224 · 360 × 56"
+                  },
+                  "type:information|style:banner|content:header-only|size:small": {
+                    "value": "6801:110240 · 360 × 56"
+                  },
+                  "type:warning|style:banner|content:header-only|size:small": {
+                    "value": "6801:110256 · 360 × 56"
+                  },
+                  "type:error|style:banner|content:header-only|size:small": {
+                    "value": "6801:110272 · 360 × 56"
+                  },
+                  "type:success|style:banner|content:header-only|size:small": {
+                    "value": "6801:110288 · 360 × 56"
+                  },
+                  "type:neutral|style:banner|content:description-only|size:small": {
+                    "value": "6801:110304 · 360 × 56"
+                  },
+                  "type:information|style:banner|content:description-only|size:small": {
+                    "value": "6801:110320 · 360 × 56"
+                  },
+                  "type:warning|style:banner|content:description-only|size:small": {
+                    "value": "6801:110336 · 360 × 56"
+                  },
+                  "type:error|style:banner|content:description-only|size:small": {
+                    "value": "6801:110352 · 360 × 56"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#F6F9FD", "token": "contextual-help/color/default/bg",
-                "variants": { "type:information": { "value": "#E5F1FF", "token": "contextual-help/color/info/bg" } }
-              },
-              { "key": "Border", "value": "#E5EBF4", "token": "contextual-help/color/default/border",
-                "variants": { "type:information": { "value": "#D2E5FF", "token": "contextual-help/color/info/border" } }
-              },
-              { "key": "Label", "value": "#445C85", "token": "contextual-help/color/default/label",
+              {
+                "key": "Surface",
+                "value": "#F6F9FD",
+                "token": "—",
                 "variants": {
-                  "type:information": { "value": "#072592", "token": "contextual-help/color/info/label" },
-                  "label:no": { "hide": true }
+                  "type:neutral": {
+                    "value": "#F6F9FD"
+                  },
+                  "type:information": {
+                    "value": "#E5F1FF"
+                  },
+                  "type:warning": {
+                    "value": "#FFF9EB"
+                  },
+                  "type:error": {
+                    "value": "#F8E6E6"
+                  },
+                  "type:success": {
+                    "value": "#E7F8F0"
+                  }
                 }
               },
-              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/default/description",
+              {
+                "key": "Left accent",
+                "value": "#D7E0EF",
+                "token": "—",
+                "variants": { "type:neutral|hasaccentborder:false": { "hide": true }, "type:information|hasaccentborder:false": { "hide": true }, "type:warning|hasaccentborder:false": { "hide": true }, "type:error|hasaccentborder:false": { "hide": true }, "type:success|hasaccentborder:false": { "hide": true },
+                  "type:neutral": {
+                    "value": "#D7E0EF"
+                  },
+                  "type:information": {
+                    "value": "#005CE5"
+                  },
+                  "type:warning": {
+                    "value": "#EBB30A"
+                  },
+                  "type:error": {
+                    "value": "#D61B2C"
+                  },
+                  "type:success": {
+                    "value": "#27C990"
+                  }
+                }
+              },
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "token": "—",
                 "variants": {
-                  "type:information": { "token": "contextual-help/color/info/description" },
-                  "description:no": { "hide": true }
+                  "type:neutral": {
+                    "value": "#0A2757"
+                  },
+                  "type:information": {
+                    "value": "#072592"
+                  },
+                  "type:warning": {
+                    "value": "#6C5009"
+                  },
+                  "type:error": {
+                    "value": "#D61B2C"
+                  },
+                  "type:success": {
+                    "value": "#035E50"
+                  },
+                  "type:neutral|content:description-only": {
+                    "hide": true
+                  },
+                  "type:information|content:description-only": {
+                    "hide": true
+                  },
+                  "type:warning|content:description-only": {
+                    "hide": true
+                  },
+                  "type:error|content:description-only": {
+                    "hide": true
+                  },
+                  "type:success|content:description-only": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "token": "—",
+                "variants": {
+                  "type:neutral": {
+                    "value": "#6780A9"
+                  },
+                  "type:information": {
+                    "value": "#2340A9"
+                  },
+                  "type:warning": {
+                    "value": "#966F0B"
+                  },
+                  "type:error": {
+                    "value": "#D61B2C"
+                  },
+                  "type:success": {
+                    "value": "#048570"
+                  },
+                  "type:neutral|content:header-only": {
+                    "hide": true
+                  },
+                  "type:information|content:header-only": {
+                    "hide": true
+                  },
+                  "type:warning|content:header-only": {
+                    "hide": true
+                  },
+                  "type:error|content:header-only": {
+                    "hide": true
+                  },
+                  "type:success|content:header-only": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Button label",
+                "value": "#0A2757",
+                "token": "—",
+                "variants": { "hasactionbutton:false": { "hide": true } }
+              },
+              {
+                "key": "Slot placeholder",
+                "value": "#9F3DFB at 9% · dashed 4/4",
+                "token": "—",
+                "variants": { "hasleadingicon:false|hastrailingicon:false": { "hide": true } }
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Button label",
+                "value": "Primary/Label/Fine",
+                "mono": true,
+                "variants": { "hasactionbutton:false": { "hide": true } }
+              },
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "variants": {
+                  "size:medium": {
+                    "value": "Primary/Multi-line Label/Base"
+                  },
+                  "size:small": {
+                    "value": "Primary/Multi-line Label/Small"
+                  },
+                  "content:description-only": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Base",
+                "mono": true,
+                "variants": {
+                  "size:medium": {
+                    "value": "Secondary/Bold/Caption"
+                  },
+                  "size:small": {
+                    "value": "Secondary/Bold/Small Caption"
+                  },
+                  "content:header-only": {
+                    "hide": true
+                  }
                 }
               }
             ]
@@ -275,260 +791,140 @@ export const callout: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Padding",       "value": "12 × 12", "mono": true },
-              { "key": "Border radius", "value": "6",       "mono": true },
-              { "key": "Border",        "value": "1px solid","mono": true },
-              { "key": "Gap",           "value": "8",       "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style", "value": "Primary/Label/Base", "mono": true,
+              {
+                "key": "Height",
+                "value": "69px",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Width",
+                "value": "360px",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "6px",
+                "mono": true,
                 "variants": {
-                  "labelSize:small": { "value": "Primary/Label/Fine" },
-                  "label:no": { "hide": true }
+                  "style:banner": {
+                    "value": "0 — square"
+                  }
                 }
               },
-              { "key": "Label font", "value": "Proxima Soft Bold · 16 / 16 · +0.25", "mono": true,
+              {
+                "key": "Left accent",
+                "value": "6px, full height",
+                "mono": true,
+                "variants": { "hasaccentborder:false": { "hide": true } }
+              },
+              {
+                "key": "Height rule",
+                "value": "12 + max(text stack, 32px slot) + 12 — text centred when shorter",
+                "mono": true
+              },
+              {
+                "key": "Padding",
+                "value": "12px top and bottom · 20px left · 16px right",
+                "mono": true
+              },
+              {
+                "key": "Title → description",
+                "value": "2px",
+                "mono": true,
                 "variants": {
-                  "labelSize:small": { "value": "Proxima Soft Bold · 12 / 12 · +0.5" },
-                  "label:no": { "hide": true }
+                  "content:header-only": {
+                    "hide": true
+                  },
+                  "content:description-only": {
+                    "hide": true
+                  }
                 }
               },
-              { "key": "Description style", "value": "Secondary/Bold/Base", "mono": true,
-                "variants": { "description:no": { "hide": true } }
+              {
+                "key": "Trailing-Slot",
+                "value": "32 × 32 at x 312, y 12",
+                "mono": true,
+                "variants": { "hastrailingicon:false": { "hide": true } }
               },
-              { "key": "Description font", "value": "BarkAda Semibold · 14 / 20", "mono": true,
-                "variants": { "description:no": { "hide": true } }
+              {
+                "key": "Leading-Slot",
+                "value": "32 × 32 at x 20 · 12px to the text (assumed) — description wrap not measured",
+                "mono": true,
+                "variants": { "hasleadingicon:false": { "hide": true } }
+              },
+              {
+                "key": "Button_New",
+                "value": "91 × 24 · 2px below the text",
+                "mono": true,
+                "variants": { "hasactionbutton:false": { "hide": true } }
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCalloutIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"cal-spec-preview\"></div>"
+        "swift": "EBCallout(\n    title: \"This is for the title.\",\n    description: \"This is the description.\",\n    type: .neutral,\n    style: .card,\n    size: .large\n)\n.ebTrailing { EBIconButton(.close) { dismiss() } }",
+        "compose": "EBCallout(\n    title = \"This is for the title.\",\n    description = \"This is the description.\",\n    type = EBCalloutType.Neutral,\n    style = EBCalloutStyle.Card,\n    size = EBCalloutSize.Large,\n    trailing = { EBIconButton(EBIcons.Close) { dismiss() } }\n)"
       }
-
     ],
     "colorsTables": [
       {
         "title": "Colors by Type",
-        "description": "All colors bound to <code>main/contextual-help/color/*</code> tokens (target after rename: <code>main/callout/*</code>). No appearance modes. No Pressed or Disabled state defined.",
+        "description": "Read off <code>get_node_info</code> on set <code>6663:104524</code>. <code>Style</code> changes only the corner radius — Card is 6, Banner square — so every colour is shared between the two. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
-          "TOKEN",
-          "VALUE"
+          "Surface",
+          "Accent",
+          "Title",
+          "Description"
         ],
         "rows": [
           {
-            "role": "Default",
-            "token": "bg",
-            "values": [
-              "main/contextual-help/color/default/bg",
-              "#F6F9FD"
-            ]
-          },
-          {
-            "role": "Default",
-            "token": "border",
-            "values": [
-              "main/contextual-help/color/default/border",
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "Default",
-            "token": "label",
-            "values": [
-              "main/contextual-help/color/default/label",
-              "#445C85"
-            ]
-          },
-          {
-            "role": "Default",
-            "token": "description",
-            "values": [
-              "main/contextual-help/color/default/description",
-              "#6780A9"
-            ]
-          },
-          {
-            "role": "Information",
-            "token": "bg",
-            "values": [
-              "main/contextual-help/color/info/bg",
-              "#E5F1FF"
-            ]
-          },
-          {
-            "role": "Information",
-            "token": "border",
-            "values": [
-              "main/contextual-help/color/info/border",
-              "#D2E5FF"
-            ]
-          },
-          {
-            "role": "Information",
-            "token": "label",
-            "values": [
-              "main/contextual-help/color/info/label",
-              "#072592"
-            ]
-          },
-          {
-            "role": "Information",
-            "token": "description",
-            "values": [
-              "main/contextual-help/color/info/description",
-              "#6780A9"
-            ]
-          },
-          {
-            "role": "Success",
+            "role": "Neutral",
             "token": "—",
             "values": [
-              "— (missing)",
-              "—"
+              "#F6F9FD",
+              "#D7E0EF",
+              "#0A2757",
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Information",
+            "token": "—",
+            "values": [
+              "#E5F1FF",
+              "#005CE5",
+              "#072592",
+              "#2340A9"
             ]
           },
           {
             "role": "Warning",
             "token": "—",
             "values": [
-              "— (missing)",
-              "—"
+              "#FFF9EB",
+              "#EBB30A",
+              "#6C5009",
+              "#966F0B"
             ]
           },
           {
             "role": "Error",
             "token": "—",
             "values": [
-              "— (missing)",
-              "—"
+              "#F8E6E6",
+              "#D61B2C",
+              "#D61B2C",
+              "#D61B2C"
             ]
           },
           {
-            "role": "Pressed",
+            "role": "Success",
             "token": "—",
             "values": [
-              "— (missing)",
-              "—"
-            ]
-          },
-          {
-            "role": "Disabled",
-            "token": "—",
-            "values": [
-              "— (missing)",
-              "—"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "description": "Label uses the Primary (Proxima Soft Bold) scale; description uses the Secondary (BarkAda Semibold) scale.",
-        "columns": [
-          "FONT",
-          "SIZE",
-          "LINE HEIGHT",
-          "TRACKING"
-        ],
-        "rows": [
-          {
-            "role": "Label (default)",
-            "token": "Primary/Label/Base",
-            "values": [
-              "Proxima Soft Bold",
-              "16 px",
-              "16 px",
-              "0.25 px"
-            ]
-          },
-          {
-            "role": "Label (small)",
-            "token": "Primary/Label/Fine",
-            "values": [
-              "Proxima Soft Bold",
-              "12 px",
-              "12 px",
-              "0.5 px"
-            ]
-          },
-          {
-            "role": "Description",
-            "token": "Secondary/Bold/Base",
-            "values": [
-              "BarkAda Semibold",
-              "14 px",
-              "20 px",
-              "0 px"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
-          "TOKEN"
-        ],
-        "rows": [
-          {
-            "role": "Width",
-            "token": "336 px (hug-content after native handoff)",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Padding horizontal",
-            "token": "12 px",
-            "values": [
-              "space/space-12"
-            ]
-          },
-          {
-            "role": "Padding vertical",
-            "token": "12 px",
-            "values": [
-              "space/space-12"
-            ]
-          },
-          {
-            "role": "Corner radius",
-            "token": "6 px",
-            "values": [
-              "radius/radius-2"
-            ]
-          },
-          {
-            "role": "Border",
-            "token": "1 px solid (per type)",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Gap (label ↔ description)",
-            "token": "2 px",
-            "values": [
-              "space/space-2"
-            ]
-          },
-          {
-            "role": "Leading icon slot",
-            "token": "— (missing, recommended 16×16)",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Trailing action slot",
-            "token": "— (missing, recommended)",
-            "values": [
-              "—"
+              "#E7F8F0",
+              "#27C990",
+              "#035E50",
+              "#048570"
             ]
           }
         ]
@@ -545,296 +941,361 @@ export const callout: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:feedback:1.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:alert:2.2.1\"</span>)\n}"
         },
         {
           "label": "Import",
-          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.feedback.*  <span class=\"cmt\">// Compose</span>"
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.alert.*  <span class=\"cmt\">// Compose</span>"
         }
       ],
-      "footnote": "Package not yet published. Names reflect the proposed rename (EBCallout, not EBContextualHelp)."
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
-      "description": "Assumes the recommended architecture: single labelSize enum (replacing label + label size), full 4-value intent enum (replacing type), plus an optional leading icon and trailing action slot.",
+      "description": "One row per property of set <code>6663:104524</code> — named <strong>Callout</strong> in Figma — in panel order: four variant axes, four booleans, then the two SLOTs (90 swap options each).",
       "rows": [
         {
-          "figma": "label (yes/no) + label size (small/default/no)",
-          "swift": "labelSize: EBCalloutLabelSize = .none",
-          "compose": "labelSize: EBCalloutLabelSize = None"
+          "figma": "Type — Neutral, Information, Warning, Error, Success",
+          "swift": "<code>type: .neutral / .information / .warning / .error / .success</code>",
+          "compose": "<code>type = EBCalloutType.Neutral / Information / Warning / Error / Success</code>"
         },
         {
-          "figma": "Label text",
-          "swift": "title: String?",
-          "compose": "title: String? = null"
+          "figma": "Style — Card, Banner",
+          "swift": "<code>style: .card / .banner</code>",
+          "compose": "<code>style = EBCalloutStyle.Card / Banner</code>"
         },
         {
-          "figma": "description (yes/no)",
-          "swift": "description: String?",
-          "compose": "description: String? = null"
+          "figma": "Content — Default, Header Only, Description Only",
+          "swift": "which of <code>title:</code> / <code>description:</code> is passed",
+          "compose": "<code>title: String?</code>, <code>description: String?</code> — at least one"
         },
         {
-          "figma": "type=default | information",
-          "swift": ".ebIntent(.info / .success / .warning / .error)",
-          "compose": "intent: EBCalloutIntent"
+          "figma": "Size — Large, Medium, Small",
+          "swift": "<code>size: .large / .medium / .small</code>",
+          "compose": "<code>size = EBCalloutSize.Large / Medium / Small</code>"
         },
         {
-          "figma": "— (missing)",
-          "swift": "leadingIcon: Image?",
-          "compose": "leadingIcon: @Composable (() -&gt; Unit)?"
+          "figma": "hasLeadingIcon — boolean, False",
+          "swift": "<code>.ebLeading { }</code> — omit for False",
+          "compose": "<code>leading: @Composable (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "— (missing)",
-          "swift": "trailingAction: (() -&gt; some View)?",
-          "compose": "trailingAction: @Composable (() -&gt; Unit)?"
+          "figma": "hasActionButton — boolean, False",
+          "swift": "<code>.ebAction(String) { }</code> — omit for False",
+          "compose": "<code>actionLabel: String? = null</code> + <code>onAction</code>"
         },
         {
-          "figma": "— (missing)",
-          "swift": ".disabled(true)",
-          "compose": "enabled: Boolean = true"
+          "figma": "hasTrailingIcon — boolean, True",
+          "swift": "<code>.ebTrailing { }</code> — omit for False",
+          "compose": "<code>trailing: @Composable (() -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "hasAccentBorder — boolean, True",
+          "swift": "<code>showsAccent: Bool = true</code>",
+          "compose": "<code>showsAccent: Boolean = true</code>"
+        },
+        {
+          "figma": "— <code>Trailing-Slot</code> (SLOT, 32 × 32)",
+          "swift": "<code>.ebTrailing { }</code> — dismissal lives here (v2.2)",
+          "compose": "<code>trailing: @Composable (() -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "— <code>Leading-Slot</code> (SLOT, 32 × 32)",
+          "swift": "<code>.ebLeading { }</code>",
+          "compose": "<code>leading: @Composable (() -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "— <code>Button_New</code> (text button, 91 × 24)",
+          "swift": "<code>.ebAction(String) { }</code>",
+          "compose": "<code>actionLabel: String? = null</code> + <code>onAction</code>"
         }
       ],
       "filePaths": {
-        "swift": "ios/Components/Feedback/EBCallout.swift",
-        "compose": "android/components/feedback/EBCallout.kt"
+        "swift": "ios/Components/Callout/EBCallout.swift",
+        "compose": "android/components/callout/EBCallout.kt"
       }
     },
     "usageSnippets": [
       {
-        "subheading": "Info callout — label + description",
-        "swift": "<span class=\"typ\">EBCallout</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Add title here\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"This is a short helpful context message for the user.\"</span>\n)\n    .<span class=\"fn\">ebIntent</span>(.info)\n    .<span class=\"fn\">ebLabelSize</span>(.default)",
-        "compose": "<span class=\"typ\">EBCallout</span>(\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Add title here\"</span>,\n    <span class=\"prp\">description</span> = <span class=\"str\">\"This is a short helpful context message for the user.\"</span>,\n    <span class=\"prp\">intent</span> = <span class=\"typ\">EBCalloutIntent</span>.Info,\n    <span class=\"prp\">labelSize</span> = <span class=\"typ\">EBCalloutLabelSize</span>.Default\n)"
+        "subheading": "Information · Card · Default",
+        "swift": "<span class=\"cmt\">// Type=Information, Style=Card, Content=Default, Size=Large — 6663:104538, 360 × 69.</span>\n<span class=\"typ\">EBCallout</span>(\n    title: <span class=\"str\">\"Transfer limit reached\"</span>,\n    description: <span class=\"str\">\"Try again tomorrow or verify your account.\"</span>,\n    type: .<span class=\"prp\">information</span>,\n    style: .<span class=\"prp\">card</span>,\n    size: .<span class=\"prp\">large</span>\n)\n.<span class=\"fn\">ebTrailing</span> { <span class=\"typ\">EBIconButton</span>(.<span class=\"prp\">close</span>) { dismiss() } }",
+        "compose": "<span class=\"cmt\">// Type=Information, Style=Card, Content=Default, Size=Large — 6663:104538, 360 × 69.</span>\n<span class=\"typ\">EBCallout</span>(\n    title = <span class=\"str\">\"Transfer limit reached\"</span>,\n    description = <span class=\"str\">\"Try again tomorrow or verify your account.\"</span>,\n    type = <span class=\"typ\">EBCalloutType</span>.<span class=\"prp\">Information</span>,\n    style = <span class=\"typ\">EBCalloutStyle</span>.<span class=\"prp\">Card</span>,\n    size = <span class=\"typ\">EBCalloutSize</span>.<span class=\"prp\">Large</span>,\n    trailing = { <span class=\"typ\">EBIconButton</span>(<span class=\"typ\">EBIcons</span>.<span class=\"prp\">Close</span>) { dismiss() } }\n)"
       },
       {
-        "subheading": "With trailing action (Learn more)",
-        "swift": "<span class=\"typ\">EBCallout</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Verify your number\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"We'll send a one-time code to confirm this device.\"</span>\n)\n    .<span class=\"fn\">ebIntent</span>(.info)\n    .<span class=\"fn\">ebTrailingAction</span> {\n        <span class=\"typ\">EBTextButton</span>(<span class=\"str\">\"Learn more\"</span>) { showSheet = <span class=\"kw\">true</span> }\n    }",
-        "compose": "<span class=\"typ\">EBCallout</span>(\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Verify your number\"</span>,\n    <span class=\"prp\">description</span> = <span class=\"str\">\"We'll send a one-time code to confirm this device.\"</span>,\n    <span class=\"prp\">intent</span> = <span class=\"typ\">EBCalloutIntent</span>.Info,\n    <span class=\"prp\">trailingAction</span> = {\n        <span class=\"typ\">EBTextButton</span>(<span class=\"str\">\"Learn more\"</span>, onClick = { showSheet = <span class=\"kw\">true</span> })\n    }\n)"
+        "subheading": "Warning · Banner · Header Only",
+        "swift": "<span class=\"cmt\">// Type=Warning, Style=Banner, Content=Header Only, Size=Medium — 6801:110006, 360 × 56.</span>\n<span class=\"typ\">EBCallout</span>(\n    title: <span class=\"str\">\"Transfer limit reached\"</span>,\n    type: .<span class=\"prp\">warning</span>,\n    style: .<span class=\"prp\">banner</span>,\n    size: .<span class=\"prp\">medium</span>\n)\n.<span class=\"fn\">ebTrailing</span> { <span class=\"typ\">EBIconButton</span>(.<span class=\"prp\">close</span>) { dismiss() } }",
+        "compose": "<span class=\"cmt\">// Type=Warning, Style=Banner, Content=Header Only, Size=Medium — 6801:110006, 360 × 56.</span>\n<span class=\"typ\">EBCallout</span>(\n    title = <span class=\"str\">\"Transfer limit reached\"</span>,\n    type = <span class=\"typ\">EBCalloutType</span>.<span class=\"prp\">Warning</span>,\n    style = <span class=\"typ\">EBCalloutStyle</span>.<span class=\"prp\">Banner</span>,\n    size = <span class=\"typ\">EBCalloutSize</span>.<span class=\"prp\">Medium</span>,\n    trailing = { <span class=\"typ\">EBIconButton</span>(<span class=\"typ\">EBIcons</span>.<span class=\"prp\">Close</span>) { dismiss() } }\n)"
       },
       {
-        "subheading": "Warning intent (new)",
-        "swift": "<span class=\"typ\">EBCallout</span>(\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Transfers above ₱50,000 require ID verification.\"</span>\n)\n    .<span class=\"fn\">ebIntent</span>(.warning)\n    .<span class=\"fn\">ebLabelSize</span>(.none)",
-        "compose": "<span class=\"typ\">EBCallout</span>(\n    <span class=\"prp\">description</span> = <span class=\"str\">\"Transfers above ₱50,000 require ID verification.\"</span>,\n    <span class=\"prp\">intent</span> = <span class=\"typ\">EBCalloutIntent</span>.Warning,\n    <span class=\"prp\">labelSize</span> = <span class=\"typ\">EBCalloutLabelSize</span>.None\n)"
+        "subheading": "Error · Card · Description Only",
+        "swift": "<span class=\"cmt\">// Type=Error, Style=Card, Content=Description Only, Size=Small — 6682:111636, 360 × 56.</span>\n<span class=\"typ\">EBCallout</span>(\n    description: <span class=\"str\">\"Try again tomorrow or verify your account.\"</span>,\n    type: .<span class=\"prp\">error</span>,\n    style: .<span class=\"prp\">card</span>,\n    size: .<span class=\"prp\">small</span>\n)\n.<span class=\"fn\">ebTrailing</span> { <span class=\"typ\">EBIconButton</span>(.<span class=\"prp\">close</span>) { dismiss() } }",
+        "compose": "<span class=\"cmt\">// Type=Error, Style=Card, Content=Description Only, Size=Small — 6682:111636, 360 × 56.</span>\n<span class=\"typ\">EBCallout</span>(\n    description = <span class=\"str\">\"Try again tomorrow or verify your account.\"</span>,\n    type = <span class=\"typ\">EBCalloutType</span>.<span class=\"prp\">Error</span>,\n    style = <span class=\"typ\">EBCalloutStyle</span>.<span class=\"prp\">Card</span>,\n    size = <span class=\"typ\">EBCalloutSize</span>.<span class=\"prp\">Small</span>,\n    trailing = { <span class=\"typ\">EBIconButton</span>(<span class=\"typ\">EBIcons</span>.<span class=\"prp\">Close</span>) { dismiss() } }\n)"
+      },
+      {
+        "subheading": "Success · Banner · Default",
+        "swift": "<span class=\"cmt\">// Type=Success, Style=Banner, Content=Default, Size=Medium — 6801:109956, 360 × 64.</span>\n<span class=\"typ\">EBCallout</span>(\n    title: <span class=\"str\">\"Transfer limit reached\"</span>,\n    description: <span class=\"str\">\"Try again tomorrow or verify your account.\"</span>,\n    type: .<span class=\"prp\">success</span>,\n    style: .<span class=\"prp\">banner</span>,\n    size: .<span class=\"prp\">medium</span>\n)\n.<span class=\"fn\">ebTrailing</span> { <span class=\"typ\">EBIconButton</span>(.<span class=\"prp\">close</span>) { dismiss() } }",
+        "compose": "<span class=\"cmt\">// Type=Success, Style=Banner, Content=Default, Size=Medium — 6801:109956, 360 × 64.</span>\n<span class=\"typ\">EBCallout</span>(\n    title = <span class=\"str\">\"Transfer limit reached\"</span>,\n    description = <span class=\"str\">\"Try again tomorrow or verify your account.\"</span>,\n    type = <span class=\"typ\">EBCalloutType</span>.<span class=\"prp\">Success</span>,\n    style = <span class=\"typ\">EBCalloutStyle</span>.<span class=\"prp\">Banner</span>,\n    size = <span class=\"typ\">EBCalloutSize</span>.<span class=\"prp\">Medium</span>,\n    trailing = { <span class=\"typ\">EBIconButton</span>(<span class=\"typ\">EBIcons</span>.<span class=\"prp\">Close</span>) { dismiss() } }\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Don't rely on colour alone",
-        "ios": "Pair intent with a leading icon (info / warning / error). WCAG 1.4.1.",
-        "android": "Same — both icon and color must carry intent."
+        "requirement": "Live region",
+        "ios": "Post an announcement with the title and description when it appears; Error should interrupt, the rest queue.",
+        "android": "<code>liveRegion = LiveRegionMode.Assertive</code> for Error, <code>Polite</code> otherwise (documented v2.2)."
       },
       {
-        "requirement": "Semantic grouping",
-        "ios": "Wrap label + description in an <code>accessibilityElement(children: .combine)</code> so VoiceOver reads them as one note.",
-        "android": "Use <code>Modifier.semantics(mergeDescendants = true)</code>."
+        "requirement": "Not colour alone",
+        "ios": "Type changes the surface, the 6px accent and the text colour — nothing else. Put the severity in the title copy.",
+        "android": "Same."
       },
       {
-        "requirement": "Live-region announce",
-        "ios": "If the callout appears after a user action, post a <code>UIAccessibility.Notification.announcement</code> with its text.",
-        "android": "Use <code>liveRegion = LiveRegionMode.Polite</code> when the callout mounts."
+        "requirement": "Dismiss",
+        "ios": "Dismissal lives in the 32 × 32 trailing slot; label it \"Dismiss\" and extend it to 44pt.",
+        "android": "<code>IconButton</code>, 48dp, <code>contentDescription = \"Dismiss\"</code>."
       },
       {
-        "requirement": "Tappable callout target",
-        "ios": "Minimum 44 × 44 pt if the whole container is tappable.",
-        "android": "Minimum 48 × 48 dp same."
+        "requirement": "Contrast — title",
+        "ios": "Neutral 13.80:1, Information 10.87:1, Warning 7.17:1, Success 7.01:1 — but Error #D61B2C on #F8E6E6 is 4.31:1, below 4.5:1 at 14–18pt bold.",
+        "android": "Same ratios."
       },
       {
-        "requirement": "Dynamic type / font scaling",
-        "ios": "Label and description both scale with Dynamic Type; don't hard-lock line-height to 16/20.",
-        "android": "Use <code>sp</code> units and respect <code>fontScale</code>."
+        "requirement": "Contrast — description",
+        "ios": "Only Information passes (7.72:1). Neutral 3.80:1, Warning 4.37:1, Error 4.31:1 and Success 4.15:1 are all below 4.5:1.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use Callout for soft, inline guidance — a flow hint, a policy reminder, a \"this is what happens next\" note.",
-        "dontText": "Use Callout for page-level critical messages — reach for Alert when the severity warrants a dismissible banner."
+        "doText": "Use Card inside a content area and Banner edge-to-edge at the top of a screen.",
+        "dontText": "Don’t round a Banner or square a Card — Style exists to make that choice."
       },
       {
-        "doText": "Pair intent colour with a leading icon. Every intent ships a default (info-circle, check-circle, warning-triangle, error-circle).",
-        "dontText": "Rely on colour alone to communicate severity — fails WCAG 1.4.1 and breaks for colour-blind users."
+        "doText": "Match Size to the surrounding text: Large beside 16pt body, Small inside dense lists.",
+        "dontText": "Don’t mix sizes within one screen."
       },
       {
-        "doText": "Put a single TextButton in the trailing action slot when the callout opens a sheet or links to docs.",
-        "dontText": "Nest a full filled Button — it overweights the callout. If the call to action is primary, it belongs outside the callout."
+        "doText": "Use Header Only for a single-line status and Description Only for a hint.",
+        "dontText": "Don’t put a sentence in the title of a Header Only callout."
+      },
+      {
+        "doText": "Put dismissal in the trailing slot.",
+        "dontText": "Don’t ship the purple Slot Block placeholder."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Component name \"Contextual Help\" is internal jargon. Rename to <code>Callout</code>. Inner layers are reasonable."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Names follow the v2.1 pass — <code>AlertContainer</code>, <code>ContentRow</code>, <code>LeadingSlotContainer</code>, <code>Leading-Slot</code>. But <code>LeftBorderAccent</code> sits <strong>inside</strong> <code>AlertContainer</code> on Information, Error and Success and <strong>outside</strong> it on Neutral and Warning, and Neutral’s ContentRow is 280 wide where the other Types’ are 292."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Redundant <code>label</code> + <code>label size</code> encode one concept; <code>type</code> is a 2-value stub of a 4-value intent."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Four PascalCase axes over a complete 90-variant matrix, plus four <code>has*</code> booleans on <code>True</code>/<code>False</code>. The set is named <strong>Callout</strong> in Figma and this page now follows it, but the root frame is still <code>AlertContainer</code> and the Alert page documents the same node."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All bg / border / label / description bound to <code>main/contextual-help/color/*</code>. Spacing uses <code>space/*</code>. Rename namespace alongside the component rename."
+        "notes": "All six text layers resolve <code>matched</code> — <code>Primary/Headlines/Block</code>, <code>Primary/Multi-line Label/Base</code>, <code>Primary/Multi-line Label/Small</code>, <code>Secondary/Bold/Base</code>, <code>Secondary/Bold/Caption</code>, <code>Secondary/Bold/Small Caption</code>. Colour bindings cannot be read with the plugin."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No leading-icon slot, no trailing-action slot, no system primitive match on either platform — custom <code>EBCallout</code> with intent enum required."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One view with four enums and two slots; heights follow a rule — 12 + title + 2 + description + 12 for Default (69 / 64 / 57), and 56 for the one-line contents."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No Pressed, Focused, or Disabled states. Tappable callouts and disabled-form contexts can't be expressed."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Display-only; dismissal lives in the trailing slot (v2.2) and the button belongs to its owner."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No icons shipped today — Information variant carries intent via colour alone. Add vector Icon instances per intent."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Leading and trailing content are real SLOTs; <code>Button_New</code> is an instance delegated to the Button owner (v2.2)."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked by rename + property schema collapse + intent expansion + slot additions."
+        "notes": "Four enums and two slots are ready to map; no mappings are registered."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Component name",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Rename to <code>Callout</code> before Code Connect — otherwise the native file <code>EBCallout.swift</code> won't match the Figma name <code>Contextual Help</code>."
-      },
-      {
-        "aspect": "Property naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Collapse <code>label</code>+<code>label size</code> and expand <code>type</code>."
-      },
-      {
-        "aspect": "Slot inference",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Add <code>#leading-icon</code> and <code>#trailing-action</code> slots."
-      },
-      {
-        "aspect": "State coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Add Pressed and Disabled states."
-      },
-      {
-        "aspect": "Native component file",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Planned: <code>EBCallout.swift</code> / <code>EBCallout.kt</code>."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
-      "total": 8,
-      "description": "4 axes: Label (yes/no) × Label Size (small / default / no) × Description (yes/no) × Type (default / information). Cartesian is constrained — of the 24 combinations, only 8 are shipped as valid variants.",
+      "total": 90,
+      "description": "<code>Type</code> (5) × <code>Style</code> (2) × <code>Content</code> (3) × <code>Size</code> (3) = 90 variants, a complete matrix, all 360 wide. Default is 69 / 64 / 57 tall at Large / Medium / Small; Header Only and Description Only are 56 at every size.",
       "columns": [
-        "Label",
-        "Label Size",
-        "Description",
         "Type",
-        "Node ID",
-        "Dimensions"
+        "Style",
+        "Variants",
+        "Heights",
+        "Default Large node"
       ],
       "rows": [
         {
           "cells": [
-            "yes",
-            "small",
-            "yes",
-            "default",
-            "23:179896",
-            "336 × 98"
+            "Neutral",
+            "Card",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6663:104525</code>"
           ]
         },
         {
           "cells": [
-            "yes",
-            "small",
-            "yes",
-            "information",
-            "23:179899",
-            "336 × 98"
+            "Neutral",
+            "Banner",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6801:109634</code>"
           ]
         },
         {
           "cells": [
-            "yes",
-            "default",
-            "yes",
-            "default",
-            "23:179902",
-            "336 × 102"
+            "Information",
+            "Card",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6663:104538</code>"
           ]
         },
         {
           "cells": [
-            "yes",
-            "default",
-            "yes",
-            "information",
-            "23:179905",
-            "336 × 102"
+            "Information",
+            "Banner",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6801:109652</code>"
           ]
         },
         {
           "cells": [
-            "no",
-            "no",
-            "yes",
-            "default",
-            "23:179908",
-            "336 × 84"
+            "Warning",
+            "Card",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6663:104551</code>"
           ]
         },
         {
           "cells": [
-            "no",
-            "no",
-            "yes",
-            "information",
-            "23:179910",
-            "336 × 84"
+            "Warning",
+            "Banner",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6801:109670</code>"
           ]
         },
         {
           "cells": [
-            "yes",
-            "default",
-            "no",
-            "default",
-            "23:179912",
-            "336 × 39"
+            "Error",
+            "Card",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6663:104564</code>"
           ]
         },
         {
           "cells": [
-            "yes",
-            "default",
-            "no",
-            "information",
-            "23:179915",
-            "336 × 39"
+            "Error",
+            "Banner",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6801:109688</code>"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6663:104577</code>"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "9",
+            "Default 69 / 64 / 57 · one-line 56",
+            "<code>6801:109706</code>"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Repointed to the 2026 Working File Callout · node 6663:104524",
+      "rows": [
+        {
+          "body": "<strong>This page now documents the live Callout.</strong> It had been on the Sticker Sheets node <code>23:179895</code> — a 4-type strip with <code>label</code> / <code>label size</code> / <code>description</code> booleans. The component in the 2026 Working File, <code>6663:104524</code>, is named <strong>Callout</strong> in Figma and carries 90 variants.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>Type</code> (Neutral, Information, Warning, Error, Success), <code>Style</code> (Banner, Card), <code>Content</code> (Default, Header Only, Description Only), <code>Size</code> (Small, Medium, Large), then <code>hasLeadingIcon</code>, <code>hasActionButton</code>, <code>hasTrailingIcon</code> and <code>hasAccentBorder</code>. <code>Leading-Slot</code> and <code>Trailing-Slot</code> (90 items each) are listed without controls.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> 360 wide, height 12 + max(text stack, 32) + 12, with the text centred when it is shorter than the slot. Type drives the surface, accent border, title and description colours; Size drives the two text sizes.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live panel</strong> — install <code>com.eastblue.ds:callout:2.2.1</code>, a mapping in panel order, snippets per Type and Style, and a 90-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Two values are assumed and the card says so</strong> — the gap after <code>Leading-Slot</code> (12, taken from the gap Neutral leaves before <code>Trailing-Slot</code>) and the action button’s chevron glyph, which is a hidden layer and does not export. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>The Alert page still documents this same node.</strong> <code>6663:104524</code> was written up there earlier; with the set named Callout, the Alert page needs retiring or repointing so the two do not diverge. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the Sticker Sheets component</strong> — traits, issues and recommendations were scored against <code>23:179895</code>. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

@@ -2,20 +2,29 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/visual-popup.js`.
+// Panel mirrors the property panel of set 4120:10317: one variant axis and
+// four booleans. The three SLOTs and the nested Close get no control.
 const visualPopupDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'CTA label',
-        prop: 'cta',
-        defaultValue: 'Okay',
+        label: 'Layout',
+        prop: 'layout',
+        defaultValue: 'centered',
         options: [
-          { value: 'Okay', label: 'Okay' },
-          { value: 'Got it', label: 'Got it' },
-          { value: 'Continue', label: 'Continue' },
+          { value: 'centered', label: 'Centered' },
+          { value: 'surface',  label: 'Surface' },
         ],
       },
+      { label: 'hasCloseButton', prop: 'hasclosebutton', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasPreamble', prop: 'haspreamble', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasHeader', prop: 'hasheader', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasSupportingContent', prop: 'hassupportingcontent', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
     ],
   },
 ];
@@ -24,8 +33,8 @@ export const visualPopup: ComponentData = {
   "meta": {
     "slug": "visual-popup",
     "name": "Visual Popup",
-    "node": "18477:23788",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18477-23788",
+    "node": "4120:10317",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4120-10317",
     "description": "An illustrated centered popup used for promos, success moments, and notable announcements.",
     "badges": [
       {
@@ -158,445 +167,340 @@ export const visualPopup: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Layouts",
     "specCards": [
       {
-        "cardKey": "vp-spec-default",
-        "demoKey": "default",
+        "cardKey": "vp-spec-main",
+        "demoKey": "main",
+        "title": "Visual Popup",
+        "node": "4120:10317",
+        "description": "A modal card with an image slot, title, message and one action. It hugs its stack — 320 × 279 Centered and 312 × 277 Surface with everything on.",
+        "previewHtml": "<div id=\"visual-popup-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": visualPopupDemoControls,
-        "title": "Default — single primary CTA",
-        "node": "18477:23789",
-        "description": "Hero image (320 × 180, 16:9) + title + 2-line description + single primary CTA. Use for informational modals or single-action confirms (\"Okay\").",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Default — single primary CTA",
-                "mono": false
-              },
-              {
-                "key": "Style",
-                "value": "Centered illustration popup",
-                "mono": false
-              },
-              {
-                "key": "CTA label",
-                "value": "Okay",
-                "prop": "cta",
-                "mono": false
-              }
-            ]
+                {
+                  "key": "Layout",
+                  "value": "Centered",
+                  "prop": "layout"
+                },
+                {
+                  "key": "hasCloseButton",
+                  "value": "True",
+                  "prop": "hasclosebutton"
+                },
+                {
+                  "key": "hasPreamble",
+                  "value": "True",
+                  "prop": "haspreamble"
+                },
+                {
+                  "key": "hasHeader",
+                  "value": "True",
+                  "prop": "hasheader"
+                },
+                {
+                  "key": "hasSupportingContent",
+                  "value": "True",
+                  "prop": "hassupportingcontent"
+                },
+                {
+                  "key": "⤷ Supporting Content Slot",
+                  "value": "Slot · 1 item",
+                  "variants": {
+                    "hassupportingcontent:false": {
+                      "hide": true
+                    }
+                  }
+                },
+                {
+                  "key": "⤷ Image Slot Container",
+                  "value": "Slot · 2 items"
+                },
+                {
+                  "key": "⤷ Action Slot Container",
+                  "value": "Slot · 2 items"
+                },
+                {
+                  "key": "Close",
+                  "value": "Nested instance · 24 × 24",
+                  "variants": {
+                    "hasclosebutton:false": {
+                      "hide": true
+                    }
+                  }
+                },
+                {
+                  "key": "Resolved variant",
+                  "value": "4120:10318 · 320 × 279",
+                  "mono": true,
+                  "prop": "variantNode"
+                }
+              ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
-              { "key": "Description", "value": "#6780A9", "token": "modal-popup/color/label-primary" },
-              { "key": "Preamble", "value": "#90A8D0", "token": "modal-popup/color/label-preamble" },
-              { "key": "Close icon", "value": "#6780A9", "token": "modal-popup/color/icon-close" },
-              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
+              {
+                "key": "Card",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF"
+              },
+              {
+                "key": "Surface",
+                "value": "#F6F9FD",
+                "token": "—",
+                "swatch": "#F6F9FD",
+                "variants": {
+                  "layout:centered": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Preamble",
+                "value": "#90A8D0",
+                "token": "—",
+                "swatch": "#90A8D0",
+                "variants": {
+                  "layout:centered": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "token": "—",
+                "swatch": "#0A2757"
+              },
+              {
+                "key": "Message",
+                "value": "#6780A9",
+                "token": "—",
+                "swatch": "#6780A9"
+              },
+              {
+                "key": "Button",
+                "value": "#005CE5",
+                "token": "—",
+                "swatch": "#005CE5"
+              },
+              {
+                "key": "Button label",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF"
+              },
+              {
+                "key": "Close glyph",
+                "value": "#445C85",
+                "token": "—",
+                "swatch": "#445C85"
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "320px",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "24 horizontal · 24 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Illustration height",
-                "value": "160px",
-                "mono": true
-              }
-            ]
+                {
+                  "key": "Size",
+                  "value": "320 × 279",
+                  "mono": true,
+                  "prop": "size-readout"
+                },
+                {
+                  "key": "Radius",
+                  "value": "6px",
+                  "mono": true
+                },
+                {
+                  "key": "Padding",
+                  "value": "24px",
+                  "mono": true,
+                  "variants": {
+                    "layout:surface": {
+                      "value": "16px"
+                    }
+                  }
+                },
+                {
+                  "key": "Stack",
+                  "value": "image 89 · 24 · title 26 · 16 · message 40 · supporting 24 · action 36 · 24",
+                  "mono": true,
+                  "variants": {
+                    "layout:surface": {
+                      "value": "16 · preamble 10 · 4 · title 26 · message 40 · 16 · image 89 · supporting 24 · action 36 · 16"
+                    }
+                  }
+                },
+                {
+                  "key": "Height",
+                  "value": "Hugs the stack",
+                  "variants": {}
+                },
+                {
+                  "key": "Image Slot",
+                  "value": "320 × 89",
+                  "mono": true,
+                  "variants": {
+                    "layout:surface": {
+                      "value": "280 × 89 · radius 6"
+                    }
+                  }
+                },
+                {
+                  "key": "Title → message",
+                  "value": "gap 16",
+                  "mono": true,
+                  "variants": {
+                    "layout:surface": {
+                      "value": "gap 0"
+                    }
+                  }
+                },
+                {
+                  "key": "Preamble → title",
+                  "value": "gap 4",
+                  "mono": true,
+                  "variants": {
+                    "layout:centered": {
+                      "hide": true
+                    }
+                  }
+                },
+                {
+                  "key": "Action Slot",
+                  "value": "272 × 36",
+                  "mono": true,
+                  "variants": {
+                    "layout:surface": {
+                      "value": "280 × 36"
+                    }
+                  }
+                },
+                {
+                  "key": "Button radius",
+                  "value": "99px",
+                  "mono": true
+                },
+                {
+                  "key": "Close",
+                  "value": "24 × 24 · top right · y 16",
+                  "mono": true,
+                  "variants": {
+                    "hasclosebutton:false": {
+                      "hide": true
+                    }
+                  }
+                }
+              ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
               {
-                "key": "Title style",
+                "key": "#title",
                 "value": "Primary/Headlines/Section",
                 "mono": true
               },
               {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 22 / 26",
+                "key": "#message",
+                "value": "Secondary/Default/Base",
+                "mono": true
+              },
+              {
+                "key": "Preamble",
+                "value": "Primary/Label/Tiny",
+                "mono": true,
+                "variants": {
+                  "layout:centered": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Button #label",
+                "value": "Primary/Label/Base",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIllustration</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"illustration\"</span><span class=\"syn-punc\">))</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">,</span>\n    illustration <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource(R.drawable.illus)<span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPopupAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"vp-preview-default\"></div>"
-      },
-      {
-        "cardKey": "vp-spec-2cta",
-        "demoKey": "2cta",
-        "demoControls": visualPopupDemoControls,
-        "title": "2 CTA — primary outline + tertiary text",
-        "node": "18477:23797",
-        "description": "Same hero + title + description as Default, then a secondary outline button on top of a tertiary text button. Use for confirm/cancel pairs.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Variant",
-                "value": "2 CTA — primary outline + tertiary text",
-                "mono": false
-              },
-              {
-                "key": "Style",
-                "value": "Centered illustration popup",
-                "mono": false
-              },
-              {
-                "key": "CTA label",
-                "value": "Okay",
-                "prop": "cta",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
-              { "key": "Description", "value": "#6780A9", "token": "modal-popup/color/label-primary" },
-              { "key": "Preamble", "value": "#90A8D0", "token": "modal-popup/color/label-preamble" },
-              { "key": "Close icon", "value": "#6780A9", "token": "modal-popup/color/icon-close" },
-              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "320px",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "24 horizontal · 24 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Illustration height",
-                "value": "160px",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 22 / 26",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIllustration</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"illustration\"</span><span class=\"syn-punc\">))</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">,</span>\n    illustration <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource(R.drawable.illus)<span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPopupAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"vp-preview-2cta\"></div>"
-      },
-      {
-        "cardKey": "vp-spec-version2",
-        "demoKey": "version2",
-        "demoControls": visualPopupDemoControls,
-        "title": "Version 2 — preamble + close icon, content-first",
-        "node": "18477:23806",
-        "description": "Onboarding/tutorial layout. The popup itself is a single light-gray (<code>bg/color-bg</code>) container — preamble label, title with close icon, description, a 280×180 hero image with 10px radius, then primary CTA. (The outer white frame has zero padding, so only the gray container is visible.)",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Variant",
-                "value": "Version 2 — preamble + close icon, content-first",
-                "mono": false
-              },
-              {
-                "key": "Style",
-                "value": "Centered illustration popup",
-                "mono": false
-              },
-              {
-                "key": "CTA label",
-                "value": "Okay",
-                "prop": "cta",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
-              { "key": "Description", "value": "#6780A9", "token": "modal-popup/color/label-primary" },
-              { "key": "Preamble", "value": "#90A8D0", "token": "modal-popup/color/label-preamble" },
-              { "key": "Close icon", "value": "#6780A9", "token": "modal-popup/color/icon-close" },
-              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "320px",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "24 horizontal · 24 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Illustration height",
-                "value": "160px",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 22 / 26",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIllustration</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"illustration\"</span><span class=\"syn-punc\">))</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">,</span>\n    illustration <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource(R.drawable.illus)<span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPopupAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"vp-preview-version2\"></div>"
+        "swift": "EBVisualPopup(\n    title: \"Put the title here\",\n    message: \"Add description here.\",\n    layout: .centered\n)\n    .ebImage { Image(\"popup\") }\n    .ebAction(\"Label\") { dismiss() }",
+        "compose": "EBVisualPopup(\n    title = \"Put the title here\",\n    message = \"Add description here.\",\n    layout = EBVisualPopupLayout.Centered,\n    image = { Image(painterResource(R.drawable.popup), null) },\n    actionLabel = \"Label\",\n    onAction = { dismiss() }\n)"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by Variant",
-        "description": "Modal popup ships display-only color tokens — no pressed/disabled states (the popup itself doesn't have interaction states; CTAs handle that via Button tokens).",
+        "title": "Colors by Layout",
+        "description": "Read off <code>get_node_info</code> on both variants of set <code>4120:10317</code>. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
-          "Value"
+          "Centered",
+          "Surface"
         ],
         "rows": [
           {
-            "role": "Modal background",
-            "token": "main/modal-popup/color/bg",
+            "role": "Card",
+            "token": "—",
             "values": [
+              "#FFFFFF",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Title label",
-            "token": "main/modal-popup/color/label",
+            "role": "Inner surface",
+            "token": "—",
             "values": [
-              "#0A2757"
+              "–",
+              "#F6F9FD"
             ]
           },
           {
-            "role": "Description label",
-            "token": "main/modal-popup/color/label-primary",
+            "role": "Preamble",
+            "token": "—",
             "values": [
-              "#6780A9"
-            ]
-          },
-          {
-            "role": "Preamble (V2)",
-            "token": "main/modal-popup/color/label-preamble",
-            "values": [
+              "–",
               "#90A8D0"
             ]
           },
           {
-            "role": "Close icon (V2)",
-            "token": "main/modal-popup/color/icon-close",
+            "role": "Title",
+            "token": "—",
             "values": [
+              "#0A2757",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Message",
+            "token": "—",
+            "values": [
+              "#6780A9",
               "#6780A9"
             ]
           },
           {
-            "role": "V2 inner container",
-            "token": "bg/color-bg",
-            "values": [
-              "#F6F9FD"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
-          "Value"
-        ],
-        "rows": [
-          {
-            "role": "Default / 2 CTA width",
+            "role": "Button / label",
             "token": "—",
             "values": [
-              "320px"
+              "#005CE5 / #FFFFFF",
+              "#005CE5 / #FFFFFF"
             ]
           },
           {
-            "role": "Version 2 width",
+            "role": "Close glyph",
             "token": "—",
             "values": [
-              "312px"
-            ]
-          },
-          {
-            "role": "Hero image (Default / 2 CTA)",
-            "token": "—",
-            "values": [
-              "320 × 180 (16:9)"
-            ]
-          },
-          {
-            "role": "Hero image (V2)",
-            "token": "—",
-            "values": [
-              "280 × 180, 10px radius"
-            ]
-          },
-          {
-            "role": "Body padding",
-            "token": "space/space-24",
-            "values": [
-              "24px"
-            ]
-          },
-          {
-            "role": "CTA group padding (vertical)",
-            "token": "space/space-24",
-            "values": [
-              "24px"
-            ]
-          },
-          {
-            "role": "2 CTA gap between buttons",
-            "token": "space/space-8",
-            "values": [
-              "8px"
-            ]
-          },
-          {
-            "role": "V2 inner container padding",
-            "token": "space/space-16",
-            "values": [
-              "16px h, 16t / 24b"
-            ]
-          },
-          {
-            "role": "Corner radius",
-            "token": "radius/radius-2",
-            "values": [
-              "6px"
-            ]
-          },
-          {
-            "role": "Shadow",
-            "token": "Shadow/Depth 0",
-            "values": [
-              "0 0 4px #E8EEF2C9"
-            ]
-          },
-          {
-            "role": "Close icon (V2)",
-            "token": "—",
-            "values": [
-              "24 × 24"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Spec"
-        ],
-        "rows": [
-          {
-            "role": "Title",
-            "token": "Primary/Headlines/Section",
-            "values": [
-              "Proxima Soft Bold · 22 / 26"
-            ]
-          },
-          {
-            "role": "Description",
-            "token": "Secondary/Default/Base",
-            "values": [
-              "BarkAda Medium · 14 / 20"
-            ]
-          },
-          {
-            "role": "Preamble (V2)",
-            "token": "Primary/Label/Tiny",
-            "values": [
-              "Proxima Soft Bold · 10 / 10 · +0.25"
-            ]
-          },
-          {
-            "role": "CTA label",
-            "token": "Primary/Label/Large",
-            "values": [
-              "Proxima Soft Bold · 18 / 18 · +0.25"
+              "#445C85",
+              "#445C85"
             ]
           }
         ]
@@ -613,36 +517,72 @@ export const visualPopup: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:visual-popup:1.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:visual-popup:2.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.visualpopup.*  <span class=\"cmt\">// Compose</span>"
         }
-      ]
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>4120:10317</code>, in panel order, then the three SLOTs and the text layers.",
       "rows": [
         {
-          "figma": "Type=Default",
-          "swift": ".ebKind(.singleCTA)",
-          "compose": "kind = EBVisualPopupKind.SingleCTA"
+          "figma": "Layout — Centered, Surface",
+          "swift": "<code>layout: .centered / .surface</code>",
+          "compose": "<code>layout = EBVisualPopupLayout.Centered / Surface</code>"
         },
         {
-          "figma": "Type=2 CTA",
-          "swift": ".ebKind(.dualCTA)",
-          "compose": "kind = EBVisualPopupKind.DualCTA"
+          "figma": "hasCloseButton — boolean",
+          "swift": "<code>.ebOnDismiss { }</code> — omit for False",
+          "compose": "<code>onDismiss: (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "Type=Version 2",
-          "swift": ".ebKind(.dismissible)",
-          "compose": "kind = EBVisualPopupKind.Dismissible"
+          "figma": "hasPreamble — boolean · Surface only",
+          "swift": "<code>preamble: String?</code>",
+          "compose": "<code>preamble: String? = null</code>"
         },
         {
-          "figma": "Hero image (raster)",
-          "swift": "heroImage: Image",
-          "compose": "heroImage: Painter"
+          "figma": "hasHeader — boolean",
+          "swift": "<code>title: String?</code>",
+          "compose": "<code>title: String? = null</code>"
         },
         {
-          "figma": "CTA buttons",
-          "swift": "primary / secondary / tertiary: EBButton",
-          "compose": "primary / secondary / tertiary: @Composable"
+          "figma": "hasSupportingContent — boolean",
+          "swift": "<code>.ebSupporting { }</code> — omit for False",
+          "compose": "<code>supporting: (@Composable () -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "⤷ Image Slot Container — SLOT · 2 items",
+          "swift": "content of <code>.ebImage { }</code>",
+          "compose": "<code>image: (@Composable () -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "⤷ Supporting Content Slot — SLOT · 1 item",
+          "swift": "<code>.ebSupporting { }</code>",
+          "compose": "<code>supporting: (@Composable () -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "⤷ Action Slot Container — SLOT · 2 items",
+          "swift": "<code>.ebAction(String) { }</code>",
+          "compose": "<code>actionLabel: String</code> + <code>onAction: () -&gt; Unit</code>"
+        },
+        {
+          "figma": "<code>Close</code> instance",
+          "swift": "<code>.ebOnDismiss { }</code>",
+          "compose": "<code>onDismiss: (() -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "— <code>#title</code> / <code>#message</code>",
+          "swift": "<code>title: String</code>, <code>message: String</code>",
+          "compose": "<code>title: String</code>, <code>message: String</code>"
+        },
+        {
+          "figma": "— preamble (Surface, a second <code>#message</code>)",
+          "swift": "<code>preamble: String?</code>",
+          "compose": "<code>preamble: String? = null</code>"
         }
       ],
       "filePaths": {
@@ -652,151 +592,300 @@ export const visualPopup: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Default — single CTA</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Cash In Successful\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"₱500.00 added to your wallet.\"</span>,\n    <span class=\"prp\">heroImage</span>: <span class=\"typ\">Image</span>(<span class=\"str\">\"cash-in-success\"</span>),\n    <span class=\"prp\">primary</span>: <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Okay\"</span>) { /* dismiss */ }\n)\n.<span class=\"fn\">ebKind</span>(.<span class=\"prp\">singleCTA</span>)\n\n<span class=\"cmt\">// 2 CTA — confirm/cancel</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Cancel transaction?\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"This cannot be undone.\"</span>,\n    <span class=\"prp\">heroImage</span>: <span class=\"typ\">Image</span>(<span class=\"str\">\"warning-illustration\"</span>),\n    <span class=\"prp\">primary</span>: <span class=\"typ\">EBOutlinedButton</span>(<span class=\"str\">\"Confirm\"</span>) { /* confirm */ },\n    <span class=\"prp\">secondary</span>: <span class=\"typ\">EBTextButton</span>(<span class=\"str\">\"Go Back\"</span>) { /* dismiss */ }\n)\n.<span class=\"fn\">ebKind</span>(.<span class=\"prp\">dualCTA</span>)\n\n<span class=\"cmt\">// Version 2 — onboarding with close icon</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">preamble</span>: <span class=\"str\">\"NEW\"</span>,\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Save your receipts\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Tap any transaction to save its receipt.\"</span>,\n    <span class=\"prp\">heroImage</span>: <span class=\"typ\">Image</span>(<span class=\"str\">\"receipt-tutorial\"</span>),\n    <span class=\"prp\">primary</span>: <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Got it\"</span>) { /* dismiss */ },\n    <span class=\"prp\">onClose</span>: { /* dismiss */ }\n)\n.<span class=\"fn\">ebKind</span>(.<span class=\"prp\">dismissible</span>)",
-        "compose": "<span class=\"cmt\">// Default — single CTA</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">kind</span> = <span class=\"typ\">EBVisualPopupKind</span>.<span class=\"prp\">SingleCTA</span>,\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Cash In Successful\"</span>,\n    <span class=\"prp\">description</span> = <span class=\"str\">\"₱500.00 added to your wallet.\"</span>,\n    <span class=\"prp\">heroImage</span> = painterResource(R.drawable.cash_in_success),\n    <span class=\"prp\">primary</span> = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Okay\"</span>, onClick = { /* dismiss */ }) }\n)\n\n<span class=\"cmt\">// 2 CTA — confirm/cancel</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">kind</span> = <span class=\"typ\">EBVisualPopupKind</span>.<span class=\"prp\">DualCTA</span>,\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Cancel transaction?\"</span>,\n    <span class=\"prp\">description</span> = <span class=\"str\">\"This cannot be undone.\"</span>,\n    <span class=\"prp\">heroImage</span> = painterResource(R.drawable.warning),\n    <span class=\"prp\">primary</span> = { <span class=\"typ\">EBOutlinedButton</span>(<span class=\"str\">\"Confirm\"</span>, onClick = { /* confirm */ }) },\n    <span class=\"prp\">secondary</span> = { <span class=\"typ\">EBTextButton</span>(<span class=\"str\">\"Go Back\"</span>, onClick = { /* dismiss */ }) }\n)\n\n<span class=\"cmt\">// Version 2 — onboarding with close icon</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">kind</span> = <span class=\"typ\">EBVisualPopupKind</span>.<span class=\"prp\">Dismissible</span>,\n    <span class=\"prp\">preamble</span> = <span class=\"str\">\"NEW\"</span>,\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Save your receipts\"</span>,\n    <span class=\"prp\">description</span> = <span class=\"str\">\"Tap any transaction to save its receipt.\"</span>,\n    <span class=\"prp\">heroImage</span> = painterResource(R.drawable.receipt_tutorial),\n    <span class=\"prp\">primary</span> = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Got it\"</span>, onClick = { /* dismiss */ }) },\n    <span class=\"prp\">onClose</span> = { /* dismiss */ }\n)"
+        "subheading": "Centered",
+        "swift": "<span class=\"cmt\">// Layout=Centered — 4120:10318, 320 × 279.</span>\nEBVisualPopup(\n    title: \"You’re all set\",\n    message: \"Your account is ready to use.\",\n    layout: .centered\n)\n    .ebImage { Image(\"popup-success\") }\n    .ebAction(\"Got it\") { dismiss() }",
+        "compose": "<span class=\"cmt\">// Layout=Centered — 4120:10318, 320 × 279.</span>\nEBVisualPopup(\n    title = \"You’re all set\",\n    message = \"Your account is ready to use.\",\n    layout = EBVisualPopupLayout.Centered,\n    image = { Image(painterResource(R.drawable.popup_success), null) },\n    actionLabel = \"Got it\",\n    onAction = { dismiss() }\n)"
+      },
+      {
+        "subheading": "Surface",
+        "swift": "<span class=\"cmt\">// Layout=Surface — 4120:10339, 312 × 277.</span>\nEBVisualPopup(\n    title: \"Limited time offer\",\n    message: \"Claim your voucher before Friday.\",\n    preamble: \"Promo\",\n    layout: .surface\n)\n    .ebImage { Image(\"popup-promo\") }\n    .ebAction(\"Claim now\") { claim() }",
+        "compose": "<span class=\"cmt\">// Layout=Surface — 4120:10339, 312 × 277.</span>\nEBVisualPopup(\n    preamble = \"Promo\",\n    title = \"Limited time offer\",\n    message = \"Claim your voucher before Friday.\",\n    layout = EBVisualPopupLayout.Surface,\n    image = { Image(painterResource(R.drawable.popup_promo), null) },\n    actionLabel = \"Claim now\",\n    onAction = { claim() }\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Modal trait / role",
-        "ios": "Present via <code>.sheet</code> or <code>.alert</code> — VoiceOver announces as modal",
-        "android": "<code>Dialog</code> announces as modal; TalkBack focus trapped inside"
+        "requirement": "Dialog role",
+        "ios": "Present as a sheet or overlay with <code>.accessibilityAddTraits(.isModal)</code>; focus moves to the title.",
+        "android": "<code>Dialog</code> with <code>Modifier.semantics { paneTitle = title }</code>."
       },
       {
-        "requirement": "Focus trap",
-        "ios": "Automatic with <code>.sheet</code>",
-        "android": "Automatic with <code>Dialog</code> — set <code>dismissOnClickOutside = false</code> for confirm popups"
+        "requirement": "Title",
+        "ios": "<code>.accessibilityAddTraits(.isHeader)</code> on <code>#title</code>.",
+        "android": "<code>Modifier.semantics { heading() }</code>."
       },
       {
-        "requirement": "Close button label (V2)",
-        "ios": "<code>.accessibilityLabel(\"Close\")</code>",
-        "android": "<code>contentDescription = \"Close\"</code>"
+        "requirement": "Image",
+        "ios": "Decorative when the title carries the message — <code>.accessibilityHidden(true)</code>.",
+        "android": "<code>contentDescription = null</code>."
       },
       {
-        "requirement": "Hero image",
-        "ios": "If decorative: <code>.accessibilityHidden(true)</code>. If informative: provide a label.",
-        "android": "Same — <code>contentDescription = null</code> for decorative, otherwise describe"
+        "requirement": "Dismiss",
+        "ios": "The 24 × 24 Close needs a 44pt target and a label, and the popup should also dismiss on a background tap.",
+        "android": "48dp target; <code>onDismissRequest</code> handles back and outside taps."
       },
       {
-        "requirement": "Tap targets",
-        "ios": "CTAs use Button which meets HIG 44pt",
-        "android": "CTAs meet Material 48dp"
-      },
-      {
-        "requirement": "Destructive role",
-        "ios": "Currently undefined — needs <code>role: .destructive</code> when state lands",
-        "android": "Currently undefined — needs Button destructive colors when state lands"
+        "requirement": "Contrast",
+        "ios": "Title #0A2757 is 14.58:1 on white and 13.80:1 on #F6F9FD. Message #6780A9 is 4.01:1 on white at 14pt — below 4.5:1. The Surface preamble #90A8D0 is 2.41:1. White on the #005CE5 button is 5.10:1.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use Visual Popup for critical confirms, success states with celebration, and onboarding moments — places where the hero image adds emotional weight.",
-        "dontText": "Use for inline form errors or transient notifications — those belong in Toast, Banner, or inline error patterns, not a blocking modal."
+        "doText": "Use Centered for a single confirmation moment with one action.",
+        "dontText": "Don’t stack two actions — the set ships one Action Slot."
       },
       {
-        "doText": "Use the Default variant when the popup has one obvious next step (Okay, Got it, Continue).",
-        "dontText": "Use 2 CTA when one button is clearly more important than the other — that's still a Default with the secondary action elsewhere."
+        "doText": "Use Surface when the popup carries a promo image and a preamble.",
+        "dontText": "Don’t use Surface for errors; its tinted card reads promotional."
       },
       {
-        "doText": "Use Version 2 (with close icon) only for onboarding/tutorial popups where the user can dismiss without taking action.",
-        "dontText": "Add a close icon to confirm/destructive popups — forces the user to consciously choose the CTA."
+        "doText": "Keep the title to one line and the message to two.",
+        "dontText": "Don’t rely on the card growing — both variants are fixed height."
+      },
+      {
+        "doText": "Always provide a dismiss path — the Close instance or a background tap.",
+        "dontText": "Don’t set hasCloseButton=False without another way out."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Semantic names: <code>Modals Asset</code>, <code>body</code>, <code>header</code>, <code>CTA - Base Button Group</code>, <code>Close</code>."
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "Two different layers are both named <code>#message</code> in the Surface heading — the preamble and the body copy. Generic <code>container</code> / <code>offset</code> frames and a <code>_space_16</code> instance that is 24 tall compound it."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Property values mix paradigms: <code>Default</code> / <code>2 CTA</code> / <code>Version 2</code>. Should be one semantic axis."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One PascalCase axis, <code>Layout</code>, over two built variants, plus four <code>has*</code> booleans on True/False."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors, spacing, radii, shadow, and typography bound to tokens."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "All four text layers resolve <code>matched</code> — Primary/Headlines/Section, Secondary/Default/Base, Primary/Label/Tiny, Primary/Label/Base. Colour bindings cannot be read with the plugin."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Maps to <code>.sheet</code> / <code>.alert</code> on iOS and <code>Dialog</code> / <code>AlertDialog</code> on Android."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Maps to one <code>EBVisualPopup</code> with an image slot and one action, but both variants are fixed-height frames rather than stacks that hug their content."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No destructive, error, or loading variants. Close affordance only on Version 2."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "A static surface; the button carries its own states."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Hero is a flat raster placeholder with \"Replace me\" overlay. Should be a swappable Image slot."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Three real SLOTs with swap options (2, 1, 2) and a nested Close instance, but the Image and Supporting Content slots ship empty."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "One axis, four booleans and three slots are ready to map; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 3,
-      "description": "",
+      "total": 2,
+      "description": "<code>Layout</code> (2) = 2 variants, both built; both hug their stack. Four booleans — <code>hasCloseButton</code>, <code>hasPreamble</code>, <code>hasHeader</code>, <code>hasSupportingContent</code> — add none.",
       "columns": [
-        "Type",
-        "Width",
-        "Hero",
-        "CTAs",
-        "Node ID"
+        "Layout",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "Default",
-            "320px",
-            "320 × 180 (raster)",
-            "1 primary",
-            "18477:23789"
+            "Centered",
+            "<code>4120:10318</code>",
+            "320 × 279"
           ]
         },
         {
           "cells": [
-            "2 CTA",
-            "320px",
-            "320 × 180 (raster)",
-            "1 outline + 1 text",
-            "18477:23797"
-          ]
-        },
-        {
-          "cells": [
-            "Version 2",
-            "312px",
-            "280 × 180 (raster, in container)",
-            "1 primary + close icon",
-            "18477:23806"
+            "Surface",
+            "<code>4120:10339</code>",
+            "312 × 277"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "The preview hugs its stack · node 4120:10317",
+      "rows": [
+        {
+          "body": "<strong>Height now follows the content.</strong> Turning off <code>hasHeader</code>, <code>hasPreamble</code> or <code>hasSupportingContent</code> drops that row and its gap instead of leaving a fixed 279 / 277 frame. <code>hasCloseButton</code> does not change the height — Close is pinned, not stacked.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Row model read off the set and the six placed instances</strong> in the section, which run 348, 370, 404, 426 and 499 tall as their slots change. Centered: 89 + 24 + 26 + 16 + 40 + 24 + 36 + 24 = 279. Surface: 16 + 10 + 4 + 26 + 40 + 16 + 89 + 24 + 36 + 16 = 277.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Title sits flush against the message on Surface</strong> (gap 0) and 16 above it on Centered.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The Supporting Content row is the 24 the set reserves</strong>, not the height of swapped-in content — the slot ships empty and the instances show it growing with whatever is placed in it. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Surface heading spacing and the Centered preamble · node 4120:10317",
+      "rows": [
+        {
+          "body": "<strong>Surface heading spacing corrected.</strong> Preamble sits at y 16 (10 tall), the title at y 30 — a 4 gap, not 16 — and the message at y 56.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong><code>hasPreamble</code> is Surface only.</strong> Centered has no preamble layer, so the control is disabled there and the row reads <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Repointed to the 2026 Working File Visual Popup · node 4120:10317",
+      "rows": [
+        {
+          "body": "<strong>This page now documents the rebuilt Visual Popup.</strong> It had been on the Sticker Sheets node <code>18477:23788</code>; the Working File set <code>4120:10317</code> carries two variants, <code>Layout=Centered</code> and <code>Layout=Surface</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Style tab rebuilt to one card.</strong> Two cards on retired nodes became one with a <code>Layout</code> control; the Image, Supporting Content and Action slots are listed without controls.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> Centered is 320 × 279 at 24 padding; Surface is 312 × 277 at 16 padding over an #F6F9FD card, with a left-aligned preamble, title and message.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved against the token database.</strong> <code>#title</code> → <code>Primary/Headlines/Section</code>, <code>#message</code> → <code>Secondary/Default/Base</code>, the Surface preamble → <code>Primary/Label/Tiny</code>, button <code>#label</code> → <code>Primary/Label/Base</code>, all matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:visual-popup:2.0.0</code>, a seven-row mapping, two snippets and a two-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Two layers share the name <code>#message</code></strong> in the Surface heading — the 10px preamble and the 14px body copy. Code Connect cannot map both. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>The Close instance does not render.</strong> It sits at 24 × 24 in the tree on both variants but is absent from <code>export_node_as_image</code>, so the popup ships with no visible dismiss control. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>The Image and Supporting Content slots ship empty</strong> — 89 tall and 40 tall of blank space in the rendered variants. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>A <code>_space_16</code> instance is 24 tall</strong> in the Surface stack, and the stack is spaced with spacer instances rather than auto-layout gaps. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Message and preamble fail AA</strong> — #6780A9 is 4.01:1 on white at 14pt and the #90A8D0 preamble 2.41:1. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Panel added from the property panel.</strong> Four booleans — <code>hasCloseButton</code>, <code>hasPreamble</code>, <code>hasHeader</code>, <code>hasSupportingContent</code> — all True, plus the slot item counts: Supporting Content 1, Image 2, Action 2.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The set sits in a section named “[NEW] Visual Popup (Don’t Use)”.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the Sticker Sheets component.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

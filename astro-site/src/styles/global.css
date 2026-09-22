@@ -310,6 +310,27 @@ body {
 .si-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
 .si-pre, .si-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 
+/* ── Accordion preview — Label is Primary (Proxima Soft), Description is
+   Secondary (BarkAda). ────────────────────────────────────────────── */
+.acc-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.acc-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Banner preview — preamble, heading and action label are Primary
+   (Proxima Soft); the description is Secondary (BarkAda). ─────────── */
+.bnr-pre { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.bnr-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.bnr-action { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.bnr-blurb { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.bnr-replace { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Visual Popup preview ────────────────────────────────────────── */
+.vp-title, .vp-pre, .vp-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.vp-msg { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Menu Grid preview ───────────────────────────────────────────── */
+.mg-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.mg-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
 /* ── Detail Hero preview ─────────────────────────────────────────────
    Title carries 0 tracking, the sender label and value 0.25, and the
    description is BarkAda at 0 — all read off the layers of set

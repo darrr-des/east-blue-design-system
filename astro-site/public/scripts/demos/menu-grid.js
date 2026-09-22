@@ -1,171 +1,121 @@
-/* Auto-extracted from assessment-src/components/menu-grid.html.
- * Powers the live-preview dropdowns/toggles for the menu-grid component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs menu-grid
- */
-/* ── Menu Grid Component JS ───────────────────────────────────────── */
-/* Geometry measured off the Figma component set (node 5973:70111).
- * The container is always 336 wide; the tile width, horizontal gap and
- * side padding are per-column-count values rather than one formula —
- * Column=5 packs 64-wide tiles at a 0.8 gap with 6.4 side padding, which
- * a uniform (320 - gaps) / n expression does not reproduce. Each row of
- * the table sums back to 336 exactly.
+/* Menu Grid — Style tab demo.
+ * Rebuilt from Figma component set 5973:70111 (GCash DS 2026 Working File).
+ * Offsets read off get_node_info on the variants; text styles resolved with
+ * get_styled_text_segments.
  *
- * Column=2 renders the Service Item child at Orientation=Horizontal
- * (158 × 64, icon left of the label). Column=3 | 4 | 5 renders
- * Orientation=Vertical (72 tall, icon above the label). That switch is
- * driven by the column count alone — Menu Grid exposes no orientation
- * property of its own.
+ * Panel (set 5973:70111, from the property-panel screenshot):
+ *   Column · 5, 4, 3, 2      (variant)
+ *   Row    · 5, 4, 3, 2, 1   (variant)
+ * 4 x 5 = 20 variants, all built. The grid holds Service Item instances.
+ *
+ * Every variant is 336 wide with 8 padding and a 4 gap. The tile width is
+ * what is left over: Column=2 158, Column=3 104, Column=4 77. Column=2
+ * swaps the Service Item to its Horizontal layout (158 x 64); the others
+ * use Vertical (72 tall).
+ *
+ * Column=5 is the exception the set makes for itself: the tile stays at
+ * the Service Item's natural 64 and the row distributes the 16 left over
+ * as 6.4 outer padding and 0.8 between tiles, rather than 8 and 4.
  */
-var _mgDemo = { row: 2, col: 4 };
 
-var MG_CONTAINER_W = 336;
-var MG_PAD_V = 8;
-var MG_GAP_V = 4;
-var MG_ICON = 48;
+var MG_NODES = {"4|4":"5973:70112","4|5":"5973:70129","2|4":"5973:70150","2|5":"5973:70162","2|3":"5973:70177","2|2":"5973:70186","2|1":"5973:70192","3|2":"5973:70195","3|1":"5973:70202","5|4":"5973:70206","4|3":"5973:70227","5|3":"5973:70240","4|2":"5973:70256","5|2":"5973:70265","5|1":"5973:70276","4|1":"5973:70282","5|5":"5973:70287","3|5":"5973:70313","3|4":"5973:70329","3|3":"5973:70342"};
+var MG_W = 336, MG_PAD = 8, MG_GAP = 4;
+var MG_TEXT = { label: '#072592', desc: '#445C85' };
+var MG_ASSET = '#F6F9FD', MG_BORDER = '#D7E0EF';
 
-var MG_LAYOUT = {
-  2: { tileW: 158, tileH: 64, gap: 4, padH: 8 },
-  3: { tileW: 104, tileH: 72, gap: 4, padH: 8 },
-  4: { tileW: 77, tileH: 72, gap: 4, padH: 8 },
-  5: { tileW: 64, tileH: 72, gap: 0.8, padH: 6.4 }
-};
-
-function _mgLayout(cols) {
-  return MG_LAYOUT[cols] || MG_LAYOUT[4];
+/* Tile metrics per column count — width, height and the row's padding/gap. */
+function _mgMetrics(cols) {
+  if (cols === 5) return { w: 64, h: 72, padX: 6.4, gapX: 0.8, horizontal: false };
+  if (cols === 2) return { w: (MG_W - MG_PAD * 2 - MG_GAP) / 2, h: 64, padX: MG_PAD, gapX: MG_GAP, horizontal: true };
+  var w = (MG_W - MG_PAD * 2 - MG_GAP * (cols - 1)) / cols;
+  return { w: w, h: 72, padX: MG_PAD, gapX: MG_GAP, horizontal: false };
 }
 
-function _mgOrientation(cols) {
-  return cols === 2 ? 'horizontal' : 'vertical';
+function _mgSize(cols, rows) {
+  var m = _mgMetrics(cols);
+  return { w: MG_W, h: MG_PAD * 2 + rows * m.h + (rows - 1) * MG_GAP };
 }
 
-function _mgTileW(cols) {
-  return _mgLayout(cols).tileW;
-}
-
-function _mgTileH(cols) {
-  return _mgLayout(cols).tileH;
-}
-
-function _mgBuildSvg(cols, rows) {
-  var L = _mgLayout(cols);
-  var tileW = L.tileW;
-  var tileH = L.tileH;
-  var horizontal = _mgOrientation(cols) === 'horizontal';
-  var w = MG_CONTAINER_W;
-  var h = MG_PAD_V * 2 + rows * tileH + (rows - 1) * MG_GAP_V;
-  var font = "'Proxima Soft', system-ui, sans-serif";
-
-  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-  s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="6" fill="#FFFFFF" stroke="#E5EBF4" stroke-width="1"/>';
-
-  for (var r = 0; r < rows; r++) {
-    for (var c = 0; c < cols; c++) {
-      var x = L.padH + c * (tileW + L.gap);
-      var y = MG_PAD_V + r * (tileH + MG_GAP_V);
-      if (horizontal) {
-        /* icon left, label right — Container is inset 12 from the tile edge */
-        s += '<circle cx="' + (x + 12 + MG_ICON / 2) + '" cy="' + (y + tileH / 2) + '" r="' + (MG_ICON / 2) + '" fill="#E5EBF4"/>';
-        s += '<text x="' + (x + 12 + MG_ICON + 12) + '" y="' + (y + tileH / 2 + 4) + '" fill="#072592" font-size="12" font-weight="700" letter-spacing="0.5" font-family="' + font + '">Label</text>';
-      } else {
-        /* icon above, label centred beneath */
-        s += '<circle cx="' + (x + tileW / 2) + '" cy="' + (y + MG_ICON / 2) + '" r="' + (MG_ICON / 2) + '" fill="#E5EBF4"/>';
-        s += '<text x="' + (x + tileW / 2) + '" y="' + (y + 63) + '" text-anchor="middle" fill="#072592" font-size="12" font-weight="700" letter-spacing="0.5" font-family="' + font + '">Label</text>';
-      }
-    }
+/* One Service Item, drawn the way the Service Item card draws it. */
+function _mgTile(x, y, m) {
+  var s = '';
+  if (m.horizontal) {
+    s += '<circle cx="' + (x + 44) + '" cy="' + (y + 32) + '" r="24" fill="' + MG_ASSET + '"/>';
+    s += '<text class="mg-label" x="' + (x + 76) + '" y="' + (y + 26) + '" font-size="12" font-weight="700" fill="' +
+         MG_TEXT.label + '" dominant-baseline="central">Label</text>';
+    s += '<text class="mg-desc" x="' + (x + 76) + '" y="' + (y + 42) + '" font-size="10" font-weight="600" fill="' +
+         MG_TEXT.desc + '" dominant-baseline="central">Description</text>';
+  } else {
+    s += '<circle cx="' + (x + m.w / 2) + '" cy="' + (y + 24) + '" r="24" fill="' + MG_ASSET + '"/>';
+    s += '<text class="mg-label" x="' + (x + m.w / 2) + '" y="' + (y + 60) + '" font-size="12" font-weight="700" fill="' +
+         MG_TEXT.label + '" text-anchor="middle" dominant-baseline="central">Label</text>';
   }
-  s += '</svg>';
   return s;
 }
 
-function updateMenuGridDemo() {
-  var rEl = document.getElementById('mg-demo-row');
-  var cEl = document.getElementById('mg-demo-col');
-  var r = rEl ? parseInt(rEl.value, 10) || 2 : 2;
-  var c = cEl ? parseInt(cEl.value, 10) || 4 : 4;
-  _mgDemo.row = r;
-  _mgDemo.col = c;
-  var el = document.getElementById('mg-demo-preview');
-  if (el) el.innerHTML = _mgBuildSvg(c, r);
-
-  /* Column=2 flips the Service Item child to Orientation=Horizontal —
-     surface it as a live readout so the coupling is visible. */
-  var oEl = document.getElementById('mg-demo-orientation');
-  if (oEl) oEl.textContent = _mgOrientation(c) === 'horizontal' ? 'Horizontal' : 'Vertical';
+function _mgRender(c) {
+  var cols = parseInt(c.column, 10), rows = parseInt(c.row, 10);
+  var m = _mgMetrics(cols), size = _mgSize(cols, rows);
+  var s = '<svg width="' + size.w + '" height="' + size.h + '" viewBox="0 0 ' + size.w + ' ' + size.h +
+          '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  s += '<rect x="0" y="0" width="' + size.w + '" height="' + size.h + '" fill="#FFFFFF"/>';
+  for (var r = 0; r < rows; r++) {
+    for (var i = 0; i < cols; i++) {
+      var x = m.padX + i * (m.w + m.gapX), y = MG_PAD + r * (m.h + MG_GAP);
+      s += _mgTile(x, y, m);
+    }
+  }
+  return s + '</svg>';
 }
 
-/* ── Menu Grid Spec Cards ─────────────────────────────────────────── */
-var _mgSpecCards = {
-  r2c4: { row: '2', col: '4' },
-  r4c4: { row: '4', col: '4' },
-  r5c5: { row: '5', col: '5' }
-};
-
-var _specCards = _mgSpecCards;
+/* ── Per-card state — Figma's default variant ──────────────────────── */
+var _specCards = { main: { column: '4', row: '4' } };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  var rows = parseInt(card.row, 10);
-  var cols = parseInt(card.col, 10);
-  return 'EBMenuGrid(items: services, rows: ' + rows + ', columns: ' + cols + ')';
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function buildSwiftSnippet(cardKey, c) {
+  return ['EBMenuGrid(columns: ' + c.column + ') {', '    ForEach(services.prefix(' + (c.column * c.row) + ')) { service in',
+    '        EBServiceItem(service.label)', '            .ebAsset { Image(service.icon) }', '    }', '}'].join('\n');
 }
-
-function buildComposeSnippet(type, card) {
-  var rows = parseInt(card.row, 10);
-  var cols = parseInt(card.col, 10);
-  return 'EBMenuGrid(\n    items = services,\n    rows = ' + rows + ',\n    columns = ' + cols + '\n)';
+function buildComposeSnippet(cardKey, c) {
+  return ['EBMenuGrid(', '    columns = ' + c.column + ',', '    modifier = Modifier.fillMaxWidth()', ') {',
+    '    services.take(' + (c.column * c.row) + ').forEach { service ->', '        EBServiceItem(',
+    '            label = service.label,', '            asset = { Image(painterResource(service.icon), null) },',
+    '            onClick = { open(service) }', '        )', '    }', '}'].join('\n');
 }
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
+/* ── Control handler ────────────────────────────────────────────────── */
 function updateSpecCard(cardStyle, prop, value) {
-  var card = _mgSpecCards[cardStyle];
+  var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
-  var rows = parseInt(card.row, 10);
-  var cols = parseInt(card.col, 10);
 
-  /* Update preview — find the SVG inside the spec card preview */
-  var specCardEl = document.getElementById('spec-card-mg-spec-' + _mgKeyToLegacy(cardStyle));
-  if (specCardEl) {
-    var previewBody = specCardEl.querySelector('.spec-preview-body');
-    if (previewBody) previewBody.innerHTML = _mgBuildSvg(cols, rows);
-  }
+  var host = document.getElementById('menu-grid-spec-' + cardStyle);
+  if (host) host.innerHTML = _mgRender(card);
 
-  /* Update Properties readouts via [data-sp] */
-  var spRow = document.querySelector('[data-sp="' + cardStyle + '-row"]');
-  if (spRow) spRow.textContent = String(rows);
-  var spCol = document.querySelector('[data-sp="' + cardStyle + '-col"]');
-  if (spCol) spCol.textContent = String(cols);
+  ['column', 'row'].forEach(function (a) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
+    if (el) el.textContent = card[a];
+  });
+  var cols = parseInt(card.column, 10), rows = parseInt(card.row, 10);
+  var m = _mgMetrics(cols), size = _mgSize(cols, rows);
+  var put = function (name, text) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + name + '"]');
+    if (el) el.textContent = text;
+  };
+  put('size-readout', size.w + ' × ' + size.h);
+  put('tile-readout', m.w + ' × ' + m.h);
+  put('count-readout', (cols * rows) + ' tiles');
+  put('variantNode', MG_NODES[cols + '|' + rows] + ' · ' + size.w + ' × ' + size.h);
 
-  /* Update Layout section — `Cells` row is a CALCULATED value (rows ×
-     cols), which Plan A's `variants` map can't express (it's a lookup
-     table, not a computed expression). This is a documented exception
-     to the Plan A migration: keep the JS rebuild for menu-grid Layout. */
-  var layoutEl = document.getElementById('spec-' + cardStyle + '-layout');
-  if (layoutEl) {
-    var L = _mgLayout(cols);
-    var orientation = _mgOrientation(cols) === 'horizontal' ? 'Horizontal' : 'Vertical';
-    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Cells</span><span class="spec-prop-val mono">' + cols + ' × ' + rows + ' = ' + (rows * cols) + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Item orientation</span><span class="spec-prop-val mono">' + orientation + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Tile size</span><span class="spec-prop-val mono">' + L.tileW + ' × ' + L.tileH + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Icon slot</span><span class="spec-prop-val mono">48 × 48</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Container width</span><span class="spec-prop-val mono">336</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding</span><span class="spec-prop-val mono">' + L.padH + ' horizontal · ' + MG_PAD_V + ' vertical</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Gap</span><span class="spec-prop-val mono">' + L.gap + ' × ' + MG_GAP_V + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Border radius</span><span class="spec-prop-val mono">radius/radius-2 (6px)</span></div>';
-    lh += '</div>';
-    layoutEl.innerHTML = lh;
-  }
-
-  /* Update DEV code via [data-code-content] */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
     var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
       var code = getSnippet(cardStyle, lang, card);
@@ -178,23 +128,22 @@ function updateSpecCard(cardStyle, prop, value) {
 }
 window.updateSpecCard = updateSpecCard;
 
-function _mgKeyToLegacy(k) {
-  if (k === 'r2c4') return '2x4';
-  if (k === 'r4c4') return '4x4';
-  if (k === 'r5c5') return '5x5';
-  return k;
+/* ── Overview tab shim — the old panel had mg-demo-row / -col selects. ── */
+function updateMenuGridDemo() {
+  var el = document.getElementById('mg-demo-preview');
+  if (!el) return;
+  var v = function (id, f) { var n = document.getElementById(id); return n ? n.value : f; };
+  el.innerHTML = _mgRender({ column: v('mg-demo-col', '4'), row: v('mg-demo-row', '2') });
 }
+window.updateMenuGridDemo = updateMenuGridDemo;
 
+/* ── First paint ────────────────────────────────────────────────────── */
 function _mgInit() {
   updateMenuGridDemo();
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'column', _specCards[k].column);
+  });
 }
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _mgInit);
-} else {
-  _mgInit();
-}
-
-(function(){
-  document.addEventListener('astro:page-load', _mgInit);
-})();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mgInit);
+else _mgInit();
+document.addEventListener('astro:page-load', _mgInit);

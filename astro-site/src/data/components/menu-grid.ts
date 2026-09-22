@@ -2,34 +2,32 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/menu-grid.js`.
-// Property order and value ranges mirror the Figma component set
-// (node 5973:70111): `Column` = 2–5 columns across, `Row` = 1–5 rows down.
-// Column=2 switches the Service Item child to Orientation=Horizontal.
+// Panel mirrors the property panel of set 5973:70111: two variant axes.
 const menuGridDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
         label: 'Column',
-        prop: 'col',
+        prop: 'column',
         defaultValue: '4',
         options: [
-          { value: '2', label: '2' },
-          { value: '3', label: '3' },
-          { value: '4', label: '4' },
           { value: '5', label: '5' },
+          { value: '4', label: '4' },
+          { value: '3', label: '3' },
+          { value: '2', label: '2' },
         ],
       },
       {
         label: 'Row',
         prop: 'row',
-        defaultValue: '2',
+        defaultValue: '4',
         options: [
-          { value: '1', label: '1' },
-          { value: '2', label: '2' },
-          { value: '3', label: '3' },
-          { value: '4', label: '4' },
           { value: '5', label: '5' },
+          { value: '4', label: '4' },
+          { value: '3', label: '3' },
+          { value: '2', label: '2' },
+          { value: '1', label: '1' },
         ],
       },
     ],
@@ -147,36 +145,45 @@ export const menuGrid: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Layouts",
     "specCards": [
       {
-        "cardKey": "mg-spec-2x4",
-        "demoKey": "r2c4",
+        "cardKey": "mg-spec-main",
+        "demoKey": "main",
+        "title": "Menu Grid",
+        "node": "5973:70111",
+        "description": "A 336-wide grid of Service Item tiles. Column sets the tile width, Row the height; 20 variants.",
+        "previewHtml": "<div id=\"menu-grid-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": menuGridDemoControls,
-        "title": "Row 2 × Column 4 — 8 services (most common)",
-        "node": "18320:14371",
-        "description": "The default dashboard layout — 2 rows × 4 columns = 8 services. Used on the home dashboard for primary service shortcuts.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Row",
-                "value": "2",
-                "prop": "row",
-                "mono": false
-              },
-              {
                 "key": "Column",
                 "value": "4",
-                "prop": "col",
-                "mono": false
+                "prop": "column"
               },
               {
-                "key": "Grid",
-                "value": "4-column",
-                "mono": false
+                "key": "Row",
+                "value": "4",
+                "prop": "row"
+              },
+              {
+                "key": "Tiles",
+                "value": "16 tiles",
+                "prop": "count-readout"
+              },
+              {
+                "key": "Tile",
+                "value": "Service Item instance"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "5973:70112 · 336 × 316",
+                "mono": true,
+                "prop": "variantNode"
               }
             ]
           },
@@ -184,8 +191,36 @@ export const menuGrid: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Container bg", "value": "#FFFFFF", "token": "bg/color-bg-main" },
-              { "key": "Border (weak)", "value": "#E5EBF4", "token": "border/color-border-weak" }
+              {
+                "key": "Grid background",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF"
+              },
+              {
+                "key": "Tile asset",
+                "value": "#F6F9FD",
+                "token": "—",
+                "swatch": "#F6F9FD"
+              },
+              {
+                "key": "Tile label",
+                "value": "#072592",
+                "token": "—",
+                "swatch": "#072592"
+              },
+              {
+                "key": "Tile description",
+                "value": "#445C85",
+                "token": "—",
+                "swatch": "#445C85"
+              },
+              {
+                "key": "Tile border",
+                "value": "#D7E0EF",
+                "token": "—",
+                "swatch": "#D7E0EF"
+              }
             ]
           },
           {
@@ -193,44 +228,61 @@ export const menuGrid: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Cells",
-                "value": "4 × 2 = 8",
+                "key": "Size",
+                "value": "336 × 316",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Width",
+                "value": "336 — fixed",
                 "mono": true
               },
               {
-                "key": "Item orientation",
-                "value": "Vertical",
-                "mono": true
+                "key": "Padding",
+                "value": "8px",
+                "mono": true,
+                "variants": {
+                  "column:5": {
+                    "value": "6.4px"
+                  }
+                }
               },
               {
-                "key": "Tile size",
+                "key": "Gap",
+                "value": "4px",
+                "mono": true,
+                "variants": {
+                  "column:5": {
+                    "value": "0.8px across · 4px down"
+                  }
+                }
+              },
+              {
+                "key": "Tile",
                 "value": "77 × 72",
-                "mono": true
+                "mono": true,
+                "prop": "tile-readout"
               },
               {
-                "key": "Icon slot",
-                "value": "48 × 48",
-                "mono": true
+                "key": "Tile layout",
+                "value": "Service Item · Vertical",
+                "mono": true,
+                "variants": {
+                  "column:2": {
+                    "value": "Service Item · Horizontal"
+                  }
+                }
               },
               {
-                "key": "Container width",
-                "value": "336",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "8 horizontal · 8 vertical",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "4 × 4",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
+                "key": "Row pitch",
+                "value": "76 (72 + 4)",
+                "mono": true,
+                "variants": {
+                  "column:2": {
+                    "value": "68 (64 + 4)"
+                  }
+                }
               }
             ]
           },
@@ -239,327 +291,63 @@ export const menuGrid: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Label style",
+                "key": "Tile #label",
                 "value": "Primary/Label/Fine",
                 "mono": true
               },
               {
-                "key": "Label font",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
+                "key": "Tile #description",
+                "value": "Secondary/Bold/Small Caption",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBMenuGrid</span><span class=\"syn-punc\">(</span>items<span class=\"syn-punc\">: </span>services<span class=\"syn-punc\">, </span>columns<span class=\"syn-punc\">: </span>4<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBMenuGrid</span><span class=\"syn-punc\">(</span>\n    items <span class=\"syn-eq\">=</span> services<span class=\"syn-punc\">,</span>\n    columns <span class=\"syn-eq\">=</span> 4\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"284\" height=\"132\" viewBox=\"0 0 284 132\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"284\" height=\"132\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1\"></rect><circle cx=\"40\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"40\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text></svg>"
-      },
-      {
-        "cardKey": "mg-spec-4x4",
-        "demoKey": "r4c4",
-        "demoControls": menuGridDemoControls,
-        "title": "Row 4 × Column 4 — 16 services",
-        "node": "18320:14333",
-        "description": "Expanded grid for \"All Services\" sheets — 4 rows × 4 columns = 16 services. Used on category pages or full-list views.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Row",
-                "value": "4",
-                "prop": "row",
-                "mono": false
-              },
-              {
-                "key": "Column",
-                "value": "4",
-                "prop": "col",
-                "mono": false
-              },
-              {
-                "key": "Grid",
-                "value": "4-column",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Container bg", "value": "#FFFFFF", "token": "bg/color-bg-main" },
-              { "key": "Border (weak)", "value": "#E5EBF4", "token": "border/color-border-weak" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cells",
-                "value": "4 × 4 = 16",
-                "mono": true
-              },
-              {
-                "key": "Item orientation",
-                "value": "Vertical",
-                "mono": true
-              },
-              {
-                "key": "Tile size",
-                "value": "77 × 72",
-                "mono": true
-              },
-              {
-                "key": "Icon slot",
-                "value": "48 × 48",
-                "mono": true
-              },
-              {
-                "key": "Container width",
-                "value": "336",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "8 horizontal · 8 vertical",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "4 × 4",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBMenuGrid</span><span class=\"syn-punc\">(</span>items<span class=\"syn-punc\">: </span>services<span class=\"syn-punc\">, </span>columns<span class=\"syn-punc\">: </span>4<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBMenuGrid</span><span class=\"syn-punc\">(</span>\n    items <span class=\"syn-eq\">=</span> services<span class=\"syn-punc\">,</span>\n    columns <span class=\"syn-eq\">=</span> 4\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"284\" height=\"252\" viewBox=\"0 0 284 252\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"284\" height=\"252\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1\"></rect><circle cx=\"40\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"40\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"40\" cy=\"150\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"180\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"150\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"180\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"150\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"180\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"150\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"180\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"40\" cy=\"210\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"240\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"210\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"240\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"210\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"240\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"210\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"240\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text></svg>"
-      },
-      {
-        "cardKey": "mg-spec-5x5",
-        "demoKey": "r5c5",
-        "demoControls": menuGridDemoControls,
-        "title": "Row 5 × Column 5 — 25 services (max)",
-        "node": "18320:14508",
-        "description": "Maximum density — 5 rows × 5 columns = 25 services. Use sparingly; label legibility tightens at this density.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Row",
-                "value": "5",
-                "prop": "row",
-                "mono": false
-              },
-              {
-                "key": "Column",
-                "value": "5",
-                "prop": "col",
-                "mono": false
-              },
-              {
-                "key": "Grid",
-                "value": "5-column",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Container bg", "value": "#FFFFFF", "token": "bg/color-bg-main" },
-              { "key": "Border (weak)", "value": "#E5EBF4", "token": "border/color-border-weak" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cells",
-                "value": "5 × 5 = 25",
-                "mono": true
-              },
-              {
-                "key": "Item orientation",
-                "value": "Vertical",
-                "mono": true
-              },
-              {
-                "key": "Tile size",
-                "value": "64 × 72",
-                "mono": true
-              },
-              {
-                "key": "Icon slot",
-                "value": "48 × 48",
-                "mono": true
-              },
-              {
-                "key": "Container width",
-                "value": "336",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "6.4 horizontal · 8 vertical",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "0.8 × 4",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBMenuGrid</span><span class=\"syn-punc\">(</span>items<span class=\"syn-punc\">: </span>services<span class=\"syn-punc\">, </span>columns<span class=\"syn-punc\">: </span>4<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBMenuGrid</span><span class=\"syn-punc\">(</span>\n    items <span class=\"syn-eq\">=</span> services<span class=\"syn-punc\">,</span>\n    columns <span class=\"syn-eq\">=</span> 4\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"352\" height=\"312\" viewBox=\"0 0 352 312\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"352\" height=\"312\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1\"></rect><circle cx=\"40\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"312\" cy=\"30\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"312\" y=\"60\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"40\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"312\" cy=\"90\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"312\" y=\"120\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"40\" cy=\"150\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"180\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"150\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"180\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"150\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"180\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"150\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"180\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"312\" cy=\"150\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"312\" y=\"180\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"40\" cy=\"210\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"240\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"210\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"240\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"210\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"240\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"210\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"240\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"312\" cy=\"210\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"312\" y=\"240\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"40\" cy=\"270\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"40\" y=\"300\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"108\" cy=\"270\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"108\" y=\"300\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"176\" cy=\"270\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"176\" y=\"300\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"244\" cy=\"270\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"244\" y=\"300\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text><circle cx=\"312\" cy=\"270\" r=\"14\" fill=\"#E8EBF0\"></circle><text x=\"312\" y=\"300\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"9\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Label</text></svg>"
+        "swift": "EBMenuGrid(columns: 4) {\n    ForEach(services.prefix(16)) { service in\n        EBServiceItem(service.label)\n            .ebAsset { Image(service.icon) }\n    }\n}",
+        "compose": "EBMenuGrid(\n    columns = 4,\n    modifier = Modifier.fillMaxWidth()\n) {\n    services.take(16).forEach { service ->\n        EBServiceItem(\n            label = service.label,\n            asset = { Image(painterResource(service.icon), null) },\n            onClick = { open(service) }\n        )\n    }\n}"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by State",
-        "description": "Menu Grid owns only the container surface. Every colour inside a tile — icon, label, description — belongs to <a href=\"/components/service-item\">Service Item</a> and is documented there.",
+        "title": "Colors by Role",
+        "description": "The grid is a white frame; every colour below belongs to the Service Item instances it holds. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
           "Value"
         ],
         "rows": [
           {
-            "role": "Container bg",
-            "token": "bg/color-bg-main",
+            "role": "Grid background",
+            "token": "—",
             "values": [
               "#FFFFFF"
             ]
           },
           {
-            "role": "Border (weak)",
-            "token": "border/color-border-weak",
-            "values": [
-              "#E5EBF4"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "description": "Measured from the component set. <code>Column=5</code> tightens the horizontal padding and column gap to fit five 64px tiles inside the same 336px container.",
-        "columns": [
-          "Value"
-        ],
-        "rows": [
-          {
-            "role": "Container width",
+            "role": "Tile asset",
             "token": "—",
             "values": [
-              "336px (fixed)"
+              "#F6F9FD"
             ]
           },
           {
-            "role": "Padding (horizontal)",
-            "token": "space/space-8",
-            "values": [
-              "8px · 6.4px at Column=5"
-            ]
-          },
-          {
-            "role": "Padding (vertical)",
-            "token": "space/space-8",
-            "values": [
-              "8px"
-            ]
-          },
-          {
-            "role": "Row gap",
-            "token": "space/space-4",
-            "values": [
-              "4px"
-            ]
-          },
-          {
-            "role": "Column gap",
-            "token": "space/space-4",
-            "values": [
-              "4px · 0.8px at Column=5"
-            ]
-          },
-          {
-            "role": "Corner radius",
-            "token": "radius/radius-2",
-            "values": [
-              "6px"
-            ]
-          },
-          {
-            "role": "Tile width",
+            "role": "Tile label",
             "token": "—",
             "values": [
-              "158 · 104 · 77 · 64 by Column"
+              "#072592"
             ]
           },
           {
-            "role": "Tile height",
+            "role": "Tile description",
             "token": "—",
             "values": [
-              "64px at Column=2 · 72px at Column=3–5"
+              "#445C85"
             ]
           },
           {
-            "role": "Icon slot",
+            "role": "Tile border",
             "token": "—",
             "values": [
-              "48 × 48"
+              "#D7E0EF"
             ]
           }
         ]
@@ -576,26 +364,32 @@ export const menuGrid: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:menu-grid:1.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:menu-grid:2.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.menugrid.*  <span class=\"cmt\">// Compose</span>"
         }
-      ]
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "Set <code>5973:70111</code> has two axes and no booleans. Natively the row count is the item count, not a property.",
       "rows": [
         {
-          "figma": "Row=\"by N\"",
-          "swift": "rows: Int",
-          "compose": "rows: Int"
+          "figma": "Column — 5, 4, 3, 2",
+          "swift": "<code>EBMenuGrid(columns: Int)</code>",
+          "compose": "<code>columns: Int</code>"
         },
         {
-          "figma": "Column=\"by N\"",
-          "swift": "columns: Int",
-          "compose": "columns: Int"
+          "figma": "Row — 5, 4, 3, 2, 1",
+          "swift": "implied by the item count",
+          "compose": "implied by the item count"
         },
         {
-          "figma": "Service Item (instance)",
-          "swift": "items: [EBServiceItem]",
-          "compose": "items: List&lt;EBServiceItem&gt;"
+          "figma": "Tile — Service Item instance",
+          "swift": "<code>EBServiceItem</code> in the builder",
+          "compose": "<code>EBServiceItem</code> in the content lambda"
         }
       ],
       "filePaths": {
@@ -605,41 +399,64 @@ export const menuGrid: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Default dashboard grid — 2 rows × 4 columns</span>\n<span class=\"typ\">EBMenuGrid</span>(<span class=\"prp\">columns</span>: <span class=\"kw\">4</span>, <span class=\"prp\">items</span>: services)\n\n<span class=\"cmt\">// Service Item child</span>\n<span class=\"typ\">EBServiceItem</span>(\n    <span class=\"prp\">icon</span>: <span class=\"typ\">Image</span>(<span class=\"str\">\"send-money\"</span>),\n    <span class=\"prp\">label</span>: <span class=\"str\">\"Send Money\"</span>,\n    <span class=\"prp\">action</span>: { /* tap */ }\n)",
-        "compose": "<span class=\"cmt\">// Default dashboard grid — 2 rows × 4 columns</span>\n<span class=\"typ\">EBMenuGrid</span>(\n    <span class=\"prp\">columns</span> = <span class=\"kw\">4</span>,\n    <span class=\"prp\">items</span> = services\n)\n\n<span class=\"cmt\">// Service Item child</span>\n<span class=\"typ\">EBServiceItem</span>(\n    <span class=\"prp\">icon</span> = painterResource(R.drawable.send_money),\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Send Money\"</span>,\n    <span class=\"prp\">onClick</span> = { /* tap */ }\n)"
+        "subheading": "4 columns — the dashboard default",
+        "swift": "<span class=\"cmt\">// Column=4, Row=2 — 5973:70256, 336 × 164; tiles 77 × 72.</span>\nEBMenuGrid(columns: 4) {\n    ForEach(services.prefix(8)) { service in\n        EBServiceItem(service.label)\n            .ebAsset { Image(service.icon) }\n    }\n}",
+        "compose": "<span class=\"cmt\">// Column=4, Row=2 — 5973:70256, 336 × 164; tiles 77 × 72.</span>\nEBMenuGrid(columns = 4) {\n    services.take(8).forEach { service ->\n        EBServiceItem(\n            label = service.label,\n            asset = { Image(painterResource(service.icon), null) },\n            onClick = { open(service) }\n        )\n    }\n}"
+      },
+      {
+        "subheading": "2 columns — horizontal tiles",
+        "swift": "<span class=\"cmt\">// Column=2, Row=2 — 5973:70186, 336 × 148; tiles 158 × 64.</span>\nEBMenuGrid(columns: 2) {\n    ForEach(services.prefix(4)) { service in\n        EBServiceItem(service.label)\n            .ebOrientation(.horizontal)\n            .ebDescription(service.subtitle)\n            .ebAsset { Image(service.icon) }\n    }\n}",
+        "compose": "<span class=\"cmt\">// Column=2, Row=2 — 5973:70186, 336 × 148; tiles 158 × 64.</span>\nEBMenuGrid(columns = 2) {\n    services.take(4).forEach { service ->\n        EBServiceItem(\n            label = service.label,\n            orientation = EBServiceItemOrientation.Horizontal,\n            description = { Text(service.subtitle) },\n            asset = { Image(painterResource(service.icon), null) },\n            onClick = { open(service) }\n        )\n    }\n}"
+      },
+      {
+        "subheading": "5 columns — the tightest row",
+        "swift": "<span class=\"cmt\">// Column=5, Row=1 — 5973:70276, 336 × 88; tiles stay 64 wide.</span>\nEBMenuGrid(columns: 5) {\n    ForEach(services.prefix(5)) { service in\n        EBServiceItem(service.label)\n            .ebAsset { Image(service.icon) }\n    }\n}",
+        "compose": "<span class=\"cmt\">// Column=5, Row=1 — 5973:70276, 336 × 88; tiles stay 64 wide.</span>\nEBMenuGrid(columns = 5) {\n    services.take(5).forEach { service ->\n        EBServiceItem(\n            label = service.label,\n            asset = { Image(painterResource(service.icon), null) },\n            onClick = { open(service) }\n        )\n    }\n}"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Tap target",
-        "ios": "Service Item is 64+ px wide × ~64 px tall — meets HIG 44pt minimum",
-        "android": "Meets Material 48dp minimum"
-      },
-      {
-        "requirement": "Accessibility label",
-        "ios": "<code>.accessibilityLabel(label)</code> on each item",
-        "android": "<code>contentDescription = label</code>"
-      },
-      {
         "requirement": "Grid semantics",
-        "ios": "Container exposes grid traits via <code>LazyVGrid</code>",
-        "android": "<code>LazyVerticalGrid</code> announces row/column position"
+        "ios": "<code>LazyVGrid</code> with <code>.accessibilityElement(children: .contain)</code>; each tile is its own button.",
+        "android": "<code>LazyVerticalGrid</code>; each tile carries <code>Role.Button</code>."
       },
       {
-        "requirement": "Disabled state",
-        "ios": "Currently undefined — needs token + <code>.disabled(true)</code> handling",
-        "android": "Currently undefined — needs token + <code>enabled = false</code>"
+        "requirement": "Reading order",
+        "ios": "Row by row, left to right.",
+        "android": "Same; do not override traversal."
+      },
+      {
+        "requirement": "Tap target",
+        "ios": "A 77 × 72 tile clears 44pt; at Column=5 the tile is 64 wide, still above it.",
+        "android": "Clears 48dp at every column count."
+      },
+      {
+        "requirement": "Labels",
+        "ios": "Tile labels are the accessible names; keep them unique within a grid.",
+        "android": "Same."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Label #072592 is 12.44:1 on white; description #445C85 is 6.74:1 at 10pt.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use Row=2 × Column=4 for the primary dashboard surface — 8 services is the established home pattern.",
-        "dontText": "Use Row=5 × Column=5 unless density is essential — 25 cells reduces label legibility."
+        "doText": "Use Column=4 for the dashboard — it is what the home grid ships.",
+        "dontText": "Don’t mix column counts within one section."
       },
       {
-        "doText": "Pair Menu Grid with a section heading or container card so users understand the grouping.",
-        "dontText": "Mix icon styles within a single grid — keep all Service Item icons in the same vector style."
+        "doText": "Use Column=2 when each service needs a description beside its icon.",
+        "dontText": "Don’t use Column=2 for icon-only shortcuts."
+      },
+      {
+        "doText": "Let the item count drive the rows natively.",
+        "dontText": "Don’t hard-code a Row value in code — it is a Figma-only axis."
+      },
+      {
+        "doText": "Keep labels short at Column=5; the tile is 64 wide.",
+        "dontText": "Don’t pad a grid with empty tiles to fill a row."
       }
     ],
     "scorecard": [
@@ -648,300 +465,333 @@ export const menuGrid: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Every child is a named <code>Service Item</code> instance. No Frame/Group debris in the component set."
+        "notes": "A flat frame of <code>Service Item</code> instances — nothing else to name."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>Column</code> = tiles across, <code>Row</code> = tiles down — the conventional reading. Values are plain numbers. Figma variant properties are string-only, so numeric strings are the correct representation."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Two PascalCase axes over a complete 4 × 5 matrix, but <code>Row</code> is a count baked into variants; natively it is the number of items passed in."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "na",
-        "statusLabel": "Not Applicable",
-        "notes": "Menu Grid owns only the container surface and its spacing. Every tokenised colour inside a tile belongs to <a href=\"/components/service-item\">Service Item</a> and is audited there — the same delegation as C5."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Both tile text layers resolve <code>matched</code> — <code>Primary/Label/Fine</code> and <code>Secondary/Bold/Small Caption</code>."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Maps to <code>LazyVGrid</code> / <code>LazyVerticalGrid(GridCells.Fixed(Column))</code> with <code>Column × Row</code> items. The tile orientation switch at <code>Column=2</code> must be carried in the API — see the Docs recommendation."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Maps to <code>LazyVGrid</code> / <code>LazyVerticalGrid</code> with a column count. The Column=5 spacing — 6.4 padding and 0.8 gaps instead of 8 and 4 — has no clean native equivalent."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
         "status": "na",
         "statusLabel": "Not Applicable",
-        "notes": "Menu Grid is a layout container with no states of its own. Tap and disabled behaviour is assessed on <a href=\"/components/service-item\">Service Item</a>."
+        "notes": "A container; the tiles carry their own states."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Icons are delivered through a Figma <code>SLOT</code> on each tile rather than baked artwork."
+        "notes": "Every tile is a Service Item instance with its own Asset-Slot."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "No CLI mappings registered yet — left open for engineering."
+        "notes": "One usable property, <code>Column</code>; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
       "total": 20,
-      "description": "4 <code>Column</code> × 5 <code>Row</code> = <strong>20 variants</strong>. <code>Column</code> counts tiles across, <code>Row</code> counts tiles down. Every variant is a 336-wide container of <strong>Service Item</strong> instances at a 4 row gap.",
+      "description": "<code>Column</code> (4) × <code>Row</code> (5) = 20 variants, all built. Width is always 336; the tile width falls out of the column count and the height out of the row count.",
       "columns": [
         "Column",
         "Row",
         "Tiles",
-        "Container",
-        "Node"
+        "Tile size",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "Column = 2",
-            "Row = 1",
-            "2",
-            "336 × 80",
-            "<code>5973:70192</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 2",
-            "Row = 2",
-            "4",
-            "336 × 148",
-            "<code>5973:70186</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 2",
-            "Row = 3",
-            "6",
-            "336 × 216",
-            "<code>5973:70177</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 2",
-            "Row = 4",
-            "8",
-            "336 × 284",
-            "<code>5973:70150</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 2",
-            "Row = 5",
-            "10",
-            "336 × 352",
-            "<code>5973:70162</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 3",
-            "Row = 1",
-            "3",
-            "336 × 88",
-            "<code>5973:70202</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 3",
-            "Row = 2",
-            "6",
-            "336 × 164",
-            "<code>5973:70195</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 3",
-            "Row = 3",
-            "9",
-            "336 × 240",
-            "<code>5973:70342</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 3",
-            "Row = 4",
-            "12",
-            "336 × 316",
-            "<code>5973:70329</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 3",
-            "Row = 5",
-            "15",
-            "336 × 392",
-            "<code>5973:70313</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 4",
-            "Row = 1",
-            "4",
-            "336 × 88",
-            "<code>5973:70282</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 4",
-            "Row = 2",
-            "8",
-            "336 × 164",
-            "<code>5973:70256</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 4",
-            "Row = 3",
-            "12",
-            "336 × 240",
-            "<code>5973:70227</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 4",
-            "Row = 4",
-            "16",
-            "336 × 316",
-            "<code>5973:70112</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 4",
-            "Row = 5",
-            "20",
-            "336 × 392",
-            "<code>5973:70129</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 5",
-            "Row = 1",
             "5",
-            "336 × 88",
-            "<code>5973:70276</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 5",
-            "Row = 2",
-            "10",
-            "336 × 164",
-            "<code>5973:70265</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 5",
-            "Row = 3",
-            "15",
-            "336 × 240",
-            "<code>5973:70240</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 5",
-            "Row = 4",
-            "20",
-            "336 × 316",
-            "<code>5973:70206</code>"
-          ]
-        },
-        {
-          "cells": [
-            "Column = 5",
-            "Row = 5",
+            "5",
             "25",
-            "336 × 392",
-            "<code>5973:70287</code>"
+            "64 × 72",
+            "<code>5973:70287</code>",
+            "336 × 392"
+          ]
+        },
+        {
+          "cells": [
+            "5",
+            "4",
+            "20",
+            "64 × 72",
+            "<code>5973:70206</code>",
+            "336 × 316"
+          ]
+        },
+        {
+          "cells": [
+            "5",
+            "3",
+            "15",
+            "64 × 72",
+            "<code>5973:70240</code>",
+            "336 × 240"
+          ]
+        },
+        {
+          "cells": [
+            "5",
+            "2",
+            "10",
+            "64 × 72",
+            "<code>5973:70265</code>",
+            "336 × 164"
+          ]
+        },
+        {
+          "cells": [
+            "5",
+            "1",
+            "5",
+            "64 × 72",
+            "<code>5973:70276</code>",
+            "336 × 88"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "5",
+            "20",
+            "77 × 72",
+            "<code>5973:70129</code>",
+            "336 × 392"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "4",
+            "16",
+            "77 × 72",
+            "<code>5973:70112</code>",
+            "336 × 316"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "3",
+            "12",
+            "77 × 72",
+            "<code>5973:70227</code>",
+            "336 × 240"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "2",
+            "8",
+            "77 × 72",
+            "<code>5973:70256</code>",
+            "336 × 164"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "1",
+            "4",
+            "77 × 72",
+            "<code>5973:70282</code>",
+            "336 × 88"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "5",
+            "15",
+            "104 × 72",
+            "<code>5973:70313</code>",
+            "336 × 392"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "4",
+            "12",
+            "104 × 72",
+            "<code>5973:70329</code>",
+            "336 × 316"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "3",
+            "9",
+            "104 × 72",
+            "<code>5973:70342</code>",
+            "336 × 240"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "2",
+            "6",
+            "104 × 72",
+            "<code>5973:70195</code>",
+            "336 × 164"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "1",
+            "3",
+            "104 × 72",
+            "<code>5973:70202</code>",
+            "336 × 88"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "5",
+            "10",
+            "158 × 64",
+            "<code>5973:70162</code>",
+            "336 × 352"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "4",
+            "8",
+            "158 × 64",
+            "<code>5973:70150</code>",
+            "336 × 284"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "3",
+            "6",
+            "158 × 64",
+            "<code>5973:70177</code>",
+            "336 × 216"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "2",
+            "4",
+            "158 × 64",
+            "<code>5973:70186</code>",
+            "336 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "1",
+            "2",
+            "158 × 64",
+            "<code>5973:70192</code>",
+            "336 × 80"
           ]
         }
-      ],
-      "summary": {
-        "columns": [
-          "Column",
-          "Row range",
-          "Tiles",
-          "Tile size",
-          "Item orientation",
-          "Count"
-        ],
-        "rows": [
-          {
-            "cells": [
-              "<strong>Column = 2</strong>",
-              "1 – 5",
-              "2 – 10",
-              "158 × 64",
-              "Horizontal",
-              "5"
-            ]
-          },
-          {
-            "cells": [
-              "<strong>Column = 3</strong>",
-              "1 – 5",
-              "3 – 15",
-              "104 × 72",
-              "Vertical",
-              "5"
-            ]
-          },
-          {
-            "cells": [
-              "<strong>Column = 4</strong>",
-              "1 – 5",
-              "4 – 20",
-              "77 × 72",
-              "Vertical",
-              "5"
-            ]
-          },
-          {
-            "cells": [
-              "<strong>Column = 5</strong>",
-              "1 – 5",
-              "5 – 25",
-              "64 × 72",
-              "Vertical",
-              "5"
-            ]
-          }
-        ]
-      },
-      "collapseLabel": "View full Column × Row breakdown (20 rows)"
+      ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 5973:70111",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>Column</code> (5, 4, 3, 2) and <code>Row</code> (5, 4, 3, 2, 1). Three cards on retired node <code>18320:14371</code> are replaced.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> Every variant is 336 wide with 8 padding and a 4 gap; the tile width falls out of the column count — 158 at Column=2, 104 at 3, 77 at 4.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Column=2 swaps the tile to Service Item Horizontal</strong> — 158 × 64 with the description beside the asset, where the other counts use Vertical at 72 tall.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved against the token database.</strong> Tile <code>#label</code> → <code>Primary/Label/Fine</code> and <code>#description</code> → <code>Secondary/Bold/Small Caption</code>, both matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:menu-grid:2.0.0</code>, three snippets and a 20-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Column=5 breaks the grid’s own spacing.</strong> The tile stays at the Service Item’s natural 64 and the row distributes the 16 left over as 6.4 outer padding and 0.8 between tiles, instead of 8 and 4. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong><code>Row</code> is a Figma-only axis.</strong> Natively the row count is the number of items passed to the grid, so 20 variants collapse to one component with a column count. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "2.0.1",
       "date": "August 2026",
