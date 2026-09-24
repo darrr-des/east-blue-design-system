@@ -331,6 +331,25 @@ body {
 .mg-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
 .mg-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 
+/* ── Chip preview — Label and Value are Primary (Proxima Soft). ──── */
+.chip-label, .chip-value { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Chat Composer preview ───────────────────────────────────────── */
+.cc-text { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Action Row preview — every text layer is Proxima Soft. ─────── */
+.ar-label, .ar-cta, .ar-counter { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.ar-desc { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+
+/* ── Generic Card preview — Blurb, Title, Tag and Badge are Primary
+   (Proxima Soft); the description rows are Secondary (BarkAda). ──── */
+.gc-blurb, .gc-title, .gc-tag, .gc-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.gc-label, .gc-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Generic Transaction Card preview ────────────────────────────── */
+.gt-label, .gt-amount, .gt-badge, .gt-initials { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.gt-date { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
 /* ── Detail Hero preview ─────────────────────────────────────────────
    Title carries 0 tracking, the sender label and value 0.25, and the
    description is BarkAda at 0 — all read off the layers of set

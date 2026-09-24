@@ -1,209 +1,213 @@
-/* Auto-extracted from assessment-src/components/action-list.html.
- * Powers the live-preview dropdowns/toggles for the action-list component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs action-list
+/* Action Row — Style tab demo.
+ * Rebuilt from Figma component set 4628:19843 (GCash DS 2026 Working File).
+ * Offsets, fills and text styles read off get_node_info and
+ * get_styled_text_segments; checked against export_node_as_image.
+ *
+ * Panel (set 4628:19843, from the property-panel screenshot):
+ *   TrailingContent      · CTA, Counter                       (variant)
+ *   State                · Default, Loading, Disabled, Pressed (variant)
+ *   Density              · Expanded, Compact                  (variant)
+ *   hasAsset             · True   (boolean)
+ *   hasDescription       · True   (boolean)
+ *   hasLeadingComponent  · True   (boolean)
+ *   hasTrailingComponent · True   (boolean)
+ *   hasBottomBorder      · False  (boolean)
+ *   Title                · "Label"       (text)
+ *   Description          · "description" (text)
+ * Slots (no control): Asset-Slot (12 items) · Counter-Slot (6 items) ·
+ *   Leading-Slot (6 items).
+ * 2 x 4 x 2 = 16 variants, all built.
+ *
+ * 360 wide. Density sets the vertical padding — Expanded 13 (64 tall),
+ * Compact 9 (56) — around a 38-tall Row: Asset-Slot 32 at x 12, a 12 gap,
+ * the text column, then the TrailingGroup at the right edge. CTA gives a
+ * 64-wide group (30 label + 32 icon), Counter a 56-wide one (32 chevron +
+ * 24 counter), and the text column takes what is left: 216 or 224.
+ *
+ * Loading replaces the row with skeleton bars and is 56 tall whatever
+ * Density says — see the card.
  */
-/* ── Action List JS ─────────────────────────────────────────── */
-/* 3 sibling shapes × 3 states. Preview renders the shape + state picked
-   in the playground. Counter sibling intentionally renders its label in
-   the brand-blue Bold 18 style to visualize the C2 inconsistency.      */
 
-function _litEscape(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+var AR_W = 360;
+var AR_NODES = {
+  'cta|default|compact': '4628:19844',   'cta|default|expanded': '4628:19857',
+  'cta|pressed|expanded': '4628:19870',  'cta|pressed|compact': '4628:20022',
+  'cta|disabled|compact': '4628:19939',  'cta|disabled|expanded': '4628:19952',
+  'cta|loading|expanded': '4649:16639',  'cta|loading|compact': '4649:16649',
+  'counter|default|compact': '4628:19883', 'counter|default|expanded': '4628:19911',
+  'counter|pressed|compact': '4628:19897', 'counter|pressed|expanded': '4628:19925',
+  'counter|disabled|compact': '4628:19965', 'counter|disabled|expanded': '4628:19979',
+  'counter|loading|compact': '4628:20010', 'counter|loading|expanded': '4628:20016'
+};
+
+var AR_STATE = {
+  'default':  { bg: '#FFFFFF', label: '#0A2757', asset: '#D7E0EF', cta: '#005CE5' },
+  'pressed':  { bg: '#F6F9FD', label: '#0A2757', asset: '#D7E0EF', cta: '#005CE5' },
+  'disabled': { bg: '#FFFFFF', label: '#C2CFE5', asset: '#EEF2F9', cta: '#C2CFE5' },
+  'loading':  { bg: '#FFFFFF', label: '#C2CFE5', asset: '#EEF2F9', cta: '#C2CFE5' }
+};
+var AR_SKELETON = '#EEF2F9', AR_BORDER = '#D7E0EF';
+var AR_COUNTER = { bg: '#EEF2F9', value: '#072592' };
+
+function _arOn(v, def) { return v == null ? def : v === 'true'; }
+function _arKey(c) { return [c.trailingcontent, c.state, c.density].join('|'); }
+
+/* Description colour is read per variant: #6780A9 on CTA, #90A8D0 on
+ * Counter, #C2CFE5 when Disabled. */
+function _arDesc(c) {
+  if (c.state === 'disabled') return '#C2CFE5';
+  return c.trailingcontent === 'counter' ? '#90A8D0' : '#6780A9';
 }
 
-function _litIcon(disabled, loading) {
-  if (loading) {
-    return '<div style="width:32px;height:32px;border-radius:50%;background:#EEF2F9;flex-shrink:0;"></div>';
+/* Row height is the tallest of the three columns: the 32 asset, the text
+ * stack (Label 16, then 8 + Description 14) and the 32 trailing group.
+ * The set only ships the booleans on, so with them off the height is
+ * computed this way rather than read — the card says so. */
+function _arRowHeight(c) {
+  var text = 16 + (_arOn(c.hasdescription, true) ? 8 + 14 : 0);
+  var asset = _arOn(c.hasasset, true) ? 32 : 0;
+  var trailing = (_arOn(c.hasleadingcomponent, true) || _arOn(c.hastrailingcomponent, true)) ? 32 : 0;
+  return Math.max(text, asset, trailing);
+}
+
+function _arHeight(c) {
+  if (c.state === 'loading') return 56;                 /* Density has no effect */
+  return _arRowHeight(c) + (c.density === 'compact' ? 9 : 13) * 2;
+}
+
+/* Chevron centred in its 32 box — cx / cy are the box's centre, which is
+ * (332, top + 18) for CTA and (300, top + 18) for Counter. */
+function _arChevron(cx, cy, fill) {
+  return '<path d="M' + (cx - 3) + ' ' + (cy - 6) + 'l6 6 -6 6" stroke="' + fill +
+         '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+}
+
+function _arRender(c) {
+  var st = AR_STATE[c.state] || AR_STATE['default'];
+  var h = _arHeight(c);
+  var s = '<svg width="' + AR_W + '" height="' + h + '" viewBox="0 0 ' + AR_W + ' ' + h +
+          '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  s += '<rect x="0" y="0" width="' + AR_W + '" height="' + h + '" fill="' + st.bg + '"/>';
+
+  if (c.state === 'loading') {
+    s += '<circle cx="28" cy="28" r="16" fill="' + AR_SKELETON + '"/>';
+    s += '<rect x="56" y="13" width="206" height="16" rx="4" fill="' + AR_SKELETON + '"/>';
+    s += '<rect x="56" y="37" width="206" height="6" rx="4" fill="' + AR_SKELETON + '"/>';
+    s += '<rect x="286" y="16" width="24" height="24" rx="4" fill="' + AR_SKELETON + '"/>';
+    s += '<rect x="324" y="16" width="24" height="24" rx="4" fill="' + AR_SKELETON + '"/>';
+    if (_arOn(c.hasbottomborder, false)) s += '<rect x="0" y="' + (h - 1) + '" width="' + AR_W + '" height="1" fill="' + AR_BORDER + '"/>';
+    return s + '</svg>';
   }
-  var fill = '#C2C6CF';
-  return '<div style="width:32px;height:32px;border-radius:50%;background:' + fill + ';flex-shrink:0;opacity:' + (disabled ? '.5' : '1') + ';"></div>';
-}
 
-function _litChevron(color) {
-  return '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M10 6l6 6-6 6" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-}
+  var top = c.density === 'compact' ? 9 : 13;
+  var rowH = _arRowHeight(c), mid = top + rowH / 2;
+  var asset = _arOn(c.hasasset, true), desc = _arOn(c.hasdescription, true);
+  var lead = _arOn(c.hasleadingcomponent, true), trail = _arOn(c.hastrailingcomponent, true);
+  var counter = c.trailingcontent === 'counter';
+  var groupW = counter ? 56 : 64;
+  var textX = asset ? 56 : 12;
 
-function _litRender(opts) {
-  var variant = opts.variant || 'base';
-  var state   = opts.state   || 'default';
-  var density = opts.density || 'compact';
-  var label   = opts.label   || 'Label';
-  var desc    = opts.desc    || 'description';
-  var counter = opts.counter || '3';
+  if (asset) s += '<circle cx="28" cy="' + mid + '" r="16" fill="' + st.asset + '"/>';
+  var textTop = top + (rowH - (desc ? 38 : 16)) / 2;
+  s += '<text class="ar-label" x="' + textX + '" y="' + (textTop + 8) + '" font-size="16" font-weight="700" fill="' + st.label +
+       '" dominant-baseline="central">' + (c.title || 'Label') + '</text>';
+  if (desc) s += '<text class="ar-desc" x="' + textX + '" y="' + (textTop + 31) + '" font-size="12" font-weight="600" fill="' +
+                 _arDesc(c) + '" dominant-baseline="central">' + (c.description || 'description') + '</text>';
 
-  var isLoading  = state === 'loading';
-  var isDisabled = state === 'disabled';
-  var labelColor   = isDisabled ? '#C2CFE5' : (variant === 'counter' ? '#005CE5' : '#0A2757');
-  var descColor    = isDisabled ? '#C2CFE5' : '#6780A9';
-  var ctaColor     = isDisabled ? '#9BC5FD' : '#005CE5';
-  // Chevron is the brand blue accent across all variants in the
-  // Default / Pressed states (matches `action-list/color/default/chevron`
-  // documented in each spec card's Colors section).
-  var chevColor    = isDisabled ? '#9BC5FD' : '#005CE5';
-  var counterBg    = '#EEF2F9';
-  var counterColor = isDisabled ? '#C2CFE5' : '#072592';
-
-  var padV = density === 'expanded' ? 12 : 8;
-  var rowExtra = variant === 'counter' ? 'border-radius:6px;box-shadow:0 1px 3px 0 rgba(232,238,242,.79);' : '';
-  var bg = '#FFFFFF';
-
-  var labelFontSize = variant === 'counter' ? 18 : 16;
-  var labelWeight   = variant === 'counter' ? 700 : 600;
-
-  var html = '<div style="width:360px;background:' + bg + ';' + rowExtra + '">';
-  html += '<div style="display:flex;align-items:center;gap:12px;padding:' + padV + 'px 12px;">';
-
-  // Leading icon (always present except loading w/ no icon — we always show)
-  html += _litIcon(isDisabled, isLoading);
-
-  // Body
-  if (isLoading) {
-    html += '<div style="flex:1 0 0;display:flex;flex-direction:column;gap:6px;min-width:0;">';
-    html += '<div style="height:16px;border-radius:2px;background:#EEF2F9;"></div>';
-    if (variant === 'description') {
-      html += '<div style="height:12px;border-radius:2px;background:#EEF2F9;width:60%;"></div>';
+  var gx = AR_W - 12 - groupW;
+  if (counter) {
+    if (trail) s += _arChevron(gx + 16, mid, c.state === 'disabled' ? '#C2CFE5' : '#0A2757');
+    if (lead) {
+      s += '<circle cx="' + (gx + 44) + '" cy="' + mid + '" r="12" fill="' + AR_COUNTER.bg + '"/>';
+      s += '<text class="ar-counter" x="' + (gx + 44) + '" y="' + mid + '" font-size="14" font-weight="700" fill="' +
+           (c.state === 'disabled' ? '#C2CFE5' : AR_COUNTER.value) + '" text-anchor="middle" dominant-baseline="central">0</text>';
     }
-    html += '</div>';
-    html += '<div style="height:16px;width:51px;border-radius:2px;background:#EEF2F9;flex-shrink:0;"></div>';
   } else {
-    html += '<div style="flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;">';
-    html += '<div style="font-family:\'Proxima Soft\',system-ui;font-size:' + labelFontSize + 'px;line-height:' + labelFontSize + 'px;font-weight:' + labelWeight + ';letter-spacing:0.25px;color:' + labelColor + ';">' + _litEscape(label) + '</div>';
-    if (variant === 'description') {
-      html += '<div style="font-family:\'Proxima Soft\',system-ui;font-size:12px;line-height:14px;font-weight:600;letter-spacing:0.5px;color:' + descColor + ';">' + _litEscape(desc) + '</div>';
-    }
-    html += '</div>';
-
-    // Trailing
-    if (variant === 'counter') {
-      html += '<div style="display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;background:' + counterBg + ';color:' + counterColor + ';font-family:\'Proxima Soft\',system-ui;font-size:14px;font-weight:700;letter-spacing:0.25px;flex-shrink:0;">' + _litEscape(counter) + '</div>';
-    } else {
-      html += '<span style="font-family:\'Proxima Soft\',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:' + ctaColor + ';flex-shrink:0;">CTA</span>';
-    }
-    html += _litChevron(chevColor);
+    if (lead) s += '<text class="ar-cta" x="' + (gx + 30) + '" y="' + mid + '" font-size="16" font-weight="600" fill="' +
+                   st.cta + '" text-anchor="end" dominant-baseline="central">CTA</text>';
+    if (trail) s += _arChevron(gx + 48, mid, st.cta);
   }
-
-  html += '</div>';
-  html += '</div>';
-  return html;
+  if (_arOn(c.hasbottomborder, false)) s += '<rect x="0" y="' + (h - 1) + '" width="' + AR_W + '" height="1" fill="' + AR_BORDER + '"/>';
+  return s + '</svg>';
 }
 
-function updateLitDemo() {
-  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
-  var el = document.getElementById('lit-demo-preview');
-  if (!el) return;
-  el.innerHTML = _litRender({
-    variant: getVal('lit-ctrl-variant', 'base'),
-    state:   getVal('lit-ctrl-state',   'default'),
-    density: getVal('lit-ctrl-density', 'compact'),
-    label:   getVal('lit-ctrl-label',   'Label'),
-    desc:    getVal('lit-ctrl-desc',    'description'),
-    counter: getVal('lit-ctrl-counter', '3')
-  });
-}
-
-/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
+/* ── Per-card state — Figma's default variant ──────────────────────── */
 var _specCards = {
-  base:        { variant: 'base',        state: 'default', density: 'compact' },
-  counter:     { variant: 'counter',     state: 'default', density: 'compact' },
-  description: { variant: 'description', state: 'default', density: 'compact' }
+  main: {
+    trailingcontent: 'cta', state: 'default', density: 'expanded',
+    hasasset: 'true', hasdescription: 'true', hasleadingcomponent: 'true',
+    hastrailingcomponent: 'true', hasbottomborder: 'false',
+    title: 'Label', description: 'description'
+  }
 };
 window._specCards = _specCards;
 
-/* ── Code snippet builders (called by updateSpecCard + switchCodeTab) ── */
-function buildSwiftSnippet(type, card) {
-  var stateMap = { default: '.default', disabled: '.disabled', loading: '.loading' };
-  var stateVal = stateMap[card.state] || '.default';
-  var lines = [];
-  if (type === 'counter') {
-    lines.push('EBActionRow("Notifications", icon: icon, counter: 5)');
-  } else if (type === 'description') {
-    lines.push('EBActionRow("Account settings", icon: icon, description: "Subtitle")');
-  } else {
-    lines.push('EBActionRow("Account settings", icon: icon)');
-  }
-  lines.push('    .ebState(' + stateVal + ')');
-  if (card.density === 'expanded') lines.push('    .ebDensity(.expanded)');
-  lines.push('    .onTap { }');
-  return lines.join('\n');
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function _arQ(v) { return JSON.stringify(String(v)); }
+function buildSwiftSnippet(cardKey, c) {
+  var l = ['EBActionRow(' + _arQ(c.title || 'Label') + ')'];
+  if (_arOn(c.hasdescription, true)) l.push('    .ebDescription(' + _arQ(c.description || 'description') + ')');
+  if (_arOn(c.hasasset, true)) l.push('    .ebAsset { Image("asset") }');
+  l.push('    .ebDensity(.' + c.density + ')');
+  if (c.trailingcontent === 'counter') {
+    if (_arOn(c.hasleadingcomponent, true)) l.push('    .ebCounter(0)');
+  } else if (_arOn(c.hasleadingcomponent, true)) l.push('    .ebCTA("CTA")');
+  if (!_arOn(c.hastrailingcomponent, true)) l.push('    .ebTrailingIcon(nil)');
+  if (_arOn(c.hasbottomborder, false)) l.push('    .ebBottomBorder(true)');
+  if (c.state === 'disabled') l.push('    .disabled(true)');
+  if (c.state === 'loading') l.push('    .ebLoading(true)');
+  return l.join('\n');
 }
-
-function buildComposeSnippet(type, card) {
-  var stateMap = { default: 'Default', disabled: 'Disabled', loading: 'Loading' };
-  var stateVal = stateMap[card.state] || 'Default';
-  var lines = [];
-  lines.push('EBActionRow(');
-  if (type === 'counter') {
-    lines.push('    label = "Notifications",');
-    lines.push('    leadingIcon = { icon },');
-    lines.push('    counter = 5,');
-  } else if (type === 'description') {
-    lines.push('    label = "Account settings",');
-    lines.push('    description = "Subtitle",');
-    lines.push('    leadingIcon = { icon },');
-  } else {
-    lines.push('    label = "Account settings",');
-    lines.push('    leadingIcon = { icon },');
-  }
-  lines.push('    state = EBRowState.' + stateVal + ',');
-  if (card.density === 'expanded') lines.push('    density = EBRowDensity.Expanded,');
-  lines.push('    onClick = { }');
-  lines.push(')');
-  return lines.join('\n');
+function buildComposeSnippet(cardKey, c) {
+  var l = ['EBActionRow(', '    title = ' + _arQ(c.title || 'Label') + ','];
+  if (_arOn(c.hasdescription, true)) l.push('    description = ' + _arQ(c.description || 'description') + ',');
+  if (_arOn(c.hasasset, true)) l.push('    asset = { Image(painterResource(R.drawable.asset), null) },');
+  l.push('    density = EBActionRowDensity.' + (c.density === 'compact' ? 'Compact' : 'Expanded') + ',');
+  if (c.trailingcontent === 'counter') {
+    if (_arOn(c.hasleadingcomponent, true)) l.push('    counter = 0,');
+  } else if (_arOn(c.hasleadingcomponent, true)) l.push('    ctaLabel = "CTA",');
+  if (!_arOn(c.hastrailingcomponent, true)) l.push('    trailingIcon = null,');
+  if (_arOn(c.hasbottomborder, false)) l.push('    showsBottomBorder = true,');
+  if (c.state === 'disabled') l.push('    enabled = false,');
+  if (c.state === 'loading') l.push('    loading = true,');
+  l.push('    onClick = { }');
+  l.push(')');
+  return l.join('\n');
 }
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
-function _titleCase(s) {
-  if (!s) return s;
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
+/* ── Control handler ────────────────────────────────────────────────── */
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
 
-  /* Update the preview wrapper's HTML (we wrap the preview in #lit-spec-{key}) */
-  var preview = document.getElementById('lit-spec-' + cardStyle);
-  if (preview) {
-    var rendered = _litRender({
-      variant: card.variant,
-      state:   card.state,
-      density: card.density,
-      label:   'Label',
-      desc:    'description',
-      counter: '3'
-    });
-    /* _litRender returns a wrapping <div>; replace the wrapper's inner content */
-    var temp = document.createElement('div');
-    temp.innerHTML = rendered;
-    var inner = temp.firstChild;
-    if (inner) {
-      preview.innerHTML = inner.innerHTML;
-      /* Carry width/styles from rendered onto the wrapper for shape parity */
-      if (inner.getAttribute && inner.getAttribute('style')) {
-        preview.setAttribute('style', inner.getAttribute('style'));
-      }
-    }
-  }
+  var host = document.getElementById('action-list-spec-' + cardStyle);
+  if (host) host.innerHTML = _arRender(card);
 
-  /* Update Properties text — data-sp="${cardStyle}-${prop}" */
-  var spState   = document.querySelector('[data-sp="' + cardStyle + '-state"]');
-  var spDensity = document.querySelector('[data-sp="' + cardStyle + '-density"]');
-  if (spState)   spState.textContent   = _titleCase(card.state);
-  if (spDensity) spDensity.textContent = _titleCase(card.density);
+  ['trailingcontent', 'state', 'density', 'hasasset', 'hasdescription', 'hasleadingcomponent',
+   'hastrailingcomponent', 'hasbottomborder', 'title', 'description'].forEach(function (a) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
+    if (!el) return;
+    if (a.indexOf('has') === 0) el.textContent = card[a] === 'true' ? 'True' : 'False';
+    else if (a === 'title' || a === 'description') el.textContent = card[a];
+    else el.textContent = card[a].charAt(0).toUpperCase() + card[a].slice(1);
+  });
+  var h = _arHeight(card);
+  var put = function (name, text) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + name + '"]');
+    if (el) el.textContent = text;
+  };
+  put('size-readout', AR_W + ' × ' + h);
+  put('variantNode', AR_NODES[_arKey(card)] + ' · ' + AR_W + ' × ' + h);
 
-  /* Colors + Layout sections are server-rendered from action-list.ts;
-     Plan A's `_patchSpecCardRows` handles state- and density-keyed overrides. */
-
-  /* Update DEV code — always */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
     var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
       var code = getSnippet(cardStyle, lang, card);
@@ -214,21 +218,33 @@ function updateSpecCard(cardStyle, prop, value) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-function _litInitSpecCards() {
-  /* Initialize each card by triggering one update */
-  Object.keys(_specCards).forEach(function(k) {
+/* ── Overview tab shim — the old panel drove lit-ctrl-* selects. ──── */
+function updateLitDemo() {
+  var el = document.getElementById('lit-demo-preview');
+  if (!el) return;
+  var v = function (id, f) { var n = document.getElementById(id); return n ? n.value : f; };
+  var variant = v('lit-ctrl-variant', 'cta');
+  el.innerHTML = _arRender({
+    trailingcontent: variant === 'counter' ? 'counter' : 'cta',
+    state: v('lit-ctrl-state', 'default'),
+    density: v('lit-ctrl-density', 'expanded'),
+    hasasset: 'true',
+    hasdescription: v('lit-ctrl-desc', 'yes') === 'no' ? 'false' : 'true',
+    hasleadingcomponent: 'true', hastrailingcomponent: 'true', hasbottomborder: 'false',
+    title: v('lit-ctrl-label', 'Label')
+  });
+}
+window.updateLitDemo = updateLitDemo;
+
+/* ── First paint ────────────────────────────────────────────────────── */
+function _arInit() {
+  updateLitDemo();
+  Object.keys(_specCards).forEach(function (k) {
     updateSpecCard(k, 'state', _specCards[k].state);
   });
 }
-
-function _litInit() {
-  updateLitDemo();
-  _litInitSpecCards();
-}
-
-(function () {
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _litInit);
-  else _litInit();
-  document.addEventListener('astro:page-load', _litInit);
-})();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _arInit);
+else _arInit();
+document.addEventListener('astro:page-load', _arInit);

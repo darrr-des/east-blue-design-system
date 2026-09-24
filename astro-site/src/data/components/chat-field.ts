@@ -1,21 +1,17 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — toggles between Inactive (active=no) and Active
-// (active=yes). Wired to a future per-card update handler in
-// `public/scripts/demos/chat-field.js`.
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/chat-field.js`.
+// Panel mirrors the property panel of set 5536:31209: two variant axes.
+// leadingAction and trailingAction are SLOTs (4 items each), no control.
 const chatFieldDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
-      {
-        label: 'Active',
-        prop: 'active',
-        defaultValue: 'no',
-        options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
-        ],
-      },
+      { label: 'isActive', prop: 'isactive', control: 'toggle', defaultValue: 'false',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasValue', prop: 'hasvalue', control: 'toggle', defaultValue: 'false',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
     ],
   },
 ];
@@ -210,132 +206,239 @@ export const chatField: ComponentData = {
     "recommendations": []
   },
   "style": {
-    "heading": "Types",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "default",
-        "demoKey": "default",
+        "cardKey": "cf-spec-main",
+        "demoKey": "main",
+        "title": "Chat Composer",
+        "node": "5536:31209",
+        "description": "A 360 × 88 message bar — an attach action, a 248-wide input field and a send action. isActive lights the border; hasValue swaps the placeholder for a value.",
+        "previewHtml": "<div id=\"chat-field-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": chatFieldDemoControls,
-        "title": "Default",
-        "node": "23:145916",
-        "description": "Message composer with a leading attachment icon, inner input field, and trailing send action. Flip Active to focus the field.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Active", "value": "no", "prop": "active" }
+              {
+                "key": "isActive",
+                "value": "False",
+                "prop": "isactive"
+              },
+              {
+                "key": "hasValue",
+                "value": "False",
+                "prop": "hasvalue"
+              },
+              {
+                "key": "⤷ leadingAction",
+                "value": "Slot · 4 items — Add_Full"
+              },
+              {
+                "key": "⤷ trailingAction",
+                "value": "Slot · 4 items — Send Message Medium"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "5536:31210 · 360 × 88",
+                "mono": true,
+                "prop": "variantNode"
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "chat-field/color/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF"
+              },
+              {
+                "key": "Field fill",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF"
+              },
+              {
+                "key": "Field border",
+                "value": "#D7E0EF",
+                "token": "—",
+                "swatch": "#D7E0EF",
                 "variants": {
-                  "active:yes": { "value": "#005CE5", "token": "input-field/active/border" }
+                  "isactive:true": {
+                    "value": "#005CE5",
+                    "swatch": "#005CE5"
+                  }
                 }
               },
-              { "key": "Input text", "value": "#90A8D0", "token": "input-field/default/placeholder",
+              {
+                "key": "Placeholder",
+                "value": "#90A8D0",
+                "token": "—",
+                "swatch": "#90A8D0",
                 "variants": {
-                  "active:yes": { "value": "#0A2757", "token": "input-field/active/value" }
+                  "hasvalue:true": {
+                    "hide": true
+                  }
                 }
               },
-              { "key": "Send icon", "value": "#005CE5", "token": "chat-field/color/icon" }
+              {
+                "key": "Value",
+                "value": "#0A2757",
+                "token": "—",
+                "swatch": "#0A2757",
+                "variants": {
+                  "hasvalue:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Add icon",
+                "value": "#005CE5",
+                "token": "—",
+                "swatch": "#005CE5"
+              },
+              {
+                "key": "Send icon",
+                "value": "#9BC5FD",
+                "token": "—",
+                "swatch": "#9BC5FD",
+                "variants": {
+                  "hasvalue:true": {
+                    "value": "#005CE5",
+                    "swatch": "#005CE5"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Field height", "value": "48 (auto-grow)", "mono": true },
-              { "key": "Padding H", "value": "12", "mono": true },
-              { "key": "Padding V", "value": "14", "mono": true },
-              { "key": "Border radius", "value": "6", "mono": true },
-              { "key": "Border width", "value": "1", "mono": true,
-                "variants": { "active:yes": { "value": "2" } }
+              {
+                "key": "Size",
+                "value": "360 × 88",
+                "mono": true
               },
-              { "key": "Send button", "value": "40 × 40", "mono": true }
+              {
+                "key": "Padding",
+                "value": "12 top · 12 sides · 24 bottom",
+                "mono": true
+              },
+              {
+                "key": "leadingAction",
+                "value": "40 × 52 at (12, 12) · icon 32",
+                "mono": true
+              },
+              {
+                "key": "Input Field",
+                "value": "248 × 52 at (52, 12)",
+                "mono": true
+              },
+              {
+                "key": "Field radius",
+                "value": "6px",
+                "mono": true
+              },
+              {
+                "key": "Field border",
+                "value": "1px",
+                "mono": true,
+                "variants": {
+                  "isactive:true": {
+                    "value": "2px"
+                  }
+                }
+              },
+              {
+                "key": "Text inset",
+                "value": "12 left · 16 top",
+                "mono": true
+              },
+              {
+                "key": "trailingAction",
+                "value": "44 × 52 at (300, 12) · icon 32",
+                "mono": true
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Style", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
-              { "key": "Font",  "value": "Proxima Soft Semibold · 16 / 20 · +0.25", "mono": true }
+              {
+                "key": "#text-label",
+                "value": "Primary/Multi-line Label/Light/Base",
+                "mono": true
+              }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBChatField</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">: </span>$message<span class=\"syn-punc\">, </span>onSend<span class=\"syn-punc\">: </span><span class=\"syn-punc\">{ </span>sendMessage<span class=\"syn-punc\">() }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBChatField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> message<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ message = it }</span><span class=\"syn-punc\">,</span>\n    onSend <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ sendMessage() }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"cf-spec-preview\"></div>"
+        "swift": "EBChatComposer(\n    text: $message,\n    placeholder: \"Say hi!\"\n)\n    .ebLeadingAction(.add) { attach() }\n    .ebTrailingAction(.send) { send() }",
+        "compose": "EBChatComposer(\n    value = message,\n    onValueChange = { message = it },\n    placeholder = \"Say hi!\",\n    leadingAction = { EBIconButton(EBIcons.Add) { attach() } },\n    trailingAction = { EBIconButton(EBIcons.Send) { send() } }\n)"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "The composer owns only two tokens (<code>bg</code>, <code>icon</code>). Every other color is inherited from the nested Input Field's <code>main/input-field/*</code> collection — another motivation for rebuilding the composer as a composition rather than a primitive.",
+        "description": "Read off <code>get_node_info</code> on the four variants of set <code>5536:31209</code>. The two icon fills are not exposed by the plugin — they come from <code>export_node_as_image</code>. Token paths could not be read.",
         "columns": [
-          "DEFAULT (active=no)",
-          "ACTIVE (active=yes)"
+          "Inactive",
+          "Active"
         ],
         "rows": [
           {
-            "role": "Composer bg",
-            "token": "main/chat-field/color/bg",
-            "values": [
-              "#FFFFFF",
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "Leading icon (plus)",
-            "token": "main/chat-field/color/icon",
-            "values": [
-              "#005CE5",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "Trailing icon (send)",
-            "token": "main/chat-field/color/icon",
-            "values": [
-              "#005CE5",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "Field bg",
-            "token": "main/input-field/{state}/bg",
-            "values": [
-              "#FFFFFF",
-              "#FFFFFF"
-            ]
-          },
-          {
             "role": "Field border",
-            "token": "main/input-field/{state}/border",
+            "token": "—",
             "values": [
-              "#D7E0EF (1px)",
-              "#005CE5 (2px)"
+              "#D7E0EF",
+              "#005CE5"
             ]
           },
           {
-            "role": "Field placeholder",
-            "token": "main/input-field/default/placeholder",
+            "role": "Field fill",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Placeholder",
+            "token": "—",
             "values": [
               "#90A8D0",
               "#90A8D0"
             ]
           },
           {
-            "role": "Field text (filled)",
-            "token": "main/input-field/default/text",
+            "role": "Value",
+            "token": "—",
             "values": [
               "#0A2757",
               "#0A2757"
+            ]
+          },
+          {
+            "role": "Add icon",
+            "token": "—",
+            "values": [
+              "#005CE5",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Send icon (no value / value)",
+            "token": "—",
+            "values": [
+              "#9BC5FD / #005CE5",
+              "#9BC5FD / #005CE5"
             ]
           }
         ]
@@ -352,100 +455,109 @@ export const chatField: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:chat:1.0.0\"</span>)\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:form-elements:1.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:chat-composer:2.0.0\"</span>)\n}"
         },
         {
           "label": "Import",
-          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.chat.*  <span class=\"cmt\">// Compose</span>\n<span class=\"kw\">import</span> com.eastblue.ds.form.*"
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.chatcomposer.*  <span class=\"cmt\">// Compose</span>"
         }
       ],
       "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "Set <code>5536:31209</code> carries two booleans and two SLOTs. Natively both booleans are state, not parameters — focus drives <code>isActive</code> and the bound text drives <code>hasValue</code>.",
       "rows": [
         {
-          "figma": "(text content)",
-          "swift": "text: Binding&lt;String&gt;",
-          "compose": "value: String"
+          "figma": "isActive — boolean",
+          "swift": "<code>@FocusState</code> on the field",
+          "compose": "<code>interactionSource.collectIsFocusedAsState()</code>"
         },
         {
-          "figma": "active (yes/no)",
-          "swift": "@FocusState",
-          "compose": "interactionSource"
+          "figma": "hasValue — boolean",
+          "swift": "<code>text.isEmpty</code>",
+          "compose": "<code>value.isNotEmpty()</code>"
         },
         {
-          "figma": "(leading slot)",
-          "swift": "leadingAction: () -&gt; Void",
-          "compose": "leadingAction: () -&gt; Unit"
+          "figma": "⤷ leadingAction — SLOT · 4 items",
+          "swift": "<code>.ebLeadingAction(.add) { }</code>",
+          "compose": "<code>leadingAction: @Composable () -&gt; Unit</code>"
         },
         {
-          "figma": "(trailing slot)",
-          "swift": "trailingAction: () -&gt; Void",
-          "compose": "trailingAction: () -&gt; Unit"
+          "figma": "⤷ trailingAction — SLOT · 4 items",
+          "swift": "<code>.ebTrailingAction(.send) { }</code>",
+          "compose": "<code>trailingAction: @Composable () -&gt; Unit</code>"
         },
         {
-          "figma": "(line growth)",
-          "swift": "axis: .vertical, lineLimit(1...5)",
-          "compose": "singleLine = false, maxLines = 5"
-        },
-        {
-          "figma": "(placeholder)",
-          "swift": "placeholder: String",
-          "compose": "placeholder: String"
+          "figma": "— <code>#text-label</code>",
+          "swift": "<code>text: Binding&lt;String&gt;</code> + <code>placeholder: String</code>",
+          "compose": "<code>value: String</code>, <code>onValueChange</code>, <code>placeholder: String</code>"
         }
       ],
       "filePaths": {
-        "swift": "ios/Components/Chat/EBChatComposer.swift",
-        "compose": "android/components/chat/EBChatComposer.kt"
+        "swift": "ios/Components/ChatComposer/EBChatComposer.swift",
+        "compose": "android/components/chatcomposer/EBChatComposer.kt"
       }
     },
     "usageSnippets": [
       {
-        "subheading": "Inactive composer",
-        "swift": "<span class=\"typ\">EBChatComposer</span>(\n    <span class=\"prp\">placeholder</span>: <span class=\"str\">\"Say hi!\"</span>,\n    <span class=\"prp\">text</span>: $message,\n    <span class=\"prp\">onAttach</span>: { presentAttachSheet() },\n    <span class=\"prp\">onSend</span>:   { send(message) }\n)",
-        "compose": "<span class=\"typ\">EBChatComposer</span>(\n    <span class=\"prp\">value</span> = message,\n    <span class=\"prp\">onValueChange</span> = { message = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Say hi!\"</span>,\n    <span class=\"prp\">onAttach</span> = { presentAttachSheet() },\n    <span class=\"prp\">onSend</span> = { send(message) }\n)"
+        "subheading": "Resting",
+        "swift": "<span class=\"cmt\">// isActive=False, hasValue=False — 5536:31210, 360 × 88.</span>\nEBChatComposer(\n    text: $message,\n    placeholder: \"Say hi!\"\n)\n    .ebLeadingAction(.add) { attach() }\n    .ebTrailingAction(.send) { send() }",
+        "compose": "<span class=\"cmt\">// isActive=False, hasValue=False — 5536:31210, 360 × 88.</span>\nEBChatComposer(\n    value = message,\n    onValueChange = { message = it },\n    placeholder = \"Say hi!\",\n    leadingAction = { EBIconButton(EBIcons.Add) { attach() } },\n    trailingAction = { EBIconButton(EBIcons.Send) { send() } }\n)"
       },
       {
-        "subheading": "Active with send-disabled",
-        "swift": "<span class=\"typ\">EBChatComposer</span>(\n    <span class=\"prp\">placeholder</span>: <span class=\"str\">\"Say hi!\"</span>,\n    <span class=\"prp\">text</span>: $message,\n    <span class=\"prp\">onAttach</span>: attach,\n    <span class=\"prp\">onSend</span>:   send,\n    <span class=\"prp\">sendEnabled</span>: !message.<span class=\"prp\">isEmpty</span>\n)",
-        "compose": "<span class=\"typ\">EBChatComposer</span>(\n    <span class=\"prp\">value</span> = message,\n    <span class=\"prp\">onValueChange</span> = { message = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Say hi!\"</span>,\n    <span class=\"prp\">onAttach</span> = attach,\n    <span class=\"prp\">onSend</span> = send,\n    <span class=\"prp\">sendEnabled</span> = message.isNotEmpty()\n)"
+        "subheading": "Focused",
+        "swift": "<span class=\"cmt\">// isActive=True, hasValue=False — 5554:36222; the border turns #005CE5.</span>\nEBChatComposer(text: $message, placeholder: \"Say hi!\")\n    .focused($isFocused)\n    .ebLeadingAction(.add) { attach() }\n    .ebTrailingAction(.send) { send() }",
+        "compose": "<span class=\"cmt\">// isActive=True, hasValue=False — 5554:36222; the border turns #005CE5.</span>\n// Focus is state, not a parameter — the border follows\n// interactionSource.collectIsFocusedAsState().\nEBChatComposer(\n    value = message,\n    onValueChange = { message = it },\n    placeholder = \"Say hi!\",\n    leadingAction = { EBIconButton(EBIcons.Add) { attach() } },\n    trailingAction = { EBIconButton(EBIcons.Send) { send() } }\n)"
+      },
+      {
+        "subheading": "With a value",
+        "swift": "<span class=\"cmt\">// isActive=True, hasValue=True — 5554:36279; the send glyph turns solid.</span>\n// The send action enables itself once text is entered.\nEBChatComposer(text: $message, placeholder: \"Say hi!\")\n    .ebTrailingAction(.send, isEnabled: !message.isEmpty) { send() }",
+        "compose": "<span class=\"cmt\">// isActive=True, hasValue=True — 5554:36279; the send glyph turns solid.</span>\nEBChatComposer(\n    value = message,\n    onValueChange = { message = it },\n    placeholder = \"Say hi!\",\n    trailingAction = {\n        EBIconButton(EBIcons.Send, enabled = message.isNotEmpty()) { send() }\n    }\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Minimum touch target (icon buttons)",
-        "ios": "44 × 44 pt — 32px frame pads to 44pt hit area",
-        "android": "48 × 48 dp — 32px frame pads to 48dp hit area"
+        "requirement": "Field",
+        "ios": "<code>TextField</code> with an accessibility label — the placeholder alone is not a label.",
+        "android": "<code>TextField</code> with <code>Modifier.semantics { contentDescription = \"Message\" }</code>."
       },
       {
-        "requirement": "Leading icon label",
-        "ios": "<code>.accessibilityLabel(\"Attach\")</code>",
-        "android": "<code>contentDescription = \"Attach\"</code>"
+        "requirement": "Actions",
+        "ios": "The 32 icons need 44pt targets and their own labels — “Attach”, “Send”.",
+        "android": "48dp targets; <code>contentDescription</code> on each <code>IconButton</code>."
       },
       {
-        "requirement": "Trailing icon label",
-        "ios": "<code>.accessibilityLabel(\"Send\")</code>",
-        "android": "<code>contentDescription = \"Send\"</code>"
+        "requirement": "Send state",
+        "ios": "Disable send while the field is empty and announce it with <code>.accessibilityHint</code>.",
+        "android": "<code>enabled = false</code> until the value is non-empty."
       },
       {
-        "requirement": "Send-disabled announcement",
-        "ios": "VoiceOver reads \"Send, dimmed\" via <code>.accessibilityHint(\"Enter a message first\")</code>",
-        "android": "TalkBack reads disabled state via <code>semantics { disabled() }</code>"
+        "requirement": "Keyboard",
+        "ios": "Submit on return; keep the composer above the keyboard inset.",
+        "android": "<code>ImeAction.Send</code>; respect <code>imePadding()</code>."
       },
       {
-        "requirement": "Keyboard submit",
-        "ios": "<code>.onSubmit { send() }</code> on the nested TextField",
-        "android": "<code>keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send)</code>"
+        "requirement": "Contrast",
+        "ios": "Placeholder #90A8D0 is 2.41:1 on white — below 4.5:1. The value #0A2757 is 14.58:1. The pale send glyph #9BC5FD is 1.78:1.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Dock the composer to the bottom of the chat scroll view with the keyboard inset, and let the field auto-grow within lineLimit(1...5) / maxLines = 5.",
-        "dontText": "Use Chat Field for single-line structured inputs (name, phone, amount). Use Input Field or the typed form-element sibling instead."
+        "doText": "Keep the composer pinned to the bottom of the thread, above the keyboard.",
+        "dontText": "Don’t let it scroll away with the messages."
       },
       {
-        "doText": "Dim the trailing send icon when the field is empty. Reflects system chat conventions (iMessage, WhatsApp, Messenger) and prevents empty-send.",
-        "dontText": "Swap the plus icon for unrelated actions (navigation, close). Leading slot is reserved for content-entry affordances: attach, camera, mic, emoji."
+        "doText": "Enable send only once there is text — that is what the solid glyph means.",
+        "dontText": "Don’t ship the pale send glyph as an enabled control."
+      },
+      {
+        "doText": "Use the leading slot for attachments; it takes 4 swap options.",
+        "dontText": "Don’t stack more than one action on each side — the slots are 40 and 44 wide."
+      },
+      {
+        "doText": "Let the field grow for long messages.",
+        "dontText": "Don’t rely on the fixed 52 height for multi-line input — the set only ships one line."
       }
     ],
     "scorecard": [
@@ -454,107 +566,191 @@ export const chatField: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Both icon frames share the generic name <code>container</code>. Should be <code>leading</code> / <code>trailing</code>."
+        "notes": "<code>leadingAction</code>, <code>Input Field</code> and <code>trailingAction</code> are semantic, but the text layer keeps the legacy <code>#text-label</code> sigil."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>active=yes/no</code> — boolean naming and semantic intent both wrong; the property duplicates the inner field's <code>State=Active</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Two camelCase booleans over a complete 2 × 2 matrix."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>main/chat-field/color/bg</code> and <code>main/chat-field/color/icon</code> resolved. Spacing (<code>space/space-8</code>, <code>12</code>, <code>16</code>, <code>24</code>) and radius (<code>radius/radius-2</code>) bound."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>#text-label</code> resolves <code>matched</code> to <code>Primary/Multi-line Label/Light/Base</code>. Colour bindings cannot be read, and the two icon fills are not exposed at all."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No native primitive for \"chat composer\"; maps to <code>HStack { Button + TextField + Button }</code>. Shipping as a single component hides the composition."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Maps to one composer with two action slots, but both Figma axes are runtime state natively — focus and the bound text — not parameters."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Only Active/Inactive. Missing Error, Disabled, isFilled, and send-disabled states that the use case requires."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Resting and focused ship. There is no disabled, error or multi-line state, and no pressed state on either action."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Both leading (plus) and trailing (send) glyphs are raster PNGs; must vectorize and bind to <code>main/chat-field/color/icon</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Both actions are real SLOTs with 4 swap options, holding icon instances."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked by composition rebuild, property rename, and icon vectorization."
+        "notes": "Two booleans and two slots are ready to map; no mappings are registered."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>active=yes/no</code> cannot map to native booleans and duplicates the nested field's focus"
-      },
-      {
-        "aspect": "Component identity",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Native platforms compose this pattern from three siblings — Chat Field needs to ship as a composition, not a primitive"
-      },
-      {
-        "aspect": "Icon slots",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Leading/trailing icon frames are fixed rasters, not Icon Button instances"
-      },
-      {
-        "aspect": "Native component file",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Proposed target: <code>EBChatComposer</code> under a new Chat package"
-      }
-    ],
+    "codeConnect": [],
     "variants": {
-      "total": 2,
-      "description": "Single axis: <code>active</code> (no/yes). Both variants are 360×88px.",
+      "total": 4,
+      "description": "<code>isActive</code> (2) × <code>hasValue</code> (2) = 4 variants, all built. Every one is 360 × 88.",
       "columns": [
-        "active",
-        "Size",
-        "Inner field border",
-        "Node ID"
+        "isActive",
+        "hasValue",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "no",
-            "360×88",
-            "1px #D7E0EF",
-            "23:145916"
+            "False",
+            "False",
+            "<code>5536:31210</code>",
+            "360 × 88"
           ]
         },
         {
           "cells": [
-            "yes",
-            "360×88",
-            "2px #005CE5",
-            "23:145922"
+            "True",
+            "False",
+            "<code>5554:36222</code>",
+            "360 × 88"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "True",
+            "<code>5554:36272</code>",
+            "360 × 88"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "True",
+            "<code>5554:36279</code>",
+            "360 × 88"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 5536:31209",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>isActive</code> and <code>hasValue</code>. The cards on retired node <code>23:145916</code> are replaced; <code>leadingAction</code> and <code>trailingAction</code> are listed as SLOTs with 4 items each.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> 360 × 88 with 12 padding on top and the sides and 24 underneath: leading slot 40 × 52 at (12, 12), Input Field 248 × 52 at (52, 12) radius 6, trailing slot 44 × 52 at (300, 12).",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Colours read per variant.</strong> The border goes #D7E0EF → #005CE5 with <code>isActive</code>; the text goes from the #90A8D0 placeholder to a #0A2757 value.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved against the token database.</strong> <code>#text-label</code> matches <code>Primary/Multi-line Label/Light/Base</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:chat-composer:2.0.0</code>, a five-row mapping, three snippets and a four-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Both axes are runtime state natively.</strong> <code>isActive</code> is focus and <code>hasValue</code> is whether the bound text is empty, so neither maps to a parameter. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>The send glyph changes with <code>hasValue</code></strong> — pale #9BC5FD to solid #005CE5 — but the icon fills are not exposed by the plugin, so both come from the export. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>No disabled, error or multi-line state.</strong> The field is a fixed 52 tall on one line, and neither action has a pressed state. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>The placeholder fails AA</strong> — #90A8D0 is 2.41:1 on white at 16pt, and the pale send glyph 1.78:1. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>The text layer keeps the <code>#</code> sigil</strong> — <code>#text-label</code>. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>The set sits in a section named “[NEW] Chat Composer (Don’t Use)”.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

@@ -2,29 +2,54 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/action-list.js`.
+// Panel mirrors the property panel of set 4628:19843, in its order: three
+// variant axes, five booleans and the two text properties. Asset-Slot,
+// Counter-Slot and Leading-Slot get no control.
 const actionListDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
+      {
+        label: 'TrailingContent',
+        prop: 'trailingcontent',
+        defaultValue: 'cta',
+        options: [
+          { value: 'cta',     label: 'CTA' },
+          { value: 'counter', label: 'Counter' },
+        ],
+      },
       {
         label: 'State',
         prop: 'state',
         defaultValue: 'default',
         options: [
           { value: 'default',  label: 'Default' },
-          { value: 'disabled', label: 'Disabled' },
           { value: 'loading',  label: 'Loading' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'pressed',  label: 'Pressed' },
         ],
       },
       {
         label: 'Density',
         prop: 'density',
-        defaultValue: 'compact',
+        defaultValue: 'expanded',
         options: [
-          { value: 'compact',  label: 'Compact' },
           { value: 'expanded', label: 'Expanded' },
+          { value: 'compact',  label: 'Compact' },
         ],
       },
+      { label: 'hasAsset', prop: 'hasasset', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasDescription', prop: 'hasdescription', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasLeadingComponent', prop: 'hasleadingcomponent', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasTrailingComponent', prop: 'hastrailingcomponent', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasBottomBorder', prop: 'hasbottomborder', control: 'toggle', defaultValue: 'false',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'Title', prop: 'title', control: 'input', defaultValue: 'Label', options: [] },
+      { label: 'Description', prop: 'description', control: 'input', defaultValue: 'description', options: [] },
     ],
   },
 ];
@@ -217,44 +242,220 @@ export const actionList: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "list-—-icon-+-label-+-cta-+-chevron",
-        "demoKey": "base",
+        "cardKey": "al-spec-main",
+        "demoKey": "main",
+        "title": "Action Row",
+        "node": "4628:19843",
+        "description": "A 360-wide tappable row — asset, title, description and either a CTA label or a counter. It hugs its tallest column; Density adds 13 or 9 above and below.",
+        "previewHtml": "<div id=\"action-list-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": actionListDemoControls,
-        "title": "List — icon + label + CTA + chevron",
-        "node": "18577:14545",
-        "description": "Baseline row. 6 variants (State × Density). Label in Neutral Dark Semibold 16. Trailing CTA text + 24 px chevron icon. 360 × 48 (compact) / 360 × 56 (expanded).",
-        "previewHtml": "<div id=\"lit-spec-base\" style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:16px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Variant", "value": "List — icon + label + CTA + chevron" },
-              { "key": "State",   "value": "Default", "prop": "state" },
-              { "key": "Density", "value": "Compact", "prop": "density" }
+              {
+                "key": "TrailingContent",
+                "value": "CTA",
+                "prop": "trailingcontent"
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "prop": "state"
+              },
+              {
+                "key": "Density",
+                "value": "Expanded",
+                "prop": "density"
+              },
+              {
+                "key": "hasAsset",
+                "value": "True",
+                "prop": "hasasset"
+              },
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "prop": "hasdescription"
+              },
+              {
+                "key": "hasLeadingComponent",
+                "value": "True",
+                "prop": "hasleadingcomponent"
+              },
+              {
+                "key": "hasTrailingComponent",
+                "value": "True",
+                "prop": "hastrailingcomponent"
+              },
+              {
+                "key": "hasBottomBorder",
+                "value": "False",
+                "prop": "hasbottomborder"
+              },
+              {
+                "key": "Title",
+                "value": "Label",
+                "prop": "title"
+              },
+              {
+                "key": "Description",
+                "value": "description",
+                "prop": "description"
+              },
+              {
+                "key": "⤷ Asset-Slot",
+                "value": "Slot · 12 items",
+                "variants": {
+                  "hasasset:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "⤷ Leading-Slot",
+                "value": "Slot · 6 items — CTA label",
+                "variants": {
+                  "trailingcontent:counter": {
+                    "value": "Slot · 6 items — Counter"
+                  }
+                }
+              },
+              {
+                "key": "⤷ Counter-Slot",
+                "value": "Slot · 6 items",
+                "variants": {
+                  "trailingcontent:cta": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Resolved variant",
+                "value": "4628:19857 · 360 × 64",
+                "mono": true,
+                "prop": "variantNode"
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg",      "value": "#FFFFFF", "token": "action-list/color/default/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "action-list/color/default/label",
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF",
                 "variants": {
-                  "state:disabled": { "value": "#C2CFE5", "token": "action-list/color/disabled/label" }
+                  "state:pressed": {
+                    "value": "#F6F9FD",
+                    "swatch": "#F6F9FD"
+                  }
                 }
               },
-              { "key": "Link", "value": "#005CE5", "token": "action-list/color/default/label-link",
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "token": "—",
+                "swatch": "#0A2757",
                 "variants": {
-                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/label-link" }
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  }
                 }
               },
-              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron",
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "token": "—",
+                "swatch": "#6780A9",
                 "variants": {
-                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/chevron" }
+                  "hasdescription:false": {
+                    "hide": true
+                  },
+                  "trailingcontent:counter": {
+                    "value": "#90A8D0",
+                    "swatch": "#90A8D0"
+                  },
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  }
+                }
+              },
+              {
+                "key": "Asset",
+                "value": "#D7E0EF",
+                "token": "—",
+                "swatch": "#D7E0EF",
+                "variants": {
+                  "hasasset:false": {
+                    "hide": true
+                  },
+                  "state:disabled": {
+                    "value": "#EEF2F9",
+                    "swatch": "#EEF2F9"
+                  }
+                }
+              },
+              {
+                "key": "CTA label",
+                "value": "#005CE5",
+                "token": "—",
+                "swatch": "#005CE5",
+                "variants": {
+                  "trailingcontent:counter": {
+                    "hide": true
+                  },
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  }
+                }
+              },
+              {
+                "key": "Counter",
+                "value": "#EEF2F9 / #072592",
+                "token": "—",
+                "swatch": "#EEF2F9",
+                "variants": {
+                  "trailingcontent:cta": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Skeleton",
+                "value": "#EEF2F9",
+                "token": "—",
+                "swatch": "#EEF2F9",
+                "variants": {
+                  "state:default": {
+                    "hide": true
+                  },
+                  "state:pressed": {
+                    "hide": true
+                  },
+                  "state:disabled": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Bottom border",
+                "value": "#D7E0EF",
+                "token": "—",
+                "swatch": "#D7E0EF",
+                "variants": {
+                  "hasbottomborder:false": {
+                    "hide": true
+                  }
                 }
               }
             ]
@@ -263,14 +464,124 @@ export const actionList: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Height", "value": "48px", "mono": true,
+              {
+                "key": "Size",
+                "value": "360 × 64",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Width",
+                "value": "360 — fixed",
+                "mono": true
+              },
+              {
+                "key": "Padding",
+                "value": "12 sides · 13 top and bottom",
+                "mono": true,
                 "variants": {
-                  "density:expanded": { "value": "56px" }
+                  "density:compact": {
+                    "value": "12 sides · 9 top and bottom"
+                  }
                 }
               },
-              { "key": "Padding", "value": "8px 12px", "mono": true,
+              {
+                "key": "Row",
+                "value": "336 × 38",
+                "mono": true
+              },
+              {
+                "key": "Row height",
+                "value": "Tallest of asset 32 · text 38 · trailing 32",
+                "mono": true
+              },
+              {
+                "key": "CTA chevron",
+                "value": "32 box centred at x 332",
+                "mono": true,
                 "variants": {
-                  "density:expanded": { "value": "12px 12px" }
+                  "trailingcontent:counter": {
+                    "value": "32 box centred at x 300"
+                  },
+                  "hastrailingcomponent:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Asset-Slot",
+                "value": "32 × 32 at x 12 · gap 12",
+                "mono": true,
+                "variants": {
+                  "hasasset:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Text column",
+                "value": "216 wide",
+                "mono": true,
+                "variants": {
+                  "trailingcontent:counter": {
+                    "value": "224 wide"
+                  }
+                }
+              },
+              {
+                "key": "Title → description",
+                "value": "gap 8",
+                "mono": true,
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "TrailingGroup",
+                "value": "64 wide — CTA 30 + icon 32",
+                "mono": true,
+                "variants": {
+                  "trailingcontent:counter": {
+                    "value": "56 wide — icon 32 + counter 24"
+                  }
+                }
+              },
+              {
+                "key": "Counter",
+                "value": "24 × 24 · radius full",
+                "mono": true,
+                "variants": {
+                  "trailingcontent:cta": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Loading skeleton",
+                "value": "lines 206 × 16 and 206 × 6 · two 24 blocks",
+                "mono": true,
+                "variants": {
+                  "state:default": {
+                    "hide": true
+                  },
+                  "state:pressed": {
+                    "hide": true
+                  },
+                  "state:disabled": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Bottom border",
+                "value": "1px full width",
+                "mono": true,
+                "variants": {
+                  "hasbottomborder:false": {
+                    "hide": true
+                  }
                 }
               }
             ]
@@ -279,390 +590,127 @@ export const actionList: ComponentData = {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Font",     "value": "Proxima Soft Semibold", "mono": true },
-              { "key": "Size",     "value": "16px / 16px",           "mono": true },
-              { "key": "Tracking", "value": "+0.25",                 "mono": true }
+              {
+                "key": "Title",
+                "value": "Primary/Label/Base",
+                "mono": true
+              },
+              {
+                "key": "Description",
+                "value": "Primary/Multi-line Label/Light/Fine",
+                "mono": true,
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
+                }
+              }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBActionRow</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Account settings\"</span><span class=\"syn-punc\">, </span>icon<span class=\"syn-punc\">: </span>icon<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">onTap</span><span class=\"syn-punc\">{ }</span>",
-        "compose": "<span class=\"syn-type\">EBActionRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account settings\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ icon }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBRowState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span><span class=\"syn-punc\">,</span>\n    onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "list---with-counter-—-icon-+-label-+-counter-+-chevron",
-        "demoKey": "counter",
-        "demoControls": actionListDemoControls,
-        "title": "List - with Counter — icon + label + counter + chevron",
-        "node": "18577:14637",
-        "description": "Adds a trailing <a href=\"#\" onclick=\"showPanelById('counter');return false;\">Counter</a> pill. 6 variants (Density × State). Card-like container with <code>radius-2</code> (6 px) corners and <code>Depth/D0</code> drop-shadow — differs from the base's flat row. Label switches to Bold 18 Brand Blue. 360 × 56 / 360 × 64.",
-        "previewHtml": "<div id=\"lit-spec-counter\" style=\"width:360px;\"><div style=\"display:flex;align-items:center;gap:12px;padding:12px;background:#FFFFFF;border-radius:6px;box-shadow:0 1px 4px rgba(10,39,87,0.08), 0 0 0 1px rgba(10,39,87,0.04);\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:18px;line-height:20px;font-weight:700;letter-spacing:0.25px;color:#005CE5;\">Label</div></div><span style=\"display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:99px;background:#005CE5;color:#FFFFFF;font-family:'Proxima Soft',system-ui;font-size:13px;font-weight:700;line-height:1;flex-shrink:0;\">3</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Variant", "value": "List - with Counter — icon + label + counter + chevron" },
-              { "key": "State",   "value": "Default", "prop": "state" },
-              { "key": "Density", "value": "Compact", "prop": "density" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg",      "value": "#FFFFFF", "token": "action-list/color/default/bg" },
-              { "key": "Label", "value": "#005CE5", "token": "action-list/color/default/label-brand",
-                "variants": {
-                  "state:disabled": { "value": "#C2CFE5", "token": "action-list/color/disabled/label" }
-                }
-              },
-              { "key": "Counter", "value": "#005CE5", "token": "counter/color/filled/bg",
-                "variants": {
-                  "state:disabled": { "value": "#E5EBF4", "token": "counter/color/empty/bg" }
-                }
-              },
-              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron",
-                "variants": {
-                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/chevron" }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Height", "value": "56px", "mono": true,
-                "variants": {
-                  "density:expanded": { "value": "64px" }
-                }
-              },
-              { "key": "Padding", "value": "11px 12px", "mono": true,
-                "variants": {
-                  "density:expanded": { "value": "15px 12px" }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Font",     "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size",     "value": "18px / 20px",       "mono": true },
-              { "key": "Tracking", "value": "+0.25",             "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBActionRow</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Account settings\"</span><span class=\"syn-punc\">, </span>icon<span class=\"syn-punc\">: </span>icon<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">onTap</span><span class=\"syn-punc\">{ }</span>",
-        "compose": "<span class=\"syn-type\">EBActionRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account settings\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ icon }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBRowState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span><span class=\"syn-punc\">,</span>\n    onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "list---with-description-—-icon-+-label-+-description-+-cta-+-chevron",
-        "demoKey": "description",
-        "demoControls": actionListDemoControls,
-        "title": "List - with Description — icon + label + description + CTA + chevron",
-        "node": "18577:14604",
-        "description": "Adds a secondary description line under the label. 3 variants (State only — no Density axis). Label matches the base (Semibold 16 Neutral). Description uses Semibold 12 / tracking-wider / <code>main/action-list/color/default/description</code> (<code>#6780A9</code>). 360 × 60.",
-        "previewHtml": "<div id=\"lit-spec-description\" style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#6780A9;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Variant", "value": "List - with Description — icon + label + description + CTA + chevron" },
-              { "key": "State",   "value": "Default", "prop": "state" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg",          "value": "#FFFFFF", "token": "action-list/color/default/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "action-list/color/default/label",
-                "variants": {
-                  "state:disabled": { "value": "#C2CFE5", "token": "action-list/color/disabled/label" }
-                }
-              },
-              { "key": "Description", "value": "#6780A9", "token": "action-list/color/default/description",
-                "variants": {
-                  "state:disabled": { "value": "#C2CFE5", "token": "action-list/color/disabled/description" }
-                }
-              },
-              { "key": "Link", "value": "#005CE5", "token": "action-list/color/default/label-link",
-                "variants": {
-                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/label-link" }
-                }
-              },
-              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron",
-                "variants": {
-                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/chevron" }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Height",  "value": "60px",      "mono": true },
-              { "key": "Padding", "value": "8px 12px", "mono": true,
-                "variants": {
-                  "density:expanded": { "value": "12px 12px" }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label font",       "value": "Proxima Soft Semibold · 16 / 18 · +0.25", "mono": true },
-              { "key": "Description font", "value": "Proxima Soft Semibold · 12 / 16 · +0.4",  "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBActionRow</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Account settings\"</span><span class=\"syn-punc\">, </span>icon<span class=\"syn-punc\">: </span>icon<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">onTap</span><span class=\"syn-punc\">{ }</span>",
-        "compose": "<span class=\"syn-type\">EBActionRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account settings\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ icon }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBRowState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span><span class=\"syn-punc\">,</span>\n    onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBActionRow(\"Label\")\n    .ebDescription(\"description\")\n    .ebAsset { Image(\"asset\") }\n    .ebDensity(.expanded)\n    .ebCTA(\"CTA\")",
+        "compose": "EBActionRow(\n    title = \"Label\",\n    description = \"description\",\n    asset = { Image(painterResource(R.drawable.asset), null) },\n    density = EBActionRowDensity.Expanded,\n    ctaLabel = \"CTA\",\n    onClick = { }\n)"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
+        "description": "Read off <code>get_node_info</code> across the 16 variants of set <code>4628:19843</code>. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
           "Default",
+          "Pressed",
           "Disabled",
           "Loading"
         ],
         "rows": [
           {
-            "role": "Row bg",
-            "token": "main/action-list/color/default/bg",
+            "role": "Background",
+            "token": "—",
             "values": [
               "#FFFFFF",
+              "#F6F9FD",
               "#FFFFFF",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Label (base & with-description)",
-            "token": "main/action-list/color/default/label",
+            "role": "Title",
+            "token": "—",
             "values": [
               "#0A2757",
+              "#0A2757",
               "#C2CFE5",
-              "—"
+              "–"
             ]
           },
           {
-            "role": "Label (with-counter)",
-            "token": "main/action-list/color/default/label-brand",
-            "values": [
-              "#005CE5",
-              "#C2CFE5",
-              "—"
-            ]
-          },
-          {
-            "role": "Description",
-            "token": "main/action-list/color/default/description",
+            "role": "Description (CTA)",
+            "token": "—",
             "values": [
               "#6780A9",
+              "#6780A9",
               "#C2CFE5",
-              "—"
+              "–"
             ]
           },
           {
-            "role": "Trailing CTA label",
-            "token": "main/action-list/color/default/label-link",
+            "role": "Description (Counter)",
+            "token": "—",
             "values": [
-              "#005CE5",
-              "#9BC5FD",
-              "—"
-            ]
-          },
-          {
-            "role": "Chevron",
-            "token": "main/action-list/color/default/chevron",
-            "values": [
-              "#005CE5",
-              "#9BC5FD",
-              "—"
-            ]
-          },
-          {
-            "role": "Counter bg",
-            "token": "main/counter/color/filled/bg",
-            "values": [
-              "#EEF2F9",
-              "#EEF2F9",
-              "—"
-            ]
-          },
-          {
-            "role": "Counter label",
-            "token": "main/counter/color/filled/label",
-            "values": [
-              "#072592",
+              "#90A8D0",
+              "#90A8D0",
               "#C2CFE5",
-              "—"
+              "–"
             ]
           },
           {
-            "role": "Skeleton fill",
-            "token": "bg/color-bg-strong",
+            "role": "Asset",
+            "token": "—",
             "values": [
-              "—",
-              "—",
+              "#D7E0EF",
+              "#D7E0EF",
+              "#EEF2F9",
               "#EEF2F9"
             ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
-          "Value"
-        ],
-        "rows": [
+          },
           {
-            "role": "Frame width",
+            "role": "CTA label",
             "token": "—",
             "values": [
-              "360px (fill container in product)"
+              "#005CE5",
+              "#005CE5",
+              "#C2CFE5",
+              "–"
             ]
           },
           {
-            "role": "Row height — base",
+            "role": "Counter fill / value",
             "token": "—",
             "values": [
-              "48 (compact) / 56 (expanded)"
+              "#EEF2F9 / #072592",
+              "#EEF2F9 / #072592",
+              "#EEF2F9 / #C2CFE5",
+              "–"
             ]
           },
           {
-            "role": "Row height — with Counter",
+            "role": "Skeleton",
             "token": "—",
             "values": [
-              "56 (compact) / 64 (expanded)"
+              "–",
+              "–",
+              "–",
+              "#EEF2F9"
             ]
           },
           {
-            "role": "Row height — with Description",
+            "role": "Bottom border",
             "token": "—",
             "values": [
-              "60 (no density axis)"
-            ]
-          },
-          {
-            "role": "Icon size",
-            "token": "—",
-            "values": [
-              "32 × 32"
-            ]
-          },
-          {
-            "role": "Icon → label gap",
-            "token": "space/space-12",
-            "values": [
-              "12px"
-            ]
-          },
-          {
-            "role": "Wrapper padding (compact)",
-            "token": "space/space-12 + 7/11",
-            "values": [
-              "12px / 7px (compact) · 12px / 11px (expanded)"
-            ]
-          },
-          {
-            "role": "Description gap",
-            "token": "space/space-6",
-            "values": [
-              "6px"
-            ]
-          },
-          {
-            "role": "Counter radius",
-            "token": "radius/radius-round",
-            "values": [
-              "99999px (pill)"
-            ]
-          },
-          {
-            "role": "Counter size",
-            "token": "—",
-            "values": [
-              "24 × 24 (filled) / h24 (empty)"
-            ]
-          },
-          {
-            "role": "Card radius (with Counter)",
-            "token": "radius/radius-2",
-            "values": [
-              "6px"
-            ]
-          },
-          {
-            "role": "Card shadow (with Counter)",
-            "token": "Depth/D0",
-            "values": [
-              "0 1 3 0 · #E8EEF2C9"
-            ]
-          },
-          {
-            "role": "Chevron size",
-            "token": "—",
-            "values": [
-              "24 × 24 (base + with-description) / 32 × 32 (with-counter)"
-            ]
-          },
-          {
-            "role": "Spacer annotations",
-            "token": "—",
-            "values": [
-              "_space_2, _space_16 leak through (opacity 0)"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Spec"
-        ],
-        "rows": [
-          {
-            "role": "Label — base & with-description",
-            "token": "Primary/Label/Light/Base",
-            "values": [
-              "Proxima Soft Semibold · 16 / 16 · +0.25"
-            ]
-          },
-          {
-            "role": "Label — with-counter",
-            "token": "Primary/Label/Large",
-            "values": [
-              "Proxima Soft Bold · 18 / 18 · +0.25"
-            ]
-          },
-          {
-            "role": "Description",
-            "token": "Primary/Multi-line Label/Light/Fine",
-            "values": [
-              "Proxima Soft Semibold · 12 / 14 · +0.5"
-            ]
-          },
-          {
-            "role": "Trailing CTA",
-            "token": "Primary/Label/Light/Base",
-            "values": [
-              "Proxima Soft Semibold · 16 / 16 · +0.25"
-            ]
-          },
-          {
-            "role": "Counter label",
-            "token": "Primary/Label/Small",
-            "values": [
-              "Proxima Soft Bold · 14 / 14 · +0.25"
+              "#D7E0EF",
+              "#D7E0EF",
+              "#D7E0EF",
+              "#D7E0EF"
             ]
           }
         ]
@@ -679,188 +727,471 @@ export const actionList: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:list:1.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:action-row:2.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.actionrow.*  <span class=\"cmt\">// Compose</span>"
         }
-      ]
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>4628:19843</code>, in panel order, then the three SLOTs.",
       "rows": [
         {
-          "figma": "3 sibling components",
-          "swift": "1 component: <code>List</code>",
-          "compose": "EBActionListRow"
+          "figma": "TrailingContent — CTA, Counter",
+          "swift": "<code>.ebCTA(String)</code> or <code>.ebCounter(Int)</code>",
+          "compose": "<code>ctaLabel: String?</code> or <code>counter: Int?</code>"
         },
         {
-          "figma": "icon (Placeholder)",
-          "swift": "leading (Slot)",
-          "compose": "@ViewBuilder leading"
+          "figma": "State — Default, Loading, Disabled, Pressed",
+          "swift": "<code>.ebLoading(true)</code>, <code>.disabled(true)</code>; Pressed is the row’s pressed style",
+          "compose": "<code>loading = true</code>, <code>enabled = false</code>; Pressed from <code>interactionSource</code>"
         },
         {
-          "figma": "label: String",
-          "swift": "label: String",
-          "compose": "label: String"
+          "figma": "Density — Expanded, Compact",
+          "swift": "<code>.ebDensity(.expanded / .compact)</code>",
+          "compose": "<code>density = EBActionRowDensity.Expanded / Compact</code>"
         },
         {
-          "figma": "description (only on sibling)",
-          "swift": "description?: String",
-          "compose": "description: String?"
+          "figma": "hasAsset — boolean",
+          "swift": "<code>.ebAsset { }</code> — omit for False",
+          "compose": "<code>asset: (@Composable () -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "trailingComponent (bool) / counter (bool) / chevron (bool)",
-          "swift": "trailing: .cta(String) | .counter(Int) | .chevron | .none",
-          "compose": "trailing: EBRowTrailing"
+          "figma": "hasDescription — boolean",
+          "swift": "<code>.ebDescription(String)</code>",
+          "compose": "<code>description: String? = null</code>"
         },
         {
-          "figma": "density: Compact/Expanded",
-          "swift": "density: .compact / .expanded",
-          "compose": ".controlSize(.regular / .large)"
+          "figma": "hasLeadingComponent — boolean",
+          "swift": "the CTA label or counter itself",
+          "compose": "<code>ctaLabel</code> / <code>counter</code> set to null"
         },
         {
-          "figma": "state: Default/Disabled/Loading",
-          "swift": "state: .default / .pressed / .disabled / .loading",
-          "compose": ".disabled(Bool) + intrinsic press + loading: Bool"
+          "figma": "hasTrailingComponent — boolean",
+          "swift": "<code>.ebTrailingIcon(nil)</code> to drop the chevron",
+          "compose": "<code>trailingIcon: EBIcon? = EBIcons.ChevronRight</code>"
         },
         {
-          "figma": "bottomBorder: Bool",
-          "swift": "bottomBorder: Bool",
-          "compose": "divider: Bool"
+          "figma": "hasBottomBorder — boolean",
+          "swift": "<code>.ebBottomBorder(true)</code>",
+          "compose": "<code>showsBottomBorder = true</code>"
         },
         {
-          "figma": "(not modeled)",
-          "swift": "onTap",
-          "compose": "action: () -&gt; Void"
+          "figma": "Title / Description — text",
+          "swift": "<code>EBActionRow(_ title: String)</code>, <code>.ebDescription</code>",
+          "compose": "<code>title: String</code>, <code>description: String?</code>"
+        },
+        {
+          "figma": "⤷ Asset-Slot — SLOT · 12 items (32 × 32)",
+          "swift": "content of <code>.ebAsset</code>",
+          "compose": "the value of <code>asset</code>"
+        },
+        {
+          "figma": "⤷ Leading-Slot — SLOT · 6 items",
+          "swift": "the CTA label",
+          "compose": "the CTA label"
+        },
+        {
+          "figma": "⤷ Counter-Slot — SLOT · 6 items (24 × 24)",
+          "swift": "the counter badge",
+          "compose": "the counter badge"
         }
       ],
       "filePaths": {
-        "swift": "ios/Components/List/EBActionListRow.swift",
-        "compose": "android/components/list/EBActionListRow.kt"
+        "swift": "ios/Components/ActionRow/EBActionRow.swift",
+        "compose": "android/components/actionrow/EBActionRow.kt"
       }
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Base — icon + label + CTA + chevron</span>\n<span class=\"typ\">EBActionListRow</span>(<span class=\"str\">\"Payment methods\"</span>, <span class=\"prp\">trailing</span>: .<span class=\"prp\">cta</span>(<span class=\"str\">\"View\"</span>)) {\n    <span class=\"typ\">Image</span>(systemName: <span class=\"str\">\"creditcard.fill\"</span>)\n} action: { openPaymentMethods() }\n\n<span class=\"cmt\">// With counter — shows 3 pending items</span>\n<span class=\"typ\">EBActionListRow</span>(<span class=\"str\">\"Notifications\"</span>, <span class=\"prp\">trailing</span>: .<span class=\"prp\">counter</span>(<span class=\"kw\">3</span>)) {\n    <span class=\"typ\">Image</span>(systemName: <span class=\"str\">\"bell.fill\"</span>)\n} action: { openNotifications() }\n\n<span class=\"cmt\">// With description + chevron</span>\n<span class=\"typ\">EBActionListRow</span>(\n    <span class=\"str\">\"Profile\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Name, photo, and contact info\"</span>,\n    <span class=\"prp\">trailing</span>: .<span class=\"prp\">chevron</span>\n) {\n    <span class=\"typ\">Image</span>(systemName: <span class=\"str\">\"person.crop.circle\"</span>)\n} action: { openProfile() }\n\n<span class=\"cmt\">// Loading</span>\n<span class=\"typ\">EBActionListRow</span>.<span class=\"prp\">skeleton</span>()",
-        "compose": "<span class=\"cmt\">// Base — icon + label + CTA + chevron</span>\n<span class=\"typ\">EBActionListRow</span>(\n    label = <span class=\"str\">\"Payment methods\"</span>,\n    leading = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.CreditCard, contentDescription = null) },\n    trailing = <span class=\"typ\">EBRowTrailing</span>.Cta(<span class=\"str\">\"View\"</span>),\n    onClick = { openPaymentMethods() }\n)\n\n<span class=\"cmt\">// With counter</span>\n<span class=\"typ\">EBActionListRow</span>(\n    label = <span class=\"str\">\"Notifications\"</span>,\n    leading = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.Notifications, contentDescription = null) },\n    trailing = <span class=\"typ\">EBRowTrailing</span>.Counter(<span class=\"kw\">3</span>),\n    onClick = { openNotifications() }\n)\n\n<span class=\"cmt\">// With description + chevron</span>\n<span class=\"typ\">EBActionListRow</span>(\n    label = <span class=\"str\">\"Profile\"</span>,\n    description = <span class=\"str\">\"Name, photo, and contact info\"</span>,\n    leading = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.Person, contentDescription = null) },\n    trailing = <span class=\"typ\">EBRowTrailing</span>.Chevron,\n    onClick = { openProfile() }\n)\n\n<span class=\"cmt\">// Loading</span>\n<span class=\"typ\">EBActionListRow</span>.Skeleton()"
+        "subheading": "CTA · Expanded",
+        "swift": "<span class=\"cmt\">// TrailingContent=CTA, State=Default, Density=Expanded — 4628:19857, 360 × 64.</span>\nEBActionRow(\"Linked accounts\")\n    .ebDescription(\"3 connected\")\n    .ebAsset { Image(\"bank\") }\n    .ebDensity(.expanded)\n    .ebCTA(\"Manage\")",
+        "compose": "<span class=\"cmt\">// TrailingContent=CTA, State=Default, Density=Expanded — 4628:19857, 360 × 64.</span>\nEBActionRow(\n    title = \"Linked accounts\",\n    description = \"3 connected\",\n    asset = { Image(painterResource(R.drawable.bank), null) },\n    density = EBActionRowDensity.Expanded,\n    ctaLabel = \"Manage\",\n    onClick = { openAccounts() }\n)"
+      },
+      {
+        "subheading": "Counter · Compact",
+        "swift": "<span class=\"cmt\">// TrailingContent=Counter, State=Default, Density=Compact — 4628:19883, 360 × 56.</span>\nEBActionRow(\"Notifications\")\n    .ebDescription(\"Unread\")\n    .ebAsset { Image(\"bell\") }\n    .ebDensity(.compact)\n    .ebCounter(4)",
+        "compose": "<span class=\"cmt\">// TrailingContent=Counter, State=Default, Density=Compact — 4628:19883, 360 × 56.</span>\nEBActionRow(\n    title = \"Notifications\",\n    description = \"Unread\",\n    asset = { Image(painterResource(R.drawable.bell), null) },\n    density = EBActionRowDensity.Compact,\n    counter = 4,\n    onClick = { openInbox() }\n)"
+      },
+      {
+        "subheading": "Loading",
+        "swift": "<span class=\"cmt\">// State=Loading — 4649:16639, 360 × 56 whatever Density says.</span>\nEBActionRow(\"Linked accounts\")\n    .ebLoading(true)",
+        "compose": "<span class=\"cmt\">// State=Loading — 4649:16639, 360 × 56 whatever Density says.</span>\nEBActionRow(\n    title = \"Linked accounts\",\n    loading = true,\n    onClick = { }\n)"
+      },
+      {
+        "subheading": "Disabled",
+        "swift": "<span class=\"cmt\">// State=Disabled, Density=Expanded — 4628:19952, 360 × 64.</span>\nEBActionRow(\"Linked accounts\")\n    .ebDescription(\"Unavailable\")\n    .ebCTA(\"Manage\")\n    .disabled(true)",
+        "compose": "<span class=\"cmt\">// State=Disabled, Density=Expanded — 4628:19952, 360 × 64.</span>\nEBActionRow(\n    title = \"Linked accounts\",\n    description = \"Unavailable\",\n    ctaLabel = \"Manage\",\n    enabled = false,\n    onClick = { }\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Row as button",
-        "ios": "Wrap row in <code>Button</code>; mark decorative leading icon with <code>.accessibilityHidden(true)</code>.",
-        "android": "<code>Modifier.clickable { … }.semantics(mergeDescendants = true) { role = Role.Button }</code>."
+        "requirement": "Row role",
+        "ios": "Wrap as <code>Button</code>; the label reads title then description.",
+        "android": "<code>Modifier.clickable(role = Role.Button)</code> with a merged <code>contentDescription</code>."
       },
       {
-        "requirement": "Combined label",
-        "ios": "Announce label + description + trailing counter as one phrase: \"Notifications, 3 unread\".",
-        "android": "Same — build via <code>contentDescription</code>."
+        "requirement": "Counter",
+        "ios": "<code>.accessibilityValue(\"4 unread\")</code> — a bare digit is not enough.",
+        "android": "Append the count to <code>stateDescription</code>."
       },
       {
-        "requirement": "Touch target",
-        "ios": "Minimum 44 × 44 — expanded density hits this; compact (48 px row) is safe; ensure whole row is the tap target, not just the chevron.",
-        "android": "Minimum 48 × 48dp — same."
+        "requirement": "CTA",
+        "ios": "The CTA is part of the row, not a second button — do not expose it separately unless it has its own action.",
+        "android": "Same; keep one clickable per row."
       },
       {
         "requirement": "Loading",
-        "ios": "Announce \"Loading\" once; disable tap while loading.",
-        "android": "Same — <code>enabled = false</code> plus <code>contentDescription = \"Loading\"</code>."
+        "ios": "<code>.accessibilityLabel(\"Loading\")</code> and hide the skeleton bars.",
+        "android": "<code>contentDescription = \"Loading\"</code>; skeletons <code>clearAndSetSemantics {}</code>."
       },
       {
-        "requirement": "Focus ring",
-        "ios": "Provide a focused treatment for external keyboards.",
-        "android": "Focus ring required for TV / external keyboards."
+        "requirement": "Contrast",
+        "ios": "Title #0A2757 is 14.58:1 on white. Description #6780A9 is 4.01:1 at 12pt and #90A8D0 2.41:1 — both below 4.5:1. The CTA #005CE5 is 5.10:1. Disabled #C2CFE5 is 1.57:1.",
+        "android": "Same ratios."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use Expanded where the row carries a description, Compact in dense lists.",
+        "dontText": "Don’t mix densities within one list."
+      },
+      {
+        "doText": "Use the counter for an unread or pending count.",
+        "dontText": "Don’t put a number in the CTA label — that is what the counter is for."
+      },
+      {
+        "doText": "Turn on the bottom border when rows stack without a divider of their own.",
+        "dontText": "Don’t double up a border and a list divider."
+      },
+      {
+        "doText": "Use Loading while the row’s data is in flight.",
+        "dontText": "Don’t leave Loading on a row that has nothing to fetch."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "3 sibling components for one pattern. Spacer annotations leak into production."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>Wrapper</code>, <code>Row</code>, <code>Asset-Slot</code>, <code>Text-Container</code> and <code>TrailingGroup</code> are semantic, but <code>Leading-Slot</code> holds the trailing CTA and sits inside <code>TrailingGroup</code> — the name says the opposite of where it is."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Inconsistent label typography across siblings. Counter sibling uses a different text style than its peers."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Three PascalCase axes and five <code>has*</code> booleans over a complete 16-variant matrix, but <code>hasLeadingComponent</code> / <code>hasTrailingComponent</code> describe the slots inside the trailing group rather than the row’s own leading and trailing."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors / paddings bound to <code>main/action-list/*</code>, <code>space/*</code>, <code>radius/*</code> tokens."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Both text layers resolve <code>matched</code> — <code>Primary/Label/Base</code> and <code>Primary/Multi-line Label/Light/Fine</code>. The description uses two different greys depending on TrailingContent, and colour bindings cannot be read."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Maps cleanly once trailing is a single enum instead of three booleans across three components."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One <code>EBActionRow</code> with a density enum, an asset slot and either a CTA label or a counter."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No Pressed / Focused. Disabled + Loading present."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default, Pressed, Disabled and Loading on both TrailingContent values and both densities."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Leading icon is a gray placeholder circle — move to a Figma Slot."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Three real SLOTs — Asset (12 items), Leading and Counter (6 each) — plus a chevron instance."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked on consolidation. Mapping three siblings would cement the wrong schema."
+        "notes": "Three axes, five booleans and three slots are ready to map; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 0,
-      "description": "3 sibling components. Base + Counter multiply State (3) × Density (2) = 6 each. Description axis = State (3). Total <strong>6 + 6 + 3 = 15 variants</strong>.",
+      "total": 16,
+      "description": "<code>TrailingContent</code> (2) × <code>State</code> (4) × <code>Density</code> (2) = 16 variants, all built. The five booleans and two text properties add none. Loading is 56 tall in both densities.",
       "columns": [
-        "Component",
-        "Axes",
-        "Count",
-        "Node"
+        "TrailingContent",
+        "State",
+        "Density",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>List</strong>",
-            "State (3) × Density (2)",
-            "6",
-            "18577:14545"
+            "CTA",
+            "Default",
+            "Expanded",
+            "<code>4628:19857</code>",
+            "360 × 64"
           ]
         },
         {
           "cells": [
-            "<strong>List - with Counter</strong>",
-            "Density (2) × State (3)",
-            "6",
-            "18577:14637"
+            "CTA",
+            "Default",
+            "Compact",
+            "<code>4628:19844</code>",
+            "360 × 56"
           ]
         },
         {
           "cells": [
-            "<strong>List - with Description</strong>",
-            "State (3)",
-            "3",
-            "18577:14604"
+            "CTA",
+            "Pressed",
+            "Expanded",
+            "<code>4628:19870</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Pressed",
+            "Compact",
+            "<code>4628:20022</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Disabled",
+            "Expanded",
+            "<code>4628:19952</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Disabled",
+            "Compact",
+            "<code>4628:19939</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Loading",
+            "Expanded",
+            "<code>4649:16639</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Loading",
+            "Compact",
+            "<code>4649:16649</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Default",
+            "Expanded",
+            "<code>4628:19911</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Default",
+            "Compact",
+            "<code>4628:19883</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Pressed",
+            "Expanded",
+            "<code>4628:19925</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Pressed",
+            "Compact",
+            "<code>4628:19897</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Disabled",
+            "Expanded",
+            "<code>4628:19979</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Disabled",
+            "Compact",
+            "<code>4628:19965</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Loading",
+            "Expanded",
+            "<code>4628:20016</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Loading",
+            "Compact",
+            "<code>4628:20010</code>",
+            "360 × 56"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Chevron alignment and a hugging height · node 4628:19843",
+      "rows": [
+        {
+          "body": "<strong>Chevron re-centred on the set.</strong> Its 32 box sits at x 332 with a CTA and x 300 with a Counter, centred on the row — the preview had it 2px low and 3px left.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Height follows the content.</strong> The row is the tallest of the 32 asset, the text stack (16, plus 8 + 14 with a description) and the 32 trailing group, with Density adding 13 or 9 above and below — so 64 Expanded with everything on, 58 without the description, 42 with the label alone.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Those boolean-off heights are computed, not read.</strong> The set ships all five booleans on in every variant, so the hidden layers report stale coordinates. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 4628:19843",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>TrailingContent</code>, <code>State</code>, <code>Density</code>, five <code>has*</code> booleans and the <code>Title</code> / <code>Description</code> inputs. The three cards on retired nodes are replaced; the three SLOTs are listed without controls.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> 360 wide with a 38-tall Row: Asset-Slot 32 at x 12, a 12 gap, the text column (216 with CTA, 224 with Counter), then the TrailingGroup — 64 wide for CTA (30 label + 32 icon), 56 for Counter (32 chevron + 24 counter).",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Density is vertical padding only</strong> — 13 top and bottom for Expanded (64 tall), 9 for Compact (56).",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved against the token database.</strong> <code>Title</code> → <code>Primary/Label/Base</code> and <code>Description</code> → <code>Primary/Multi-line Label/Light/Fine</code>, both matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:action-row:2.0.0</code>, a twelve-row mapping, four snippets and a 16-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Loading ignores Density.</strong> Both Loading variants are 56 tall, so an Expanded list jumps 8px when a row finishes loading. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>The description uses two different greys</strong> — #6780A9 with a CTA and #90A8D0 with a Counter — for the same layer in the same state. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong><code>Leading-Slot</code> holds the trailing CTA</strong> and sits inside <code>TrailingGroup</code>, so <code>hasLeadingComponent</code> controls something on the right-hand side. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Description contrast fails AA</strong> — #6780A9 is 4.01:1 and #90A8D0 2.41:1 at 12pt; Disabled #C2CFE5 is 1.57:1. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

@@ -1,125 +1,141 @@
-/* Auto-extracted from assessment-src/components/chat-field.html.
- * Powers the live-preview dropdowns/toggles for the chat-field component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs chat-field
+/* Chat Composer — Style tab demo.
+ * Rebuilt from Figma component set 5536:31209 (GCash DS 2026 Working File),
+ * inside the section "[NEW] Chat Composer (Don't Use)".
+ * Offsets, fills and the text style read off get_node_info and
+ * get_styled_text_segments; checked against export_node_as_image.
+ *
+ * Panel (set 5536:31209, from the property-panel screenshot):
+ *   isActive        · True, False   (variant)
+ *   hasValue        · True, False   (variant)
+ *   trailingAction  · 4 items       (slot — Send Message Medium)
+ *   leadingAction   · 4 items       (slot — Add_Full)
+ * 2 x 2 = 4 variants, all built, every one 360 x 88.
+ *
+ * Row: leadingAction slot 40 x 52 at (12, 12) with a 32 icon, Input Field
+ * 248 x 52 at (52, 12) radius 6, trailingAction slot 44 x 52 at (300, 12).
+ * The frame pads 12 on top and the sides and 24 underneath.
+ *
+ * isActive swaps the field border from #D7E0EF to #005CE5 and the export
+ * draws the active one heavier, so the preview uses 1 and 2. hasValue
+ * swaps the text from the #90A8D0 placeholder to a #0A2757 value, and the
+ * send glyph from pale to solid blue — the icon fills are not exposed by
+ * the plugin, so those two come from the export.
  */
-/* ── Chat Field Component JS ──────────────────────────────────────── */
-var _cfDemo = { active: 'no' };
 
-function _cfBuildSvg(active) {
-  var isActive = (active === 'yes');
-  var fieldBorder = isActive ? '#005CE5' : '#D7E0EF';
-  var fieldBorderW = isActive ? 2 : 1;
-  var textColor = isActive ? '#0A2757' : '#90A8D0';
-  var iconColor = '#005CE5';
-
-  // Container: 360×88, white bg, paddings 12/16/24/12 (top/right/bottom/left)
-  // Field width = 360 - 12 - 32 - 8 - 12 - 32 - 16 = 248
-  // Field height = fills vertical between padding = 88 - 12 - 24 = 52
-  var s = '<svg width="360" height="88" viewBox="0 0 360 88" fill="none">';
-  s += '<rect width="360" height="88" fill="#FFFFFF"/>';
-
-  // Leading plus icon at x=12, y=(88-24)/2... center it in container vertical content band (12..64 → 38)
-  // icon frame 32×32 center at x=12+16=28, y=12+16=28 → content area from y=12 to y=64
-  // actual glyph inset 18.75% → draw plus from 18 to 38 in frame 12..44
-  var lx = 12, ly = 28; // frame top-left
-  s += '<rect x="' + lx + '" y="' + ly + '" width="32" height="32" fill="none"/>';
-  // plus glyph centered in 32×32
-  s += '<path d="M' + (lx + 16) + ' ' + (ly + 8) + 'v16M' + (lx + 8) + ' ' + (ly + 16) + 'h16" stroke="' + iconColor + '" stroke-width="2" stroke-linecap="round"/>';
-
-  // Field: x = 12 + 32 + 8 = 52, y = 12+4 = 16 (approximate vertical centering within 12..64 band), width = 248, height = 52
-  var fx = 52, fy = 18, fw = 248, fh = 52;
-  s += '<rect x="' + (fx + 0.5) + '" y="' + (fy + 0.5) + '" width="' + (fw - 1) + '" height="' + (fh - 1) + '" rx="5.5" fill="#FFFFFF" stroke="' + fieldBorder + '" stroke-width="' + fieldBorderW + '"/>';
-  s += '<text x="' + (fx + 12) + '" y="' + (fy + 32) + '" font-family="Proxima Soft, system-ui" font-size="16" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">Say hi!</text>';
-
-  // Trailing send icon at x = fx + fw + 12 = 312, y = 28 (same as leading)
-  var tx = 312, ty = 28;
-  s += '<rect x="' + tx + '" y="' + ty + '" width="32" height="32" fill="none"/>';
-  // paper-plane glyph roughly inset [18.75%, 18.75%, 12.5%, 10.94%] → draw a simplified plane
-  s += '<path d="M' + (tx + 7) + ' ' + (ty + 16) + 'L' + (tx + 27) + ' ' + (ty + 7) + 'L' + (tx + 20) + ' ' + (ty + 27) + 'L' + (tx + 17) + ' ' + (ty + 18) + 'Z" stroke="' + iconColor + '" stroke-width="1.6" stroke-linejoin="round" fill="none"/>';
-  s += '<path d="M' + (tx + 7) + ' ' + (ty + 16) + 'L' + (tx + 17) + ' ' + (ty + 18) + '" stroke="' + iconColor + '" stroke-width="1.6" stroke-linecap="round"/>';
-
-  s += '</svg>';
-  return s;
-}
-
-function updateChatFieldDemo() {
-  var el = document.getElementById('cf-demo-preview');
-  if (el) el.innerHTML = _cfBuildSvg(_cfDemo.active);
-}
-
-function _cfInitSpecCards() {
-  updateSpecCard('default', 'active', _specCards['default'].active);
-}
-
-function _cfInit() {
-  updateChatFieldDemo();
-  _cfInitSpecCards();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _cfInit);
-} else {
-  _cfInit();
-}
-
-/* ── Canonical wiring (matches avatar.js shape) ────────────────────── */
-/* Single dynamic spec card — keyed by demoKey `default`. */
-var _specCards = {
-  'default': { active: 'no' }
+var CC_W = 360, CC_H = 88;
+var CC_NODES = {
+  'false|false': '5536:31210', 'true|false': '5554:36222',
+  'false|true': '5554:36272',  'true|true': '5554:36279'
 };
+var CC_BORDER = { on: '#005CE5', off: '#D7E0EF' };
+var CC_TEXT = { placeholder: '#90A8D0', value: '#0A2757' };
+var CC_SEND = { on: '#005CE5', off: '#9BC5FD' };
+var CC_ADD = '#005CE5';
+
+function _ccOn(v, def) { return v == null ? def : v === 'true'; }
+
+/* Add_Full — 32 box, 20 glyph. */
+function _ccAdd(x, y) {
+  return '<path d="M' + (x + 16) + ' ' + (y + 6) + 'v20 M' + (x + 6) + ' ' + (y + 16) + 'h20" stroke="' + CC_ADD +
+         '" stroke-width="2" stroke-linecap="round"/>';
+}
+
+/* Send Message Medium — 32 box. The library glyph is not exposed by the
+ * plugin, so this is a stand-in drawn to match the export. */
+function _ccSend(x, y, fill) {
+  return '<path d="M' + (x + 26) + ' ' + (y + 7) + 'L' + (x + 6) + ' ' + (y + 15) + 'l8 3 3 8z" fill="none" stroke="' + fill +
+         '" stroke-width="2" stroke-linejoin="round"/>' +
+         '<path d="M' + (x + 26) + ' ' + (y + 7) + 'l-12 11" stroke="' + fill + '" stroke-width="2" stroke-linecap="round"/>';
+}
+
+function _ccRender(c) {
+  var active = _ccOn(c.isactive, false), value = _ccOn(c.hasvalue, false);
+  var border = active ? CC_BORDER.on : CC_BORDER.off, weight = active ? 2 : 1;
+  var s = '<svg width="' + CC_W + '" height="' + CC_H + '" viewBox="0 0 ' + CC_W + ' ' + CC_H +
+          '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  s += '<rect x="0" y="0" width="' + CC_W + '" height="' + CC_H + '" fill="#FFFFFF"/>';
+  s += _ccAdd(12, 22);
+  s += '<rect x="' + (52 + weight / 2) + '" y="' + (12 + weight / 2) + '" width="' + (248 - weight) + '" height="' + (52 - weight) +
+       '" rx="6" fill="#FFFFFF" stroke="' + border + '" stroke-width="' + weight + '"/>';
+  s += '<text class="cc-text" x="64" y="38" font-size="16" font-weight="600" fill="' +
+       (value ? CC_TEXT.value : CC_TEXT.placeholder) + '" dominant-baseline="central">' +
+       (value ? 'Hi!' : 'Say hi!') + '</text>';
+  s += _ccSend(312, 22, value ? CC_SEND.on : CC_SEND.off);
+  return s + '</svg>';
+}
+
+/* ── Per-card state — Figma's default variant ──────────────────────── */
+var _specCards = { main: { isactive: 'false', hasvalue: 'false' } };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(cardStyle, card) {
-  var isActive = card && card.active === 'yes';
-  var lines = [];
-  lines.push('EBChatField(value: $message, onSend: { sendMessage() })');
-  if (isActive) lines.push('    .focused($isFocused)');
-  return lines.join('\n');
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function buildSwiftSnippet(cardKey, c) {
+  var l = ['EBChatComposer(', '    text: $message,', '    placeholder: "Say hi!"', ')'];
+  l.push('    .ebLeadingAction(.add) { attach() }');
+  l.push('    .ebTrailingAction(.send) { send() }');
+  if (_ccOn(c.isactive, false)) l.push('    .focused($isFocused)');
+  return l.join('\n');
 }
-
-function buildComposeSnippet(cardStyle, card) {
-  var isActive = card && card.active === 'yes';
-  var lines = [];
-  lines.push('EBChatField(');
-  lines.push('    value = message,');
-  lines.push('    onValueChange = { message = it },');
-  if (isActive) lines.push('    isFocused = true,');
-  lines.push('    onSend = { sendMessage() }');
-  lines.push(')');
-  return lines.join('\n');
+function buildComposeSnippet(cardKey, c) {
+  var l = ['EBChatComposer(', '    value = message,', '    onValueChange = { message = it },', '    placeholder = "Say hi!",'];
+  l.push('    leadingAction = { EBIconButton(EBIcons.Add) { attach() } },');
+  l.push('    trailingAction = { EBIconButton(EBIcons.Send) { send() } }');
+  l.push(')');
+  return l.join('\n');
 }
-
-function getSnippet(cardStyle, lang, card) {
-  return lang === 'swift'
-    ? buildSwiftSnippet(cardStyle, card)
-    : buildComposeSnippet(cardStyle, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
+/* ── Control handler ────────────────────────────────────────────────── */
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
 
-  /* Update SVG preview inside the spec card root */
-  var rootEl = document.getElementById('spec-card-' + cardStyle);
-  if (rootEl) {
-    var previewEl = rootEl.querySelector('.spec-card-preview');
-    if (previewEl) previewEl.innerHTML = _cfBuildSvg(card.active);
-  }
+  var host = document.getElementById('chat-field-spec-' + cardStyle);
+  if (host) host.innerHTML = _ccRender(card);
 
-  /* Property-text cells — `[data-sp="${cardStyle}-${prop}"]`. */
-  var spActive = document.querySelector('[data-sp="' + cardStyle + '-active"]');
-  if (spActive) spActive.textContent = card.active;
+  ['isactive', 'hasvalue'].forEach(function (a) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
+    if (el) el.textContent = card[a] === 'true' ? 'True' : 'False';
+  });
+  var nodeEl = document.querySelector('[data-sp="' + cardStyle + '-variantNode"]');
+  if (nodeEl) nodeEl.textContent = CC_NODES[card.isactive + '|' + card.hasvalue] + ' · 360 × 88';
 
-  /* DEV code — `[data-code-content="${cardStyle}"]`. */
-  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
-  if (codeEl) {
-    var lang = codeEl.getAttribute('data-lang') || 'swift';
-    var code = getSnippet(cardStyle, lang, card);
-    codeEl.setAttribute('data-final', code);
-    codeEl.textContent = code;
-    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
   }
 }
 window.updateSpecCard = updateSpecCard;
+
+/* ── Overview tab shim — the old panel toggled an active flag. ─────── */
+function updateChatFieldDemo() {
+  var el = document.getElementById('cf-demo-preview');
+  if (!el) return;
+  var n = document.getElementById('cf-demo-active');
+  el.innerHTML = _ccRender({ isactive: n && n.value === 'true' ? 'true' : 'false', hasvalue: 'false' });
+}
+window.updateChatFieldDemo = updateChatFieldDemo;
+
+/* ── First paint ────────────────────────────────────────────────────── */
+function _ccInit() {
+  updateChatFieldDemo();
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'isactive', _specCards[k].isactive);
+  });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _ccInit);
+else _ccInit();
+document.addEventListener('astro:page-load', _ccInit);

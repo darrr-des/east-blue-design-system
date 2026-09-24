@@ -1,119 +1,142 @@
-/* Auto-extracted from assessment-src/components/chip.html.
- * Powers the live-preview dropdowns/toggles for the chip component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs chip
+/* Chip — Style tab demo.
+ * Rebuilt from Figma component set 5595:39596 (GCash DS 2026 Working File).
+ * Offsets, fills and text styles read off get_node_info and
+ * get_styled_text_segments; checked against export_node_as_image.
+ *
+ * Panel (set 5595:39596, from the property-panel screenshot):
+ *   hasValue        · False, True              (variant)
+ *   State           · Pressed, Disabled, Default (variant)
+ *   hasLeadingIcon  · False, True              (variant)
+ *   hasTrailingIcon · True, False              (variant)
+ *   ⤷ Leading-Icon  · Placeholder    (instance swap)
+ *   ⤷ Trailing-Icon · Chevron Down   (instance swap)
+ *   Dropdown-Slot   · 12 items       (slot, ships empty)
+ * 2 x 3 x 2 x 2 = 24 variants, all built.
+ *
+ * The pill is 32 tall with radius 99 and hugs its row:
+ *   left 4 + icon 24 + 4   (or 14 with no leading icon)
+ *   + Label 41
+ *   + 8 + Value 42         (hasValue)
+ *   + 8 + chevron 16       (hasTrailingIcon)
+ *   + right 14
+ * which gives 161 with everything on, 69 with the label alone, and 87,
+ * 93, 111, 137, 143 for the combinations in between — all confirmed
+ * against the set.
+ *
+ * The chevron's own fill is not exposed by the plugin. In the export it
+ * follows the last piece of text — Value when shown, otherwise Label —
+ * so the preview draws it that way.
  */
-/* ── Chip Component JS ────────────────────────────────────────────── */
-var _chipSpec = {
-  filled:   { style: 'filled',  leading: 'avatar', trailing: 'close' },
-  light:    { style: 'light',   leading: 'none',   trailing: 'none' },
-  outline:  { style: 'outline', leading: 'none',   trailing: 'none' },
-  dropdown: { style: 'light',   leading: 'none',   trailing: 'chevron', selectedValue: true }
-};
 
-/* Expose for shared utilities — `switchCodeTab` reads this when the
-   user clicks SwiftUI / Compose so it can rebuild the snippet. */
-var _specCards = _chipSpec;
+var CHIP_NODES = {"false|pressed|true|true":"5595:39597","false|pressed|true|false":"5595:39607","false|pressed|false|true":"5595:39614","false|pressed|false|false":"5595:39621","false|disabled|true|true":"5595:39625","false|disabled|true|false":"5595:39635","false|disabled|false|true":"5595:39642","false|disabled|false|false":"5595:39649","false|default|true|true":"5595:39653","false|default|true|false":"5595:39663","false|default|false|true":"5595:39670","false|default|false|false":"5595:39677","true|pressed|true|true":"5595:39681","true|pressed|true|false":"5595:39693","true|pressed|false|true":"5595:39702","true|pressed|false|false":"5595:39711","true|disabled|true|true":"5595:39717","true|disabled|true|false":"5595:39729","true|disabled|false|true":"5595:39738","true|disabled|false|false":"5595:39747","true|default|true|true":"5595:39753","true|default|true|false":"5595:39765","true|default|false|true":"5595:39774","true|default|false|false":"5595:39783"};
+var CHIP_H = 32;
+
+/* Pill fill, border and the two text colours per State. */
+var CHIP_STATE = {
+  'default':  { fill: 'none',    stroke: '#D7E0EF', label: '#6780A9', labelOpacity: 1,   value: '#005CE5' },
+  'pressed':  { fill: '#005CE5', stroke: 'none',    label: '#F6F9FD', labelOpacity: 0.8, value: '#FFFFFF' },
+  'disabled': { fill: '#EEF2F9', stroke: 'none',    label: '#C2CFE5', labelOpacity: 1,   value: '#9BC5FD' }
+};
+var CHIP_PLACEHOLDER = '#D3DCEA';
+
+function _chOn(v, def) { return v == null ? def : v === 'true'; }
+function _chKey(c) { return [c.hasvalue, c.state, c.hasleadingicon, c.hastrailingicon].join('|'); }
+
+function _chWidth(c) {
+  var lead = _chOn(c.hasleadingicon, true), value = _chOn(c.hasvalue, true), trail = _chOn(c.hastrailingicon, true);
+  return (lead ? 4 + 24 + 4 : 14) + 41 + (value ? 8 + 42 : 0) + (trail ? 8 + 16 : 0) + 14;
+}
+
+function _chChevron(x, y, fill) {
+  return '<path d="M' + (x + 4) + ' ' + (y + 6.5) + 'l4 4 4 -4" stroke="' + fill +
+         '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+}
+
+function _chRender(c) {
+  var st = CHIP_STATE[c.state] || CHIP_STATE['default'];
+  var lead = _chOn(c.hasleadingicon, true), value = _chOn(c.hasvalue, true), trail = _chOn(c.hastrailingicon, true);
+  var w = _chWidth(c);
+  var s = '<svg width="' + w + '" height="' + CHIP_H + '" viewBox="0 0 ' + w + ' ' + CHIP_H +
+          '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  s += '<rect x="0.5" y="0.5" width="' + (w - 1) + '" height="' + (CHIP_H - 1) + '" rx="' + ((CHIP_H - 1) / 2) +
+       '" fill="' + (st.fill === 'none' ? '#FFFFFF' : st.fill) + '"' +
+       (st.stroke === 'none' ? '' : ' stroke="' + st.stroke + '"') + '/>';
+
+  var x = 14;
+  if (lead) { s += '<circle cx="16" cy="16" r="12" fill="' + CHIP_PLACEHOLDER + '"/>'; x = 32; }
+  s += '<text class="chip-label" x="' + x + '" y="16" font-size="16" font-weight="700" fill="' + st.label +
+       '" fill-opacity="' + st.labelOpacity + '" dominant-baseline="central">Label</text>';
+  x += 41;
+  if (value) {
+    s += '<text class="chip-value" x="' + (x + 8) + '" y="16" font-size="16" font-weight="700" fill="' + st.value +
+         '" dominant-baseline="central">Value</text>';
+    x += 8 + 42;
+  }
+  if (trail) s += _chChevron(x + 8, 8, value ? st.value : st.label);
+  return s + '</svg>';
+}
+
+/* ── Per-card state — Figma's default variant ──────────────────────── */
+var _specCards = { main: { hasvalue: 'true', state: 'default', hasleadingicon: 'true', hastrailingicon: 'true' } };
 window._specCards = _specCards;
 
-var _chipDemo = { style: 'filled', leading: 'avatar', trailing: 'close' };
-
-/* Spec-card Colors section is server-rendered from chip.ts; Plan A's
-   `_patchSpecCardRows` (assessment.js) handles per-style updates when a
-   row declares `variants`. Demo no longer rebuilds it. */
-
-function _chipBuildHtml(opts) {
-  var style = opts.style || 'filled';
-  var leading = opts.leading || 'none';
-  var trailing = opts.trailing || 'none';
-  var label = opts.label || 'Label';
-  var selectedValue = opts.selectedValue;
-
-  var isDropdown = trailing === 'chevron';
-  var bg, border, labelColor, iconColor, valueColor;
-  if (style === 'filled') {
-    bg = '#005CE5'; border = 'none'; labelColor = '#FFFFFF'; iconColor = '#F6F9FDB8';
-  } else if (style === 'outline') {
-    bg = '#FFFFFF'; border = '2px solid #D7E0EF'; labelColor = '#6780A9'; iconColor = '#7E96BE';
-  } else {
-    bg = '#EEF2F9'; border = 'none'; labelColor = '#6780A9'; iconColor = '#7E96BE';
-  }
-  valueColor = '#005CE5';
-
-  var padL = isDropdown ? '16px' : (leading !== 'none' ? '6px' : '16px');
-  var padR = isDropdown ? '14px' : '16px';
-
-  var html = '<div style="display:inline-flex;align-items:center;height:36px;padding:0 ' + padR + ' 0 ' + padL + ';background:' + bg + ';border:' + border + ';border-radius:99px;box-sizing:border-box;font-family:\'Proxima Soft\', system-ui, sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;">';
-
-  // Leading
-  if (leading === 'avatar') {
-    html += '<div style="width:24px;height:24px;border-radius:50%;background:#C2C6CF;flex-shrink:0;margin-right:4px;"></div>';
-  } else if (leading === 'icon') {
-    html += '<div style="width:24px;height:24px;border-radius:4px;background:' + iconColor + ';opacity:.65;flex-shrink:0;margin-right:4px;"></div>';
-  }
-
-  // Label
-  html += '<span style="color:' + labelColor + ';white-space:nowrap;">' + label + '</span>';
-
-  // Selected value (dropdown only)
-  if (isDropdown && selectedValue) {
-    html += '<span style="margin-left:8px;color:' + valueColor + ';white-space:nowrap;">Conservative first</span>';
-  }
-
-  // Trailing
-  if (trailing === 'close') {
-    html += '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:8px;flex-shrink:0;"><path d="M4 4l8 8M12 4l-8 8" stroke="' + labelColor + '" stroke-width="1.6" stroke-linecap="round"/></svg>';
-  } else if (trailing === 'chevron') {
-    html += '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="margin-left:4px;flex-shrink:0;"><path d="M7 10l5 5 5-5" stroke="' + valueColor + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  }
-
-  html += '</div>';
-  return html;
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function buildSwiftSnippet(cardKey, c) {
+  var l = ['EBChip("Label")'];
+  if (_chOn(c.hasvalue, true)) l.push('    .ebValue("Value")');
+  if (_chOn(c.hasleadingicon, true)) l.push('    .ebLeadingIcon { Image("placeholder") }');
+  if (_chOn(c.hastrailingicon, true)) l.push('    .ebTrailingIcon(.chevronDown)');
+  if (c.state === 'disabled') l.push('    .disabled(true)');
+  l.push('    .ebDropdown { EBMenu(options) }');
+  return l.join('\n');
 }
-
-/* Overview — live demo */
-function updateChipDemo() {
-  _chipDemo.style = document.getElementById('chip-demo-style').value;
-  _chipDemo.leading = document.getElementById('chip-demo-leading').value;
-  _chipDemo.trailing = document.getElementById('chip-demo-trailing').value;
-  var el = document.getElementById('chip-demo-preview');
-  if (el) el.innerHTML = _chipBuildHtml(Object.assign({ label: 'Filter Name' }, _chipDemo));
+function buildComposeSnippet(cardKey, c) {
+  var l = ['EBChip(', '    label = "Label",'];
+  if (_chOn(c.hasvalue, true)) l.push('    value = "Value",');
+  if (_chOn(c.hasleadingicon, true)) l.push('    leadingIcon = { Icon(painterResource(R.drawable.placeholder), null) },');
+  if (_chOn(c.hastrailingicon, true)) l.push('    trailingIcon = EBIcons.ChevronDown,');
+  if (c.state === 'disabled') l.push('    enabled = false,');
+  l.push('    dropdown = { EBMenu(options) },');
+  l.push('    onClick = { }');
+  l.push(')');
+  return l.join('\n');
 }
-
-/* Style — per-spec-card live preview + readout */
-function updateChipSpecCard(card, prop, val) {
-  return updateSpecCard(card, prop, val);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
+window.getSnippet = getSnippet;
 
-function updateSpecCard(card, prop, val) {
-  var state = _chipSpec[card];
-  if (!state) return;
-  if (prop === 'selectedValue') state.selectedValue = !!val;
-  else state[prop] = val;
+/* ── Control handler ────────────────────────────────────────────────── */
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
 
-  // Properties readout — data-sp="${demoKey}-${prop}"
-  var readout = document.querySelector('[data-sp="' + card + '-' + prop + '"]');
-  if (readout) readout.textContent = String(val);
+  var host = document.getElementById('chip-spec-' + cardStyle);
+  if (host) host.innerHTML = _chRender(card);
 
-  // Re-render preview (existing id `spec-chip-${card}-preview` lives in
-  // the data file's previewHtml)
-  var target = document.getElementById('spec-chip-' + card + '-preview');
-  if (target) {
-    var labels = { filled: 'Filter Name', light: 'Category', outline: 'Category', dropdown: 'Sort by' };
-    target.innerHTML = _chipBuildHtml(Object.assign({ label: labels[card] }, state));
-  }
+  ['hasvalue', 'state', 'hasleadingicon', 'hastrailingicon'].forEach(function (a) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
+    if (!el) return;
+    el.textContent = a === 'state'
+      ? card.state.charAt(0).toUpperCase() + card.state.slice(1)
+      : (card[a] === 'true' ? 'True' : 'False');
+  });
+  var w = _chWidth(card);
+  var put = function (name, text) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + name + '"]');
+    if (el) el.textContent = text;
+  };
+  put('size-readout', w + ' × ' + CHIP_H);
+  put('variantNode', CHIP_NODES[_chKey(card)] + ' · ' + w + ' × ' + CHIP_H);
 
-  // Colors section is now server-rendered from chip.ts (SSR source of
-  // truth). Plan A's `_patchSpecCardRows` patches per-style values when
-  // a row declares `variants` in the data file.
-
-  // DEV code — `[data-code-content="${demoKey}"]`. Always update.
-  var devView = document.querySelector('[data-view="' + card + '-dev"]');
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + card + '"]');
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
-      var code = getSnippet(card, lang, state);
+      var code = getSnippet(cardStyle, lang, card);
       codeEl.setAttribute('data-final', code);
       codeEl.setAttribute('data-lang', lang);
       codeEl.textContent = code;
@@ -121,101 +144,31 @@ function updateSpecCard(card, prop, val) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-/* ── Code snippet builders ───────────────────────────────────────── */
-function buildSwiftSnippet(type, card) {
-  var styleCap = (card.style || 'filled');
-  var labels = { filled: 'Filter Name', light: 'Category', outline: 'Category', dropdown: 'Sort by' };
-  var label = labels[type] || 'Filter';
-  var lines = [];
-  if (type === 'dropdown') {
-    lines.push('EBChip("' + label + '",');
-    lines.push('    selectedValue: "Conservative first",');
-    lines.push('    trailing: .chevron,');
-    lines.push('    action: { /* open dropdown */ })');
-    lines.push('.ebStyle(.' + styleCap + ')');
-  } else if (type === 'filled') {
-    lines.push('EBChip("' + label + '",');
-    if ((card.leading || 'none') === 'avatar') lines.push('    leading: .avatar(EBAvatar(initials: "DM")),');
-    else if ((card.leading || 'none') === 'icon') lines.push('    leading: .icon(Image(systemName: "tag")),');
-    if ((card.trailing || 'none') !== 'none') lines.push('    trailing: .' + (card.trailing || 'close') + ',');
-    lines.push('    onRemove: { /* remove */ })');
-    lines.push('.ebStyle(.' + styleCap + ')');
-  } else {
-    lines.push('EBChip("' + label + '")');
-    lines.push('    .ebStyle(.' + styleCap + ')');
-  }
-  return lines.join('\n');
-}
-
-function buildComposeSnippet(type, card) {
-  var styleCap = (card.style || 'filled').charAt(0).toUpperCase() + (card.style || 'filled').slice(1);
-  var labels = { filled: 'Filter Name', light: 'Category', outline: 'Category', dropdown: 'Sort by' };
-  var label = labels[type] || 'Filter';
-  var lines = [];
-  lines.push('EBChip(');
-  lines.push('    label = "' + label + '",');
-  lines.push('    style = EBChipStyle.' + styleCap + ',');
-  if (type === 'dropdown') {
-    lines.push('    selectedValue = "Conservative first",');
-    lines.push('    trailing = EBChipTrailing.Chevron,');
-    lines.push('    onClick = { /* open dropdown */ }');
-  } else {
-    if ((card.leading || 'none') === 'avatar') lines.push('    leading = { EBAvatar(initials = "DM") },');
-    else if ((card.leading || 'none') === 'icon') lines.push('    leading = { Icon(Icons.Filled.Tag, null) },');
-    var tr = card.trailing || 'none';
-    if (tr !== 'none') {
-      lines.push('    trailing = EBChipTrailing.' + (tr.charAt(0).toUpperCase() + tr.slice(1)) + ',');
-      if (tr === 'close') lines.push('    onRemove = { /* remove */ }');
-    }
-  }
-  // strip trailing comma on last meaningful line
-  var last = lines[lines.length - 1];
-  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
-  lines.push(')');
-  return lines.join('\n');
-}
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
-}
-window.getSnippet = getSnippet;
-
-/* SwiftUI / Compose tab toggle within DEV view */
-function switchChipCodeTab(tabBtn, lang, cardKey) {
-  var block = tabBtn.closest('.spec-card-code');
-  if (!block) return;
-  block.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
-  tabBtn.classList.add('active');
-  block.querySelectorAll('.spec-code-block').forEach(function(pre) {
-    pre.style.display = pre.getAttribute('data-lang') === lang ? '' : 'none';
+/* ── Overview tab shim — the old panel had style / leading / trailing. ── */
+var _chipDemo = { style: 'outline', leading: 'yes', trailing: 'yes' };
+function updateChipDemo() {
+  var el = document.getElementById('chip-demo-preview');
+  if (!el) return;
+  var v = function (id, f) { var n = document.getElementById(id); return n ? n.value : f; };
+  var style = v('chip-demo-style', 'outline');
+  el.innerHTML = _chRender({
+    hasvalue: 'false',
+    state: style === 'filled' ? 'pressed' : (style === 'light' ? 'disabled' : 'default'),
+    hasleadingicon: v('chip-demo-leading', 'yes') === 'yes' ? 'true' : 'false',
+    hastrailingicon: v('chip-demo-trailing', 'yes') === 'yes' ? 'true' : 'false'
   });
 }
+window.updateChipDemo = updateChipDemo;
 
-/* DES/DEV toggle */
-function toggleChipSpecMode(cardKey, toggleEl) {
-  var labels = toggleEl.querySelectorAll('.spec-mode-label');
-  var isDes = labels[0].classList.contains('active');
-  labels[0].classList.toggle('active', !isDes);
-  labels[1].classList.toggle('active', isDes);
-  var desEl = document.querySelector('[data-view="' + cardKey + '-des"]');
-  var devEl = document.querySelector('[data-view="' + cardKey + '-dev"]');
-  if (desEl) desEl.style.display = isDes ? 'none' : '';
-  if (devEl) devEl.style.display = isDes ? '' : 'none';
-}
-
-function _chipInitSpecCards() {
-  Object.keys(_chipSpec).forEach(function(card) {
-    var labels = { filled: 'Filter Name', light: 'Category', outline: 'Category', dropdown: 'Sort by' };
-    var target = document.getElementById('spec-chip-' + card + '-preview');
-    if (target) target.innerHTML = _chipBuildHtml(Object.assign({ label: labels[card] }, _chipSpec[card]));
-  });
-}
-
-function _chipInit() {
+/* ── First paint ────────────────────────────────────────────────────── */
+function _chInit() {
   updateChipDemo();
-  _chipInitSpecCards();
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'state', _specCards[k].state);
+  });
 }
-
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _chipInit);
-else _chipInit();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _chInit);
+else _chInit();
+document.addEventListener('astro:page-load', _chInit);

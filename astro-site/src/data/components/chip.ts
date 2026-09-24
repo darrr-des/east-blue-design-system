@@ -2,40 +2,28 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/chip.js`.
+// Panel mirrors the property panel of set 5595:39596, in its order: four
+// variant axes. The two icon swaps and Dropdown-Slot get no control.
 const chipDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
+      { label: 'hasValue', prop: 'hasvalue', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
       {
-        label: 'Style',
-        prop: 'style',
-        defaultValue: 'filled',
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
         options: [
-          { value: 'filled', label: 'Filled' },
-          { value: 'light', label: 'Light' },
-          { value: 'outline', label: 'Outline' },
+          { value: 'pressed',  label: 'Pressed' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'default',  label: 'Default' },
         ],
       },
-      {
-        label: 'Leading',
-        prop: 'leading',
-        defaultValue: 'none',
-        options: [
-          { value: 'none', label: 'None' },
-          { value: 'avatar', label: 'Avatar' },
-          { value: 'icon', label: 'Icon' },
-        ],
-      },
-      {
-        label: 'Trailing',
-        prop: 'trailing',
-        defaultValue: 'none',
-        options: [
-          { value: 'none', label: 'None' },
-          { value: 'close', label: 'Close' },
-          { value: 'chevron', label: 'Chevron' },
-        ],
-      },
+      { label: 'hasLeadingIcon', prop: 'hasleadingicon', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasTrailingIcon', prop: 'hastrailingicon', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
     ],
   },
 ];
@@ -232,312 +220,293 @@ export const chip: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "chip-spec-filled",
-        "demoKey": "filled",
+        "cardKey": "chip-spec-main",
+        "demoKey": "main",
+        "title": "Chip",
+        "node": "5595:39596",
+        "description": "A 32-tall filter pill that hugs its row — optional leading icon, label, optional value and a chevron that opens the Dropdown-Slot.",
+        "previewHtml": "<div id=\"chip-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": chipDemoControls,
-        "title": "Filled",
-        "node": "18336:22244",
-        "description": "Brand blue fill with white label. Represents an active/applied filter.",
-        "previewHtml": "<div id=\"spec-chip-filled-preview\"><div style=\"display:inline-flex;align-items:center;height:36px;padding:0 16px 0 6px;background:#005CE5;border:none;border-radius:99px;box-sizing:border-box;font-family:'Proxima Soft', system-ui, sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;\"><div style=\"width:24px;height:24px;border-radius:50%;background:#C2C6CF;flex-shrink:0;margin-right:4px;\"></div><span style=\"color:#FFFFFF;white-space:nowrap;\">Filter Name</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"margin-left:8px;flex-shrink:0;\"><path d=\"M4 4l8 8M12 4l-8 8\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Style", "value": "Filled", "prop": "style" },
-              { "key": "Leading", "value": "avatar", "prop": "leading" },
-              { "key": "Trailing", "value": "close", "prop": "trailing" }
+              {
+                "key": "hasValue",
+                "value": "True",
+                "prop": "hasvalue"
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "prop": "state"
+              },
+              {
+                "key": "hasLeadingIcon",
+                "value": "True",
+                "prop": "hasleadingicon"
+              },
+              {
+                "key": "hasTrailingIcon",
+                "value": "True",
+                "prop": "hastrailingicon"
+              },
+              {
+                "key": "⤷ Leading-Icon",
+                "value": "Placeholder",
+                "variants": {
+                  "hasleadingicon:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "⤷ Trailing-Icon",
+                "value": "Chevron Down",
+                "variants": {
+                  "hastrailingicon:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "⤷ Dropdown-Slot",
+                "value": "Slot · 12 items"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "5595:39753 · 161 × 32",
+                "mono": true,
+                "prop": "variantNode"
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Background", "value": "#005CE5", "token": "main/filter/color/primary/bg" },
-              { "key": "Label", "value": "#FFFFFF", "token": "main/filter/color/primary/label" },
-              { "key": "Icon", "value": "#F6F9FDB8", "token": "main/filter/color/primary/icon" }
+              {
+                "key": "Pill fill",
+                "value": "None",
+                "token": "—",
+                "variants": {
+                  "state:pressed": {
+                    "value": "#005CE5",
+                    "swatch": "#005CE5"
+                  },
+                  "state:disabled": {
+                    "value": "#EEF2F9",
+                    "swatch": "#EEF2F9"
+                  }
+                }
+              },
+              {
+                "key": "Pill border",
+                "value": "#D7E0EF",
+                "token": "—",
+                "swatch": "#D7E0EF",
+                "variants": {
+                  "state:pressed": {
+                    "hide": true
+                  },
+                  "state:disabled": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Label",
+                "value": "#6780A9",
+                "token": "—",
+                "swatch": "#6780A9",
+                "variants": {
+                  "state:pressed": {
+                    "value": "#F6F9FD at 80%",
+                    "swatch": "#F6F9FD"
+                  },
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  }
+                }
+              },
+              {
+                "key": "Value",
+                "value": "#005CE5",
+                "token": "—",
+                "swatch": "#005CE5",
+                "variants": {
+                  "hasvalue:false": {
+                    "hide": true
+                  },
+                  "state:pressed|hasvalue:true": {
+                    "value": "#FFFFFF",
+                    "swatch": "#FFFFFF"
+                  },
+                  "state:disabled|hasvalue:true": {
+                    "value": "#9BC5FD",
+                    "swatch": "#9BC5FD"
+                  }
+                }
+              },
+              {
+                "key": "Chevron",
+                "value": "Follows Value",
+                "token": "—",
+                "variants": {
+                  "hastrailingicon:false": {
+                    "hide": true
+                  },
+                  "hasvalue:false": {
+                    "value": "Follows Label"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Height", "value": "32px", "mono": true },
-              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
-              { "key": "Padding L", "value": "4px", "mono": true },
-              { "key": "Padding R", "value": "14px", "mono": true },
-              { "key": "Leading avatar", "value": "24 × 24", "mono": true },
-              { "key": "Close icon", "value": "16 × 16", "mono": true }
+              {
+                "key": "Size",
+                "value": "161 × 32",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Height",
+                "value": "32",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "99px",
+                "mono": true
+              },
+              {
+                "key": "Padding left",
+                "value": "4 (icon)",
+                "mono": true,
+                "variants": {
+                  "hasleadingicon:false": {
+                    "value": "14"
+                  }
+                }
+              },
+              {
+                "key": "Padding right",
+                "value": "14",
+                "mono": true
+              },
+              {
+                "key": "Leading icon",
+                "value": "24 × 24 · gap 4",
+                "mono": true,
+                "variants": {
+                  "hasleadingicon:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Label → value",
+                "value": "gap 8",
+                "mono": true,
+                "variants": {
+                  "hasvalue:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Trailing icon",
+                "value": "16 × 16 · gap 8",
+                "mono": true,
+                "variants": {
+                  "hastrailingicon:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Dropdown-Slot",
+                "value": "Full width · 8 below the pill",
+                "mono": true
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text style", "value": "Primary/Label/Base", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "16px", "mono": true },
-              { "key": "Line-height", "value": "16px", "mono": true },
-              { "key": "Tracking", "value": "0.25px", "mono": true }
+              {
+                "key": "Label",
+                "value": "Primary/Label/Base",
+                "mono": true
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Label/Base",
+                "mono": true,
+                "variants": {
+                  "hasvalue:false": {
+                    "hide": true
+                  }
+                }
+              }
             ]
           }
         ],
-        "swift": "<code><span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Filter Name\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">leading</span><span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.avatar</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">initials</span><span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"DM\"</span><span class=\"syn-punc\">)),</span>\n    <span class=\"syn-param\">trailing</span><span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.close</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">onRemove</span><span class=\"syn-punc\">:</span> <span class=\"syn-punc\">{</span> <span class=\"syn-cmt\">/* remove filter */</span> <span class=\"syn-punc\">})</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.filled</span><span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Filter Name\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">style</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBChipStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Filled</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">leading</span> <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">initials</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"DM\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">},</span>\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBChipTrailing</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Close</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">onRemove</span> <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-cmt\">/* remove filter */</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
-      },
-      {
-        "cardKey": "chip-spec-light",
-        "demoKey": "light",
-        "demoControls": chipDemoControls,
-        "title": "Light",
-        "node": "18336:22257",
-        "description": "Light gray fill with gray label. Used for inactive filters, tags, or dropdown trigger base.",
-        "previewHtml": "<div id=\"spec-chip-light-preview\"><div style=\"display:inline-flex;align-items:center;height:36px;padding:0 16px 0 16px;background:#EEF2F9;border:none;border-radius:99px;box-sizing:border-box;font-family:'Proxima Soft', system-ui, sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;\"><span style=\"color:#6780A9;white-space:nowrap;\">Category</span></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Style", "value": "Light", "prop": "style" },
-              { "key": "Leading", "value": "none", "prop": "leading" },
-              { "key": "Trailing", "value": "none", "prop": "trailing" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#EEF2F9", "token": "main/filter/color/secondary/bg" },
-              { "key": "Label", "value": "#6780A9", "token": "main/filter/color/secondary/label" },
-              { "key": "Icon", "value": "#7E96BE", "token": "main/filter/color/secondary/icon" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Height", "value": "32px", "mono": true },
-              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
-              { "key": "Padding horizontal", "value": "14px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text style", "value": "Primary/Label/Base", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "16px", "mono": true },
-              { "key": "Line-height", "value": "16px", "mono": true },
-              { "key": "Tracking", "value": "0.25px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<code><span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Category\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.light</span><span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Category\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">style</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBChipStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Light</span>\n<span class=\"syn-punc\">)</span></code>"
-      },
-      {
-        "cardKey": "chip-spec-outline",
-        "demoKey": "outline",
-        "demoControls": chipDemoControls,
-        "title": "Outline",
-        "node": "18336:22270",
-        "description": "White fill with 2px gray border and gray label. Alternative inactive style for light surfaces.",
-        "previewHtml": "<div id=\"spec-chip-outline-preview\"><div style=\"display:inline-flex;align-items:center;height:36px;padding:0 16px 0 16px;background:#FFFFFF;border:2px solid #D7E0EF;border-radius:99px;box-sizing:border-box;font-family:'Proxima Soft', system-ui, sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;\"><span style=\"color:#6780A9;white-space:nowrap;\">Category</span></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Style", "value": "Outline", "prop": "style" },
-              { "key": "Leading", "value": "none", "prop": "leading" },
-              { "key": "Trailing", "value": "none", "prop": "trailing" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#FFFFFF", "token": "surface/default" },
-              { "key": "Border", "value": "#D7E0EF", "token": "main/filter/color/tertiary/border" },
-              { "key": "Label", "value": "#6780A9", "token": "main/filter/color/tertiary/label" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Height", "value": "32px", "mono": true },
-              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
-              { "key": "Border width", "value": "2px", "mono": true },
-              { "key": "Padding horizontal", "value": "14px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text style", "value": "Primary/Label/Base", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "16px", "mono": true },
-              { "key": "Line-height", "value": "16px", "mono": true },
-              { "key": "Tracking", "value": "0.25px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<code><span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Category\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.outline</span><span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Category\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">style</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBChipStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Outline</span>\n<span class=\"syn-punc\">)</span></code>"
-      },
-      {
-        "cardKey": "chip-spec-dropdown",
-        "demoKey": "dropdown",
-        "demoControls": chipDemoControls,
-        "title": "Dropdown",
-        "node": "18336:22284",
-        "description": "Light style with a trailing chevron. Used as a pill-styled dropdown trigger. Selected value shown in blue <code>label-link</code>.",
-        "previewHtml": "<div id=\"spec-chip-dropdown-preview\"><div style=\"display:inline-flex;align-items:center;height:36px;padding:0 14px 0 16px;background:#EEF2F9;border:none;border-radius:99px;box-sizing:border-box;font-family:'Proxima Soft', system-ui, sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;\"><span style=\"color:#6780A9;white-space:nowrap;\">Sort by</span><span style=\"margin-left:8px;color:#005CE5;white-space:nowrap;\">Conservative first</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"margin-left:4px;flex-shrink:0;\"><path d=\"M7 10l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Style", "value": "Light", "prop": "style" },
-              { "key": "Leading", "value": "none", "prop": "leading" },
-              { "key": "Trailing", "value": "chevron", "prop": "trailing" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#EEF2F9", "token": "main/filter/color/secondary/bg" },
-              { "key": "Label", "value": "#6780A9", "token": "main/filter/color/secondary/label" },
-              { "key": "Selected value", "value": "#005CE5", "token": "main/filter/color/secondary/label-link" },
-              { "key": "Chevron", "value": "#005CE5", "token": "main/filter/color/secondary/chevron" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Height", "value": "32px", "mono": true },
-              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
-              { "key": "Padding left", "value": "16px", "mono": true },
-              { "key": "Padding right", "value": "12px", "mono": true },
-              { "key": "Chevron size", "value": "24 × 24", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text style", "value": "Primary/Label/Base", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "16px", "mono": true },
-              { "key": "Line-height", "value": "16px", "mono": true },
-              { "key": "Tracking", "value": "0.25px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<code><span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Sort by\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">selectedValue</span><span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Conservative first\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">trailing</span><span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.chevron</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">action</span><span class=\"syn-punc\">:</span> <span class=\"syn-punc\">{</span> <span class=\"syn-cmt\">/* open dropdown */</span> <span class=\"syn-punc\">})</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.light</span><span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Sort by\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">selectedValue</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Conservative first\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">style</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBChipStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Light</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBChipTrailing</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Chevron</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">onClick</span> <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-cmt\">/* open dropdown */</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+        "swift": "EBChip(\"Label\")\n    .ebValue(\"Value\")\n    .ebLeadingIcon { Image(\"placeholder\") }\n    .ebTrailingIcon(.chevronDown)\n    .ebDropdown { EBMenu(options) }",
+        "compose": "EBChip(\n    label = \"Label\",\n    value = \"Value\",\n    leadingIcon = { Icon(painterResource(R.drawable.placeholder), null) },\n    trailingIcon = EBIcons.ChevronDown,\n    dropdown = { EBMenu(options) },\n    onClick = { }\n)"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by Style",
-        "description": "Three style modes, each with bg, label, and icon tokens. Dropdown adds <code>label-link</code> and <code>chevron</code>.",
+        "title": "Colors by State",
+        "description": "Read off <code>get_node_info</code> across the 24 variants of set <code>5595:39596</code>. Token paths could not be read; the plugin returns no variable bindings. The chevron’s own fill is not exposed — in the export it follows the Value, or the Label when there is none.",
         "columns": [
-          "Token",
-          "Value"
+          "Default",
+          "Pressed",
+          "Disabled"
         ],
         "rows": [
           {
-            "role": "Filled",
-            "token": "bg",
+            "role": "Pill fill",
+            "token": "—",
             "values": [
-              "main/filter/color/primary/bg",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "label",
-            "values": [
-              "main/filter/color/primary/label",
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "icon",
-            "values": [
-              "main/filter/color/primary/icon",
-              "#F6F9FDB8"
-            ]
-          },
-          {
-            "role": "Light",
-            "token": "bg",
-            "values": [
-              "main/filter/color/secondary/bg",
+              "–",
+              "#005CE5",
               "#EEF2F9"
             ]
           },
           {
-            "role": "—",
-            "token": "label",
+            "role": "Pill border",
+            "token": "—",
             "values": [
-              "main/filter/color/secondary/label",
-              "#6780A9"
+              "#D7E0EF",
+              "–",
+              "–"
             ]
           },
           {
-            "role": "—",
-            "token": "icon",
+            "role": "Label",
+            "token": "—",
             "values": [
-              "main/filter/color/secondary/icon",
-              "#7E96BE"
+              "#6780A9",
+              "#F6F9FD at 80%",
+              "#C2CFE5"
             ]
           },
           {
-            "role": "—",
-            "token": "selected value",
+            "role": "Value",
+            "token": "—",
             "values": [
-              "main/filter/color/secondary/label-link",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "chevron",
-            "values": [
-              "main/filter/color/secondary/chevron",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "Outline",
-            "token": "border",
-            "values": [
-              "main/filter/color/tertiary/border",
-              "#D7E0EF"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "label",
-            "values": [
-              "main/filter/color/tertiary/label",
-              "#6780A9"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "icon",
-            "values": [
-              "main/filter/color/tertiary/icon",
-              "#7E96BE"
+              "#005CE5",
+              "#FFFFFF",
+              "#9BC5FD"
             ]
           }
         ]
@@ -554,41 +523,57 @@ export const chip: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:chip:1.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:chip:2.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.chip.*  <span class=\"cmt\">// Compose</span>"
         }
-      ]
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>5595:39596</code>, in panel order, then the two icon swaps and the slot.",
       "rows": [
         {
-          "figma": "style",
-          "swift": ".ebStyle(.filled / .light / .outline)",
-          "compose": "style = EBChipStyle.*"
+          "figma": "hasValue — boolean",
+          "swift": "<code>.ebValue(String)</code> — omit for False",
+          "compose": "<code>value: String? = null</code>"
         },
         {
-          "figma": "leading",
-          "swift": "leading: EBChipLeading?",
-          "compose": "leading: @Composable (() -&gt; Unit)?"
+          "figma": "State — Pressed, Disabled, Default",
+          "swift": "Pressed is the button style; <code>.disabled(true)</code> for Disabled",
+          "compose": "Pressed from <code>interactionSource</code>; <code>enabled = false</code>"
         },
         {
-          "figma": "trailing",
-          "swift": "trailing: EBChipTrailing?",
-          "compose": "trailing: EBChipTrailing?"
+          "figma": "hasLeadingIcon — boolean",
+          "swift": "<code>.ebLeadingIcon { }</code> — omit for False",
+          "compose": "<code>leadingIcon: (@Composable () -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "selectedValue",
-          "swift": "selectedValue: String?",
-          "compose": "selectedValue: String?"
+          "figma": "hasTrailingIcon — boolean",
+          "swift": "<code>.ebTrailingIcon(.chevronDown)</code>",
+          "compose": "<code>trailingIcon: EBIcon? = null</code>"
         },
         {
-          "figma": "label",
-          "swift": "title: String",
-          "compose": "label: String"
+          "figma": "⤷ Leading-Icon — Placeholder (24 × 24)",
+          "swift": "content of <code>.ebLeadingIcon</code>",
+          "compose": "the value of <code>leadingIcon</code>"
         },
         {
-          "figma": "onTap / onClose",
-          "swift": "action / onRemove",
-          "compose": "onClick / onRemove"
+          "figma": "⤷ Trailing-Icon — Chevron Down (16 × 16)",
+          "swift": "the icon passed to <code>.ebTrailingIcon</code>",
+          "compose": "the value of <code>trailingIcon</code>"
+        },
+        {
+          "figma": "⤷ Dropdown-Slot — SLOT · 12 items",
+          "swift": "<code>.ebDropdown { }</code>",
+          "compose": "<code>dropdown: (@Composable () -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "— <code>Label</code> / <code>Value</code>",
+          "swift": "<code>EBChip(_ label: String)</code>, <code>.ebValue</code>",
+          "compose": "<code>label: String</code>, <code>value: String?</code>"
         }
       ],
       "filePaths": {
@@ -598,50 +583,69 @@ export const chip: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Applied filter — brand fill, avatar + close</span>\n<span class=\"typ\">EBChip</span>(<span class=\"str\">\"Filter Name\"</span>,\n    <span class=\"prp\">leading</span>: .<span class=\"fn\">avatar</span>(<span class=\"typ\">EBAvatar</span>(<span class=\"prp\">initials</span>: <span class=\"str\">\"DM\"</span>)),\n    <span class=\"prp\">trailing</span>: .<span class=\"prp\">close</span>,\n    <span class=\"prp\">onRemove</span>: { /* remove filter */ })\n.<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">filled</span>)\n\n<span class=\"cmt\">// Inactive filter — light, label only</span>\n<span class=\"typ\">EBChip</span>(<span class=\"str\">\"Category\"</span>)\n    .<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">light</span>)\n\n<span class=\"cmt\">// Dropdown trigger with selected value</span>\n<span class=\"typ\">EBChip</span>(<span class=\"str\">\"Sort by\"</span>,\n    <span class=\"prp\">selectedValue</span>: <span class=\"str\">\"Conservative first\"</span>,\n    <span class=\"prp\">trailing</span>: .<span class=\"prp\">chevron</span>,\n    <span class=\"prp\">action</span>: { /* open dropdown */ })\n.<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">light</span>)",
-        "compose": "<span class=\"cmt\">// Applied filter — brand fill, avatar + close</span>\n<span class=\"typ\">EBChip</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Filter Name\"</span>,\n    <span class=\"prp\">style</span> = <span class=\"typ\">EBChipStyle</span>.<span class=\"prp\">Filled</span>,\n    <span class=\"prp\">leading</span> = { <span class=\"typ\">EBAvatar</span>(initials = <span class=\"str\">\"DM\"</span>) },\n    <span class=\"prp\">trailing</span> = <span class=\"typ\">EBChipTrailing</span>.<span class=\"prp\">Close</span>,\n    <span class=\"prp\">onRemove</span> = { /* remove filter */ }\n)\n\n<span class=\"cmt\">// Inactive filter — light, label only</span>\n<span class=\"typ\">EBChip</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Category\"</span>,\n    <span class=\"prp\">style</span> = <span class=\"typ\">EBChipStyle</span>.<span class=\"prp\">Light</span>\n)\n\n<span class=\"cmt\">// Dropdown trigger with selected value</span>\n<span class=\"typ\">EBChip</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Sort by\"</span>,\n    <span class=\"prp\">selectedValue</span> = <span class=\"str\">\"Conservative first\"</span>,\n    <span class=\"prp\">style</span> = <span class=\"typ\">EBChipStyle</span>.<span class=\"prp\">Light</span>,\n    <span class=\"prp\">trailing</span> = <span class=\"typ\">EBChipTrailing</span>.<span class=\"prp\">Chevron</span>,\n    <span class=\"prp\">onClick</span> = { /* open dropdown */ }\n)"
+        "subheading": "Default · label and value",
+        "swift": "<span class=\"cmt\">// hasValue=True, State=Default, both icons — 5595:39753, 161 × 32.</span>\nEBChip(\"Sort by\")\n    .ebValue(\"Newest\")\n    .ebLeadingIcon { Image(\"sort\") }\n    .ebTrailingIcon(.chevronDown)\n    .ebDropdown { EBMenu(sortOptions) }",
+        "compose": "<span class=\"cmt\">// hasValue=True, State=Default, both icons — 5595:39753, 161 × 32.</span>\nEBChip(\n    label = \"Sort by\",\n    value = \"Newest\",\n    leadingIcon = { Icon(painterResource(R.drawable.sort), null) },\n    trailingIcon = EBIcons.ChevronDown,\n    dropdown = { EBMenu(sortOptions) },\n    onClick = { open() }\n)"
+      },
+      {
+        "subheading": "Label only",
+        "swift": "<span class=\"cmt\">// hasValue=False, State=Default, no icons — 5595:39677, 69 × 32.</span>\nEBChip(\"All\")",
+        "compose": "<span class=\"cmt\">// hasValue=False, State=Default, no icons — 5595:39677, 69 × 32.</span>\nEBChip(label = \"All\", onClick = { select() })"
+      },
+      {
+        "subheading": "Pressed",
+        "swift": "<span class=\"cmt\">// hasValue=True, State=Pressed, both icons — 5595:39681, 161 × 32; filled #005CE5.</span>\nEBChip(\"Sort by\")\n    .ebValue(\"Newest\")\n    .ebLeadingIcon { Image(\"sort\") }\n    .ebTrailingIcon(.chevronDown)\n    // Pressed is the built-in pressed style",
+        "compose": "<span class=\"cmt\">// hasValue=True, State=Pressed, both icons — 5595:39681, 161 × 32; filled #005CE5.</span>\nEBChip(\n    label = \"Sort by\",\n    value = \"Newest\",\n    leadingIcon = { Icon(painterResource(R.drawable.sort), null) },\n    trailingIcon = EBIcons.ChevronDown,\n    onClick = { open() }\n)  // Pressed comes from interactionSource"
+      },
+      {
+        "subheading": "Disabled",
+        "swift": "<span class=\"cmt\">// hasValue=True, State=Disabled — 5595:39717, 161 × 32; #EEF2F9 fill.</span>\nEBChip(\"Sort by\")\n    .ebValue(\"Newest\")\n    .ebTrailingIcon(.chevronDown)\n    .disabled(true)",
+        "compose": "<span class=\"cmt\">// hasValue=True, State=Disabled — 5595:39717, 161 × 32; #EEF2F9 fill.</span>\nEBChip(\n    label = \"Sort by\",\n    value = \"Newest\",\n    trailingIcon = EBIcons.ChevronDown,\n    enabled = false,\n    onClick = { }\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Tap target",
-        "ios": "32px height is below HIG 44pt — wrap in a 44pt-tall hit area",
-        "android": "32dp height is below Material 48dp — expand touch target via <code>Modifier.minimumInteractiveComponentSize()</code>"
-      },
-      {
         "requirement": "Role",
-        "ios": "<code>.accessibilityAddTraits(.isButton)</code>",
-        "android": "Use <code>semantics { role = Role.Button }</code>"
+        "ios": "A <code>Button</code> that opens a menu — <code>.accessibilityAddTraits(.isButton)</code> and <code>.accessibilityHint(\"Opens filter options\")</code>.",
+        "android": "<code>Role.Button</code>; expose the dropdown with <code>expanded</code> semantics."
       },
       {
-        "requirement": "Close button label",
-        "ios": "<code>.accessibilityLabel(\"Remove filter: \\(label)\")</code>",
-        "android": "<code>contentDescription = \"Remove filter: $label\"</code>"
+        "requirement": "Label and value",
+        "ios": "Read both as one name — “Sort by, Newest” — so the current selection is announced.",
+        "android": "Merge into one <code>contentDescription</code>."
       },
       {
-        "requirement": "Dropdown indicator",
-        "ios": "<code>.accessibilityHint(\"Double-tap to change\")</code>",
-        "android": "Announce chevron via role + state"
+        "requirement": "Tap target",
+        "ios": "The pill is 32 tall — extend the target to 44pt with <code>.contentShape</code>, do not grow the pill.",
+        "android": "<code>Modifier.minimumInteractiveComponentSize()</code> for 48dp."
       },
       {
-        "requirement": "Selected state",
-        "ios": "<code>.accessibilityAddTraits(.isSelected)</code> for <code>style=filled</code>",
-        "android": "<code>selected = true</code> in semantics for active filters"
+        "requirement": "Disabled",
+        "ios": "<code>.disabled(true)</code>; the chip stays in the reading order.",
+        "android": "<code>enabled = false</code>."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Default label #6780A9 is 4.01:1 on white at 16pt, just under 4.5:1; value #005CE5 is 5.10:1. Pressed white on #005CE5 is 5.10:1, and the 80% #F6F9FD label about 3.6:1. Disabled #C2CFE5 on #EEF2F9 is 1.42:1 and #9BC5FD 1.61:1.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use style=filled for applied/active filters, style=light for inactive filters and dropdown triggers, style=outline when the surface beneath is already light gray.",
-        "dontText": "Mix filled and light chips in the same filter row without intent — it signals \"one filter is selected,\" so using both styles for unrelated reasons misleads the user."
+        "doText": "Use the value to show the current selection — “Sort by · Newest”.",
+        "dontText": "Don’t repeat the label in the value."
       },
       {
-        "doText": "Pair the close affordance with applied filters so users can remove them with a single tap.",
-        "dontText": "Add a close icon to dropdown-trigger chips — the chevron already indicates the tap behavior; a close icon implies removal instead of picking."
+        "doText": "Keep the chevron whenever the chip opens a dropdown.",
+        "dontText": "Don’t ship a chevron on a chip that does not open anything."
       },
       {
-        "doText": "Keep the chip label to one or two words. Use selectedValue to show the picked option separately.",
-        "dontText": "Stretch chips to fill width — they're meant to fit their content. If a control needs full width, use a Button or Select Field instead."
+        "doText": "Use the leading icon to name the filter’s category.",
+        "dontText": "Don’t ship the grey Placeholder — swap in a real icon."
+      },
+      {
+        "doText": "Keep labels to one or two words; the chip hugs its text.",
+        "dontText": "Don’t let a row of chips wrap mid-label — scroll it instead."
       }
     ],
     "scorecard": [
@@ -650,139 +654,387 @@ export const chip: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Semantic names: <code>container</code>, <code>Placeholder</code>, <code>Close</code>, <code>Chevron Down</code>."
+        "notes": "<code>Pill</code>, <code>LeadingIcon</code>, <code>ContentRow</code>, <code>Label</code>, <code>Value</code>, <code>TrailingIcon</code> and <code>Dropdown-Slot</code> — semantic throughout, with no <code>#</code> sigils."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Split across two components. <code>with icon</code> uses yes/no. Dropdown uses <code>type=\"with active time\"</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Three <code>has*</code> booleans and one <code>State</code> axis over a complete 24-variant matrix."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors, radii, spacing, and typography bound to tokens."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>Label</code> and <code>Value</code> both resolve <code>matched</code> to <code>Primary/Label/Base</code>. Colour bindings cannot be read, and the Pressed label is <code>#F6F9FD</code> dimmed to 80% rather than its own colour."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to custom pill on iOS and <code>FilterChip</code>/<code>InputChip</code> on Android."
+        "notes": "One <code>EBChip</code> with a label, optional value, two optional icons and a dropdown slot."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No pressed / disabled / error states. Selected is implied by <code>style=filled</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Default, Pressed and Disabled ship, but there is no Selected state — a filter chip usually needs one, and Pressed is being used for it in the export."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Leading slot is a hardcoded 24px gray circle — should be a swappable Avatar/Icon instance."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Both icons are instance swaps, but the leading one ships the grey Placeholder and the chevron’s fill is not exposed by the plugin."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Blocked by C2 consolidation."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Four properties and three swaps are ready to map; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 0,
-      "description": "",
+      "total": 24,
+      "description": "<code>hasValue</code> (2) × <code>State</code> (3) × <code>hasLeadingIcon</code> (2) × <code>hasTrailingIcon</code> (2) = 24 variants, all built. Every one is 32 tall; the width hugs the row.",
       "columns": [
-        "Source",
-        "Style",
-        "Leading",
-        "Trailing",
-        "Node ID"
+        "hasValue",
+        "State",
+        "hasLeadingIcon",
+        "hasTrailingIcon",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "Filter",
-            "Filled (primary)",
-            "Avatar",
-            "Close",
-            "18336:22244"
+            "True",
+            "Default",
+            "True",
+            "True",
+            "<code>5595:39753</code>",
+            "161 × 32"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Filled (primary)",
-            "—",
-            "—",
-            "18336:22253"
+            "True",
+            "Default",
+            "True",
+            "False",
+            "<code>5595:39765</code>",
+            "137 × 32"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Light",
-            "Avatar",
-            "Close",
-            "18336:22257"
+            "True",
+            "Default",
+            "False",
+            "True",
+            "<code>5595:39774</code>",
+            "143 × 32"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Light",
-            "—",
-            "—",
-            "18336:22266"
+            "True",
+            "Default",
+            "False",
+            "False",
+            "<code>5595:39783</code>",
+            "119 × 32"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Outline",
-            "Avatar",
-            "Close",
-            "18336:22270"
+            "True",
+            "Pressed",
+            "True",
+            "True",
+            "<code>5595:39681</code>",
+            "161 × 32"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Outline",
-            "—",
-            "—",
-            "18336:22279"
+            "True",
+            "Pressed",
+            "True",
+            "False",
+            "<code>5595:39693</code>",
+            "137 × 32"
           ]
         },
         {
           "cells": [
-            "Filter w/ Dropdown",
-            "Light",
-            "—",
-            "Chevron",
-            "18336:22292"
+            "True",
+            "Pressed",
+            "False",
+            "True",
+            "<code>5595:39702</code>",
+            "143 × 32"
           ]
         },
         {
           "cells": [
-            "Filter w/ Dropdown",
-            "Light (w/ selected value)",
-            "—",
-            "Chevron",
-            "18336:22284"
+            "True",
+            "Pressed",
+            "False",
+            "False",
+            "<code>5595:39711</code>",
+            "119 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Disabled",
+            "True",
+            "True",
+            "<code>5595:39717</code>",
+            "161 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Disabled",
+            "True",
+            "False",
+            "<code>5595:39729</code>",
+            "137 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Disabled",
+            "False",
+            "True",
+            "<code>5595:39738</code>",
+            "143 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Disabled",
+            "False",
+            "False",
+            "<code>5595:39747</code>",
+            "119 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Default",
+            "True",
+            "True",
+            "<code>5595:39653</code>",
+            "111 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Default",
+            "True",
+            "False",
+            "<code>5595:39663</code>",
+            "87 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Default",
+            "False",
+            "True",
+            "<code>5595:39670</code>",
+            "93 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Default",
+            "False",
+            "False",
+            "<code>5595:39677</code>",
+            "69 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Pressed",
+            "True",
+            "True",
+            "<code>5595:39597</code>",
+            "111 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Pressed",
+            "True",
+            "False",
+            "<code>5595:39607</code>",
+            "87 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Pressed",
+            "False",
+            "True",
+            "<code>5595:39614</code>",
+            "93 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Pressed",
+            "False",
+            "False",
+            "<code>5595:39621</code>",
+            "69 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Disabled",
+            "True",
+            "True",
+            "<code>5595:39625</code>",
+            "111 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Disabled",
+            "True",
+            "False",
+            "<code>5595:39635</code>",
+            "87 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Disabled",
+            "False",
+            "True",
+            "<code>5595:39642</code>",
+            "93 × 32"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Disabled",
+            "False",
+            "False",
+            "<code>5595:39649</code>",
+            "69 × 32"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 5595:39596",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>hasValue</code>, <code>State</code>, <code>hasLeadingIcon</code>, <code>hasTrailingIcon</code>. The four cards on retired node <code>18336:22244</code> are replaced; the icon swaps and <code>Dropdown-Slot</code> are listed without controls.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> The pill is 32 tall at radius 99 and hugs its row: 4 + icon 24 + 4 (or 14 bare) + Label 41 + 8 + Value 42 + 8 + chevron 16 + 14 — 161 with everything on, 69 with the label alone.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Colours read per State.</strong> Default is a #D7E0EF outline with a #6780A9 label and #005CE5 value; Pressed fills #005CE5; Disabled fills #EEF2F9 with #C2CFE5 and #9BC5FD text.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved against the token database.</strong> <code>Label</code> and <code>Value</code> both match <code>Primary/Label/Base</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:chip:2.0.0</code>, an eight-row mapping, four snippets and a 24-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>There is no Selected state.</strong> A filter chip needs one, and the filled #005CE5 treatment is currently carried by <code>State=Pressed</code>. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>The Pressed label is #F6F9FD dimmed to 80%</strong> rather than its own colour — invisible to anyone reading the fill. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Disabled text fails contrast</strong> — #C2CFE5 on #EEF2F9 is 1.42:1 and #9BC5FD 1.61:1. The Default label #6780A9 is 4.01:1, just under AA. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>The chevron’s fill is not exposed</strong> by the plugin; the preview follows the export, where it takes the Value colour, or the Label colour when there is no value. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

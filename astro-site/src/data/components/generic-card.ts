@@ -1,64 +1,60 @@
 import type { ComponentData, DemoControlSection } from '../types';
 import { buildStatelessColorsTable } from './_helpers';
 
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/generic-card.js`.
+// Panel mirrors the property panel of set 5412:31504, in its order: three
+// variant axes then the seven booleans. The two icon slots and the
+// Description slot get no control.
 const genericCardDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'iconSize',
-        prop: 'iconSize',
-        defaultValue: '64',
-        options: [
-          { value: '64', label: '64' },
-          { value: '52', label: '52' },
-          { value: '46', label: '46' },
-          { value: '40', label: '40' },
-          { value: '32', label: '32' },
-          { value: '24', label: '24' },
-        ],
-      },
-      {
-        label: 'state',
-        prop: 'state',
+        label: 'Status',
+        prop: 'status',
         defaultValue: 'default',
         options: [
-          { value: 'default', label: 'Default' },
+          { value: 'default',  label: 'Default' },
           { value: 'skeleton', label: 'Skeleton' },
         ],
       },
-    ],
-  },
-  {
-    heading: 'Slots',
-    rows: [
       {
-        label: 'hasSubtitle',
-        prop: 'hasSubtitle',
-        defaultValue: 'yes',
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
         options: [
-          { value: 'yes', label: 'Yes' },
-          { value: 'no', label: 'No' },
+          { value: 'default',  label: 'Default' },
+          { value: 'disabled', label: 'Disabled' },
         ],
       },
       {
-        label: 'hasBadge',
-        prop: 'hasBadge',
-        defaultValue: 'yes',
+        label: 'IconSize',
+        prop: 'iconsize',
+        defaultValue: 'xl',
         options: [
-          { value: 'yes', label: 'Yes' },
-          { value: 'no', label: 'No' },
+          { value: 'xl',  label: 'XL' },
+          { value: 'lg',  label: 'LG' },
+          { value: 'md',  label: 'MD' },
+          { value: 'sm',  label: 'SM' },
+          { value: 'xs',  label: 'XS' },
+          { value: 'xxs', label: 'XXS' },
         ],
       },
-      {
-        label: 'hasChevron',
-        prop: 'hasChevron',
-        defaultValue: 'yes',
-        options: [
-          { value: 'yes', label: 'Yes' },
-          { value: 'no', label: 'No' },
-        ],
-      },
+      { label: 'hasLeadingElement', prop: 'hasleadingelement', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasSubtitle', prop: 'hassubtitle', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasBlurb', prop: 'hasblurb', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasTag', prop: 'hastag', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasDescription', prop: 'hasdescription', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'has Badge', prop: 'hasbadge', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasTrailingElement', prop: 'hastrailingelement', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
     ],
   },
 ];
@@ -269,371 +265,945 @@ export const genericCard: ComponentData = {
     "recommendations": []
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "default-—-iconsize=64",
-        "demoKey": "default",
+        "cardKey": "gc-spec-main",
+        "demoKey": "main",
+        "title": "Generic Card",
+        "node": "5412:31504",
+        "description": "A 360-wide list card — leading icon at six sizes, blurb and tag, heading, two description rows and a badge, with a Skeleton status for loading.",
+        "previewHtml": "<div id=\"generic-card-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": genericCardDemoControls,
-        "title": "Default — iconSize=64",
-        "node": "18482:35807",
-        "description": "Full-featured row: icon + blurb with tag, heading, 2 description lines, bottom badge, chevron.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-default\"><div class=\"eb-preview eb-preview-gcard\"><div class=\"eb-preview-gcard__icon eb-preview-gcard__icon--64\"></div><div class=\"eb-preview-gcard__content\"><div class=\"eb-preview-gcard__subtitle\"><span class=\"eb-preview-gcard__blurb\">Blurb</span><span class=\"eb-preview-gcard__tag\">Tag</span></div><p class=\"eb-preview-gcard__heading\">Heading Goes Here</p><p class=\"eb-preview-gcard__desc-line eb-preview-gcard__desc-line--first\"><span class=\"eb-preview-gcard__desc-label\">Label:</span><span class=\"eb-preview-gcard__desc-value\">Description goes here</span></p><p class=\"eb-preview-gcard__desc-line\"><span class=\"eb-preview-gcard__desc-label\">Label:</span><span class=\"eb-preview-gcard__desc-value\">Description goes here</span></p><span class=\"eb-preview-gcard__badge\">Label</span></div><div class=\"eb-preview-gcard__chevron-wrap\"><svg class=\"eb-preview-gcard__chevron\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "iconSize", "value": "64",      "prop": "iconSize" },
-              { "key": "state",    "value": "Default", "prop": "state" },
-              { "key": "Layout",   "value": "icon-leading + content-right" }
+              {
+                "key": "Status",
+                "value": "Default",
+                "prop": "status"
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "prop": "state"
+              },
+              {
+                "key": "IconSize",
+                "value": "XL",
+                "prop": "iconsize",
+                "variants": {
+                  "hasleadingelement:false": {
+                    "value": "— no leading element"
+                  }
+                }
+              },
+              {
+                "key": "hasLeadingElement",
+                "value": "True",
+                "prop": "hasleadingelement"
+              },
+              {
+                "key": "hasSubtitle",
+                "value": "True",
+                "prop": "hassubtitle"
+              },
+              {
+                "key": "hasBlurb",
+                "value": "True",
+                "prop": "hasblurb"
+              },
+              {
+                "key": "hasTag",
+                "value": "True",
+                "prop": "hastag"
+              },
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "prop": "hasdescription"
+              },
+              {
+                "key": "has Badge",
+                "value": "True",
+                "prop": "hasbadge"
+              },
+              {
+                "key": "hasTrailingElement",
+                "value": "True",
+                "prop": "hastrailingelement"
+              },
+              {
+                "key": "⤷ Leading-Icon-Slot",
+                "value": "Slot · 12 items",
+                "variants": {
+                  "hasleadingelement:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "⤷ Trailing-Icon-Slot",
+                "value": "Slot · 12 items",
+                "variants": {
+                  "hastrailingelement:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "⤷ Description",
+                "value": "Slot · 12 items"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "5412:31505 · 360 × 148",
+                "mono": true,
+                "prop": "variantNode"
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",     "value": "#FFFFFF", "token": "card-list/color/bg" },
-              { "key": "Border",      "value": "#E5EBF4", "token": "card-list/color/border" },
-              { "key": "Title",       "value": "#0A2757", "token": "card-list/color/label-header" },
-              { "key": "Description", "value": "#445C85", "token": "card-list/color/description" },
-              { "key": "Label",       "value": "#90A8D0", "token": "card-list/color/label" },
-              { "key": "Blurb",       "value": "#005CE5", "token": "card-list/color/label-blurb" },
-              { "key": "Icon",        "value": "#005CE5", "token": "card-list/color/icon" },
-              { "key": "Badge bg",    "value": "#E5F1FF", "token": "badge/information/light/background" },
-              { "key": "Badge label", "value": "#005CE5", "token": "badge/information/light/label" }
+              {
+                "key": "Card",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF"
+              },
+              {
+                "key": "Divider",
+                "value": "#E5EBF4",
+                "token": "—",
+                "swatch": "#E5EBF4"
+              },
+              {
+                "key": "Blurb",
+                "value": "#005CE5",
+                "token": "—",
+                "swatch": "#005CE5",
+                "variants": {
+                  "hasblurb:false": {
+                    "hide": true
+                  },
+                  "state:disabled": {
+                    "value": "#9BC5FD",
+                    "swatch": "#9BC5FD"
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Tag",
+                "value": "#D61B2C / #FFFFFF",
+                "token": "—",
+                "swatch": "#D61B2C",
+                "variants": {
+                  "hastag:false": {
+                    "hide": true
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "token": "—",
+                "swatch": "#0A2757",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Row label",
+                "value": "#90A8D0",
+                "token": "—",
+                "swatch": "#90A8D0",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Row description",
+                "value": "#445C85",
+                "token": "—",
+                "swatch": "#445C85",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Badge",
+                "value": "#E5F1FF / #005CE5",
+                "token": "—",
+                "swatch": "#E5F1FF",
+                "variants": {
+                  "hasbadge:false": {
+                    "hide": true
+                  },
+                  "state:disabled": {
+                    "value": "#C2C6CF / #FFFFFF",
+                    "swatch": "#C2C6CF"
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Chevron",
+                "value": "#005CE5",
+                "token": "—",
+                "swatch": "#005CE5",
+                "variants": {
+                  "hastrailingelement:false": {
+                    "hide": true
+                  },
+                  "state:disabled": {
+                    "value": "#9BC5FD",
+                    "swatch": "#9BC5FD"
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Icon placeholder",
+                "value": "#D3DCEA",
+                "token": "—",
+                "swatch": "#D3DCEA",
+                "variants": {
+                  "hasleadingelement:false": {
+                    "hide": true
+                  },
+                  "state:disabled": {
+                    "value": "#9BC5FD",
+                    "swatch": "#9BC5FD"
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+{
+                "key": "Skeleton blocks",
+                "value": "#EEF2F9",
+                "token": "—",
+                "swatch": "#EEF2F9",
+                "variants": {
+                  "status:default": {
+                    "hide": true
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Width × Height",         "value": "360 × 146", "mono": true },
-              { "key": "Padding",                "value": "16 24 16 12", "mono": true },
-              { "key": "Gap (icon ↔ content)",   "value": "24px", "mono": true },
-              { "key": "Gap (content ↔ chevron)","value": "24px", "mono": true },
-              { "key": "Bottom border",          "value": "1px", "mono": true },
-              { "key": "Icon size",              "value": "64 × 64", "mono": true },
-              { "key": "Chevron size",           "value": "32 × 32", "mono": true }
+              {
+                "key": "Size",
+                "value": "360 × 148",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Padding",
+                "value": "24 left · 12 right · 16 top and bottom",
+                "mono": true
+              },
+              {
+                "key": "Row height",
+                "value": "Tallest of content · icon · 32 chevron",
+                "mono": true
+              },
+              {
+                "key": "Alignment",
+                "value": "Icons at the row top · text centres",
+                "mono": true
+              },
+              {
+                "key": "Leading icon",
+                "value": "64 × 64",
+                "mono": true,
+                "prop": "icon-readout"
+              },
+              {
+                "key": "Icon → content gap",
+                "value": "24",
+                "mono": true,
+                "variants": {
+                  "iconsize:md": {
+                    "value": "20"
+                  },
+                  "iconsize:sm": {
+                    "value": "16"
+                  },
+                  "iconsize:xs": {
+                    "value": "16"
+                  },
+                  "iconsize:xxs": {
+                    "value": "12"
+                  }
+                }
+              },
+              {
+                "key": "Content block",
+                "value": "180 wide at x 112",
+                "mono": true,
+                "prop": "content-readout"
+              },
+              {
+                "key": "Header",
+                "value": "21 tall · Blurb then Tag 29 × 16",
+                "mono": true,
+                "variants": {
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Title",
+                "value": "23 tall · 4 below the header",
+                "mono": true,
+                "variants": {
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Description rows",
+                "value": "18 tall each · 4 apart",
+                "mono": true,
+                "variants": {
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Badge",
+                "value": "48 × 18 · radius 99",
+                "mono": true,
+                "variants": {
+                  "hasbadge:false": {
+                    "hide": true
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Trailing icon",
+                "value": "32 × 32 at x 316 · y 30",
+                "mono": true,
+                "variants": {
+                  "hastrailingelement:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Skeleton blocks",
+                "value": "69 × 20 · 159 × 23 · 159 × 18 · 159 × 18 · 45 × 19",
+                "mono": true,
+                "variants": {
+                  "status:default": {
+                    "hide": true
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Heading",     "value": "Proxima Soft Bold · 18 / 23 · +0.25", "mono": true },
-              { "key": "Blurb",       "value": "Proxima Soft Bold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Description", "value": "BarkAda Semibold · 12 / 18 · +0", "mono": true },
-              { "key": "Tag label",   "value": "Proxima Soft Bold · 12 / 12 · +0.5", "mono": true },
-              { "key": "Badge label", "value": "Proxima Soft Bold · 12 / 12 · +0.5", "mono": true }
-            ]
-          },
-          {
-            "label": "Composed sub-components",
-            "rows": [
               {
-                "key": "Tag",
-                "value": "Badge · Negative · Heavy",
-                "mono": true
+                "key": "Blurb",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "variants": {
+                  "hasblurb:false": {
+                    "hide": true
+                  },
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "Bottom pill",
-                "value": "Badge · Information · Light",
-                "mono": true
+                "key": "Title",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "variants": {
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "Icon (today)",
-                "value": "Drawn placeholder",
-                "mono": false
-              },
-              {
-                "key": "Icon (proposed)",
-                "value": "Avatar / Icon slot",
-                "mono": false
+                "key": "Label / Description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "variants": {
+                  "status:skeleton": {
+                    "hide": true
+                  }
+                }
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCard</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description body\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">))</span>\n    .<span class=\"syn-fn\">ebIconSize</span><span class=\"syn-punc\">(</span>64<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebBlurb</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Blurb\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCard</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description body\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Star</span><span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    iconSize <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBIconSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Size64</span><span class=\"syn-punc\">,</span>\n    blurb <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Blurb\"</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "skeleton-—-loading-state",
-        "demoKey": "skeleton",
-        "demoControls": genericCardDemoControls,
-        "title": "Skeleton — loading state",
-        "node": "18482:35832",
-        "description": "The loading pattern for the card. Every content slot becomes a rounded rectangle placeholder in neutral gray. Use while awaiting data.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-skeleton\"><div class=\"eb-preview eb-preview-gcard eb-preview-gcard--skeleton\"><div class=\"eb-preview-gcard__icon eb-preview-gcard__icon--64\"></div><div class=\"eb-preview-gcard__content\"><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--tag\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--heading\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--desc\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--desc2\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--badge\"></div></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--chevron\"></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "iconSize", "value": "64",       "prop": "iconSize" },
-              { "key": "state",    "value": "Skeleton", "prop": "state" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Skeleton bg", "value": "#EEF2F9", "token": "main/skeleton/bg" },
-              { "key": "Surface bg",  "value": "#FFFFFF", "token": "main/card/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Min height",       "value": "88px",   "mono": true },
-              { "key": "Padding",          "value": "16px",   "mono": true },
-              { "key": "Corner radius",    "value": "12px",   "mono": true },
-              { "key": "Icon placeholder", "value": "64 × 64", "mono": true },
-              { "key": "Bar 1 size",       "value": "120 × 14", "mono": true },
-              { "key": "Bar 2 size",       "value": "180 × 10", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "N/A", "value": "No text in skeleton state" }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBGenericCard</span><span class=\"syn-punc\">(</span>isLoading<span class=\"syn-punc\">: </span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBGenericCard</span><span class=\"syn-punc\">(</span>\n    isLoading <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBGenericCard(\"Heading Goes Here\")\n    .ebBlurb(\"Blurb\")\n    .ebTag(\"Tag\")\n    .ebDescription(\"Label:\", \"Description goes here\")\n    .ebBadge(\"Label\")\n    .ebLeadingIcon(.xl) { Image(\"icon\") }",
+        "compose": "EBGenericCard(\n    title = \"Heading Goes Here\",\n    blurb = \"Blurb\",\n    tag = \"Tag\",\n    description = \"Label: Description goes here\",\n    badge = \"Label\",\n    iconSize = EBGenericCardIconSize.XL,\n    leadingIcon = { Image(painterResource(R.drawable.icon), null) },\n    onClick = { }\n)"
       }
     ],
-    colorsTables: [
-      // Card 1 — Default with leading icon
-      buildStatelessColorsTable({
-        title: 'Default — Colors',
-        description: 'Tappable list-style card with leading icon, heading, description, optional blurb + tag.',
-        rows: [
-          { role: 'Surface',     token: 'card-list/color/bg',                  value: '#FFFFFF' },
-          { role: 'Border',      token: 'card-list/color/border',              value: '#E5EBF4' },
-          { role: 'Title',       token: 'card-list/color/label-header',        value: '#0A2757' },
-          { role: 'Description', token: 'card-list/color/description',         value: '#445C85' },
-          { role: 'Label',       token: 'card-list/color/label',               value: '#90A8D0' },
-          { role: 'Blurb',       token: 'card-list/color/label-blurb',         value: '#005CE5' },
-          { role: 'Icon',        token: 'card-list/color/icon',                value: '#005CE5' },
-          { role: 'Badge bg',    token: 'badge/information/light/background',  value: '#E5F1FF' },
-          { role: 'Badge label', token: 'badge/information/light/label',       value: '#005CE5' },
+    "colorsTables": [
+      {
+        "title": "Colors by State",
+        "description": "Read off <code>get_node_info</code> across the 18 variants of set <code>5412:31504</code>. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Default",
+          "Disabled",
+          "Skeleton"
         ],
-      }),
-      // Card 2 — Skeleton loading state
-      buildStatelessColorsTable({
-        title: 'Skeleton — Colors',
-        description: 'Loading state — every content slot is a rounded rectangle in neutral grey on the card surface.',
-        rows: [
-          { role: 'Skeleton bg', token: 'main/skeleton/bg', value: '#EEF2F9' },
-          { role: 'Surface bg',  token: 'main/card/bg',     value: '#FFFFFF' },
-        ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Card",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Divider",
+            "token": "—",
+            "values": [
+              "#E5EBF4",
+              "#E5EBF4",
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Blurb",
+            "token": "—",
+            "values": [
+              "#005CE5",
+              "#9BC5FD",
+              "–"
+            ]
+          },
+          {
+            "role": "Tag",
+            "token": "—",
+            "values": [
+              "#D61B2C / #FFFFFF",
+              "#D61B2C / #FFFFFF",
+              "–"
+            ]
+          },
+          {
+            "role": "Title",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#C2CFE5",
+              "–"
+            ]
+          },
+          {
+            "role": "Row label",
+            "token": "—",
+            "values": [
+              "#90A8D0",
+              "#C2CFE5",
+              "–"
+            ]
+          },
+          {
+            "role": "Row description",
+            "token": "—",
+            "values": [
+              "#445C85",
+              "#C2CFE5",
+              "–"
+            ]
+          },
+          {
+            "role": "Badge",
+            "token": "—",
+            "values": [
+              "#E5F1FF / #005CE5",
+              "#C2C6CF / #FFFFFF",
+              "–"
+            ]
+          },
+          {
+            "role": "Chevron",
+            "token": "—",
+            "values": [
+              "#005CE5",
+              "#9BC5FD",
+              "–"
+            ]
+          },
+          {
+            "role": "Icon placeholder",
+            "token": "—",
+            "values": [
+              "#D3DCEA",
+              "#9BC5FD",
+              "–"
+            ]
+          },
+          {
+            "role": "Skeleton blocks",
+            "token": "—",
+            "values": [
+              "–",
+              "–",
+              "#EEF2F9"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:generic-card:2.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.genericcard.*  <span class=\"cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>5412:31504</code>, in panel order, then the three SLOTs. <code>Skeleton</code> ships <code>State=Default</code> only.",
       "rows": [
         {
-          "figma": "<code>iconSize: 64 | 52 | 46 | 40 | 32 | 24</code>",
-          "swift": "<code>size: xl | l | m | s</code>",
-          "compose": "<code>.controlSize(.large)</code> etc."
+          "figma": "Status — Default, Skeleton",
+          "swift": "<code>.ebSkeleton(true)</code>",
+          "compose": "<code>skeleton = true</code>"
         },
         {
-          "figma": "(drawn circle)",
-          "swift": "<code>leadingMedia: Avatar | Icon</code> (slot)",
-          "compose": "<code>leadingMedia: EBLeadingMedia?</code>"
+          "figma": "State — Default, Disabled",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
         },
         {
-          "figma": "(hardcoded text)",
-          "swift": "<code>heading: String</code>",
-          "compose": "<code>heading: String</code>"
+          "figma": "IconSize — XL, LG, MD, SM, XS, XXS (64, 52, 46, 40, 32, 24) · only with hasLeadingElement",
+          "swift": "<code>.ebLeadingIcon(.xl … .xxs) { }</code>",
+          "compose": "<code>iconSize = EBGenericCardIconSize.XL … XXS</code>"
         },
         {
-          "figma": "<code>hasBlurb</code>",
-          "swift": "<code>blurb?: String</code>",
-          "compose": "<code>blurb: String?</code>"
+          "figma": "hasLeadingElement — boolean",
+          "swift": "omit <code>.ebLeadingIcon</code>",
+          "compose": "<code>leadingIcon: (@Composable () -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "<code>hasTag</code>",
-          "swift": "<code>tag?: Badge</code> (instance)",
-          "compose": "<code>tag: EBBadge?</code>"
+          "figma": "hasSubtitle — boolean",
+          "swift": "<code>.ebSubtitle(String, String)</code>",
+          "compose": "<code>subtitle: String? = null</code>"
         },
         {
-          "figma": "<code>hasSubtitle</code>",
-          "swift": "(derived: shown if <code>blurb</code> or <code>tag</code> present)",
-          "compose": "—"
+          "figma": "hasBlurb — boolean",
+          "swift": "<code>.ebBlurb(String)</code>",
+          "compose": "<code>blurb: String? = null</code>"
         },
         {
-          "figma": "(hardcoded \"Description goes here\")",
-          "swift": "<code>descriptions: [LabelValue]</code>",
-          "compose": "<code>descriptions: [EBLabelValue]</code>"
+          "figma": "hasTag — boolean",
+          "swift": "<code>.ebTag(String)</code>",
+          "compose": "<code>tag: String? = null</code>"
         },
         {
-          "figma": "<code>has2ndDescription</code>",
-          "swift": "(derived: up to N rows rendered)",
-          "compose": "—"
+          "figma": "hasDescription — boolean",
+          "swift": "<code>.ebDescription(String, String)</code>",
+          "compose": "<code>description: String? = null</code>"
         },
         {
-          "figma": "<code>hasBadge</code>",
-          "swift": "<code>badge?: Badge</code> (instance)",
-          "compose": "<code>badge: EBBadge?</code>"
+          "figma": "has Badge — boolean (note the space)",
+          "swift": "<code>.ebBadge(String)</code>",
+          "compose": "<code>badge: String? = null</code>"
         },
         {
-          "figma": "<code>hasChevron</code>",
-          "swift": "<code>showChevron: Bool = true</code>",
-          "compose": "<code>showChevron: Bool = true</code>"
+          "figma": "hasTrailingElement — boolean",
+          "swift": "<code>.ebTrailingIcon(nil)</code> to drop it",
+          "compose": "<code>trailingIcon: EBIcon? = EBIcons.ChevronRight</code>"
         },
         {
-          "figma": "<code>state: Default | skeleton</code>",
-          "swift": "<code>loading: Bool</code>",
-          "compose": "<code>loading: Bool</code>"
+          "figma": "⤷ Leading-Icon-Slot — SLOT · 12 items",
+          "swift": "content of <code>.ebLeadingIcon</code>",
+          "compose": "the value of <code>leadingIcon</code>"
         },
         {
-          "figma": "(not modeled)",
-          "swift": "<code>onTap?: () -&gt; Void</code>",
-          "compose": "<code>onTap: (() -&gt; Void)?</code>"
+          "figma": "⤷ Trailing-Icon-Slot — SLOT · 12 items",
+          "swift": "the chevron",
+          "compose": "the value of <code>trailingIcon</code>"
+        },
+        {
+          "figma": "⤷ Description — SLOT · 12 items",
+          "swift": "the two label / description rows",
+          "compose": "the two label / description rows"
         }
-      ]
+      ],
+      "filePaths": {
+        "swift": "ios/Components/GenericCard/EBGenericCard.swift",
+        "compose": "android/components/genericcard/EBGenericCard.kt"
+      }
     },
-    "usageSnippets": [],
-    "accessibility": [
+    "usageSnippets": [
       {
-        "requirement": "Row as a button",
-        "ios": "Whole row wrapped in <code>Button</code> with combined <code>accessibilityLabel</code> (heading + blurb + tag).",
-        "android": "<code>Modifier.clickable { onTap() }.semantics(mergeDescendants = true)</code> on the row."
+        "subheading": "Default · XL",
+        "swift": "<span class=\"cmt\">// Status=Default, State=Default, IconSize=XL — 5412:31505, 360 × 148.</span>\nEBGenericCard(\"GSave Time Deposit\")\n    .ebBlurb(\"New\")\n    .ebTag(\"Hot\")\n    .ebDescription(\"Rate:\", \"up to 4.25% p.a.\")\n    .ebBadge(\"Insured\")\n    .ebLeadingIcon(.xl) { Image(\"gsave\") }",
+        "compose": "<span class=\"cmt\">// Status=Default, State=Default, IconSize=XL — 5412:31505, 360 × 148.</span>\nEBGenericCard(\n    title = \"GSave Time Deposit\",\n    blurb = \"New\",\n    tag = \"Hot\",\n    description = \"Rate: up to 4.25% p.a.\",\n    badge = \"Insured\",\n    iconSize = EBGenericCardIconSize.XL,\n    leadingIcon = { Image(painterResource(R.drawable.gsave), null) },\n    onClick = { open() }\n)"
       },
       {
-        "requirement": "Combined announcement",
-        "ios": "\"Send Money Abroad, PROMO, New, Free for first transfer, Same day, Recommended\" — VoiceOver reads top-to-bottom.",
-        "android": "Same reading order — TalkBack follows composition."
+        "subheading": "Compact icon · XXS",
+        "swift": "<span class=\"cmt\">// Status=Default, State=Default, IconSize=XXS — 5412:31685, 360 × 148; the icon is 24 and the content block widens to 232.</span>\nEBGenericCard(\"GSave Time Deposit\")\n    .ebLeadingIcon(.xxs) { Image(\"gsave\") }",
+        "compose": "<span class=\"cmt\">// Status=Default, State=Default, IconSize=XXS — 5412:31685, 360 × 148; the icon is 24 and the content block widens to 232.</span>\nEBGenericCard(\n    title = \"GSave Time Deposit\",\n    iconSize = EBGenericCardIconSize.XXS,\n    leadingIcon = { Image(painterResource(R.drawable.gsave), null) },\n    onClick = { open() }\n)"
       },
       {
-        "requirement": "Loading state",
-        "ios": "Announce \"Loading\" once on mount; suppress per-placeholder announcements.",
-        "android": "Apply <code>contentDescription = \"Loading\"</code> to the skeleton container."
+        "subheading": "Skeleton",
+        "swift": "<span class=\"cmt\">// Status=Skeleton, IconSize=XL — 5412:31530, 360 × 146.</span>\nEBGenericCard(\"\")\n    .ebSkeleton(true)",
+        "compose": "<span class=\"cmt\">// Status=Skeleton, IconSize=XL — 5412:31530, 360 × 146.</span>\nEBGenericCard(\n    title = \"\",\n    skeleton = true,\n    onClick = { }\n)"
       },
       {
-        "requirement": "Min touch target",
-        "ios": "146 px row height ≫ 44 pt ✓",
-        "android": "146 dp ≫ 48 dp ✓"
+        "subheading": "Disabled",
+        "swift": "<span class=\"cmt\">// Status=Default, State=Disabled, IconSize=XL — 5418:32487, 360 × 148.</span>\nEBGenericCard(\"GSave Time Deposit\")\n    .ebBlurb(\"New\")\n    .ebBadge(\"Insured\")\n    .disabled(true)",
+        "compose": "<span class=\"cmt\">// Status=Default, State=Disabled, IconSize=XL — 5418:32487, 360 × 148.</span>\nEBGenericCard(\n    title = \"GSave Time Deposit\",\n    blurb = \"New\",\n    badge = \"Insured\",\n    enabled = false,\n    onClick = { }\n)"
       }
     ],
-    "usageGuidelines": [],
+    "accessibility": [
+      {
+        "requirement": "Card role",
+        "ios": "One <code>Button</code> per card; the label reads blurb, tag, title, then the rows.",
+        "android": "<code>Modifier.clickable(role = Role.Button)</code> with a merged <code>contentDescription</code>."
+      },
+      {
+        "requirement": "Tag and badge",
+        "ios": "Read them as values, not separate buttons — <code>.accessibilityValue(\"Hot, Insured\")</code>.",
+        "android": "Append both to <code>stateDescription</code>."
+      },
+      {
+        "requirement": "Skeleton",
+        "ios": "<code>.accessibilityLabel(\"Loading\")</code> and hide the blocks from VoiceOver.",
+        "android": "<code>contentDescription = \"Loading\"</code>; blocks <code>clearAndSetSemantics {}</code>."
+      },
+      {
+        "requirement": "Leading icon",
+        "ios": "Decorative when the title names the product — <code>.accessibilityHidden(true)</code>.",
+        "android": "<code>contentDescription = null</code>."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Title #0A2757 is 14.58:1 on white and the row description #445C85 6.74:1. The row label #90A8D0 is 2.41:1 and the Disabled text #C2CFE5 1.57:1 — both below AA. White on the #D61B2C tag is 5.18:1.",
+        "android": "Same ratios."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Pick the icon size that matches the row’s density — XL for a hero product, XXS in a dense list.",
+        "dontText": "Don’t mix icon sizes within one list; the content block shifts with them."
+      },
+      {
+        "doText": "Use Skeleton while the card’s data loads.",
+        "dontText": "Don’t leave Skeleton on a card with nothing to fetch."
+      },
+      {
+        "doText": "Keep the blurb to one word and the tag shorter still — they share a 21-tall row.",
+        "dontText": "Don’t use both the tag and the badge for the same message."
+      },
+      {
+        "doText": "Use the two description rows for label-and-value pairs.",
+        "dontText": "Don’t put a sentence in them; the row is one line at 12pt."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Clean container / content / chevron hierarchy. Tag and bottom pill are Badge instances."
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "<code>ContentRow</code>, <code>MediaContainer</code>, <code>ContentBlock</code> and the two icon slots are semantic, but one variant’s frame is <code>IconContainert</code>, the spacer instance is <code>_space_40</code> while measuring 24, and the two description rows are both <code>TextContainer</code> holding <code>Label</code> and <code>Description</code>."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "6 numeric <code>iconSize</code> values — collapse to semantic scale."
+        "notes": "Three PascalCase axes, but <code>has Badge</code> carries a space where every sibling is camelCase, and <code>hasSubtitle</code> / <code>hasDescription</code> both point at the same pair of identical rows."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors bound to <code>main/card-list/color/*</code> + Badge tokens."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "All three text layers resolve <code>matched</code> — <code>Primary/Label/Small</code>, <code>Primary/Headlines/Block</code>, <code>Secondary/Bold/Caption</code>. Colour bindings cannot be read, and the Tag keeps its full-strength red in Disabled."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Maps cleanly to a row composable once icon slot + chevron are fixed."
+        "notes": "Maps to one card with an icon-size enum and optional parts, but the 18 variants encode a loading status that is runtime state natively."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Default + skeleton built. Missing pressed + disabled for a tappable row."
+        "notes": "Default, Disabled and Skeleton ship. There is no pressed state on a card that is tappable."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Icon placeholder isn't an instance; chevron is a raster."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Leading and trailing icons are real SLOTs with 12 swap options each, plus a Description slot with 12."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked until iconSize rename and icon slot adoption land."
+        "notes": "Three axes, seven booleans and three slots are ready to map; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 12,
-      "description": "<code>iconSize</code> (6) × <code>state</code> (2) = <strong>12 variants</strong>. The 6 boolean slot props (<code>hasBlurb</code>, <code>hasTag</code>, <code>hasSubtitle</code>, <code>has2ndDescription</code>, <code>hasBadge</code>, <code>hasChevron</code>) toggle content independently and don't multiply the variant count.",
+      "total": 18,
+      "description": "<code>Status</code> (2) × <code>State</code> (2) × <code>IconSize</code> (6) would be 24; 18 are built, because Skeleton ships <code>State=Default</code> only. The seven booleans add none.",
       "columns": [
-        "iconSize",
-        "Default node",
-        "Skeleton node",
+        "Status",
+        "State",
+        "IconSize",
+        "Icon",
+        "Node ID",
         "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>64</strong>",
-            "<code>18482:35807</code>",
-            "<code>18482:35832</code>",
+            "Default",
+            "Default",
+            "XL",
+            "64",
+            "<code>5412:31505</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "XL",
+            "64",
+            "<code>5418:32487</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Skeleton",
+            "Default",
+            "XL",
+            "64",
+            "<code>5412:31530</code>",
             "360 × 146"
           ]
         },
         {
           "cells": [
-            "<strong>52</strong>",
-            "<code>18482:35843</code>",
-            "<code>18482:35868</code>",
+            "Default",
+            "Default",
+            "LG",
+            "52",
+            "<code>5412:31541</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "LG",
+            "52",
+            "<code>5418:32462</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Skeleton",
+            "Default",
+            "LG",
+            "52",
+            "<code>5412:31566</code>",
             "360 × 146"
           ]
         },
         {
           "cells": [
-            "<strong>46</strong>",
-            "<code>18482:35879</code>",
-            "<code>18482:35904</code>",
+            "Default",
+            "Default",
+            "MD",
+            "46",
+            "<code>5412:31577</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "MD",
+            "46",
+            "<code>5418:32437</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Skeleton",
+            "Default",
+            "MD",
+            "46",
+            "<code>5412:31602</code>",
             "360 × 146"
           ]
         },
         {
           "cells": [
-            "<strong>40</strong>",
-            "<code>18482:35915</code>",
-            "<code>18482:35940</code>",
+            "Default",
+            "Default",
+            "SM",
+            "40",
+            "<code>5412:31613</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "SM",
+            "40",
+            "<code>5418:32412</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Skeleton",
+            "Default",
+            "SM",
+            "40",
+            "<code>5412:31638</code>",
             "360 × 146"
           ]
         },
         {
           "cells": [
-            "<strong>32</strong>",
-            "<code>18482:35951</code>",
-            "<code>18482:35976</code>",
+            "Default",
+            "Default",
+            "XS",
+            "32",
+            "<code>5412:31649</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "XS",
+            "32",
+            "<code>5418:32387</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Skeleton",
+            "Default",
+            "XS",
+            "32",
+            "<code>5412:31674</code>",
             "360 × 146"
           ]
         },
         {
           "cells": [
-            "<strong>24</strong>",
-            "<code>18482:35987</code>",
-            "<code>18482:36012</code>",
+            "Default",
+            "Default",
+            "XXS",
+            "24",
+            "<code>5412:31685</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "XXS",
+            "24",
+            "<code>5418:32362</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "Skeleton",
+            "Default",
+            "XXS",
+            "24",
+            "<code>5412:31710</code>",
             "360 × 146"
           ]
         }
@@ -641,6 +1211,191 @@ export const genericCard: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.4",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "IconSize locks without a leading element · node 5412:31504",
+      "rows": [
+        {
+          "body": "<strong><code>IconSize</code> only describes the leading icon.</strong> With <code>hasLeadingElement=False</code> the control is disabled and the row reads <code>—</code>, so the panel cannot offer a size for an icon that is not there.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The set cannot express that</strong> — <code>IconSize</code> is a variant axis, so all six values stay selectable in Figma even when the boolean hides the icon. Worth folding the size into the slot instead. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.3",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Chevron sits 14 below the row top · node 5412:31504",
+      "rows": [
+        {
+          "body": "<strong>The chevron is not centred.</strong> <code>Trailing-Icon-Slot</code> sits 14 below the row top — y 30 on the full card — and holds that offset at every IconSize, so it lines up with the heading rather than the card’s middle. The leading icon is flush with the row top.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Both fall back to centred on a short row</strong>, which is the title-and-chevron case from the previous pass.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Chevron and placeholder colours · node 5412:31504",
+      "rows": [
+        {
+          "body": "<strong>The chevron is #005CE5, not the navy title colour</strong> — and #9BC5FD when Disabled. The icon placeholder follows: #D3DCEA by default, #9BC5FD when Disabled.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Both come from <code>export_node_as_image</code>.</strong> The Chevron Right and Placeholder instances expose only their guide layers to the plugin, never the glyph fill. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Vertical centring on short cards · node 5412:31504",
+      "rows": [
+        {
+          "body": "<strong>Columns now centre on the row.</strong> With only a title and a chevron the heading sat 4px high against a centred chevron; the content block, the leading icon and the chevron all centre on the tallest of the three.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 5412:31504",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>Status</code>, <code>State</code>, <code>IconSize</code> and the seven booleans. The three slots are listed without controls.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> 360 × 148 (Skeleton 146): 24 left padding, the icon, a gap, the content block, a 24 spacer, the 32 trailing icon and 12 right padding.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>IconSize only changes the leading icon</strong> — 64, 52, 46, 40, 32, 24 — and the gap after it shrinks with it (24, 24, 20, 16, 16, 12), so the content block widens from 180 to 232. Every variant stays 148 tall.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved against the token database.</strong> <code>Blurb</code> → <code>Primary/Label/Small</code>, <code>Title</code> → <code>Primary/Headlines/Block</code>, the row text → <code>Secondary/Bold/Caption</code>, all matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:generic-card:2.0.0</code>, a thirteen-row mapping, four snippets and an 18-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong><code>has Badge</code> carries a space</strong> where every sibling property is camelCase — it will not survive Code Connect as written. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong><code>hasSubtitle</code> and <code>hasDescription</code> point at the same pair of rows.</strong> Both <code>TextContainer</code> rows are named identically and every variant ships them on, so the preview maps hasDescription to the first and hasSubtitle to the second — a guess that needs confirming. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Layer-name slips.</strong> One variant’s frame is <code>IconContainert</code>, and the spacer instance is <code>_space_40</code> while measuring 24 wide. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>The Tag keeps its full-strength red in Disabled</strong> — #D61B2C on a card whose every other element has dropped to #C2CFE5. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>No pressed state</strong> on a card that is tappable — the set ships Default, Disabled and Skeleton only. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Row label and disabled text fail AA</strong> — #90A8D0 is 2.41:1 and #C2CFE5 1.57:1 at 12pt. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Heights with the booleans off are computed, not read</strong> — all 18 variants ship them on, so the hidden layers report stale coordinates. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

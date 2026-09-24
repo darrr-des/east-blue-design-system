@@ -1,173 +1,191 @@
-/* Auto-extracted from assessment-src/components/generic-transaction-card.html.
- * Powers the live-preview dropdowns/toggles for the generic-transaction-card component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs generic-transaction-card
+/* Generic Transaction Card — Style tab demo.
+ * Rebuilt from Figma component set 5488:32955 (GCash DS 2026 Working File).
+ * Offsets, fills and text styles read off get_node_info and
+ * get_styled_text_segments; checked against export_node_as_image.
+ *
+ * Panel (set 5488:32955, from the property-panel screenshot):
+ *   State              · Default, Pressed, Disabled   (variant)
+ *   Status             · Default, Read, Skeleton      (variant)
+ *   hasLeadingElement  · True   ⤷ Leading-Slot  · 4 items
+ *   hasAmount          · True
+ *   hasTrailingElement · True   ⤷ Trailing-Slot · 4 items
+ *   hasBadge           · True
+ * 5 of the 9 combinations are built — Pressed, Disabled and Read each
+ * pair with one value of the other axis — so the panel snaps.
+ *
+ * 360 x 82 (Skeleton 79). LeadingElement 44 x 50 at (22, 16) holding a 32
+ * avatar, then the content row at x 66: Label and Amount on the first
+ * line, the badge and date on the second. The trailing Others glyph sits
+ * at x 312.
+ *
+ * Disabled is the odd one out: its avatar is 24, not 32, so its content
+ * row starts at x 58 and runs 278 wide.
  */
-/* ── Generic Transaction Card JS ────────────────────────────────── */
-/* 5 variants, 5 layouts. Preview renders each honestly — the prop
-   switch produces visibly different rows (the whole point of the
-   "this is 5 components hiding as 1" argument in Open Issues).      */
 
-function _gtxEscape(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+var GT_W = 360;
+var GT_NODES = {
+  'default|default': '5488:32979', 'pressed|default': '5492:33839',
+  'disabled|default': '5492:33889', 'default|read': '5501:38441',
+  'default|skeleton': '5488:33001'
+};
+
+var GT_S = {
+  'default|default':  { bg: '#FFFFFF', label: '#0A2757', amount: '#0A2757', date: '#6780A9', others: '#005CE5',
+                        avatar: '#005CE5', initials: '#FFFFFF', badge: '#E5F1FF', badgeLabel: '#005CE5', avatarSize: 32 },
+  'pressed|default':  { bg: '#F6F9FD', label: '#0A2757', amount: '#0A2757', date: '#6780A9', others: '#005CE5',
+                        avatar: '#005CE5', initials: '#FFFFFF', badge: '#E5F1FF', badgeLabel: '#005CE5', avatarSize: 32 },
+  'default|read':     { bg: '#FFFFFF', label: '#0A2757', amount: '#90A8D0', date: '#6780A9', others: '#005CE5',
+                        avatar: '#005CE5', initials: '#FFFFFF', badge: '#E5F1FF', badgeLabel: '#005CE5', avatarSize: 32 },
+  'disabled|default': { bg: '#FFFFFF', label: '#C2CFE5', amount: '#C2CFE5', date: '#C2CFE5', others: '#9BC5FD',
+                        avatar: '#9BC5FD', initials: '#F6F9FD', badge: '#D7E0EF', badgeLabel: '#FFFFFF', avatarSize: 24 }
+};
+var GT_BORDER = '#E5EBF4', GT_SKELETON = '#EEF2F9';
+
+function _gtOn(v, def) { return v == null ? def : v === 'true'; }
+function _gtKey(c) { return c.state + '|' + c.status; }
+
+/* Only 5 of the 9 pairings are built. */
+function _gtResolve(card, changed) {
+  var built = GT_NODES[_gtKey(card)];
+  if (built) return _gtKey(card);
+  if (changed === 'status') card.state = 'default';
+  else card.status = 'default';
+  return _gtKey(card);
 }
 
-function _gtxBadge(text) {
-  return '<span class="eb-preview-gtx__badge">' + _gtxEscape(text) + '</span>';
+/* The "Others" glyph — three dots. The instance exposes only its guide
+ * layers, so the fill comes from export_node_as_image: #005CE5, and
+ * #9BC5FD when Disabled. */
+function _gtOthers(x, y, fill) {
+  var s = '';
+  [4, 12, 20].forEach(function (dx) { s += '<circle cx="' + (x + dx) + '" cy="' + (y + 12) + '" r="2" fill="' + fill + '"/>'; });
+  return s;
 }
 
-function _gtxAvatar(initials) {
-  return '<span class="eb-preview-gtx__avatar">' + _gtxEscape((initials || 'G').substring(0, 2)) + '</span>';
-}
+function _gtRender(c) {
+  var skeleton = c.status === 'skeleton';
+  var h = skeleton ? 79 : 82;
+  var s = '<svg width="' + GT_W + '" height="' + h + '" viewBox="0 0 ' + GT_W + ' ' + h +
+          '" fill="none" xmlns="http://www.w3.org/2000/svg">';
 
-function _gtxRender(opts) {
-  var type     = opts.type || 'default';
-  var label    = opts.label || 'Label';
-  var badge    = opts.badge || 'Label';
-  var date     = opts.date || 'Date XX, XXXX, Time (AM,PM)';
-  var amount   = opts.amount || 'PHP XX.XX';
-  var ref      = opts.ref || 'Reference No: GC123456789876543';
-  var initials = opts.initials || 'JD';
-
-  if (type === 'skeleton') {
-    return '<div class="eb-preview eb-preview-gtx">' +
-      '<div class="eb-preview-gtx__content">' +
-        '<div class="eb-preview-gtx__sk eb-preview-gtx__sk--label"></div>' +
-        '<div class="eb-preview-gtx__sk eb-preview-gtx__sk--date"></div>' +
-      '</div>' +
-      '<div class="eb-preview-gtx__trailing">' +
-        '<div class="eb-preview-gtx__sk eb-preview-gtx__sk--amount"></div>' +
-      '</div>' +
-    '</div>';
+  if (skeleton) {
+    s += '<rect x="0" y="0" width="' + GT_W + '" height="' + h + '" fill="#FFFFFF"/>';
+    s += '<circle cx="38" cy="32" r="16" fill="' + GT_SKELETON + '"/>';
+    s += '<rect x="67" y="16" width="80" height="20" rx="4" fill="' + GT_SKELETON + '"/>';
+    s += '<rect x="67" y="40" width="182" height="23" rx="4" fill="' + GT_SKELETON + '"/>';
+    s += '<rect x="262" y="16" width="82" height="19" rx="4" fill="' + GT_SKELETON + '"/>';
+    s += '<rect x="0" y="' + (h - 1) + '" width="' + GT_W + '" height="1" fill="' + GT_BORDER + '"/>';
+    return s + '</svg>';
   }
 
-  var html = '<div class="eb-preview eb-preview-gtx">';
+  var st = GT_S[_gtKey(c)] || GT_S['default|default'];
+  var lead = _gtOn(c.hasleadingelement, true), amount = _gtOn(c.hasamount, true);
+  var trail = _gtOn(c.hastrailingelement, true), badge = _gtOn(c.hasbadge, true);
+  var av = st.avatarSize;
+  var contentX = lead ? (22 + av + 12) : 22;
 
-  if (type === 'with-avatar') {
-    html += _gtxAvatar(initials);
+  s += '<rect x="0" y="0" width="' + GT_W + '" height="' + h + '" fill="' + st.bg + '"/>';
+  if (lead) {
+    s += '<circle cx="' + (22 + av / 2) + '" cy="' + (16 + av / 2) + '" r="' + (av / 2) + '" fill="' + st.avatar + '"/>';
+    s += '<text class="gt-initials" x="' + (22 + av / 2) + '" y="' + (16 + av / 2) + '" font-size="12" font-weight="700" fill="' +
+         st.initials + '" text-anchor="middle" dominant-baseline="central">G</text>';
   }
+  s += '<text class="gt-label" x="' + contentX + '" y="28" font-size="18" font-weight="700" fill="' + st.label +
+       '" dominant-baseline="central">Label</text>';
+  if (amount) s += '<text class="gt-amount" x="238" y="28" font-size="18" font-weight="700" fill="' + st.amount +
+                   '" dominant-baseline="central">XXX.XX</text>';
+  if (trail) s += _gtOthers(312, 16, st.others);
 
-  html += '<div class="eb-preview-gtx__content">';
-  html += '<p class="eb-preview-gtx__label">' + _gtxEscape(label) + '</p>';
-
-  if (type === 'no-amount') {
-    html += '<p class="eb-preview-gtx__reference">' + _gtxEscape(ref) + '</p>';
-  } else {
-    html += '<div class="eb-preview-gtx__meta-row">';
-    if (type === 'default' || type === 'with-avatar') {
-      html += _gtxBadge(badge);
-    }
-    html += '<span class="eb-preview-gtx__meta">' + _gtxEscape(date) + '</span>';
-    html += '</div>';
+  var dateX = contentX;
+  if (badge) {
+    s += '<rect x="' + contentX + '" y="48" width="48" height="18" rx="9" fill="' + st.badge + '"/>';
+    s += '<text class="gt-badge" x="' + (contentX + 24) + '" y="57" font-size="12" font-weight="700" fill="' + st.badgeLabel +
+         '" text-anchor="middle" dominant-baseline="central">Label</text>';
+    dateX = contentX + 56;
   }
-
-  html += '</div>';
-
-  // Trailing
-  html += '<div class="eb-preview-gtx__trailing">';
-  if (type === 'no-amount') {
-    html += _gtxBadge(badge);
-  } else {
-    html += '<span class="eb-preview-gtx__amount">' + _gtxEscape(amount) + '</span>';
-    if (type === 'more-information') {
-      html += '<span class="eb-preview-gtx__menu" aria-hidden="true">⋯</span>';
-    }
-  }
-  html += '</div>';
-
-  html += '</div>';
-  return html;
+  s += '<text class="gt-date" x="' + dateX + '" y="57" font-size="12" font-weight="600" fill="' + st.date +
+       '" dominant-baseline="central">Date XX, XXXX, Time (AM,PM)</text>';
+  s += '<rect x="0" y="' + (h - 1) + '" width="' + GT_W + '" height="1" fill="' + GT_BORDER + '"/>';
+  return s + '</svg>';
 }
 
-function _gtxContextMarkup() {
-  // A realistic Activity-screen segment showing 3 transactions + a skeleton row
-  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm">' +
-    _gtxRender({type:'with-avatar', label:'Juan Dela Cruz',       badge:'Sent',     date:'Apr 14, 2026, 10:24 AM', amount:'PHP 1,500.00', initials:'JD'}) +
-    _gtxRender({type:'default',     label:'Globe Postpaid',       badge:'Paid',     date:'Apr 12, 2026, 09:15 AM', amount:'PHP 999.00'}) +
-    _gtxRender({type:'no-amount',   label:'KYC Verification',                        ref:'Reference No: GC987654321012345',          badge:'Approved'}) +
-    _gtxRender({type:'skeleton'}) +
-  '</div>';
-}
+/* ── Per-card state — Figma's default variant ──────────────────────── */
+var _specCards = {
+  main: { state: 'default', status: 'default', hasleadingelement: 'true', hasamount: 'true',
+          hastrailingelement: 'true', hasbadge: 'true' }
+};
+window._specCards = _specCards;
 
-function _gtxUpdate() {
-  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
-  var preview = document.getElementById('gtx-demo-preview');
-  if (!preview) return;
-  preview.innerHTML = _gtxRender({
-    type:     getVal('gtx-ctrl-type', 'default'),
-    label:    getVal('gtx-ctrl-label', 'Juan Dela Cruz'),
-    badge:    getVal('gtx-ctrl-badge', 'Sent'),
-    date:     getVal('gtx-ctrl-date', 'Apr 14, 2026, 10:24 AM'),
-    amount:   getVal('gtx-ctrl-amount', 'PHP 1,500.00'),
-    ref:      getVal('gtx-ctrl-ref', 'GC123456789876543'),
-    initials: getVal('gtx-ctrl-initials', 'JD')
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function buildSwiftSnippet(cardKey, c) {
+  var l = ['EBTransactionCard(', '    label: "Label",', '    date: "Date XX, XXXX, Time (AM,PM)"', ')'];
+  if (_gtOn(c.hasamount, true)) l.push('    .ebAmount("XXX.XX")');
+  if (_gtOn(c.hasbadge, true)) l.push('    .ebBadge("Label")');
+  if (_gtOn(c.hasleadingelement, true)) l.push('    .ebLeading { EBAvatar("G") }');
+  if (_gtOn(c.hastrailingelement, true)) l.push('    .ebTrailing(.others) { showMenu() }');
+  if (c.status === 'read') l.push('    .ebRead(true)');
+  if (c.status === 'skeleton') l.push('    .ebSkeleton(true)');
+  if (c.state === 'disabled') l.push('    .disabled(true)');
+  return l.join('\n');
+}
+function buildComposeSnippet(cardKey, c) {
+  var l = ['EBTransactionCard(', '    label = "Label",', '    date = "Date XX, XXXX, Time (AM,PM)",'];
+  if (_gtOn(c.hasamount, true)) l.push('    amount = "XXX.XX",');
+  if (_gtOn(c.hasbadge, true)) l.push('    badge = "Label",');
+  if (_gtOn(c.hasleadingelement, true)) l.push('    leading = { EBAvatar("G") },');
+  if (_gtOn(c.hastrailingelement, true)) l.push('    trailing = { EBIconButton(EBIcons.Others) { showMenu() } },');
+  if (c.status === 'read') l.push('    read = true,');
+  if (c.status === 'skeleton') l.push('    skeleton = true,');
+  if (c.state === 'disabled') l.push('    enabled = false,');
+  l.push('    onClick = { }');
+  l.push(')');
+  return l.join('\n');
+}
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+}
+window.getSnippet = getSnippet;
+
+/* ── Control handler ────────────────────────────────────────────────── */
+function _gtSync(cardStyle, card) {
+  ['state', 'status'].forEach(function (a) {
+    var el = document.querySelector('[onchange*="updateSpecCard(\'' + cardStyle + '\', \'' + a + '\'"]');
+    if (el) el.value = card[a];
   });
 }
 
-/* ── Generic Transaction Card Spec Cards (cascaded pattern) ──────── */
-var _gtxSpecCards = {
-  'default':     { type: 'default' },
-  'with-avatar': { type: 'with-avatar' },
-  'no-amount':   { type: 'no-amount' }
-};
-
-var _specCards = _gtxSpecCards;
-window._specCards = _specCards;
-
-function _getGtxSnippet(cardKey, lang, card) {
-  var t = (card && card.type) || cardKey;
-  if (lang === 'swift') {
-    if (t === 'with-avatar') return 'EBTransactionCard(\n    title: "Juan Dela Cruz",\n    date: "Today, 3:24 PM",\n    amount: "PHP 500.00",\n    leading: .avatar("JD")\n)';
-    if (t === 'no-amount')   return 'EBTransactionCard(\n    title: "Profile updated",\n    metadata: "Reference No: GC123456789876543",\n    trailing: .badge(EBBadge("Approved"))\n)';
-    if (t === 'more-information') return 'EBTransactionCard(\n    title: "Globe Postpaid",\n    date: "Apr 12, 2026, 9:15 AM",\n    amount: "PHP 999.00",\n    trailing: .menu { /* show actions */ }\n)';
-    if (t === 'skeleton')    return 'EBTransactionCard(loading: true)';
-    return 'EBTransactionCard(\n    title: "Globe Postpaid",\n    badge: EBBadge("Paid", intent: .information),\n    date: "Apr 12, 2026, 9:15 AM",\n    amount: "PHP 999.00"\n)';
-  }
-  if (t === 'with-avatar') return 'EBTransactionCard(\n    title = "Juan Dela Cruz",\n    date = "Today, 3:24 PM",\n    amount = "PHP 500.00",\n    leading = { EBAvatar(initials = "JD") }\n)';
-  if (t === 'no-amount')   return 'EBTransactionCard(\n    title = "Profile updated",\n    metadata = "Reference No: GC123456789876543",\n    trailing = EBRowTrailing.Badge(EBBadge("Approved"))\n)';
-  if (t === 'more-information') return 'EBTransactionCard(\n    title = "Globe Postpaid",\n    date = "Apr 12, 2026, 9:15 AM",\n    amount = "PHP 999.00",\n    trailing = EBRowTrailing.Menu { /* show actions */ }\n)';
-  if (t === 'skeleton')    return 'EBTransactionCard(loading = true)';
-  return 'EBTransactionCard(\n    title = "Globe Postpaid",\n    badge = EBBadge("Paid", EBBadgeIntent.Information),\n    date = "Apr 12, 2026, 9:15 AM",\n    amount = "PHP 999.00"\n)';
-}
-
-function buildSwiftSnippet(type, card)   { return _getGtxSnippet(type, 'swift', card); }
-function buildComposeSnippet(type, card) { return _getGtxSnippet(type, 'compose', card); }
-function getSnippet(type, lang, card)    { return _getGtxSnippet(type, lang, card); }
-window.getSnippet = getSnippet;
-
-function _gtxSpecRender(card) {
-  // Use sensible per-type defaults so the preview looks complete
-  var t = card.type || 'default';
-  if (t === 'with-avatar') return _gtxRender({type:t, label:'Juan Dela Cruz', badge:'Sent', date:'Apr 14, 2026, 10:24 AM', amount:'PHP 1,500.00', initials:'JD'});
-  if (t === 'no-amount')   return _gtxRender({type:t, label:'KYC Verification', ref:'Reference No: GC987654321012345', badge:'Approved'});
-  if (t === 'more-information') return _gtxRender({type:t, label:'Globe Postpaid', date:'Apr 12, 2026, 9:15 AM', amount:'PHP 999.00'});
-  if (t === 'skeleton')    return _gtxRender({type:t});
-  return _gtxRender({type:t, label:'Globe Postpaid', badge:'Paid', date:'Apr 12, 2026, 9:15 AM', amount:'PHP 999.00'});
-}
-
-function updateSpecCard(cardKey, prop, value) {
-  var card = _gtxSpecCards[cardKey];
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
+  var key = _gtResolve(card, prop);
+  _gtSync(cardStyle, card);
 
-  /* Update preview body */
-  var card$ = document.getElementById('spec-card-' + _gtxCardKeyFor(cardKey));
-  if (card$) {
-    var preview = card$.querySelector('.spec-card-preview, .spec-preview-body, .spec-preview-frame');
-    if (preview) preview.innerHTML = _gtxSpecRender(card);
-  }
+  var host = document.getElementById('generic-transaction-card-spec-' + cardStyle);
+  if (host) host.innerHTML = _gtRender(card);
 
-  /* Update Type readout — data-sp="<demoKey>-type" */
-  var spType = document.querySelector('[data-sp="' + cardKey + '-type"]');
-  if (spType) spType.textContent = card.type;
+  ['state', 'status', 'hasleadingelement', 'hasamount', 'hastrailingelement', 'hasbadge'].forEach(function (a) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
+    if (!el) return;
+    el.textContent = a.indexOf('has') === 0 ? (card[a] === 'true' ? 'True' : 'False')
+      : card[a].charAt(0).toUpperCase() + card[a].slice(1);
+  });
+  var h = card.status === 'skeleton' ? 79 : 82;
+  var put = function (name, text) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + name + '"]');
+    if (el) el.textContent = text;
+  };
+  put('size-readout', GT_W + ' × ' + h);
+  put('avatar-readout', (GT_S[key] || GT_S['default|default']).avatarSize + ' × ' + (GT_S[key] || GT_S['default|default']).avatarSize);
+  put('variantNode', GT_NODES[key] + ' · ' + GT_W + ' × ' + h);
 
-  /* Update DEV code */
-  var devView = document.querySelector('[data-view="' + cardKey + '-dev"]');
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardKey + '"]');
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
-      var code = getSnippet(cardKey, lang, card);
+      var code = getSnippet(cardStyle, lang, card);
       codeEl.setAttribute('data-final', code);
       codeEl.setAttribute('data-lang', lang);
       codeEl.textContent = code;
@@ -175,50 +193,31 @@ function updateSpecCard(cardKey, prop, value) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-/* Map a demoKey to the spec card's full cardKey via the inner preview id. */
-function _gtxCardKeyFor(demoKey) {
-  var idMap = { 'default': 'gtx-spec-1', 'with-avatar': 'gtx-spec-2', 'no-amount': 'gtx-spec-3' };
-  var inner = document.getElementById(idMap[demoKey]);
-  if (!inner) return null;
-  var card$ = inner.closest('.spec-card');
-  if (!card$) return null;
-  return (card$.id || '').replace(/^spec-card-/, '');
-}
-
-function _gtxInit() {
-  var ctx = document.getElementById('gtx-context-preview');
-  if (ctx) ctx.innerHTML = _gtxContextMarkup();
-  _gtxUpdate();
-
-  var s1 = document.getElementById('gtx-spec-1');
-  if (s1) s1.innerHTML = _gtxRender({type:'default', label:'Label', badge:'Label', date:'Date XX, XXXX, Time (AM,PM)', amount:'PHP XX.XX'});
-
-  var s2 = document.getElementById('gtx-spec-2');
-  if (s2) s2.innerHTML = _gtxRender({type:'with-avatar', label:'Label', badge:'Label', date:'Date XX, XXXX, Time (AM,PM)', amount:'XXX.XX', initials:'G'});
-
-  var s3 = document.getElementById('gtx-spec-3');
-  if (s3) s3.innerHTML = _gtxRender({type:'no-amount', label:'Label', ref:'Reference No: GC123456789876543', badge:'Label'});
-
-  /* Sync each per-card type dropdown to the card's default type. */
-  ['default', 'with-avatar', 'no-amount'].forEach(function(k) {
-    var ck = _gtxCardKeyFor(k);
-    if (!ck) return;
-    var card$ = document.getElementById('spec-card-' + ck);
-    if (!card$) return;
-    var sel = card$.querySelector('.demo-figma-panel select');
-    if (!sel) return;
-    var t = (_gtxSpecCards[k] || {}).type || k;
-    for (var i = 0; i < sel.options.length; i++) {
-      if (sel.options[i].value === t) { sel.selectedIndex = i; break; }
-    }
+/* ── Overview tab shim — the old panel drove gtx-ctrl-* selects. ───── */
+function _gtxUpdate() {
+  var el = document.getElementById('gtx-demo-preview');
+  if (!el) return;
+  var yes = function (id, f) { var n = document.getElementById(id); return (n ? n.value : f) === 'yes' ? 'true' : 'false'; };
+  var v = function (id, f) { var n = document.getElementById(id); return n ? n.value : f; };
+  el.innerHTML = _gtRender({
+    state: v('gtx-ctrl-state', 'default'), status: v('gtx-ctrl-type', 'default'),
+    hasleadingelement: yes('gtx-ctrl-initials', 'yes'),
+    hasamount: yes('gtx-ctrl-amount', 'yes'),
+    hastrailingelement: 'true',
+    hasbadge: yes('gtx-ctrl-badge', 'yes')
   });
 }
+window._gtxUpdate = _gtxUpdate;
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _gtxInit);
-else _gtxInit();
-
-(function(){
-  function reinit(){ if (typeof _gtxInit === 'function') _gtxInit(); }
-  document.addEventListener('astro:page-load', reinit);
-})();
+/* ── First paint ────────────────────────────────────────────────────── */
+function _gtInit() {
+  _gtxUpdate();
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'state', _specCards[k].state);
+  });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _gtInit);
+else _gtInit();
+document.addEventListener('astro:page-load', _gtInit);
