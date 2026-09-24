@@ -1,40 +1,50 @@
 import type { ComponentData, DemoControlSection } from '../types';
 import { buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/bottom-sheet.js`.
+// Panel mirrors the property panel of set 5304:32717, in its order: four
+// variant axes then the seven booleans. The five SLOTs get no control.
 const bottomSheetDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
         label: 'TitleAlignment',
-        prop: 'align',
+        prop: 'titlealignment',
         defaultValue: 'left',
         options: [
-          { value: 'left', label: 'Left' },
           { value: 'center', label: 'Center' },
+          { value: 'left',   label: 'Left' },
         ],
       },
       {
         label: 'FooterOrientation',
-        prop: 'footer',
+        prop: 'footerorientation',
         defaultValue: 'vertical',
         options: [
-          { value: 'vertical', label: 'Vertical' },
           { value: 'horizontal', label: 'Horizontal' },
+          { value: 'vertical',   label: 'Vertical' },
         ],
       },
-      {
-        label: 'Subtitle',
-        prop: 'subtitle',
-        defaultValue: 'description',
-        options: [
-          { value: 'none', label: 'None' },
-          { value: 'supporting', label: 'Supporting' },
-          { value: 'description', label: 'Description' },
-        ],
-      },
+      { label: 'hasSupportingText', prop: 'hassupportingtext', control: 'toggle', defaultValue: 'false',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasDescription', prop: 'hasdescription', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'showDragHandle', prop: 'showdraghandle', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasAboveTitleSlot', prop: 'hasabovetitleslot', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasPreamble', prop: 'haspreamble', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasLeadingSlot', prop: 'hasleadingslot', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasTrailingSlot', prop: 'hastrailingslot', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasContent', prop: 'hascontent', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'hasFooter', prop: 'hasfooter', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
     ],
   },
 ];
@@ -319,41 +329,216 @@ export const bottomSheet: ComponentData = {
     "recommendations": []
   },
   "style": {
-    "heading": "Types",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "default",
-        "demoKey": "left-align",
+        "cardKey": "bs-spec-main",
+        "demoKey": "main",
+        "title": "Bottom Sheet",
+        "node": "5304:32717",
+        "description": "A 360-wide sheet — drag handle, header with preamble and title, an optional description or supporting text, a content slot and a one- or two-button footer.",
+        "previewHtml": "<div id=\"bottom-sheet-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": bottomSheetDemoControls,
-        "title": "Default",
-        "node": "12522:12860",
-        "description": "A modal sheet that slides up from the bottom of the screen — typically used to confirm an action, collect a single input, or surface a focused decision without leaving the current screen.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"bottom-sheet-spec-preview-left-align\"><div style=\"background:#fff;border-top-left-radius:12px;border-top-right-radius:12px;width:240px;overflow:hidden;box-shadow:0 -2px 10px rgba(2,14,34,0.08);\"><div style=\"display:flex;align-items:flex-start;gap:8px;padding:16px 48px 8px 18px;position:relative;\"><div style=\"width:24px;height:24px;border-radius:50%;background:#C2C6CF;flex-shrink:0;margin-top:2px;\"></div><div style=\"flex:1;\"><div style=\"font-size:10px;color:#90A8D0;font-weight:700;margin-bottom:3px;\">Preamble here...</div><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;line-height:1.2;\">Title here of the header...</div></div><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"position:absolute;right:18px;top:18px;opacity:0.8;\"><path d=\"M6 6l12 12M18 6L6 18\" stroke=\"#6780A9\" stroke-width=\"2\" stroke-linecap=\"round\"></path></svg></div><div style=\"padding:0 18px 20px;\"><div style=\"font-family:'BarkAda',serif;font-weight:500;font-size:11px;color:#445C85;line-height:1.5;\">This area is designated for descriptions...</div></div><div style=\"padding:4px 18px 20px;display:flex;flex-direction:column;gap:8px;\"><div style=\"height:28px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div><div style=\"height:22px;display:flex;align-items:center;justify-content:center;color:#005CE5;font-size:11px;font-weight:700;\">Label</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Alignment",   "value": "Left Align",          "mono": true, "prop": "align" },
-              { "key": "Preamble",    "value": "yes",                 "mono": true, "prop": "preamble" },
-              { "key": "Description", "value": "yes",                 "mono": true, "prop": "desc" },
-              { "key": "CTA",         "value": "Primary + Tertiary",  "mono": true, "prop": "cta" }
+              {
+                "key": "TitleAlignment",
+                "value": "Left",
+                "prop": "titlealignment"
+              },
+              {
+                "key": "FooterOrientation",
+                "value": "Vertical",
+                "prop": "footerorientation"
+              },
+              {
+                "key": "hasSupportingText",
+                "value": "False",
+                "prop": "hassupportingtext"
+              },
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "prop": "hasdescription"
+              },
+              {
+                "key": "showDragHandle",
+                "value": "True",
+                "prop": "showdraghandle"
+              },
+              {
+                "key": "hasAboveTitleSlot",
+                "value": "True",
+                "prop": "hasabovetitleslot"
+              },
+              {
+                "key": "hasPreamble",
+                "value": "True",
+                "prop": "haspreamble"
+              },
+              {
+                "key": "hasLeadingSlot",
+                "value": "True",
+                "prop": "hasleadingslot"
+              },
+              {
+                "key": "hasTrailingSlot",
+                "value": "True",
+                "prop": "hastrailingslot"
+              },
+              {
+                "key": "hasContent",
+                "value": "True",
+                "prop": "hascontent"
+              },
+              {
+                "key": "hasFooter",
+                "value": "True",
+                "prop": "hasfooter"
+              },
+              {
+                "key": "⤷ Above-Title-Slot",
+                "value": "Slot · 8 items",
+                "variants": {
+                  "hasabovetitleslot:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "⤷ Leading-Slot",
+                "value": "Slot · 6 items",
+                "variants": {
+                  "hasleadingslot:false": {
+                    "hide": true
+                  },
+                  "titlealignment:center": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "⤷ Trailing-Slot",
+                "value": "Slot · 6 items — Close",
+                "variants": {
+                  "hastrailingslot:false": {
+                    "hide": true
+                  },
+                  "titlealignment:center": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "⤷ Content-Slot",
+                "value": "Slot · 8 items",
+                "variants": {
+                  "hascontent:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "⤷ Footer-Slot",
+                "value": "Slot · 8 items — Button - Large/Medium",
+                "variants": {
+                  "hasfooter:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Resolved variant",
+                "value": "5304:32718 · 360 × 404",
+                "mono": true,
+                "prop": "variantNode"
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",     "value": "#FFFFFF", "token": "bottom-sheet/color/bg" },
-              { "key": "Preamble", "value": "#90A8D0", "token": "bottom-sheet/color/preamble",
-                "variants": { "preamble:no": { "hide": true } }
+              {
+                "key": "Sheet",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF"
               },
-              { "key": "Header",      "value": "#0A2757", "token": "bottom-sheet/color/header" },
-              { "key": "Description", "value": "#445C85", "token": "bottom-sheet/color/description",
-                "variants": { "desc:no": { "hide": true } }
+              {
+                "key": "Drag handle",
+                "value": "#C2CFE5",
+                "token": "—",
+                "swatch": "#C2CFE5",
+                "variants": {
+                  "showdraghandle:false": {
+                    "hide": true
+                  }
+                }
               },
-              { "key": "Close icon", "value": "#6780A9", "token": "bottom-sheet/color/icon-close",
-                "variants": { "align:center": { "hide": true } }
+              {
+                "key": "Preamble",
+                "value": "#90A8D0",
+                "token": "—",
+                "swatch": "#90A8D0",
+                "variants": {
+                  "haspreamble:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "token": "—",
+                "swatch": "#0A2757"
+              },
+              {
+                "key": "Supporting text",
+                "value": "#445C85",
+                "token": "—",
+                "swatch": "#445C85",
+                "variants": {
+                  "hassupportingtext:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "#445C85",
+                "token": "—",
+                "swatch": "#445C85",
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Primary button",
+                "value": "#005CE5 / #FFFFFF",
+                "token": "—",
+                "swatch": "#005CE5",
+                "variants": {
+                  "hasfooter:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Secondary button",
+                "value": "Transparent / #005CE5",
+                "token": "—",
+                "swatch": "#005CE5",
+                "variants": {
+                  "hasfooter:false": {
+                    "hide": true
+                  }
+                }
               }
             ]
           },
@@ -361,279 +546,651 @@ export const bottomSheet: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Width",         "value": "360", "mono": true },
-              { "key": "Corner radius", "value": "8",   "mono": true },
-              { "key": "Header padding","value": "24 × 8", "mono": true },
-              { "key": "Content padding","value": "24 sides · 32 bottom", "mono": true }
+              {
+                "key": "Size",
+                "value": "360 × 404",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Width",
+                "value": "360 — fixed",
+                "mono": true
+              },
+              {
+                "key": "Top radius",
+                "value": "16px",
+                "mono": true
+              },
+              {
+                "key": "Padding",
+                "value": "24 sides",
+                "mono": true
+              },
+              {
+                "key": "Drag handle",
+                "value": "32 × 4 centred · 12 row",
+                "mono": true,
+                "variants": {
+                  "showdraghandle:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Above-Title-Slot",
+                "value": "312 × 16",
+                "mono": true,
+                "variants": {
+                  "hasabovetitleslot:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Header",
+                "value": "24 top · slot 16 · 16 gap · TitleRow · 8 bottom",
+                "mono": true
+              },
+{
+                "key": "TitleRow",
+                "value": "72 tall",
+                "mono": true,
+                "prop": "titlerow-readout"
+              },
+              {
+                "key": "Title column",
+                "value": "232 wide — wraps clear of the trailing slot",
+                "mono": true,
+                "variants": {
+                  "titlealignment:center": {
+                    "value": "312 wide"
+                  },
+                  "hasleadingslot:false": {
+                    "value": "276 wide"
+                  }
+                }
+              },
+{
+                "key": "Leading / Trailing slot",
+                "value": "32 circle · 24 × 24",
+                "mono": true,
+                "variants": {
+                  "titlealignment:center": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "32 row · text 312 wide",
+                "mono": true,
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Content-Slot",
+                "value": "360 × 64",
+                "mono": true,
+                "variants": {
+                  "hascontent:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Footer-Slot",
+                "value": "160 tall · two 312 × 50 buttons",
+                "mono": true,
+                "variants": {
+                  "hasfooter:false": {
+                    "hide": true
+                  },
+                  "footerorientation:horizontal": {
+                    "value": "98 tall · two 150 × 50 buttons, 12 apart"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Preamble",    "value": "Proxima Soft Bold · 14 / 14 · +0.25", "mono": true,
-                "variants": { "preamble:no": { "hide": true } }
+              {
+                "key": "Preamble",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "variants": {
+                  "haspreamble:false": {
+                    "hide": true
+                  }
+                }
               },
-              { "key": "Title",       "value": "Proxima Soft Bold · 22 / 26", "mono": true },
-              { "key": "Description", "value": "BarkAda Medium · 14 / 20", "mono": true,
-                "variants": { "desc:no": { "hide": true } }
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Section",
+                "mono": true
+              },
+              {
+                "key": "Supporting text",
+                "value": "Secondary/Bold/Base",
+                "mono": true,
+                "variants": {
+                  "hassupportingtext:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Default/Base",
+                "mono": true,
+                "variants": {
+                  "hasdescription:false": {
+                    "hide": true
+                  }
+                }
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBBottomSheet</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPreamble</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description body\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAlignment</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.leading</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Continue\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBBottomSheet</span><span class=\"syn-punc\">(</span>\n    header <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    preamble <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description body\"</span><span class=\"syn-punc\">,</span>\n    alignment <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSheetAlignment</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Leading</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSheetAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Continue\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      
+        "swift": "EBBottomSheet(\n    title: \"Title here of the header...\",\n    preamble: \"Preamble here...\",\n    description: \"This is a body description\"\n)\n    .ebTitleAlignment(.left)\n    .ebFooterOrientation(.vertical)\n    .ebTrailing(.close) { dismiss() }\n    .ebFooter { EBButton(\"Label\") { }; EBTextButton(\"Label\") { } }",
+        "compose": "EBBottomSheet(\n    title = \"Title here of the header...\",\n    preamble = \"Preamble here...\",\n    description = \"This is a body description\",\n    titleAlignment = EBTitleAlignment.Left,\n    footerOrientation = EBFooterOrientation.Vertical,\n    trailing = { EBIconButton(EBIcons.Close) { dismiss() } },\n    footer = { EBButton(\"Label\") { }; EBTextButton(\"Label\") { } },\n    onDismiss = { dismiss() }\n)"
+      }
     ],
-    colorsTables: [
-      // Card 1 — Default sheet with header + CTA
-      buildStatelessColorsTable({
-        title: 'Default — Colors',
-        description: 'Bottom sheet with preamble, heading, description, optional close icon, and primary CTA.',
-        rows: [
-          { role: 'Surface',           token: 'bottom-header/color/bg',          value: '#FFFFFF' },
-          { role: 'Preamble',          token: 'bottom-header/color/preamble',    value: '#90A8D0' },
-          { role: 'Header',            token: 'bottom-header/color/header',      value: '#0A2757' },
-          { role: 'Description',       token: 'bottom-header/color/description', value: '#445C85' },
-          { role: 'Close icon',        token: 'bottom-header/color/icon-close',  value: '#6780A9' },
+    "colorsTables": [
+      {
+        "title": "Colors by Role",
+        "description": "Read off <code>get_node_info</code> across the eight variants of set <code>5304:32717</code>; nothing changes with the axes. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Value"
         ],
-      }),
-      // Card 2 — Without close icon
-      buildStatelessColorsTable({
-        title: 'No Close — Colors',
-        description: 'Same surface palette as Default; close icon omitted (modal-style mandatory action).',
-        rows: [
-          { role: 'Surface',     token: 'bottom-header/color/bg',          value: '#FFFFFF' },
-          { role: 'Preamble',    token: 'bottom-header/color/preamble',    value: '#90A8D0' },
-          { role: 'Header',      token: 'bottom-header/color/header',      value: '#0A2757' },
-          { role: 'Description', token: 'bottom-header/color/description', value: '#445C85' },
-        ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Sheet",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Drag handle",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Preamble",
+            "token": "—",
+            "values": [
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Title",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Supporting text / Description",
+            "token": "—",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Primary button / label",
+            "token": "—",
+            "values": [
+              "#005CE5 / #FFFFFF"
+            ]
+          },
+          {
+            "role": "Secondary button label",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:bottom-sheet:2.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.bottomsheet.*  <span class=\"cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
-      "description": "The current Figma schema (alignment + 9 booleans) is not fit for 1:1 mapping. The table below maps the proposed post-restructure schema to native APIs.",
+      "description": "One row per property of set <code>5304:32717</code>, in panel order, then the five SLOTs. <code>hasSupportingText</code> and <code>hasDescription</code> are never both True, and Center ships only with a description.",
       "rows": [
         {
-          "figma": "<code>isPresented</code>",
-          "swift": "<code>.sheet(isPresented: $binding)</code>",
-          "compose": "<code>if (showSheet) ModalBottomSheet(onDismissRequest:)</code>"
+          "figma": "TitleAlignment — Center, Left",
+          "swift": "<code>.ebTitleAlignment(.center / .left)</code>",
+          "compose": "<code>titleAlignment = EBTitleAlignment.Center / Left</code>"
         },
         {
-          "figma": "<code>detents</code>",
-          "swift": "<code>.presentationDetents([.medium, .large])</code>",
-          "compose": "<code>sheetState = rememberModalBottomSheetState(…)</code> + <code>Detent</code> enum"
+          "figma": "FooterOrientation — Horizontal, Vertical",
+          "swift": "<code>.ebFooterOrientation(.horizontal / .vertical)</code>",
+          "compose": "<code>footerOrientation = EBFooterOrientation.Horizontal / Vertical</code>"
         },
         {
-          "figma": "<code>dragHandle = visible|hidden</code>",
-          "swift": "<code>.presentationDragIndicator(.visible / .hidden)</code>",
-          "compose": "<code>dragHandle = { BottomSheetDefaults.DragHandle() }</code> or <code>null</code>"
+          "figma": "hasSupportingText — boolean",
+          "swift": "<code>supportingText: String?</code>",
+          "compose": "<code>supportingText: String? = null</code>"
         },
         {
-          "figma": "<code>titleAlignment = leading|center</code>",
-          "swift": "<code>titleAlignment: .leading / .center</code>",
-          "compose": "<code>titleAlignment = Alignment.Start / Center</code>"
-        },
-        {
-          "figma": "<code>leading</code> slot",
-          "swift": "<code>leading: { EBAvatar(…) }</code> (ViewBuilder)",
-          "compose": "<code>leading: @Composable () -&gt; Unit</code>"
-        },
-        {
-          "figma": "<code>trailing</code> slot (e.g. close)",
-          "swift": "<code>trailing: { EBIconButton(.close) { dismiss() } }</code>",
-          "compose": "<code>trailing: @Composable () -&gt; Unit</code>"
-        },
-        {
-          "figma": "<code>aboveTitle</code> slot (progress / stepper)",
-          "swift": "<code>aboveTitle: { EBProgressBar(…) }</code>",
-          "compose": "<code>aboveTitle: @Composable () -&gt; Unit</code>"
-        },
-        {
-          "figma": "<code>preamble</code>",
-          "swift": "<code>preamble: String?</code>",
-          "compose": "<code>preamble: String? = null</code>"
-        },
-        {
-          "figma": "<code>title</code>",
-          "swift": "<code>title: String</code>",
-          "compose": "<code>title: String</code>"
-        },
-        {
-          "figma": "<code>description</code>",
+          "figma": "hasDescription — boolean",
           "swift": "<code>description: String?</code>",
           "compose": "<code>description: String? = null</code>"
         },
         {
-          "figma": "<code>content</code> slot",
-          "swift": "<code>@ViewBuilder content: () -&gt; Content</code> (trailing closure)",
-          "compose": "<code>content: @Composable ColumnScope.() -&gt; Unit</code>"
+          "figma": "showDragHandle — boolean",
+          "swift": "<code>.ebDragHandle(false)</code> to drop it",
+          "compose": "<code>showDragHandle: Boolean = true</code>"
         },
         {
-          "figma": "<code>footer</code> slot",
-          "swift": "<code>footer: () -&gt; Footer</code>",
-          "compose": "<code>footer: @Composable RowScope.() -&gt; Unit</code>"
+          "figma": "hasAboveTitleSlot — boolean",
+          "swift": "<code>.ebAboveTitle { }</code>",
+          "compose": "<code>aboveTitle: (@Composable () -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "<code>dismissible</code>",
-          "swift": "<code>.interactiveDismissDisabled(!dismissible)</code>",
-          "compose": "<code>sheetState.confirmValueChange = { dismissible }</code>"
+          "figma": "hasPreamble — boolean",
+          "swift": "<code>preamble: String?</code>",
+          "compose": "<code>preamble: String? = null</code>"
         },
         {
-          "figma": "(legacy) <code>alignment = Left Align</code>",
-          "swift": "→ split into <code>titleAlignment</code> + <code>leading</code> + <code>trailing</code>",
-          "compose": "→ split into <code>titleAlignment</code> + <code>leading</code> + <code>trailing</code>"
+          "figma": "hasLeadingSlot — boolean",
+          "swift": "<code>.ebLeading { }</code>",
+          "compose": "<code>leading: (@Composable () -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "(legacy) <code>showSlot1..4</code> booleans",
-          "swift": "→ removed, replaced by <code>content</code> slot",
-          "compose": "→ removed, replaced by <code>content</code> slot"
+          "figma": "hasTrailingSlot — boolean",
+          "swift": "<code>.ebTrailing(.close) { }</code>",
+          "compose": "<code>trailing: (@Composable () -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "(legacy) <code>primaryAction</code> / <code>secondaryAction</code>",
-          "swift": "→ removed, replaced by <code>footer</code> slot",
-          "compose": "→ removed, replaced by <code>footer</code> slot"
+          "figma": "hasContent — boolean",
+          "swift": "<code>.ebContent { }</code>",
+          "compose": "<code>content: (@Composable () -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "hasFooter — boolean",
+          "swift": "<code>.ebFooter { }</code>",
+          "compose": "<code>footer: (@Composable () -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "⤷ Above-Title / Leading / Trailing / Content / Footer slots",
+          "swift": "the closures above",
+          "compose": "the lambdas above"
         }
-      ]
+      ],
+      "filePaths": {
+        "swift": "ios/Components/BottomSheet/EBBottomSheet.swift",
+        "compose": "android/components/bottomsheet/EBBottomSheet.kt"
+      }
     },
-    "usageSnippets": [],
-    "accessibility": [
+    "usageSnippets": [
       {
-        "requirement": "Modal trait",
-        "ios": "<code>.sheet</code> applies the modal trait automatically — VoiceOver traps focus inside the sheet.",
-        "android": "<code>ModalBottomSheet</code> treats content as modal by default — TalkBack swipe is contained."
+        "subheading": "Left · vertical footer",
+        "swift": "<span class=\"cmt\">// TitleAlignment=Left, FooterOrientation=Vertical, hasDescription=True — 5304:32718, 360 × 404.</span>\nEBBottomSheet(\n    title: \"Confirm your transfer\",\n    preamble: \"Review\",\n    description: \"Double-check the details before you send.\"\n)\n    .ebTitleAlignment(.left)\n    .ebFooterOrientation(.vertical)\n    .ebTrailing(.close) { dismiss() }\n    .ebFooter { EBButton(\"Send\") { send() }; EBTextButton(\"Cancel\") { dismiss() } }",
+        "compose": "<span class=\"cmt\">// TitleAlignment=Left, FooterOrientation=Vertical, hasDescription=True — 5304:32718, 360 × 404.</span>\nEBBottomSheet(\n    title = \"Confirm your transfer\",\n    preamble = \"Review\",\n    description = \"Double-check the details before you send.\",\n    titleAlignment = EBTitleAlignment.Left,\n    footerOrientation = EBFooterOrientation.Vertical,\n    trailing = { EBIconButton(EBIcons.Close) { dismiss() } },\n    footer = { EBButton(\"Send\") { send() }; EBTextButton(\"Cancel\") { dismiss() } },\n    onDismiss = { dismiss() }\n)"
       },
       {
-        "requirement": "Focus management",
-        "ios": "Focus moves to the sheet on present; restores to trigger on dismiss. If a first-field focus is desired, use <code>.focused($firstField)</code>.",
-        "android": "Focus enters sheet content on show; restored to trigger on dismiss. Request initial focus via <code>LaunchedEffect</code> + <code>focusRequester</code>."
+        "subheading": "Left · horizontal footer",
+        "swift": "<span class=\"cmt\">// FooterOrientation=Horizontal — 5304:32769, 360 × 342; two 150-wide buttons.</span>\nEBBottomSheet(title: \"Confirm your transfer\", description: \"…\")\n    .ebFooterOrientation(.horizontal)\n    .ebFooter { EBTextButton(\"Cancel\") { dismiss() }; EBButton(\"Send\") { send() } }",
+        "compose": "<span class=\"cmt\">// FooterOrientation=Horizontal — 5304:32769, 360 × 342; two 150-wide buttons.</span>\nEBBottomSheet(\n    title = \"Confirm your transfer\",\n    description = \"…\",\n    footerOrientation = EBFooterOrientation.Horizontal,\n    footer = { EBTextButton(\"Cancel\") { dismiss() }; EBButton(\"Send\") { send() } },\n    onDismiss = { dismiss() }\n)"
       },
       {
-        "requirement": "Title as heading",
-        "ios": "Mark the title Text with <code>.accessibilityAddTraits(.isHeader)</code> so VoiceOver reads it first.",
-        "android": "Use <code>Modifier.semantics { heading() }</code> on the title; set <code>paneTitle</code> on the sheet surface."
+        "subheading": "Supporting text",
+        "swift": "<span class=\"cmt\">// hasSupportingText=True, hasDescription=False — 5377:35367, 360 × 398; the text sits inside the title block.</span>\nEBBottomSheet(\n    title: \"Confirm your transfer\",\n    supportingText: \"This is a supporting text\"\n)",
+        "compose": "<span class=\"cmt\">// hasSupportingText=True, hasDescription=False — 5377:35367, 360 × 398; the text sits inside the title block.</span>\nEBBottomSheet(\n    title = \"Confirm your transfer\",\n    supportingText = \"This is a supporting text\",\n    onDismiss = { dismiss() }\n)"
       },
       {
-        "requirement": "Drag handle announcement",
-        "ios": "iOS's built-in grabber is announced as \"Adjustable\". Custom handles need <code>.accessibilityLabel(\"Resize sheet\")</code> and <code>.accessibilityAdjustableAction</code>.",
-        "android": "Material 3 default handle exposes resize action. Custom handles need <code>Modifier.semantics { contentDescription = \"Resize sheet\" }</code>."
-      },
-      {
-        "requirement": "Dismiss gesture",
-        "ios": "Swipe-down + ESC + tap-outside all route through <code>isPresented</code>. For non-dismissible, use <code>.interactiveDismissDisabled(true)</code>.",
-        "android": "Back gesture + tap-outside via <code>onDismissRequest</code>. Non-dismissible: <code>sheetState.confirmValueChange = { false }</code>."
-      },
-      {
-        "requirement": "Close button (if trailing slot)",
-        "ios": "Wrap 24×24 icon in a ≥44×44pt tappable area. Label: <code>.accessibilityLabel(\"Close\")</code>.",
-        "android": "Wrap 24×24 icon in a ≥48×48dp tappable area. <code>contentDescription = stringResource(R.string.close)</code>."
-      },
-      {
-        "requirement": "Destructive CTA",
-        "ios": "Use <code>role: .destructive</code> on the footer button.",
-        "android": "Use <code>EBButtonDefaults.destructiveColors()</code> and explicit <code>contentDescription</code>."
-      },
-      {
-        "requirement": "Reduce motion",
-        "ios": "Respect <code>UIAccessibility.isReduceMotionEnabled</code> — skip slide-up / use cross-fade.",
-        "android": "Respect <code>Settings.Global.ANIMATOR_DURATION_SCALE</code> — shorten animation when accessibility demands it."
+        "subheading": "Centred title",
+        "swift": "<span class=\"cmt\">// TitleAlignment=Center — 5304:32755, 360 × 378; the leading and trailing slots are dropped.</span>\nEBBottomSheet(\n    title: \"You’re all set\",\n    preamble: \"Done\",\n    description: \"This is description\"\n)\n    .ebTitleAlignment(.center)",
+        "compose": "<span class=\"cmt\">// TitleAlignment=Center — 5304:32755, 360 × 378; the leading and trailing slots are dropped.</span>\nEBBottomSheet(\n    title = \"You’re all set\",\n    preamble = \"Done\",\n    description = \"This is description\",\n    titleAlignment = EBTitleAlignment.Center,\n    onDismiss = { dismiss() }\n)"
       }
     ],
-    "usageGuidelines": [],
+    "accessibility": [
+      {
+        "requirement": "Sheet semantics",
+        "ios": "Present as a sheet with <code>.presentationDetents</code>; focus moves to the title, which carries <code>.isHeader</code>.",
+        "android": "<code>ModalBottomSheet</code> with <code>Modifier.semantics { paneTitle = title }</code>."
+      },
+      {
+        "requirement": "Drag handle",
+        "ios": "Decorative — <code>.accessibilityHidden(true)</code>; dismissal is the Close button or the swipe gesture.",
+        "android": "<code>dragHandle</code> is not focusable; keep <code>onDismissRequest</code>."
+      },
+      {
+        "requirement": "Close",
+        "ios": "The 24 × 24 Close needs a 44pt target and the label “Close”.",
+        "android": "48dp target and a <code>contentDescription</code>."
+      },
+      {
+        "requirement": "Footer order",
+        "ios": "Vertical puts the primary first; horizontal puts it on the right. Keep the reading order primary-last on horizontal.",
+        "android": "Same — mind the traversal order when the footer is a Row."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Title #0A2757 is 14.58:1 on white; supporting text and description #445C85 are 6.74:1. The preamble #90A8D0 is 2.41:1, below AA. White on the #005CE5 button is 5.10:1.",
+        "android": "Same ratios."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use the description for one line under the header, the supporting text when it belongs with the title block.",
+        "dontText": "Don’t use both — the set never ships them together."
+      },
+      {
+        "doText": "Use a vertical footer when the primary action needs full width.",
+        "dontText": "Don’t put more than two buttons in the footer."
+      },
+      {
+        "doText": "Keep the drag handle on for a sheet the user can swipe away.",
+        "dontText": "Don’t hide the handle and the Close button at once — the sheet becomes a trap."
+      },
+      {
+        "doText": "Use the centred title for confirmations with no leading icon.",
+        "dontText": "Don’t expect a leading or trailing slot on Center; the set drops both."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Scope is the header, not the sheet. Content region is 4 decorative placeholder rectangles instead of a Figma Slot. Icon-placeholder is a raw circle. Component name (\"Bottom Drawer\") disagrees with token namespace (\"bottom-header\") and DS convention (\"Bottom Sheet\")."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>DragHandle</code>, <code>Header</code>, <code>Above-Title-Slot</code>, <code>TitleRow</code>, <code>TitleBlock</code>, <code>Description</code>, <code>Content-Slot</code> and <code>Footer-Slot</code> — semantic throughout, no <code>#</code> sigils."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Alignment axis collapses two structurally different layouts (Left has leading icon + close X; Center has above-title headerSlot + no close X). No detent axis. 9 booleans (<code>showSlot1..4</code>, <code>primaryAction</code>, <code>secondaryAction</code>, <code>preamble</code>, <code>description</code>, <code>iconPlaceholder</code>) that should be slots."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Two PascalCase axes plus seven booleans, but <code>hasSupportingText</code> and <code>hasDescription</code> are variant axes rather than booleans, and only 8 of their 16 combinations are built."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Surface, preamble, header, description, close icon all bound to <code>main/bottom-header/color/*</code>. Icon-placeholder grey (<code>#C2C6CF</code>) is hardcoded. Drag-handle token doesn't exist yet (component has no handle)."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All four text layers resolve <code>matched</code> — <code>Primary/Label/Small</code>, <code>Primary/Headlines/Section</code>, <code>Secondary/Bold/Base</code>, <code>Secondary/Default/Base</code>. Colour bindings cannot be read with the plugin."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Does not map to <code>.sheet</code> / <code>ModalBottomSheet</code> as-is. No detent axis, no drag handle, no dismissible contract, hard-baked CTAs. After restructure → clean 1:1 mapping."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Maps to one sheet with two enums, five optional slots and optional strings."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Only default state. No drag states (resting / dragging / snapping), no present / dismiss transition annotation, no empty / loading / error state guidance for the content slot."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "A container; the buttons and the Close carry their own states."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Close X is a remote raster PNG (<code>shape_full</code> from Figma CDN) rather than a vector Icon instance. Icon-placeholder is a raw <code>#C2C6CF</code> circle, not a vector icon slot."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Five real SLOTs — 8, 6, 6, 8 and 8 swap options — plus a Close instance and Button - Large/Medium instances."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked on restructure. Scope overlap with Modal and Overlay must be resolved; mapping the current schema would hardcode the wrong architecture."
+        "notes": "Four axes, seven booleans and five slots are ready to map; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 2,
-      "description": "Single axis — <code>Alignment = Left Align | Center Align</code>. The header shape-shifts across these two values (see Open Issues).",
+      "total": 8,
+      "description": "<code>TitleAlignment</code> (2) × <code>FooterOrientation</code> (2) × <code>hasSupportingText</code> (2) × <code>hasDescription</code> (2) would be 16; 8 are built. The two text axes never combine, and Center ships only with a description. The seven booleans add none.",
       "columns": [
-        "#",
-        "Alignment",
-        "Node",
-        "Dimensions",
-        "Header slots present",
-        "Notes"
+        "TitleAlignment",
+        "FooterOrientation",
+        "hasSupportingText",
+        "hasDescription",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "1",
-            "<strong>Left Align</strong>",
-            "<code>12522:12860</code>",
-            "360 × 324",
-            "iconPlaceholder (leading) · preamble · title · Close X (trailing, raster)",
-            "Title + preamble left-aligned next to optional leading icon. Close X fixed top-right at (24, 24)."
+            "Left",
+            "Vertical",
+            "False",
+            "True",
+            "<code>5304:32718</code>",
+            "360 × 404"
           ]
         },
         {
           "cells": [
-            "2",
-            "<strong>Center Align</strong>",
-            "<code>12817:43834</code>",
-            "360 × 330",
-            "headerSlot (above-title, e.g. progress bar) · preamble · title",
-            "No leading icon, no close X. Adds an <code>headerSlot</code> used for progress bars / steppers. Title + preamble centered."
+            "Left",
+            "Vertical",
+            "True",
+            "False",
+            "<code>5377:35367</code>",
+            "360 × 398"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Vertical",
+            "False",
+            "False",
+            "<code>5377:35438</code>",
+            "360 × 372"
+          ]
+        },
+        {
+          "cells": [
+            "Center",
+            "Vertical",
+            "False",
+            "True",
+            "<code>5304:32755</code>",
+            "360 × 378"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Horizontal",
+            "False",
+            "True",
+            "<code>5304:32769</code>",
+            "360 × 342"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Horizontal",
+            "True",
+            "False",
+            "<code>5377:35473</code>",
+            "360 × 336"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Horizontal",
+            "False",
+            "False",
+            "<code>5377:35510</code>",
+            "360 × 310"
+          ]
+        },
+        {
+          "cells": [
+            "Center",
+            "Horizontal",
+            "False",
+            "True",
+            "<code>5304:32806</code>",
+            "360 × 316"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Leading slot drawn round · node 5304:32717",
+      "rows": [
+        {
+          "body": "<strong>The Leading-Slot placeholder is a 32 circle</strong>, matching the round Placeholder instance the set ships; it had been drawn as a rounded square.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Title wraps inside its column · node 5304:32717",
+      "rows": [
+        {
+          "body": "<strong>The title no longer runs under the Close button.</strong> It wraps to the column Figma gives it — 232 on Left with a leading slot, 276 without, 312 on Center — instead of drawing fixed lines.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The TitleRow height now follows the wrap</strong> — preamble 20, then 26 a line, then 26 for the supporting text. That reproduces all three measured shapes: 72 on Left, 98 with supporting text and 46 on Center.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 5304:32717",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — four variant axes and seven booleans, with the five SLOTs listed without controls.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> 360 wide, stacked: DragHandle 12, Header (Above-Title-Slot 16 then the TitleRow), Description 32, Content-Slot 64 and a Footer-Slot of 160 vertical or 98 horizontal. Heights run 310 to 404.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>TitleRow height follows the content</strong> — 72 on Left, 98 with supporting text, 46 on Center, which drops the leading and trailing slots altogether.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved against the token database.</strong> Preamble → <code>Primary/Label/Small</code>, Title → <code>Primary/Headlines/Section</code>, supporting text → <code>Secondary/Bold/Base</code>, description → <code>Secondary/Default/Base</code>, all matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:bottom-sheet:2.0.0</code>, a twelve-row mapping, four snippets and an eight-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Only 8 of the 16 combinations are built.</strong> <code>hasSupportingText</code> and <code>hasDescription</code> never combine, and Center ships only with a description, so the panel snaps. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Two booleans are variant axes.</strong> <code>hasSupportingText</code> and <code>hasDescription</code> sit beside <code>hasPreamble</code> and <code>hasContent</code>, which are real booleans — the same idea expressed two ways. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>The footer swaps button order with orientation.</strong> Vertical puts the primary on top; horizontal puts it on the right, with the secondary first in the layer order. <span class=\"tag-open tag-a11y\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>The preamble fails AA</strong> — #90A8D0 is 2.41:1 on white at 14pt. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Heights with the booleans off are computed, not read</strong> — every variant ships them on, so the hidden layers report stale coordinates. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",
