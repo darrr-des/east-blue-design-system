@@ -1,19 +1,31 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — same across all 3 button styles. Wired to
-// the legacy `updateSpecCard(cardStyle, prop, value)` function in
-// `public/scripts/demos/button.js`.
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)` in
+// `public/scripts/demos/button.js`. The Properties section mirrors the
+// property panel of set 17104:184842 in its order; the two Container rows
+// are instance-swap slots and get no control. Appearance is a Variable Mode
+// on the parent frame, not a variant axis, so it sits in its own section.
 const buttonDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
+        label: 'Style',
+        prop: 'style',
+        defaultValue: 'filled',
+        options: [
+          { value: 'filled',  label: 'Filled' },
+          { value: 'outline', label: 'Outline' },
+          { value: 'text',    label: 'Text' },
+        ],
+      },
+      {
         label: 'State',
         prop: 'state',
         defaultValue: 'default',
         options: [
-          { value: 'default', label: 'Default' },
-          { value: 'pressed', label: 'Pressed' },
+          { value: 'default',  label: 'Default' },
+          { value: 'pressed',  label: 'Pressed' },
           { value: 'disabled', label: 'Disabled' },
         ],
       },
@@ -22,24 +34,25 @@ const buttonDemoControls: DemoControlSection[] = [
         prop: 'size',
         defaultValue: 'large',
         options: [
-          { value: 'large', label: 'Large' },
-          { value: 'medium', label: 'Medium' },
-          { value: 'small', label: 'Small' },
+          { value: 'large',   label: 'Large' },
+          { value: 'medium',  label: 'Medium' },
+          { value: 'small',   label: 'Small' },
+          { value: 'xsmall',  label: 'XSmall' },
           { value: 'compact', label: 'Compact' },
-          { value: 'xsmall', label: 'XSmall' },
         ],
       },
       {
         label: 'Icon Placement',
-        prop: 'iconPlacement',
+        prop: 'iconplacement',
         defaultValue: 'none',
         options: [
-          { value: 'none', label: 'None' },
-          { value: 'leading', label: 'Leading' },
+          { value: 'none',     label: 'None' },
+          { value: 'leading',  label: 'Leading' },
           { value: 'trailing', label: 'Trailing' },
-          { value: 'iconOnly', label: 'Icon Only' },
+          { value: 'icononly', label: 'Icon Only' },
         ],
       },
+      { label: 'Label', prop: 'label', control: 'input', defaultValue: 'Button', options: [] },
     ],
   },
   {
@@ -50,15 +63,16 @@ const buttonDemoControls: DemoControlSection[] = [
         prop: 'appearance',
         defaultValue: 'default',
         options: [
-          { value: 'default', label: 'Default' },
+          { value: 'default',     label: 'Default' },
           { value: 'destructive', label: 'Destructive' },
-          { value: 'white', label: 'White' },
-          { value: 'subtle', label: 'Subtle' },
+          { value: 'white',       label: 'White' },
+          { value: 'subtle',      label: 'Subtle' },
         ],
       },
     ],
   },
 ];
+
 
 export const button: ComponentData = {
   "meta": {
@@ -69,8 +83,8 @@ export const button: ComponentData = {
     "description": "Used to trigger an action when tapped. The button's Call to Action describes the action that will occur. The Large/Medium Buttons are the default size for the GCash app.",
     "badges": [
       {
-        "kind": "keep",
-        "label": "Keep"
+        "kind": "fix",
+        "label": "Fix"
       },
       {
         "kind": "refine",
@@ -82,27 +96,27 @@ export const button: ComponentData = {
   "overview": {
     "inContextNote": "How the button appears in a real product screen — primary and secondary actions in a bottom sheet.",
     "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/button-in-context.png\" alt=\"Button component shown in a GCash Physical Card bottom sheet with primary and secondary buttons\" >",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\"><button class=\"demo-btn demo-btn-primary\" id=\"demo-btn-live\" style=\"display:inline-flex;align-items:center;gap:8px;\"><svg id=\"demo-btn-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span id=\"demo-btn-text\">Label</span><svg id=\"demo-btn-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Style</span><select class=\"demo-panel-select\" onchange=\"setDemoStyle(this.value)\"><option value=\"filled\" selected=\"\">Filled</option><option value=\"outline\">Outline</option><option value=\"text\">Text</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"setDemoState(this.value)\"><option value=\"default\" selected=\"\">Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" onchange=\"setDemoSize(this.value)\"><option value=\"large\" selected=\"\">Large</option><option value=\"medium\">Medium</option><option value=\"small\">Small</option><option value=\"compact\">Compact</option><option value=\"xsmall\">XSmall</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Icon Placement</span><select class=\"demo-panel-select\" onchange=\"setDemoIconPlacement(this.value)\"><option value=\"none\" selected=\"\">None</option><option value=\"leading\">Leading</option><option value=\"trailing\">Trailing</option><option value=\"iconOnly\">Icon Only</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Mode</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Appearance</span><select class=\"demo-panel-select\" onchange=\"setDemoAppearance(this.value)\"><option value=\"default\" selected=\"\">Default</option><option value=\"destructive\">Destructive</option><option value=\"white\">White</option><option value=\"subtle\">Subtle</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\"><div id=\"btn-demo-preview\"></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Style</span><select class=\"demo-panel-select\" onchange=\"setDemoStyle(this.value)\"><option value=\"filled\" selected=\"\">Filled</option><option value=\"outline\">Outline</option><option value=\"text\">Text</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"setDemoState(this.value)\"><option value=\"default\" selected=\"\">Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" onchange=\"setDemoSize(this.value)\"><option value=\"large\" selected=\"\">Large</option><option value=\"medium\">Medium</option><option value=\"small\">Small</option><option value=\"xsmall\">XSmall</option><option value=\"compact\">Compact</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Icon Placement</span><select class=\"demo-panel-select\" onchange=\"setDemoIconPlacement(this.value)\"><option value=\"none\" selected=\"\">None</option><option value=\"leading\">Leading</option><option value=\"trailing\">Trailing</option><option value=\"icononly\">Icon Only</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Label</span><input type=\"text\" class=\"demo-panel-select demo-panel-input\" value=\"Button\" placeholder=\"Label\" oninput=\"setDemoLabel(this.value)\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Mode</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Appearance</span><select class=\"demo-panel-select\" onchange=\"setDemoAppearance(this.value)\"><option value=\"default\" selected=\"\">Default</option><option value=\"destructive\">Destructive</option><option value=\"white\">White</option><option value=\"subtle\">Subtle</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Three styles (Filled/Outline/Text) with four appearance modes cover primary, secondary, tertiary, surface, and destructive action patterns across all contexts."
+        "note": "Three styles × five sizes × four icon placements, with four appearance modes over the top — primary, secondary, tertiary, on-surface and destructive actions are all covered from one set."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "All styles, states, and appearance colors are self-contained via variable bindings. <code>Leading Container</code> and <code>Trailing Container</code> SLOT nodes in every variant."
+        "note": "The variant itself carries the fill, stroke, radius and auto-layout — no wrapper frame. <code>#label</code> and the two Container slots are direct children."
       },
       {
         "name": "Consistent",
-        "rating": "pass",
-        "note": "Clean <code>Property=Value</code> naming across all 60 variants. Size, State, and Style are orthogonal variant dimensions. Appearance is a variable mode — no naming conflicts. 12 color variables bound consistently."
+        "rating": "partial",
+        "note": "Clean <code>Property=Value</code> naming and all 180 combinations built. Two gaps: the Large <code>Icon Only</code> variants name their slot <code>Trailing Container</code> where the other sizes say <code>Leading Container</code>, and the Outline stroke is 3 at Large against 2 everywhere else."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Style=Filled → <code>Button</code>, Style=Outline → <code>OutlinedButton</code>, Style=Text → <code>TextButton</code>. SLOT nodes support icon+label compositions. Each size has its own text style — clean native mapping."
+        "note": "<code>Leading Container</code> and <code>Trailing Container</code> are Figma SLOT nodes (80 and 54 items offered). Each size resolves to its own DS text style, so the label maps cleanly to a native type ramp."
       }
     ],
     "behavior": [
@@ -111,49 +125,49 @@ export const button: ComponentData = {
         "ios": "yes",
         "android": "yes",
         "property": "State=Default",
-        "notes": "All four appearance modes fully defined."
+        "notes": "60 variants — every style, size and icon placement."
       },
       {
         "state": "Pressed",
         "ios": "yes",
         "android": "yes",
         "property": "State=Pressed",
-        "notes": "Darker fill/border using pressed tokens."
+        "notes": "Darker fill, stroke and label from the pressed tokens."
       },
       {
         "state": "Disabled",
         "ios": "yes",
         "android": "yes",
         "property": "State=Disabled",
-        "notes": "Muted color tokens applied across all appearances."
+        "notes": "Muted tokens across all four appearance modes."
       },
       {
         "state": "Destructive",
         "ios": "yes",
         "android": "yes",
-        "property": "Appearance mode: Destructive",
-        "notes": "Red tokens via variable mode. Applies to all 3 styles (Filled/Outline/Text)."
+        "property": "Mode: Appearance=Destructive",
+        "notes": "A Variable Mode on the parent frame, not a variant — applies to all three styles."
+      },
+      {
+        "state": "Icon Only",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Icon Placement=Icon Only",
+        "notes": "Square the height of the size: 50, 48, 36, 28, 24. Needs <code>accessibilityLabel</code> / <code>contentDescription</code>."
       },
       {
         "state": "Focused (a11y)",
         "ios": "na",
         "android": "na",
         "property": "—",
-        "notes": "Mobile-only component. Focus rings rendered natively by iOS (UIKit/SwiftUI) and Android (Material a11y). No Figma state required."
+        "notes": "Mobile-only. iOS and Android draw focus natively — no Figma state needed."
       },
       {
         "state": "Loading",
         "ios": "yes",
         "android": "yes",
         "property": "Native modifier",
-        "notes": "Handled as an interaction modifier in native code — <code>.ebLoading(true)</code> (SwiftUI) / <code>isLoading = true</code> (Compose). Removed as a Figma state in v4.0."
-      },
-      {
-        "state": "Icon Only (a11y)",
-        "ios": "yes",
-        "android": "yes",
-        "property": "Icon Placement=Icon Only",
-        "notes": "Square target matches size height. Requires <code>accessibilityLabel</code> / <code>contentDescription</code> since no visible text."
+        "notes": "<code>.ebLoading(true)</code> / <code>isLoading = true</code>. Not a Figma state."
       }
     ],
     "resolved": [
@@ -208,8 +222,32 @@ export const button: ComponentData = {
     ],
     "open": [
       {
+        "headline": "Icon Only at Large names its slot <code>Trailing Container</code>.",
+        "body": "The other four sizes name the same single slot <code>Leading Container</code>. Nine variants are affected — 3 styles × 3 states at <code>Size=Large</code>. Code Connect would map one icon-only button to two different slot names.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Outline stroke is 3 at Large and 2 everywhere else.",
+        "body": "Read off <code>get_svg</code> on the Outline row: Large exports at <code>stroke-width 3</code>, Medium, Small, Compact and XSmall at <code>2</code>. Large reads visibly heavier than the rest of the ramp.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Corner radius carries two raw values.",
+        "body": "<code>99</code> at Large and Medium, <code>99999</code> at Small, Compact and XSmall. Both clamp to a pill, so nothing shows — but the value is unbound and inconsistent.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "All structural blockers resolved through v4.1 — registration can now proceed against the current API (Style × Appearance × Size + Icon Placement).",
+        "body": "The property shape is ready — four enums plus a text property and two slots. Registration can proceed once the slot naming above is settled.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -218,8 +256,28 @@ export const button: ComponentData = {
     ],
     "recommendations": [
       {
+        "headline": "Rename the component set <code>Button_New</code> \u2192 <code>Button</code>.",
+        "body": "Decided by the DS owner. <code>_New</code> reads as a migration artifact and every consumer inherits it \u2014 the instances inside Alert, Callout, Carousel Item, Modal and Modal - Transaction Receipt all show <code>Button_New</code> in their layer trees. Renaming the master propagates to all of them at once. This page now shows <code>Button</code>; the Figma set is still named <code>Button_New</code> until the rename is made there.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Rename the Large Icon Only slot to <code>Leading Container</code>.",
+        "body": "Brings the nine Large variants in line with the other four sizes so icon-only maps to one native parameter.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Bind the Outline stroke and the corner radius to tokens.",
+        "body": "One stroke value across the ramp, or a documented per-size token; one radius token in place of the <code>99</code> / <code>99999</code> split.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Order the Size enum by height.",
+        "body": "The panel lists Large, Medium, Small, XSmall, Compact while Compact (28) is taller than XSmall (24). Reordering makes the ramp readable in the picker.",
+        "tag": "Rename"
+      },
+      {
         "headline": "Document full-width (stretch) behavior.",
-        "body": "Add an <code>isFullWidth</code> boolean property for bottom-sheet CTAs and standalone action areas. Today this is achieved via constraints on each screen; a first-class property makes the intent explicit and removes per-screen guesswork.",
+        "body": "Add an <code>isFullWidth</code> boolean for bottom-sheet CTAs. Today it is per-screen constraints, so the intent is invisible at handoff.",
         "tag": "Property"
       }
     ]
@@ -228,55 +286,88 @@ export const button: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "btn-spec-filled",
-        "demoKey": "filled",
+        "cardKey": "btn-spec-main",
+        "demoKey": "main",
+        "title": "Button",
+        "node": "17104:184842",
+        "description": "One card for the whole set: Style × State × Size × Icon Placement, with Appearance as a Variable Mode. Every reading below tracks the selection.",
+        "previewHtml": "<div id=\"button-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": buttonDemoControls,
-        "title": "Filled",
-        "node": "17104:184843",
-        "description": "Solid background with contrasting label. Primary action style. Colors change via Appearance variable mode.",
-        "previewHtml": "<button class=\"demo-btn demo-btn-primary\" id=\"spec-filled-btn\" style=\"display:inline-flex;align-items:center;gap:8px;\"><svg id=\"spec-filled-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span>Button</span><svg id=\"spec-filled-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Style",      "value": "Filled" },
-              { "key": "Appearance", "value": "Default", "prop": "appearance" },
-              { "key": "State",      "value": "Default", "prop": "state" },
-              { "key": "Size",       "value": "Large",   "prop": "size" }
+              {
+                "key": "Style",
+                "value": "Filled",
+                "prop": "style"
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "prop": "state"
+              },
+              {
+                "key": "Size",
+                "value": "Large",
+                "prop": "size"
+              },
+              {
+                "key": "Icon Placement",
+                "value": "None",
+                "prop": "iconplacement"
+              },
+              {
+                "key": "Icon slot",
+                "value": "— (empty)",
+                "prop": "slot"
+              },
+              {
+                "key": "Label",
+                "value": "Button",
+                "prop": "label"
+              },
+              {
+                "key": "Appearance (Mode)",
+                "value": "Default",
+                "prop": "appearance"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "17104:184843 · 97 × 50",
+                "prop": "variantNode",
+                "mono": true
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Default bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg",
-                "variants": {
-                  "appearance:destructive": { "value": "#D81E1E", "token": "button/primary/destructive/enabled/bg" },
-                  "appearance:white":       { "value": "#FFFFFF", "token": "button/primary/white/enabled/bg" },
-                  "appearance:subtle":      { "value": "#E5F1FF", "token": "button/primary/subtle/enabled/bg" }
-                }
+              {
+                "key": "Background",
+                "value": "#005CE5",
+                "prop": "bg",
+                "swatch": true
               },
-              { "key": "Default label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label",
-                "variants": {
-                  "appearance:destructive": { "value": "#FFFFFF", "token": "button/primary/destructive/enabled/label" },
-                  "appearance:white":       { "value": "#005CE5", "token": "button/primary/white/enabled/label" },
-                  "appearance:subtle":      { "value": "#005CE5", "token": "button/primary/subtle/enabled/label" }
-                }
+              {
+                "key": "Border",
+                "value": "#005CE5",
+                "prop": "border",
+                "swatch": true
               },
-              { "key": "Pressed bg", "value": "#2340A9", "token": "button/primary/brand/pressed/bg",
-                "variants": {
-                  "appearance:destructive": { "value": "#B01818", "token": "button/primary/destructive/pressed/bg" },
-                  "appearance:white":       { "value": "#EEF2F9", "token": "button/primary/white/pressed/bg" },
-                  "appearance:subtle":      { "value": "#D2E5FF", "token": "button/primary/subtle/pressed/bg" }
-                }
+              {
+                "key": "Label",
+                "value": "#FFFFFF",
+                "prop": "labelColor",
+                "swatch": true
               },
-              { "key": "Disabled bg", "value": "#9BC5FD", "token": "button/primary/brand/disabled/bg",
-                "variants": {
-                  "appearance:destructive": { "value": "#F5A3A3", "token": "button/primary/destructive/disabled/bg" },
-                  "appearance:white":       { "value": "#F5F7FA", "token": "button/primary/white/disabled/bg" },
-                  "appearance:subtle":      { "value": "#EEF5FF", "token": "button/primary/subtle/disabled/bg" }
-                }
+              {
+                "key": "Icon slot",
+                "value": "#020E22 @ 24%",
+                "prop": "slotFill",
+                "swatch": true
               }
             ]
           },
@@ -284,279 +375,86 @@ export const button: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Height", "value": "50px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "48px" },
-                  "size:small":   { "value": "36px" },
-                  "size:compact": { "value": "28px" },
-                  "size:xsmall":  { "value": "24px" }
-                }
+              {
+                "key": "Frame",
+                "value": "97 × 50",
+                "prop": "frame",
+                "mono": true
               },
-              { "key": "Padding H", "value": "20px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "16px" },
-                  "size:small":   { "value": "12px" },
-                  "size:compact": { "value": "12px" },
-                  "size:xsmall":  { "value": "10px" }
-                }
+              {
+                "key": "Height",
+                "value": "50",
+                "prop": "height",
+                "mono": true
               },
-              { "key": "Padding V", "value": "16px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "12px" },
-                  "size:small":   { "value": "8px" },
-                  "size:compact": { "value": "5px" },
-                  "size:xsmall":  { "value": "4px" }
-                }
+              {
+                "key": "Padding H",
+                "value": "20",
+                "prop": "padH",
+                "mono": true
               },
-              { "key": "Radius", "value": "99px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Font",       "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "Primary/Label/Base" },
-                  "size:small":   { "value": "Primary/Label/Base" },
-                  "size:compact": { "value": "Primary/Label/Small" },
-                  "size:xsmall":  { "value": "Primary/Label/Fine" }
-                }
+              {
+                "key": "Padding V",
+                "value": "16",
+                "prop": "padV",
+                "mono": true
               },
-              { "key": "Size", "value": "18px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "16px" },
-                  "size:small":   { "value": "16px" },
-                  "size:compact": { "value": "14px" },
-                  "size:xsmall":  { "value": "12px" }
-                }
+              {
+                "key": "Gap",
+                "value": "8",
+                "prop": "gap",
+                "mono": true
               },
-              { "key": "Tracking",   "value": "0.25px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Save\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.filled</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Save\"</span><span class=\"syn-punc\">,</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAppearance</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Large</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "btn-spec-outline",
-        "demoKey": "outline",
-        "demoControls": buttonDemoControls,
-        "title": "Outline",
-        "node": "17104:184852",
-        "description": "Transparent background with border and accent-colored label. Secondary action style.",
-        "previewHtml": "<button class=\"demo-btn demo-btn-outlined\" id=\"spec-outline-btn\" style=\"display:inline-flex;align-items:center;gap:8px;\"><svg id=\"spec-outline-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span>Button</span><svg id=\"spec-outline-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Style",      "value": "Outline" },
-              { "key": "Appearance", "value": "Default", "prop": "appearance" },
-              { "key": "State",      "value": "Default", "prop": "state" },
-              { "key": "Size",       "value": "Large",   "prop": "size" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Default border", "value": "#005CE5", "token": "button/secondary/brand/enabled/border",
-                "variants": {
-                  "appearance:destructive": { "value": "#D81E1E", "token": "button/secondary/destructive/enabled/border" }
-                }
+              {
+                "key": "Icon",
+                "value": "24 × 24",
+                "prop": "icon",
+                "mono": true
               },
-              { "key": "Default label", "value": "#005CE5", "token": "button/secondary/brand/enabled/label",
-                "variants": {
-                  "appearance:destructive": { "value": "#D81E1E", "token": "button/secondary/destructive/enabled/label" }
-                }
+              {
+                "key": "Radius",
+                "value": "99",
+                "prop": "radius",
+                "mono": true
               },
-              { "key": "Pressed border", "value": "#2340A9", "token": "button/secondary/brand/pressed/border",
-                "variants": {
-                  "appearance:destructive": { "value": "#B01818", "token": "button/secondary/destructive/pressed/border" }
-                }
-              },
-              { "key": "Disabled border", "value": "#9BC5FD", "token": "button/secondary/brand/disabled/border",
-                "variants": {
-                  "appearance:destructive": { "value": "#F5A3A3", "token": "button/secondary/destructive/disabled/border" }
-                }
+              {
+                "key": "Stroke",
+                "value": "3 inside",
+                "prop": "stroke",
+                "mono": true
               }
             ]
           },
           {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Height", "value": "50px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "48px" },
-                  "size:small":   { "value": "36px" },
-                  "size:compact": { "value": "28px" },
-                  "size:xsmall":  { "value": "24px" }
-                }
-              },
-              { "key": "Padding H", "value": "20px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "16px" },
-                  "size:small":   { "value": "12px" },
-                  "size:compact": { "value": "12px" },
-                  "size:xsmall":  { "value": "10px" }
-                }
-              },
-              { "key": "Padding V", "value": "16px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "12px" },
-                  "size:small":   { "value": "8px" },
-                  "size:compact": { "value": "5px" },
-                  "size:xsmall":  { "value": "4px" }
-                }
-              },
-              { "key": "Border",    "value": "1.5px solid", "mono": true },
-              { "key": "Radius",    "value": "99px",  "mono": true }
-            ]
-          },
-          {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Font",       "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "Primary/Label/Base" },
-                  "size:small":   { "value": "Primary/Label/Base" },
-                  "size:compact": { "value": "Primary/Label/Small" },
-                  "size:xsmall":  { "value": "Primary/Label/Fine" }
-                }
-              },
-              { "key": "Size", "value": "18px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "16px" },
-                  "size:small":   { "value": "16px" },
-                  "size:compact": { "value": "14px" },
-                  "size:xsmall":  { "value": "12px" }
-                }
-              },
-              { "key": "Tracking",   "value": "0.25px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Large</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "btn-spec-text",
-        "demoKey": "text",
-        "demoControls": buttonDemoControls,
-        "title": "Text",
-        "node": "17104:184855",
-        "description": "No background or border. Label only. Tertiary action style.",
-        "previewHtml": "<button class=\"demo-btn\" style=\"background:transparent;color:#005CE5;border:none;padding:14px 24px;border-radius:99px;font-weight:700;display:inline-flex;align-items:center;gap:8px;\" id=\"spec-text-btn\"><svg id=\"spec-text-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span>Button</span><svg id=\"spec-text-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button>",
-        "sections": [
-          {
-            "label": "Properties",
-            "rows": [
-              { "key": "Style",      "value": "Text" },
-              { "key": "Appearance", "value": "Default", "prop": "appearance" },
-              { "key": "State",      "value": "Default", "prop": "state" },
-              { "key": "Size",       "value": "Large",   "prop": "size" }
-            ],
-            "slug": "props"
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Default label", "value": "#005CE5", "token": "button/tertiary/brand/enabled/label",
-                "variants": {
-                  "appearance:destructive": { "value": "#D81E1E", "token": "button/tertiary/destructive/enabled/label" }
-                }
-              },
-              { "key": "Pressed label", "value": "#2340A9", "token": "button/tertiary/brand/pressed/label",
-                "variants": {
-                  "appearance:destructive": { "value": "#B01818", "token": "button/tertiary/destructive/pressed/label" }
-                }
-              },
-              { "key": "Disabled label", "value": "#9BC5FD", "token": "button/tertiary/brand/disabled/label",
-                "variants": {
-                  "appearance:destructive": { "value": "#F5A3A3", "token": "button/tertiary/destructive/disabled/label" }
-                }
+              {
+                "key": "#label",
+                "value": "Primary/Label/Large",
+                "prop": "textStyle",
+                "mono": true
               }
             ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Height", "value": "50px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "48px" },
-                  "size:small":   { "value": "36px" },
-                  "size:compact": { "value": "28px" },
-                  "size:xsmall":  { "value": "24px" }
-                }
-              },
-              { "key": "Padding H", "value": "20px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "16px" },
-                  "size:small":   { "value": "12px" },
-                  "size:compact": { "value": "12px" },
-                  "size:xsmall":  { "value": "10px" }
-                }
-              },
-              { "key": "Padding V", "value": "16px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "12px" },
-                  "size:small":   { "value": "8px" },
-                  "size:compact": { "value": "5px" },
-                  "size:xsmall":  { "value": "4px" }
-                }
-              },
-              { "key": "Radius",    "value": "99px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Font",       "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "Primary/Label/Base" },
-                  "size:small":   { "value": "Primary/Label/Base" },
-                  "size:compact": { "value": "Primary/Label/Small" },
-                  "size:xsmall":  { "value": "Primary/Label/Fine" }
-                }
-              },
-              { "key": "Size", "value": "18px", "mono": true,
-                "variants": {
-                  "size:medium":  { "value": "16px" },
-                  "size:small":   { "value": "16px" },
-                  "size:compact": { "value": "14px" },
-                  "size:xsmall":  { "value": "12px" }
-                }
-              },
-              { "key": "Tracking",   "value": "0.25px", "mono": true }
-            ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTextButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Skip\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTextButton</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Skip\"</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Large</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.filled</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span>\n    onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonSize</span>.<span class=\"syn-dot\">Large</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by Appearance Mode",
-        "description": "Token names resolve to different hex values per mode. All 4 modes share the same 4 variables from the <code>Button</code> collection.",
+        "title": "Filled — Colors by Appearance Mode",
+        "description": "Default mode re-read from the variant nodes in this pass. Destructive, White and Subtle carry the v3 / v4.1 Variable Mode capture — switching modes is a Figma write, so they were not re-read.",
         "columns": [
-          "Enabled",
+          "Default",
           "Pressed",
           "Disabled"
         ],
         "rows": [
           {
-            "role": "Default",
-            "token": "bg",
+            "role": "Default · bg",
+            "token": "button/primary/brand/{state}/bg",
             "values": [
               "#005CE5",
               "#2340A9",
@@ -564,16 +462,17 @@ export const button: ComponentData = {
             ]
           },
           {
-            "role": "label",
-            "token": "#FFFFFF",
+            "role": "Default · label",
+            "token": "button/primary/brand/{state}/label",
             "values": [
+              "#FFFFFF",
               "#FFFFFF",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Destructive",
-            "token": "bg",
+            "role": "Destructive · bg",
+            "token": "button/primary/destructive/{state}/bg",
             "values": [
               "#D81E1E",
               "#B01818",
@@ -581,16 +480,17 @@ export const button: ComponentData = {
             ]
           },
           {
-            "role": "label",
-            "token": "#FFFFFF",
+            "role": "Destructive · label",
+            "token": "button/primary/destructive/{state}/label",
             "values": [
+              "#FFFFFF",
               "#FFFFFF",
               "#FFFFFF"
             ]
           },
           {
-            "role": "White",
-            "token": "bg",
+            "role": "White · bg",
+            "token": "button/primary/white/{state}/bg",
             "values": [
               "#FFFFFF",
               "#EEF2F9",
@@ -598,16 +498,17 @@ export const button: ComponentData = {
             ]
           },
           {
-            "role": "label",
-            "token": "#005CE5",
+            "role": "White · label",
+            "token": "button/primary/white/{state}/label",
             "values": [
               "#005CE5",
-              "#005CE5"
+              "#2340A9",
+              "#9BC5FD"
             ]
           },
           {
-            "role": "Subtle",
-            "token": "bg",
+            "role": "Subtle · bg",
+            "token": "button/primary/subtle/{state}/bg",
             "values": [
               "#E5F1FF",
               "#D2E5FF",
@@ -615,88 +516,10 @@ export const button: ComponentData = {
             ]
           },
           {
-            "role": "label",
-            "token": "#005CE5",
+            "role": "Subtle · label",
+            "token": "button/primary/subtle/{state}/label",
             "values": [
               "#005CE5",
-              "#005CE5"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Colors by Appearance Mode",
-        "description": "Outline uses border + label tokens — no background fill. All 4 modes share the same 3 variables from the <code>Button</code> collection.",
-        "columns": [
-          "Enabled",
-          "Pressed",
-          "Disabled"
-        ],
-        "rows": [
-          {
-            "role": "Default",
-            "token": "border",
-            "values": [
-              "#005CE5",
-              "#2340A9",
-              "#9BC5FD"
-            ]
-          },
-          {
-            "role": "label",
-            "token": "#005CE5",
-            "values": [
-              "#2340A9",
-              "#9BC5FD"
-            ]
-          },
-          {
-            "role": "Destructive",
-            "token": "border",
-            "values": [
-              "#D81E1E",
-              "#B01818",
-              "#F5A3A3"
-            ]
-          },
-          {
-            "role": "label",
-            "token": "#D81E1E",
-            "values": [
-              "#B01818",
-              "#F5A3A3"
-            ]
-          },
-          {
-            "role": "White",
-            "token": "border",
-            "values": [
-              "#005CE5",
-              "#2340A9",
-              "#9BC5FD"
-            ]
-          },
-          {
-            "role": "label",
-            "token": "#005CE5",
-            "values": [
-              "#2340A9",
-              "#9BC5FD"
-            ]
-          },
-          {
-            "role": "Subtle",
-            "token": "border",
-            "values": [
-              "#005CE5",
-              "#2340A9",
-              "#9BC5FD"
-            ]
-          },
-          {
-            "role": "label",
-            "token": "#005CE5",
-            "values": [
               "#2340A9",
               "#9BC5FD"
             ]
@@ -704,17 +527,17 @@ export const button: ComponentData = {
         ]
       },
       {
-        "title": "Colors by Appearance Mode",
-        "description": "Text style uses label-only tokens — no background or border. All 4 modes share the same 3 variables from the <code>Button</code> collection.",
+        "title": "Outline — Colors by Appearance Mode",
+        "description": "No fill. Stroke is 3 inside at Large and 2 inside at every other size.",
         "columns": [
-          "Enabled",
+          "Default",
           "Pressed",
           "Disabled"
         ],
         "rows": [
           {
-            "role": "Default",
-            "token": "label",
+            "role": "Default · border",
+            "token": "button/secondary/brand/{state}/border",
             "values": [
               "#005CE5",
               "#2340A9",
@@ -722,8 +545,17 @@ export const button: ComponentData = {
             ]
           },
           {
-            "role": "Destructive",
-            "token": "label",
+            "role": "Default · label",
+            "token": "button/secondary/brand/{state}/label",
+            "values": [
+              "#005CE5",
+              "#2340A9",
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Destructive · border",
+            "token": "button/secondary/destructive/{state}/border",
             "values": [
               "#D81E1E",
               "#B01818",
@@ -731,8 +563,17 @@ export const button: ComponentData = {
             ]
           },
           {
-            "role": "White",
-            "token": "label",
+            "role": "Destructive · label",
+            "token": "button/secondary/destructive/{state}/label",
+            "values": [
+              "#D81E1E",
+              "#B01818",
+              "#F5A3A3"
+            ]
+          },
+          {
+            "role": "White · border",
+            "token": "button/secondary/white/{state}/border",
             "values": [
               "#005CE5",
               "#2340A9",
@@ -740,12 +581,93 @@ export const button: ComponentData = {
             ]
           },
           {
-            "role": "Subtle",
-            "token": "label",
+            "role": "White · label",
+            "token": "button/secondary/white/{state}/label",
             "values": [
               "#005CE5",
               "#2340A9",
               "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Subtle · border",
+            "token": "button/secondary/subtle/{state}/border",
+            "values": [
+              "#005CE5",
+              "#2340A9",
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Subtle · label",
+            "token": "button/secondary/subtle/{state}/label",
+            "values": [
+              "#005CE5",
+              "#2340A9",
+              "#9BC5FD"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Text — Colors by Appearance Mode",
+        "description": "Label only — no fill, no stroke. The frame keeps the same padding as Filled.",
+        "columns": [
+          "Default",
+          "Pressed",
+          "Disabled"
+        ],
+        "rows": [
+          {
+            "role": "Default · label",
+            "token": "button/tertiary/brand/{state}/label",
+            "values": [
+              "#005CE5",
+              "#2340A9",
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Destructive · label",
+            "token": "button/tertiary/destructive/{state}/label",
+            "values": [
+              "#D81E1E",
+              "#B01818",
+              "#F5A3A3"
+            ]
+          },
+          {
+            "role": "White · label",
+            "token": "button/tertiary/white/{state}/label",
+            "values": [
+              "#005CE5",
+              "#2340A9",
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Subtle · label",
+            "token": "button/tertiary/subtle/{state}/label",
+            "values": [
+              "#005CE5",
+              "#2340A9",
+              "#9BC5FD"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Icon slot placeholder",
+        "description": "The unfilled Leading / Trailing Container slot as it ships in the set — replaced by the swapped instance.",
+        "columns": [
+          "All states"
+        ],
+        "rows": [
+          {
+            "role": "Container fill",
+            "token": "— (raw value)",
+            "values": [
+              "#020E22 @ 24%"
             ]
           }
         ]
@@ -777,42 +699,27 @@ export const button: ComponentData = {
         {
           "figma": "<code>Style=Filled</code>",
           "swift": "<code>.ebAppearance(.filled)</code>",
-          "compose": "<code>EBButton {}</code>"
+          "compose": "<code>EBButton { }</code>"
         },
         {
           "figma": "<code>Style=Outline</code>",
           "swift": "<code>.ebAppearance(.outlined)</code>",
-          "compose": "<code>EBOutlinedButton {}</code>"
+          "compose": "<code>EBOutlinedButton { }</code>"
         },
         {
           "figma": "<code>Style=Text</code>",
           "swift": "<code>.ebAppearance(.textLink)</code>",
-          "compose": "<code>EBTextButton {}</code>"
+          "compose": "<code>EBTextButton { }</code>"
         },
         {
-          "figma": "<code>Appearance=Default</code>",
-          "swift": "(default — omit modifier)",
-          "compose": "(default — omit colors param)"
+          "figma": "<code>State=Default</code>",
+          "swift": "(default — omit)",
+          "compose": "(default — omit)"
         },
         {
-          "figma": "<code>Appearance=Destructive</code>",
-          "swift": "<code>.ebColorScheme(.destructive)</code>",
-          "compose": "<code>colors = EBButtonDefaults.destructiveColors()</code>"
-        },
-        {
-          "figma": "<code>Appearance=White</code>",
-          "swift": "<code>.ebColorScheme(.white)</code>",
-          "compose": "<code>colors = EBButtonDefaults.whiteColors()</code>"
-        },
-        {
-          "figma": "<code>Appearance=Subtle</code>",
-          "swift": "<code>.ebColorScheme(.subtle)</code>",
-          "compose": "<code>colors = EBButtonDefaults.subtleColors()</code>"
-        },
-        {
-          "figma": "<code>Size=Large…XSmall</code>",
-          "swift": "<code>controlSize: .large / .regular / .small / .compact / .mini</code>",
-          "compose": "<code>size = EBButtonSize.Large / Medium / Small / Compact / XSmall</code>"
+          "figma": "<code>State=Pressed</code>",
+          "swift": "Drawn by the press gesture",
+          "compose": "Drawn by the ripple / pressed state"
         },
         {
           "figma": "<code>State=Disabled</code>",
@@ -820,9 +727,9 @@ export const button: ComponentData = {
           "compose": "<code>enabled = false</code>"
         },
         {
-          "figma": "<code>(Loading — runtime)</code>",
-          "swift": "<code>.ebLoading(true)</code>",
-          "compose": "<code>isLoading = true</code>"
+          "figma": "<code>Size=Large … Compact</code>",
+          "swift": "<code>.controlSize(.large / .regular / .small / .mini / .compact)</code>",
+          "compose": "<code>size = EBButtonSize.Large / Medium / Small / XSmall / Compact</code>"
         },
         {
           "figma": "<code>Icon Placement=None</code>",
@@ -831,18 +738,58 @@ export const button: ComponentData = {
         },
         {
           "figma": "<code>Icon Placement=Leading</code>",
-          "swift": "<code>Label(\"…\", systemImage: \"…\")</code>",
+          "swift": "<code>leadingIcon: Image(…)</code>",
           "compose": "<code>leadingIcon = { Icon(…) }</code>"
         },
         {
           "figma": "<code>Icon Placement=Trailing</code>",
-          "swift": "<code>Label + trailing Image</code>",
+          "swift": "<code>trailingIcon: Image(…)</code>",
           "compose": "<code>trailingIcon = { Icon(…) }</code>"
         },
         {
           "figma": "<code>Icon Placement=Icon Only</code>",
-          "swift": "<code>EBButton(icon: Image(…), accessibilityLabel: \"…\")</code>",
-          "compose": "<code>EBButton(contentDescription = \"…\") { Icon(…) }</code>"
+          "swift": "<code>EBButton(icon:, accessibilityLabel:)</code>",
+          "compose": "<code>EBButton(contentDescription = …) { Icon(…) }</code>"
+        },
+        {
+          "figma": "<code>Label</code> (text)",
+          "swift": "First argument — <code>EBButton(\"Save\")</code>",
+          "compose": "<code>Text(\"Save\")</code> in the content slot"
+        },
+        {
+          "figma": "<code>Leading Container</code> (slot)",
+          "swift": "<code>leadingIcon</code> parameter",
+          "compose": "<code>leadingIcon</code> composable slot"
+        },
+        {
+          "figma": "<code>Trailing Container</code> (slot)",
+          "swift": "<code>trailingIcon</code> parameter",
+          "compose": "<code>trailingIcon</code> composable slot"
+        },
+        {
+          "figma": "Mode <code>Appearance=Default</code>",
+          "swift": "(default — omit modifier)",
+          "compose": "(default — omit colors)"
+        },
+        {
+          "figma": "Mode <code>Appearance=Destructive</code>",
+          "swift": "<code>.ebColorScheme(.destructive)</code>",
+          "compose": "<code>colors = EBButtonDefaults.destructiveColors()</code>"
+        },
+        {
+          "figma": "Mode <code>Appearance=White</code>",
+          "swift": "<code>.ebColorScheme(.white)</code>",
+          "compose": "<code>colors = EBButtonDefaults.whiteColors()</code>"
+        },
+        {
+          "figma": "Mode <code>Appearance=Subtle</code>",
+          "swift": "<code>.ebColorScheme(.subtle)</code>",
+          "compose": "<code>colors = EBButtonDefaults.subtleColors()</code>"
+        },
+        {
+          "figma": "(Loading — runtime, no Figma state)",
+          "swift": "<code>.ebLoading(true)</code>",
+          "compose": "<code>isLoading = true</code>"
         }
       ],
       "filePaths": {
@@ -916,57 +863,57 @@ export const button: ComponentData = {
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All layers use semantic names. <code>container</code>, <code>#label</code>, <code>leadingIcon</code>, <code>trailingIcon</code> consistent across all 60 variants."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Semantic names throughout — <code>#label</code>, <code>Leading Container</code>, <code>Trailing Container</code> — and the wrapper frame is gone, so the variant itself carries the fill, radius and auto-layout. One gap: the nine <code>Icon Placement=Icon Only</code> variants at <code>Size=Large</code> hold a slot named <code>Trailing Container</code>, where the other four sizes name the same slot <code>Leading Container</code>."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "v3 clean orthogonal dimensions: <code>Style</code> (Filled/Outline/Text), <code>Size</code> (Large/Medium/Small/Compact/XSmall), <code>State</code> (Default/Pressed/Disabled). Appearance via 4 variable modes. <code>leadingIcon</code>/<code>trailingIcon</code> are SLOT nodes with Boolean component properties."
+        "notes": "Four orthogonal axes in clean <code>Property=Value</code> form: <code>Style</code> (Filled/Outline/Text), <code>State</code> (Default/Pressed/Disabled), <code>Size</code> (Large/Medium/Small/XSmall/Compact), <code>Icon Placement</code> (None/Leading/Trailing/Icon Only). All 180 combinations are built — no holes. <code>Label</code> is a text property; the two Containers are instance-swap slots."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All color values connected to semantic tokens. Layout/sizing driven by <code>button/size</code> variable collection (height, padding-h, padding-v, font-size)."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Colour is mode-driven through the <code>Button</code> collection and every label resolves to a DS text style (<code>Primary/Label/Large</code> → <code>Base</code> → <code>Small</code> → <code>Fine</code>). Two raw-value inconsistencies remain: the Outline stroke is <code>3</code> at Large and <code>2</code> at every other size, and the corner radius is <code>99</code> at Large/Medium but <code>99999</code> at Small/Compact/XSmall."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to <code>Button</code>, <code>OutlinedButton</code>, <code>TextButton</code>. Destructive maps to <code>role: .destructive</code> / <code>contentColor = errorColor</code>."
+        "notes": "Maps to <code>EBButton</code> / <code>EBOutlinedButton</code> / <code>EBTextButton</code>. Icon Only is a square the height of the size — a direct icon-button mapping. Nothing web-only in the set."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Default, Pressed, Disabled, Loading covered across all 60 variants. Focus ring is N/A — mobile OS handles natively. Loading uses dot indicators with disabled appearance colors."
+        "notes": "Default, Pressed and Disabled across all 180 variants. Focus is N/A on mobile — iOS and Android draw it. Loading is a runtime modifier, not a Figma state."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Icon slots are Figma SLOT nodes accepting vector icon instances. Boolean properties control visibility."
+        "notes": "Both containers are Figma SLOT nodes taking vector instances — 80 items offered on Leading, 54 on Trailing. Unfilled, a slot ships as a <code>#020E22</code> circle at 24%, 24 at Large/Medium and 16 at Small/Compact/XSmall."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet. Property structure is clean and ready for mapping."
+        "notes": "No CLI mappings registered. The property shape is ready: four enums plus one text property map 1:1 to the native API, and Appearance resolves from the environment rather than a parameter."
       }
     ],
     "codeConnect": [],
     "variants": {
       "total": 180,
-      "description": "3 <code>Style</code> × 5 <code>Size</code> × 3 <code>State</code> × 4 <code>Icon Placement</code> = <strong>180 variants</strong>. <code>Appearance</code> is a variable mode (Default/Destructive/White/Subtle) that further multiplies visual states × 4 = <strong>720 resolved visual states</strong>.",
+      "description": "3 <code>Style</code> × 3 <code>State</code> × 5 <code>Size</code> × 4 <code>Icon Placement</code> = <strong>180 variants</strong>, all built. <code>Appearance</code> is a Variable Mode (Default / Destructive / White / Subtle), so the set resolves to <strong>720 visual states</strong>. <details><summary>View full Size × geometry breakdown (5 rows)</summary><table class=\"data-table\"><thead><tr><th>Size</th><th>Height</th><th>Padding H / V</th><th>Icon</th><th>Outline stroke</th><th>Radius</th><th>Text style</th></tr></thead><tbody><tr><td><strong>Large</strong></td><td><code>50</code></td><td><code>20 / 16</code></td><td><code>24</code></td><td><code>3</code></td><td><code>99</code></td><td><code>Primary/Label/Large</code></td></tr><tr><td><strong>Medium</strong></td><td><code>48</code></td><td><code>16 / 16</code></td><td><code>24</code></td><td><code>2</code></td><td><code>99</code></td><td><code>Primary/Label/Base</code></td></tr><tr><td><strong>Small</strong></td><td><code>36</code></td><td><code>12 / 10</code></td><td><code>16</code></td><td><code>2</code></td><td><code>99999</code></td><td><code>Primary/Label/Base</code></td></tr><tr><td><strong>XSmall</strong></td><td><code>24</code></td><td><code>10 / 6</code></td><td><code>16</code></td><td><code>2</code></td><td><code>99999</code></td><td><code>Primary/Label/Fine</code></td></tr><tr><td><strong>Compact</strong></td><td><code>28</code></td><td><code>8 / 7</code></td><td><code>16</code></td><td><code>2</code></td><td><code>99999</code></td><td><code>Primary/Label/Small</code></td></tr></tbody></table><p class=\"table-footnote\">Icon gap is 8 at every size. Icon Only is a square the height of the size. Read off nodes in set 17104:184842.</p></details>",
       "columns": [
         "Style",
         "Sizes",
@@ -978,7 +925,7 @@ export const button: ComponentData = {
         {
           "cells": [
             "<strong>Filled</strong>",
-            "Large, Medium, Small, Compact, XSmall",
+            "Large, Medium, Small, XSmall, Compact",
             "Default, Pressed, Disabled",
             "None, Leading, Trailing, Icon Only",
             "60"
@@ -987,7 +934,7 @@ export const button: ComponentData = {
         {
           "cells": [
             "<strong>Outline</strong>",
-            "Large, Medium, Small, Compact, XSmall",
+            "Large, Medium, Small, XSmall, Compact",
             "Default, Pressed, Disabled",
             "None, Leading, Trailing, Icon Only",
             "60"
@@ -996,7 +943,7 @@ export const button: ComponentData = {
         {
           "cells": [
             "<strong>Text</strong>",
-            "Large, Medium, Small, Compact, XSmall",
+            "Large, Medium, Small, XSmall, Compact",
             "Default, Pressed, Disabled",
             "None, Leading, Trailing, Icon Only",
             "60"
@@ -1006,6 +953,92 @@ export const button: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "4.2.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Set re-read; Style tab collapsed to one card · node 17104:184842",
+      "rows": [
+        {
+          "body": "<strong>Rename <code>Button_New</code> \u2192 <code>Button</code> decided.</strong> The DS owner settled the name. This page now shows <code>Button</code>. The Figma set is still named <code>Button_New</code>, and renaming it is a Figma edit this site does not make, so the consumer pages keep reading the instance as <code>Button_New</code> until the file changes. Carousel Item's held question is closed by the same decision. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1 Decided"
+          }
+        },
+        {
+          "body": "<strong>Style tab collapsed to a single card.</strong> Three per-style cards replaced by one card whose panel mirrors the Figma property panel in its order — Style, State, Size, Icon Placement, Label — with Appearance kept as a Mode section. The two Containers are instance-swap slots and get no control. Every Colors, Layout and Typography reading now tracks the selection, and the card reports the resolved variant node for all 180 combinations.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview rebuilt from the set.</strong> The HTML button stand-in was replaced by an SVG drawn from the measured geometry, so the preview hugs like the component: Icon Only is a square the height of the size, and the label drives the width.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Padding corrected at four of five sizes.</strong> Read off the Filled/Default row — Large <code>20 / 16</code>, Medium <code>16 / 16</code>, Small <code>12 / 10</code>, Compact <code>8 / 7</code>, XSmall <code>10 / 6</code>. The page previously carried Medium <code>16 / 12</code>, Small <code>12 / 8</code>, Compact <code>12 / 5</code> and XSmall <code>10 / 4</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Corrected"
+          }
+        },
+        {
+          "body": "<strong>Icon geometry documented.</strong> Slot is 24 at Large and Medium, 16 at Small, Compact and XSmall; the gap to the label is 8 at every size. An unfilled slot ships as a <code>#020E22</code> circle at 24%.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Documented"
+          }
+        },
+        {
+          "body": "<strong>Text styles re-resolved.</strong> All five label styles matched by id and by value — <code>Primary/Label/Large</code> (Large), <code>Primary/Label/Base</code> (Medium and Small), <code>Primary/Label/Small</code> (Compact), <code>Primary/Label/Fine</code> (XSmall). Per-row font, size and tracking dropped from the card; the style name carries them.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Verified"
+          }
+        },
+        {
+          "body": "<strong>Inner <code>container</code> frame is gone.</strong> <code>#label</code> and the Container slots are direct children of the variant, so the tree is two deep, not three. The v4.1 note saying the inner frame was retained no longer describes the set.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Improved"
+          }
+        },
+        {
+          "body": "<strong>Large <code>Icon Only</code> names its slot <code>Trailing Container</code></strong> — the other four sizes name the same slot <code>Leading Container</code>. Nine variants affected (3 styles × 3 states at Large). <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1 Open"
+          }
+        },
+        {
+          "body": "<strong>Outline stroke is 3 at Large, 2 at every other size</strong>, and the corner radius is <code>99</code> at Large/Medium against <code>99999</code> at Small/Compact/XSmall. Both are raw values, unbound. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3 Open"
+          }
+        },
+        {
+          "body": "<strong>Size enum is ordered Large, Medium, Small, XSmall, Compact</strong> while Compact (28) is taller than XSmall (24). Cosmetic in the picker, confusing at handoff. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2 Open"
+          }
+        },
+        {
+          "body": "<strong>Appearance modes not re-read.</strong> Default mode was re-read from the variant nodes and agrees with what the page carried. Destructive, White and Subtle keep the v3 / v4.1 capture — switching a Variable Mode is a Figma write, which this pass does not do.",
+          "delta": {
+            "kind": "open",
+            "label": "C3 Unverified"
+          }
+        }
+      ]
+    },
     {
       "version": "4.1.0",
       "date": "April 2026",

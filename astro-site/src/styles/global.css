@@ -361,6 +361,10 @@ body {
 .bdg-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
 .ctr-text { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
 
+/* ── Button preview — #label is Proxima Soft Bold; tracking is set per
+   size on the SVG text element (0.25, or 0.5 at XSmall). */
+.btn-preview-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
 /* ── Checkbox with Label preview ─────────────────────────────────── */
 .ci-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
 .ci-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }

@@ -267,8 +267,8 @@ export const carouselItem: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Settle the <code>Button_New</code> name.",
-        "body": "The button instance inside every version is named <code>Button_New</code>, which reads like a migration artifact. Held for the final reviewer to decide — it belongs to the Button component, not this one.",
+        "headline": "<code>Button_New</code> renames to <code>Button</code> at the source.",
+        "body": "Settled by the DS owner: the master becomes <code>Button</code> and the new name propagates to the instance in every version here. Nothing to change on this component — the rename is pending in Figma on <a href=\"/components/button\">Button</a>.",
         "tag": "Rename"
       },
       {
