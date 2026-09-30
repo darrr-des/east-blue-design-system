@@ -2,24 +2,37 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/avatar.js`.
+// Panel mirrors the property panel of set 17143:4488 (Avatar_New): two
+// variant axes. The Initials input is the component's own text layer.
 const avatarDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Size',
+        label: 'type',
+        prop: 'type',
+        defaultValue: 'dark-initials',
+        options: [
+          { value: 'dark-initials',  label: 'dark-initials' },
+          { value: 'image',          label: 'image' },
+          { value: 'initials-light', label: 'initials-light' },
+        ],
+      },
+      {
+        label: 'size',
         prop: 'size',
         defaultValue: '64',
         options: [
-          { value: '20', label: '20px' },
-          { value: '24', label: '24px' },
-          { value: '32', label: '32px' },
-          { value: '40', label: '40px' },
-          { value: '48', label: '48px' },
-          { value: '64', label: '64px' },
           { value: '90', label: '90px' },
+          { value: '64', label: '64px' },
+          { value: '48', label: '48px' },
+          { value: '40', label: '40px' },
+          { value: '32', label: '32px' },
+          { value: '24', label: '24px' },
+          { value: '20', label: '20px' },
         ],
       },
+      { label: 'Initials', prop: 'initials', control: 'input', defaultValue: 'DM', options: [] },
     ],
   },
 ];
@@ -139,229 +152,174 @@ export const avatar: ComponentData = {
     "heading": "Types",
     "specCards": [
       {
-        "cardKey": "ava-spec-dark",
-        "demoKey": "dark",
+        "cardKey": "ava-spec-main",
+        "demoKey": "main",
+        "title": "Avatar",
+        "node": "17143:4488",
+        "description": "A circular avatar at seven sizes — the user’s initials on a dark or light circle, or a photo. Each size carries its own DS text style.",
+        "previewHtml": "<div id=\"avatar-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": avatarDemoControls,
-        "title": "Dark Initials",
-        "node": "17143:4531",
-        "description": "Blue circle with white initials text. Branded avatar used as default when no photo is available.",
-        "previewHtml": "<svg width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" id=\"ava-spec-dark-svg\"><circle cx=\"32\" cy=\"32\" r=\"30\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"2\"></circle><text x=\"32\" y=\"42.85\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"31\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">DM</text></svg>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type", "value": "Dark Initials" },
-              { "key": "Size", "value": "64px", "prop": "size" }
+              {
+                "key": "type",
+                "value": "dark-initials",
+                "prop": "type"
+              },
+              {
+                "key": "size",
+                "value": "64px",
+                "prop": "size"
+              },
+              {
+                "key": "Initials",
+                "value": "DM",
+                "prop": "initials"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "17143:4531 · 64 × 64",
+                "mono": true,
+                "prop": "variantNode"
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Background", "value": "#005CE5", "token": "main/avatar/brand/bg" },
-              { "key": "Initials", "value": "#FFFFFF", "token": "main/avatar/brand/initials" },
-              { "key": "Border", "value": "#E5EBF4", "token": "main/avatar/brand/border" }
+              {
+                "key": "Circle",
+                "value": "#005CE5",
+                "token": "—",
+                "swatch": "#005CE5",
+                "variants": {
+                  "type:initials-light": {
+                    "value": "#F6F9FD",
+                    "swatch": "#F6F9FD"
+                  },
+                  "type:image": {
+                    "value": "#C2CFE5 — photo placeholder",
+                    "swatch": "#C2CFE5"
+                  }
+                }
+              },
+              {
+                "key": "Initials",
+                "value": "#FFFFFF",
+                "token": "—",
+                "swatch": "#FFFFFF",
+                "variants": {
+                  "type:initials-light": {
+                    "value": "#2340A9",
+                    "swatch": "#2340A9"
+                  },
+                  "type:image": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Ring",
+                "value": "#E5EBF4",
+                "token": "—",
+                "swatch": "#E5EBF4"
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Size", "value": "64 × 64px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-round", "mono": true },
-              { "key": "Border width", "value": "2px", "mono": true }
+              {
+                "key": "Size",
+                "value": "64 × 64",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Shape",
+                "value": "Circle · radius full",
+                "mono": true
+              },
+              {
+                "key": "Ring",
+                "value": "3 centred",
+                "mono": true,
+                "prop": "stroke-readout"
+              },
+              {
+                "key": "Initials font",
+                "value": "31 / 35 · tracking 0",
+                "mono": true,
+                "prop": "font-readout",
+                "variants": {
+                  "type:image": {
+                    "hide": true
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text style", "value": "Primary/Headlines/Region", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "31px", "mono": true },
-              { "key": "Line-height", "value": "35px", "mono": true }
+              {
+                "key": "#initials",
+                "value": "Primary/Headlines/Region",
+                "mono": true,
+                "prop": "style-readout",
+                "variants": {
+                  "type:image": {
+                    "hide": true
+                  }
+                }
+              }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span>initials<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"JD\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.darkInitials</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.size40</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span>\n    initials <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"JD\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAvatarStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.DarkInitials</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAvatarSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Size40</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "ava-spec-light",
-        "demoKey": "light",
-        "demoControls": avatarDemoControls,
-        "title": "Light Initials",
-        "node": "17143:4535",
-        "description": "Light circle with blue initials text. Neutral variant for non-branded contexts.",
-        "previewHtml": "<svg width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" id=\"ava-spec-light-svg\"><circle cx=\"32\" cy=\"32\" r=\"30\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"2\"></circle><text x=\"32\" y=\"42.85\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"31\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">LM</text></svg>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Type", "value": "Light Initials" },
-              { "key": "Size", "value": "64px", "prop": "size" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#F6F9FD", "token": "main/avatar/default/bg" },
-              { "key": "Initials", "value": "#2340A9", "token": "main/avatar/default/initials" },
-              { "key": "Border", "value": "#E5EBF4", "token": "main/avatar/default/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Size", "value": "64 × 64px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-round", "mono": true },
-              { "key": "Border width", "value": "2px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text style", "value": "Primary/Headlines/Region", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "31px", "mono": true },
-              { "key": "Line-height", "value": "35px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span>initials<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"JD\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.lightInitials</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.size40</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span>\n    initials <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"JD\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAvatarStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.LightInitials</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAvatarSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Size40</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "ava-spec-image",
-        "demoKey": "image",
-        "demoControls": avatarDemoControls,
-        "title": "Image",
-        "node": "17143:4546",
-        "description": "User profile photo in a circle clip. Falls back to placeholder when image fails to load.",
-        "previewHtml": "<svg width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" id=\"ava-spec-image-svg\"><circle cx=\"32\" cy=\"32\" r=\"30\" fill=\"#C2CFE5\" stroke=\"#E5EBF4\" stroke-width=\"2\"></circle><circle cx=\"32\" cy=\"25.6\" r=\"8\" fill=\"#9BABC4\" opacity=\".6\"></circle><ellipse cx=\"32\" cy=\"48\" rx=\"14.08\" ry=\"10.24\" fill=\"#9BABC4\" opacity=\".4\"></ellipse></svg>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Type", "value": "Image" },
-              { "key": "Size", "value": "64px", "prop": "size" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Placeholder bg", "value": "#C2CFE5", "token": "main/avatar/placeholder/bg" },
-              { "key": "Border", "value": "#E5EBF4", "token": "main/avatar/placeholder/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Size", "value": "64 × 64px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-round", "mono": true },
-              { "key": "Border width", "value": "2px", "mono": true },
-              { "key": "Image fit", "value": "cover", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "—", "value": "image-only avatar" }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span>image<span class=\"syn-punc\">: </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"user-photo\"</span><span class=\"syn-punc\">))</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.size40</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span>\n    image <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> url<span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAvatarSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Size40</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBAvatar(\n    initials: \"DM\",\n    type: .darkInitials,\n    size: .px64\n)",
+        "compose": "EBAvatar(\n    initials = \"DM\",\n    type = EBAvatarType.DarkInitials,\n    size = EBAvatarSize.Px64\n)"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by Type -- Dark Initials",
-        "description": "Display-only component. No interaction states. All colors bound to <code>main/avatar/brand/</code> tokens.",
+        "title": "Colors by Type",
+        "description": "Read off <code>get_node_info</code> across the 21 variants of set <code>17143:4488</code>; nothing changes with size. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
-          "Value"
+          "dark-initials",
+          "initials-light",
+          "image"
         ],
         "rows": [
           {
-            "role": "Circle bg",
-            "token": "main/avatar/brand/bg",
+            "role": "Circle",
+            "token": "—",
             "values": [
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "Circle border",
-            "token": "main/avatar/brand/border",
-            "values": [
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "Initials text",
-            "token": "main/avatar/brand/initials",
-            "values": [
-              "#FFFFFF"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Colors by Type -- Light Initials",
-        "description": "Display-only component. No interaction states. All colors bound to <code>main/avatar/default/</code> tokens.",
-        "columns": [
-          "Value"
-        ],
-        "rows": [
-          {
-            "role": "Circle bg",
-            "token": "main/avatar/default/bg",
-            "values": [
-              "#F6F9FD"
-            ]
-          },
-          {
-            "role": "Circle border",
-            "token": "main/avatar/default/border",
-            "values": [
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "Initials text",
-            "token": "main/avatar/default/initials",
-            "values": [
-              "#2340A9"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Colors by Type -- Image",
-        "description": "Display-only component. Placeholder colors shown when image has not loaded. All colors bound to <code>main/avatar/placeholder/</code> tokens.",
-        "columns": [
-          "Value"
-        ],
-        "rows": [
-          {
-            "role": "Placeholder bg",
-            "token": "main/avatar/placeholder/bg",
-            "values": [
+              "#005CE5",
+              "#F6F9FD",
               "#C2CFE5"
             ]
           },
           {
-            "role": "Placeholder border",
-            "token": "main/avatar/placeholder/border",
+            "role": "Initials",
+            "token": "—",
             "values": [
+              "#FFFFFF",
+              "#2340A9",
+              "–"
+            ]
+          },
+          {
+            "role": "Ring",
+            "token": "—",
+            "values": [
+              "#E5EBF4",
+              "#E5EBF4",
               "#E5EBF4"
             ]
           }
@@ -374,42 +332,42 @@ export const avatar: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "iOS -- Swift Package Manager",
-          "code": "<span class=\"cmt\">// In Xcode: File -> Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>\n\n<span class=\"cmt\">// Or in Package.swift:</span>\n.<span class=\"fn\">package</span>(\n    <span class=\"prp\">url</span>: <span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>,\n    <span class=\"prp\">from</span>: <span class=\"str\">\"1.0.0\"</span>\n)"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
         },
         {
-          "label": "Android -- Gradle (Kotlin DSL)",
-          "code": "<span class=\"cmt\">// build.gradle.kts (app)</span>\n<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:avatar:1.0.0\"</span>)\n}"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:avatar:2.0.0\"</span>)\n}"
         },
         {
           "label": "Import",
           "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.avatar.*  <span class=\"cmt\">// Compose</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths. API shape is final -- native implementation is pending."
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
-      "description": "Every row maps a Figma component property to its native equivalent.",
+      "description": "Set <code>17143:4488</code> has two axes and no booleans. The size enum carries the initials’ text style with it — each of the seven sizes uses a different one.",
       "rows": [
         {
-          "figma": "<code>type=dark-initials</code>",
-          "swift": "<code>.darkInitials</code>",
-          "compose": "<code>AvatarType.DarkInitials</code>"
+          "figma": "type — dark-initials, image, initials-light",
+          "swift": "<code>type: .darkInitials / .image / .initialsLight</code>",
+          "compose": "<code>type = EBAvatarType.DarkInitials / Image / InitialsLight</code>"
         },
         {
-          "figma": "<code>type=initials-light</code>",
-          "swift": "<code>.lightInitials</code>",
-          "compose": "<code>AvatarType.LightInitials</code>"
+          "figma": "size — 90, 64, 48, 40, 32, 24, 20",
+          "swift": "<code>size: .px90 … .px20</code>",
+          "compose": "<code>size = EBAvatarSize.Px90 … Px20</code>"
         },
         {
-          "figma": "<code>type=image</code>",
-          "swift": "<code>.image(url:)</code>",
-          "compose": "<code>AvatarType.Image(url)</code>"
+          "figma": "— <code>#initials</code>",
+          "swift": "<code>initials: String</code>",
+          "compose": "<code>initials: String</code>"
         },
         {
-          "figma": "<code>size=20px...90px</code>",
-          "swift": "<code>size: AvatarSize</code>",
-          "compose": "<code>size: AvatarSize</code>"
+          "figma": "— <code>replace here - image</code>",
+          "swift": "<code>image: Image</code>",
+          "compose": "<code>image: Painter</code>"
         }
       ],
       "filePaths": {
@@ -419,146 +377,488 @@ export const avatar: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Dark Initials",
-        "swift": "<span class=\"cmt\">// Dark initials</span>\n<span class=\"typ\">EBAvatar</span>(<span class=\"str\">\"DM\"</span>, <span class=\"prp\">type</span>: .<span class=\"prp\">darkInitials</span>, <span class=\"prp\">size</span>: .<span class=\"prp\">large</span>)",
-        "compose": "<span class=\"cmt\">// Dark initials</span>\n<span class=\"typ\">EBAvatar</span>(\n    <span class=\"prp\">initials</span> = <span class=\"str\">\"DM\"</span>,\n    <span class=\"prp\">type</span> = <span class=\"typ\">AvatarType</span>.<span class=\"prp\">DarkInitials</span>,\n    <span class=\"prp\">size</span> = <span class=\"typ\">AvatarSize</span>.<span class=\"prp\">Large</span>\n)"
+        "subheading": "dark-initials · 64px",
+        "swift": "<span class=\"cmt\">// type=dark-initials, size=64px — 17143:4531; #005CE5 circle, white initials at 31/35.</span>\nEBAvatar(\n    initials: \"DM\",\n    type: .darkInitials,\n    size: .px64\n)",
+        "compose": "<span class=\"cmt\">// type=dark-initials, size=64px — 17143:4531; #005CE5 circle, white initials at 31/35.</span>\nEBAvatar(\n    initials = \"DM\",\n    type = EBAvatarType.DarkInitials,\n    size = EBAvatarSize.Px64\n)"
       },
       {
-        "subheading": "Light Initials",
-        "swift": "<span class=\"cmt\">// Light initials</span>\n<span class=\"typ\">EBAvatar</span>(<span class=\"str\">\"LM\"</span>, <span class=\"prp\">type</span>: .<span class=\"prp\">lightInitials</span>, <span class=\"prp\">size</span>: .<span class=\"prp\">medium</span>)",
-        "compose": "<span class=\"cmt\">// Light initials</span>\n<span class=\"typ\">EBAvatar</span>(\n    <span class=\"prp\">initials</span> = <span class=\"str\">\"LM\"</span>,\n    <span class=\"prp\">type</span> = <span class=\"typ\">AvatarType</span>.<span class=\"prp\">LightInitials</span>,\n    <span class=\"prp\">size</span> = <span class=\"typ\">AvatarSize</span>.<span class=\"prp\">Medium</span>\n)"
+        "subheading": "initials-light · 40px",
+        "swift": "<span class=\"cmt\">// type=initials-light, size=40px — 17143:4517; #F6F9FD circle, #2340A9 initials at 18/23.</span>\nEBAvatar(\n    initials: \"LM\",\n    type: .initialsLight,\n    size: .px40\n)",
+        "compose": "<span class=\"cmt\">// type=initials-light, size=40px — 17143:4517; #F6F9FD circle, #2340A9 initials at 18/23.</span>\nEBAvatar(\n    initials = \"LM\",\n    type = EBAvatarType.InitialsLight,\n    size = EBAvatarSize.Px40\n)"
       },
       {
-        "subheading": "Image",
-        "swift": "<span class=\"cmt\">// Image</span>\n<span class=\"typ\">EBAvatar</span>(<span class=\"prp\">imageURL</span>: profileURL, <span class=\"prp\">size</span>: .<span class=\"prp\">large</span>)",
-        "compose": "<span class=\"cmt\">// Image</span>\n<span class=\"typ\">EBAvatar</span>(\n    <span class=\"prp\">imageUrl</span> = profileUrl,\n    <span class=\"prp\">type</span> = <span class=\"typ\">AvatarType</span>.<span class=\"prp\">Image</span>,\n    <span class=\"prp\">size</span> = <span class=\"typ\">AvatarSize</span>.<span class=\"prp\">Large</span>\n)"
+        "subheading": "image · 90px",
+        "swift": "<span class=\"cmt\">// type=image, size=90px — 17143:4548; the ellipse is the photo placeholder.</span>\nEBAvatar(\n    image: Image(\"profile\"),\n    size: .px90\n)",
+        "compose": "<span class=\"cmt\">// type=image, size=90px — 17143:4548; the ellipse is the photo placeholder.</span>\nEBAvatar(\n    image = painterResource(R.drawable.profile),\n    size = EBAvatarSize.Px90\n)"
+      },
+      {
+        "subheading": "20px in a dense list",
+        "swift": "<span class=\"cmt\">// type=dark-initials, size=20px — 17143:4489; initials drop to 10/10.</span>\nEBAvatar(initials: \"DM\", type: .darkInitials, size: .px20)",
+        "compose": "<span class=\"cmt\">// type=dark-initials, size=20px — 17143:4489; initials drop to 10/10.</span>\nEBAvatar(initials = \"DM\", type = EBAvatarType.DarkInitials, size = EBAvatarSize.Px20)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Alt text",
-        "ios": "<code>accessibilityLabel(\"User avatar\")</code>",
-        "android": "<code>contentDescription = \"User avatar\"</code>"
+        "requirement": "Decorative by default",
+        "ios": "An avatar beside a name is decorative — <code>.accessibilityHidden(true)</code> so the name is not read twice.",
+        "android": "<code>contentDescription = null</code>."
       },
       {
-        "requirement": "Decorative mode",
-        "ios": "<code>isAccessibilityElement = false</code> (in lists)",
-        "android": "<code>importantForAccessibility = no</code>"
+        "requirement": "Standalone",
+        "ios": "When the avatar is the only identifier, label it with the person’s full name, not the initials.",
+        "android": "Same — <code>contentDescription = fullName</code>."
       },
       {
-        "requirement": "Image loading",
-        "ios": "<code>AsyncImage</code> with placeholder",
-        "android": "<code>SubcomposeAsyncImage</code> with placeholder"
+        "requirement": "Initials",
+        "ios": "Two letters at most; the circle clips, it does not shrink the text.",
+        "android": "Same."
+      },
+      {
+        "requirement": "Tap target",
+        "ios": "A tappable avatar below 44pt — 40, 32, 24 and 20 — needs its target expanded with <code>.contentShape</code>.",
+        "android": "<code>Modifier.minimumInteractiveComponentSize()</code> for 48dp."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "White on the #005CE5 circle is 5.10:1. #2340A9 on #F6F9FD is 9.32:1. Both pass at every size.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use dark-initials as default when no photo is available.",
-        "dontText": "Use image type with placeholder -- use initials instead."
+        "doText": "Use dark-initials as the default and initials-light on a coloured or busy surface.",
+        "dontText": "Don’t mix both types in one list."
       },
       {
-        "doText": "Match avatar size to context (20px in dense lists, 90px in profiles).",
-        "dontText": "Mix initials types in the same context."
+        "doText": "Match the size to the row — 64 and 90 for profile headers, 32 and below in lists.",
+        "dontText": "Don’t scale an avatar between the built sizes; each one carries its own text style."
       },
       {
-        "doText": "Always pass 2-letter initials (first + last).",
-        "dontText": "Show single-letter or empty initials."
+        "doText": "Fall back to initials when the photo has not been set.",
+        "dontText": "Don’t ship the grey ellipse as a finished state — it is a placeholder."
       },
       {
-        "doText": "Provide alt text for image avatars.",
-        "dontText": "Skip accessibility labels."
+        "doText": "Keep initials to the person’s first and last initial.",
+        "dontText": "Don’t put three letters in a 20px circle."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Layers named <code>container</code>, <code>background</code>, <code>replace here - image</code>. Simple hierarchy. Minor: some sizes have a child also named <code>container</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>container</code>, <code>background</code> and <code>#initials</code> are clear, but the image variant’s layer is called <code>replace here - image</code> — an instruction, not a name."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Variant naming resolved (<code>initials-light</code>). Token name typo fixed (<code>main/avatar/brand/initials</code>). Size values use <code>px</code> suffix (minor, no impact on native mapping)."
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "Both axes are lowercase where the DS uses PascalCase, the values mix word order — <code>dark-initials</code> against <code>initials-light</code> — and <code>size</code> carries the <code>px</code> suffix inside the value."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "8 color tokens, full typography tokens, and <code>radius/radius-round</code> connected. Border-width is fixed per size (by design)."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All seven sizes resolve <code>matched</code>, each to its own style — Spotlight, Region, Section, Block, Multi-line Label/Small, Label/Fine and Label/Tiny. Colour bindings cannot be read with the plugin."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to custom Circle-clipped view on both platforms. No web-only patterns."
+        "notes": "One <code>EBAvatar</code> with a type enum, a size enum and either initials or an image."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
         "status": "na",
         "statusLabel": "Not Applicable",
-        "notes": "Display-only component. No interactive states needed."
+        "notes": "A display element; any pressed state belongs to whatever wraps it."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All initials variants now use vector ELLIPSE layers. Image type rasters are expected (user photos)."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The photo is a plain ellipse rather than a SLOT, so there is no swap list for it."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Usage descriptions attached. Variant naming now clean. Token typo remains. No CLI mappings."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Two axes and one text layer are ready to map; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 0,
-      "description": "3 <code>type</code> × 7 <code>size</code> = <strong>21 variants</strong>. No interaction state axis (display-only component).",
+      "total": 21,
+      "description": "<code>type</code> (3) × <code>size</code> (7) = 21 variants, all built. The initials scale with the circle and each size uses its own DS text style.",
       "columns": [
-        "Type",
-        "Sizes",
-        "Notes",
-        "Count"
+        "type",
+        "size",
+        "Node ID",
+        "Dimensions",
+        "Initials font",
+        "Text style"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>dark-initials</strong>",
-            "20, 24, 32, 40, 48, 64, 90 px",
-            "Brand background, white initials",
-            "7"
+            "dark-initials",
+            "90px",
+            "<code>17143:4539</code>",
+            "90 × 90",
+            "35 / 38",
+            "Primary/Headlines/Spotlight",
+            "3"
           ]
         },
         {
           "cells": [
-            "<strong>initials-light</strong>",
-            "20, 24, 32, 40, 48, 64, 90 px",
-            "Light background, dark initials",
-            "7"
+            "initials-light",
+            "90px",
+            "<code>17143:4542</code>",
+            "90 × 90",
+            "35 / 38",
+            "Primary/Headlines/Spotlight",
+            "3"
           ]
         },
         {
           "cells": [
-            "<strong>image</strong>",
-            "20, 24, 32, 40, 48, 64, 90 px",
-            "Photo fill (raster expected)",
-            "7"
+            "image",
+            "90px",
+            "<code>17143:4548</code>",
+            "90 × 90",
+            "–",
+            "–",
+            "3"
+          ]
+        },
+        {
+          "cells": [
+            "dark-initials",
+            "64px",
+            "<code>17143:4531</code>",
+            "64 × 64",
+            "31 / 35",
+            "Primary/Headlines/Region",
+            "3"
+          ]
+        },
+        {
+          "cells": [
+            "initials-light",
+            "64px",
+            "<code>17143:4535</code>",
+            "64 × 64",
+            "31 / 35",
+            "Primary/Headlines/Region",
+            "3"
+          ]
+        },
+        {
+          "cells": [
+            "image",
+            "64px",
+            "<code>17143:4546</code>",
+            "64 × 64",
+            "–",
+            "–",
+            "3"
+          ]
+        },
+        {
+          "cells": [
+            "dark-initials",
+            "48px",
+            "<code>17143:4523</code>",
+            "48 × 48",
+            "22 / 26",
+            "Primary/Headlines/Section",
+            "3"
+          ]
+        },
+        {
+          "cells": [
+            "initials-light",
+            "48px",
+            "<code>17143:4526</code>",
+            "48 × 48",
+            "22 / 26",
+            "Primary/Headlines/Section",
+            "3"
+          ]
+        },
+        {
+          "cells": [
+            "image",
+            "48px",
+            "<code>17143:4529</code>",
+            "48 × 48",
+            "–",
+            "–",
+            "3"
+          ]
+        },
+        {
+          "cells": [
+            "dark-initials",
+            "40px",
+            "<code>17143:4513</code>",
+            "40 × 40",
+            "18 / 23",
+            "Primary/Headlines/Block",
+            "2"
+          ]
+        },
+        {
+          "cells": [
+            "initials-light",
+            "40px",
+            "<code>17143:4517</code>",
+            "40 × 40",
+            "18 / 23",
+            "Primary/Headlines/Block",
+            "2"
+          ]
+        },
+        {
+          "cells": [
+            "image",
+            "40px",
+            "<code>17143:4521</code>",
+            "40 × 40",
+            "–",
+            "–",
+            "2"
+          ]
+        },
+        {
+          "cells": [
+            "dark-initials",
+            "32px",
+            "<code>17143:4505</code>",
+            "32 × 32",
+            "14 / 16",
+            "Primary/Multi-line Label/Small",
+            "2"
+          ]
+        },
+        {
+          "cells": [
+            "initials-light",
+            "32px",
+            "<code>17143:4508</code>",
+            "32 × 32",
+            "14 / 16",
+            "Primary/Multi-line Label/Small",
+            "2"
+          ]
+        },
+        {
+          "cells": [
+            "image",
+            "32px",
+            "<code>17143:4511</code>",
+            "32 × 32",
+            "–",
+            "–",
+            "2"
+          ]
+        },
+        {
+          "cells": [
+            "dark-initials",
+            "24px",
+            "<code>17143:4497</code>",
+            "24 × 24",
+            "12 / 12",
+            "Primary/Label/Fine",
+            "1.5"
+          ]
+        },
+        {
+          "cells": [
+            "initials-light",
+            "24px",
+            "<code>17143:4500</code>",
+            "24 × 24",
+            "12 / 12",
+            "Primary/Label/Fine",
+            "1.5"
+          ]
+        },
+        {
+          "cells": [
+            "image",
+            "24px",
+            "<code>17143:4503</code>",
+            "24 × 24",
+            "–",
+            "–",
+            "1.5"
+          ]
+        },
+        {
+          "cells": [
+            "dark-initials",
+            "20px",
+            "<code>17143:4489</code>",
+            "20 × 20",
+            "10 / 10",
+            "Primary/Label/Tiny",
+            "1.25"
+          ]
+        },
+        {
+          "cells": [
+            "initials-light",
+            "20px",
+            "<code>17143:4492</code>",
+            "20 × 20",
+            "10 / 10",
+            "Primary/Label/Tiny",
+            "1.25"
+          ]
+        },
+        {
+          "cells": [
+            "image",
+            "20px",
+            "<code>17143:4495</code>",
+            "20 × 20",
+            "–",
+            "–",
+            "1.25"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Ring widths read exactly · node 17143:4488",
+      "rows": [
+        {
+          "body": "<strong>The ring is thicker than the preview had it, and stepped rather than proportional</strong> — 3 at 90, 64 and 48, 2 at 40 and 32, 1.5 at 24, 1.25 at 20. Figma draws one circle with a fill and a centred #E5EBF4 stroke inset by half its width, so the ring's outer edge is the frame edge.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>The widths come from <code>get_svg</code>, not a measurement.</strong> <code>get_node_info</code> exposes the stroke's colour but neither its weight nor its alignment; the SVG export carries both, so the earlier “measured, not read” note is closed.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "The ring sits outside the fill · node 17143:4488",
+      "rows": [
+        {
+          "body": "<strong>The #E5EBF4 ring is drawn outside the coloured circle.</strong> The variant's box is the full diameter and the fill is inset by the stroke, so a 64 avatar is a 60 blue circle inside a 2 ring — the preview had it as a 1px centred stroke and it barely showed.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The ring's weight is measured, not read.</strong> The plugin exposes neither <code>strokeWeight</code> nor <code>strokeAlign</code>; the width comes from <code>export_node_as_image</code> — about 2 at 64 — and the preview scales it with the circle. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 17143:4488",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>type</code> and <code>size</code>, plus an Initials input for the component’s own text layer. The three cards on retired nodes are replaced.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> A circle of the chosen size with a #E5EBF4 stroke: dark-initials #005CE5 with white initials, initials-light #F6F9FD with #2340A9, image a #C2CFE5 placeholder ellipse.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The initials scale with the circle</strong> — 35/38, 31/35, 22/26, 18/23, 14/16, 12/12 and 10/10 from 90 down to 20 — and the card reads the font per size rather than deriving it.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>All seven sizes resolve to their own DS text style</strong>, matched: Headlines/Spotlight, Region, Section, Block, then Multi-line Label/Small, Label/Fine and Label/Tiny.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:avatar:2.0.0</code>, a four-row mapping, four snippets and a 21-row inventory carrying each size’s font and text style.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Property naming needs a pass.</strong> Both axes are lowercase, <code>dark-initials</code> and <code>initials-light</code> put the same two words in opposite order, and <code>size</code> bakes <code>px</code> into every value. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>The photo is a plain ellipse named <code>replace here - image</code></strong> — an instruction rather than a name, and not a SLOT, so there is no swap list. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>Four sizes are below the minimum tap target</strong> — 40, 32, 24 and 20 — so a tappable avatar needs its target expanded. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "",

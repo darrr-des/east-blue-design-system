@@ -2,6 +2,8 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/badge.js`.
+// Panel mirrors the property panel of set 18482:28972: three variant axes.
+// Level locks to Heavy on Primary and Brand, which ship that Level only.
 const badgeDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -9,27 +11,39 @@ const badgeDemoControls: DemoControlSection[] = [
       {
         label: 'State',
         prop: 'state',
-        defaultValue: 'Primary',
+        defaultValue: 'primary',
         options: [
-          { value: 'Primary', label: 'Primary' },
-          { value: 'Brand', label: 'Brand' },
-          { value: 'Info', label: 'Info' },
-          { value: 'Success', label: 'Success' },
-          { value: 'Warning', label: 'Warning' },
-          { value: 'Danger', label: 'Danger' },
-          { value: 'Disabled', label: 'Disabled' },
+          { value: 'primary',     label: 'Primary' },
+          { value: 'brand',       label: 'Brand' },
+          { value: 'information', label: 'Information' },
+          { value: 'positive',    label: 'Positive' },
+          { value: 'notice',      label: 'Notice' },
+          { value: 'negative',    label: 'Negative' },
+          { value: 'muted',       label: 'Muted' },
         ],
       },
       {
         label: 'Level',
         prop: 'level',
-        defaultValue: 'Heavy',
+        defaultValue: 'heavy',
         options: [
-          { value: 'Heavy', label: 'Heavy' },
-          { value: 'Medium', label: 'Medium' },
-          { value: 'Light', label: 'Light' },
+          { value: 'heavy',  label: 'Heavy' },
+          { value: 'light',  label: 'Light' },
+          { value: 'medium', label: 'Medium' },
         ],
       },
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'default',
+        options: [
+          { value: 'voucher',     label: 'Voucher' },
+          { value: 'transaction', label: 'Transaction' },
+          { value: 'default',     label: 'Default' },
+          { value: 'dashboard',   label: 'Dashboard' },
+        ],
+      },
+      { label: 'Label', prop: 'label', control: 'input', defaultValue: 'Label', options: [] },
     ],
   },
 ];
@@ -125,820 +139,286 @@ export const badge: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Types",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "bd-spec-default",
-        "demoKey": "default",
-        "demoControls": badgeDemoControls,
-        "title": "Default",
+        "cardKey": "bd-spec-main",
+        "demoKey": "main",
+        "title": "Badge",
         "node": "18482:28972",
-        "description": "Pill-shaped badge with full border-radius (99px). Standard status indicator for general use.",
+        "description": "A status pill. State and Level set the colour, Type sets the shape — a 48 × 18 pill, a voucher stub, or a 40 × 16 / 34 × 12 rounded tag.",
+        "previewHtml": "<div id=\"badge-spec-main\" class=\"spec-preview-body\"></div>",
+        "demoControls": badgeDemoControls,
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type", "value": "Default" },
-              { "key": "State", "value": "Primary", "prop": "state" },
-              { "key": "Level", "value": "Heavy", "prop": "level" }
+              {
+                "key": "State",
+                "value": "Primary",
+                "prop": "state"
+              },
+              {
+                "key": "Level",
+                "value": "Heavy",
+                "prop": "level",
+                "variants": {
+                  "state:primary": {
+                    "value": "Heavy — the only Level"
+                  },
+                  "state:brand": {
+                    "value": "Heavy — the only Level"
+                  }
+                }
+              },
+              {
+                "key": "Type",
+                "value": "Default",
+                "prop": "type"
+              },
+              {
+                "key": "Label",
+                "value": "Label",
+                "prop": "label"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "18482:28973 · 48 × 18",
+                "mono": true,
+                "prop": "variantNode"
+              }
             ]
           },
           {
-            label: 'Colors',
-            slug: 'colors',
-            rows: [
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
               {
-                key: 'Background',
-                value: '#005CE5',
-                token: 'main/badge/primary/heavy/background',
-                variants: {
-                  'state:Primary|level:Heavy':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Primary|level:Medium':  { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Primary|level:Light':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Brand|level:Heavy':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Brand|level:Medium':    { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Brand|level:Light':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Info|level:Heavy':      { value: '#2340A9', token: 'main/badge/information/heavy/background' },
-                  'state:Info|level:Medium':     { value: '#D2E5FF', token: 'main/badge/information/medium/background' },
-                  'state:Info|level:Light':      { value: '#E5F1FF', token: 'main/badge/information/light/background' },
-                  'state:Success|level:Heavy':   { value: '#12AF80', token: 'main/badge/positive/heavy/background' },
-                  'state:Success|level:Medium':  { value: '#CAF2E0', token: 'main/badge/positive/medium/background' },
-                  'state:Success|level:Light':   { value: '#E7F8F0', token: 'main/badge/positive/light/background' },
-                  'state:Warning|level:Heavy':   { value: '#CA970C', token: 'main/badge/notice/heavy/background' },
-                  'state:Warning|level:Medium':  { value: '#F7D96E', token: 'main/badge/notice/medium/background' },
-                  'state:Warning|level:Light':   { value: '#FCF0CA', token: 'main/badge/notice/light/background' },
-                  'state:Danger|level:Heavy':    { value: '#D61B2C', token: 'main/badge/negative/heavy/background' },
-                  'state:Danger|level:Medium':   { value: '#F4C7C9', token: 'main/badge/negative/medium/background' },
-                  'state:Danger|level:Light':    { value: '#F8E6E6', token: 'main/badge/negative/light/background' },
-                  'state:Disabled|level:Heavy':  { value: '#717883', token: 'main/badge/muted/heavy/background' },
-                  'state:Disabled|level:Medium': { value: '#9A9FA7', token: 'main/badge/muted/medium/background' },
-                  'state:Disabled|level:Light':  { value: '#C2C5CA', token: 'main/badge/muted/light/background' },
-                },
+                "key": "Fill",
+                "value": "#005CE5",
+                "token": "—",
+                "prop": "fill-readout"
               },
               {
-                key: 'Label',
-                value: '#FFFFFF',
-                token: 'main/badge/primary/heavy/label',
-                variants: {
-                  'state:Primary|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Primary|level:Medium':  { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Primary|level:Light':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Brand|level:Heavy':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Brand|level:Medium':    { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Brand|level:Light':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Info|level:Heavy':      { value: '#FFFFFF', token: 'main/badge/information/heavy/label' },
-                  'state:Info|level:Medium':     { value: '#005CE5', token: 'main/badge/information/medium/label' },
-                  'state:Info|level:Light':      { value: '#005CE5', token: 'main/badge/information/light/label' },
-                  'state:Success|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/positive/heavy/label' },
-                  'state:Success|level:Medium':  { value: '#048570', token: 'main/badge/positive/medium/label' },
-                  'state:Success|level:Light':   { value: '#048570', token: 'main/badge/positive/light/label' },
-                  'state:Warning|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/notice/heavy/label' },
-                  'state:Warning|level:Medium':  { value: '#966F0B', token: 'main/badge/notice/medium/label' },
-                  'state:Warning|level:Light':   { value: '#966F0B', token: 'main/badge/notice/light/label' },
-                  'state:Danger|level:Heavy':    { value: '#FFFFFF', token: 'main/badge/negative/heavy/label' },
-                  'state:Danger|level:Medium':   { value: '#8D0710', token: 'main/badge/negative/medium/label' },
-                  'state:Danger|level:Light':    { value: '#B50707', token: 'main/badge/negative/light/label' },
-                  'state:Disabled|level:Heavy':  { value: '#FFFFFF', token: 'main/badge/muted/heavy/label' },
-                  'state:Disabled|level:Medium': { value: '#FFFFFF', token: 'main/badge/muted/medium/label' },
-                  'state:Disabled|level:Light':  { value: '#FFFFFF', token: 'main/badge/muted/light/label' },
-                },
-              },
-            ],
+                "key": "Label",
+                "value": "#FFFFFF",
+                "token": "—",
+                "prop": "text-readout"
+              }
+            ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Padding H", "value": "8px", "mono": true },
-              { "key": "Padding V", "value": "2px (top) / 4px (bottom)", "mono": true },
-              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
-              { "key": "Min height", "value": "20px", "mono": true }
+              {
+                "key": "Size",
+                "value": "48 × 18",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Radius",
+                "value": "99 — pill",
+                "mono": true,
+                "variants": {
+                  "type:voucher": {
+                    "value": "0, with 4 on the bottom right"
+                  },
+                  "type:transaction": {
+                    "value": "4"
+                  },
+                  "type:dashboard": {
+                    "value": "4"
+                  }
+                }
+              },
+              {
+                "key": "Label alignment",
+                "value": "Centred",
+                "mono": true,
+                "variants": {
+                  "type:voucher": {
+                    "value": "Left, inset 8"
+                  }
+                }
+              },
+              {
+                "key": "Padding",
+                "value": "8 horizontal",
+                "mono": true,
+                "variants": {
+                  "type:transaction": {
+                    "value": "4 horizontal"
+                  },
+                  "type:dashboard": {
+                    "value": "4 horizontal"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text Style", "value": "Primary/Label/Fine", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "12px", "mono": true },
-              { "key": "Tracking", "value": "0.5px", "mono": true },
-              { "key": "Line-height", "value": "12px", "mono": true }
+              {
+                "key": "#label",
+                "value": "Primary/Label/Fine",
+                "mono": true,
+                "prop": "style-readout"
+              }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>intent<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.information</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Information</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:Proxima Soft,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:4px 8px 2px;border-radius:99px;text-align:center;white-space:nowrap;\">Label</span>"
-      },
-      {
-        "cardKey": "bd-spec-voucher",
-        "demoKey": "voucher",
-        "demoControls": badgeDemoControls,
-        "title": "Voucher",
-        "node": "18482:28972",
-        "description": "Badge with bottom-right radius only (4px). Used on voucher cards and promotional items. Fixed 18px height.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Type", "value": "Voucher" },
-              { "key": "State", "value": "Primary", "prop": "state" },
-              { "key": "Level", "value": "Heavy", "prop": "level" }
-            ]
-          },
-          {
-            label: 'Colors',
-            slug: 'colors',
-            rows: [
-              {
-                key: 'Background',
-                value: '#005CE5',
-                token: 'main/badge/primary/heavy/background',
-                variants: {
-                  'state:Primary|level:Heavy':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Primary|level:Medium':  { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Primary|level:Light':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Brand|level:Heavy':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Brand|level:Medium':    { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Brand|level:Light':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Info|level:Heavy':      { value: '#2340A9', token: 'main/badge/information/heavy/background' },
-                  'state:Info|level:Medium':     { value: '#D2E5FF', token: 'main/badge/information/medium/background' },
-                  'state:Info|level:Light':      { value: '#E5F1FF', token: 'main/badge/information/light/background' },
-                  'state:Success|level:Heavy':   { value: '#12AF80', token: 'main/badge/positive/heavy/background' },
-                  'state:Success|level:Medium':  { value: '#CAF2E0', token: 'main/badge/positive/medium/background' },
-                  'state:Success|level:Light':   { value: '#E7F8F0', token: 'main/badge/positive/light/background' },
-                  'state:Warning|level:Heavy':   { value: '#CA970C', token: 'main/badge/notice/heavy/background' },
-                  'state:Warning|level:Medium':  { value: '#F7D96E', token: 'main/badge/notice/medium/background' },
-                  'state:Warning|level:Light':   { value: '#FCF0CA', token: 'main/badge/notice/light/background' },
-                  'state:Danger|level:Heavy':    { value: '#D61B2C', token: 'main/badge/negative/heavy/background' },
-                  'state:Danger|level:Medium':   { value: '#F4C7C9', token: 'main/badge/negative/medium/background' },
-                  'state:Danger|level:Light':    { value: '#F8E6E6', token: 'main/badge/negative/light/background' },
-                  'state:Disabled|level:Heavy':  { value: '#717883', token: 'main/badge/muted/heavy/background' },
-                  'state:Disabled|level:Medium': { value: '#9A9FA7', token: 'main/badge/muted/medium/background' },
-                  'state:Disabled|level:Light':  { value: '#C2C5CA', token: 'main/badge/muted/light/background' },
-                },
-              },
-              {
-                key: 'Label',
-                value: '#FFFFFF',
-                token: 'main/badge/primary/heavy/label',
-                variants: {
-                  'state:Primary|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Primary|level:Medium':  { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Primary|level:Light':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Brand|level:Heavy':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Brand|level:Medium':    { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Brand|level:Light':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Info|level:Heavy':      { value: '#FFFFFF', token: 'main/badge/information/heavy/label' },
-                  'state:Info|level:Medium':     { value: '#005CE5', token: 'main/badge/information/medium/label' },
-                  'state:Info|level:Light':      { value: '#005CE5', token: 'main/badge/information/light/label' },
-                  'state:Success|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/positive/heavy/label' },
-                  'state:Success|level:Medium':  { value: '#048570', token: 'main/badge/positive/medium/label' },
-                  'state:Success|level:Light':   { value: '#048570', token: 'main/badge/positive/light/label' },
-                  'state:Warning|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/notice/heavy/label' },
-                  'state:Warning|level:Medium':  { value: '#966F0B', token: 'main/badge/notice/medium/label' },
-                  'state:Warning|level:Light':   { value: '#966F0B', token: 'main/badge/notice/light/label' },
-                  'state:Danger|level:Heavy':    { value: '#FFFFFF', token: 'main/badge/negative/heavy/label' },
-                  'state:Danger|level:Medium':   { value: '#8D0710', token: 'main/badge/negative/medium/label' },
-                  'state:Danger|level:Light':    { value: '#B50707', token: 'main/badge/negative/light/label' },
-                  'state:Disabled|level:Heavy':  { value: '#FFFFFF', token: 'main/badge/muted/heavy/label' },
-                  'state:Disabled|level:Medium': { value: '#FFFFFF', token: 'main/badge/muted/medium/label' },
-                  'state:Disabled|level:Light':  { value: '#FFFFFF', token: 'main/badge/muted/light/label' },
-                },
-              },
-            ],
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Height", "value": "18px (fixed)", "mono": true },
-              { "key": "Padding H", "value": "8px", "mono": true },
-              { "key": "Padding V", "value": "2px (top) / 4px (bottom)", "mono": true },
-              { "key": "Corner radius", "value": "0/0/4px/0 (BR only)", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text Style", "value": "Primary/Label/Fine", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "12px", "mono": true },
-              { "key": "Tracking", "value": "0.5px", "mono": true },
-              { "key": "Line-height", "value": "12px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Voucher label\"</span><span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.voucher</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Voucher label\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Voucher</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:Proxima Soft,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:4px 8px 2px;border-radius:0 0 4px 0;text-align:center;white-space:nowrap;height:18px;box-sizing:border-box;\">Label</span>"
-      },
-      {
-        "cardKey": "bd-spec-transaction",
-        "demoKey": "transaction",
-        "demoControls": badgeDemoControls,
-        "title": "Transaction",
-        "node": "18482:28972",
-        "description": "Rounded rectangle badge (4px radius). Used in transaction lists and history screens. Compact padding.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Type", "value": "Transaction" },
-              { "key": "State", "value": "Primary", "prop": "state" },
-              { "key": "Level", "value": "Heavy", "prop": "level" }
-            ]
-          },
-          {
-            label: 'Colors',
-            slug: 'colors',
-            rows: [
-              {
-                key: 'Background',
-                value: '#005CE5',
-                token: 'main/badge/primary/heavy/background',
-                variants: {
-                  'state:Primary|level:Heavy':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Primary|level:Medium':  { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Primary|level:Light':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Brand|level:Heavy':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Brand|level:Medium':    { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Brand|level:Light':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Info|level:Heavy':      { value: '#2340A9', token: 'main/badge/information/heavy/background' },
-                  'state:Info|level:Medium':     { value: '#D2E5FF', token: 'main/badge/information/medium/background' },
-                  'state:Info|level:Light':      { value: '#E5F1FF', token: 'main/badge/information/light/background' },
-                  'state:Success|level:Heavy':   { value: '#12AF80', token: 'main/badge/positive/heavy/background' },
-                  'state:Success|level:Medium':  { value: '#CAF2E0', token: 'main/badge/positive/medium/background' },
-                  'state:Success|level:Light':   { value: '#E7F8F0', token: 'main/badge/positive/light/background' },
-                  'state:Warning|level:Heavy':   { value: '#CA970C', token: 'main/badge/notice/heavy/background' },
-                  'state:Warning|level:Medium':  { value: '#F7D96E', token: 'main/badge/notice/medium/background' },
-                  'state:Warning|level:Light':   { value: '#FCF0CA', token: 'main/badge/notice/light/background' },
-                  'state:Danger|level:Heavy':    { value: '#D61B2C', token: 'main/badge/negative/heavy/background' },
-                  'state:Danger|level:Medium':   { value: '#F4C7C9', token: 'main/badge/negative/medium/background' },
-                  'state:Danger|level:Light':    { value: '#F8E6E6', token: 'main/badge/negative/light/background' },
-                  'state:Disabled|level:Heavy':  { value: '#717883', token: 'main/badge/muted/heavy/background' },
-                  'state:Disabled|level:Medium': { value: '#9A9FA7', token: 'main/badge/muted/medium/background' },
-                  'state:Disabled|level:Light':  { value: '#C2C5CA', token: 'main/badge/muted/light/background' },
-                },
-              },
-              {
-                key: 'Label',
-                value: '#FFFFFF',
-                token: 'main/badge/primary/heavy/label',
-                variants: {
-                  'state:Primary|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Primary|level:Medium':  { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Primary|level:Light':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Brand|level:Heavy':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Brand|level:Medium':    { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Brand|level:Light':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Info|level:Heavy':      { value: '#FFFFFF', token: 'main/badge/information/heavy/label' },
-                  'state:Info|level:Medium':     { value: '#005CE5', token: 'main/badge/information/medium/label' },
-                  'state:Info|level:Light':      { value: '#005CE5', token: 'main/badge/information/light/label' },
-                  'state:Success|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/positive/heavy/label' },
-                  'state:Success|level:Medium':  { value: '#048570', token: 'main/badge/positive/medium/label' },
-                  'state:Success|level:Light':   { value: '#048570', token: 'main/badge/positive/light/label' },
-                  'state:Warning|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/notice/heavy/label' },
-                  'state:Warning|level:Medium':  { value: '#966F0B', token: 'main/badge/notice/medium/label' },
-                  'state:Warning|level:Light':   { value: '#966F0B', token: 'main/badge/notice/light/label' },
-                  'state:Danger|level:Heavy':    { value: '#FFFFFF', token: 'main/badge/negative/heavy/label' },
-                  'state:Danger|level:Medium':   { value: '#8D0710', token: 'main/badge/negative/medium/label' },
-                  'state:Danger|level:Light':    { value: '#B50707', token: 'main/badge/negative/light/label' },
-                  'state:Disabled|level:Heavy':  { value: '#FFFFFF', token: 'main/badge/muted/heavy/label' },
-                  'state:Disabled|level:Medium': { value: '#FFFFFF', token: 'main/badge/muted/medium/label' },
-                  'state:Disabled|level:Light':  { value: '#FFFFFF', token: 'main/badge/muted/light/label' },
-                },
-              },
-            ],
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Padding H", "value": "4px", "mono": true },
-              { "key": "Padding V", "value": "1px (top) / 3px (bottom)", "mono": true },
-              { "key": "Corner radius", "value": "4px", "mono": true },
-              { "key": "Min height", "value": "20px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text Style", "value": "Primary/Label/Fine", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "12px", "mono": true },
-              { "key": "Tracking", "value": "0.5px", "mono": true },
-              { "key": "Line-height", "value": "12px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Pending\"</span><span class=\"syn-punc\">, </span>intent<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.notice</span><span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.transaction</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Pending\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Notice</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Transaction</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:Proxima Soft,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:3px 4px 1px;border-radius:4px;text-align:center;white-space:nowrap;\">Label</span>"
-      },
-      {
-        "cardKey": "bd-spec-dashboard",
-        "demoKey": "dashboard",
-        "demoControls": badgeDemoControls,
-        "title": "Dashboard",
-        "node": "18482:28972",
-        "description": "Compact rounded rectangle badge (4px radius) with smaller typography (10px). Used in dashboard widgets and summary cards.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Type", "value": "Dashboard" },
-              { "key": "State", "value": "Primary", "prop": "state" },
-              { "key": "Level", "value": "Heavy", "prop": "level" }
-            ]
-          },
-          {
-            label: 'Colors',
-            slug: 'colors',
-            rows: [
-              {
-                key: 'Background',
-                value: '#005CE5',
-                token: 'main/badge/primary/heavy/background',
-                variants: {
-                  'state:Primary|level:Heavy':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Primary|level:Medium':  { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Primary|level:Light':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
-                  'state:Brand|level:Heavy':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Brand|level:Medium':    { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Brand|level:Light':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
-                  'state:Info|level:Heavy':      { value: '#2340A9', token: 'main/badge/information/heavy/background' },
-                  'state:Info|level:Medium':     { value: '#D2E5FF', token: 'main/badge/information/medium/background' },
-                  'state:Info|level:Light':      { value: '#E5F1FF', token: 'main/badge/information/light/background' },
-                  'state:Success|level:Heavy':   { value: '#12AF80', token: 'main/badge/positive/heavy/background' },
-                  'state:Success|level:Medium':  { value: '#CAF2E0', token: 'main/badge/positive/medium/background' },
-                  'state:Success|level:Light':   { value: '#E7F8F0', token: 'main/badge/positive/light/background' },
-                  'state:Warning|level:Heavy':   { value: '#CA970C', token: 'main/badge/notice/heavy/background' },
-                  'state:Warning|level:Medium':  { value: '#F7D96E', token: 'main/badge/notice/medium/background' },
-                  'state:Warning|level:Light':   { value: '#FCF0CA', token: 'main/badge/notice/light/background' },
-                  'state:Danger|level:Heavy':    { value: '#D61B2C', token: 'main/badge/negative/heavy/background' },
-                  'state:Danger|level:Medium':   { value: '#F4C7C9', token: 'main/badge/negative/medium/background' },
-                  'state:Danger|level:Light':    { value: '#F8E6E6', token: 'main/badge/negative/light/background' },
-                  'state:Disabled|level:Heavy':  { value: '#717883', token: 'main/badge/muted/heavy/background' },
-                  'state:Disabled|level:Medium': { value: '#9A9FA7', token: 'main/badge/muted/medium/background' },
-                  'state:Disabled|level:Light':  { value: '#C2C5CA', token: 'main/badge/muted/light/background' },
-                },
-              },
-              {
-                key: 'Label',
-                value: '#FFFFFF',
-                token: 'main/badge/primary/heavy/label',
-                variants: {
-                  'state:Primary|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Primary|level:Medium':  { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Primary|level:Light':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
-                  'state:Brand|level:Heavy':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Brand|level:Medium':    { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Brand|level:Light':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
-                  'state:Info|level:Heavy':      { value: '#FFFFFF', token: 'main/badge/information/heavy/label' },
-                  'state:Info|level:Medium':     { value: '#005CE5', token: 'main/badge/information/medium/label' },
-                  'state:Info|level:Light':      { value: '#005CE5', token: 'main/badge/information/light/label' },
-                  'state:Success|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/positive/heavy/label' },
-                  'state:Success|level:Medium':  { value: '#048570', token: 'main/badge/positive/medium/label' },
-                  'state:Success|level:Light':   { value: '#048570', token: 'main/badge/positive/light/label' },
-                  'state:Warning|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/notice/heavy/label' },
-                  'state:Warning|level:Medium':  { value: '#966F0B', token: 'main/badge/notice/medium/label' },
-                  'state:Warning|level:Light':   { value: '#966F0B', token: 'main/badge/notice/light/label' },
-                  'state:Danger|level:Heavy':    { value: '#FFFFFF', token: 'main/badge/negative/heavy/label' },
-                  'state:Danger|level:Medium':   { value: '#8D0710', token: 'main/badge/negative/medium/label' },
-                  'state:Danger|level:Light':    { value: '#B50707', token: 'main/badge/negative/light/label' },
-                  'state:Disabled|level:Heavy':  { value: '#FFFFFF', token: 'main/badge/muted/heavy/label' },
-                  'state:Disabled|level:Medium': { value: '#FFFFFF', token: 'main/badge/muted/medium/label' },
-                  'state:Disabled|level:Light':  { value: '#FFFFFF', token: 'main/badge/muted/light/label' },
-                },
-              },
-            ],
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Padding H", "value": "4px", "mono": true },
-              { "key": "Padding V", "value": "1px", "mono": true },
-              { "key": "Corner radius", "value": "4px", "mono": true },
-              { "key": "Min height", "value": "16px", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Text Style", "value": "Primary/Label/Tiny", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
-              { "key": "Size", "value": "10px", "mono": true },
-              { "key": "Tracking", "value": "0.25px", "mono": true },
-              { "key": "Line-height", "value": "10px", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.dashboard</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Dashboard</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:Proxima Soft,system-ui,sans-serif;font-weight:700;font-size:10px;line-height:10px;letter-spacing:0.25px;padding:1px 4px 1px;border-radius:4px;text-align:center;white-space:nowrap;\">Label</span>"
+        "swift": "EBBadge(\"Label\")\n    .ebState(.primary)\n    .ebLevel(.heavy)\n    .ebType(.default)",
+        "compose": "EBBadge(\n    label = \"Label\",\n    state = EBBadgeState.Primary,\n    level = EBBadgeLevel.Heavy,\n    type = EBBadgeType.Default\n)"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by Appearance Mode",
-        "description": "Display-only component. All colors bound to <code>main/badge/{semantic}/{level}/</code> tokens. Primary and Brand states only support Heavy level.",
+        "title": "Colors by State and Level",
+        "description": "Read off <code>get_node_info</code> across the 68 variants of set <code>18482:28972</code>. Type does not change the colours, only the shape. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
-          "Role",
-          "Token",
-          "Value"
+          "Fill",
+          "Label"
         ],
         "rows": [
           {
-            "role": "Primary",
-            "token": "Heavy",
+            "role": "Primary · Heavy",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/primary/heavy/background",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "Primary",
-            "token": "Heavy",
-            "values": [
-              "label",
-              "main/badge/primary/heavy/label",
+              "#005CE5",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Brand",
-            "token": "Heavy",
+            "role": "Brand · Heavy",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/brand/heavy/background",
-              "#1972F9"
-            ]
-          },
-          {
-            "role": "Brand",
-            "token": "Heavy",
-            "values": [
-              "label",
-              "main/badge/brand/heavy/label",
+              "#1972F9",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Info",
-            "token": "Light",
+            "role": "Information · Light",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/information/light/background",
-              "#E5F1FF"
-            ]
-          },
-          {
-            "role": "Info",
-            "token": "Light",
-            "values": [
-              "label",
-              "main/badge/information/light/label",
+              "#E5F1FF",
               "#005CE5"
             ]
           },
           {
-            "role": "Info",
-            "token": "Medium",
+            "role": "Information · Medium",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/information/medium/background",
-              "#D2E5FF"
-            ]
-          },
-          {
-            "role": "Info",
-            "token": "Medium",
-            "values": [
-              "label",
-              "main/badge/information/medium/label",
+              "#D2E5FF",
               "#005CE5"
             ]
           },
           {
-            "role": "Info",
-            "token": "Heavy",
+            "role": "Information · Heavy",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/information/heavy/background",
-              "#2340A9"
-            ]
-          },
-          {
-            "role": "Info",
-            "token": "Heavy",
-            "values": [
-              "label",
-              "main/badge/information/heavy/label",
+              "#2340A9",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Success",
-            "token": "Light",
+            "role": "Positive · Light",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/positive/light/background",
-              "#E7F8F0"
-            ]
-          },
-          {
-            "role": "Success",
-            "token": "Light",
-            "values": [
-              "label",
-              "main/badge/positive/light/label",
+              "#E7F8F0",
               "#048570"
             ]
           },
           {
-            "role": "Success",
-            "token": "Medium",
+            "role": "Positive · Medium",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/positive/medium/background",
-              "#CAF2E0"
-            ]
-          },
-          {
-            "role": "Success",
-            "token": "Medium",
-            "values": [
-              "label",
-              "main/badge/positive/medium/label",
+              "#CAF2E0",
               "#048570"
             ]
           },
           {
-            "role": "Success",
-            "token": "Heavy",
+            "role": "Positive · Heavy",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/positive/heavy/background",
-              "#12AF80"
-            ]
-          },
-          {
-            "role": "Success",
-            "token": "Heavy",
-            "values": [
-              "label",
-              "main/badge/positive/heavy/label",
+              "#12AF80",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Warning",
-            "token": "Light",
+            "role": "Notice · Light",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/notice/light/background",
-              "#FCF0CA"
-            ]
-          },
-          {
-            "role": "Warning",
-            "token": "Light",
-            "values": [
-              "label",
-              "main/badge/notice/light/label",
+              "#FCF0CA",
               "#966F0B"
             ]
           },
           {
-            "role": "Warning",
-            "token": "Medium",
+            "role": "Notice · Medium",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/notice/medium/background",
-              "#F7D96E"
-            ]
-          },
-          {
-            "role": "Warning",
-            "token": "Medium",
-            "values": [
-              "label",
-              "main/badge/notice/medium/label",
+              "#F7D96E",
               "#966F0B"
             ]
           },
           {
-            "role": "Warning",
-            "token": "Heavy",
+            "role": "Notice · Heavy",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/notice/heavy/background",
-              "#CA970C"
-            ]
-          },
-          {
-            "role": "Warning",
-            "token": "Heavy",
-            "values": [
-              "label",
-              "main/badge/notice/heavy/label",
+              "#CA970C",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Danger",
-            "token": "Light",
+            "role": "Negative · Light",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/negative/light/background",
-              "#F8E6E6"
-            ]
-          },
-          {
-            "role": "Danger",
-            "token": "Light",
-            "values": [
-              "label",
-              "main/badge/negative/light/label",
+              "#F8E6E6",
               "#B50707"
             ]
           },
           {
-            "role": "Danger",
-            "token": "Medium",
+            "role": "Negative · Medium",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/negative/medium/background",
-              "#F4C7C9"
-            ]
-          },
-          {
-            "role": "Danger",
-            "token": "Medium",
-            "values": [
-              "label",
-              "main/badge/negative/medium/label",
+              "#F4C7C9",
               "#8D0710"
             ]
           },
           {
-            "role": "Danger",
-            "token": "Heavy",
+            "role": "Negative · Heavy",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/negative/heavy/background",
-              "#D61B2C"
-            ]
-          },
-          {
-            "role": "Danger",
-            "token": "Heavy",
-            "values": [
-              "label",
-              "main/badge/negative/heavy/label",
+              "#D61B2C",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Disabled",
-            "token": "Light",
+            "role": "Muted · Light",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/muted/light/background",
-              "#C2C5CA"
-            ]
-          },
-          {
-            "role": "Disabled",
-            "token": "Light",
-            "values": [
-              "label",
-              "main/badge/muted/light/label",
+              "#C2C5CA",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Disabled",
-            "token": "Medium",
+            "role": "Muted · Medium",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/muted/medium/background",
-              "#9A9FA7"
-            ]
-          },
-          {
-            "role": "Disabled",
-            "token": "Medium",
-            "values": [
-              "label",
-              "main/badge/muted/medium/label",
+              "#9A9FA7",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Disabled",
-            "token": "Heavy",
+            "role": "Muted · Heavy",
+            "token": "—",
             "values": [
-              "bg",
-              "main/badge/muted/heavy/background",
-              "#717883"
-            ]
-          },
-          {
-            "role": "Disabled",
-            "token": "Heavy",
-            "values": [
-              "label",
-              "main/badge/muted/heavy/label",
+              "#717883",
               "#FFFFFF"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout by Type",
-        "columns": [
-          "Voucher",
-          "Transaction",
-          "Dashboard"
-        ],
-        "rows": [
-          {
-            "role": "Height",
-            "token": "auto",
-            "values": [
-              "18px (fixed)",
-              "auto",
-              "auto"
-            ]
-          },
-          {
-            "role": "Padding H",
-            "token": "8px",
-            "values": [
-              "8px",
-              "4px",
-              "4px"
-            ]
-          },
-          {
-            "role": "Padding V",
-            "token": "2px (top) / 4px (bottom)",
-            "values": [
-              "2px (top) / 4px (bottom)",
-              "1px (top) / 3px (bottom)",
-              "1px"
-            ]
-          },
-          {
-            "role": "Corner radius",
-            "token": "99px (pill)",
-            "values": [
-              "0/0/4px/0 (BR only)",
-              "4px",
-              "4px"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Font",
-          "Size",
-          "Tracking",
-          "Line-height"
-        ],
-        "rows": [
-          {
-            "role": "Default / Voucher / Transaction",
-            "token": "Primary/Label/Fine",
-            "values": [
-              "Proxima Soft Bold",
-              "12px",
-              "0.5px",
-              "12px"
-            ]
-          },
-          {
-            "role": "Dashboard",
-            "token": "Primary/Label/Tiny",
-            "values": [
-              "Proxima Soft Bold",
-              "10px",
-              "0.25px",
-              "10px"
             ]
           }
         ]
@@ -950,92 +430,42 @@ export const badge: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "iOS -- Swift Package Manager",
-          "code": "<span class=\"cmt\">// In Xcode: File -> Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>\n\n<span class=\"cmt\">// Or in Package.swift:</span>\n.<span class=\"fn\">package</span>(\n    <span class=\"prp\">url</span>: <span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>,\n    <span class=\"prp\">from</span>: <span class=\"str\">\"1.0.0\"</span>\n)"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
         },
         {
-          "label": "Android -- Gradle (Kotlin DSL)",
-          "code": "<span class=\"cmt\">// build.gradle.kts (app)</span>\n<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:badge:1.0.0\"</span>)\n}"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:badge:2.0.0\"</span>)\n}"
         },
         {
           "label": "Import",
           "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.badge.*  <span class=\"cmt\">// Compose</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths. API shape is final -- native implementation is pending."
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
-      "description": "Every row maps a Figma component property to its native equivalent.",
+      "description": "One row per property of set <code>18482:28972</code>. <code>State</code> and <code>Level</code> together pick the colour pair; <code>Type</code> picks the shape. Primary and Brand ship <code>Level=Heavy</code> only.",
       "rows": [
         {
-          "figma": "<code>State=Primary</code>",
-          "swift": "<code>state: .primary</code>",
-          "compose": "<code>BadgeState.Primary</code>"
+          "figma": "State — Primary, Brand, Information, Positive, Notice, Negative, Muted",
+          "swift": "<code>.ebState(.primary … .muted)</code>",
+          "compose": "<code>state = EBBadgeState.Primary … Muted</code>"
         },
         {
-          "figma": "<code>State=Brand</code>",
-          "swift": "<code>state: .brand</code>",
-          "compose": "<code>BadgeState.Brand</code>"
+          "figma": "Level — Heavy, Light, Medium",
+          "swift": "<code>.ebLevel(.heavy / .light / .medium)</code>",
+          "compose": "<code>level = EBBadgeLevel.Heavy / Light / Medium</code>"
         },
         {
-          "figma": "<code>State=Info</code>",
-          "swift": "<code>state: .info</code>",
-          "compose": "<code>BadgeState.Info</code>"
+          "figma": "Type — Voucher, Transaction, Default, Dashboard",
+          "swift": "<code>.ebType(.default … .dashboard)</code>",
+          "compose": "<code>type = EBBadgeType.Default … Dashboard</code>"
         },
         {
-          "figma": "<code>State=Success</code>",
-          "swift": "<code>state: .success</code>",
-          "compose": "<code>BadgeState.Success</code>"
-        },
-        {
-          "figma": "<code>State=Warning</code>",
-          "swift": "<code>state: .warning</code>",
-          "compose": "<code>BadgeState.Warning</code>"
-        },
-        {
-          "figma": "<code>State=Danger</code>",
-          "swift": "<code>state: .danger</code>",
-          "compose": "<code>BadgeState.Danger</code>"
-        },
-        {
-          "figma": "<code>State=Disabled</code>",
-          "swift": "<code>state: .disabled</code>",
-          "compose": "<code>BadgeState.Disabled</code>"
-        },
-        {
-          "figma": "<code>Level=Heavy</code>",
-          "swift": "<code>level: .heavy</code>",
-          "compose": "<code>BadgeLevel.Heavy</code>"
-        },
-        {
-          "figma": "<code>Level=Medium</code>",
-          "swift": "<code>level: .medium</code>",
-          "compose": "<code>BadgeLevel.Medium</code>"
-        },
-        {
-          "figma": "<code>Level=Light</code>",
-          "swift": "<code>level: .light</code>",
-          "compose": "<code>BadgeLevel.Light</code>"
-        },
-        {
-          "figma": "<code>Type=Default</code>",
-          "swift": "<code>type: .default</code>",
-          "compose": "<code>BadgeType.Default</code>"
-        },
-        {
-          "figma": "<code>Type=Voucher</code>",
-          "swift": "<code>type: .voucher</code>",
-          "compose": "<code>BadgeType.Voucher</code>"
-        },
-        {
-          "figma": "<code>Type=Transaction</code>",
-          "swift": "<code>type: .transaction</code>",
-          "compose": "<code>BadgeType.Transaction</code>"
-        },
-        {
-          "figma": "<code>Type=Dashboard</code>",
-          "swift": "<code>type: .dashboard</code>",
-          "compose": "<code>BadgeType.Dashboard</code>"
+          "figma": "— <code>#label</code> / <code>#value</code>",
+          "swift": "<code>EBBadge(_ label: String)</code>",
+          "compose": "<code>label: String</code>"
         }
       ],
       "filePaths": {
@@ -1045,209 +475,829 @@ export const badge: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Default (Pill)",
-        "swift": "<span class=\"cmt\">// Success badge -- heavy level</span>\n<span class=\"typ\">EBBadge</span>(<span class=\"str\">\"Completed\"</span>, <span class=\"prp\">state</span>: .<span class=\"prp\">success</span>, <span class=\"prp\">level</span>: .<span class=\"prp\">heavy</span>)\n\n<span class=\"cmt\">// Info badge -- light level</span>\n<span class=\"typ\">EBBadge</span>(<span class=\"str\">\"Pending\"</span>, <span class=\"prp\">state</span>: .<span class=\"prp\">info</span>, <span class=\"prp\">level</span>: .<span class=\"prp\">light</span>)",
-        "compose": "<span class=\"cmt\">// Success badge -- heavy level</span>\n<span class=\"typ\">EBBadge</span>(\n    <span class=\"prp\">text</span> = <span class=\"str\">\"Completed\"</span>,\n    <span class=\"prp\">state</span> = <span class=\"typ\">BadgeState</span>.<span class=\"prp\">Success</span>,\n    <span class=\"prp\">level</span> = <span class=\"typ\">BadgeLevel</span>.<span class=\"prp\">Heavy</span>\n)\n\n<span class=\"cmt\">// Info badge -- light level</span>\n<span class=\"typ\">EBBadge</span>(\n    <span class=\"prp\">text</span> = <span class=\"str\">\"Pending\"</span>,\n    <span class=\"prp\">state</span> = <span class=\"typ\">BadgeState</span>.<span class=\"prp\">Info</span>,\n    <span class=\"prp\">level</span> = <span class=\"typ\">BadgeLevel</span>.<span class=\"prp\">Light</span>\n)"
+        "subheading": "Default · Primary",
+        "swift": "<span class=\"cmt\">// State=Primary, Level=Heavy, Type=Default — 18482:28973, 48 × 18.</span>\nEBBadge(\"New\")\n    .ebState(.primary)\n    .ebLevel(.heavy)",
+        "compose": "<span class=\"cmt\">// State=Primary, Level=Heavy, Type=Default — 18482:28973, 48 × 18.</span>\nEBBadge(\n    label = \"New\",\n    state = EBBadgeState.Primary,\n    level = EBBadgeLevel.Heavy\n)"
+      },
+      {
+        "subheading": "Light level",
+        "swift": "<span class=\"cmt\">// State=Positive, Level=Light, Type=Default — 18482:28983; #E7F8F0 with #048570 text.</span>\nEBBadge(\"Paid\")\n    .ebState(.positive)\n    .ebLevel(.light)",
+        "compose": "<span class=\"cmt\">// State=Positive, Level=Light, Type=Default — 18482:28983; #E7F8F0 with #048570 text.</span>\nEBBadge(\n    label = \"Paid\",\n    state = EBBadgeState.Positive,\n    level = EBBadgeLevel.Light\n)"
       },
       {
         "subheading": "Voucher",
-        "swift": "<span class=\"typ\">EBBadge</span>(<span class=\"str\">\"50% OFF\"</span>, <span class=\"prp\">state</span>: .<span class=\"prp\">danger</span>, <span class=\"prp\">level</span>: .<span class=\"prp\">heavy</span>, <span class=\"prp\">type</span>: .<span class=\"prp\">voucher</span>)",
-        "compose": "<span class=\"typ\">EBBadge</span>(\n    <span class=\"prp\">text</span> = <span class=\"str\">\"50% OFF\"</span>,\n    <span class=\"prp\">state</span> = <span class=\"typ\">BadgeState</span>.<span class=\"prp\">Danger</span>,\n    <span class=\"prp\">level</span> = <span class=\"typ\">BadgeLevel</span>.<span class=\"prp\">Heavy</span>,\n    <span class=\"prp\">type</span> = <span class=\"typ\">BadgeType</span>.<span class=\"prp\">Voucher</span>\n)"
-      },
-      {
-        "subheading": "Transaction",
-        "swift": "<span class=\"typ\">EBBadge</span>(<span class=\"str\">\"Failed\"</span>, <span class=\"prp\">state</span>: .<span class=\"prp\">danger</span>, <span class=\"prp\">level</span>: .<span class=\"prp\">heavy</span>, <span class=\"prp\">type</span>: .<span class=\"prp\">transaction</span>)",
-        "compose": "<span class=\"typ\">EBBadge</span>(\n    <span class=\"prp\">text</span> = <span class=\"str\">\"Failed\"</span>,\n    <span class=\"prp\">state</span> = <span class=\"typ\">BadgeState</span>.<span class=\"prp\">Danger</span>,\n    <span class=\"prp\">level</span> = <span class=\"typ\">BadgeLevel</span>.<span class=\"prp\">Heavy</span>,\n    <span class=\"prp\">type</span> = <span class=\"typ\">BadgeType</span>.<span class=\"prp\">Transaction</span>\n)"
+        "swift": "<span class=\"cmt\">// Type=Voucher — 18482:29011; a 48 × 18 stub, square but for a 4 radius on the bottom right, label left-aligned.</span>\nEBBadge(\"50% off\")\n    .ebState(.information)\n    .ebLevel(.light)\n    .ebType(.voucher)",
+        "compose": "<span class=\"cmt\">// Type=Voucher — 18482:29011; a 48 × 18 stub, square but for a 4 radius on the bottom right, label left-aligned.</span>\nEBBadge(\n    label = \"50% off\",\n    state = EBBadgeState.Information,\n    level = EBBadgeLevel.Light,\n    type = EBBadgeType.Voucher\n)"
       },
       {
         "subheading": "Dashboard",
-        "swift": "<span class=\"typ\">EBBadge</span>(<span class=\"str\">\"Active\"</span>, <span class=\"prp\">state</span>: .<span class=\"prp\">success</span>, <span class=\"prp\">level</span>: .<span class=\"prp\">light</span>, <span class=\"prp\">type</span>: .<span class=\"prp\">dashboard</span>)",
-        "compose": "<span class=\"typ\">EBBadge</span>(\n    <span class=\"prp\">text</span> = <span class=\"str\">\"Active\"</span>,\n    <span class=\"prp\">state</span> = <span class=\"typ\">BadgeState</span>.<span class=\"prp\">Success</span>,\n    <span class=\"prp\">level</span> = <span class=\"typ\">BadgeLevel</span>.<span class=\"prp\">Light</span>,\n    <span class=\"prp\">type</span> = <span class=\"typ\">BadgeType</span>.<span class=\"prp\">Dashboard</span>\n)"
+        "swift": "<span class=\"cmt\">// Type=Dashboard — 18482:29056; 34 × 12 with a 10pt label, the smallest of the four.</span>\nEBBadge(\"New\")\n    .ebState(.information)\n    .ebLevel(.light)\n    .ebType(.dashboard)",
+        "compose": "<span class=\"cmt\">// Type=Dashboard — 18482:29056; 34 × 12 with a 10pt label, the smallest of the four.</span>\nEBBadge(\n    label = \"New\",\n    state = EBBadgeState.Information,\n    level = EBBadgeLevel.Light,\n    type = EBBadgeType.Dashboard\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Accessibility label",
-        "ios": "<code>accessibilityLabel(\"Status: Completed\")</code>",
-        "android": "<code>contentDescription = \"Status: Completed\"</code>"
+        "requirement": "Read as a value",
+        "ios": "A badge beside a label is its value — <code>.accessibilityValue(\"paid\")</code> on the row, not a separate element.",
+        "android": "Append it to the row’s <code>stateDescription</code>."
       },
       {
-        "requirement": "Decorative mode",
-        "ios": "<code>isAccessibilityElement = false</code> (when status is conveyed elsewhere)",
-        "android": "<code>importantForAccessibility = no</code>"
+        "requirement": "Never colour alone",
+        "ios": "The label carries the meaning; the colour repeats it. Do not ship a badge with no text.",
+        "android": "Same."
       },
       {
-        "requirement": "Color contrast",
-        "ios": "Heavy levels meet WCAG AA (4.5:1+)",
-        "android": "Heavy levels meet WCAG AA (4.5:1+)"
+        "requirement": "Dashboard size",
+        "ios": "At 34 × 12 with a 10pt label it is below the recommended minimum text size — use it only where the row already names the status.",
+        "android": "Same."
       },
       {
-        "requirement": "Non-color indicator",
-        "ios": "Badge text conveys meaning alongside color",
-        "android": "Badge text conveys meaning alongside color"
+        "requirement": "Not interactive",
+        "ios": "A badge is not a control; do not attach a tap to it.",
+        "android": "No <code>clickable</code> on the badge itself."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Most pairs pass: white on #005CE5 5.10:1, #048570 on #E7F8F0 4.74:1, #B50707 on #F8E6E6 7.00:1. Two fail — white on Muted Light #C2C5CA is 2.17:1 and white on Notice Heavy #CA970C 2.45:1.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use semantic states that match the content meaning (Success for completed, Danger for failed, Warning for pending).",
-        "dontText": "Use badges for interactive elements -- badges are display-only status indicators."
+        "doText": "Use Light and Medium inside dense lists, Heavy where the badge must carry.",
+        "dontText": "Don’t mix Levels of the same State in one list."
       },
       {
-        "doText": "Use Heavy level for primary status indicators and Light/Medium for secondary or supporting context.",
-        "dontText": "Use multiple Heavy badges in the same row -- visual noise. Use one Heavy + rest Light/Medium."
+        "doText": "Match Type to where it sits — Dashboard in tiles, Transaction in rows, Voucher on a coupon.",
+        "dontText": "Don’t use the Voucher stub outside a voucher; its one-sided radius reads as a torn edge."
       },
       {
-        "doText": "Match badge Type to context: Default for general, Voucher for promos, Transaction for history, Dashboard for summaries.",
-        "dontText": "Mix badge Types within the same list or group."
+        "doText": "Keep the label to one or two words.",
+        "dontText": "Don’t put a sentence in a 34 × 12 Dashboard badge."
+      },
+      {
+        "doText": "Use Muted for a neutral or expired status.",
+        "dontText": "Don’t use Muted Light for anything a user must read — the white text on it is 2.17:1."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Simple single-layer structure: container with text child. Semantic naming."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "One text layer per variant, but it is <code>#label</code> on Default and Voucher and <code>#value</code> on Transaction and Dashboard — the same content under two names."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Clean enum properties: State, Level, Type. Minor: State names don't match token semantic names."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Three PascalCase axes, but <code>State</code> holds intents (Information, Positive) rather than interaction states, and Primary and Brand ship one Level, so 68 of the theoretical 84 combinations exist."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors bound to <code>main/badge/</code> tokens. Note: 2 variants have hardcoded <code>opacity: 0.90</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Both text layers resolve <code>matched</code> — <code>Primary/Label/Fine</code> and <code>Primary/Label/Tiny</code>. Seventeen colour pairs are hard-coded; no bindings can be read."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to custom <code>EBBadge</code> on both platforms. Simple text + background shape."
+        "notes": "Three enums and a label map to one <code>EBBadge</code>."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
         "status": "na",
         "statusLabel": "Not Applicable",
-        "notes": "Display-only component. No interactive states needed."
+        "notes": "A static label; badges are not interactive."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "na",
         "statusLabel": "Not Applicable",
-        "notes": "No icons or assets. Text-only component."
+        "notes": "No icons or assets."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet. Property naming is clean and ready for mapping."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Three axes and one text layer are ready to map; no mappings are registered."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Clean enum properties: State (7), Level (3), Type (4). Ready for Code Connect mapping."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors token-bound. Minor opacity inconsistency on 2 variants."
-      },
-      {
-        "aspect": "State coverage",
-        "status": "na",
-        "statusLabel": "Not Applicable",
-        "notes": "Display-only. No interaction states."
-      },
-      {
-        "aspect": "Native component file",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "EBBadge.swift / EBBadge.kt not yet created"
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 68,
-      "description": "7 <code>State</code> values x 3 <code>Level</code> values x 4 <code>Type</code> values = 84 theoretical. Primary and Brand only support Heavy level, so actual count is (2 x 1 x 4) + (5 x 3 x 4) = 8 + 60 = 68 variants.",
+      "description": "<code>State</code> (7) × <code>Level</code> (3) × <code>Type</code> (4) would be 84; 68 are built, because Primary and Brand ship <code>Level=Heavy</code> only — 17 per Type.",
       "columns": [
         "State",
         "Level",
-        "Types",
-        "Notes"
+        "Type",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
             "Primary",
             "Heavy",
-            "Default, Voucher, Transaction, Dashboard",
-            "4 variants"
+            "Default",
+            "<code>18482:28973</code>",
+            "48 × 18"
           ]
         },
         {
           "cells": [
             "Brand",
             "Heavy",
-            "Default, Voucher, Transaction, Dashboard",
-            "4 variants"
+            "Default",
+            "<code>18482:28975</code>",
+            "48 × 18"
           ]
         },
         {
           "cells": [
-            "Info",
-            "Light / Medium / Heavy",
-            "Default, Voucher, Transaction, Dashboard",
-            "12 variants"
+            "Information",
+            "Heavy",
+            "Default",
+            "<code>18482:28981</code>",
+            "48 × 18"
           ]
         },
         {
           "cells": [
-            "Success",
-            "Light / Medium / Heavy",
-            "Default, Voucher, Transaction, Dashboard",
-            "12 variants"
+            "Information",
+            "Light",
+            "Default",
+            "<code>18482:28977</code>",
+            "48 × 18"
           ]
         },
         {
           "cells": [
-            "Warning",
-            "Light / Medium / Heavy",
-            "Default, Voucher, Transaction, Dashboard",
-            "12 variants"
+            "Information",
+            "Medium",
+            "Default",
+            "<code>18482:28979</code>",
+            "48 × 18"
           ]
         },
         {
           "cells": [
-            "Danger",
-            "Light / Medium / Heavy",
-            "Default, Voucher, Transaction, Dashboard",
-            "12 variants"
+            "Positive",
+            "Heavy",
+            "Default",
+            "<code>18482:28987</code>",
+            "48 × 18"
           ]
         },
         {
           "cells": [
-            "Disabled",
-            "Light / Medium / Heavy",
-            "Default, Voucher, Transaction, Dashboard",
-            "12 variants"
+            "Positive",
+            "Light",
+            "Default",
+            "<code>18482:28983</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Medium",
+            "Default",
+            "<code>18482:28985</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Heavy",
+            "Default",
+            "<code>18482:28993</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Light",
+            "Default",
+            "<code>18482:28989</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Medium",
+            "Default",
+            "<code>18482:28991</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Heavy",
+            "Default",
+            "<code>18482:28999</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Light",
+            "Default",
+            "<code>18482:28995</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Medium",
+            "Default",
+            "<code>18482:28997</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Heavy",
+            "Default",
+            "<code>18482:29005</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Light",
+            "Default",
+            "<code>18482:29001</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Medium",
+            "Default",
+            "<code>18482:29003</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Primary",
+            "Heavy",
+            "Voucher",
+            "<code>18482:29007</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Brand",
+            "Heavy",
+            "Voucher",
+            "<code>18482:29009</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Heavy",
+            "Voucher",
+            "<code>18482:29015</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Light",
+            "Voucher",
+            "<code>18482:29011</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Medium",
+            "Voucher",
+            "<code>18482:29013</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Heavy",
+            "Voucher",
+            "<code>18482:29021</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Light",
+            "Voucher",
+            "<code>18482:29017</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Medium",
+            "Voucher",
+            "<code>18482:29019</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Heavy",
+            "Voucher",
+            "<code>18482:29027</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Light",
+            "Voucher",
+            "<code>18482:29023</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Medium",
+            "Voucher",
+            "<code>18482:29025</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Heavy",
+            "Voucher",
+            "<code>18482:29033</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Light",
+            "Voucher",
+            "<code>18482:29029</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Medium",
+            "Voucher",
+            "<code>18482:29031</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Heavy",
+            "Voucher",
+            "<code>18482:29039</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Light",
+            "Voucher",
+            "<code>18482:29035</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Medium",
+            "Voucher",
+            "<code>18482:29037</code>",
+            "48 × 18"
+          ]
+        },
+        {
+          "cells": [
+            "Primary",
+            "Heavy",
+            "Transaction",
+            "<code>18482:29041</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Brand",
+            "Heavy",
+            "Transaction",
+            "<code>18482:29047</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Heavy",
+            "Transaction",
+            "<code>18482:29065</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Light",
+            "Transaction",
+            "<code>18482:29053</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Medium",
+            "Transaction",
+            "<code>18482:29059</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Heavy",
+            "Transaction",
+            "<code>18482:29083</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Light",
+            "Transaction",
+            "<code>18482:29071</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Medium",
+            "Transaction",
+            "<code>18482:29077</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Heavy",
+            "Transaction",
+            "<code>18482:29101</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Light",
+            "Transaction",
+            "<code>18482:29089</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Medium",
+            "Transaction",
+            "<code>18482:29095</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Heavy",
+            "Transaction",
+            "<code>18482:29119</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Light",
+            "Transaction",
+            "<code>18482:29107</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Medium",
+            "Transaction",
+            "<code>18482:29113</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Heavy",
+            "Transaction",
+            "<code>18482:29137</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Light",
+            "Transaction",
+            "<code>18482:29125</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Medium",
+            "Transaction",
+            "<code>18482:29131</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Primary",
+            "Heavy",
+            "Dashboard",
+            "<code>18482:29044</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Brand",
+            "Heavy",
+            "Dashboard",
+            "<code>18482:29050</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Heavy",
+            "Dashboard",
+            "<code>18482:29068</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Light",
+            "Dashboard",
+            "<code>18482:29056</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Medium",
+            "Dashboard",
+            "<code>18482:29062</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Heavy",
+            "Dashboard",
+            "<code>18482:29086</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Light",
+            "Dashboard",
+            "<code>18482:29074</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Positive",
+            "Medium",
+            "Dashboard",
+            "<code>18482:29080</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Heavy",
+            "Dashboard",
+            "<code>18482:29104</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Light",
+            "Dashboard",
+            "<code>18482:29092</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Notice",
+            "Medium",
+            "Dashboard",
+            "<code>18482:29098</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Heavy",
+            "Dashboard",
+            "<code>18482:29122</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Light",
+            "Dashboard",
+            "<code>18482:29110</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Negative",
+            "Medium",
+            "Dashboard",
+            "<code>18482:29116</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Heavy",
+            "Dashboard",
+            "<code>18482:29140</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Light",
+            "Dashboard",
+            "<code>18482:29128</code>",
+            "34 × 12"
+          ]
+        },
+        {
+          "cells": [
+            "Muted",
+            "Medium",
+            "Dashboard",
+            "<code>18482:29134</code>",
+            "34 × 12"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 18482:28972",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>State</code>, <code>Level</code>, <code>Type</code> and a Label input. The cards on retired nodes are replaced.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Type sets the shape, State and Level the colour.</strong> Default is a 48 × 18 pill, Voucher the same box squared off but for a 4 radius on the bottom right, Transaction 40 × 16 at radius 4 and Dashboard 34 × 12 with a 10pt label.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>All seventeen colour pairs read off the set</strong> — from Primary #005CE5 on white through to Muted Heavy #717883 — and they do not change with Type.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved against the token database.</strong> <code>Primary/Label/Fine</code> at 12 and <code>Primary/Label/Tiny</code> on Dashboard, both matched.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:badge:2.0.0</code>, a four-row mapping, four snippets and a 68-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Primary and Brand ship one Level.</strong> 68 of the theoretical 84 exist, so the Level control locks to Heavy on those two states. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>The text layer has two names</strong> — <code>#label</code> on Default and Voucher, <code>#value</code> on Transaction and Dashboard — for the same content. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Muted Light is not a light tint.</strong> Every other Light is a pale wash with dark text; Muted Light is #C2C5CA with white text at 2.17:1. Notice Heavy is 2.45:1. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong><code>State</code> holds intents, not interaction states</strong> — Information, Positive, Notice — which reads oddly beside every other component’s <code>State</code>. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "",

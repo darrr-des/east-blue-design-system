@@ -1,20 +1,23 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/avatar-group.js`.
+// Panel mirrors the property panel of set 18276:4554 (Avatar Group_New):
+// one axis, which is all the set exposes. The overflow tile's "+5" is
+// baked into that variant, not a property.
 const avatarGroupDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Layout',
+        label: 'layout',
         prop: 'layout',
         defaultValue: 'pair',
         options: [
-          { value: 'pair', label: 'Pair (2 avatars)' },
-          { value: 'trio', label: 'Trio (3 avatars)' },
-          { value: 'quad', label: 'Quad (4 avatars)' },
-          { value: 'overflow', label: 'Overflow (3 + N)' },
+          { value: 'pair',     label: 'pair' },
+          { value: 'overflow', label: 'overflow' },
+          { value: 'quad',     label: 'quad' },
+          { value: 'trio',     label: 'trio' },
         ],
       },
     ],
@@ -146,33 +149,37 @@ export const avatarGroup: ComponentData = {
     "heading": "Layouts",
     "specCards": [
       {
-        "cardKey": "avg-spec-2",
-        "demoKey": "pair",
+        "cardKey": "avg-spec-main",
+        "demoKey": "main",
+        "title": "Avatar Group",
+        "node": "18276:4554",
+        "description": "A 48 × 48 cluster of Avatar_New tiles — two overlapping at 32, or three or four at 24, with the last tile as a “+N” counter.",
+        "previewHtml": "<div id=\"avatar-group-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": avatarGroupDemoControls,
-        "title": "Pair — 2 avatars",
-        "node": "18276:4555",
-        "description": "Two avatars placed diagonally. Top-left uses dark-initials (brand), bottom-right uses initials-light (default).",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "Pair",
-                "mono": false,
+                "key": "layout",
+                "value": "pair",
                 "prop": "layout"
               },
               {
-                "key": "Avatar count",
+                "key": "Tiles",
                 "value": "2",
-                "mono": false,
-                "prop": "count"
+                "prop": "count-readout"
               },
               {
-                "key": "Container",
-                "value": "48 &#215; 48",
-                "mono": false
+                "key": "Tile",
+                "value": "Avatar_New instance"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "18276:4555 · 48 × 48",
+                "mono": true,
+                "prop": "variantNode"
               }
             ]
           },
@@ -181,346 +188,133 @@ export const avatarGroup: ComponentData = {
             "slug": "colors",
             "rows": [
               {
-                "key": "Brand bg",
-                "value": "#005CE5",
-                "mono": true,
-                "token": "avatar/brand/bg"
+                "key": "Dark tile",
+                "value": "#005CE5 / #FFFFFF",
+                "token": "—",
+                "swatch": "#005CE5"
               },
               {
-                "key": "Brand initials",
-                "value": "#FFFFFF",
-                "mono": true,
-                "token": "avatar/brand/initials"
+                "key": "Light tile",
+                "value": "#F6F9FD / #2340A9",
+                "token": "—",
+                "swatch": "#F6F9FD"
               },
               {
-                "key": "Default bg",
-                "value": "#F6F9FD",
-                "mono": true,
-                "token": "avatar/default/bg"
-              },
-              {
-                "key": "Default initials",
-                "value": "#2340A9",
-                "mono": true,
-                "token": "avatar/default/initials"
-              },
-              {
-                "key": "Border (all)",
+                "key": "Ring",
                 "value": "#E5EBF4",
+                "token": "—",
+                "swatch": "#E5EBF4"
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Size",
+                "value": "48 × 48",
+                "mono": true
+              },
+              {
+                "key": "Tile",
+                "value": "32 × 32",
                 "mono": true,
-                "token": "avatar/border"
+                "prop": "tile-readout"
+              },
+              {
+                "key": "Ring",
+                "value": "2 centred",
+                "mono": true,
+                "variants": {
+                  "layout:trio": {
+                    "value": "1.5 centred"
+                  },
+                  "layout:quad": {
+                    "value": "1.5 centred"
+                  },
+                  "layout:overflow": {
+                    "value": "1.5 centred"
+                  }
+                }
+              },
+              {
+                "key": "Placement",
+                "value": "Dark (0, 0) · light (16, 16) — overlapping",
+                "mono": true,
+                "variants": {
+                  "layout:trio": {
+                    "value": "Dark (12, 0) · dark (0, 24) · light (24, 24)"
+                  },
+                  "layout:quad": {
+                    "value": "2 × 2 grid — dark on top, light beneath"
+                  },
+                  "layout:overflow": {
+                    "value": "2 × 2 grid — the last tile is the counter"
+                  }
+                }
               }
             ]
           },
           {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Container",
-                "value": "48 &#215; 48",
-                "mono": true
-              },
-              {
-                "key": "Inner avatar",
-                "value": "24 &#215; 24",
-                "mono": true
-              },
-              {
-                "key": "Inner radius",
-                "value": "12px (circle)",
-                "mono": true
-              },
-              {
-                "key": "Inner border",
-                "value": "1.5px solid",
-                "mono": true
-              },
-              {
-                "key": "Overlap offset",
-                "value": "16px diagonal",
-                "mono": true
-              }
-            ]
-          },
-          {
             "label": "Typography",
             "slug": "typo",
             "rows": [
               {
-                "key": "Initials style",
-                "value": "Primary/Label/Bold/Small",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size/lh",
-                "value": "10px / 12px",
-                "mono": true
+                "key": "Tile initials",
+                "value": "Primary/Multi-line Label/Small",
+                "mono": true,
+                "variants": {
+                  "layout:trio": {
+                    "value": "Primary/Label/Fine"
+                  },
+                  "layout:quad": {
+                    "value": "Primary/Label/Fine"
+                  },
+                  "layout:overflow": {
+                    "value": "Primary/Label/Fine"
+                  }
+                }
               }
             ]
           }
         ],
-        "swift": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars<span class=\"syn-punc\">:</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Pair (2 avatars) automatically when members.count == 2</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars <span class=\"syn-eq\">=</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Pair (2 avatars) automatically when members.size == 2</span></code>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"avg-spec-pair-preview\"><svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">DM</text><circle cx=\"28\" cy=\"28\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"28\" y=\"31\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">LM</text></svg></div>"
-      },
-      {
-        "cardKey": "avg-spec-3",
-        "demoKey": "trio",
-        "demoControls": avatarGroupDemoControls,
-        "title": "Trio — 3 avatars",
-        "node": "18276:4558",
-        "description": "Three avatars in a triangular arrangement. Two on top (dark + dark), one default at bottom.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Variant",      "value": "Trio", "prop": "layout" },
-              { "key": "Avatar count", "value": "3" },
-              { "key": "Container",    "value": "48 &#215; 48" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Brand bg",         "value": "#005CE5", "token": "avatar/brand/bg" },
-              { "key": "Brand initials",   "value": "#FFFFFF", "token": "avatar/brand/initials" },
-              { "key": "Default bg",       "value": "#F6F9FD", "token": "avatar/default/bg" },
-              { "key": "Default initials", "value": "#2340A9", "token": "avatar/default/initials" },
-              { "key": "Border (all)",     "value": "#E5EBF4", "token": "avatar/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Container",      "value": "48 &#215; 48",                    "mono": true },
-              { "key": "Inner avatar",   "value": "24 &#215; 24",                    "mono": true },
-              { "key": "Inner radius",   "value": "12px (circle)",                   "mono": true },
-              { "key": "Inner border",   "value": "1.5px solid",                     "mono": true },
-              { "key": "Overlap offset", "value": "12px horizontal, 24px vertical",  "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Initials style", "value": "Primary/Label/Bold/Small", "mono": true },
-              { "key": "Font",           "value": "Proxima Soft Bold",        "mono": true },
-              { "key": "Size/lh",        "value": "10px / 12px",              "mono": true }
-            ]
-          }
-        ],
-        "swift": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars<span class=\"syn-punc\">:</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Trio (3 avatars) automatically when members.count == 3</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars <span class=\"syn-eq\">=</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Trio (3 avatars) automatically when members.size == 3</span></code>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"avg-spec-trio-preview\"><svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"24\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"24\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">DM</text><circle cx=\"12\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">LM</text><circle cx=\"36\" cy=\"36\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"39\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">AB</text></svg></div>"
-      },
-      {
-        "cardKey": "avg-spec-4",
-        "demoKey": "quad",
-        "demoControls": avatarGroupDemoControls,
-        "title": "Quad — 4 avatars",
-        "node": "18276:4562",
-        "description": "Four avatars in a 2×2 grid. Top row: brand + brand. Bottom row: default + default.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Variant",      "value": "Quad", "prop": "layout" },
-              { "key": "Avatar count", "value": "4" },
-              { "key": "Container",    "value": "48 &#215; 48" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Brand bg",         "value": "#005CE5", "token": "avatar/brand/bg" },
-              { "key": "Brand initials",   "value": "#FFFFFF", "token": "avatar/brand/initials" },
-              { "key": "Default bg",       "value": "#F6F9FD", "token": "avatar/default/bg" },
-              { "key": "Default initials", "value": "#2340A9", "token": "avatar/default/initials" },
-              { "key": "Border (all)",     "value": "#E5EBF4", "token": "avatar/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Container",      "value": "48 &#215; 48",      "mono": true },
-              { "key": "Inner avatar",   "value": "24 &#215; 24",      "mono": true },
-              { "key": "Inner radius",   "value": "12px (circle)",     "mono": true },
-              { "key": "Inner border",   "value": "1.5px solid",       "mono": true },
-              { "key": "Overlap offset", "value": "24px grid step",    "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Initials style", "value": "Primary/Label/Bold/Small", "mono": true },
-              { "key": "Font",           "value": "Proxima Soft Bold",        "mono": true },
-              { "key": "Size/lh",        "value": "10px / 12px",              "mono": true }
-            ]
-          }
-        ],
-        "swift": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars<span class=\"syn-punc\">:</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Quad (4 avatars) automatically when members.count == 4</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars <span class=\"syn-eq\">=</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Quad (4 avatars) automatically when members.size == 4</span></code>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"avg-spec-quad-preview\"><svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">DM</text><circle cx=\"36\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">LM</text><circle cx=\"12\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">AB</text><circle cx=\"36\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">CD</text></svg></div>"
-      },
-      {
-        "cardKey": "avg-spec-5plus",
-        "demoKey": "overflow",
-        "demoControls": avatarGroupDemoControls,
-        "title": "Overflow — 3 + \"+N\" badge",
-        "node": "18276:4585",
-        "description": "Overflow variant — 3 avatars plus a \"+N\" badge in the bottom-right position. Use when group has 5 or more members. The \"+N\" uses the default/light avatar style with overridable text content.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Variant",      "value": "Overflow", "prop": "layout" },
-              { "key": "Avatar count", "value": "3 + \"+N\"" },
-              { "key": "Badge",        "value": "\"+N\" (overridable text)" },
-              { "key": "Badge style",  "value": "default/light avatar" },
-              { "key": "Container",    "value": "48 &#215; 48" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Brand bg",         "value": "#005CE5", "token": "avatar/brand/bg" },
-              { "key": "Brand initials",   "value": "#FFFFFF", "token": "avatar/brand/initials" },
-              { "key": "Default bg",       "value": "#F6F9FD", "token": "avatar/default/bg" },
-              { "key": "Default initials", "value": "#2340A9", "token": "avatar/default/initials" },
-              { "key": "Border (all)",     "value": "#E5EBF4", "token": "avatar/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Container",      "value": "48 &#215; 48",                             "mono": true },
-              { "key": "Inner avatar",   "value": "24 &#215; 24",                             "mono": true },
-              { "key": "Inner radius",   "value": "12px (circle)",                            "mono": true },
-              { "key": "Inner border",   "value": "1.5px solid",                              "mono": true },
-              { "key": "Overlap offset", "value": "24px grid step · badge in bottom-right",   "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Initials style", "value": "Primary/Label/Bold/Small", "mono": true },
-              { "key": "Font",           "value": "Proxima Soft Bold",        "mono": true },
-              { "key": "Size/lh",        "value": "10px / 12px",              "mono": true }
-            ]
-          }
-        ],
-        "swift": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars<span class=\"syn-punc\">:</span> members<span class=\"syn-punc\">,</span> overflowFrom<span class=\"syn-punc\">:</span> <span class=\"syn-num\">3</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Shows first 3 avatars + \"+N\" badge when members.count &gt; 4</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>\n    avatars <span class=\"syn-eq\">=</span> members<span class=\"syn-punc\">,</span>\n    overflowFrom <span class=\"syn-eq\">=</span> <span class=\"syn-num\">3</span>\n<span class=\"syn-punc\">)</span></code>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"avg-spec-overflow-preview\"><svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">DM</text><circle cx=\"36\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">LM</text><circle cx=\"12\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">AB</text><circle cx=\"36\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">+5</text></svg></div>"
+        "swift": "EBAvatarGroup(\n    avatars: people.prefix(2),\n    layout: .pair\n)",
+        "compose": "EBAvatarGroup(\n    avatars = people.take(2),\n    layout = EBAvatarGroupLayout.Pair\n)"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by State",
-        "description": "Inner avatars use the same tokens as the main Avatar component. See Avatar / Style tab for the full token reference.",
+        "title": "Colors by Tile",
+        "description": "Every tile is an Avatar_New instance, so the colours are that component’s. Read off <code>get_node_info</code> on the four variants of set <code>18276:4554</code>; token paths could not be read.",
         "columns": [
-          "Value"
+          "Fill",
+          "Initials"
         ],
         "rows": [
           {
-            "role": "Brand avatar bg",
-            "token": "main/avatar/brand/bg",
+            "role": "Dark tile",
+            "token": "—",
             "values": [
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "Brand avatar border",
-            "token": "main/avatar/brand/border",
-            "values": [
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "Brand avatar initials",
-            "token": "main/avatar/brand/intials library typo",
-            "values": [
+              "#005CE5",
               "#FFFFFF"
             ]
           },
           {
-            "role": "Default avatar bg",
-            "token": "main/avatar/default/bg",
+            "role": "Light tile / counter",
+            "token": "—",
             "values": [
-              "#F6F9FD"
-            ]
-          },
-          {
-            "role": "Default avatar border",
-            "token": "main/avatar/default/border",
-            "values": [
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "Default avatar initials",
-            "token": "main/avatar/default/initials",
-            "values": [
+              "#F6F9FD",
               "#2340A9"
             ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [],
-        "rows": [
-          {
-            "role": "Container size",
-            "token": "48 × 48",
-            "values": []
           },
           {
-            "role": "Inner avatar size",
-            "token": "24 × 24",
-            "values": []
-          },
-          {
-            "role": "Inner avatar radius",
-            "token": "12px",
-            "values": []
-          },
-          {
-            "role": "Inner avatar border",
-            "token": "1.5px solid",
-            "values": []
-          },
-          {
-            "role": "Overlap offset (2 avatars)",
-            "token": "16px diagonal",
-            "values": []
-          },
-          {
-            "role": "Overlap offset (3 avatars)",
-            "token": "12px horizontal, 24px vertical",
-            "values": []
-          },
-          {
-            "role": "Overlap offset (4 avatars)",
-            "token": "24px grid step",
-            "values": []
+            "role": "Ring",
+            "token": "—",
+            "values": [
+              "#E5EBF4",
+              "–"
+            ]
           }
         ]
       }
@@ -536,31 +330,32 @@ export const avatarGroup: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:avatar:1.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:avatar:2.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.avatar.*  <span class=\"cmt\">// Compose</span>"
         }
-      ]
+      ],
+      "footnote": "Ships with the Avatar package. Not yet published — these are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "Set <code>18276:4554</code> has one axis. Natively the layout follows the number of avatars passed in, so the enum is a fallback rather than a parameter callers set by hand.",
       "rows": [
         {
-          "figma": "layout=pair",
-          "swift": ".ebLayout(.pair)",
-          "compose": "layout = EBAvatarGroupLayout.Pair"
+          "figma": "layout — pair, overflow, quad, trio",
+          "swift": "<code>layout: .pair / .trio / .quad / .overflow</code>",
+          "compose": "<code>layout = EBAvatarGroupLayout.Pair / Trio / Quad / Overflow</code>"
         },
         {
-          "figma": "layout=trio",
-          "swift": ".ebLayout(.trio)",
-          "compose": "layout = EBAvatarGroupLayout.Trio"
+          "figma": "Tile — Avatar_New instance (32 on pair, 24 elsewhere)",
+          "swift": "<code>avatars: [EBAvatarModel]</code>",
+          "compose": "<code>avatars: List&lt;EBAvatarModel&gt;</code>"
         },
         {
-          "figma": "layout=quad",
-          "swift": ".ebLayout(.quad)",
-          "compose": "layout = EBAvatarGroupLayout.Quad"
-        },
-        {
-          "figma": "layout=overflow",
-          "swift": ".ebLayout(.overflow)",
-          "compose": "layout = EBAvatarGroupLayout.Overflow"
+          "figma": "Counter tile — <code>Overflow</code> instance",
+          "swift": "<code>overflow: Int</code>",
+          "compose": "<code>overflow: Int</code>"
         }
       ],
       "filePaths": {
@@ -570,136 +365,248 @@ export const avatarGroup: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Pair / trio / quad — pass avatars, layout auto-detected from count</span>\n<span class=\"typ\">EBAvatarGroup</span>(<span class=\"prp\">avatars</span>: [\n    <span class=\"typ\">EBAvatar</span>(<span class=\"prp\">initials</span>: <span class=\"str\">\"DM\"</span>),\n    <span class=\"typ\">EBAvatar</span>(<span class=\"prp\">initials</span>: <span class=\"str\">\"LM\"</span>),\n    <span class=\"typ\">EBAvatar</span>(<span class=\"prp\">initials</span>: <span class=\"str\">\"AB\"</span>)\n])\n\n<span class=\"cmt\">// Overflow — pass full list + max visible count</span>\n<span class=\"typ\">EBAvatarGroup</span>(<span class=\"prp\">avatars</span>: allAvatars, <span class=\"prp\">maxVisible</span>: <span class=\"kw\">3</span>)\n    .<span class=\"fn\">ebLayout</span>(.<span class=\"prp\">overflow</span>)\n    <span class=\"cmt\">// renders 3 avatars + \"+N\" if allAvatars.count > 3</span>",
-        "compose": "<span class=\"cmt\">// Pair / trio / quad — pass avatars, layout auto-detected from count</span>\n<span class=\"typ\">EBAvatarGroup</span>(\n    <span class=\"prp\">avatars</span> = <span class=\"fn\">listOf</span>(\n        <span class=\"typ\">Avatar</span>(<span class=\"prp\">initials</span> = <span class=\"str\">\"DM\"</span>),\n        <span class=\"typ\">Avatar</span>(<span class=\"prp\">initials</span> = <span class=\"str\">\"LM\"</span>),\n        <span class=\"typ\">Avatar</span>(<span class=\"prp\">initials</span> = <span class=\"str\">\"AB\"</span>)\n    )\n)\n\n<span class=\"cmt\">// Overflow — pass full list + maxVisible</span>\n<span class=\"typ\">EBAvatarGroup</span>(\n    <span class=\"prp\">avatars</span> = allAvatars,\n    <span class=\"prp\">maxVisible</span> = <span class=\"kw\">3</span>,\n    <span class=\"prp\">layout</span> = <span class=\"typ\">EBAvatarGroupLayout</span>.<span class=\"prp\">Overflow</span>\n)"
+        "subheading": "pair",
+        "swift": "<span class=\"cmt\">// layout=pair — 18276:4555, 48 × 48; two 32 tiles overlapping.</span>\nEBAvatarGroup(\n    avatars: people.prefix(2),\n    layout: .pair\n)",
+        "compose": "<span class=\"cmt\">// layout=pair — 18276:4555, 48 × 48; two 32 tiles overlapping.</span>\nEBAvatarGroup(\n    avatars = people.take(2),\n    layout = EBAvatarGroupLayout.Pair\n)"
+      },
+      {
+        "subheading": "trio",
+        "swift": "<span class=\"cmt\">// layout=trio — 18276:4558; three 24 tiles, one above two.</span>\nEBAvatarGroup(\n    avatars: people.prefix(3),\n    layout: .trio\n)",
+        "compose": "<span class=\"cmt\">// layout=trio — 18276:4558; three 24 tiles, one above two.</span>\nEBAvatarGroup(\n    avatars = people.take(3),\n    layout = EBAvatarGroupLayout.Trio\n)"
+      },
+      {
+        "subheading": "quad",
+        "swift": "<span class=\"cmt\">// layout=quad — 18276:4562; four 24 tiles on a 2 × 2 grid.</span>\nEBAvatarGroup(\n    avatars: people.prefix(4),\n    layout: .quad\n)",
+        "compose": "<span class=\"cmt\">// layout=quad — 18276:4562; four 24 tiles on a 2 × 2 grid.</span>\nEBAvatarGroup(\n    avatars = people.take(4),\n    layout = EBAvatarGroupLayout.Quad\n)"
+      },
+      {
+        "subheading": "overflow",
+        "swift": "<span class=\"cmt\">// layout=overflow — 18276:4585; three tiles and a “+5” counter.</span>\nEBAvatarGroup(\n    avatars: people.prefix(3),\n    overflow: people.count - 3,\n    layout: .overflow\n)",
+        "compose": "<span class=\"cmt\">// layout=overflow — 18276:4585; three tiles and a “+5” counter.</span>\nEBAvatarGroup(\n    avatars = people.take(3),\n    overflow = people.size - 3,\n    layout = EBAvatarGroupLayout.Overflow\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Accessibility label",
-        "ios": "<code>.accessibilityLabel(\"3 participants: Dara, Lara, Alex\")</code>",
-        "android": "<code>contentDescription = \"3 participants: ...\"</code>"
+        "requirement": "One element",
+        "ios": "Group the cluster — <code>.accessibilityElement(children: .ignore)</code> — and label it “Ana, Ben and 5 others”.",
+        "android": "<code>Modifier.semantics(mergeDescendants = true)</code> with the same phrasing."
       },
       {
-        "requirement": "Role",
-        "ios": "Decorative if not tappable — use <code>.accessibilityHidden(true)</code> on individual avatars",
-        "android": "Same — prefer single group-level semantic"
+        "requirement": "Counter",
+        "ios": "Spell it out — “and 5 others”, not “plus five”.",
+        "android": "Same."
+      },
+      {
+        "requirement": "Decorative",
+        "ios": "When the names are already in the row, hide the group.",
+        "android": "<code>contentDescription = null</code>."
       },
       {
         "requirement": "Tap target",
-        "ios": "48 × 48 container meets iOS HIG when whole group is tappable",
-        "android": "Meets Material 48dp minimum"
+        "ios": "The whole 48 cluster clears 44pt; do not make individual tiles tappable at 24.",
+        "android": "Clears 48dp as one target."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "White on #005CE5 is 5.10:1; #2340A9 on #F6F9FD is 9.32:1. Both pass.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use Avatar Group for 2–4 participants in a list item, header, or shared-with indicator.",
-        "dontText": "Use for counts above 4 without an overflow \"+N\" badge — users can't infer total count from a cluster alone."
+        "doText": "Use pair for two people, trio and quad for three or four.",
+        "dontText": "Don’t use quad for five — that is what overflow is for."
       },
       {
-        "doText": "Provide a single group-level accessibility label listing all participants.",
-        "dontText": "Let each avatar announce separately — creates VoiceOver/TalkBack noise."
+        "doText": "Put the count of the people not shown in the counter.",
+        "dontText": "Don’t put the total in it; the three visible tiles already count."
+      },
+      {
+        "doText": "Keep the cluster at 48 so rows line up.",
+        "dontText": "Don’t scale the group; the tiles are fixed at 32 and 24."
+      },
+      {
+        "doText": "Order the tiles by relevance — the first is the most prominent.",
+        "dontText": "Don’t rely on the tile order to convey rank; it is not announced."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Semantic names: <code>Avatar</code>, <code>container</code>. Top-level component set uses \"Avatar Group\" — clean."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Every tile is an <code>Avatar_New</code> instance and the counter an <code>Overflow</code> instance, but no layer names the positions, so the four layouts are only distinguishable by coordinates."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Property <code>no. of initals</code> has typo, spaces, and uses string values. Rename to <code>count</code> with integer values."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>layout</code> is lowercase where the DS uses PascalCase, and its values mix a count word (pair, trio, quad) with a behaviour word (overflow)."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All colors bound to Avatar's tokens. Inherits the same typo in <code>intials</code> — tracked under Avatar's open issues."
+        "notes": "Colours and text styles come from the Avatar instances, which resolve <code>matched</code> — <code>Primary/Multi-line Label/Small</code> at 32 and <code>Primary/Label/Fine</code> at 24."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Maps to stacked avatars via ZStack (iOS) / Box + offset (Compose). Fixed 48×48 and count=2/3/4 don't match a dynamic native list — API should accept an array."
+        "notes": "Maps to one group that takes a list of avatars, but the layout enum duplicates what the list length already says."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No overflow state for 5+ avatars. Common DS pattern (\"+N\" badge) is missing."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "A display cluster; any pressed state belongs to whatever wraps it."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Inner avatars are hardcoded 24px containers, not Avatar component instances. Breaks compositional inheritance — changes to Avatar won't propagate."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Tiles are instances of the Avatar component, so they inherit its ring and text styles."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "One axis and the counter text are ready to map; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
       "total": 4,
-      "description": "",
+      "description": "<code>layout</code> (4) = 4 variants, all built and all 48 × 48. pair uses two 32 tiles; trio, quad and overflow use 24 tiles.",
       "columns": [
         "layout",
+        "Tiles",
+        "Tile size",
         "Node ID",
-        "Size",
-        "Notes"
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
             "pair",
-            "18276:4555",
-            "48 × 48",
-            "2 avatars — diagonal"
+            "2",
+            "32",
+            "<code>18276:4555</code>",
+            "48 × 48"
           ]
         },
         {
           "cells": [
             "trio",
-            "18276:4558",
-            "48 × 48",
-            "3 avatars — triangle"
+            "3",
+            "24",
+            "<code>18276:4558</code>",
+            "48 × 48"
           ]
         },
         {
           "cells": [
             "quad",
-            "18276:4562",
-            "48 × 48",
-            "4 avatars — 2×2 grid"
+            "4",
+            "24",
+            "<code>18276:4562</code>",
+            "48 × 48"
           ]
         },
         {
           "cells": [
             "overflow",
-            "18276:4585",
-            "48 × 48",
-            "3 avatars + \"+N\" overflow badge"
+            "3 + counter",
+            "24",
+            "<code>18276:4585</code>",
+            "48 × 48"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Counter control dropped · node 18276:4554",
+      "rows": [
+        {
+          "body": "<strong>The Counter input is gone.</strong> The overflow tile's “+5” is baked into that variant, not a Figma property, so a control for it only invited edits the set cannot express. The native <code>overflow</code> parameter stays in the Code tab, where it belongs.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 18276:4554",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>layout</code> plus a Counter input for the overflow tile’s text. The cards on retired nodes are replaced.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> Every layout is 48 × 48: pair is two 32 tiles at (0, 0) and (16, 16); trio is 24s at (12, 0), (0, 24) and (24, 24); quad and overflow are a 2 × 2 grid of 24s, with overflow’s last tile the counter.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Tiles inherit the Avatar ring</strong> — 2 at 32 and 1.5 at 24, centred, from <code>get_svg</code> on the Avatar set.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — a three-row mapping, four snippets and a four-row inventory. It ships with the Avatar package.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The layout enum duplicates the list length.</strong> Natively the cluster can pick its own arrangement from the number of avatars passed in, so three of the four values are redundant. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Naming needs a pass</strong> — <code>layout</code> is lowercase, and its values mix counts (pair, trio, quad) with a behaviour (overflow). <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

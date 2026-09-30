@@ -1,8 +1,10 @@
 import type { ComponentData, DemoControlSection } from '../types';
 import { buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/counter.js`.
+// Panel mirrors the property panel of set 4675:21497, in its order: two
+// variant axes, the two text properties and one boolean.
 const counterDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -10,45 +12,18 @@ const counterDemoControls: DemoControlSection[] = [
       {
         label: 'State',
         prop: 'state',
-        defaultValue: 'auto',
+        defaultValue: 'default',
         options: [
-          { value: 'auto', label: 'Auto (from count)' },
-          { value: 'filled', label: 'Filled' },
-          { value: 'empty', label: 'Empty' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'default',  label: 'Default' },
         ],
       },
-      {
-        label: 'With Limit',
-        prop: 'withLimit',
-        defaultValue: 'no',
-        options: [
-          { value: 'no', label: 'No (single integer)' },
-          { value: 'yes', label: 'Yes (slash format)' },
-        ],
-      },
-      {
-        label: 'Count',
-        prop: 'count',
-        defaultValue: '5',
-        options: [
-          { value: '0', label: '0' },
-          { value: '5', label: '5' },
-          { value: '10', label: '10' },
-          { value: '99', label: '99' },
-          { value: '247', label: '247' },
-        ],
-      },
-      {
-        label: 'Limit',
-        prop: 'limit',
-        defaultValue: '10',
-        options: [
-          { value: '5', label: '5' },
-          { value: '10', label: '10' },
-          { value: '50', label: '50' },
-          { value: '100', label: '100' },
-        ],
-      },
+      { label: 'hasLimit', prop: 'haslimit', control: 'toggle', defaultValue: 'true',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
+      { label: 'Count', prop: 'count', control: 'input', defaultValue: '0', options: [] },
+      { label: 'Limit', prop: 'limit', control: 'input', defaultValue: '10', options: [] },
+      { label: 'hasOverflow', prop: 'hasoverflow', control: 'toggle', defaultValue: 'false',
+        options: [ { value: 'false', label: 'False' }, { value: 'true', label: 'True' } ] },
     ],
   },
 ];
@@ -264,122 +239,16 @@ export const counter: ComponentData = {
     "recommendations": []
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "empty-—-with-limit",
-        "demoKey": "empty-limit",
+        "cardKey": "ctr-spec-main",
+        "demoKey": "main",
+        "title": "Counter",
+        "node": "4675:21497",
+        "description": "A 24-tall pill showing a count, optionally against a limit. It hugs its digits — 53 wide at “0 / 10”, a 24 circle with the count alone.",
+        "previewHtml": "<div id=\"counter-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": counterDemoControls,
-        "title": "Empty — with limit",
-        "node": "18482:71322",
-        "description": "Slash format showing zero progress against a limit (\"0 / 10\"). Muted label on neutral bg. Used when no slots are filled yet.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-empty-limit\"><span class=\"eb-preview eb-preview-counter eb-preview-counter--empty\">0 / 10</span></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "empty",
-                "mono": true,
-                "prop": "state"
-              },
-              {
-                "key": "with limit",
-                "value": "yes",
-                "mono": true,
-                "prop": "withLimit"
-              },
-              {
-                "key": "Example text",
-                "value": "0 / 10",
-                "mono": true,
-                "prop": "example"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#EEF2F9", "mono": true, "token": "counter/color/empty/bg",
-                "variants": { "state:filled": { "token": "counter/color/filled/bg" } }
-              },
-              { "key": "Label", "value": "#C2CFE5", "mono": true, "token": "counter/color/empty/label",
-                "variants": { "state:filled": { "value": "#072592", "token": "counter/color/filled/label" } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Height",
-                "value": "24",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "0 × 8 (hug width)",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "99 (pill)",
-                "mono": true
-              },
-              {
-                "key": "Example width",
-                "value": "53 (for \"0 / 10\")",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size / line-height",
-                "value": "14 / 14",
-                "mono": true
-              },
-              {
-                "key": "Letter-spacing",
-                "value": "+0.25",
-                "mono": true
-              },
-              {
-                "key": "Alignment",
-                "value": "center",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBCounter</span><span class=\"syn-punc\">(</span>count<span class=\"syn-punc\">: </span>0<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLimit</span><span class=\"syn-punc\">(</span>99<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.empty</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCounter</span><span class=\"syn-punc\">(</span>\n    count <span class=\"syn-eq\">=</span> 0<span class=\"syn-punc\">,</span>\n    limit <span class=\"syn-eq\">=</span> 99<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCounterState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Empty</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "filled-—-with-limit",
-        "demoKey": "filled-limit",
-        "demoControls": counterDemoControls,
-        "title": "Filled — with limit",
-        "node": "18482:71324",
-        "description": "Slash format with a filled count (\"10 / 10\"). Brand-blue label on neutral bg. Used when capacity is at or approaching the limit.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-filled-limit\"><span class=\"eb-preview eb-preview-counter eb-preview-counter--filled\">10 / 10</span></div>",
         "sections": [
           {
             "label": "Properties",
@@ -387,21 +256,44 @@ export const counter: ComponentData = {
             "rows": [
               {
                 "key": "State",
-                "value": "Filled",
-                "mono": true,
+                "value": "Default",
                 "prop": "state"
               },
               {
-                "key": "Has limit",
-                "value": "Yes",
-                "mono": true,
-                "prop": "withLimit"
+                "key": "hasLimit",
+                "value": "True",
+                "prop": "haslimit"
               },
               {
-                "key": "Char count",
-                "value": "120 / 200",
+                "key": "Count",
+                "value": "0",
+                "prop": "count"
+              },
+              {
+                "key": "Limit",
+                "value": "10",
+                "prop": "limit",
+                "variants": {
+                  "haslimit:false": {
+                    "value": "—"
+                  }
+                }
+              },
+              {
+                "key": "hasOverflow",
+                "value": "False",
+                "prop": "hasoverflow",
+                "variants": {
+                  "haslimit:true": {
+                    "value": "— only without a limit"
+                  }
+                }
+              },
+              {
+                "key": "Resolved variant",
+                "value": "4675:21502 · 53 × 24",
                 "mono": true,
-                "prop": "example"
+                "prop": "variantNode"
               }
             ]
           },
@@ -410,22 +302,22 @@ export const counter: ComponentData = {
             "slug": "colors",
             "rows": [
               {
-                "key": "Counter color",
-                "value": "#3C4A5C",
-                "mono": true,
-                "token": "main/counter/label"
+                "key": "Pill",
+                "value": "#EEF2F9",
+                "token": "—",
+                "swatch": "#EEF2F9"
               },
               {
-                "key": "Limit color",
-                "value": "#3C4A5C",
-                "mono": true,
-                "token": "main/counter/label"
-              },
-              {
-                "key": "Separator color",
-                "value": "#3C4A5C",
-                "mono": true,
-                "token": "main/counter/label"
+                "key": "Text",
+                "value": "#072592",
+                "token": "—",
+                "swatch": "#072592",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "swatch": "#C2CFE5"
+                  }
+                }
               }
             ]
           },
@@ -433,133 +325,50 @@ export const counter: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Padding (top)",
-                "value": "4",
-                "mono": true
-              },
-              {
-                "key": "Alignment",
-                "value": "right",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "0",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Caption/Regular",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft",
-                "mono": true
-              },
               {
                 "key": "Size",
-                "value": "12",
+                "value": "53 × 24",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Height",
+                "value": "24 — fixed",
                 "mono": true
               },
               {
-                "key": "Line-height",
-                "value": "16",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBCounter</span><span class=\"syn-punc\">(</span>\n    count<span class=\"syn-punc\">: </span><span class=\"syn-type\">Int</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"120\"</span><span class=\"syn-punc\">)!</span><span class=\"syn-punc\">,</span>\n    limit<span class=\"syn-punc\">: </span><span class=\"syn-type\">Int</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"200\"</span><span class=\"syn-punc\">)!</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCounter</span><span class=\"syn-punc\">(</span>\n    count <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"120\"</span><span class=\"syn-punc\">,</span>\n    limit <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"200\"</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "single-integer",
-        "demoKey": "single",
-        "demoControls": counterDemoControls,
-        "title": "Single integer",
-        "node": "18482:71326",
-        "description": "Standalone count — notifications, unread messages, pending items. Hugs tightly around the digit (24 × 24 for single digit, grows for 2+ digits). Empty state shown muted; filled state shown in brand-blue. Pairs with overflow handling (\"99+\") once <code>count</code> is parameterized.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-single\"><span class=\"eb-preview eb-preview-counter eb-preview-counter--filled\">5</span></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "with limit",
-                "value": "no",
+                "key": "Radius",
+                "value": "99 — pill",
                 "mono": true,
-                "prop": "withLimit"
-              },
-              {
-                "key": "state",
-                "value": "empty | filled",
-                "mono": true,
-                "prop": "state"
-              },
-              {
-                "key": "Example text",
-                "value": "0",
-                "mono": true,
-                "prop": "example"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              {
-                "key": "Empty bg",
-                "value": "#EEF2F9",
-                "mono": true,
-                "token": "counter/color/empty/bg"
-              },
-              {
-                "key": "Empty label",
-                "value": "#C2CFE5",
-                "mono": true,
-                "token": "counter/color/empty/label"
-              },
-              {
-                "key": "Filled bg",
-                "value": "#EEF2F9",
-                "mono": true,
-                "token": "counter/color/filled/bg"
-              },
-              {
-                "key": "Filled label",
-                "value": "#072592",
-                "mono": true,
-                "token": "counter/color/filled/label"
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Min-width",
-                "value": "24 (circle for single digit)",
-                "mono": true
-              },
-              {
-                "key": "Max-width",
-                "value": "hug (grows with digit count)",
-                "mono": true
+                "variants": {
+                  "haslimit:false": {
+                    "value": "Full — a 24 circle"
+                  }
+                }
               },
               {
                 "key": "Padding",
-                "value": "0 × 8",
+                "value": "8 horizontal",
+                "mono": true,
+                "variants": {
+                  "haslimit:false": {
+                    "value": "7.5 horizontal — the circle is exactly 24"
+                  }
+                }
+              },
+              {
+                "key": "Gap",
+                "value": "4 between Count, / and Limit",
+                "mono": true,
+                "variants": {
+                  "haslimit:false": {
+                    "value": "4 before the + when hasOverflow"
+                  }
+                }
+              },
+              {
+                "key": "Width",
+                "value": "Hugs the digits",
                 "mono": true
               }
             ]
@@ -569,211 +378,257 @@ export const counter: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Label style",
+                "key": "Count / Separator / Limit",
                 "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCounter</span><span class=\"syn-punc\">(</span>count<span class=\"syn-punc\">: </span>5<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"bell\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCounter</span><span class=\"syn-punc\">(</span>\n    count <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    showLimit <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBCounter(0, limit: 10)",
+        "compose": "EBCounter(\n    count = 0,\n    limit = 10\n)"
       }
     ],
-    colorsTables: [
-      // Card 1 — Empty / zero state
-      buildStatelessColorsTable({
-        title: 'Empty — Colors',
-        description: 'Counter at zero — neutral grey chip with muted label.',
-        rows: [
-          { role: 'Background', token: 'counter/color/empty/bg',    value: '#EEF2F9' },
-          { role: 'Label',      token: 'counter/color/empty/label', value: '#3C4A5C' },
+    "colorsTables": [
+      {
+        "title": "Colors by State",
+        "description": "Read off <code>get_node_info</code> on the four variants of set <code>4675:21497</code>; hasLimit does not change them. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Default",
+          "Disabled"
         ],
-      }),
-      // Card 2 — Filled / numeric value
-      buildStatelessColorsTable({
-        title: 'Filled — Colors',
-        description: 'Counter showing a numeric value on the same surface.',
-        rows: [
-          { role: 'Label',      token: 'main/counter/label',        value: '#3C4A5C' },
-          { role: 'Background', token: 'counter/color/empty/bg',    value: '#EEF2F9' },
-        ],
-      }),
-      // Card 3 — Active / accented
-      buildStatelessColorsTable({
-        title: 'Active — Colors',
-        description: 'Active counter highlight (e.g. unread or pending).',
-        rows: [
-          { role: 'Background', token: 'counter/color/active/bg',    value: '#EEF2F9' },
-          { role: 'Label',      token: 'counter/color/active/label', value: '#005CE5' },
-        ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Pill",
+            "token": "—",
+            "values": [
+              "#EEF2F9",
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Count / Separator / Limit",
+            "token": "—",
+            "values": [
+              "#072592",
+              "#C2CFE5"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:counter:2.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.counter.*  <span class=\"cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>4675:21497</code>, in panel order. <code>hasLimit</code> is really “was a limit passed”, and <code>hasOverflow</code> applies only when none was.",
       "rows": [
         {
-          "figma": "(hardcoded text \"0 / 10\", \"10 / 10\")",
-          "swift": "<code>count: Int</code>",
+          "figma": "State — Default, Disabled",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
+        },
+        {
+          "figma": "hasLimit — True, False",
+          "swift": "pass <code>limit:</code> or omit it",
+          "compose": "<code>limit: Int? = null</code>"
+        },
+        {
+          "figma": "Count — text",
+          "swift": "<code>EBCounter(_ count: Int)</code>",
           "compose": "<code>count: Int</code>"
         },
         {
-          "figma": "<code>with limit: yes | no</code>",
-          "swift": "<code>limit: Int?</code> (nil = single-integer format; set = slash format)",
+          "figma": "Limit — text",
+          "swift": "<code>limit: Int?</code>",
           "compose": "<code>limit: Int?</code>"
         },
         {
-          "figma": "<code>state: empty | filled</code>",
-          "swift": "<em>derived</em> from count (0 = empty, &gt;0 = filled)",
-          "compose": "<em>auto</em>, with override"
-        },
-        {
-          "figma": "(not modeled)",
-          "swift": "<code>maxDisplay: Int = 99</code>",
-          "compose": "<code>maxDisplay: Int = 99</code>"
+          "figma": "hasOverflow — boolean",
+          "swift": "<code>.ebOverflow(true)</code> — appends “+”",
+          "compose": "<code>overflow: Boolean = false</code>"
         }
-      ]
+      ],
+      "filePaths": {
+        "swift": "ios/Components/Counter/EBCounter.swift",
+        "compose": "android/components/counter/EBCounter.kt"
+      }
     },
-    "usageSnippets": [],
-    "accessibility": [
+    "usageSnippets": [
       {
-        "requirement": "Context-aware label",
-        "ios": "Set <code>.accessibilityLabel(\"5 unread messages\")</code> — screen readers should hear what the number means, not just the digits.",
-        "android": "Set <code>contentDescription = \"5 unread messages\"</code>."
+        "subheading": "With a limit",
+        "swift": "<span class=\"cmt\">// State=Default, hasLimit=True — 4675:21502, 53 × 24.</span>\nEBCounter(3, limit: 10)",
+        "compose": "<span class=\"cmt\">// State=Default, hasLimit=True — 4675:21502, 53 × 24.</span>\nEBCounter(\n    count = 3,\n    limit = 10\n)"
       },
       {
-        "requirement": "Zero state",
-        "ios": "When <code>count == 0</code>, default behavior (<code>hideWhenZero: true</code>) removes the pill from the accessibility tree entirely. Best practice — nothing to announce.",
-        "android": "Same — hidden at zero by default."
+        "subheading": "Count alone",
+        "swift": "<span class=\"cmt\">// State=Default, hasLimit=False — 4675:21508, a 24 circle.</span>\nEBCounter(3)",
+        "compose": "<span class=\"cmt\">// State=Default, hasLimit=False — 4675:21508, a 24 circle.</span>\nEBCounter(count = 3)"
+      },
+      {
+        "subheading": "Overflow",
+        "swift": "<span class=\"cmt\">// hasLimit=False, hasOverflow=True — the count is followed by “+”.</span>\nEBCounter(99)\n    .ebOverflow(true)",
+        "compose": "<span class=\"cmt\">// hasLimit=False, hasOverflow=True — the count is followed by “+”.</span>\nEBCounter(\n    count = 99,\n    overflow = true\n)"
+      },
+      {
+        "subheading": "Disabled",
+        "swift": "<span class=\"cmt\">// State=Disabled, hasLimit=True — 4675:21498; the text drops to #C2CFE5 and the pill stays #EEF2F9.</span>\nEBCounter(0, limit: 10)\n    .disabled(true)",
+        "compose": "<span class=\"cmt\">// State=Disabled, hasLimit=True — 4675:21498; the text drops to #C2CFE5 and the pill stays #EEF2F9.</span>\nEBCounter(\n    count = 0,\n    limit = 10,\n    enabled = false\n)"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Read as a value",
+        "ios": "Attach it to what it counts — <code>.accessibilityValue(\"3 of 10\")</code> on the row, not a separate element.",
+        "android": "Append it to the row’s <code>stateDescription</code>."
+      },
+      {
+        "requirement": "Spell the limit",
+        "ios": "“3 of 10”, not “3 slash 10”.",
+        "android": "Same — do not let the separator be read literally."
       },
       {
         "requirement": "Overflow",
-        "ios": "Announce the actual count, not \"99+\" — e.g. <code>\"247 unread\"</code>. The \"99+\" is a visual truncation, not the truth.",
-        "android": "Same — screen reader gets the real number."
+        "ios": "“99 plus” — announce the plus, it changes the meaning.",
+        "android": "Same."
+      },
+      {
+        "requirement": "Not interactive",
+        "ios": "A counter is a readout; do not attach a tap to it.",
+        "android": "No <code>clickable</code> on the pill."
       },
       {
         "requirement": "Contrast",
-        "ios": "Filled: #072592 on #EEF2F9 = 11.8:1 ✓. Empty: #C2CFE5 on #EEF2F9 = 1.4:1 — fails AA. Empty is decorative (shown only when the user opts out of <code>hideWhenZero</code>); don't use for counts that must be read.",
-        "android": "Same ratios apply."
+        "ios": "#072592 on #EEF2F9 is 11.87:1. Disabled #C2CFE5 on #EEF2F9 is 1.42:1 — unreadable, though that is the point of a disabled readout.",
+        "android": "Same ratios."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use the limit form when there is a cap the user is working towards.",
+        "dontText": "Don’t show a limit the user cannot affect."
+      },
+      {
+        "doText": "Use hasOverflow for a count past what the space can show — 99+.",
+        "dontText": "Don’t pair the “+” with a limit; the set has no such variant."
+      },
+      {
+        "doText": "Keep it to counts and progress, as the component description says.",
+        "dontText": "Don’t use it as a badge for status words — that is Badge."
+      },
+      {
+        "doText": "Let the pill hug; it grows with the digits.",
+        "dontText": "Don’t pad it to a fixed width in code."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Clean one-layer structure (container + label)."
+        "notes": "<code>Count</code>, <code>Separator</code>, <code>LimitGroup</code> / <code>Limit</code> and <code>Overflow</code> / <code>Plus</code> — every layer says what it holds."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>hasLimit</code> + <code>State</code> follow the naming guidelines; <code>Count</code> and <code>Limit</code> are exposed as text properties."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>State</code> and <code>hasLimit</code> are variant axes while <code>hasOverflow</code> is a boolean, though all three change what renders; and <code>hasLimit</code> only restates whether a Limit value was given."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Surface + label bound to <code>main/counter/color/*</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The text layers resolve <code>matched</code> to <code>Primary/Label/Small</code>. Three colour values are hard-coded; no bindings can be read."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to a tiny <code>EBCounter</code> view/composable — Text inside a Capsule."
+        "notes": "Maps to one <code>EBCounter</code> taking a count, an optional limit and an overflow flag."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Display-only — no interactive states needed. Overflow affordance is property-bound and the clamp rule is settled."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "A readout; Disabled is the only state and it is inherited from the control it sits in."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "na",
         "statusLabel": "Not Applicable",
-        "notes": "No assets."
+        "notes": "No icons or assets."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists. <code>State</code> → enum, <code>hasLimit</code> → <code>Bool</code>, <code>Count</code>/<code>Limit</code> → text parameters."
+        "notes": "Two axes, two text properties and one boolean are ready to map; no mappings are registered."
       }
     ],
     "codeConnect": [],
     "variants": {
       "total": 4,
-      "description": "<code>state</code> (2) × <code>with limit</code> (2) = <strong>4 variants</strong>. Both formats are kept — they solve different problems: single-integer for counts, slash for progress.",
+      "description": "<code>State</code> (2) × <code>hasLimit</code> (2) = 4 variants, all built. <code>Count</code>, <code>Limit</code> and <code>hasOverflow</code> add none; the pill hugs whatever the digits measure.",
       "columns": [
-        "#",
-        "Node",
-        "state",
-        "with limit",
-        "Format",
-        "Example",
+        "State",
+        "hasLimit",
+        "Node ID",
         "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "1",
-            "<code>18482:71322</code>",
-            "empty",
-            "yes",
-            "slash",
-            "<code>0 / 10</code>",
+            "Default",
+            "True",
+            "<code>4675:21502</code>",
             "53 × 24"
           ]
         },
         {
           "cells": [
-            "2",
-            "<code>18482:71324</code>",
-            "filled",
-            "yes",
-            "slash",
-            "<code>10 / 10</code>",
-            "59 × 24"
+            "Default",
+            "False",
+            "<code>4675:21508</code>",
+            "24 × 24"
           ]
         },
         {
           "cells": [
-            "3",
-            "<code>18482:71326</code>",
-            "empty",
-            "no",
-            "single integer",
-            "<code>0</code>",
-            "25 × 24"
+            "Disabled",
+            "True",
+            "<code>4675:21498</code>",
+            "53 × 24"
           ]
         },
         {
           "cells": [
-            "4",
-            "<code>18482:71328</code>",
-            "filled",
-            "no",
-            "single integer",
-            "<code>0</code>",
+            "Disabled",
+            "False",
+            "<code>4675:22734</code>",
             "24 × 24"
           ]
         }
@@ -781,6 +636,94 @@ export const counter: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Padding differs between the two shapes · node 4675:21497",
+      "rows": [
+        {
+          "body": "<strong>The count-only circle pads 7.5 a side, not 8.</strong> 7.5 + 9 + 7.5 is the 24 Figma reports; the limit pill pads 8 (8 + 9 + 4 + 5 + 4 + 15 + 8 = 53). The preview had both at 8 and drew the circle a pixel wide.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Widths beyond the sample copy are computed.</strong> The set ships “0” and “0 / 10” only, so a longer count grows from those paddings rather than from a second measurement. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 4675:21497",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>State</code>, <code>hasLimit</code>, the <code>Count</code> and <code>Limit</code> inputs and <code>hasOverflow</code>. The three cards on retired nodes <code>18482:71322</code>, <code>71324</code> and <code>71326</code> are replaced.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> 24 tall at 8 padding with 4 gaps: 53 × 24 at “0 / 10”, a 24 circle with the count alone. It hugs the digits, so typing a longer count widens it.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Colours read per State.</strong> The #EEF2F9 pill does not change; the text goes #072592 → #C2CFE5 when Disabled.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Typography resolved against the token database.</strong> Count, Separator and Limit all match <code>Primary/Label/Small</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:counter:2.0.0</code>, a five-row mapping, four snippets and a four-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong><code>hasOverflow</code> only applies without a limit.</strong> The “+” sits beside the count in the no-limit variant, so the panel locks it when hasLimit is on. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Three ways to say the same thing.</strong> <code>hasLimit</code> is a variant axis, <code>hasOverflow</code> a boolean and <code>Limit</code> a text property — natively passing a limit is the only signal needed. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

@@ -2,6 +2,8 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/checkbox.js`.
+// Panel mirrors the property panel of set 17143:2464: three variant axes.
+// indeterminate ships on State=Default only, so the panel snaps.
 const checkboxDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -9,13 +11,23 @@ const checkboxDemoControls: DemoControlSection[] = [
       {
         label: 'State',
         prop: 'state',
-        defaultValue: 'Default',
+        defaultValue: 'default',
         options: [
-          { value: 'Default', label: 'Default' },
-          { value: 'Pressed', label: 'Pressed' },
-          { value: 'Focused', label: 'Focused' },
-          { value: 'Disabled', label: 'Disabled' },
-          { value: 'Error', label: 'Error' },
+          { value: 'default',  label: 'Default' },
+          { value: 'pressed',  label: 'Pressed' },
+          { value: 'focused',  label: 'Focused' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'error',    label: 'Error' },
+        ],
+      },
+      {
+        label: 'isSelected',
+        prop: 'isselected',
+        defaultValue: 'false',
+        options: [
+          { value: 'false',         label: 'false' },
+          { value: 'true',          label: 'true' },
+          { value: 'indeterminate', label: 'indeterminate' },
         ],
       },
       {
@@ -23,9 +35,9 @@ const checkboxDemoControls: DemoControlSection[] = [
         prop: 'size',
         defaultValue: 'medium',
         options: [
-          { value: 'small', label: 'Small' },
+          { value: 'small',  label: 'Small' },
           { value: 'medium', label: 'Medium' },
-          { value: 'large', label: 'Large' },
+          { value: 'large',  label: 'Large' },
         ],
       },
     ],
@@ -158,36 +170,65 @@ export const checkbox: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "cb-spec-unchecked",
-        "demoKey": "unchecked",
+        "cardKey": "cb-spec-main",
+        "demoKey": "main",
+        "title": "Checkbox",
+        "node": "17143:2464",
+        "description": "A 16, 20 or 24 box at radius 4 — a 2 outline when clear, a filled box with a white tick or dash when not.",
+        "previewHtml": "<div id=\"checkbox-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": checkboxDemoControls,
-        "title": "Unchecked",
-        "node": "17143:2471",
-        "description": "Empty container with border stroke. Represents a deselected option.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "isSelected", "value": "false" },
-              { "key": "State", "value": "Default", "prop": "state" },
-              { "key": "Size", "value": "Medium", "prop": "size" }
+              {
+                "key": "State",
+                "value": "Default",
+                "prop": "state"
+              },
+              {
+                "key": "isSelected",
+                "value": "false",
+                "prop": "isselected"
+              },
+              {
+                "key": "Size",
+                "value": "Medium",
+                "prop": "size"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "17143:2471 · 20 × 20",
+                "mono": true,
+                "prop": "variantNode"
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border", "value": "#D7E0EF", "token": "main/checkbox/color/default/unselected/border",
-                "variants": {
-                  "state:Pressed":  { "value": "#1972F9", "token": "main/checkbox/color/pressed/unselected/border" },
-                  "state:Focused":  { "value": "#1972F9", "token": "main/checkbox/color/focused/unselected/border" },
-                  "state:Disabled": { "value": "#D7E0EF", "token": "main/checkbox/color/disabled/unselected/border" },
-                  "state:Error":    { "value": "#D81E1E", "token": "main/checkbox/color/error/unselected/border" }
-                }
+              {
+                "key": "Box fill",
+                "value": "None",
+                "token": "—",
+                "prop": "fill-readout"
+              },
+              {
+                "key": "Outline",
+                "value": "#D7E0EF · 2",
+                "token": "—",
+                "prop": "stroke-readout"
+              },
+              {
+                "key": "Glyph",
+                "value": "—",
+                "token": "—",
+                "prop": "glyph-readout"
               }
             ]
           },
@@ -195,173 +236,148 @@ export const checkbox: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Size", "value": "20 × 20px", "mono": true,
+              {
+                "key": "Size",
+                "value": "20 × 20",
+                "mono": true,
+                "prop": "size-readout"
+              },
+              {
+                "key": "Radius",
+                "value": "4",
+                "mono": true
+              },
+              {
+                "key": "Outline",
+                "value": "2, centred",
+                "mono": true,
                 "variants": {
-                  "size:small": { "value": "16 × 16px" },
-                  "size:large": { "value": "24 × 24px" }
+                  "isselected:true": {
+                    "hide": true
+                  },
+                  "isselected:indeterminate": {
+                    "hide": true
+                  }
                 }
               },
-              { "key": "Corner radius", "value": "4px (radius-1)", "mono": true },
-              { "key": "Border width", "value": "2px", "mono": true },
-              { "key": "Hit target", "value": "44 × 44 (mobile)", "mono": true }
+              {
+                "key": "Tick",
+                "value": "M6 10L9 13L15 7 · stroke 2.3",
+                "mono": true,
+                "variants": {
+                  "isselected:false": {
+                    "hide": true
+                  },
+                  "isselected:indeterminate": {
+                    "hide": true
+                  },
+                  "size:small": {
+                    "value": "M5 8L7 10L11 6 · stroke 2"
+                  },
+                  "size:large": {
+                    "value": "M6 12.5L9.5 16L17.5 8 · stroke 2.5"
+                  }
+                }
+              },
+              {
+                "key": "Dash",
+                "value": "M5 10H15 · stroke 2.3",
+                "mono": true,
+                "variants": {
+                  "isselected:false": {
+                    "hide": true
+                  },
+                  "isselected:true": {
+                    "hide": true
+                  },
+                  "size:small": {
+                    "value": "M4 8H12.5 · stroke 2.3"
+                  },
+                  "size:large": {
+                    "value": "M6 12H18 · stroke 2.5"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "—", "value": "icon-only control" }
+              {
+                "key": "Text",
+                "value": "— the checkbox carries no label; see CheckboxItem",
+                "mono": false
+              }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>isSelected<span class=\"syn-punc\">: </span>$checked<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    checked <span class=\"syn-eq\">=</span> checked<span class=\"syn-punc\">,</span>\n    onCheckedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-unchecked-preview\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"><rect x=\"1\" y=\"1\" width=\"18\" height=\"18\" rx=\"3\" stroke=\"#D7E0EF\" stroke-width=\"2\"></rect></svg></div>"
-      },
-      {
-        "cardKey": "cb-spec-checked",
-        "demoKey": "checked",
-        "demoControls": checkboxDemoControls,
-        "title": "Checked",
-        "node": "17143:2473",
-        "description": "Filled container with white checkmark. Represents a selected option. Checkmark is rendered via a separable <code>icon-check</code> child layer.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "isSelected", "value": "true" },
-              { "key": "State", "value": "Default", "prop": "state" },
-              { "key": "Size", "value": "Medium", "prop": "size" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Container bg", "value": "#1972F9", "token": "main/checkbox/color/default/selected/bg",
-                "variants": {
-                  "state:Pressed":  { "value": "#0F57C8", "token": "main/checkbox/color/pressed/selected/bg" },
-                  "state:Focused":  { "value": "#1972F9", "token": "main/checkbox/color/focused/selected/bg" },
-                  "state:Disabled": { "value": "#9BC5FD", "token": "main/checkbox/color/disabled/selected/bg" },
-                  "state:Error":    { "value": "#D81E1E", "token": "main/checkbox/color/error/selected/bg" }
-                }
-              },
-              { "key": "Checkmark", "value": "#FFFFFF", "token": "main/checkbox/color/default/selected/check" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Size", "value": "20 × 20px", "mono": true,
-                "variants": {
-                  "size:small": { "value": "16 × 16px" },
-                  "size:large": { "value": "24 × 24px" }
-                }
-              },
-              { "key": "Corner radius", "value": "4px (radius-1)", "mono": true },
-              { "key": "Border width", "value": "None (filled)", "mono": true },
-              { "key": "Hit target", "value": "44 × 44 (mobile)", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "—", "value": "icon-only control" }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>isSelected<span class=\"syn-punc\">: </span>$checked<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    checked <span class=\"syn-eq\">=</span> checked<span class=\"syn-punc\">,</span>\n    onCheckedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-checked-preview\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"><rect width=\"20\" height=\"20\" rx=\"4\" fill=\"#1972F9\"></rect><path d=\"M6 10L9 13L15 7\" stroke=\"white\" stroke-width=\"2.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div>"
+        "swift": "EBCheckbox(\n    isOn: $isOn,\n    size: .medium\n)",
+        "compose": "EBCheckbox(\n    checked = checked,\n    onCheckedChange = { checked = it },\n    size = EBCheckboxSize.Medium\n)"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "All interaction states now have defined colors. Token paths follow <code>main/checkbox/color/{state}/{role}</code> convention.",
+        "description": "Read off <code>get_node_info</code> across the 33 variants of set <code>17143:2464</code>; Size does not change them. Token paths could not be read; the plugin returns no variable bindings.",
         "columns": [
-          "Token",
-          "DEFAULT",
-          "PRESSED",
-          "DISABLED",
-          "ERROR"
+          "Unselected fill",
+          "Unselected outline",
+          "Selected fill"
         ],
         "rows": [
           {
-            "role": "Unchecked",
-            "token": "Border",
+            "role": "Default",
+            "token": "—",
             "values": [
-              "unselected/border",
+              "–",
               "#D7E0EF",
-              "#1972F9",
-              "#D7E0EF",
-              "#D81E1E"
+              "#1972F9"
             ]
           },
           {
-            "role": "Unchecked",
-            "token": "Container bg",
+            "role": "Pressed",
+            "token": "—",
             "values": [
-              "unselected/bg",
-              "–",
               "#EBF2FF",
-              "–",
-              "–"
-            ]
-          },
-          {
-            "role": "Checked",
-            "token": "Container bg",
-            "values": [
-              "selected/bg",
               "#1972F9",
-              "#0F57C8",
-              "#9BC5FD",
-              "#D81E1E"
-            ]
-          },
-          {
-            "role": "Checked",
-            "token": "Checkmark",
-            "values": [
-              "selected/icon-check",
-              "#FFFFFF",
-              "#FFFFFF",
-              "#FFFFFF",
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "Indeterminate",
-            "token": "Container bg",
-            "values": [
-              "indeterminate/bg",
-              "#1972F9",
-              "–",
-              "–",
-              "–"
-            ]
-          },
-          {
-            "role": "Indeterminate",
-            "token": "Dash icon",
-            "values": [
-              "indeterminate/icon",
-              "#FFFFFF",
-              "–",
-              "–",
-              "–"
+              "#0F57C8"
             ]
           },
           {
             "role": "Focused",
-            "token": "Border",
+            "token": "—",
             "values": [
-              "focused/border",
-              "#1972F9 (all isSelected values)"
+              "–",
+              "#1972F9",
+              "#1972F9"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "token": "—",
+            "values": [
+              "–",
+              "#D7E0EF",
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Error",
+            "token": "—",
+            "values": [
+              "–",
+              "#D81E1E",
+              "#D81E1E"
+            ]
+          },
+          {
+            "role": "Glyph",
+            "token": "—",
+            "values": [
+              "–",
+              "–",
+              "#FFFFFF"
             ]
           }
         ]
@@ -374,55 +390,51 @@ export const checkbox: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>\n\n<span class=\"cmt\">// Or in Package.swift:</span>\n.<span class=\"fn\">package</span>(\n    <span class=\"prp\">url</span>: <span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>,\n    <span class=\"prp\">from</span>: <span class=\"str\">\"2.0.0\"</span>\n)"
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"cmt\">// build.gradle.kts (app)</span>\n<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:checkbox:2.0.0\"</span>)\n}"
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:checkbox:2.0.0\"</span>)\n}"
         },
         {
           "label": "Import",
           "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.checkbox.*  <span class=\"cmt\">// Compose</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths. API shape is final — native implementation is pending."
+      "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "One row per property of set <code>17143:2464</code>. Natively only <code>Size</code> is a parameter — selection is a binding and the other four States are interaction or validation state.",
       "rows": [
         {
-          "figma": "isSelected",
-          "swift": "isOn: Binding&lt;Bool&gt;",
-          "compose": "checked: Boolean"
+          "figma": "State — Default, Pressed, Focused",
+          "swift": "the control’s own pressed and focus styling",
+          "compose": "<code>interactionSource</code>"
         },
         {
-          "figma": "isSelected = indeterminate",
-          "swift": "toggleIndeterminate",
-          "compose": "TriStateCheckbox"
+          "figma": "State — Disabled",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
         },
         {
-          "figma": "Size",
-          "swift": ".controlSize()",
-          "compose": "size = EBCheckboxSize.*"
+          "figma": "State — Error",
+          "swift": "<code>.ebError(true)</code>",
+          "compose": "<code>isError = true</code>"
         },
         {
-          "figma": "State = Disabled",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
+          "figma": "isSelected — false, true",
+          "swift": "<code>isOn: Binding&lt;Bool&gt;</code>",
+          "compose": "<code>checked: Boolean</code> + <code>onCheckedChange</code>"
         },
         {
-          "figma": "State = Pressed",
-          "swift": "—",
-          "compose": "interactionSource"
+          "figma": "isSelected — indeterminate",
+          "swift": "<code>.indeterminate</code> state",
+          "compose": "<code>EBToggleableState.Indeterminate</code>"
         },
         {
-          "figma": "State = Focused",
-          "swift": ".focused()",
-          "compose": "interactionSource"
-        },
-        {
-          "figma": "State = Error",
-          "swift": ".ebError(true)",
-          "compose": "isError = true"
+          "figma": "Size — Small 16, Medium 20, Large 24",
+          "swift": "<code>size: .small / .medium / .large</code>",
+          "compose": "<code>size = EBCheckboxSize.Small / Medium / Large</code>"
         }
       ],
       "filePaths": {
@@ -432,65 +444,69 @@ export const checkbox: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Unchecked",
-        "swift": "<span class=\"cmt\">// Unchecked (default state)</span>\n<span class=\"typ\">EBCheckbox</span>(<span class=\"prp\">isOn</span>: $isSelected)\n    .<span class=\"fn\">controlSize</span>(.<span class=\"prp\">regular</span>)\n\n<span class=\"cmt\">// Small size</span>\n<span class=\"typ\">EBCheckbox</span>(<span class=\"prp\">isOn</span>: $isSelected)\n    .<span class=\"fn\">controlSize</span>(.<span class=\"prp\">mini</span>)",
-        "compose": "<span class=\"cmt\">// Unchecked (default state)</span>\n<span class=\"typ\">EBCheckbox</span>(\n    <span class=\"prp\">checked</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">onCheckedChange</span> = { isSelected = it },\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBCheckboxSize</span>.Medium\n)\n\n<span class=\"cmt\">// Small size</span>\n<span class=\"typ\">EBCheckbox</span>(\n    <span class=\"prp\">checked</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">onCheckedChange</span> = { isSelected = it },\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBCheckboxSize</span>.Small\n)"
+        "subheading": "Unselected · Medium",
+        "swift": "<span class=\"cmt\">// State=Default, isSelected=false, Size=Medium — 17143:2471, 20 × 20.</span>\nEBCheckbox(isOn: $agreed, size: .medium)",
+        "compose": "<span class=\"cmt\">// State=Default, isSelected=false, Size=Medium — 17143:2471, 20 × 20.</span>\nEBCheckbox(\n    checked = agreed,\n    onCheckedChange = { agreed = it },\n    size = EBCheckboxSize.Medium\n)"
       },
       {
-        "subheading": "Checked",
-        "swift": "<span class=\"cmt\">// Checked (selected state)</span>\n<span class=\"typ\">EBCheckbox</span>(<span class=\"prp\">isOn</span>: .<span class=\"fn\">constant</span>(<span class=\"kw\">true</span>))\n    .<span class=\"fn\">controlSize</span>(.<span class=\"prp\">regular</span>)\n\n<span class=\"cmt\">// Bound to state</span>\n@<span class=\"typ\">State</span> <span class=\"kw\">private var</span> isChecked = <span class=\"kw\">true</span>\n<span class=\"typ\">EBCheckbox</span>(<span class=\"prp\">isOn</span>: $isChecked)\n    .<span class=\"fn\">controlSize</span>(.<span class=\"prp\">large</span>)",
-        "compose": "<span class=\"cmt\">// Checked (selected state)</span>\n<span class=\"typ\">EBCheckbox</span>(\n    <span class=\"prp\">checked</span> = <span class=\"kw\">true</span>,\n    <span class=\"prp\">onCheckedChange</span> = { isSelected = it },\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBCheckboxSize</span>.Medium\n)\n\n<span class=\"cmt\">// Bound to state</span>\n<span class=\"kw\">var</span> isChecked <span class=\"kw\">by</span> <span class=\"fn\">remember</span> { <span class=\"fn\">mutableStateOf</span>(<span class=\"kw\">true</span>) }\n<span class=\"typ\">EBCheckbox</span>(\n    <span class=\"prp\">checked</span> = isChecked,\n    <span class=\"prp\">onCheckedChange</span> = { isChecked = it }\n)"
+        "subheading": "Selected",
+        "swift": "<span class=\"cmt\">// State=Default, isSelected=true, Size=Medium — 17143:2473; #1972F9 with a white tick.</span>\nEBCheckbox(isOn: .constant(true), size: .medium)",
+        "compose": "<span class=\"cmt\">// State=Default, isSelected=true, Size=Medium — 17143:2473; #1972F9 with a white tick.</span>\nEBCheckbox(\n    checked = true,\n    onCheckedChange = { },\n    size = EBCheckboxSize.Medium\n)"
       },
       {
         "subheading": "Indeterminate",
-        "swift": "<span class=\"cmt\">// Indeterminate (partial selection)</span>\n<span class=\"typ\">EBCheckbox</span>(<span class=\"prp\">isOn</span>: $isSelected)\n    .<span class=\"fn\">controlSize</span>(.<span class=\"prp\">regular</span>)\n    .<span class=\"fn\">toggleIndeterminate</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"cmt\">// Indeterminate (partial selection)</span>\n<span class=\"typ\">TriStateCheckbox</span>(\n    <span class=\"prp\">state</span> = <span class=\"typ\">ToggleableState</span>.Indeterminate,\n    <span class=\"prp\">onClick</span> = { <span class=\"cmt\">/* cycle state */</span> },\n    <span class=\"prp\">modifier</span> = <span class=\"typ\">Modifier</span>.<span class=\"fn\">size</span>(<span class=\"typ\">EBCheckboxSize</span>.Medium)\n)"
-      },
-      {
-        "subheading": "Disabled",
-        "swift": "<span class=\"cmt\">// Disabled unchecked</span>\n<span class=\"typ\">EBCheckbox</span>(<span class=\"prp\">isOn</span>: $isSelected)\n    .<span class=\"fn\">controlSize</span>(.<span class=\"prp\">regular</span>)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)\n\n<span class=\"cmt\">// Disabled checked</span>\n<span class=\"typ\">EBCheckbox</span>(<span class=\"prp\">isOn</span>: .<span class=\"fn\">constant</span>(<span class=\"kw\">true</span>))\n    .<span class=\"fn\">controlSize</span>(.<span class=\"prp\">regular</span>)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"cmt\">// Disabled unchecked</span>\n<span class=\"typ\">EBCheckbox</span>(\n    <span class=\"prp\">checked</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">onCheckedChange</span> = {},\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBCheckboxSize</span>.Medium\n)\n\n<span class=\"cmt\">// Disabled checked</span>\n<span class=\"typ\">EBCheckbox</span>(\n    <span class=\"prp\">checked</span> = <span class=\"kw\">true</span>,\n    <span class=\"prp\">onCheckedChange</span> = {},\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBCheckboxSize</span>.Medium\n)"
+        "swift": "<span class=\"cmt\">// State=Default, isSelected=indeterminate, Size=Medium — 17733:1048; a white dash for a partial selection.</span>\n// A parent row whose children are partly selected.\nEBCheckbox(isOn: .indeterminate, size: .medium)",
+        "compose": "<span class=\"cmt\">// State=Default, isSelected=indeterminate, Size=Medium — 17733:1048; a white dash for a partial selection.</span>\nEBTriStateCheckbox(\n    state = EBToggleableState.Indeterminate,\n    onClick = { selectAll() },\n    size = EBCheckboxSize.Medium\n)"
       },
       {
         "subheading": "Error",
-        "swift": "<span class=\"cmt\">// Error state (form validation)</span>\n<span class=\"typ\">EBCheckbox</span>(<span class=\"prp\">isOn</span>: $isSelected)\n    .<span class=\"fn\">controlSize</span>(.<span class=\"prp\">regular</span>)\n    .<span class=\"fn\">ebError</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"cmt\">// Error state (form validation)</span>\n<span class=\"typ\">EBCheckbox</span>(\n    <span class=\"prp\">checked</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">onCheckedChange</span> = { isSelected = it },\n    <span class=\"prp\">isError</span> = <span class=\"kw\">true</span>,\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBCheckboxSize</span>.Medium\n)"
+        "swift": "<span class=\"cmt\">// State=Error, isSelected=false, Size=Medium — 17733:1002; a #D81E1E outline for an unticked required box.</span>\nEBCheckbox(isOn: $agreed, size: .medium)\n    .ebError(!agreed && submitted)",
+        "compose": "<span class=\"cmt\">// State=Error, isSelected=false, Size=Medium — 17733:1002; a #D81E1E outline for an unticked required box.</span>\nEBCheckbox(\n    checked = agreed,\n    onCheckedChange = { agreed = it },\n    size = EBCheckboxSize.Medium,\n    isError = !agreed && submitted\n)"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Minimum touch target",
-        "ios": "44 x 44 pt",
-        "android": "48 x 48 dp"
+        "requirement": "Label",
+        "ios": "A bare checkbox has no name — pair it with a label or set <code>.accessibilityLabel</code>. CheckboxItem does this for you.",
+        "android": "Use the labelled row, or set <code>contentDescription</code>."
       },
       {
-        "requirement": "Accessibility label",
-        "ios": "<code>.accessibilityLabel(\"Accept terms\")</code>",
-        "android": "<code>semantics { contentDescription = \"Accept terms\" }</code>"
-      },
-      {
-        "requirement": "Checked state announcement",
-        "ios": "VoiceOver reads \"checked\" / \"unchecked\" automatically via Toggle",
-        "android": "TalkBack reads state automatically via Checkbox semantics"
+        "requirement": "Tap target",
+        "ios": "All three sizes are below 44pt — expand the target with <code>.contentShape</code> or let the whole row take the tap.",
+        "android": "<code>Modifier.minimumInteractiveComponentSize()</code> for 48dp."
       },
       {
         "requirement": "Indeterminate",
-        "ios": "<code>toggleIndeterminate</code> reads \"mixed\"",
-        "android": "<code>TriStateCheckbox</code> reads \"partially checked\""
+        "ios": "Announce it as “mixed” — <code>.accessibilityValue(\"mixed\")</code> — not as checked.",
+        "android": "<code>ToggleableState.Indeterminate</code> announces “partially checked”."
+      },
+      {
+        "requirement": "Error",
+        "ios": "Colour alone carries Error — pair it with a message and <code>.accessibilityHint</code>.",
+        "android": "Same; expose the message with <code>error</code> semantics."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "The #D7E0EF outline is 1.42:1 against white — below the 3:1 a control boundary needs. Selected #1972F9 is 3.68:1 and Disabled #9BC5FD 1.78:1. White on #1972F9 is 3.68:1.",
+        "android": "Same ratios."
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Pair with a visible label adjacent to the checkbox. Checkboxes must always have associated text.",
-        "dontText": "Use for a single binary toggle — use Switch/Toggle instead. Checkboxes are for multi-select scenarios."
+        "doText": "Use indeterminate for a parent whose children are partly selected.",
+        "dontText": "Don’t use it as a third user-settable value — tapping it should resolve to checked."
       },
       {
-        "doText": "Use for multi-select scenarios — forms, filter lists, settings, and select-all patterns.",
-        "dontText": "Use a standalone Checkbox without an accessible label. Pair with CheckboxItem or an adjacent text label for form use."
+        "doText": "Match the size to the row — Medium in forms, Small in dense lists.",
+        "dontText": "Don’t use Large for a list of many items."
       },
       {
-        "doText": "Expand touch area via padding when using Small (16px) size — minimum touch target is 44pt / 48dp.",
-        "dontText": "Omit an accessible label. Use .accessibilityLabel / contentDescription when no visible label is present."
+        "doText": "Pair Error with a message under the field.",
+        "dontText": "Don’t rely on the red outline alone."
+      },
+      {
+        "doText": "Use CheckboxItem when the control needs a label.",
+        "dontText": "Don’t place a bare checkbox next to loose text and call it labelled."
       }
     ],
     "scorecard": [
@@ -499,121 +515,436 @@ export const checkbox: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Root frame named <code>container</code>. Simple, semantic hierarchy. No generic layer names."
+        "notes": "Each variant is a <code>container</code> holding <code>icon-check</code> or <code>icon-indeterminate</code> — nothing extra, nothing misnamed."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>isSelected</code> now uses <code>true/false</code> — corrected in Figma. Maps directly to Swift <code>Bool</code> / Kotlin <code>Boolean</code>. <code>indeterminate</code> property is a C5 concern (missing state variant)."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>State</code> and <code>Size</code> are PascalCase but <code>isSelected</code> is camelCase, and its values are lowercase strings rather than True/False, so the tri-state reads as three unrelated words."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All states have defined color values. Default, Pressed, Disabled, Error, Focused, and Indeterminate containers use distinct fills/strokes. Separable <code>icon-check</code> and <code>icon-indeterminate</code> layers present."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Ten colour values are hard-coded across the five states; no bindings can be read. There is no text layer to resolve."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Maps to <code>Toggle(.checkbox)</code> / <code>Checkbox</code>. Indeterminate maps to <code>TriStateCheckbox</code>. Label pairing via <code>CheckboxItem</code> compound component."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Maps to one checkbox with a size enum, but four of the five States are interaction or validation state natively, and <code>isSelected</code> is a binding — only Size is a parameter."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All 5 interaction states defined (Default, Pressed, Focused, Disabled, Error) × isSelected (true/false) × 3 sizes. Indeterminate added as <code>isSelected=indeterminate</code> with <code>icon-indeterminate</code> dash layer. 33 total variants."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Default, Pressed, Focused, Disabled and Error all ship, but only for <code>false</code> and <code>true</code> — indeterminate has no pressed, focused, disabled or error variant."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Checkmark rebuilt as a separable <code>icon-check</code> child vector layer inside each checked container. Can be tinted via <code>selected/icon-check</code> token and swapped natively."
+        "notes": "The tick and dash are vector paths that scale per size — 2, 2.3 and 2.5 stroke."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "All structural blockers resolved (C2, C5, C6). Ready for CLI mapping registration. No mappings registered yet."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Three axes are ready to map; no mappings are registered."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>isSelected=true/false</code> — maps directly to Swift <code>Bool</code> and Kotlin <code>Boolean</code>"
-      },
-      {
-        "aspect": "Icon/asset quality",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>icon-check</code> is now a named, separable child layer — can be mapped to a native icon slot via Code Connect"
-      },
-      {
-        "aspect": "State coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All interaction states defined — Default, Pressed, Focused, Disabled, Error, plus Indeterminate"
-      },
-      {
-        "aspect": "Usage descriptions",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All 33 variants have usage descriptions attached in Figma"
-      },
-      {
-        "aspect": "Native component file",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "EBCheckbox.swift / EBCheckbox.kt not yet created"
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 33,
-      "description": "5 <code>State</code> × 3 <code>isSelected</code> × 3 <code>Size</code> = 45 theoretical. <code>isSelected=indeterminate</code> only ships <code>State=Default</code>, so actual count is (5 × 2 × 3) + (1 × 1 × 3) = <strong>33 variants</strong>.",
+      "description": "<code>State</code> (5) × <code>isSelected</code> (3) × <code>Size</code> (3) would be 45; 33 are built, because <code>indeterminate</code> ships on <code>State=Default</code> only.",
       "columns": [
+        "State",
         "isSelected",
-        "States",
-        "Sizes",
-        "Count"
+        "Size",
+        "Node ID",
+        "Dimensions"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>false</strong>",
-            "Default, Pressed, Focused, Disabled, Error",
-            "Small, Medium, Large",
-            "15"
+            "Default",
+            "false",
+            "Small",
+            "<code>17143:2465</code>",
+            "16 × 16"
           ]
         },
         {
           "cells": [
-            "<strong>true</strong>",
-            "Default, Pressed, Focused, Disabled, Error",
-            "Small, Medium, Large",
-            "15"
+            "Default",
+            "true",
+            "Small",
+            "<code>17143:2468</code>",
+            "16 × 16"
           ]
         },
         {
           "cells": [
-            "<strong>indeterminate</strong>",
-            "Default only",
-            "Small, Medium, Large",
-            "3"
+            "Default",
+            "indeterminate",
+            "Small",
+            "<code>17733:1044</code>",
+            "16 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Pressed",
+            "false",
+            "Small",
+            "<code>17733:968</code>",
+            "16 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Pressed",
+            "true",
+            "Small",
+            "<code>17733:980</code>",
+            "16 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Focused",
+            "false",
+            "Small",
+            "<code>17733:971</code>",
+            "16 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Focused",
+            "true",
+            "Small",
+            "<code>17733:984</code>",
+            "16 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "false",
+            "Small",
+            "<code>17733:974</code>",
+            "16 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "true",
+            "Small",
+            "<code>17733:988</code>",
+            "16 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "false",
+            "Small",
+            "<code>17733:977</code>",
+            "16 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "true",
+            "Small",
+            "<code>17733:992</code>",
+            "16 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "false",
+            "Medium",
+            "<code>17143:2471</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "true",
+            "Medium",
+            "<code>17143:2473</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "indeterminate",
+            "Medium",
+            "<code>17733:1048</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Pressed",
+            "false",
+            "Medium",
+            "<code>17733:996</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Pressed",
+            "true",
+            "Medium",
+            "<code>17733:1004</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Focused",
+            "false",
+            "Medium",
+            "<code>17733:998</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Focused",
+            "true",
+            "Medium",
+            "<code>17733:1008</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "false",
+            "Medium",
+            "<code>17733:1000</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "true",
+            "Medium",
+            "<code>17733:1012</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "false",
+            "Medium",
+            "<code>17733:1002</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "true",
+            "Medium",
+            "<code>17733:1016</code>",
+            "20 × 20"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "false",
+            "Large",
+            "<code>17143:2476</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "true",
+            "Large",
+            "<code>17143:2478</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "indeterminate",
+            "Large",
+            "<code>17733:1052</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Pressed",
+            "false",
+            "Large",
+            "<code>17733:1020</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Pressed",
+            "true",
+            "Large",
+            "<code>17733:1028</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Focused",
+            "false",
+            "Large",
+            "<code>17733:1022</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Focused",
+            "true",
+            "Large",
+            "<code>17733:1032</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "false",
+            "Large",
+            "<code>17733:1024</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "true",
+            "Large",
+            "<code>17733:1036</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "false",
+            "Large",
+            "<code>17733:1026</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "true",
+            "Large",
+            "<code>17733:1040</code>",
+            "24 × 24"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Style + Code tabs rebuilt against the live set · node 17143:2464",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to one card with the Figma property panel</strong> — <code>State</code>, <code>isSelected</code> and <code>Size</code>. The three cards on retired nodes are replaced.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Preview redrawn from the set.</strong> Small 16, Medium 20 and Large 24, all at radius 4: a 2 outline when clear, a filled box with a white glyph when not. The tick and dash paths and their 2 / 2.3 / 2.5 strokes come from <code>get_svg</code> on each size.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Ten colour values read per State.</strong> Pressed is the only one that fills an unselected box (#EBF2FF inside a #1972F9 outline); Pressed selected deepens to #0F57C8 and Disabled selected lightens to #9BC5FD.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt on the live set</strong> — install <code>com.eastblue.ds:checkbox:2.0.0</code>, a six-row mapping, four snippets and a 33-row inventory.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>indeterminate ships on Default only.</strong> 33 of the theoretical 45 exist — there is no pressed, focused, disabled or error indeterminate box — so the panel snaps. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>The unselected outline fails the 3:1 a control boundary needs</strong> — #D7E0EF is 1.42:1 on white, and Disabled selected #9BC5FD is 1.78:1. Even the selected #1972F9 is 3.68:1. <span class=\"tag-open tag-c3\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>All three sizes are below the minimum tap target</strong> — 16, 20 and 24 against 44pt / 48dp — so the row has to carry the target. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Naming is mixed</strong> — <code>State</code> and <code>Size</code> PascalCase beside a camelCase <code>isSelected</code> whose values are lowercase words. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>The Overview tab still describes the earlier assessment.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.5.0",
       "date": "March 2026",

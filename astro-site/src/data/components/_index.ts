@@ -17,6 +17,7 @@ import { callout } from './callout';
 import { carouselCard } from './carousel-card';
 import { carouselItem } from './carousel-item';
 import { chatField } from './chat-field';
+import { checkboxItem } from './checkbox-item';
 import { checkbox } from './checkbox';
 import { chip } from './chip';
 import { counter } from './counter';
@@ -115,6 +116,7 @@ export const componentMap: Record<string, ComponentData> = {
   'carousel-item': carouselItem,
   'chat-field': chatField,
   'checkbox': checkbox,
+  'checkbox-item': checkboxItem,
   'chip': chip,
   'counter': counter,
   'countdown-promo': countdownPromo,

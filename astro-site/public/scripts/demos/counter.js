@@ -1,191 +1,152 @@
-/* Auto-extracted from assessment-src/components/counter.html.
- * Powers the live-preview dropdowns/toggles for the counter component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs counter
+/* Counter — Style tab demo.
+ * Rebuilt from Figma component set 4675:21497 (GCash DS 2026 Working File).
+ * Fills, offsets and the text style read off get_node_info and
+ * get_styled_text_segments.
+ *
+ * Panel (set 4675:21497, from the property-panel screenshot):
+ *   State       · Disabled, Default   (variant)
+ *   hasLimit    · True, False         (variant)
+ *   Count       · "0"                 (text)
+ *   Limit       · "10"                (text)
+ *   hasOverflow · False               (boolean)
+ * 2 x 2 = 4 variants, all built.
+ *
+ * hasLimit=True is a 53 x 24 pill — 8 padding, Count, a 4 gap, the "/"
+ * separator, another 4 gap, the Limit. hasLimit=False is a 24 circle
+ * holding the Count alone, with a hidden "+" that hasOverflow reveals.
+ * Both hug their text, so the preview measures the digits rather than
+ * assuming the sample's width.
  */
-/* ── Counter JS ─────────────────────────────────────────────────── */
-/* Counter — single-integer count pill. `count` drives the text.
-   Overflow collapses to "maxDisplay+" (e.g. "99+"). `state` auto-
-   derives from count unless explicitly overridden.                   */
 
-function _counterRender(opts) {
-  var rawCount   = opts.count;
-  var rawLimit   = opts.limit;
-  var rawMax     = opts.maxDisplay;
-  var withLimit  = opts.withLimit === 'yes';
-  var stateMode  = opts.state || 'auto';
+var CTR_NODES = {
+  'default|true': '4675:21502',  'default|false': '4675:21508',
+  'disabled|true': '4675:21498', 'disabled|false': '4675:22734'
+};
+var CTR_BG = '#EEF2F9';
+var CTR_TEXT = { 'default': '#072592', 'disabled': '#C2CFE5' };
+var CTR_H = 24, CTR_GAP = 4;
+/* Horizontal padding differs between the two shapes: the limit pill is
+ * 8 a side (8 + 9 + 4 + 5 + 4 + 15 + 8 = 53, the width Figma reports),
+ * the count-only circle 7.5 (7.5 + 9 + 7.5 = 24). Anything wider than the
+ * sample grows from those paddings — that part is computed, not read. */
+function _ctrPad(c) { return _ctrOn(c.haslimit, true) ? 8 : 7.5; }
 
-  // Parse count
-  var countNum = parseInt(rawCount, 10);
-  if (isNaN(countNum) || countNum < 0) countNum = 0;
+function _ctrOn(v, def) { return v == null ? def : v === 'true'; }
+function _ctrKey(c) { return c.state + '|' + c.haslimit; }
 
-  var maxNum = parseInt(rawMax, 10);
-  if (isNaN(maxNum) || maxNum < 1) maxNum = 99;
+/* The pill hugs, so the digits have to be measured. Figma's own sample
+ * gives the anchors: "0" is 9 wide, "/" 5, "10" 15 and "+" 8 at 14pt. */
+var _ctrCanvas = null;
+function _ctrTextW(text, known) {
+  if (known && known[text] != null) return known[text];
+  try {
+    _ctrCanvas = _ctrCanvas || document.createElement('canvas');
+    var ctx = _ctrCanvas.getContext('2d');
+    ctx.font = "700 14px 'Proxima Soft', sans-serif";
+    return Math.ceil(ctx.measureText(text).width + 0.25 * text.length);
+  } catch (e) { return text.length * 8; }
+}
+var CTR_KNOWN = { '0': 9, '/': 5, '10': 15, '+': 8 };
 
-  var displayText;
-  if (withLimit) {
-    // Slash format — render "count / limit". Clamp count to limit visually.
-    var limitNum = parseInt(rawLimit, 10);
-    if (isNaN(limitNum) || limitNum < 1) limitNum = 10;
-    var shownCount = Math.min(countNum, limitNum);
-    displayText = shownCount + ' / ' + limitNum;
-  } else {
-    // Single-integer format with overflow
-    displayText = (countNum > maxNum) ? (maxNum + '+') : String(countNum);
+function _ctrParts(c) {
+  var count = c.count == null ? '0' : c.count;
+  var parts = [{ t: count, w: _ctrTextW(count, CTR_KNOWN) }];
+  if (_ctrOn(c.haslimit, true)) {
+    parts.push({ t: '/', w: CTR_KNOWN['/'] });
+    parts.push({ t: c.limit == null ? '10' : c.limit, w: _ctrTextW(c.limit == null ? '10' : c.limit, CTR_KNOWN) });
+  } else if (_ctrOn(c.hasoverflow, false)) {
+    parts.push({ t: '+', w: CTR_KNOWN['+'] });
   }
-
-  // Derive state
-  var isFilled;
-  if (stateMode === 'filled')      isFilled = true;
-  else if (stateMode === 'empty')  isFilled = false;
-  else                              isFilled = countNum > 0;
-
-  var classes = [
-    'eb-preview',
-    'eb-preview-counter',
-    isFilled ? 'eb-preview-counter--filled' : 'eb-preview-counter--empty'
-  ];
-  return '<span class="' + classes.join(' ') + '">' + _counterEscape(displayText) + '</span>';
+  return parts;
 }
 
-function _counterEscape(s) {
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+function _ctrWidth(c) {
+  var parts = _ctrParts(c);
+  var text = parts.reduce(function (a, p) { return a + p.w; }, 0) + CTR_GAP * (parts.length - 1);
+  return Math.max(CTR_H, _ctrPad(c) * 2 + text);
 }
 
-/* In Context — Counter as trailing content on a list row (matches
-   real product usage: Avatar + Label + Chevron + Counter).           */
-function _counterChevronSvg() {
-  return '<svg class="eb-preview-list-row__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
-    '<path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' +
-  '</svg>';
-}
-
-function _counterListRow(label, count, withLimit, limit) {
-  return '<div class="eb-preview eb-preview-list-row">' +
-    '<div class="eb-preview-list-row__avatar" aria-hidden="true"></div>' +
-    '<div class="eb-preview-list-row__label">' + _counterEscape(label) + '</div>' +
-    '<div class="eb-preview-list-row__trailing">' +
-      _counterChevronSvg() +
-      _counterRender({
-        count: count,
-        withLimit: withLimit || 'no',
-        limit: limit || '10',
-        maxDisplay: '99',
-        state: 'auto'
-      }) +
-    '</div>' +
-  '</div>';
-}
-
-function _counterContextMarkup() {
-  // Three realistic uses — two single-integer list rows + one slash-format
-  // row showing progress-against-capacity (beneficiaries used).
-  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm">' +
-    _counterListRow('Notifications', 5,   'no') +
-    _counterListRow('Activity',      247, 'no') +
-    _counterListRow('Beneficiaries', 3,   'yes', '10') +
-  '</div>';
-}
-
-function _counterUpdate() {
-  var state     = document.getElementById('counter-ctrl-state');
-  var countEl   = document.getElementById('counter-ctrl-count');
-  var limitEl   = document.getElementById('counter-ctrl-limit');
-  var maxEl     = document.getElementById('counter-ctrl-max');
-  var withLimit = document.getElementById('counter-ctrl-withlimit');
-  var preview   = document.getElementById('counter-demo-preview');
-  if (!preview) return;
-  preview.innerHTML = _counterRender({
-    state:      state ? state.value : 'auto',
-    count:      countEl ? countEl.value : '5',
-    limit:      limitEl ? limitEl.value : '10',
-    maxDisplay: maxEl ? maxEl.value : '99',
-    withLimit:  withLimit ? withLimit.value : 'no'
+function _ctrRender(c) {
+  var w = _ctrWidth(c), fill = CTR_TEXT[c.state] || CTR_TEXT['default'];
+  var parts = _ctrParts(c);
+  var textW = parts.reduce(function (a, p) { return a + p.w; }, 0) + CTR_GAP * (parts.length - 1);
+  var x = (w - textW) / 2;
+  var s = '<svg width="' + w + '" height="' + CTR_H + '" viewBox="0 0 ' + w + ' ' + CTR_H +
+          '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  s += '<rect x="0" y="0" width="' + w + '" height="' + CTR_H + '" rx="' + (CTR_H / 2) + '" fill="' + CTR_BG + '"/>';
+  parts.forEach(function (p) {
+    s += '<text class="ctr-text" x="' + (x + p.w / 2) + '" y="12" font-size="14" font-weight="700" fill="' + fill +
+         '" text-anchor="middle" dominant-baseline="central">' + p.t + '</text>';
+    x += p.w + CTR_GAP;
   });
+  return s + '</svg>';
 }
 
-/* ── Spec card state (Button-style) ──────────────────────────────── */
+/* ── Per-card state — Figma's default variant ──────────────────────── */
 var _specCards = {
-  'empty-limit':  { state: 'empty',  withLimit: 'yes', count: '0',  limit: '10' },
-  'filled-limit': { state: 'filled', withLimit: 'yes', count: '10', limit: '10' },
-  'single':       { state: 'auto',   withLimit: 'no',  count: '5',  limit: '10' }
+  main: { state: 'default', haslimit: 'true', hasoverflow: 'false', count: '0', limit: '10' }
 };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  var hasLimit = card.withLimit === 'yes';
-  var lines = [];
-  if (hasLimit) {
-    lines.push('EBCounter(');
-    lines.push('    count: ' + card.count + ',');
-    lines.push('    limit: ' + card.limit);
-    lines.push(')');
-  } else {
-    lines.push('EBCounter(count: ' + card.count + ')');
-    lines.push('    .ebMaxDisplay(99)');
-  }
-  if (card.state === 'empty') lines.push('    .ebState(.empty)');
-  else if (card.state === 'filled') lines.push('    .ebState(.filled)');
-  return lines.join('\n');
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function buildSwiftSnippet(cardKey, c) {
+  var l = ['EBCounter(' + (c.count || '0')];
+  if (_ctrOn(c.haslimit, true)) l[0] += ', limit: ' + (c.limit || '10');
+  l[0] += ')';
+  if (!_ctrOn(c.haslimit, true) && _ctrOn(c.hasoverflow, false)) l.push('    .ebOverflow(true)');
+  if (c.state === 'disabled') l.push('    .disabled(true)');
+  return l.join('\n');
 }
-
-function buildComposeSnippet(type, card) {
-  var hasLimit = card.withLimit === 'yes';
-  var lines = ['EBCounter('];
-  lines.push('    count = ' + card.count + ',');
-  if (hasLimit) lines.push('    limit = ' + card.limit + ',');
-  else          lines.push('    maxDisplay = 99,');
-  if (card.state === 'empty')      lines.push('    state = EBCounterState.Empty');
-  else if (card.state === 'filled') lines.push('    state = EBCounterState.Filled');
-  else                              lines.push('    // state derived from count');
-  lines.push(')');
-  return lines.join('\n');
+function buildComposeSnippet(cardKey, c) {
+  var l = ['EBCounter(', '    count = ' + (c.count || '0') + ','];
+  if (_ctrOn(c.haslimit, true)) l.push('    limit = ' + (c.limit || '10') + ',');
+  else if (_ctrOn(c.hasoverflow, false)) l.push('    overflow = true,');
+  if (c.state === 'disabled') l.push('    enabled = false,');
+  l[l.length - 1] = l[l.length - 1].replace(/,$/, '');
+  l.push(')');
+  return l.join('\n');
 }
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
+/* ── Control handler ────────────────────────────────────────────────── */
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview pill */
-  var previewEl = document.getElementById('counter-spec-' + cardStyle);
-  if (previewEl) {
-    previewEl.innerHTML = _counterRender({
-      count: card.count,
-      limit: card.limit,
-      maxDisplay: '99',
-      withLimit: card.withLimit,
-      state: card.state
-    });
-  }
+  /* Limit belongs to hasLimit; overflow only exists without one. */
+  var lock = function (name, disabled) {
+    var row = document.querySelector('[data-panel-card="' + cardStyle + '"][data-panel-prop="' + name + '"]');
+    if (!row) return;
+    var input = row.querySelector('input');
+    if (input) input.disabled = disabled;
+    row.classList.toggle('is-disabled', disabled);
+  };
+  lock('limit', !_ctrOn(card.haslimit, true));
+  lock('hasoverflow', _ctrOn(card.haslimit, true));
 
-  /* Update properties text */
-  ['state', 'withLimit', 'example'].forEach(function(p) {
-    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
-    if (!el) return;
-    var span = el.querySelector('.spec-prop-hex') || el;
-    if (p === 'state') {
-      span.textContent = card.state.charAt(0).toUpperCase() + card.state.slice(1);
-    } else if (p === 'withLimit') {
-      span.textContent = card.withLimit;
-    } else if (p === 'example') {
-      var hasLimit = card.withLimit === 'yes';
-      span.textContent = hasLimit ? (card.count + ' / ' + card.limit) : card.count;
-    }
-  });
+  var host = document.getElementById('counter-spec-' + cardStyle);
+  if (host) host.innerHTML = _ctrRender(card);
 
-  /* DEV code update */
+  var put = function (name, text) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + name + '"]');
+    if (el) el.textContent = text;
+  };
+  put('state', card.state.charAt(0).toUpperCase() + card.state.slice(1));
+  put('haslimit', card.haslimit === 'true' ? 'True' : 'False');
+  put('hasoverflow', _ctrOn(card.haslimit, true) ? '—' : (card.hasoverflow === 'true' ? 'True' : 'False'));
+  put('count', card.count);
+  put('limit', _ctrOn(card.haslimit, true) ? card.limit : '—');
+  put('size-readout', _ctrWidth(card) + ' × ' + CTR_H);
+  put('variantNode', CTR_NODES[_ctrKey(card)] + ' · ' + _ctrWidth(card) + ' × ' + CTR_H);
+
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
     var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
       var code = getSnippet(cardStyle, lang, card);
@@ -196,32 +157,31 @@ function updateSpecCard(cardStyle, prop, value) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-function initSpecCards() {
-  Object.keys(_specCards).forEach(function(k) {
+/* ── Overview tab shim — the old panel drove counter-ctrl-* fields. ── */
+function _counterUpdate() {
+  var el = document.getElementById('counter-demo-preview');
+  if (!el) return;
+  var v = function (id, f) { var n = document.getElementById(id); return n ? n.value : f; };
+  var withLimit = v('counter-ctrl-withlimit', 'yes') !== 'no';
+  el.innerHTML = _ctrRender({
+    state: v('counter-ctrl-state', 'default'),
+    haslimit: withLimit ? 'true' : 'false',
+    hasoverflow: v('counter-ctrl-max', 'no') === 'yes' ? 'true' : 'false',
+    count: v('counter-ctrl-count', '0'),
+    limit: v('counter-ctrl-limit', '10')
+  });
+}
+window._counterUpdate = _counterUpdate;
+
+/* ── First paint ────────────────────────────────────────────────────── */
+function _ctrInit() {
+  _counterUpdate();
+  Object.keys(_specCards).forEach(function (k) {
     updateSpecCard(k, 'state', _specCards[k].state);
   });
 }
-
-function _counterInit() {
-  var ctx = document.getElementById('counter-context-preview');
-  if (ctx) ctx.innerHTML = _counterContextMarkup();
-  _counterUpdate();
-  initSpecCards();
-
-  /* Legacy id support — keep older spec previews wired if they still exist */
-  var s1 = document.getElementById('counter-spec-1');
-  if (s1) s1.innerHTML = _counterRender({count:'0', limit:'10', withLimit:'yes', state:'empty'});
-  var s2 = document.getElementById('counter-spec-2');
-  if (s2) s2.innerHTML = _counterRender({count:'10', limit:'10', withLimit:'yes', state:'filled'});
-  var s3 = document.getElementById('counter-spec-3');
-  if (s3) s3.innerHTML = '<div style="display:inline-flex;gap:12px;align-items:center;">' +
-    _counterRender({count:'0', withLimit:'no', state:'empty'}) +
-    _counterRender({count:'5', withLimit:'no', state:'auto'}) +
-    _counterRender({count:'247', withLimit:'no', maxDisplay:'99', state:'auto'}) +
-  '</div>';
-}
-
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _counterInit);
-else _counterInit();
-document.addEventListener('astro:page-load', _counterInit);
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _ctrInit);
+else _ctrInit();
+document.addEventListener('astro:page-load', _ctrInit);

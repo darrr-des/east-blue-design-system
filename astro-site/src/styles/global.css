@@ -354,6 +354,17 @@ body {
 .bs-pre, .bs-title, .bs-button { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
 .bs-msg, .bs-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 
+/* ── Avatar preview — initials are Primary (Proxima Soft); tracking is
+   set per size on the element. ────────────────────────────────────── */
+.av-initials { font-family: 'Proxima Soft', system-ui, sans-serif; }
+.avg-initials { font-family: 'Proxima Soft', system-ui, sans-serif; }
+.bdg-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
+.ctr-text { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Checkbox with Label preview ─────────────────────────────────── */
+.ci-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.ci-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
 /* ── Detail Hero preview ─────────────────────────────────────────────
    Title carries 0 tracking, the sender label and value 0.25, and the
    description is BarkAda at 0 — all read off the layers of set
