@@ -5,12 +5,10 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "migrate": "node scripts/utils/migrate.mjs",
-    "_comment_migrate": "HISTORICAL — the one-time conversion from the legacy assessment-src/ HTML into src/data/components/*.ts. That folder is no longer in the repo, so this exits immediately; src/data/components/*.ts is the source of truth. DESTRUCTIVE if assessment-src/ is ever restored: it overwrites every data file.",
-    "audit": "node scripts/audit.mjs",
+    "audit": "node scripts/audit/framework-sweep.mjs",
     "lint:previews": "node scripts/audit/preview-structure-lint.mjs",
     "lint:colors": "node scripts/audit/colors-table-coverage.mjs",
-    "lint": "npm run lint:previews && npm run lint:colors",
+    "lint": "npm run lint:previews && npm run lint:colors && npm run lint:playground",
     "preview": "astro preview",
     "astro": "astro",
     "test:visual": "playwright test",
@@ -18,12 +16,30 @@
     "test:visual:report": "playwright show-report tests/.playwright-report",
     "baselines:refresh": "node scripts/export-figma-baselines.mjs",
     "sync-previews": "node scripts/sync-previews.mjs",
-    "review": "node scripts/build-visual-review.mjs"
+    "review": "node scripts/build-visual-review.mjs",
+    "audit:matrix": "node scripts/audit/framework-sweep.mjs --matrix",
+    "audit:progress": "node scripts/audit/audit-progress.mjs",
+    "audit:gate": "node scripts/audit/framework-sweep.mjs --gate",
+    "check": "npm run build && npm run audit:gate && (npm run lint || echo \"lint: advisory until every component has previews\")",
+    "cms": "KEYSTATIC=1 astro dev",
+    "playground:drift": "node scripts/playground/drift.mjs",
+    "lint:playground": "node scripts/audit/playground-lint.mjs",
+    "playground:a11y": "node scripts/playground/a11y.mjs",
+    "playground:build": "node scripts/playground/build.mjs",
+    "playground:fidelity": "node scripts/playground/fidelity.mjs",
+    "playground:smoke": "node scripts/playground/smoke.mjs",
+    "playground:reflow": "node scripts/playground/reflow.mjs",
+    "playground:checks": "npm run playground:smoke && npm run playground:reflow && npm run playground:a11y && npm run playground:fidelity"
   },
   "dependencies": {
+    "@astrojs/react": "^6.0.5",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
     "astro": "^5.0.0",
     "marked": "^18.0.2",
-    "node-html-parser": "^7.1.0"
+    "node-html-parser": "^7.1.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",

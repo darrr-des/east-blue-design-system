@@ -206,12 +206,12 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards.vertical;
   var compose = lang === 'compose';
-  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
-  var S = function (t) { return '<span class="syn-str">"' + t + '"</span>'; };
-  var K = function (t) { return '<span class="syn-kw">' + t + '</span>'; };
-  var T = function (t) { return '<span class="syn-type">' + t + '</span>'; };
-  var P = function (t) { return '<span class="syn-punc">' + t + '</span>'; };
-  var D = function (t) { return '<span class="syn-dot">' + t + '</span>'; };
+  var sep = compose ? ' = ' : ': ';
+  var S = function (t) { return '"' + t + '"'; };
+  var K = function (t) { return '' + t + ''; };
+  var T = function (t) { return '' + t + ''; };
+  var P = function (t) { return '' + t + ''; };
+  var D = function (t) { return '' + t + ''; };
 
   var cased = function (v) { return v.charAt(0).toUpperCase() + v.slice(1); };
   var enumVal = function (type, v) {

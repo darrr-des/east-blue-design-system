@@ -89,14 +89,17 @@ window.updateSpecCard = updateSpecCard;
    Rebuilds the SwiftUI / Compose snippet from the card's current state
    so the DEV tab tracks hasCTA. */
 function _adcSpan(cls, text) {
-  return '<span class="' + cls + '">' + text + '</span>';
+  /* getSnippet must return PLAIN TEXT — assessment.js inserts it via
+     textContent and highlightSyntax() re-colours it. The cls arg is kept
+     for call-site compatibility but no markup is emitted. */
+  return text;
 }
 
 function _adcSnippet(card, lang) {
   var p = function (s) { return _adcSpan('syn-punc', s); };
   var swift = lang === 'swift';
   var eq = swift ? p(':') + ' ' : ' ' + _adcSpan('syn-eq', '=') + ' ';
-  var lines = ['title' + eq + _adcSpan('syn-str', '"' + _adcEscape(card.title || 'Title') + '"')];
+  var lines = ['title' + eq + _adcSpan('syn-str', '"' + (card.title || 'Title') + '"')];
   if (card.hascta === 'true') {
     lines.push(swift
       ? 'action' + eq + _adcSpan('syn-type', 'EBAdCarouselAction') + p('(') +

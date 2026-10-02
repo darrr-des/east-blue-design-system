@@ -1,223 +1,118 @@
 /* Bottom Sheet — live preview + spec cards.
- * Matches node 5304:32717 (2026 Working File):
- *   TitleAlignment   = Left | Center
- *   FooterOrientation = Vertical | Horizontal
- *   Subtitle         = None | Supporting | Description
- * Center is a control-free layout: it carries no Leading-Slot and no
- * Trailing-Slot, and takes the Description subtitle only.
- * Wired to the Astro SpecCard demo-panel (`updateSpecCard(demoKey, prop, value)`).
+ * Set 5304:32717 (2026 Working File): TitleAlignment = Left | Center ×
+ * FooterOrientation = Vertical | Horizontal × hasSupportingText ×
+ * hasDescription — 8 built variants (Center takes the Description subtitle
+ * only, never the supporting text).
+ *
+ * Read off 5304:32718 (Left · Vertical · Description, 360 × 404),
+ * 5304:32755 (Center, 378), 5377:35367 (supporting text, 398) and
+ * 5304:32769 (Horizontal footer, 342); checked against export_node_as_image.
+ * Above-Title-Slot and Content-Slot ship empty; Leading-Slot holds a 32 px
+ * Placeholder, Trailing-Slot the 24 px Close, Footer-Slot two Button -
+ * Large/Medium instances.
  */
 
-var _BS_TITLE = '<div style="font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:14px;color:#0A2757;line-height:1.2;">Title here of the header...</div>';
-var _BS_PREAMBLE = '<div style="font-size:10px;color:#90A8D0;font-weight:700;margin-bottom:3px;">Preamble here...</div>';
-
-function _bsSubtitleBlock(subtitle, center) {
-  if (subtitle === 'none') return '';
-  var align = center ? 'text-align:center;' : '';
-  if (subtitle === 'supporting') {
-    return '<div style="padding:0 18px 14px;' + align + '">' +
-      '<div style="font-family:\'BarkAda\',serif;font-weight:600;font-size:11px;color:#6780A9;line-height:1.4;">Supporting text</div>' +
-    '</div>';
-  }
-  return '<div style="padding:0 18px 14px;' + align + '">' +
-    '<div style="font-family:\'BarkAda\',serif;font-weight:500;font-size:11px;color:#445C85;line-height:1.5;">This area is designated for descriptions...</div>' +
-  '</div>';
+function _bsEscape(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function _bsContentBlock(content) {
-  if (content === 'list') {
-    return '<div style="padding:0 18px 16px;">' +
-      '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #E5EBF4;font-size:11px;color:#0A2757;"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid #C2C6CF;"></span>Driver\'s License</div>' +
-      '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #E5EBF4;font-size:11px;color:#0A2757;"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid #005CE5;background:#005CE5;"></span>Passport</div>' +
-      '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;font-size:11px;color:#0A2757;"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid #C2C6CF;"></span>UMID</div>' +
-    '</div>';
-  }
-  if (content === 'form') {
-    return '<div style="padding:0 18px 16px;display:flex;flex-direction:column;gap:8px;">' +
-      '<div><div style="font-size:9px;color:#90A8D0;font-weight:700;margin-bottom:3px;">FULL NAME</div><div style="height:26px;border:1px solid #C2C6CF;border-radius:4px;padding:0 8px;display:flex;align-items:center;font-size:10px;color:#0A2757;">Juan Dela Cruz</div></div>' +
-      '<div><div style="font-size:9px;color:#90A8D0;font-weight:700;margin-bottom:3px;">MOBILE NUMBER</div><div style="height:26px;border:1px solid #C2C6CF;border-radius:4px;padding:0 8px;display:flex;align-items:center;font-size:10px;color:#0A2757;">+63 9XX XXX XXXX</div></div>' +
-    '</div>';
-  }
-  return '<div style="padding:0 18px 6px;"><div style="height:34px;border:1px dashed #C2CFE5;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#90A8D0;font-weight:700;letter-spacing:.4px;">Content-Slot</div></div>';
+/* Trailing-Slot › Close — get_svg on 5304:32730 (drawn at 80% opacity). */
+function _bsClose() {
+  return '<svg class="eb-preview-bs__close" viewBox="0 0 24 24" aria-hidden="true"><g opacity="0.8"><path d="M18.3652 4.36517C18.7166 4.01369 19.2871 4.01369 19.6386 4.36517C19.9897 4.71667 19.9899 5.28726 19.6386 5.6386L13.2753 12.0019L19.6386 18.3652C19.9897 18.7167 19.9899 19.2873 19.6386 19.6386C19.2873 19.9899 18.7167 19.9897 18.3652 19.6386L12.0019 13.2753L5.6386 19.6386C5.28726 19.9899 4.71667 19.9897 4.36517 19.6386C4.01369 19.2871 4.01369 18.7166 4.36517 18.3652L10.7284 12.0019L4.36517 5.6386C4.01369 5.28713 4.01369 4.71664 4.36517 4.36517C4.71664 4.01369 5.28713 4.01369 5.6386 4.36517L12.0019 10.7284L18.3652 4.36517Z" fill="currentColor"/></g></svg>';
 }
 
-function _bsFooterBlock(footer) {
-  var primary = '<div style="flex:1;height:28px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">Label</div>';
-  var secondary = '<div style="flex:1;height:28px;border:1px solid #005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#005CE5;font-size:11px;font-weight:700;">Label</div>';
-  if (footer === 'horizontal') {
-    return '<div style="padding:4px 18px 20px;display:flex;flex-direction:row;gap:8px;">' + secondary + primary + '</div>';
-  }
-  return '<div style="padding:4px 18px 20px;display:flex;flex-direction:column;gap:8px;">' + primary + secondary + '</div>';
+function _bsOn(v, def) { return String(v == null ? def : v) === 'true'; }
+
+/* opts: { align: left|center, footer: vertical|horizontal, hasSupportingText, hasDescription,
+           preamble, title, description, message, primary, tertiary } */
+function _bsRender(opts) {
+  var align = opts.align === 'center' ? 'center' : 'left';
+  var footer = opts.footer === 'horizontal' ? 'horizontal' : 'vertical';
+  var supporting = align === 'left' && _bsOn(opts.hasSupportingText, 'false');
+  var description = _bsOn(opts.hasDescription, 'true');
+  var preamble = opts.preamble || 'Preamble here...';
+  var title = opts.title || 'Title here of the header...';
+  var desc = opts.description || (align === 'center' ? 'This is description' : 'This is a body description');
+  var message = opts.message || 'This is a supporting text';
+  var primary = opts.primary || 'Label', tertiary = opts.tertiary || 'Label';
+
+  var cls = 'eb-preview eb-preview-bs eb-preview-bs--' + align + ' eb-preview-bs--' + footer;
+  var html = '<div class="' + cls + '">';
+  html += '<div class="eb-preview-bs__handle"><span></span></div>';
+  html += '<div class="eb-preview-bs__header"><div class="eb-preview-bs__above"></div><div class="eb-preview-bs__titlerow">';
+  if (align === 'left') html += '<span class="eb-preview-bs__leading" aria-hidden="true"></span>';
+  html += '<div class="eb-preview-bs__titleblock"><p class="eb-preview-bs__preamble">' + _bsEscape(preamble) + '</p><p class="eb-preview-bs__title">' + _bsEscape(title) + '</p>';
+  if (supporting) html += '<p class="eb-preview-bs__message">' + _bsEscape(message) + '</p>';
+  html += '</div>';
+  if (align === 'left') html += _bsClose();
+  html += '</div></div>';
+  if (description) html += '<p class="eb-preview-bs__description">' + _bsEscape(desc) + '</p>';
+  html += '<div class="eb-preview-bs__content"></div>';
+  html += '<div class="eb-preview-bs__footer">';
+  if (footer === 'horizontal') html += '<span class="eb-preview-bs__button eb-preview-bs__button--tertiary">' + _bsEscape(tertiary) + '</span><span class="eb-preview-bs__button eb-preview-bs__button--primary">' + _bsEscape(primary) + '</span>';
+  else html += '<span class="eb-preview-bs__button eb-preview-bs__button--primary">' + _bsEscape(primary) + '</span><span class="eb-preview-bs__button eb-preview-bs__button--tertiary">' + _bsEscape(tertiary) + '</span>';
+  html += '</div></div>';
+  return html;
 }
 
-function _bottomSheetCardMarkup(opts) {
-  var center   = (opts.align === 'center');
-  var subtitle = opts.subtitle || (center ? 'description' : 'description');
-  var footer   = opts.footer || 'vertical';
-  var content  = opts.content || 'text';
-
-  var handleBlock = '<div style="width:32px;height:4px;background:#C2CFE5;border-radius:99px;margin:8px auto 0;"></div>';
-
-  var headerBlock;
-  if (center) {
-    /* Center carries no Leading-Slot and no Trailing-Slot. */
-    headerBlock =
-      '<div style="padding:16px 18px 8px;text-align:center;">' +
-        _BS_PREAMBLE + _BS_TITLE +
-      '</div>';
-  } else {
-    headerBlock =
-      '<div style="display:flex;align-items:flex-start;gap:8px;padding:16px 48px 8px 18px;position:relative;">' +
-        '<div style="width:24px;height:24px;border-radius:50%;background:#C2CFE5;flex-shrink:0;margin-top:2px;"></div>' +
-        '<div style="flex:1;">' + _BS_PREAMBLE + _BS_TITLE + '</div>' +
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="position:absolute;right:18px;top:18px;opacity:0.8;"><path d="M6 6l12 12M18 6L6 18" stroke="#6780A9" stroke-width="2" stroke-linecap="round"/></svg>' +
-      '</div>';
-  }
-
-  return (
-    '<div style="background:#fff;border-top-left-radius:12px;border-top-right-radius:12px;width:240px;overflow:hidden;box-shadow:0 -2px 10px rgba(2,14,34,0.08);">' +
-      handleBlock + headerBlock +
-      _bsSubtitleBlock(subtitle, center) +
-      _bsContentBlock(content) +
-      _bsFooterBlock(footer) +
-    '</div>'
-  );
-}
-
-/* The scrim comes from the platform presentation, not from this component —
-   it is drawn here only to show the sheet in situ. */
-function _bottomSheetStageMarkup(opts) {
-  return (
-    '<div style="position:relative;width:280px;height:360px;margin:0 auto;background:#F6F9FD;border-radius:18px;overflow:hidden;border:1px solid #E5EBF4;">' +
-      '<div style="padding:14px;">' +
-        '<div style="width:60%;height:8px;background:#D9E2EC;border-radius:3px;margin-bottom:10px;"></div>' +
-        '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
-        '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
-      '</div>' +
-      '<div style="position:absolute;inset:0;background:#020E22;opacity:0.56;"></div>' +
-      '<div style="position:absolute;left:50%;transform:translateX(-50%);bottom:0;top:70px;display:flex;align-items:flex-start;justify-content:center;">' +
-        _bottomSheetCardMarkup(opts) +
-      '</div>' +
-    '</div>'
-  );
-}
-
-/* ── Live preview (Overview tab) ─────────────────────────────────── */
+/* ── Overview live preview ─────────────────────────────────────────── */
 function _bottomSheetUpdate() {
-  var get = function(id, fb) { var el = document.getElementById(id); return el ? el.value : fb; };
-  var preview = document.getElementById('bottom-sheet-demo-preview');
-  if (!preview) return;
-
-  var align = get('bottom-sheet-ctrl-align', 'left');
-  var subtitleEl = document.getElementById('bottom-sheet-ctrl-subtitle');
-
-  /* Center takes the Description subtitle only — mirror the Figma rule. */
-  if (subtitleEl) {
-    var locked = (align === 'center');
-    for (var i = 0; i < subtitleEl.options.length; i++) {
-      var o = subtitleEl.options[i];
-      if (o.value !== 'description') o.disabled = locked;
-    }
-    if (locked) subtitleEl.value = 'description';
-  }
-
-  preview.innerHTML = _bottomSheetStageMarkup({
-    align:    align,
-    footer:   get('bottom-sheet-ctrl-footer', 'vertical'),
-    subtitle: get('bottom-sheet-ctrl-subtitle', 'description'),
-    content:  get('bottom-sheet-ctrl-content', 'text')
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var el = document.getElementById('bs-demo-preview');
+  if (!el) return;
+  el.innerHTML = _bsRender({
+    align:             getVal('bs-ctrl-align', 'left'),
+    footer:            getVal('bs-ctrl-footer', 'vertical'),
+    hasSupportingText: getVal('bs-ctrl-hassupportingtext', 'false'),
+    hasDescription:    getVal('bs-ctrl-hasdescription', 'true'),
+    preamble:          getVal('bs-ctrl-preamble', ''),
+    title:             getVal('bs-ctrl-title', ''),
+    description:       getVal('bs-ctrl-description', ''),
+    message:           getVal('bs-ctrl-message', '')
   });
 }
+window._bottomSheetUpdate = _bottomSheetUpdate;
 
-/* ── Spec cards (Style tab) ──────────────────────────────────────── */
-var _bsSpecCards = {
-  'left-align':   { align: 'left',   footer: 'vertical', subtitle: 'description' },
-  'center-align': { align: 'center', footer: 'vertical', subtitle: 'description' }
+/* ── Spec cards — one per TitleAlignment value, keyed by demoKey ────── */
+var _specCards = {
+  'left':   { align: 'left',   footer: 'vertical', hasSupportingText: 'false', hasDescription: 'true' },
+  'center': { align: 'center', footer: 'vertical', hasSupportingText: 'false', hasDescription: 'true' }
 };
-var _specCards = _bsSpecCards;
 window._specCards = _specCards;
 
-function buildSwiftSnippet(cardKey, card) {
-  var lines = ['EBBottomSheet("Title here of the header...")'];
-  lines.push('    .ebTitleAlignment(.' + (card.align === 'center' ? 'center' : 'leading') + ')');
-  if (card.subtitle === 'supporting')      lines.push('    .ebSubtitle(.supporting("Supporting text"))');
-  else if (card.subtitle === 'description') lines.push('    .ebSubtitle(.description("Description body"))');
-  lines.push('    .ebFooterOrientation(.' + (card.footer === 'horizontal' ? 'horizontal' : 'vertical') + ')');
-  lines.push('    .ebContent { /* Content-Slot */ }');
-  return lines.join('\n');
-}
-
-function buildComposeSnippet(cardKey, card) {
-  var sub = card.subtitle === 'none'
-    ? 'EBSubtitle.None'
-    : (card.subtitle === 'supporting' ? 'EBSubtitle.Supporting("Supporting text")' : 'EBSubtitle.Description("Description body")');
-  return [
-    'EBBottomSheet(',
-    '    title = "Title here of the header...",',
-    '    titleAlignment = EBTitleAlignment.' + (card.align === 'center' ? 'Center' : 'Left') + ',',
-    '    subtitle = ' + sub + ',',
-    '    footerOrientation = EBFooterOrientation.' + (card.footer === 'horizontal' ? 'Horizontal' : 'Vertical') + ',',
-    '    content = { /* Content-Slot */ }',
-    ')'
-  ].join('\n');
-}
-
 function getSnippet(cardKey, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+  var c = card || _specCards[cardKey] || {};
+  var align = c.align === 'center' ? 'center' : 'leading', footer = c.footer === 'horizontal' ? 'horizontal' : 'vertical';
+  var supporting = c.align !== 'center' && _bsOn(c.hasSupportingText, 'false'), description = _bsOn(c.hasDescription, 'true');
+  var cap = function (v) { return v.charAt(0).toUpperCase() + v.slice(1); };
+  if (lang === 'swift') {
+    var s = 'EBBottomSheet(isPresented: $show) {\n    EBSheetHeader("Title here of the header...", preamble: "Preamble here...")';
+    if (supporting) s += '\n        .ebSupportingText("This is a supporting text")';
+    if (description) s += '\n    EBSheetDescription("This is a body description")';
+    s += '\n    content\n}\n    .ebTitleAlignment(.' + align + ')\n    .ebFooter(.' + footer + ') {\n        EBButton("Label") { }\n        EBTextButton("Label") { }\n    }';
+    return s;
+  }
+  var k = ['    title = "Title here of the header..."', '    preamble = "Preamble here..."'];
+  if (supporting) k.push('    supportingText = "This is a supporting text"');
+  if (description) k.push('    description = "This is a body description"');
+  k.push('    titleAlignment = EBTitleAlignment.' + cap(align === 'leading' ? 'leading' : 'center'), '    footerOrientation = EBFooterOrientation.' + cap(footer), '    footer = { EBButton("Label") { }; EBTextButton("Label") { } }', '    content = { … }');
+  return 'EBBottomSheet(\n' + k.join(',\n') + '\n)';
 }
 window.getSnippet = getSnippet;
 
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _bsSpecCards[cardStyle];
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
   if (!card) return;
   card[prop] = value;
-
-  /* Center is Description-only — keep the card honest. */
-  if (card.align === 'center') card.subtitle = 'description';
-
-  var previewEl = document.getElementById('bottom-sheet-spec-preview-' + cardStyle);
-  if (previewEl) previewEl.innerHTML = _bottomSheetCardMarkup(card);
-
-  var labelMap = {
-    align:    { left: 'Left', center: 'Center' },
-    footer:   { vertical: 'Vertical', horizontal: 'Horizontal' },
-    subtitle: { none: 'None', supporting: 'Supporting', description: 'Description' }
-  };
-  Object.keys(card).forEach(function(k) {
-    var el = document.querySelector('[data-sp="' + cardStyle + '-' + k + '"]');
-    if (!el) return;
-    var span = el.querySelector('.spec-prop-hex') || el;
-    span.textContent = (labelMap[k] && labelMap[k][card[k]]) || card[k];
-  });
-
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
+  var host = document.getElementById('bs-spec-' + cardKey);
+  if (host) host.innerHTML = _bsRender(card);
 }
+window.updateSpecCard = updateSpecCard;
 
-function _bsInitSpecCards() {
-  Object.keys(_bsSpecCards).forEach(function(key) {
-    updateSpecCard(key, 'align', _bsSpecCards[key].align);
-  });
-}
-
-function _bottomSheetInit() {
-  var ctx = document.getElementById('bottom-sheet-context-preview');
-  if (ctx) ctx.innerHTML = _bottomSheetStageMarkup({align:'left', footer:'vertical', subtitle:'description', content:'list'});
+function _bsInit() {
   _bottomSheetUpdate();
-  _bsInitSpecCards();
+  Object.keys(_specCards).forEach(function (k) { updateSpecCard(k, 'footer', _specCards[k].footer); });
 }
-
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _bottomSheetInit);
-else _bottomSheetInit();
-document.addEventListener('astro:page-load', _bottomSheetInit);
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _bsInit);
+else _bsInit();
+document.addEventListener('astro:page-load', _bsInit);

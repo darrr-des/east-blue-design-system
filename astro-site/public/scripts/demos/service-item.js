@@ -1,175 +1,104 @@
-/* Service Item — sized 1:1 to Figma node 20210:2441.
- *   Vertical:    64 × 72 — preamble (top) · 48×48 icon slot · label · description
- *   Horizontal:  120 × 64 — icon left · content right · preamble below
- *   Type=New:    red "New" badge top-right of icon (29 × 12)
- *   Type=Add:    green + circle top-right (12 × 12)
- *   Type=Remove: red − circle top-right (12 × 12)
- *   State=Inactive / Disabled: label dims to #C2CFE5
+/* Service Item — live preview + spec cards.
+ * Set 4692:21582 (2026 Working File): State = Default | Inactive | Pressed |
+ * Disabled × Orientation = Vertical | Horizontal × Badge = None | New ×
+ * Action = None | Add | Remove — 32 built variants (Badge=New never pairs
+ * with an Action).
+ *
+ * Read off the variants and checked against export_node_as_image:
+ *   Vertical 4692:21583 (64×72) · New 4692:21591 · Add 4692:21601 ·
+ *   Remove 4692:21610 · Inactive 4692:21619 · Pressed 4703:18264 ·
+ *   Disabled 4692:21775 · Horizontal 4692:21655 (120×64).
+ * The Preamble, Description-Slot and Border layers exist in every variant
+ * but are hidden in every export, so the preview does not draw them.
  */
 
-function _siLabelColor(state) {
-  if (state === 'inactive' || state === 'disabled') return '#C2CFE5';
-  return '#072592';
+function _siEscape(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function _siNewBadge() {
-  return '<div style="position:absolute;top:-6px;right:-6px;height:14px;padding:1px 6px;border-radius:7px;background:#E11744;color:#FFFFFF;font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:9px;line-height:12px;letter-spacing:0.25px;">New</div>';
+/* Add / Remove — 12 × 12 instances: a filled circle with white 6 × 1.5 bars. */
+function _siAction(kind) {
+  var fill = kind === 'add' ? '#12AF80' : '#D61B2C';
+  return '<svg class="eb-preview-si__action" viewBox="0 0 12 12" aria-hidden="true">' +
+    '<circle cx="6" cy="6" r="6" fill="' + fill + '"/>' +
+    '<rect x="3" y="5.25" width="6" height="1.5" rx="1" fill="#FFFFFF"/>' +
+    (kind === 'add' ? '<rect x="5.25" y="3" width="1.5" height="6" rx="1" fill="#FFFFFF"/>' : '') +
+  '</svg>';
 }
 
-function _siActionAdd() {
-  return '<div style="position:absolute;top:-6px;right:-6px;width:14px;height:14px;border-radius:50%;background:#16A34A;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:11px;line-height:11px;">+</div>';
-}
-
-function _siActionRemove() {
-  return '<div style="position:absolute;top:-6px;right:-6px;width:14px;height:14px;border-radius:50%;background:#E11744;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:11px;line-height:1;">–</div>';
-}
-
-function _siIconSlot(type) {
-  /* 48×48 pill-shaped slot. Includes overlay for New / Add / Remove types. */
-  var overlay = '';
-  if (type === 'new')    overlay = _siNewBadge();
-  if (type === 'add')    overlay = _siActionAdd();
-  if (type === 'remove') overlay = _siActionRemove();
-  return '<div style="position:relative;width:48px;height:48px;border-radius:99999px;background:#F6F9FD;flex:0 0 48px;">' + overlay + '</div>';
-}
-
-function _siLabel(state) {
-  return '<div style="font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;color:' + _siLabelColor(state) + ';">Label</div>';
-}
-
-function _siVertical(type, state) {
-  /* 64 × 72 stack: preamble (12 placeholder) · 6 gap · icon 48×48 · 6 gap · label.
-     Gap of 6 verified from Figma — icon bottom y=47, label top y=53. */
-  return '<div style="' +
-    'width:64px;display:flex;flex-direction:column;align-items:center;gap:6px;' +
-    (state === 'disabled' ? 'opacity:0.4;' : '') +
-  '">' +
-    '<div style="height:12px;"></div>' +
-    _siIconSlot(type) +
-    _siLabel(state) +
-  '</div>';
-}
-
-function _siHorizontal(type, state) {
-  /* 120 × 64 — icon-left, label-right, preamble below. */
-  return '<div style="' +
-    'width:120px;display:flex;flex-direction:column;gap:6px;' +
-    (state === 'disabled' ? 'opacity:0.4;' : '') +
-  '">' +
-    '<div style="display:flex;align-items:center;gap:8px;">' +
-      _siIconSlot(type) +
-      '<div style="flex:1;">' + _siLabel(state) + '</div>' +
-    '</div>' +
-  '</div>';
-}
-
-function _siBuild(opts) {
-  var type = opts.type || 'default';
+/* opts: { orientation: vertical|horizontal, state: default|inactive|pressed|disabled,
+           badge: none|new, action: none|add|remove, label } */
+function _siRender(opts) {
+  var orientation = opts.orientation === 'horizontal' ? 'horizontal' : 'vertical';
   var state = opts.state || 'default';
-  var orientation = opts.orientation || 'vertical';
-  if (orientation === 'horizontal') return _siHorizontal(type, state);
-  return _siVertical(type, state);
+  var badge = opts.badge === 'new' ? 'new' : 'none';
+  var action = opts.action === 'add' || opts.action === 'remove' ? opts.action : 'none';
+  var label = opts.label || 'Label';
+  var cls = 'eb-preview eb-preview-si eb-preview-si--' + orientation + ' eb-preview-si--' + state;
+  var html = '<div class="' + cls + '">';
+  html += '<span class="eb-preview-si__asset" aria-hidden="true"></span>';
+  html += '<span class="eb-preview-si__label">' + _siEscape(label) + '</span>';
+  if (badge === 'new') html += '<span class="eb-preview-si__new">New</span>';
+  if (action !== 'none') html += _siAction(action);
+  return html + '</div>';
 }
 
-/* Apply contrasting bg directly on the preview frames so the F6F9FD icon
-   slot is visible. Run on init + after Astro view transitions. */
-function _siApplyPreviewBg() {
-  var demoEl = document.getElementById('si-demo-preview');
-  if (demoEl) {
-    demoEl.style.background = '#E5EBF4';
-    demoEl.style.backgroundImage = 'none';
-  }
-  var specCardEl = document.getElementById('spec-card-default');
-  if (specCardEl) {
-    var previewEl = specCardEl.querySelector('.spec-card-preview');
-    if (previewEl) {
-      previewEl.style.background = '#E5EBF4';
-      previewEl.style.backgroundImage = 'none';
-    }
-  }
-}
-
-/* ── Overview live preview ─────────────────────────────────────── */
-var _siDemo = { type: 'default', state: 'default', orientation: 'vertical' };
-
-function updateServiceItemDemo() {
+/* ── Overview live preview ─────────────────────────────────────────── */
+function _siUpdate() {
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
   var el = document.getElementById('si-demo-preview');
-  if (el) el.innerHTML = _siBuild(_siDemo);
+  if (!el) return;
+  el.innerHTML = _siRender({
+    orientation: getVal('si-ctrl-orientation', 'vertical'),
+    state:       getVal('si-ctrl-state', 'default'),
+    badge:       getVal('si-ctrl-badge', 'none'),
+    action:      getVal('si-ctrl-action', 'none'),
+    label:       getVal('si-ctrl-label', 'Label')
+  });
 }
+window._siUpdate = _siUpdate;
 
-/* ── Spec card state ────────────────────────────────────────────── */
+/* ── Spec cards — one per Orientation value, keyed by demoKey ───────── */
 var _specCards = {
-  'default': { type: 'default', state: 'default', orientation: 'vertical' }
+  'vertical':   { orientation: 'vertical',   state: 'default', badge: 'none', action: 'none' },
+  'horizontal': { orientation: 'horizontal', state: 'default', badge: 'none', action: 'none' }
 };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(cardKey, card) {
-  var lines = ['EBServiceItem('];
-  lines.push('    icon: Image("send"),');
-  lines.push('    label: "Label"');
-  lines.push(')');
-  if (card.orientation === 'horizontal') lines.push('    .ebOrientation(.horizontal)');
-  if (card.type === 'new')    lines.push('    .ebBadge(.new)');
-  if (card.type === 'add')    lines.push('    .ebAction(.add)');
-  if (card.type === 'remove') lines.push('    .ebAction(.remove)');
-  if (card.state === 'inactive') lines.push('    .ebState(.inactive)');
-  if (card.state === 'disabled') lines.push('    .disabled(true)');
-  return lines.join('\n');
-}
-
-function buildComposeSnippet(cardKey, card) {
-  var lines = ['EBServiceItem('];
-  lines.push('    icon = { Icon(Icons.Default.Send, null) },');
-  lines.push('    label = "Label",');
-  var stateName = card.state === 'inactive' ? 'Inactive' : card.state === 'disabled' ? 'Disabled' : 'Default';
-  lines.push('    state = ServiceItemState.' + stateName + ',');
-  var orientName = card.orientation === 'horizontal' ? 'Horizontal' : 'Vertical';
-  lines.push('    orientation = Orientation.' + orientName);
-  if (card.type === 'new')    lines[lines.length - 1] += ',\n    badge = Badge.New';
-  if (card.type === 'add')    lines[lines.length - 1] += ',\n    action = Action.Add';
-  if (card.type === 'remove') lines[lines.length - 1] += ',\n    action = Action.Remove';
-  lines.push(')');
-  return lines.join('\n');
-}
-
 function getSnippet(cardKey, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+  var c = card || _specCards[cardKey] || {};
+  var cap = function (v) { return v.charAt(0).toUpperCase() + v.slice(1); };
+  var badge = c.badge === 'new', action = c.action === 'add' || c.action === 'remove' ? c.action : null;
+  if (lang === 'swift') {
+    var s = 'EBServiceItem("Label", asset: Image("service"))\n    .ebOrientation(.' + (c.orientation || 'vertical') + ')';
+    if (badge) s += '\n    .ebBadge(.new)';
+    if (action) s += '\n    .ebAction(.' + action + ') { }';
+    if (c.state === 'inactive') s += '\n    .ebInactive(true)';
+    if (c.state === 'disabled') s += '\n    .disabled(true)';
+    return s;
+  }
+  var lines = ['    label = "Label"', '    asset = { Icon(…) }', '    orientation = EBServiceItemOrientation.' + cap(c.orientation || 'vertical')];
+  if (badge) lines.push('    badge = EBServiceItemBadge.New');
+  if (action) lines.push('    action = EBServiceItemAction.' + cap(action) + ' { }');
+  if (c.state === 'inactive') lines.push('    inactive = true');
+  if (c.state === 'disabled') lines.push('    enabled = false');
+  return 'EBServiceItem(\n' + lines.join(',\n') + '\n)';
 }
 window.getSnippet = getSnippet;
 
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
   if (!card) return;
   card[prop] = value;
-
-  var rootEl = document.getElementById('spec-card-' + cardStyle);
-  if (rootEl) {
-    var previewEl = rootEl.querySelector('.spec-card-preview');
-    if (previewEl) previewEl.innerHTML = _siBuild(card);
-  }
-
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
+  var host = document.getElementById('si-spec-' + cardKey);
+  if (host) host.innerHTML = _siRender(card);
 }
 window.updateSpecCard = updateSpecCard;
 
 function _siInit() {
-  _siApplyPreviewBg();
-  updateServiceItemDemo();
-  updateSpecCard('default', 'type', _specCards['default'].type);
+  _siUpdate();
+  Object.keys(_specCards).forEach(function (k) { updateSpecCard(k, 'state', _specCards[k].state); });
 }
-
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _siInit);
 else _siInit();
 document.addEventListener('astro:page-load', _siInit);

@@ -47,7 +47,7 @@ function _gcardRender(opts) {
     '</div>';
   }
 
-  var html = '<div class="eb-preview eb-preview-gcard">';
+  var html = '<div class="eb-preview eb-preview-gcard' + (state === 'disabled' ? ' eb-preview-gcard--disabled' : '') + '">';
   html += '<div class="eb-preview-gcard__icon eb-preview-gcard__icon--' + iconSize + '"></div>';
   html += '<div class="eb-preview-gcard__content">';
 
@@ -115,46 +115,57 @@ function _gcardUpdate() {
   });
 }
 
-/* ── Spec card state ──────────────────────────────────────────────── */
+/* ── Spec card state — one card per Status value (set 5412:31504) ──
+ * Panel: State (Default, Disabled) · IconSize (XL, LG, MD, SM, XS, XXS).
+ * Skeleton has no Disabled variant, so its card exposes IconSize only. */
+var GCARD_ICON_PX = { xl: '64', lg: '52', md: '46', sm: '40', xs: '32', xxs: '24' };
 var _specCards = {
-  'default':  { iconSize: '64', state: 'default',  hasSubtitle: 'yes', hasBadge: 'yes', hasChevron: 'yes' },
-  'skeleton': { iconSize: '64', state: 'skeleton', hasSubtitle: 'yes', hasBadge: 'yes', hasChevron: 'yes' }
+  'default':  { status: 'default',  state: 'default', iconSize: 'xl' },
+  'skeleton': { status: 'skeleton', state: 'default', iconSize: 'xl' }
 };
 window._specCards = _specCards;
 
-/* ── Code snippet builders ────────────────────────────────────────── */
+/* Maps a card's Figma-named state to the render options. */
+function _gcardCardOpts(card) {
+  return {
+    iconSize: GCARD_ICON_PX[card.iconSize] || '64',
+    state: card.status === 'skeleton' ? 'skeleton' : (card.state === 'disabled' ? 'disabled' : 'default')
+  };
+}
+
+/* ── Code snippet builders — component API, one line per Figma property ── */
 function buildSwiftSnippet(type, card) {
-  var sz = (card && card.iconSize) || '64';
-  var st = (card && card.state) || 'default';
-  if (st === 'skeleton') {
-    return 'EBGenericCard(isLoading: true)\n    .ebIconSize(' + sz + ')';
+  var sz = (card && card.iconSize) || 'xl';
+  if (card && card.status === 'skeleton') {
+    return 'EBGenericCard(isLoading: true)\n    .ebIconSize(.' + sz + ')';
   }
   var lines = [];
   lines.push('EBGenericCard("Heading Goes Here")');
-  lines.push('    .ebDescription("Description goes here")');
-  lines.push('    .ebIcon(Image(systemName: "star.fill"))');
-  lines.push('    .ebIconSize(' + sz + ')');
-  if (card && card.hasSubtitle === 'yes') lines.push('    .ebBlurb("Blurb", tag: "Tag")');
-  if (card && card.hasBadge === 'yes')    lines.push('    .ebBadge("Label")');
-  if (card && card.hasChevron === 'no')   lines.push('    .ebShowChevron(false)');
+  lines.push('    .ebPreamble("Blurb", tag: "Tag")');
+  lines.push('    .ebDescription(label: "Label", "Description goes here")');
+  lines.push('    .ebDescription(label: "Label", "Description goes here")');
+  lines.push('    .ebBadge("Label")');
+  lines.push('    .ebLeadingIcon(Image(systemName: "star.fill"))');
+  lines.push('    .ebIconSize(.' + sz + ')');
+  if (card && card.state === 'disabled') lines.push('    .disabled(true)');
   return lines.join('\n');
 }
 
 function buildComposeSnippet(type, card) {
-  var sz = (card && card.iconSize) || '64';
-  var st = (card && card.state) || 'default';
-  if (st === 'skeleton') {
-    return 'EBGenericCard(\n    isLoading = true,\n    iconSize = EBIconSize.Size' + sz + '\n)';
+  var sz = ((card && card.iconSize) || 'xl').toUpperCase();
+  if (card && card.status === 'skeleton') {
+    return 'EBGenericCard(\n    isLoading = true,\n    iconSize = EBIconSize.' + sz + '\n)';
   }
   var lines = [];
   lines.push('EBGenericCard(');
   lines.push('    title = "Heading Goes Here",');
-  lines.push('    description = "Description goes here",');
+  lines.push('    preamble = "Blurb",');
+  lines.push('    tag = "Tag",');
+  lines.push('    descriptions = listOf("Label" to "Description goes here", "Label" to "Description goes here"),');
+  lines.push('    badge = "Label",');
   lines.push('    leadingIcon = { Icon(Icons.Filled.Star, null) },');
-  lines.push('    iconSize = EBIconSize.Size' + sz + ',');
-  if (card && card.hasSubtitle === 'yes') lines.push('    blurb = "Blurb",');
-  if (card && card.hasBadge === 'yes')    lines.push('    badge = "Label",');
-  if (card && card.hasChevron === 'no')   lines.push('    showChevron = false,');
+  lines.push('    iconSize = EBIconSize.' + sz + ',');
+  if (card && card.state === 'disabled') lines.push('    enabled = false,');
   var last = lines[lines.length - 1];
   if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
   lines.push(')');
@@ -172,16 +183,9 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview */
+  /* Update preview — the Properties rows follow via `variants` in the data. */
   var el = document.getElementById('gcard-spec-' + cardStyle);
-  if (el) el.innerHTML = _gcardRender(card);
-
-  /* Update properties text */
-  var propMap = ['iconSize', 'state'];
-  propMap.forEach(function (p) {
-    var sp = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
-    if (sp) sp.textContent = p === 'state' ? (card[p].charAt(0).toUpperCase() + card[p].slice(1)) : card[p];
-  });
+  if (el) el.innerHTML = _gcardRender(_gcardCardOpts(card));
 
   /* Update DEV code */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
@@ -205,7 +209,7 @@ function _gcardInit() {
   if (document.getElementById('gcard-demo-preview')) _gcardUpdate();
 
   Object.keys(_specCards).forEach(function (k) {
-    updateSpecCard(k, 'state', _specCards[k].state);
+    updateSpecCard(k, 'iconSize', _specCards[k].iconSize);
   });
 }
 

@@ -1,0 +1,896 @@
+{
+  "name": "Counter",
+  "meta": {
+    "node": "4675:21497",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4675-21497",
+    "description": "A small numeric badge used to display unread or pending counts on icons and rows.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "ready",
+        "label": "Ready"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "All four DS Health traits pass and nothing is open. <code>State</code> and <code>hasLimit</code> follow the naming guidelines, every layer has a semantic name, and <code>Count</code> and <code>Limit</code> are text properties."
+    },
+    "navGroup": "",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "How the counter appears in real product screens — a limit counter (10 / 10) beside the Send to list in Express Send, and a count (2) beside the People section when splitting a bill.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/counter-in-context.png\" alt=\"Counter component shown on two GCash screens: a 10 / 10 limit counter next to Send to on the Express Send recipient list, and a 2 counter next to People on a split-bill screen\" >",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"counter-demo-preview\"><span class=\"eb-preview eb-preview-counter eb-preview-counter--limit\"><span class=\"eb-preview-counter__count\">0</span><span class=\"eb-preview-counter__sep\">/</span><span class=\"eb-preview-counter__limit\">10</span></span></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"counter-ctrl-state\" class=\"demo-panel-select\" onchange=\"_counterUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLimit</span><select id=\"counter-ctrl-haslimit\" class=\"demo-panel-select\" onchange=\"_counterUpdate()\"><option value=\"true\" selected=\"\">True</option><option value=\"false\">False</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Count</span><input type=\"text\" id=\"counter-ctrl-count\" class=\"demo-panel-select demo-panel-input\" value=\"0\" oninput=\"_counterUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Limit</span><input type=\"text\" id=\"counter-ctrl-limit\" class=\"demo-panel-select demo-panel-input\" value=\"10\" oninput=\"_counterUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">maxDisplay</span><input type=\"text\" id=\"counter-ctrl-max\" class=\"demo-panel-select demo-panel-input\" value=\"99\" oninput=\"_counterUpdate()\"></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Generic count primitive — used across Section Header, Tab Item, and standalone notification contexts."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its typography, color tokens, and radius. Nothing external required to render."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "<code>State</code> and <code>hasLimit</code> follow the Property Naming Guidelines, all four variants are dimensionally consistent, and every frame and text layer carries a correct, distinct semantic name — <code>Count</code>, <code>Separator</code>, <code>Limit</code>, <code>Plus</code>, <code>LimitGroup</code>."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Hugs content width, drops into any inline layout (Section Header, Tab Item) without manual sizing."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default",
+        "notes": "Brand-blue label (#072592) on the neutral chip. The normal presentation."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Muted label (#C2CFE5) on the same bg. Documented as a disabled <em>context</em> — a Counter sitting inside a disabled row or field. Zero-count styling is no longer modeled as a variant; derive it from <code>count</code> in code."
+      },
+      {
+        "state": "With limit",
+        "ios": "yes",
+        "android": "yes",
+        "property": "hasLimit=True",
+        "notes": "Renders \"N / M\" (e.g. \"3 / 10\") — for slot/limit displays like \"beneficiaries used\"."
+      },
+      {
+        "state": "Without limit",
+        "ios": "yes",
+        "android": "yes",
+        "property": "hasLimit=False",
+        "notes": "Renders a single integer in a 24×24 circle. Used for unread counts, inbox badges."
+      },
+      {
+        "state": "Pressed / Focused",
+        "ios": "na",
+        "android": "na",
+        "property": "—",
+        "notes": "Counter is display-only — no interactive states."
+      },
+      {
+        "state": "Overflow (99+)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "<code>Overflow</code> layer",
+        "notes": "A hidden <code>Overflow</code> frame holding a <code>+</code> glyph sits in the two <code>hasLimit=False</code> circle variants only — it was removed from the slash format in v2.1. Single-integer clamps at <code>maxDisplay</code> (default 99) → \"99+\"; slash format clamps at <code>limit</code>. Clamping is handled in code."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "<code>with limit</code> renamed to <code>hasLimit</code>.",
+        "body": "v2.0: Rebuilt on node <code>4675:21497</code>. The property is now <code>hasLimit</code> with <code>True/False</code> values — a real Figma boolean toggle that maps directly to Swift <code>Bool</code> / Kotlin <code>Boolean</code>. The <code>State</code> axis was also recased to PascalCase, bringing both properties in line with the Property Naming Guidelines. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Applied — Rename recommendation shipped.",
+        "body": "v2.0: Applied — <code>with limit: yes/no</code> → <code>hasLimit: True/False</code>, exactly as recommended. Logged here rather than in an Applied tab because <code>overview.appliedRecommendations</code> does not yet exist in the schema. (Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>State=Disabled</code> semantics confirmed.",
+        "body": "v2.0: Closed by owner decision — <code>Disabled</code> describes the <em>control context</em> (a Counter sitting inside a disabled row or field), not a zero count. Zero-count styling is derived from <code>count</code> in code and is deliberately not modeled as a variant. This also settles the contrast question: the muted label (#C2CFE5 on #EEF2F9, 1.4:1) is disabled text, which WCAG 1.4.3 exempts. (Docs)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Overflow clamp rule settled.",
+        "body": "v2.0: Closed by owner decision — no further spec work required. Single-integer format clamps at <code>maxDisplay</code> (default 99) and renders \"99+\"; slash format clamps at <code>limit</code> when <code>count &gt; limit</code>. Handled in code; the Figma <code>Overflow</code> layer only supplies the <code>+</code> glyph. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Two use cases documented.",
+        "body": "v2.0: Closed — single-integer answers <em>how many of X are there</em> (notifications, unread, pending); slash format shows <em>progress against capacity</em> (slots used, steps completed). Captured in the Behavior table and the Style tab; no further action. (Docs)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Counter ↔ Badge relationship documented.",
+        "body": "v2.0: Closed — Counter is numeric (a count or progress); Badge is a status or tag label (Success, Premium). Teams pick by whether the content is a number. No further action. (Docs)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "<code>Disabled</code> variant width evened up.",
+        "body": "v2.1: <code>State=Disabled, hasLimit=True</code> went from 61 × 24 to <code>53 × 24</code>, matching its <code>Default</code> sibling for identical content; the component set narrowed from 109 to 101. Achieved by removing the <code>Overflow</code> frame from the slash-format variants rather than excluding it from layout. Instances no longer jump 8px when switching state. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Count and separator layers renamed.",
+        "body": "v2.1: Applied — all four count layers are now <code>Count</code> (<code>4675:21499</code> · <code>4675:21503</code> · <code>4675:22735</code> · <code>4675:21509</code>) and both slash glyphs are <code>Separator</code> (<code>4675:21500</code> · <code>4675:21504</code>). The property surface is legible for the first time. Two limit layers were misnamed in the same sweep — tracked as an open issue. (Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Overflow glyph layers renamed to <code>Plus</code>.",
+        "body": "v2.2: <code>4681:19238</code> and <code>4681:19235</code> went from <code>#overflow-value</code> to <code>Plus</code> — PascalCase, no hash prefix, per the Property Naming Guidelines. Every layer in the two circle variants now carries a correct semantic name. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Text layer naming complete.",
+        "body": "v2.3: <code>4675:21501</code> and <code>4675:21505</code> renamed to <code>Limit</code>, resolving the duplicate-<code>Count</code> collision in the slash-format variants. Every text layer in the set now carries a correct, distinct semantic name — <code>Count</code> ×4, <code>Separator</code> ×2, <code>Limit</code> ×2, <code>Plus</code> ×2 — verified by characters, not position. Closes the C1 naming issue opened at initial assessment. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Container</code> renamed to <code>LimitGroup</code>.",
+        "body": "v2.4: <code>4675:23030</code> and <code>4675:23007</code> renamed from the generic <code>Container</code> to <code>LimitGroup</code>. Every frame and text layer in the set now carries a semantic name — C1 is fully clean. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Text properties confirmed exposed.",
+        "body": "v2.4: Closed on owner confirmation — <code>Count</code> and <code>Limit</code> are exposed as text properties, so consumers set values without detaching. This closes the \"hardcoded text\" issue raised at initial assessment. Not independently verifiable from the read-only assessment tooling, which cannot read component property definitions. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>Overflow</code> layer binding confirmed.",
+        "body": "v2.4: Closed on owner confirmation — the <code>Overflow</code> frames in the two <code>hasLimit=False</code> circle variants (<code>4681:19237</code> · <code>4681:19234</code>) are property-bound, not manual visibility overrides. Their removal from the slash-format variants in v2.1 was deliberate, and resolves the nonsensical <code>0 / 10+</code> rendering. Clamping stays in code. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Variants",
+    "description": "",
+    "source": {
+      "set": "4675:21497",
+      "variants": 4,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "counter",
+        "demoKey": "counter",
+        "title": "Counter",
+        "node": "4675:21502",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-counter\"><span class=\"eb-preview eb-preview-counter eb-preview-counter--limit\"><span class=\"eb-preview-counter__count\">0</span><span class=\"eb-preview-counter__sep\">/</span><span class=\"eb-preview-counter__limit\">10</span></span></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "hasLimit",
+                "prop": "hasLimit",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasLimit",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasLimit",
+                "variants": [
+                  {
+                    "when": "hasLimit:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#EEF2F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Count",
+                "value": "#072592",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Separator",
+                "value": "#072592",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Limit",
+                "value": "#072592",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Plus",
+                "value": "#072592",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Count",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Separator",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Limit",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Plus",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "24",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "53",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasLimit:false",
+                    "value": "24",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radius",
+                "value": "99",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasLimit:false",
+                    "value": "99999",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBCounter</span>(<span class=\"syn-param\">count</span>: 0)\n    .<span class=\"syn-fn\">ebLimit</span>(10)</code>",
+        "compose": "<code><span class=\"syn-type\">EBCounter</span>(\n    <span class=\"syn-param\">count</span> <span class=\"syn-eq\">=</span> 0,\n    <span class=\"syn-param\">limit</span> <span class=\"syn-eq\">=</span> 10\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by State",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Default",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Count",
+            "token": "—",
+            "values": [
+              "#072592"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Separator",
+            "token": "—",
+            "values": [
+              "#072592"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Limit",
+            "token": "—",
+            "values": [
+              "#072592"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Plus",
+            "token": "—",
+            "values": [
+              "#072592"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Count",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Separator",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Limit",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Plus",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          }
+        ]
+      }
+    ],
+    "playground": true
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:counter:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>counter<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "State and hasLimit are the set’s two variant properties. Count and Limit are exposed as text properties (owner confirmation, v2.4); the Overflow frame’s Plus glyph is property-bound. Neither the text properties nor the overflow binding are readable with the plugin.",
+      "rows": [
+        {
+          "figma": "State — Default, Disabled",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
+        },
+        {
+          "figma": "hasLimit — True, False",
+          "swift": "<code>.ebLimit(10)</code> when True",
+          "compose": "<code>limit = 10</code> when True, else <code>null</code>"
+        },
+        {
+          "figma": "Count (text)",
+          "swift": "<code>count: Int</code>",
+          "compose": "<code>count = 0</code>"
+        },
+        {
+          "figma": "Limit (text)",
+          "swift": "<code>.ebLimit(_:)</code>",
+          "compose": "<code>limit = 10</code>"
+        },
+        {
+          "figma": "Overflow › Plus (property-bound glyph)",
+          "swift": "<code>maxDisplay: Int = 99</code> — renders \"99+\" past it",
+          "compose": "<code>maxDisplay = 99</code> — renders \"99+\" past it"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Counter",
+        "swift": "<code><span class=\"syn-type\">EBCounter</span>(<span class=\"syn-param\">count</span>: 0)\n    .<span class=\"syn-fn\">ebLimit</span>(10)</code>",
+        "compose": "<code><span class=\"syn-type\">EBCounter</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">count</span> = <span class=\"syn-val\">0</span>,\n    <span class=\"syn-param\">limit</span> = <span class=\"syn-val\">10</span>\n<span class=\"syn-punc\">)</span></code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Context-aware label",
+        "ios": "<code>.accessibilityLabel(\"3 unread\")</code> or <code>\"3 of 10 used\"</code> — the number alone is meaningless.",
+        "android": "<code>contentDescription = \"3 unread\"</code> / <code>\"3 of 10 used\"</code> on the pill."
+      },
+      {
+        "requirement": "Zero and overflow",
+        "ios": "Announce \"no unread\" at 0 and \"more than 99\" past maxDisplay — never read the plus glyph.",
+        "android": "Same two phrasings; the plus glyph is decorative."
+      },
+      {
+        "requirement": "Disabled context",
+        "ios": "The pill inherits the disabled trait of the row or field it sits in; it is never disabled on its own.",
+        "android": "Semantics merge with the parent row; no separate <code>enabled</code> handling on the pill."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "#072592 on #EEF2F9 is 10.4:1; the disabled #C2CFE5 is decorative and must not carry information.",
+        "android": "Same values — the pill colours are fixed, not themed."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use the single integer for how-many counts — unread, pending, notifications.",
+        "dontText": "Don’t use the single integer for progress against a capacity."
+      },
+      {
+        "doText": "Use hasLimit for slots used against a capacity — \"3 / 10 beneficiaries\".",
+        "dontText": "Don’t let count exceed limit; clamp it in code."
+      },
+      {
+        "doText": "Keep maxDisplay at 99 so the pill stays two digits plus the glyph.",
+        "dontText": "Don’t show four-digit counts — \"999+\" is the widest the pill should get."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Count</code>, <code>Separator</code>, <code>LimitGroup</code> › <code>Limit</code>, <code>Overflow</code> › <code>Plus</code> — read on 4675:21502 and 4675:21508."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>State</code> and <code>hasLimit</code> with Title Case values; the boolean is a real True / False."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All four text layers resolve to <code>Primary/Label/Small</code>. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One enum, one boolean, two text values — maps 1:1 onto <code>EBCounter</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default and Disabled built for both hasLimit values; the pill is not a tap target, so no Pressed."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "No icons or images — text layers only."
+      }
+    ],
+    "variants": {
+      "total": 4,
+      "description": "2 State × 2 hasLimit = 4 variants",
+      "columns": [
+        "State",
+        "hasLimit",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Default",
+            "True",
+            "<code>4675:21502</code>",
+            "53 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "False",
+            "<code>4675:21508</code>",
+            "24 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "True",
+            "<code>4675:21498</code>",
+            "53 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "False",
+            "<code>4675:22734</code>",
+            "24 × 24"
+          ]
+        }
+      ],
+      "summary": {
+        "columns": [],
+        "rows": []
+      },
+      "collapseLabel": ""
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 4675:21497",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the four live variants.</strong> One card — every property is <code>State</code> or a boolean — with <code>State</code> and <code>hasLimit</code> in the panel; colours, the <code>Primary/Label/Small</code> text style and the 53 / 24 widths read off 4675:21502 and 4675:21508. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the <code>State</code> × <code>hasLimit</code> schema.</strong> Installation on the solo coordinates, Property Mapping one row per property with the overflow rule, Usage Snippet and Guidelines added, Scorecard notes tied to the live nodes, Variants Inventory moved from the 18482 nodes to the four live nodes.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 4675:21497",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 13 resolved issues on the Overview tab had no changelog row: <code>with limit</code> renamed to <code>hasLimit</code>; Applied — Rename recommendation shipped; <code>State=Disabled</code> semantics confirmed; Overflow clamp rule settled; Two use cases documented; Counter ↔ Badge relationship documented; <code>Disabled</code> variant width evened up; Count and separator layers renamed; Overflow glyph layers renamed to <code>Plus</code>; Text layer naming complete; <code>Container</code> renamed to <code>LimitGroup</code>; Text properties confirmed exposed; <code>Overflow</code> layer binding confirmed.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 18482:71321",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Fix</strong> — Keep both formats (single integer + slash). Rename <code>with limit</code> → <code>hasLimit</code>, parameterize <code>count</code> + <code>limit</code>, add <code>99+</code> overflow. Variant count stays at 4. <span class=\"tag-open tag-c2 tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Schema"
+          }
+        },
+        {
+          "body": "<strong>C2 — Boolean naming</strong> — <code>with limit: yes/no</code> → <code>hasLimit: true/false</code>. Direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C2 — Parameterize values</strong> — Expose <code>count: Int</code> + <code>limit: Int?</code>; drop hardcoded text. Derive <code>state</code> from count. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C5 — Overflow</strong> — Add <code>maxDisplay</code> (default 99); counts beyond render \"99+\" in single-integer format, and clamp in slash format. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Trivial once parameterization + rename land. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

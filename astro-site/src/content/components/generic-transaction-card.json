@@ -1,0 +1,1566 @@
+{
+  "name": "Generic Transaction Card",
+  "meta": {
+    "node": "5488:32955",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5488-32955",
+    "description": "A transaction-summary card with merchant info, amount, date, and tappable detail surface.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>5488:32955</code> in the 2026 Working File. The <code>type</code> enum that packed five layouts into one axis is replaced by real <code>Leading-Slot</code> and <code>Trailing-Slot</code> nodes; the single <code>state</code> axis is split into <code>State = Default | Pressed | Disabled</code> beside <code>Status = Default | Read | Skeleton</code> per §6, so read-and-pressed is expressible; the heading weight matches <a href=\"#\" onclick=\"showPanelById('generic-card');return false;\">Generic Card</a> at Proxima Soft Bold 18/23; and pressed and disabled both ship. Naming is complete across every variant including the skeleton — no <code>offset</code> frames, no <code>#</code> sigil, no spaces, no duplicate names, and slots kebab-cased per §4. The label overflow is resolved, with the 270px <code>LabelAmountRow</code> budget honoured as 172 + 98. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+    },
+    "navGroup": "Card",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Transaction-history rows stack vertically in the Activity / Transactions screen. Different rows use different variants depending on the context (recipient avatar, reference number, action menu).",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"gtx-demo-preview\"><div class=\"eb-preview eb-preview-gtx\"><span class=\"eb-preview-gtx__avatar\">G</span><div class=\"eb-preview-gtx__content\"><div class=\"eb-preview-gtx__label-row\"><p class=\"eb-preview-gtx__label\">Label</p><div class=\"eb-preview-gtx__trailing\"><span class=\"eb-preview-gtx__amount\">XXX.XX</span><svg class=\"eb-preview-gtx__menu\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 10C7.10457 10 8 10.8954 8 12C8 13.1046 7.10457 14 6 14C4.89543 14 4 13.1046 4 12C4 10.8954 4.89543 10 6 10ZM12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10ZM18 10C19.1046 10 20 10.8954 20 12C20 13.1046 19.1046 14 18 14C16.8954 14 16 13.1046 16 12C16 10.8954 16.8954 10 18 10Z\" fill=\"currentColor\"/></svg></div></div><div class=\"eb-preview-gtx__meta-row\"><span class=\"eb-preview-gtx__badge\">Label</span><span class=\"eb-preview-gtx__meta\">Date XX, XXXX, Time (AM,PM)</span></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Status</span><select id=\"gtx-ctrl-status\" class=\"demo-panel-select\" onchange=\"_gtxUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"read\">Read</option><option value=\"skeleton\">Skeleton</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"gtx-ctrl-state\" class=\"demo-panel-select\" onchange=\"_gtxUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Label</span><input type=\"text\" id=\"gtx-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_gtxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Badge</span><input type=\"text\" id=\"gtx-ctrl-badge\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_gtxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Date</span><input type=\"text\" id=\"gtx-ctrl-date\" class=\"demo-panel-select demo-panel-input\" value=\"Date XX, XXXX, Time (AM,PM)\" oninput=\"_gtxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Amount</span><input type=\"text\" id=\"gtx-ctrl-amount\" class=\"demo-panel-select demo-panel-input\" value=\"XXX.XX\" oninput=\"_gtxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Avatar initials</span><input type=\"text\" id=\"gtx-ctrl-initials\" class=\"demo-panel-select demo-panel-input\" value=\"G\" oninput=\"_gtxUpdate()\"></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "A generic transaction row — the leading and trailing slots let it carry an avatar, an icon or nothing, so one component covers the layouts the old <code>type</code> enum needed five variants for."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its surface, border and typography across all five states, and composes shared <code>Avatar</code> and <code>Badge</code> instances rather than redrawing them."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "<code>State</code> and <code>Status</code> are separate PascalCase properties with Title Case values per §1 and §5, following the §6 split. Layer naming is clean across all five variants including the skeleton: slots kebab-cased per §4, text layers on the §3 vocabulary, every frame named for what it holds, and no duplicates, sigils, spaces or <code>offset</code> frames left anywhere."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "<code>leadingElement</code> and <code>trailingElement</code> are both real Figma Slots, and the avatar, badge and trailing icon are all shared instances — the composition problem the previous assessment raised is solved."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=default",
+        "notes": "Label + badge + date + amount. The baseline transaction row."
+      },
+      {
+        "state": "With avatar",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=with avatar",
+        "notes": "Adds a 32 × 32 Avatar at the leading edge. Used for person-to-person transactions."
+      },
+      {
+        "state": "More information",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=more information",
+        "notes": "Replaces the badge with an overflow menu button (⋯). Used when a row has context-menu actions."
+      },
+      {
+        "state": "No amount",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=no amount",
+        "notes": "Swaps the amount for a trailing badge; swaps date for a reference number. Used for confirmations without monetary value."
+      },
+      {
+        "state": "Skeleton loader",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=skeleton loader",
+        "notes": "Loading placeholder pattern. Worth documenting alongside Generic Card's skeleton as a DS-wide convention."
+      },
+      {
+        "state": "Pressed",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "Rows typically drill into transaction detail — need pressed tint for tap feedback."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "<code>type</code> enum replaced by slot-based composition.",
+        "body": "v2.0: Rebuilt on node <code>5488:32955</code> in the 2026 Working File. The axis that packed five structurally different layouts into one enum is gone — the leading and trailing positions are now real <code>SLOT</code> nodes, so an avatar, an icon or nothing at all is the consumer’s choice rather than a variant. The set drops from a layout enum to five states. This is the headline recommendation applied. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>no amount</code> and <code>more information</code> values retired.",
+        "body": "v2.0: Both described what was absent rather than what the card was for, and both are gone with the enum that carried them. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Heading weight aligned with Generic Card.",
+        "body": "v2.0: The label is now Proxima Soft Bold 700 at 18/23, matching <a href=\"#\" onclick=\"showPanelById('generic-card');return false;\">Generic Card</a>’s <code>Title</code> exactly. The two cards sit next to each other in lists, so a Semibold/Bold split between them read as an error rather than a distinction. (C3)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Pressed and disabled states added.",
+        "body": "v2.0: <code>state=pressed</code> fills the surface <code>#F6F9FD</code> and <code>state=disabled</code> ships alongside it, closing the missing-states finding. The card is a primary tap target in transaction lists, so touch-down feedback was the most-felt gap. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Axis split into <code>State</code> and <code>Status</code>.",
+        "body": "v2.1: Verified on the live node. <code>State = Default | Pressed | Disabled</code> now sits beside <code>Status = Default | Read | Skeleton</code>, so interaction, content status and loading are three separate concerns rather than five values competing for one axis. Read-and-pressed is expressible, which in a transaction list is the common case. Both properties are PascalCase per §1 with Title Case values per §5, matching the split <a href=\"#\" onclick=\"showPanelById('generic-card');return false;\">Generic Card</a> made and the rule in §6. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Slots brought onto the family convention.",
+        "body": "v2.1: <code>⤷ leadingElement</code> and <code>⤷ trailingElement</code> are now <code>Leading-Slot</code> and <code>Trailing-Slot</code> — the literal arrow character is gone and both follow §4 kebab-case with the <code>-Slot</code> suffix used across <a href=\"#\" onclick=\"showPanelById('bottom-sheet');return false;\">Bottom Sheet</a>, <a href=\"#\" onclick=\"showPanelById('alert');return false;\">Alert</a> and Generic Card. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The three <code>offset</code> frames named, and the typo fixed.",
+        "body": "v2.1: <code>offset</code> → <code>BadgeContainer</code>, <code>offset</code> → <code>AmountContainer</code>, and the misspelled <code>amout-offset</code> → <code>Amount</code>. A new <code>LabelAmountRow</code> now holds the label and amount columns as an explicit 270px row — 172 + 98 — so the horizontal structure is declared rather than implied by position. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Legacy sigil dropped and frames moved to PascalCase.",
+        "body": "v2.1: <code>#label</code> → <code>Label</code>, <code>#date</code> → <code>Date</code>, <code>#amount</code> → <code>Amount</code>, on the §3 vocabulary. The frames follow — <code>container</code> → <code>CardContainer</code>, <code>content-container</code> → <code>ContentContainer</code>, <code>transaction-detail</code> → <code>TransactionDetail</code> — and the space in <code>leading element</code> is closed as <code>LeadingElement</code>. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Label overflow resolved.",
+        "body": "v2.2: Re-measured on the live node — <code>Label</code> (<code>5488:32986</code>) is now 172px, matching <code>TransactionDetail</code> exactly rather than running 33px past it. The <code>LabelAmountRow</code> budget of 270px is now honoured on both sides: 172 for the label column, 98 for the amount. Nothing overlaps, and a native implementation reading these bounds gets one consistent answer instead of two. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Skeleton brought onto the shared vocabulary.",
+        "body": "v2.2: The inner layers are renamed to match the default variant — <code>transaction-detail</code> → <code>TransactionDetail</code>, the last <code>offset</code> frame → <code>BadgeContainer</code>, and <code>tag</code> / <code>header</code> / <code>badge</code> → <code>Tag</code> / <code>Header</code> / <code>Badge</code>. No frame in the component is named <code>offset</code> any more, and the skeleton no longer needs a second vocabulary to read. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Amount</code> duplication resolved.",
+        "body": "v2.2: The trailing column now reads <code>AmountRow</code> → <code>AmountContainer</code> → <code>Amount</code> — three distinct names across three levels, with the text layer keeping the §3 vocabulary name and the wrappers describing what they hold. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "5488:32955",
+      "variants": 5,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "gtx-default",
+        "demoKey": "default",
+        "title": "Default",
+        "node": "5488:32979",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gtx-spec-default\"><div class=\"eb-preview eb-preview-gtx\"><span class=\"eb-preview-gtx__avatar\">G</span><div class=\"eb-preview-gtx__content\"><div class=\"eb-preview-gtx__label-row\"><p class=\"eb-preview-gtx__label\">Label</p><div class=\"eb-preview-gtx__trailing\"><span class=\"eb-preview-gtx__amount\">XXX.XX</span><svg class=\"eb-preview-gtx__menu\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 10C7.10457 10 8 10.8954 8 12C8 13.1046 7.10457 14 6 14C4.89543 14 4 13.1046 4 12C4 10.8954 4.89543 10 6 10ZM12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10ZM18 10C19.1046 10 20 10.8954 20 12C20 13.1046 19.1046 14 18 14C16.8954 14 16 13.1046 16 12C16 10.8954 16.8954 10 18 10Z\" fill=\"currentColor\"/></svg></div></div><div class=\"eb-preview-gtx__meta-row\"><span class=\"eb-preview-gtx__badge\">Label</span><span class=\"eb-preview-gtx__meta\">Date XX, XXXX, Time (AM,PM)</span></div></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Status",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "Pressed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "#F6F9FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Amount",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Date",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Badge background",
+                "value": "#E5F1FF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#D7E0EF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Badge label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#FFFFFF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Avatar background",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Avatar initials",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#F6F9FD @ 72%",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Avatar border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#F6F9FD @ 72%",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Trailing icon",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Amount",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Date",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "82",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1 · bottom",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBTransactionCard</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">amount</span>: <span class=\"syn-str\">\"XXX.XX\"</span>,\n    <span class=\"syn-param\">date</span>: <span class=\"syn-str\">\"Date XX, XXXX, Time (AM,PM)\"</span>,\n    <span class=\"syn-param\">badge</span>: <span class=\"syn-type\">EBBadge</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">intent</span>: <span class=\"syn-dot\">.information</span>),\n    <span class=\"syn-param\">leading</span>: <span class=\"syn-dot\">.avatar</span>(<span class=\"syn-str\">\"G\"</span>),\n    <span class=\"syn-param\">trailing</span>: <span class=\"syn-dot\">.menu</span>\n)</code>",
+        "compose": "<code><span class=\"syn-type\">EBTransactionCard</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">amount</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"XXX.XX\"</span>,\n    <span class=\"syn-param\">date</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Date XX, XXXX, Time (AM,PM)\"</span>,\n    <span class=\"syn-param\">badge</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadge</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-type\">EBBadgeIntent</span>.Information),\n    <span class=\"syn-param\">leading</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">EBAvatar</span>(<span class=\"syn-param\">initials</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"G\"</span>) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTransactionTrailing</span>.Menu\n)</code>"
+      },
+      {
+        "cardKey": "gtx-read",
+        "demoKey": "read",
+        "title": "Read",
+        "node": "5501:38441",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gtx-spec-read\"><div class=\"eb-preview eb-preview-gtx eb-preview-gtx--read\"><span class=\"eb-preview-gtx__avatar\">G</span><div class=\"eb-preview-gtx__content\"><div class=\"eb-preview-gtx__label-row\"><p class=\"eb-preview-gtx__label\">Label</p><div class=\"eb-preview-gtx__trailing\"><span class=\"eb-preview-gtx__amount\">XXX.XX</span><svg class=\"eb-preview-gtx__menu\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 10C7.10457 10 8 10.8954 8 12C8 13.1046 7.10457 14 6 14C4.89543 14 4 13.1046 4 12C4 10.8954 4.89543 10 6 10ZM12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10ZM18 10C19.1046 10 20 10.8954 20 12C20 13.1046 19.1046 14 18 14C16.8954 14 16 13.1046 16 12C16 10.8954 16.8954 10 18 10Z\" fill=\"currentColor\"/></svg></div></div><div class=\"eb-preview-gtx__meta-row\"><span class=\"eb-preview-gtx__badge\">Label</span><span class=\"eb-preview-gtx__meta\">Date XX, XXXX, Time (AM,PM)</span></div></div></div></div>",
+        "hasControls": true,
+        "demoControls": [],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Status",
+                "value": "Read",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Amount",
+                "value": "#90A8D0",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Date",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Badge background",
+                "value": "#E5F1FF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Badge label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Avatar background",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Avatar initials",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Avatar border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Trailing icon",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Amount",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Date",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "82",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1 · bottom",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBTransactionCard</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">amount</span>: <span class=\"syn-str\">\"XXX.XX\"</span>,\n    <span class=\"syn-param\">date</span>: <span class=\"syn-str\">\"Date XX, XXXX, Time (AM,PM)\"</span>,\n    <span class=\"syn-param\">badge</span>: <span class=\"syn-type\">EBBadge</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">intent</span>: <span class=\"syn-dot\">.information</span>),\n    <span class=\"syn-param\">leading</span>: <span class=\"syn-dot\">.avatar</span>(<span class=\"syn-str\">\"G\"</span>),\n    <span class=\"syn-param\">trailing</span>: <span class=\"syn-dot\">.menu</span>\n)\n.<span class=\"syn-fn\">ebStatus</span>(<span class=\"syn-dot\">.read</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBTransactionCard</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">amount</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"XXX.XX\"</span>,\n    <span class=\"syn-param\">date</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Date XX, XXXX, Time (AM,PM)\"</span>,\n    <span class=\"syn-param\">badge</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadge</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-type\">EBBadgeIntent</span>.Information),\n    <span class=\"syn-param\">leading</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">EBAvatar</span>(<span class=\"syn-param\">initials</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"G\"</span>) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTransactionTrailing</span>.Menu,\n    <span class=\"syn-param\">status</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTransactionStatus</span>.Read\n)</code>"
+      },
+      {
+        "cardKey": "gtx-skeleton",
+        "demoKey": "skeleton",
+        "title": "Skeleton",
+        "node": "5488:33001",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gtx-spec-skeleton\"><div class=\"eb-preview eb-preview-gtx eb-preview-gtx--skeleton\"><span class=\"eb-preview-gtx__sk eb-preview-gtx__sk--avatar\"></span><div class=\"eb-preview-gtx__content\"><span class=\"eb-preview-gtx__sk eb-preview-gtx__sk--tag\"></span><span class=\"eb-preview-gtx__sk eb-preview-gtx__sk--header\"></span></div><div class=\"eb-preview-gtx__trailing\"><span class=\"eb-preview-gtx__sk eb-preview-gtx__sk--trail\"></span></div></div></div>",
+        "hasControls": true,
+        "demoControls": [],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Status",
+                "value": "Skeleton",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Placeholder bars",
+                "value": "#EEF2F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Leading placeholder",
+                "value": "#EEF2F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": []
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "79",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1 · bottom",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBTransactionCard</span>(<span class=\"syn-param\">loading</span>: <span class=\"syn-kw\">true</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBTransactionCard</span>(<span class=\"syn-param\">isLoading</span> <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Status",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Default",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Border",
+            "token": "—",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Amount",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Date",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Badge background",
+            "token": "—",
+            "values": [
+              "#E5F1FF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Badge label",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Avatar background",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Avatar initials",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Avatar border",
+            "token": "—",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Trailing icon",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Default · Pressed",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#F6F9FD"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Amount",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Date",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Badge background",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Badge label",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Avatar background",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Avatar initials",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 72%"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Avatar border",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 72%"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Trailing icon",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Read",
+            "element": "Amount",
+            "token": "—",
+            "values": [
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Skeleton",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Skeleton",
+            "element": "Border",
+            "token": "—",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Skeleton",
+            "element": "Placeholder bars",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Skeleton",
+            "element": "Leading placeholder",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:card:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>card<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "State and Status are the set’s two variant properties. Leading-Slot and Trailing-Slot are Figma Slots. Label, Amount, Date and the Badge are read from the layer tree of 5488:32979; whether they are exposed on the property panel is not readable with the plugin.",
+      "rows": [
+        {
+          "figma": "State — Default, Pressed, Disabled",
+          "swift": "<code>.disabled(true)</code> for Disabled · Pressed is the platform touch-down",
+          "compose": "<code>enabled = false</code> for Disabled · Pressed from <code>interactionSource</code>"
+        },
+        {
+          "figma": "Status — Default, Read, Skeleton",
+          "swift": "<code>.ebStatus(.read)</code> · <code>loading: true</code>",
+          "compose": "<code>status = EBTransactionStatus.Read</code> · <code>isLoading = true</code>"
+        },
+        {
+          "figma": "Leading-Slot (slot)",
+          "swift": "<code>leading: EBTransactionLeading</code> — <code>.avatar(\"G\")</code>",
+          "compose": "<code>leading: @Composable (() -&gt; Unit)?</code>"
+        },
+        {
+          "figma": "Trailing-Slot (slot)",
+          "swift": "<code>trailing: EBTransactionTrailing</code> — <code>.menu</code>",
+          "compose": "<code>trailing = EBTransactionTrailing.Menu</code>"
+        },
+        {
+          "figma": "Label (text)",
+          "swift": "<code>title: String</code>",
+          "compose": "<code>title = \"…\"</code>"
+        },
+        {
+          "figma": "Amount (text)",
+          "swift": "<code>amount: String</code>",
+          "compose": "<code>amount = \"…\"</code>"
+        },
+        {
+          "figma": "Date (text)",
+          "swift": "<code>date: String</code>",
+          "compose": "<code>date = \"…\"</code>"
+        },
+        {
+          "figma": "Badge (nested Badge instance)",
+          "swift": "<code>badge: EBBadge</code>",
+          "compose": "<code>badge = EBBadge(\"Label\", EBBadgeIntent.Information)</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Default",
+        "swift": "<code><span class=\"syn-type\">EBTransactionCard</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">amount</span>: <span class=\"syn-str\">\"XXX.XX\"</span>,\n    <span class=\"syn-param\">date</span>: <span class=\"syn-str\">\"Date XX, XXXX, Time (AM,PM)\"</span>,\n    <span class=\"syn-param\">badge</span>: <span class=\"syn-type\">EBBadge</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">intent</span>: <span class=\"syn-dot\">.information</span>),\n    <span class=\"syn-param\">leading</span>: <span class=\"syn-dot\">.avatar</span>(<span class=\"syn-str\">\"G\"</span>),\n    <span class=\"syn-param\">trailing</span>: <span class=\"syn-dot\">.menu</span>\n)</code>",
+        "compose": "<code><span class=\"syn-type\">EBTransactionCard</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">amount</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"XXX.XX\"</span>,\n    <span class=\"syn-param\">date</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Date XX, XXXX, Time (AM,PM)\"</span>,\n    <span class=\"syn-param\">badge</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadge</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-type\">EBBadgeIntent</span>.Information),\n    <span class=\"syn-param\">leading</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">EBAvatar</span>(<span class=\"syn-param\">initials</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"G\"</span>) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTransactionTrailing</span>.Menu\n)</code>"
+      },
+      {
+        "subheading": "Read",
+        "swift": "<code><span class=\"syn-type\">EBTransactionCard</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">amount</span>: <span class=\"syn-str\">\"XXX.XX\"</span>,\n    <span class=\"syn-param\">date</span>: <span class=\"syn-str\">\"Date XX, XXXX, Time (AM,PM)\"</span>,\n    <span class=\"syn-param\">badge</span>: <span class=\"syn-type\">EBBadge</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">intent</span>: <span class=\"syn-dot\">.information</span>),\n    <span class=\"syn-param\">leading</span>: <span class=\"syn-dot\">.avatar</span>(<span class=\"syn-str\">\"G\"</span>),\n    <span class=\"syn-param\">trailing</span>: <span class=\"syn-dot\">.menu</span>\n)\n.<span class=\"syn-fn\">ebStatus</span>(<span class=\"syn-dot\">.read</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBTransactionCard</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">amount</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"XXX.XX\"</span>,\n    <span class=\"syn-param\">date</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Date XX, XXXX, Time (AM,PM)\"</span>,\n    <span class=\"syn-param\">badge</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadge</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-type\">EBBadgeIntent</span>.Information),\n    <span class=\"syn-param\">leading</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">EBAvatar</span>(<span class=\"syn-param\">initials</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"G\"</span>) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTransactionTrailing</span>.Menu,\n    <span class=\"syn-param\">status</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTransactionStatus</span>.Read\n)</code>"
+      },
+      {
+        "subheading": "Skeleton",
+        "swift": "<code><span class=\"syn-type\">EBTransactionCard</span>(<span class=\"syn-param\">loading</span>: <span class=\"syn-kw\">true</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBTransactionCard</span>(<span class=\"syn-param\">isLoading</span> <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Row as a button",
+        "ios": "Whole row in <code>Button</code>; one <code>accessibilityLabel</code> combining label, badge, amount and date.",
+        "android": "<code>Modifier.clickable { onTap() }.semantics(mergeDescendants = true)</code> on the row."
+      },
+      {
+        "requirement": "Amount announcement",
+        "ios": "Pass the amount through the localized currency formatter, not the raw string.",
+        "android": "<code>contentDescription</code> carries the formatted amount."
+      },
+      {
+        "requirement": "Read status",
+        "ios": "<code>.accessibilityValue(\"Read\")</code> when Status is Read — the grey amount alone is not announced.",
+        "android": "<code>stateDescription = \"Read\"</code> in the row semantics."
+      },
+      {
+        "requirement": "Disabled",
+        "ios": "<code>.disabled(true)</code> adds the <code>.notEnabled</code> trait.",
+        "android": "<code>enabled = false</code> sets the disabled semantics."
+      },
+      {
+        "requirement": "Loading",
+        "ios": "Announce \"Loading\" once; <code>.accessibilityHidden(true)</code> on the placeholder bars.",
+        "android": "<code>contentDescription = \"Loading\"</code> on the skeleton container; placeholders cleared with <code>clearAndSetSemantics</code>."
+      },
+      {
+        "requirement": "Minimum target",
+        "ios": "82 pt row ≥ 44 pt.",
+        "android": "82 dp row ≥ 48 dp."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Status Read once the user has opened the transaction.",
+        "dontText": "Don’t use Read as a disabled look — Disabled is a State value."
+      },
+      {
+        "doText": "Keep the label to one line inside its 172 px column.",
+        "dontText": "Don’t let a long counterparty name push the amount out of its 98 px column."
+      },
+      {
+        "doText": "Fill Leading-Slot with an Avatar or a merchant icon that identifies the counterparty.",
+        "dontText": "Don’t put a second text layer or a badge in the slot."
+      },
+      {
+        "doText": "Show one Skeleton row per expected transaction while the list loads.",
+        "dontText": "Don’t use Skeleton for a refresh of a single amount."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "PascalCase frames, <code>Leading-Slot</code> / <code>Trailing-Slot</code> named slots, no offset frames — read on 5488:32979."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>State</code> and <code>Status</code> split, Title Case values, no absence-based names."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Label and Amount resolve to <code>Primary/Headlines/Block</code>, Date to <code>Secondary/Bold/Caption</code>. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Two enums, two slots, four text values — maps 1:1 onto <code>EBTransactionCard</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default, Pressed and Disabled built; Read and Skeleton exist at State Default only."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Avatar and Badge are instances. The Trailing-Slot icon (Others) carries a <code>shape_full</code> BOOLEAN_OPERATION — flatten it in the icon library."
+      }
+    ],
+    "variants": {
+      "total": 5,
+      "description": "3 State × 3 Status, with Read and Skeleton built at State Default only = 5 variants",
+      "columns": [
+        "State",
+        "Status",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "<code>5488:32979</code>",
+            "360 × 82"
+          ]
+        },
+        {
+          "cells": [
+            "Pressed",
+            "Default",
+            "<code>5492:33839</code>",
+            "360 × 82"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "Default",
+            "<code>5492:33889</code>",
+            "360 × 82"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Read",
+            "<code>5501:38441</code>",
+            "360 × 82"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Skeleton",
+            "<code>5488:33001</code>",
+            "360 × 79"
+          ]
+        }
+      ],
+      "summary": {
+        "columns": [],
+        "rows": []
+      },
+      "collapseLabel": ""
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 5488:32955",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the five live variants.</strong> Cards follow <code>Status</code> — Default, Read, Skeleton — with <code>State</code> as a panel control; colours, text styles and the 82 / 79 heights read off 5488:32979, 5501:38441 and 5488:33001. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the <code>State</code> × <code>Status</code> schema.</strong> Property Mapping is one row per property, Usage Snippets and Guidelines added, Scorecard regraded, Variants Inventory moved from the five <code>type</code> nodes to the five live nodes.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Trailing-Slot icon carries a BOOLEAN_OPERATION.</strong> The Others icon on 5488:32979 contains <code>shape_full</code>; flatten it in the icon library. Filed from the scorecard for the Component Review.",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 5488:32955",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 11 resolved issues on the Overview tab had no changelog row: <code>type</code> enum replaced by slot-based composition; <code>no amount</code> and <code>more information</code> values retired; Heading weight aligned with Generic Card; Pressed and disabled states added; Axis split into <code>State</code> and <code>Status</code>; Slots brought onto the family convention; The three <code>offset</code> frames named, and the typo fixed; Legacy sigil dropped and frames moved to PascalCase; Label overflow resolved; Skeleton brought onto the shared vocabulary; <code>Amount</code> duplication resolved.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 18482:35753",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Restructure</strong> — Replace <code>type</code> enum (5 layouts) with slot-based composition. Align heading weight with Generic Card. Add pressed state. <span class=\"tag-open tag-c1 tag-c2 tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Architecture"
+          }
+        },
+        {
+          "body": "<strong>C1 — Type enum hides layouts</strong> — Same anti-pattern as Alert's <code>Full Width</code>. Split into <code>leadingMedia</code>, <code>badge</code>, <code>trailing</code>, <code>loading</code>. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C2 — Absence-based names</strong> — <code>no amount</code> / <code>more information</code> describe what's missing. Semantic slot names replace them. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C2 — Heading weight inconsistency</strong> — Semibold 600 vs Generic Card's Bold 700. Standardize across card family. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C5 — Pressed state</strong> — Transaction rows drill into detail on tap; needs tap feedback. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Skeleton pattern ✓</strong> — First-class loading variant, matches Generic Card. Adopt as DS-wide convention. <span class=\"tag-fixed\">Noted</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Praise"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Blocked on restructure. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

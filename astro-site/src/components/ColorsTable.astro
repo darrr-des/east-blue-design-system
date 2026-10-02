@@ -3,6 +3,10 @@ import type { ColorsTable as ColorsTableType } from '../data/types';
 interface Props { table: ColorsTableType; }
 const { table } = Astro.props;
 
+/* Target shape is Role │ Element │ Token │ Value. Tables authored without
+   `element` render Role │ Token │ …columns until rewritten. */
+const hasElement = table.rows.some((r) => r.element);
+
 /* Pull a renderable swatch color out of a value string.
    Accepts:
      - "#FFFFFF"                 → "#FFFFFF"
@@ -43,6 +47,7 @@ function pickSwatch(value: string): string | null {
       <thead>
         <tr>
           <th>Role</th>
+          {hasElement && <th>Element</th>}
           <th>Token</th>
           {table.columns.map((c) => <th>{c}</th>)}
         </tr>
@@ -51,6 +56,7 @@ function pickSwatch(value: string): string | null {
         {table.rows.map((r) => (
           <tr>
             <td class="muted">{r.role}</td>
+            {hasElement && <td>{r.element ?? ''}</td>}
             <td class="mono">{r.token}</td>
             {r.values.map((v) => {
               const swatch = pickSwatch(v);

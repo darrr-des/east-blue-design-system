@@ -1,227 +1,97 @@
-/* Auto-extracted from assessment-src/components/counter.html.
- * Powers the live-preview dropdowns/toggles for the counter component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs counter
+/* Counter — live preview + spec card.
+ * Set 4675:21497 (2026 Working File): State = Default | Disabled ×
+ * hasLimit = True | False = 4 variants.
+ *
+ * Read off the variants and checked against export_node_as_image:
+ *   Default·True 4675:21502 (53×24) · Default·False 4675:21508 (24×24)
+ *   Disabled·True 4675:21498 · Disabled·False 4675:22734
+ * Overflow (owner decision, v2.0): the single integer clamps at maxDisplay
+ * (default 99) and shows "99+"; the slash format clamps count at limit.
  */
-/* ── Counter JS ─────────────────────────────────────────────────── */
-/* Counter — single-integer count pill. `count` drives the text.
-   Overflow collapses to "maxDisplay+" (e.g. "99+"). `state` auto-
-   derives from count unless explicitly overridden.                   */
 
-function _counterRender(opts) {
-  var rawCount   = opts.count;
-  var rawLimit   = opts.limit;
-  var rawMax     = opts.maxDisplay;
-  var withLimit  = opts.withLimit === 'yes';
-  var stateMode  = opts.state || 'auto';
+function _ctrEscape(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
 
-  // Parse count
-  var countNum = parseInt(rawCount, 10);
-  if (isNaN(countNum) || countNum < 0) countNum = 0;
+/* opts: { state: default|disabled, hasLimit: 'true'|'false', count, limit, maxDisplay } */
+function _ctrRender(opts) {
+  var state = opts.state || 'default';
+  var hasLimit = String(opts.hasLimit == null ? 'true' : opts.hasLimit) === 'true';
+  var count = opts.count == null || opts.count === '' ? '0' : String(opts.count);
+  var limit = opts.limit == null || opts.limit === '' ? '10' : String(opts.limit);
+  var max = parseInt(opts.maxDisplay, 10); if (isNaN(max)) max = 99;
+  var n = parseInt(count, 10);
 
-  var maxNum = parseInt(rawMax, 10);
-  if (isNaN(maxNum) || maxNum < 1) maxNum = 99;
+  var cls = 'eb-preview eb-preview-counter';
+  if (state === 'disabled') cls += ' eb-preview-counter--disabled';
+  if (hasLimit) cls += ' eb-preview-counter--limit';
 
-  var displayText;
-  if (withLimit) {
-    // Slash format — render "count / limit". Clamp count to limit visually.
-    var limitNum = parseInt(rawLimit, 10);
-    if (isNaN(limitNum) || limitNum < 1) limitNum = 10;
-    var shownCount = Math.min(countNum, limitNum);
-    displayText = shownCount + ' / ' + limitNum;
+  var html = '<span class="' + cls + '">';
+  if (hasLimit) {
+    var lim = parseInt(limit, 10);
+    var shown = (!isNaN(n) && !isNaN(lim) && n > lim) ? String(lim) : count;
+    html += '<span class="eb-preview-counter__count">' + _ctrEscape(shown) + '</span>';
+    html += '<span class="eb-preview-counter__sep">/</span>';
+    html += '<span class="eb-preview-counter__limit">' + _ctrEscape(limit) + '</span>';
   } else {
-    // Single-integer format with overflow
-    displayText = (countNum > maxNum) ? (maxNum + '+') : String(countNum);
+    var over = !isNaN(n) && n > max;
+    html += '<span class="eb-preview-counter__count">' + _ctrEscape(over ? String(max) : count) + '</span>';
+    if (over) html += '<span class="eb-preview-counter__plus">+</span>';
   }
-
-  // Derive state
-  var isFilled;
-  if (stateMode === 'filled')      isFilled = true;
-  else if (stateMode === 'empty')  isFilled = false;
-  else                              isFilled = countNum > 0;
-
-  var classes = [
-    'eb-preview',
-    'eb-preview-counter',
-    isFilled ? 'eb-preview-counter--filled' : 'eb-preview-counter--empty'
-  ];
-  return '<span class="' + classes.join(' ') + '">' + _counterEscape(displayText) + '</span>';
+  return html + '</span>';
 }
 
-function _counterEscape(s) {
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
-/* In Context — Counter as trailing content on a list row (matches
-   real product usage: Avatar + Label + Chevron + Counter).           */
-function _counterChevronSvg() {
-  return '<svg class="eb-preview-list-row__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
-    '<path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' +
-  '</svg>';
-}
-
-function _counterListRow(label, count, withLimit, limit) {
-  return '<div class="eb-preview eb-preview-list-row">' +
-    '<div class="eb-preview-list-row__avatar" aria-hidden="true"></div>' +
-    '<div class="eb-preview-list-row__label">' + _counterEscape(label) + '</div>' +
-    '<div class="eb-preview-list-row__trailing">' +
-      _counterChevronSvg() +
-      _counterRender({
-        count: count,
-        withLimit: withLimit || 'no',
-        limit: limit || '10',
-        maxDisplay: '99',
-        state: 'auto'
-      }) +
-    '</div>' +
-  '</div>';
-}
-
-function _counterContextMarkup() {
-  // Three realistic uses — two single-integer list rows + one slash-format
-  // row showing progress-against-capacity (beneficiaries used).
-  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm">' +
-    _counterListRow('Notifications', 5,   'no') +
-    _counterListRow('Activity',      247, 'no') +
-    _counterListRow('Beneficiaries', 3,   'yes', '10') +
-  '</div>';
-}
-
+/* ── Overview live preview ─────────────────────────────────────────── */
 function _counterUpdate() {
-  var state     = document.getElementById('counter-ctrl-state');
-  var countEl   = document.getElementById('counter-ctrl-count');
-  var limitEl   = document.getElementById('counter-ctrl-limit');
-  var maxEl     = document.getElementById('counter-ctrl-max');
-  var withLimit = document.getElementById('counter-ctrl-withlimit');
-  var preview   = document.getElementById('counter-demo-preview');
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var preview = document.getElementById('counter-demo-preview');
   if (!preview) return;
-  preview.innerHTML = _counterRender({
-    state:      state ? state.value : 'auto',
-    count:      countEl ? countEl.value : '5',
-    limit:      limitEl ? limitEl.value : '10',
-    maxDisplay: maxEl ? maxEl.value : '99',
-    withLimit:  withLimit ? withLimit.value : 'no'
+  preview.innerHTML = _ctrRender({
+    state:      getVal('counter-ctrl-state', 'default'),
+    hasLimit:   getVal('counter-ctrl-haslimit', 'true'),
+    count:      getVal('counter-ctrl-count', '0'),
+    limit:      getVal('counter-ctrl-limit', '10'),
+    maxDisplay: getVal('counter-ctrl-max', '99')
   });
 }
+window._counterUpdate = _counterUpdate;
 
-/* ── Spec card state (Button-style) ──────────────────────────────── */
+/* ── Spec card — one card: every property is State or a boolean ─────── */
 var _specCards = {
-  'empty-limit':  { state: 'empty',  withLimit: 'yes', count: '0',  limit: '10' },
-  'filled-limit': { state: 'filled', withLimit: 'yes', count: '10', limit: '10' },
-  'single':       { state: 'auto',   withLimit: 'no',  count: '5',  limit: '10' }
+  'counter': { state: 'default', hasLimit: 'true', count: '0', limit: '10', maxDisplay: '99' }
 };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  var hasLimit = card.withLimit === 'yes';
-  var lines = [];
-  if (hasLimit) {
-    lines.push('EBCounter(');
-    lines.push('    count: ' + card.count + ',');
-    lines.push('    limit: ' + card.limit);
-    lines.push(')');
-  } else {
-    lines.push('EBCounter(count: ' + card.count + ')');
-    lines.push('    .ebMaxDisplay(99)');
+function getSnippet(cardKey, lang, card) {
+  var c = card || _specCards[cardKey] || {};
+  var hasLimit = String(c.hasLimit) !== 'false';
+  var disabled = c.state === 'disabled';
+  if (lang === 'swift') {
+    var s = 'EBCounter(count: 0)';
+    if (hasLimit) s += '\n    .ebLimit(10)';
+    if (disabled) s += '\n    .disabled(true)';
+    return s;
   }
-  if (card.state === 'empty') lines.push('    .ebState(.empty)');
-  else if (card.state === 'filled') lines.push('    .ebState(.filled)');
-  return lines.join('\n');
-}
-
-function buildComposeSnippet(type, card) {
-  var hasLimit = card.withLimit === 'yes';
-  var lines = ['EBCounter('];
-  lines.push('    count = ' + card.count + ',');
-  if (hasLimit) lines.push('    limit = ' + card.limit + ',');
-  else          lines.push('    maxDisplay = 99,');
-  if (card.state === 'empty')      lines.push('    state = EBCounterState.Empty');
-  else if (card.state === 'filled') lines.push('    state = EBCounterState.Filled');
-  else                              lines.push('    // state derived from count');
-  lines.push(')');
-  return lines.join('\n');
-}
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+  var lines = ['    count = 0'];
+  if (hasLimit) lines.push('    limit = 10');
+  if (disabled) lines.push('    enabled = false');
+  return 'EBCounter(\n' + lines.join(',\n') + '\n)';
 }
 window.getSnippet = getSnippet;
 
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
   if (!card) return;
   card[prop] = value;
-
-  /* Update preview pill */
-  var previewEl = document.getElementById('counter-spec-' + cardStyle);
-  if (previewEl) {
-    previewEl.innerHTML = _counterRender({
-      count: card.count,
-      limit: card.limit,
-      maxDisplay: '99',
-      withLimit: card.withLimit,
-      state: card.state
-    });
-  }
-
-  /* Update properties text */
-  ['state', 'withLimit', 'example'].forEach(function(p) {
-    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
-    if (!el) return;
-    var span = el.querySelector('.spec-prop-hex') || el;
-    if (p === 'state') {
-      span.textContent = card.state.charAt(0).toUpperCase() + card.state.slice(1);
-    } else if (p === 'withLimit') {
-      span.textContent = card.withLimit;
-    } else if (p === 'example') {
-      var hasLimit = card.withLimit === 'yes';
-      span.textContent = hasLimit ? (card.count + ' / ' + card.limit) : card.count;
-    }
-  });
-
-  /* DEV code update */
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
+  var host = document.getElementById('counter-spec-' + cardKey);
+  if (host) host.innerHTML = _ctrRender(card);
 }
-
-function initSpecCards() {
-  Object.keys(_specCards).forEach(function(k) {
-    updateSpecCard(k, 'state', _specCards[k].state);
-  });
-}
+window.updateSpecCard = updateSpecCard;
 
 function _counterInit() {
-  var ctx = document.getElementById('counter-context-preview');
-  if (ctx) ctx.innerHTML = _counterContextMarkup();
   _counterUpdate();
-  initSpecCards();
-
-  /* Legacy id support — keep older spec previews wired if they still exist */
-  var s1 = document.getElementById('counter-spec-1');
-  if (s1) s1.innerHTML = _counterRender({count:'0', limit:'10', withLimit:'yes', state:'empty'});
-  var s2 = document.getElementById('counter-spec-2');
-  if (s2) s2.innerHTML = _counterRender({count:'10', limit:'10', withLimit:'yes', state:'filled'});
-  var s3 = document.getElementById('counter-spec-3');
-  if (s3) s3.innerHTML = '<div style="display:inline-flex;gap:12px;align-items:center;">' +
-    _counterRender({count:'0', withLimit:'no', state:'empty'}) +
-    _counterRender({count:'5', withLimit:'no', state:'auto'}) +
-    _counterRender({count:'247', withLimit:'no', maxDisplay:'99', state:'auto'}) +
-  '</div>';
+  Object.keys(_specCards).forEach(function (k) { updateSpecCard(k, 'state', _specCards[k].state); });
 }
-
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _counterInit);
 else _counterInit();
 document.addEventListener('astro:page-load', _counterInit);

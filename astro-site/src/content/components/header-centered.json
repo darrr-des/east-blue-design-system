@@ -1,0 +1,871 @@
+{
+  "name": "Page Banner",
+  "meta": {
+    "node": "4368:12839",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4368-12839",
+    "description": "A header variant with the title centered, optional leading and trailing actions on either side.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4368:12839</code> in the 2026 Working File as <strong>Page Banner</strong>, with <code>Surface = Brand | Default</code> replacing the old <code>type = dark | light</code>. Layer naming is now settled across both variants — <code>Content</code> wrapping <code>Title</code> and a <code>SubtitleRow</code> of <code>Label</code> and <code>Value</code> — which lets the title expose as a single text property and clears the legacy <code>#</code> prefix. The brand surface color and its alpha values are confirmed intentional, the remaining alignment difference is inert because the text node hugs its content, and an <code>Alignment</code> axis was decided against. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+    },
+    "navGroup": "Header",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Page Banner sits at the top of a screen, modal, or feature card — centered, taking full width, setting the title of the surface below it.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"hc-demo-preview\"><svg class=\"eb-preview eb-preview-pb\" width=\"360\" height=\"104\" viewBox=\"0 0 360 104\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"104\" fill=\"#1972F9\"/><rect y=\"103\" width=\"360\" height=\"1\" fill=\"#F6F9FD\" fill-opacity=\"0.24\"/><text class=\"pb-title\" x=\"180\" y=\"37\" font-size=\"22\" font-weight=\"700\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\">Label</text><text class=\"pb-barkada\" x=\"120.5\" y=\"60\" font-size=\"14\" font-weight=\"600\" fill=\"#F6F9FD\" fill-opacity=\"0.72\" dominant-baseline=\"central\">Label:</text><text class=\"pb-barkada\" x=\"158.5\" y=\"60\" font-size=\"14\" font-weight=\"600\" fill=\"#FFFFFF\" dominant-baseline=\"central\">Add Content</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Surface</span><select id=\"hc-ctrl-surface\" class=\"demo-panel-select\" onchange=\"_headerCenteredUpdate()\"><option value=\"brand\" selected=\"\">Brand</option><option value=\"default\">Default</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Generic page banner — works at the top of any screen, modal or feature card. Nothing ties it to one surface."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its typography, fills and border. Nothing external required to render."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "The <em>Header</em> prefix, the appearance-named property and the layer naming are all resolved. <code>Surface = Brand | Default</code> is PascalCase per §1 with Title Case values per §5, and the text layers map onto the §3 vocabulary as <code>Title</code> · <code>Label</code> · <code>Value</code>, identically in both variants."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Drops into any screen, modal or card as a page title, and composes nothing it should not."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default (Brand)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Surface=Brand",
+        "notes": "White title on the brand surface."
+      },
+      {
+        "state": "Default (Default)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Surface=Default",
+        "notes": "Dark title on the default white surface."
+      },
+      {
+        "state": "Pressed",
+        "ios": "na",
+        "android": "na",
+        "property": "—",
+        "notes": "Banner is informational — no pressed state."
+      },
+      {
+        "state": "Disabled",
+        "ios": "na",
+        "android": "na",
+        "property": "—",
+        "notes": "Not interactive."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Renamed to Page Banner.",
+        "body": "v2.0: Rebuilt on node <code>4368:12839</code> in the 2026 Working File. The name no longer sits in the <em>Header</em> namespace that four structurally different components were sharing, and it says what the component is — a full-width banner setting the title of the surface below it, not a navigation bar. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>type = dark | light</code> replaced by <code>Surface</code>.",
+        "body": "v2.0: The axis now reads <code>Surface = Brand | Default</code>, naming the surface role rather than the appearance that follows from it — the same shape Brand App Bar landed on, so the two read consistently across the family. PascalCase property per §1, Title Case values per §5. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Layer names settled across both variants.",
+        "body": "v2.1: Verified on the live node. <code>header</code> → <code>Content</code>; the 22px title, previously <code>#name</code> in Brand and <code>#label</code> in Default, is now <code>Title</code> in both; <code>text-container</code> → <code>SubtitleRow</code>, holding <code>Label</code> and <code>Value</code>. Three problems closed at once: the cross-variant mismatch that stopped the title exposing as a single text property, the duplicate <code>#label</code> inside the Default variant, and the legacy <code>#</code> prefix. Names now follow the §3 vocabulary. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Brand surface color and its alpha values confirmed intentional.",
+        "body": "v2.1: The brand fill <code>#1972F9</code> differs from Brand App Bar’s <code>#005CE5</code>, and the brand sub-row key and border are <code>#F6F9FD</code> at 72% and 24%. Confirmed by the owner as bound to generic tokens and deliberate rather than local overrides — the two surfaces serve different jobs, and a banner sitting above content is not required to match the app bar’s blue. Attested rather than verified: variable bindings and opacity tokens are not readable through the review tooling, so this is recorded on the owner’s confirmation. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Sub-row alignment difference is inert.",
+        "body": "v2.1: The sub-row key still reads <code>LEFT</code> on Brand and <code>CENTER</code> on Default, but the text node hugs its content — 36px wide for “Label:” inside a 119px row — so horizontal alignment inside it has nothing to distribute and produces no visual difference on either surface. A leftover value rather than a behavioural one, and nothing a native implementation has to reproduce. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "No <code>Alignment</code> property.",
+        "body": "v2.1: Decided against. A centered banner is what the component is for; a left-aligned title is a different component’s job, and adding the axis would double the set to serve a case nobody has asked for. Closed rather than carried forward a third time. (Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Sub-row composition confirmed as intended.",
+        "body": "v2.1: The <code>SubtitleRow</code> is present in both live variants; the owner confirms the current composition is the intended one, closing the question left over from the old <code>description = yes | no</code> control. Attested rather than verified — component property definitions are not readable through the review tooling. (Docs)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Place in the header family settled.",
+        "body": "v2.1: Page Banner is confirmed a distinct component, not a variant of another. It sets the title of the surface below it; <strong>Section Header</strong> labels a section inside a scroll, <strong>Brand App Bar</strong> carries the wordmark, and <strong>Title Bar - App</strong> carries navigation. Four different jobs, four components, none folding into another. Siblings: <a href=\"#\" onclick=\"showPanelById('header');return false;\">Section Header</a> · <a href=\"#\" onclick=\"showPanelById('header-with-logo');return false;\">Brand App Bar</a> · <a href=\"#\" onclick=\"showPanelById('header-transaction');return false;\">Detail Hero</a>. (Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "4368:12839",
+      "variants": 2,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "pb-brand",
+        "demoKey": "brand",
+        "title": "Brand",
+        "node": "4368:12840",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"pb-spec-brand\"><svg class=\"eb-preview eb-preview-pb\" width=\"360\" height=\"104\" viewBox=\"0 0 360 104\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"104\" fill=\"#1972F9\"/><rect y=\"103\" width=\"360\" height=\"1\" fill=\"#F6F9FD\" fill-opacity=\"0.24\"/><text class=\"pb-title\" x=\"180\" y=\"37\" font-size=\"22\" font-weight=\"700\" fill=\"#FFFFFF\" text-anchor=\"middle\" dominant-baseline=\"central\">Label</text><text class=\"pb-barkada\" x=\"120.5\" y=\"60\" font-size=\"14\" font-weight=\"600\" fill=\"#F6F9FD\" fill-opacity=\"0.72\" dominant-baseline=\"central\">Label:</text><text class=\"pb-barkada\" x=\"158.5\" y=\"60\" font-size=\"14\" font-weight=\"600\" fill=\"#FFFFFF\" dominant-baseline=\"central\">Add Content</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "Brand",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#1972F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Bottom border",
+                "value": "#F6F9FD @ 24%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Title",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "#F6F9FD @ 72%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Section",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "Secondary/Bold/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Secondary/Bold/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "104",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1 · bottom",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBPageBanner</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label:\"</span>,\n    <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"Add Content\"</span>\n)\n    .<span class=\"syn-fn\">ebSurface</span>(<span class=\"syn-dot\">.brand</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBPageBanner</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label:\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Content\"</span>,\n    <span class=\"syn-param\">surface</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBannerSurface</span>.Brand\n)</code>"
+      },
+      {
+        "cardKey": "pb-default",
+        "demoKey": "default",
+        "title": "Default",
+        "node": "4368:12846",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"pb-spec-default\"><svg class=\"eb-preview eb-preview-pb\" width=\"360\" height=\"104\" viewBox=\"0 0 360 104\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"104\" fill=\"#FFFFFF\"/><rect y=\"103\" width=\"360\" height=\"1\" fill=\"#E5EBF4\" fill-opacity=\"1\"/><text class=\"pb-title\" x=\"180\" y=\"37\" font-size=\"22\" font-weight=\"700\" fill=\"#0A2757\" text-anchor=\"middle\" dominant-baseline=\"central\">Label</text><text class=\"pb-barkada\" x=\"120.5\" y=\"60\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\" fill-opacity=\"1\" dominant-baseline=\"central\">Label:</text><text class=\"pb-barkada\" x=\"158.5\" y=\"60\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\" dominant-baseline=\"central\">Add Content</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Bottom border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Section",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "Secondary/Bold/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Secondary/Bold/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "104",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1 · bottom",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBPageBanner</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label:\"</span>,\n    <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"Add Content\"</span>\n)\n    .<span class=\"syn-fn\">ebSurface</span>(<span class=\"syn-dot\">.default</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBPageBanner</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label:\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Content\"</span>,\n    <span class=\"syn-param\">surface</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBannerSurface</span>.Default\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Surface",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Brand",
+            "element": "Surface",
+            "token": "—",
+            "values": [
+              "#1972F9"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Bottom border",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 24%"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 72%"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Value",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Surface",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Bottom border",
+            "token": "—",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Value",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:header:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>header<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Surface is the set’s only variant property. Title, Label and Value are text layers read from 4368:12846 — their exposure as text properties is not readable with the plugin.",
+      "rows": [
+        {
+          "figma": "Surface — Brand, Default",
+          "swift": "<code>.ebSurface(.brand / .default)</code>",
+          "compose": "<code>surface = EBBannerSurface.Brand / Default</code>"
+        },
+        {
+          "figma": "Title (text)",
+          "swift": "<code>title: String</code>",
+          "compose": "<code>title = \"…\"</code>"
+        },
+        {
+          "figma": "Label (text)",
+          "swift": "<code>label: String</code>",
+          "compose": "<code>label = \"…\"</code>"
+        },
+        {
+          "figma": "Value (text)",
+          "swift": "<code>value: String</code>",
+          "compose": "<code>value = \"…\"</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Brand",
+        "swift": "<code><span class=\"syn-type\">EBPageBanner</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label:\"</span>,\n    <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"Add Content\"</span>\n)\n    .<span class=\"syn-fn\">ebSurface</span>(<span class=\"syn-dot\">.brand</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBPageBanner</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label:\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Content\"</span>,\n    <span class=\"syn-param\">surface</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBannerSurface</span>.Brand\n)</code>"
+      },
+      {
+        "subheading": "Default",
+        "swift": "<code><span class=\"syn-type\">EBPageBanner</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label:\"</span>,\n    <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"Add Content\"</span>\n)\n    .<span class=\"syn-fn\">ebSurface</span>(<span class=\"syn-dot\">.default</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBPageBanner</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label:\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Content\"</span>,\n    <span class=\"syn-param\">surface</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBannerSurface</span>.Default\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Heading",
+        "ios": "Title carries <code>.accessibilityAddTraits(.isHeader)</code>.",
+        "android": "<code>Modifier.semantics { heading() }</code> on the title."
+      },
+      {
+        "requirement": "Label and value read together",
+        "ios": "<code>.accessibilityElement(children: .combine)</code> on the SubtitleRow.",
+        "android": "<code>Modifier.semantics(mergeDescendants = true)</code> on the row."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "White title on #1972F9 is 4.0:1; the 72% label is decorative-weight.",
+        "android": "Same values — the surfaces are fixed, not themed."
+      },
+      {
+        "requirement": "Status bar",
+        "ios": "Brand needs <code>.preferredColorScheme(.dark)</code> for the status bar.",
+        "android": "<code>isAppearanceLightStatusBars</code> false on Brand."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Brand at the top of a section screen; Default when the banner sits under a Brand app bar.",
+        "dontText": "Don’t stack Brand under Brand — two blues merge."
+      },
+      {
+        "doText": "Keep the Title to one line; 26 px line-height is sized for one.",
+        "dontText": "Don’t put a sentence in the title — the subtitle row carries the fact."
+      },
+      {
+        "doText": "Use the Label / Value pair for the one figure the page is about.",
+        "dontText": "Don’t add a second subtitle row — the set builds one."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Content</code> › <code>Title</code> / <code>SubtitleRow</code> › <code>Label</code> / <code>Value</code> — read on 4368:12846."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Surface</code> — Brand, Default; the <code>type</code> axis is gone."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Title → <code>Primary/Headlines/Section</code>, Label and Value → <code>Secondary/Bold/Base</code>. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One enum and three strings — maps 1:1 onto <code>EBPageBanner</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Static banner with no tap target."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "No icons or images."
+      }
+    ],
+    "variants": {
+      "total": 2,
+      "description": "1 Surface × 2 values = 2 variants",
+      "columns": [
+        "Surface",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Brand",
+            "<code>4368:12840</code>",
+            "360 × 104"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "<code>4368:12846</code>",
+            "360 × 104"
+          ]
+        }
+      ],
+      "summary": {
+        "columns": [],
+        "rows": []
+      },
+      "collapseLabel": ""
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 4368:12839",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the two live variants.</strong> One card per <code>Surface</code> value; geometry, colours and the three text styles verified on 4368:12840 and 4368:12846 against the exports. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the <code>Surface</code> schema.</strong> Property Mapping one row per property, Usage Snippets per Surface, Guidelines added, Scorecard regraded from the <code>type</code> era, Variants Inventory on the two live nodes.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 4368:12839",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 8 resolved issues on the Overview tab had no changelog row: Renamed to Page Banner; <code>type = dark | light</code> replaced by <code>Surface</code>; Layer names settled across both variants; Brand surface color and its alpha values confirmed intentional; Sub-row alignment difference is inert; No <code>Alignment</code> property; Sub-row composition confirmed as intended; Place in the header family settled.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 18430:2858",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Restructure</strong> — Rename to <strong>Page Banner</strong>. Swap <code>type=dark|light</code> for <code>surface=brand|default</code>. <span class=\"tag-open tag-c1 tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Naming"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Trivial mapping once renamed. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

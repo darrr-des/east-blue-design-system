@@ -1,0 +1,1349 @@
+{
+  "name": "Select",
+  "meta": {
+    "node": "7947:111865",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=7947-111865",
+    "description": "Test read. A trigger field that opens a menu of fixed options, composing Select Field for the trigger and Select Group for the menu. Read independently of the existing Select page to measure whether the framework reproduces its own result.",
+    "badges": [
+      {
+        "kind": "fix",
+        "label": "Fix"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix — the placeholder copy and two layers that never draw",
+      "text": "The schema is clean: three orthogonal axes, a complete 24-variant matrix. But <code>Type=Default</code> reads “Select Option” where both peso Types read “Select Value”, and a <code>#label</code> node and a raster flag ship in 24 variants drawing in none."
+    },
+    "navGroup": "",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "A single-choice field inside a form: the trigger sits under its section label, and the menu opens over the content below it. Sketched — no screenshot of a shipping screen was read in this pass.",
+    "inContextHtml": "<div class=\"ctx-placeholder\"><svg width=\"240\" height=\"150\" viewBox=\"0 0 240 150\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-hidden=\"true\"><rect x=\"0.5\" y=\"0.5\" width=\"239\" height=\"149\" rx=\"10\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"/><rect x=\"20\" y=\"18\" width=\"70\" height=\"8\" rx=\"4\" fill=\"#C2CFE5\"/><rect x=\"20\" y=\"38\" width=\"200\" height=\"30\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#005CE5\"/><rect x=\"32\" y=\"49\" width=\"74\" height=\"8\" rx=\"4\" fill=\"#90A8D0\"/><path d=\"M200 56l6-6 6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"20\" y=\"72\" width=\"200\" height=\"60\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\"/><rect x=\"32\" y=\"84\" width=\"60\" height=\"8\" rx=\"4\" fill=\"#005CE5\"/><rect x=\"20\" y=\"100\" width=\"200\" height=\"1\" fill=\"#E5EBF4\"/><rect x=\"32\" y=\"110\" width=\"60\" height=\"8\" rx=\"4\" fill=\"#0A2757\"/></svg></div>",
+    "inContextImage": "",
+    "inContextAlt": "A form section with a Select trigger in its expanded state, the option menu open beneath it and the first option marked as chosen.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tsel-demo-preview\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--default eb-preview-tsel--default\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Select Option</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 13L16 20L23 13\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"tsel-ctrl-type\" onchange=\"_tselUpdate()\"><option value=\"default\" selected>Default</option><option value=\"pesovector\">PesoSignVector</option><option value=\"pesotext\">PesoSignText</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"tsel-ctrl-state\" onchange=\"_tselUpdate()\"><option value=\"default\" selected>Default</option><option value=\"expanded\">Expanded</option><option value=\"error\">Error</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><label class=\"demo-panel-toggle\"><input type=\"checkbox\" id=\"tsel-ctrl-isfilled\" onchange=\"this.parentElement.classList.toggle('is-on', this.checked); _tselUpdate()\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Every fixed-list choice in a form is this control, and the three Types cover the plain case plus two currency treatments. Nothing in the set is bound to one product or one screen."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "It owns the schema and the assembly and draws neither face itself: the trigger is a <code>Select Field</code> instance and the menu a <code>Select Group</code> instance, in all 24 variants."
+      },
+      {
+        "name": "Consistent",
+        "rating": "partial",
+        "note": "The three axes are clean and the matrix is complete, but the placeholder copy disagrees across Types — <code>Default</code> reads “Select Option”, both peso Types read “Select Value” — and two of the three <code>Type</code> values are named for how the mark is drawn rather than what it means."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Composes its two children as instances rather than redrawing them, and the menu hangs off a real <code>⤷ SelectionSlot</code>, so options are passed in rather than baked into the component."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default",
+        "notes": "Resting trigger. Surface <code>#FFFFFF</code>, border <code>#D7E0EF</code>, placeholder <code>#90A8D0</code>. The menu ships in the variant but is not drawn."
+      },
+      {
+        "state": "Expanded",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Expanded",
+        "notes": "The menu draws below the trigger, the border turns <code>#005CE5</code> and the chevron flips from Down to Up. This is the only state in which the menu is drawn."
+      },
+      {
+        "state": "Error",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Error",
+        "notes": "Border turns <code>#D61B2C</code>. Surface and both text fills are unchanged from Default, so the border is the only cue."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Surface <code>#F6F9FD</code>, border <code>#E5EBF4</code>, label <code>#90A8D0</code>, value <code>#C2CFE5</code>. The leading peso mark dims with the field."
+      },
+      {
+        "state": "Filled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "isFilled=true",
+        "notes": "The value text darkens from the placeholder fill to <code>#0A2757</code> and the string changes: “Selected Option” on <code>Default</code>, “1,000.00” on both peso Types."
+      },
+      {
+        "state": "Focused",
+        "ios": "no",
+        "android": "no",
+        "property": "—",
+        "notes": "No focus state is built. Not needed while the field is touch-only; needed the moment it is reachable by keyboard or by an external controller."
+      }
+    ],
+    "resolved": [],
+    "open": [
+      {
+        "headline": "The placeholder copy disagrees across Types.",
+        "body": "The <code>#value</code> layer reads “Select Option” on <code>Type=Default</code> (node <code>7947:111932</code>) and “Select Value” on both <code>PesoSignVector</code> (<code>7947:111938</code>) and <code>PesoSignText</code> (<code>7947:115144</code>). All three were exported and read. One of the two strings is wrong, and a developer will copy whichever Type they happen to open.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "A <code>#label</code> layer ships in the trigger and draws in no variant.",
+        "body": "The trigger's <code>text-container</code> is 16 tall and holds two stacked text nodes: <code>#label</code> (“Label”, 16/16) and <code>#value</code> (14/14). Only <code>#value</code> draws — a text scan of a whole variant returns exactly one text node. Either remove it or expose it as a property that actually renders.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The drawn peso sign is an unflattened boolean.",
+        "body": "On <code>Type=PesoSignVector</code>, <code>Leading Element → Peso Sign - Proxima → shape_full</code> is a <code>BOOLEAN_OPERATION</code> rather than a flattened vector. It exports correctly today but a boolean group is a fragile thing to hand to an icon pipeline.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "A raster Philippines flag ships in every variant and draws in none.",
+        "body": "<code>flag-container</code> holds a <code>Field Trailing Flag</code> instance whose <code>philippines</code> child is a <code>RECTANGLE</code> with an <code>IMAGE</code> fill. Exporting <code>flag-container</code> on its own renders blank, so the flag draws in none of the 24 variants while shipping in all of them. A raster flag also cannot be tinted or scaled cleanly if it is ever switched on.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Two of the three <code>Type</code> values name the drawing technique.",
+        "body": "<code>PesoSignVector</code> and <code>PesoSignText</code> differ only in whether the peso mark is a drawn vector or a text glyph. That is an implementation detail; a consumer of the component cannot act on it, and a native API should not have to carry it.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "No focus state anywhere in the set.",
+        "body": "The <code>State</code> axis covers Default, Expanded, Error and Disabled. Nothing marks keyboard focus. The absence of a <em>pressed</em> state is defensible — a field signals interaction by expanding — but focus is a separate question and is not answered.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      }
+    ],
+    "recommendations": [
+      {
+        "headline": "Name the Type values for what they mean.",
+        "body": "Something closer to <code>Plain</code> / <code>Currency</code> describes the choice a product actually makes. If both peso treatments must survive, the vector-versus-glyph split belongs behind one value, not in the public name.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Make the placeholder a text property instead of baked copy.",
+        "body": "Once the placeholder is a property, the three Types cannot drift apart again, and the “Select Option” versus “Select Value” split resolves itself rather than needing to be policed.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Flatten the peso vector and settle the flag.",
+        "body": "Flatten <code>shape_full</code> to a single vector. Then either delete the flag instance or give it a boolean that draws it — shipping a raster in 24 variants that renders in none is the worst of both.",
+        "tag": "Asset"
+      },
+      {
+        "headline": "Add a focus state before the field is keyboard-reachable.",
+        "body": "A fourth <code>State</code> value, or a focus ring layered over the existing ones. Deciding it in Figma is cheaper than letting each platform invent its own.",
+        "tag": "State"
+      },
+      {
+        "headline": "Say which Type a product should reach for.",
+        "body": "Nothing on the component distinguishes when to use the vector peso from when to use the text peso. One line on the page removes the guess.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Specify the accessible combobox contract.",
+        "body": "The trigger plus menu is a combobox: it needs a role, an expanded state, an active option and a label that is read before the value. None of it is implied by the Figma structure and all of it has to be written down before handoff.",
+        "tag": "A11y"
+      }
+    ],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Examples",
+    "description": "",
+    "source": {
+      "set": "7947:111865",
+      "variants": 24,
+      "read": "2026-09-17",
+      "tool": "figma-rest + talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "type",
+        "demoKey": "type",
+        "title": "Type",
+        "node": "7947:111865",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tsel-spec-type\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--default eb-preview-tsel--default\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Select Option</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 13L16 20L23 13\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></div><figcaption class=\"eb-example__label\">Default</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--pesovector eb-preview-tsel--default\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__lead eb-preview-tsel__lead--pesovector\">₱</span><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Select Value</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 13L16 20L23 13\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></div><figcaption class=\"eb-example__label\">PesoSignVector</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--pesotext eb-preview-tsel--default\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__lead eb-preview-tsel__lead--pesotext\">₱</span><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Select Value</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 13L16 20L23 13\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></div><figcaption class=\"eb-example__label\">PesoSignText</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "expanded",
+                    "label": "Expanded"
+                  },
+                  {
+                    "value": "error",
+                    "label": "Error"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "isFilled",
+                "prop": "isFilled",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Default · PesoSignVector · PesoSignText",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Leading mark",
+                "value": "None",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "type",
+                "variants": [
+                  {
+                    "when": "type:pesovector",
+                    "value": "Drawn vector — shape_full, a BOOLEAN_OPERATION",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:pesotext",
+                    "value": "Text glyph — a ₱ TEXT node",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Placeholder",
+                "value": "Select Option",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "type",
+                "variants": [
+                  {
+                    "when": "type:pesovector",
+                    "value": "Select Value",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:pesotext",
+                    "value": "Select Value",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Light/Base",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Label/Light/Small",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "46",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "366",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "6",
+                "mono": true,
+                "token": "radius/radius-2",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "12",
+                "mono": true,
+                "token": "space/space-12",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "6",
+                "mono": true,
+                "token": "space/space-6",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:expanded",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:error",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Alignment",
+                "value": "Leading · Center",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebValue</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Select Option\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebType</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>   <span class=\"syn-cmt\">// or .pesoSignVector · .pesoSignText</span>\n    .<span class=\"syn-fn\">ebFilled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOptions</span><span class=\"syn-punc\">(</span>options<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"Select Option\"</span>,\n    <span class=\"syn-param\">type</span> = <span class=\"syn-type\">EBSelectType</span><span class=\"syn-dot\">.Default</span>,   <span class=\"syn-cmt\">// or PesoSignVector · PesoSignText</span>\n    <span class=\"syn-param\">filled</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">options</span> = options\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "state",
+        "demoKey": "state",
+        "title": "State",
+        "node": "7947:111865",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tsel-spec-state\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--default eb-preview-tsel--default\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Select Option</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 13L16 20L23 13\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></div><figcaption class=\"eb-example__label\">Default</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--default eb-preview-tsel--expanded\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Select Option</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 19L16 12L23 19\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span><span class=\"eb-preview-tsel__menu\"><span class=\"eb-preview-tsel__item eb-preview-tsel__item--selected\"><span class=\"eb-preview-tsel__item-peso\">₱</span><span>Text</span></span><span class=\"eb-preview-tsel__item\"><span class=\"eb-preview-tsel__item-peso\">₱</span><span>Text</span></span><span class=\"eb-preview-tsel__item\"><span class=\"eb-preview-tsel__item-peso\">₱</span><span>Text</span></span><span class=\"eb-preview-tsel__item\"><span class=\"eb-preview-tsel__item-peso\">₱</span><span>Text</span></span><span class=\"eb-preview-tsel__item\"><span class=\"eb-preview-tsel__item-peso\">₱</span><span>Text</span></span><span class=\"eb-preview-tsel__item\"><span class=\"eb-preview-tsel__item-peso\">₱</span><span>Text</span></span><span class=\"eb-preview-tsel__item\"><span class=\"eb-preview-tsel__item-peso\">₱</span><span>Text</span></span></span></div><figcaption class=\"eb-example__label\">Expanded</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--default eb-preview-tsel--error\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Select Option</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 13L16 20L23 13\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></div><figcaption class=\"eb-example__label\">Error</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--default eb-preview-tsel--disabled\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Select Option</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 13L16 20L23 13\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></div><figcaption class=\"eb-example__label\">Disabled</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pesovector",
+                    "label": "PesoSignVector"
+                  },
+                  {
+                    "value": "pesotext",
+                    "label": "PesoSignText"
+                  }
+                ]
+              },
+              {
+                "label": "isFilled",
+                "prop": "isFilled",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "State",
+                "value": "Default · Expanded · Error · Disabled",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Menu",
+                "value": "Not drawn",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:expanded",
+                    "value": "Drawn — Select Group, 7 items of 40",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Chevron",
+                "value": "Chevron Down",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:expanded",
+                    "value": "Chevron Up",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#F6F9FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "#D7E0EF",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:expanded",
+                    "value": "#005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:error",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "#E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Value text",
+                "value": "#90A8D0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebValue</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Select Option\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebType</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebFilled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-cmt\">// Expanded: .ebExpanded(true)</span>\n    .<span class=\"syn-fn\">ebOptions</span><span class=\"syn-punc\">(</span>options<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"Select Option\"</span>,\n    <span class=\"syn-param\">type</span> = <span class=\"syn-type\">EBSelectType</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">filled</span> = <span class=\"syn-val\">false</span>\n    <span class=\"syn-cmt\">// Expanded: expanded = true,</span>\n    <span class=\"syn-param\">options</span> = options\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "isFilled",
+        "demoKey": "isFilled",
+        "title": "isFilled",
+        "node": "7947:111865",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tsel-spec-isFilled\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--default eb-preview-tsel--default\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Select Option</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 13L16 20L23 13\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsel eb-preview-tsel--default eb-preview-tsel--default eb-preview-tsel--filled\"><span class=\"eb-preview-tsel__field\"><span class=\"eb-preview-tsel__text\"><span class=\"eb-preview-tsel__value\">Selected Option</span></span><span class=\"eb-preview-tsel__chev\"><svg viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 13L16 20L23 13\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></div><figcaption class=\"eb-example__label\">True</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pesovector",
+                    "label": "PesoSignVector"
+                  },
+                  {
+                    "value": "pesotext",
+                    "label": "PesoSignText"
+                  }
+                ]
+              },
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "expanded",
+                    "label": "Expanded"
+                  },
+                  {
+                    "value": "error",
+                    "label": "Error"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "isFilled",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "isFilled",
+                "variants": [
+                  {
+                    "when": "isFilled:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Value copy",
+                "value": "Select Option",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "isFilled",
+                "variants": [
+                  {
+                    "when": "isFilled:true",
+                    "value": "Selected Option — “1,000.00” on both peso Types",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Value text",
+                "value": "#90A8D0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "isFilled",
+                "variants": [
+                  {
+                    "when": "isFilled:true",
+                    "value": "#0A2757",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebValue</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Select Option\"</span><span class=\"syn-punc\">)</span>   <span class=\"syn-cmt\">// False: the placeholder string</span>\n    .<span class=\"syn-fn\">ebType</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebFilled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOptions</span><span class=\"syn-punc\">(</span>options<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"Select Option\"</span>,   <span class=\"syn-cmt\">// False: the placeholder string</span>\n    <span class=\"syn-param\">type</span> = <span class=\"syn-type\">EBSelectType</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">filled</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">options</span> = options\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors",
+        "description": "Read off the set on 18 September 2026 and resolved by key against the Primitives library. 299 of 300 drawn paints are bound, and each drawn value matches its token. Two rows name the token most variants use: one <code>PesoSignText</code> filled value is an unbound <code>#FF8000</code> at 30%, and the <code>Type=Default</code> disabled filled value uses <code>text/color-text</code>. The disabled label is written <code>not bound</code>: its fill is a raw value, on a layer hidden in every variant.",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Default",
+            "element": "Trigger surface",
+            "token": "bg/color-bg-main",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Trigger border",
+            "token": "border/color-border",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Value text, placeholder",
+            "token": "text/color-text-weakest",
+            "values": [
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Value text, filled",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Chevron stroke",
+            "token": "border/color-border-primary",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Expanded",
+            "element": "Trigger border",
+            "token": "border/color-border-primary",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Error",
+            "element": "Trigger border",
+            "token": "border/color-border-error",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Trigger surface",
+            "token": "bg/color-bg",
+            "values": [
+              "#F6F9FD"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Trigger border",
+            "token": "border/color-border-weak",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Label text",
+            "token": "not bound",
+            "values": [
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Value text",
+            "token": "text/color-text-disabled",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "PesoSignVector",
+            "element": "Leading mark",
+            "token": "bg/color-bg-inverse",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Menu",
+            "element": "Surface",
+            "token": "bg/color-bg-main",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Menu",
+            "element": "Border",
+            "token": "border/color-border-weak",
+            "values": [
+              "#E5EBF4"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:select:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EBDesignSystem</span>   <span class=\"syn-cmt\">// SwiftUI</span>\n<span class=\"syn-kw\">import</span> com.eastblue.ds.select.<span class=\"syn-type\">EBSelect</span>   <span class=\"syn-cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Type, State and isFilled are the three variant properties. The option list is content, passed in through the menu's ⤷ SelectionSlot rather than baked into the component.",
+      "rows": [
+        {
+          "figma": "Type — Default, PesoSignVector, PesoSignText",
+          "swift": "<code>.ebType(.default / .pesoSignVector / .pesoSignText)</code>",
+          "compose": "<code>type = EBSelectType.Default / PesoSignVector / PesoSignText</code>"
+        },
+        {
+          "figma": "State — Default, Expanded, Error, Disabled",
+          "swift": "<code>.ebExpanded(true)</code>, <code>.ebValidation(.error)</code>, <code>.disabled(true)</code>",
+          "compose": "<code>expanded = true</code>, <code>validation = EBValidation.Error</code>, <code>enabled = false</code>"
+        },
+        {
+          "figma": "isFilled — whether a choice has been made",
+          "swift": "<code>.ebFilled(true)</code>; drives both the value fill and the string",
+          "compose": "<code>filled = true</code>; drives both the value fill and the string"
+        },
+        {
+          "figma": "The menu, a Select Group instance on the ⤷ SelectionSlot",
+          "swift": "<code>.ebOptions(options)</code>",
+          "compose": "<code>options = options</code>"
+        },
+        {
+          "figma": "The value line, read from the #value text layer",
+          "swift": "<code>.ebValue(\"Selected Option\")</code>",
+          "compose": "<code>value = \"Selected Option\"</code>"
+        }
+      ]
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Resting field (Type=Default)",
+        "swift": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebValue</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Select Option\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebType</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebFilled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOptions</span><span class=\"syn-punc\">(</span>options<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"Select Option\"</span>,\n    <span class=\"syn-param\">type</span> = <span class=\"syn-type\">EBSelectType</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">filled</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">options</span> = options\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Open menu (State=Expanded)",
+        "swift": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebValue</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Select Option\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebType</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebFilled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebExpanded</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOptions</span><span class=\"syn-punc\">(</span>options<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"Select Option\"</span>,\n    <span class=\"syn-param\">type</span> = <span class=\"syn-type\">EBSelectType</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">filled</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">expanded</span> = <span class=\"syn-val\">true</span>,\n    <span class=\"syn-param\">options</span> = options\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Currency field, chosen (Type=PesoSignVector, isFilled=true)",
+        "swift": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebValue</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"1,000.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebType</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.pesoSignVector</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebFilled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOptions</span><span class=\"syn-punc\">(</span>options<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelect</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"1,000.00\"</span>,\n    <span class=\"syn-param\">type</span> = <span class=\"syn-type\">EBSelectType</span><span class=\"syn-dot\">.PesoSignVector</span>,\n    <span class=\"syn-param\">filled</span> = <span class=\"syn-val\">true</span>,\n    <span class=\"syn-param\">options</span> = options\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Combobox role",
+        "ios": "The trigger is a <code>Button</code> carrying <code>.accessibilityAddTraits(.isButton)</code> and an <code>accessibilityValue</code> holding the current choice.",
+        "android": "<code>Modifier.semantics { role = Role.DropdownList; stateDescription = value }</code> on the trigger."
+      },
+      {
+        "requirement": "Expanded state announced",
+        "ios": "Post <code>.accessibilityExpanded(isExpanded)</code> so the state change is spoken when the menu opens.",
+        "android": "<code>expandable</code> plus <code>onClick</code> semantics; announce through <code>stateDescription</code> when it toggles."
+      },
+      {
+        "requirement": "Label read before value",
+        "ios": "Set <code>accessibilityLabel</code> to the field label and <code>accessibilityValue</code> to the chosen option, never merged into one string.",
+        "android": "<code>contentDescription</code> for the label, <code>stateDescription</code> for the value."
+      },
+      {
+        "requirement": "Error is not colour alone",
+        "ios": "The red border carries no meaning to a screen reader — pair it with <code>accessibilityHint</code> or an adjacent error message.",
+        "android": "Pair the border with <code>error(errorMessage)</code> semantics; the colour alone does not carry."
+      },
+      {
+        "requirement": "Menu options reachable",
+        "ios": "Each option is its own accessibility element; the chosen one adds <code>.isSelected</code>.",
+        "android": "Each row is <code>selectable(selected = …)</code> so the chosen option is announced as selected."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Select when the options are a known, fixed list the user picks one of.",
+        "dontText": "Do not use it for free text with suggestions — that is a search field, and the menu here does not filter."
+      },
+      {
+        "doText": "Pick one peso Type per product surface and stay with it.",
+        "dontText": "Do not mix PesoSignVector and PesoSignText on the same screen; the mark is a different shape and the difference is visible."
+      },
+      {
+        "doText": "Pass the options in through the menu slot.",
+        "dontText": "Do not detach the Select Group instance to hardcode options — the slot exists precisely so you do not have to."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Frames are lower-case and consistent (<code>container</code>, <code>text-container</code>, <code>peso-sign</code>, <code>flag-container</code>) and the text layers carry the <code>#</code> prefix. Against that: the placeholder copy disagrees across Types, and both <code>#label</code> and the flag instance ship in all 24 variants while drawing in none."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Three orthogonal axes, a complete 24-variant matrix, Title Case values and a boolean correctly named <code>isFilled</code> — the schema is clean. The one blemish is that <code>PesoSignVector</code> and <code>PesoSignText</code> name the drawing technique rather than the meaning."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Not scorable with this toolchain. Type is bound — both text layers resolve to DS styles (<code>Primary/Label/Light/Base</code> and <code>Primary/Label/Light/Small</code>). Colour could not be resolved to token <em>names</em>: the file exposes only a <code>Prototype States</code> collection and the DS variables sit in a library the plugin cannot enumerate. Needs a Dev Mode read."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Three properties map to one enum, one state enum and one boolean; the menu maps to a content slot. Nothing in the structure forces a fork between iOS and Android."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Default, Expanded, Error and Disabled are all drawn and visually distinct, and the leading mark dims with the field. No focus state exists. The absent pressed state is defensible — the field signals by expanding — but focus is a separate question and is unanswered."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The chevron is a clean single-path instance that flips Down to Up and exports as one stroked path. Against it: the drawn peso is an unflattened <code>BOOLEAN_OPERATION</code>, and the trigger carries a raster <code>IMAGE</code>-filled Philippines flag that renders in no variant."
+      }
+    ],
+    "variants": {
+      "total": 24,
+      "description": "3 Type × 4 State × 2 isFilled = 24 variants — a complete matrix with no correlated axes and no gaps.",
+      "summary": {
+        "columns": [
+          "Type",
+          "Combinations",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Default",
+              "Default · Expanded · Error · Disabled × false · true",
+              "8"
+            ]
+          },
+          {
+            "cells": [
+              "PesoSignVector",
+              "Default · Expanded · Error · Disabled × false · true",
+              "8"
+            ]
+          },
+          {
+            "cells": [
+              "PesoSignText",
+              "Default · Expanded · Error · Disabled × false · true",
+              "8"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "Type",
+        "State",
+        "isFilled",
+        "Menu",
+        "Node",
+        "Trigger"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "false",
+            "not drawn",
+            "<code>7947:111932</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "true",
+            "not drawn",
+            "<code>7947:111935</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Expanded",
+            "false",
+            "shown",
+            "<code>7947:111866</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Expanded",
+            "true",
+            "shown",
+            "<code>7947:111869</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Error",
+            "false",
+            "not drawn",
+            "<code>7947:111944</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Error",
+            "true",
+            "not drawn",
+            "<code>7947:111947</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "false",
+            "not drawn",
+            "<code>7947:111956</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "true",
+            "not drawn",
+            "<code>7947:111959</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignVector",
+            "Default",
+            "false",
+            "not drawn",
+            "<code>7947:111938</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignVector",
+            "Default",
+            "true",
+            "not drawn",
+            "<code>7947:111941</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignVector",
+            "Expanded",
+            "false",
+            "shown",
+            "<code>7947:111872</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignVector",
+            "Expanded",
+            "true",
+            "shown",
+            "<code>7947:111902</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignVector",
+            "Error",
+            "false",
+            "not drawn",
+            "<code>7947:111950</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignVector",
+            "Error",
+            "true",
+            "not drawn",
+            "<code>7947:111953</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignVector",
+            "Disabled",
+            "false",
+            "not drawn",
+            "<code>7947:111962</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignVector",
+            "Disabled",
+            "true",
+            "not drawn",
+            "<code>7947:111965</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignText",
+            "Default",
+            "false",
+            "not drawn",
+            "<code>7947:115144</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignText",
+            "Default",
+            "true",
+            "not drawn",
+            "<code>7947:115386</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignText",
+            "Expanded",
+            "false",
+            "shown",
+            "<code>7947:115147</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignText",
+            "Expanded",
+            "true",
+            "shown",
+            "<code>7947:115389</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignText",
+            "Error",
+            "false",
+            "not drawn",
+            "<code>7947:115150</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignText",
+            "Error",
+            "true",
+            "not drawn",
+            "<code>7947:115392</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignText",
+            "Disabled",
+            "false",
+            "not drawn",
+            "<code>7947:115153</code>",
+            "366 × 46"
+          ]
+        },
+        {
+          "cells": [
+            "PesoSignText",
+            "Disabled",
+            "true",
+            "not drawn",
+            "<code>7947:115395</code>",
+            "366 × 46"
+          ]
+        }
+      ],
+      "collapseLabel": "View all 24 variants"
+    }
+  },
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "September 2026",
+      "kind": "initial",
+      "kindLabel": "Initial",
+      "header": "Test read · node 7947:111865",
+      "rows": [
+        {
+          "body": "<strong>Independent trial read of Select, run against the refined framework.</strong> The component already has a page at <a href=\"/components/dropdown\">Select</a>; this one was written from a fresh Figma read without consulting it, so the two can be compared. It stays out of the sidebar, search, the grid and the counts.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "All 24 variants were read off set <code>7947:111865</code> and every variant node id, Type, State and isFilled value in the inventory below was checked against the live set. Four variants were exported as images and one icon as SVG.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "Padding, gap and alignment are reported unread. The Talk To Figma plugin returns no auto-layout fields, and the Dev Mode toolchain was not authorised in this session. They are left blank rather than derived from bounding boxes.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "Colour token names are reported unread for the same reason: the file exposes one <code>Prototype States</code> collection and the DS colour variables live in a library the plugin cannot enumerate.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        }
+      ]
+    }
+  ]
+}

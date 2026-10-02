@@ -1,0 +1,53 @@
+---
+/**
+ * /playground/<slug> — TEST of the Playground tab (replaces Style), one page per test component.
+ * A standalone preview route while the Playground is rolled out. The live Style
+ * tab still renders spec cards; a component moves over via its opt-in flag.
+ *
+ * Data: public/playground/<slug>.json, generated from Figma by
+ * ../../../scripts/playground/build.mjs (REST read + tokens.json). Never hand-edited.
+ * Design: Figma pbxY8a2xcIfVZKxwnud9Xe · node 10363:30000.
+ *
+ * The page inlines only `meta` (a few hundred bytes, needed to render the
+ * header) and fetches the layer data on open. Inlining it cost ~2.5MB of HTML
+ * across 25 components, and a reader opens one.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import Base from '../../layouts/Base.astro';
+import Playground from '../../components/Playground.astro';
+
+export function getStaticPaths() {
+  const dir = path.resolve('public/playground');
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => {
+    const { meta } = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+    return { params: { slug: f.replace(/\.json$/, '') }, props: { meta } };
+  });
+}
+const { meta } = Astro.props as { meta: any };
+const { slug } = Astro.params;
+const data = { meta };
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+---
+<Base title={`Sandbox · Playground · ${data.meta.name}`}>
+  <div class="pg-page">
+    <header class="pg-head">
+      <div class="pg-test">Preview route · the Style tab still shows spec cards · <a href="/playground">all components</a></div>
+      <h1>{data.meta.name}</h1>
+      <p>Figma <code>{data.meta.setId}</code> · read {data.meta.read} · tokens from {data.meta.tokens}</p>
+    </header>
+
+    <nav class="pg-tabs" aria-label="Component tabs">
+      <a class="pg-tab" href={`/components/${slug}`}>Overview</a>
+      <span class="pg-tab is-active" aria-current="page">Playground</span>
+      <a class="pg-tab" href={`/components/${slug}`}>Code</a>
+      <a class="pg-tab" href={`/components/${slug}`}>Changelog</a>
+    </nav>
+
+      <Playground slug={slug} meta={meta} />
+  </div>
+
+
+
+</Base>

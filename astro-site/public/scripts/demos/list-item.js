@@ -128,25 +128,25 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['l1'];
   var compose = lang === 'compose';
-  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var sep = compose ? ' = ' : ': ';
   /* The label leads unlabelled in Swift, matching EBButton("Save Changes");
      Kotlin names it, since it has no equivalent convention. */
   var args = compose
-    ? ['label' + sep + '<span class="syn-str">"List body"</span>',
-       'level' + sep + '<span class="syn-val">' + card.level + '</span>']
-    : ['<span class="syn-str">"List body"</span>',
-       'level' + sep + '<span class="syn-val">' + card.level + '</span>'];
+    ? ['label' + sep + '"List body"',
+       'level' + sep + '' + card.level + '']
+    : ['"List body"',
+       'level' + sep + '' + card.level + ''];
   if (card.hasleading === 'false') {
-    args.push('hasLeading' + sep + '<span class="syn-kw">false</span>');
+    args.push('hasLeading' + sep + 'false');
   }
   if (card.hastrailing === 'true') {
     args.push('trailing' + sep + (compose
-      ? '<span class="syn-punc">{</span> <span class="syn-fn">Icon</span><span class="syn-punc">(</span>EBIcons<span class="syn-punc">.</span>ChevronRight<span class="syn-punc">) }</span>'
-      : '<span class="syn-punc">{</span> <span class="syn-type">Image</span><span class="syn-punc">(</span>systemName<span class="syn-punc">:</span> <span class="syn-str">"chevron.right"</span><span class="syn-punc">) }</span>'));
+      ? '{ Icon(EBIcons.ChevronRight) }'
+      : '{ Image(systemName: "chevron.right") }'));
   }
-  return '<span class="syn-type">EBListItem</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  return 'EBListItem(\n    ' +
+    args.join(',\n    ') +
+    '\n)';
 }
 window.getSnippet = getSnippet;
 

@@ -1,0 +1,1600 @@
+{
+  "name": "Generic Card",
+  "meta": {
+    "node": "5412:31504",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5412-31504",
+    "description": "A tappable content card — slotted leading icon, a heading with tag and badge, two label-and-description rows, and a slotted trailing chevron.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>5412:31504</code> in the 2026 Working File as <code>Status = Default | Skeleton</code> × <code>State = Default | Disabled</code> × <code>IconSize = XL | LG | MD | SM | XS | XXS</code> over 18 variants. The naming pass is complete: all three properties PascalCase per §1 with Title Case values per §5, the <code>⤷</code> glyph and the <code>#</code> sigil both gone, text layers on the §3 vocabulary and §7 hierarchy, frames PascalCase with the two meaningless <code>offset</code> frames replaced by <code>PreambleContainer</code> and <code>IconContainer</code>, and both slots kebab-cased with the <code>-Slot</code> suffix the rest of the system uses. Splitting <code>Skeleton</code> onto its own <code>Status</code> axis matches §6 and Upload File. The paired <code>TextContainer</code> rows are confirmed intentional peers, the state coverage is confirmed complete at 18 variants, and all six icon sizes are confirmed in use. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+    },
+    "navGroup": "Card",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Generic Card stacks vertically into a scrolling list — product catalogs, service menus, transaction history detail screens. Icon size tightens as the density of the list increases.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"gcard-demo-preview\"><div class=\"eb-preview eb-preview-gcard\"><div class=\"eb-preview-gcard__icon eb-preview-gcard__icon--64\"></div><div class=\"eb-preview-gcard__content\"><div class=\"eb-preview-gcard__subtitle\"><span class=\"eb-preview-gcard__blurb\">Blurb</span><span class=\"eb-preview-gcard__tag\">Tag</span></div><p class=\"eb-preview-gcard__heading\">Heading Goes Here</p><p class=\"eb-preview-gcard__desc-line eb-preview-gcard__desc-line--first\"><span class=\"eb-preview-gcard__desc-label\">Label:</span><span class=\"eb-preview-gcard__desc-value\">Description goes here</span></p><p class=\"eb-preview-gcard__desc-line\"><span class=\"eb-preview-gcard__desc-label\">Label:</span><span class=\"eb-preview-gcard__desc-value\">Description goes here</span></p><span class=\"eb-preview-gcard__badge\">Label</span></div><div class=\"eb-preview-gcard__chevron-wrap\"><svg class=\"eb-preview-gcard__chevron\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">blurb</span><input type=\"text\" id=\"gcard-ctrl-blurb\" class=\"demo-panel-select demo-panel-input\" value=\"Blurb\" oninput=\"_gcardUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">tag</span><input type=\"text\" id=\"gcard-ctrl-tag\" class=\"demo-panel-select demo-panel-input\" value=\"Tag\" oninput=\"_gcardUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">heading</span><input type=\"text\" id=\"gcard-ctrl-heading\" class=\"demo-panel-select demo-panel-input\" value=\"Heading Goes Here\" oninput=\"_gcardUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"gcard-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Description goes here\" oninput=\"_gcardUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">badge</span><input type=\"text\" id=\"gcard-ctrl-badge\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_gcardUpdate()\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">iconSize</span><select id=\"gcard-ctrl-iconsize\" class=\"demo-panel-select\" onchange=\"_gcardUpdate()\"><option value=\"64\" selected=\"\">64</option><option value=\"52\">52</option><option value=\"46\">46</option><option value=\"40\">40</option><option value=\"32\">32</option><option value=\"24\">24</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select id=\"gcard-ctrl-state\" class=\"demo-panel-select\" onchange=\"_gcardUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"skeleton\">skeleton</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Slots</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasSubtitle</span><select id=\"gcard-ctrl-hassubtitle\" class=\"demo-panel-select\" onchange=\"_gcardUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasBlurb</span><select id=\"gcard-ctrl-hasblurb\" class=\"demo-panel-select\" onchange=\"_gcardUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTag</span><select id=\"gcard-ctrl-hastag\" class=\"demo-panel-select\" onchange=\"_gcardUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">has2ndDesc</span><select id=\"gcard-ctrl-has2desc\" class=\"demo-panel-select\" onchange=\"_gcardUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasBadge</span><select id=\"gcard-ctrl-hasbadge\" class=\"demo-panel-select\" onchange=\"_gcardUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasChevron</span><select id=\"gcard-ctrl-haschevron\" class=\"demo-panel-select\" onchange=\"_gcardUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "A generic tappable content card — the two slots and the label/description rows carry product, transaction or service content without the component knowing which."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its container, spacing and typography, and composes shared <code>Badge</code> and <code>Chevron Right</code> instances rather than redrawing them."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "<code>Status</code>, <code>State</code> and <code>IconSize</code> are all PascalCase per §1 with Title Case values per §5 on the standard sizing vocabulary; <code>Skeleton</code> sits on <code>Status</code> rather than competing with interaction on <code>State</code>, per §6; text layers follow the §3 vocabulary and the §7 hierarchy; frames are PascalCase throughout, including the skeleton variants; and both slots are kebab-cased with the <code>-Slot</code> suffix used across the system."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "<code>leadingIcon</code> and <code>trailingIcon</code> are both real Figma Slots, so the artwork and the trailing affordance are consumer-supplied, and the badges are shared instances."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "state=Default",
+        "notes": "Normal row — all content visible, chevron shown when <code>hasChevron</code>."
+      },
+      {
+        "state": "Skeleton (loading)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "state=skeleton",
+        "notes": "Loading pattern — gray rounded placeholders where each content slot would render. Kudos for shipping this as a first-class variant."
+      },
+      {
+        "state": "Pressed",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "Tappable row (has chevron) — needs a pressed state with background tint for tap feedback."
+      },
+      {
+        "state": "Disabled",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "For temporarily-unavailable services (e.g. maintenance). Typically dimmed label + muted icon."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Leading icon is a real Figma Slot.",
+        "body": "v2.0: Rebuilt on node <code>5412:31504</code> in the 2026 Working File. <code>leadingIcon</code> is a genuine <code>SLOT</code> holding a <code>Placeholder</code> instance as its swap target, replacing the hardcoded circle the previous assessment flagged. A consumer supplies their own artwork without detaching, and native handoff has a real content slot to bind. (C1 · Slot)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Chevron is a vector instance in a slot.",
+        "body": "v2.0: The raster chevron is gone. <code>trailingIcon</code> is a <code>SLOT</code> carrying a <code>Chevron Right</code> instance from the shared icon library, so it recolours from tokens and stays crisp at any density — and because it is slotted, a card that needs a different trailing affordance can swap it. (C6 · Asset)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "<code>iconSize</code> values moved from numeric to semantic.",
+        "body": "v2.0: The six numeric values are replaced by a t-shirt scale — <code>xl | l | m | s | xs | xxs</code> — which is the naming half of the previous recommendation. The count is unchanged at six, and whether all six earn their place is tracked separately below. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Disabled state added.",
+        "body": "v2.0: <code>state=disabled</code> ships across all six icon sizes, closing half of the missing-states finding. Pressed is still absent and is tracked below. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "<code>skeleton</code> moved onto its own <code>Status</code> axis.",
+        "body": "v2.1: The schema is now <code>Status = Default | Skeleton</code> × <code>State = Default | Disabled</code> × <code>iconSize</code>, matching the §6 rule and the shape <a href=\"#\" onclick=\"showPanelById('upload-file');return false;\">Upload File</a> uses. A skeleton is the system reporting that content has not arrived; disabled is how the user may interact with it. Separating them means the two no longer compete for one axis. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>State</code> and <code>Status</code> PascalCase, all values Title Case.",
+        "body": "v2.1: <code>Default</code>, <code>Disabled</code>, <code>Skeleton</code> per §5, and the icon scale is now <code>XL | LG | MD | SM | XS | XXS</code> — aligned to the standard sizing vocabulary rather than the single-letter <code>l | m | s</code> it used before. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The <code>⤷</code> glyph is gone and slots are kebab-cased.",
+        "body": "v2.1: <code>⤷ icon</code>, <code>⤷ leadingIcon</code> and <code>⤷ trailingIcon</code> are now <code>MediaContainer</code>, <code>Leading-Icon</code> and <code>Trailing-Icon</code> — the literal arrow character is removed from every layer, and both slots follow §4 kebab-case, so nothing in the tree blocks a generated identifier. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Legacy sigil dropped and frames moved to PascalCase.",
+        "body": "v2.1: <code>#tag</code> → <code>Preamble</code>, <code>#name</code> → <code>Title</code>, <code>#label</code> → <code>Label</code>, <code>#description</code> → <code>Description</code>, putting the text layers on the §3 vocabulary and the §7 hierarchy. The frames follow: <code>container</code> → <code>ContentRow</code>, <code>content-block</code> → <code>ContentBlock</code>, <code>text-container</code> → <code>TextContainer</code>, <code>badge-container</code> → <code>BadgeContainer</code>. Both frames named <code>offset</code> are gone, replaced by <code>PreambleContainer</code> and <code>IconContainer</code>, which say what they hold. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Skeleton variants brought onto the shared vocabulary.",
+        "body": "v2.1: <code>icon-container </code> — with its trailing space — is now <code>MediaContainer</code>, <code>content-block</code> is <code>ContentBlock</code>, and the <code>offset</code> frame standing in for the chevron is <code>IconContainer</code>, all matching the names their default siblings use. A reviewer no longer needs a second mental model to read a skeleton variant. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Two <code>TextContainer</code> rows confirmed intentional peers.",
+        "body": "v2.2: The <code>Coverage</code> block holds two identically-structured rows by design — each a <code>Label</code> and <code>Description</code> pair, the second carrying a further line item rather than a different kind of content. Sharing a name is correct here: they are peers, not a primary and a secondary, and naming them apart would imply a hierarchy the card does not have. Note for implementation: identically-named siblings are matched by order when Figma swaps variants, so an <code>iconSize</code> change re-matches the two rows positionally. That is reliable while both rows are present and in order, and it is the reason to keep them as a fixed pair rather than making either one optional. Native implementations should model this as a list of two label-value rows rather than as two named properties. (C1 · Docs)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "State coverage confirmed as-is.",
+        "body": "v2.2: <code>State = Default | Disabled</code> is the intended coverage — no pressed state, and <code>Status=Skeleton</code> deliberately ships only with <code>State=Default</code>. A skeleton is a placeholder for content that has not arrived, so it cannot meaningfully be disabled, and the 18 built variants are therefore the complete set rather than 18 of a nominal 24. Native implementations should treat <code>Skeleton</code> × <code>Disabled</code> as unreachable and should not expect a pressed treatment from the component. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "<code>iconSize</code> → <code>IconSize</code>.",
+        "body": "v2.3: Verified on the live node — all 18 variants read <code>Status</code> × <code>State</code> × <code>IconSize</code>. Every property in the set is now PascalCase per §1 with Title Case values per §5, closing the property pass. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Slot suffix aligned to the family convention.",
+        "body": "v2.3: <code>Leading-Icon</code> and <code>Trailing-Icon</code> are now <code>Leading-Icon-Slot</code> and <code>Trailing-Icon-Slot</code> — kebab-case per §4 with the <code>-Slot</code> suffix the rest of the system uses on <a href=\"#\" onclick=\"showPanelById('bottom-sheet');return false;\">Bottom Sheet</a>, <a href=\"#\" onclick=\"showPanelById('service-item');return false;\">Service Item</a> and <a href=\"#\" onclick=\"showPanelById('upload-file');return false;\">Upload File</a>. A consumer can now tell a slot from a frame by its name alone, across every component. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "All six icon sizes confirmed in use.",
+        "body": "v2.3: <code>XL | LG | MD | SM | XS | XXS</code> stays at six by owner confirmation — each size appears in a real screen rather than being carried forward from the retired numeric scale. The 18-variant count is therefore the intended size of the set, not an artefact. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Variants",
+    "description": "",
+    "source": {
+      "set": "5412:31504",
+      "variants": 18,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "gcard-default",
+        "demoKey": "default",
+        "title": "Default",
+        "node": "5412:31505",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-default\"><div class=\"eb-preview eb-preview-gcard\"><div class=\"eb-preview-gcard__icon eb-preview-gcard__icon--64\"></div><div class=\"eb-preview-gcard__content\"><div class=\"eb-preview-gcard__subtitle\"><span class=\"eb-preview-gcard__blurb\">Blurb</span><span class=\"eb-preview-gcard__tag\">Tag</span></div><p class=\"eb-preview-gcard__heading\">Heading Goes Here</p><p class=\"eb-preview-gcard__desc-line eb-preview-gcard__desc-line--first\"><span class=\"eb-preview-gcard__desc-label\">Label:</span><span class=\"eb-preview-gcard__desc-value\">Description goes here</span></p><p class=\"eb-preview-gcard__desc-line\"><span class=\"eb-preview-gcard__desc-label\">Label:</span><span class=\"eb-preview-gcard__desc-value\">Description goes here</span></p><span class=\"eb-preview-gcard__badge\">Label</span></div><div class=\"eb-preview-gcard__chevron-wrap\"><svg class=\"eb-preview-gcard__chevron\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "IconSize",
+                "prop": "iconSize",
+                "control": "select",
+                "defaultValue": "xl",
+                "options": [
+                  {
+                    "value": "xl",
+                    "label": "XL"
+                  },
+                  {
+                    "value": "lg",
+                    "label": "LG"
+                  },
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  },
+                  {
+                    "value": "xs",
+                    "label": "XS"
+                  },
+                  {
+                    "value": "xxs",
+                    "label": "XXS"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Status",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "IconSize",
+                "value": "XL",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "iconSize",
+                "variants": [
+                  {
+                    "when": "iconSize:lg",
+                    "value": "LG",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "iconSize:md",
+                    "value": "MD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "iconSize:sm",
+                    "value": "SM",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "iconSize:xs",
+                    "value": "XS",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "iconSize:xxs",
+                    "value": "XXS",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Preamble",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Tag",
+                "value": "#D61B2C",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "#90A8D0",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#445C85",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Badge background",
+                "value": "#E5F1FF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2C6CF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Badge label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#FFFFFF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Leading icon placeholder",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Chevron",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Preamble",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "148",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1 · bottom",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBGenericCard</span>(<span class=\"syn-str\">\"Heading Goes Here\"</span>)\n    .<span class=\"syn-fn\">ebPreamble</span>(<span class=\"syn-str\">\"Blurb\"</span>, <span class=\"syn-param\">tag</span>: <span class=\"syn-str\">\"Tag\"</span>)\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebBadge</span>(<span class=\"syn-str\">\"Label\"</span>)\n    .<span class=\"syn-fn\">ebLeadingIcon</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"star.fill\"</span>))\n    .<span class=\"syn-fn\">ebIconSize</span>(<span class=\"syn-dot\">.xl</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBGenericCard</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading Goes Here\"</span>,\n    <span class=\"syn-param\">preamble</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Blurb\"</span>,\n    <span class=\"syn-param\">tag</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tag\"</span>,\n    <span class=\"syn-param\">descriptions</span> <span class=\"syn-eq\">=</span> listOf(<span class=\"syn-str\">\"Label\"</span> to <span class=\"syn-str\">\"Description goes here\"</span>, <span class=\"syn-str\">\"Label\"</span> to <span class=\"syn-str\">\"Description goes here\"</span>),\n    <span class=\"syn-param\">badge</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">leadingIcon</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(<span class=\"syn-type\">Icons</span>.Filled.Star, <span class=\"syn-kw\">null</span>) },\n    <span class=\"syn-param\">iconSize</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBIconSize</span>.XL\n)</code>"
+      },
+      {
+        "cardKey": "gcard-skeleton",
+        "demoKey": "skeleton",
+        "title": "Skeleton",
+        "node": "5412:31530",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-skeleton\"><div class=\"eb-preview eb-preview-gcard eb-preview-gcard--skeleton\"><div class=\"eb-preview-gcard__icon eb-preview-gcard__icon--64\"></div><div class=\"eb-preview-gcard__content\"><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--tag\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--heading\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--desc\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--desc2\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--badge\"></div></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--chevron\"></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "IconSize",
+                "prop": "iconSize",
+                "control": "select",
+                "defaultValue": "xl",
+                "options": [
+                  {
+                    "value": "xl",
+                    "label": "XL"
+                  },
+                  {
+                    "value": "lg",
+                    "label": "LG"
+                  },
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  },
+                  {
+                    "value": "xs",
+                    "label": "XS"
+                  },
+                  {
+                    "value": "xxs",
+                    "label": "XXS"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Status",
+                "value": "Skeleton",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "IconSize",
+                "value": "XL",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "iconSize",
+                "variants": [
+                  {
+                    "when": "iconSize:lg",
+                    "value": "LG",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "iconSize:md",
+                    "value": "MD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "iconSize:sm",
+                    "value": "SM",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "iconSize:xs",
+                    "value": "XS",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "iconSize:xxs",
+                    "value": "XXS",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Placeholder bars",
+                "value": "#EEF2F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Leading icon placeholder",
+                "value": "#EEF2F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Text layers",
+                "value": "None",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "146",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBGenericCard</span>(<span class=\"syn-param\">isLoading</span>: <span class=\"syn-kw\">true</span>)\n    .<span class=\"syn-fn\">ebIconSize</span>(<span class=\"syn-dot\">.xl</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBGenericCard</span>(\n    <span class=\"syn-param\">isLoading</span> <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>,\n    <span class=\"syn-param\">iconSize</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBIconSize</span>.XL\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Status",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Default",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Border",
+            "token": "—",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Preamble",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Tag",
+            "token": "—",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Badge background",
+            "token": "—",
+            "values": [
+              "#E5F1FF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Badge label",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Leading icon placeholder",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Chevron",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Preamble",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Badge background",
+            "token": "—",
+            "values": [
+              "#C2C6CF"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Badge label",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Leading icon placeholder",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Default · Disabled",
+            "element": "Chevron",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Skeleton",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Skeleton",
+            "element": "Placeholder bars",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Skeleton",
+            "element": "Leading icon placeholder",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:card:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>card<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Status, State and IconSize are the set’s three variant properties. Leading-Icon-Slot, Trailing-Icon-Slot and Description are Figma Slots. Preamble and Title are text layers; Tag and Badge are nested Badge instances — all read from the layer tree of 5412:31505. Whether the text layers are exposed on the property panel is not readable with the plugin.",
+      "rows": [
+        {
+          "figma": "Status — Default, Skeleton",
+          "swift": "<code>isLoading: true</code>",
+          "compose": "<code>isLoading = true</code>"
+        },
+        {
+          "figma": "State — Default, Disabled",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
+        },
+        {
+          "figma": "IconSize — XL, LG, MD, SM, XS, XXS",
+          "swift": "<code>.ebIconSize(.xl / .lg / .md / .sm / .xs / .xxs)</code>",
+          "compose": "<code>iconSize = EBIconSize.XL / LG / MD / SM / XS / XXS</code>"
+        },
+        {
+          "figma": "Leading-Icon-Slot (slot)",
+          "swift": "<code>.ebLeadingIcon(Image)</code>",
+          "compose": "<code>leadingIcon = { Icon(…) }</code>"
+        },
+        {
+          "figma": "Trailing-Icon-Slot (slot)",
+          "swift": "<code>.ebTrailingIcon(Image)</code> — Chevron Right by default",
+          "compose": "<code>trailingIcon = { Icon(…) }</code> — Chevron Right by default"
+        },
+        {
+          "figma": "Description (slot)",
+          "swift": "<code>.ebDescription(label: \"Label\", \"…\")</code> once per row",
+          "compose": "<code>descriptions = listOf(\"Label\" to \"…\")</code>"
+        },
+        {
+          "figma": "Preamble (text)",
+          "swift": "<code>.ebPreamble(\"Blurb\", tag:)</code>",
+          "compose": "<code>preamble = \"…\"</code>"
+        },
+        {
+          "figma": "Title (text)",
+          "swift": "<code>EBGenericCard(\"Heading Goes Here\")</code>",
+          "compose": "<code>title = \"…\"</code>"
+        },
+        {
+          "figma": "Tag (nested Badge instance)",
+          "swift": "<code>.ebPreamble(_, tag: \"Tag\")</code>",
+          "compose": "<code>tag = \"…\"</code>"
+        },
+        {
+          "figma": "Badge (nested Badge instance)",
+          "swift": "<code>.ebBadge(\"Label\")</code>",
+          "compose": "<code>badge = \"…\"</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Default",
+        "swift": "<code><span class=\"syn-type\">EBGenericCard</span>(<span class=\"syn-str\">\"Heading Goes Here\"</span>)\n    .<span class=\"syn-fn\">ebPreamble</span>(<span class=\"syn-str\">\"Blurb\"</span>, <span class=\"syn-param\">tag</span>: <span class=\"syn-str\">\"Tag\"</span>)\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebBadge</span>(<span class=\"syn-str\">\"Label\"</span>)\n    .<span class=\"syn-fn\">ebLeadingIcon</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"star.fill\"</span>))\n    .<span class=\"syn-fn\">ebIconSize</span>(<span class=\"syn-dot\">.xl</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBGenericCard</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading Goes Here\"</span>,\n    <span class=\"syn-param\">preamble</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Blurb\"</span>,\n    <span class=\"syn-param\">tag</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tag\"</span>,\n    <span class=\"syn-param\">descriptions</span> <span class=\"syn-eq\">=</span> listOf(<span class=\"syn-str\">\"Label\"</span> to <span class=\"syn-str\">\"Description goes here\"</span>, <span class=\"syn-str\">\"Label\"</span> to <span class=\"syn-str\">\"Description goes here\"</span>),\n    <span class=\"syn-param\">badge</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">leadingIcon</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(<span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-dot\">.Star</span>, <span class=\"syn-kw\">null</span>) },\n    <span class=\"syn-param\">iconSize</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBIconSize</span>.XL\n)</code>"
+      },
+      {
+        "subheading": "Skeleton",
+        "swift": "<code><span class=\"syn-type\">EBGenericCard</span>(<span class=\"syn-param\">isLoading</span>: <span class=\"syn-kw\">true</span>)\n    .<span class=\"syn-fn\">ebIconSize</span>(<span class=\"syn-dot\">.xl</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBGenericCard</span>(\n    <span class=\"syn-param\">isLoading</span> <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>,\n    <span class=\"syn-param\">iconSize</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBIconSize</span>.XL\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Row as a button",
+        "ios": "Whole row in <code>Button</code>; one <code>accessibilityLabel</code> combining preamble, tag, title, descriptions and badge.",
+        "android": "<code>Modifier.clickable { onTap() }.semantics(mergeDescendants = true)</code> on the row."
+      },
+      {
+        "requirement": "Reading order",
+        "ios": "Preamble, tag, title, each label and description pair, then badge — top to bottom as drawn.",
+        "android": "Same order; TalkBack follows the composition order."
+      },
+      {
+        "requirement": "Disabled",
+        "ios": "<code>.disabled(true)</code> adds the <code>.notEnabled</code> trait.",
+        "android": "<code>enabled = false</code> sets the disabled semantics."
+      },
+      {
+        "requirement": "Loading",
+        "ios": "Announce \"Loading\" once; <code>.accessibilityHidden(true)</code> on the placeholder bars.",
+        "android": "<code>contentDescription = \"Loading\"</code> on the skeleton container; placeholders cleared with <code>clearAndSetSemantics</code>."
+      },
+      {
+        "requirement": "Dynamic type",
+        "ios": "Title 18 pt and the 12 pt rows scale with Dynamic Type; the row grows in height.",
+        "android": "Text in <code>sp</code>; the row grows with the font scale."
+      },
+      {
+        "requirement": "Minimum target",
+        "ios": "148 pt row ≥ 44 pt.",
+        "android": "148 dp row ≥ 48 dp."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Pick IconSize by list density — XL for a product catalog, XXS for a dense service menu.",
+        "dontText": "Don’t mix icon sizes inside one list."
+      },
+      {
+        "doText": "Keep the Title to one line inside the 180 px content block.",
+        "dontText": "Don’t let the title wrap under the tag — shorten it instead."
+      },
+      {
+        "doText": "Swap Leading-Icon-Slot for the product or service icon at 1:1.",
+        "dontText": "Don’t ship the Placeholder instance to production."
+      },
+      {
+        "doText": "Use Status Skeleton while the list loads.",
+        "dontText": "Don’t pair Skeleton with Disabled — the set does not build it."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "PascalCase frames and three named slots on 5412:31505. A <code>_space_40</code> spacer instance sits between <code>ContentBlock</code> and <code>IconContainer</code> — confirm it or replace it with padding."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Status</code>, <code>State</code> and <code>IconSize</code> with Title Case values; no absence-based names."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Title resolves to <code>Primary/Headlines/Block</code>, Preamble to <code>Primary/Label/Small</code>, Label and Description to <code>Secondary/Bold/Caption</code>. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Three enums, three slots, two text values and two Badge instances — maps 1:1 onto <code>EBGenericCard</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default and Disabled confirmed as the intended coverage (v2.2); Skeleton exists at State Default only."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Chevron Right</code> is a vector instance in Trailing-Icon-Slot; Leading-Icon-Slot holds a swappable Placeholder instance; Tag and Badge are Badge instances."
+      }
+    ],
+    "variants": {
+      "total": 18,
+      "description": "2 Status × 2 State × 6 IconSize, Skeleton without Disabled = 18 variants",
+      "summary": {
+        "columns": [
+          "IconSize",
+          "Variants",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "XL",
+              "Default · Disabled · Skeleton",
+              "3"
+            ]
+          },
+          {
+            "cells": [
+              "LG",
+              "Default · Disabled · Skeleton",
+              "3"
+            ]
+          },
+          {
+            "cells": [
+              "MD",
+              "Default · Disabled · Skeleton",
+              "3"
+            ]
+          },
+          {
+            "cells": [
+              "SM",
+              "Default · Disabled · Skeleton",
+              "3"
+            ]
+          },
+          {
+            "cells": [
+              "XS",
+              "Default · Disabled · Skeleton",
+              "3"
+            ]
+          },
+          {
+            "cells": [
+              "XXS",
+              "Default · Disabled · Skeleton",
+              "3"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "IconSize",
+        "Status",
+        "State",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "XL",
+            "Default",
+            "Default",
+            "<code>5412:31505</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "XL",
+            "Default",
+            "Disabled",
+            "<code>5418:32487</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "XL",
+            "Skeleton",
+            "Default",
+            "<code>5412:31530</code>",
+            "360 × 146"
+          ]
+        },
+        {
+          "cells": [
+            "LG",
+            "Default",
+            "Default",
+            "<code>5412:31541</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "LG",
+            "Default",
+            "Disabled",
+            "<code>5418:32462</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "LG",
+            "Skeleton",
+            "Default",
+            "<code>5412:31566</code>",
+            "360 × 146"
+          ]
+        },
+        {
+          "cells": [
+            "MD",
+            "Default",
+            "Default",
+            "<code>5412:31577</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "MD",
+            "Default",
+            "Disabled",
+            "<code>5418:32437</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "MD",
+            "Skeleton",
+            "Default",
+            "<code>5412:31602</code>",
+            "360 × 146"
+          ]
+        },
+        {
+          "cells": [
+            "SM",
+            "Default",
+            "Default",
+            "<code>5412:31613</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "SM",
+            "Default",
+            "Disabled",
+            "<code>5418:32412</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "SM",
+            "Skeleton",
+            "Default",
+            "<code>5412:31638</code>",
+            "360 × 146"
+          ]
+        },
+        {
+          "cells": [
+            "XS",
+            "Default",
+            "Default",
+            "<code>5412:31649</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "XS",
+            "Default",
+            "Disabled",
+            "<code>5418:32387</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "XS",
+            "Skeleton",
+            "Default",
+            "<code>5412:31674</code>",
+            "360 × 146"
+          ]
+        },
+        {
+          "cells": [
+            "XXS",
+            "Default",
+            "Default",
+            "<code>5412:31685</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "XXS",
+            "Default",
+            "Disabled",
+            "<code>5418:32362</code>",
+            "360 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "XXS",
+            "Skeleton",
+            "Default",
+            "<code>5412:31710</code>",
+            "360 × 146"
+          ]
+        }
+      ],
+      "collapseLabel": "View full IconSize × Status × State breakdown (18 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 5412:31504",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the 18 live variants.</strong> Cards follow <code>Status</code> — Default, Skeleton — with <code>State</code> and <code>IconSize</code> as panel controls; colours, text styles and the 148 / 146 heights read off 5412:31505 and 5412:31530. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the <code>Status</code> × <code>State</code> × <code>IconSize</code> schema.</strong> Property Mapping is one row per property with the three slots, Usage Snippets and Guidelines added, Scorecard regraded, Variants Inventory moved from the 12 numeric <code>iconSize</code> nodes to the 18 live nodes with a summary and full breakdown.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>A spacer instance sits in the layer tree.</strong> <code>_space_40</code> (an instance carrying a Roboto \"40\" label) separates <code>ContentBlock</code> from <code>IconContainer</code> on 5412:31505. Confirm it is intentional or replace it with auto-layout padding. Filed from the scorecard for the Component Review.",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 5412:31504",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 14 resolved issues on the Overview tab had no changelog row: Leading icon is a real Figma Slot; Chevron is a vector instance in a slot; <code>iconSize</code> values moved from numeric to semantic; Disabled state added; <code>skeleton</code> moved onto its own <code>Status</code> axis; <code>State</code> and <code>Status</code> PascalCase, all values Title Case; The <code>⤷</code> glyph is gone and slots are kebab-cased; Legacy sigil dropped and frames moved to PascalCase; Skeleton variants brought onto the shared vocabulary; Two <code>TextContainer</code> rows confirmed intentional peers; State coverage confirmed as-is; <code>iconSize</code> → <code>IconSize</code>; Slot suffix aligned to the family convention; All six icon sizes confirmed in use.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 18482:35806",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Fix</strong> — Collapse iconSize to semantic scale, swap icon placeholder for a slot, vectorize the chevron, add pressed state. <span class=\"tag-open tag-c2 tag-c5 tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Schema"
+          }
+        },
+        {
+          "body": "<strong>Skeleton pattern acknowledged</strong> — First-class loading variant is rare and valuable. Adopt this pattern across the card/row family. <span class=\"tag-fixed\">Noted</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Praise"
+          }
+        },
+        {
+          "body": "<strong>C2 — iconSize collapse</strong> — 6 numeric values → 4 semantic sizes (xl/l/m/s). <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C6 — Icon slot + vector chevron</strong> — Adopt Figma Slot for leading media; vectorize chevron. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>C5 — Pressed / disabled</strong> — Tappable row needs both. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Blocked on above. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

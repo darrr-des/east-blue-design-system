@@ -1,0 +1,2636 @@
+{
+  "name": "Selection Card",
+  "meta": {
+    "node": "3777:363452",
+    "figmaUrl": "https://www.figma.com/design/wKe957vSsU9xGcLvdClyX8/Cashier---Receipt-Sticker-Sheets?node-id=3777-363452",
+    "description": "Test read. A receipt row that carries a label, description, amount and subtext; a card that swaps the amount for an action; or an option row with a radio. From Cashier · Receipt Sticker Sheets, not from the GCash DS inventory.",
+    "badges": [
+      {
+        "kind": "fix",
+        "label": "Fix"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix the state coverage and the split structure",
+      "text": "Selection is invisible in error and lost when disabled, and the three Types are built two different ways. Both are fixable in place."
+    },
+    "navGroup": "",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Rows on a cashier receipt: each charge is one card, and the payer picks the payment method on the option row. Sketched until a screenshot of the live screen exists.",
+    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"240\" height=\"140\" viewBox=\"0 0 240 140\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"20\" y=\"8\" width=\"200\" height=\"124\" rx=\"12\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"120\" y=\"24\" text-anchor=\"middle\" fill=\"currentColor\" font-size=\"9\" font-weight=\"700\" font-family=\"system-ui\" opacity=\".7\">Receipt</text>\n\n          <rect x=\"32\" y=\"34\" width=\"176\" height=\"26\" rx=\"5\" fill=\"#FFF\" stroke=\"#E5EBF4\" stroke-width=\"1\"></rect>\n          <text x=\"42\" y=\"45\" fill=\"#0A2757\" font-size=\"8\" font-weight=\"700\" font-family=\"system-ui\">Service fee</text>\n          <text x=\"42\" y=\"54\" fill=\"#445C85\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">One-time charge</text>\n          <text x=\"198\" y=\"45\" text-anchor=\"end\" fill=\"#0A2757\" font-size=\"8\" font-weight=\"600\" font-family=\"system-ui\">₱ 25.00</text>\n          <text x=\"198\" y=\"54\" text-anchor=\"end\" fill=\"#6780A9\" font-size=\"6\" font-weight=\"600\" font-family=\"system-ui\">Subtext</text>\n\n          <rect x=\"32\" y=\"66\" width=\"176\" height=\"26\" rx=\"5\" fill=\"#FFF\" stroke=\"#005CE5\" stroke-width=\"1.4\"></rect>\n          <text x=\"42\" y=\"77\" fill=\"#0A2757\" font-size=\"8\" font-weight=\"700\" font-family=\"system-ui\">Cash in</text>\n          <text x=\"42\" y=\"86\" fill=\"#445C85\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Selected</text>\n          <text x=\"198\" y=\"77\" text-anchor=\"end\" fill=\"#0A2757\" font-size=\"8\" font-weight=\"600\" font-family=\"system-ui\">₱ 500.00</text>\n          <text x=\"198\" y=\"86\" text-anchor=\"end\" fill=\"#6780A9\" font-size=\"6\" font-weight=\"600\" font-family=\"system-ui\">Subtext</text>\n\n          <rect x=\"32\" y=\"98\" width=\"176\" height=\"24\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1\"></rect>\n          <circle cx=\"44\" cy=\"110\" r=\"5\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1\"></circle>\n          <circle cx=\"44\" cy=\"110\" r=\"2.5\" fill=\"#005CE5\"></circle>\n          <text x=\"56\" y=\"108\" fill=\"#0A2757\" font-size=\"8\" font-weight=\"700\" font-family=\"system-ui\">Pay with GCash</text>\n          <text x=\"56\" y=\"117\" fill=\"#445C85\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Balance ₱ 1,204.00</text>\n          <text x=\"198\" y=\"108\" text-anchor=\"end\" fill=\"#0A2757\" font-size=\"8\" font-weight=\"600\" font-family=\"system-ui\">₱ 525.00</text>\n          <text x=\"198\" y=\"117\" text-anchor=\"end\" fill=\"#005CE5\" font-size=\"6\" font-weight=\"600\" font-family=\"system-ui\">Subtext-link</text>\n        </svg>\n      </div>",
+    "inContextImage": "",
+    "inContextAlt": "A receipt screen listing two charges as Selection Cards, the second one selected, above an option row for the payment method.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tsc-demo-preview\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--default eb-preview-tsc--default\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext</span></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"tsc-ctrl-type\" onchange=\"_tscUpdate()\"><option value=\"default\" selected>Default</option><option value=\"cards\">Cards</option><option value=\"option\">Option</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"tsc-ctrl-state\" onchange=\"_tscUpdate()\"><option value=\"default\" selected>Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isSelected</span><label class=\"demo-panel-toggle\"><input type=\"checkbox\" id=\"tsc-ctrl-isselected\" onchange=\"this.parentElement.classList.toggle('is-on', this.checked); _tscUpdate()\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">ValidationState</span><select class=\"demo-panel-select\" id=\"tsc-ctrl-validation\" onchange=\"_tscUpdate()\"><option value=\"none\" selected>None</option><option value=\"error\">Error</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "partial",
+        "note": "One row serves three jobs — a receipt line, an action card and a radio option — and takes any label, amount and asset. Type=Option is built differently enough that reuse across the three is not free."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "partial",
+        "note": "Carries its own Badge, Button and Radio instances. The Badge draws in none of the 30 variants, and OptionSlot is empty in all of them and reaches 22px past the card."
+      },
+      {
+        "name": "Consistent",
+        "rating": "warn",
+        "note": "#F6F9FD is the resting surface for Option and the pressed surface for the other two. Radius is 8 on Default and Cards, 0 on Option. Description and Subtext sit at the same 10px in two different families."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "AssetContainer and OptionSlot are real Figma Slots, so a consumer swaps artwork and appends an option row without detaching."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default",
+        "notes": "Resting row. Surface <code>#FFFFFF</code> on Default and Cards, <code>#F6F9FD</code> on Option."
+      },
+      {
+        "state": "Pressed",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Pressed",
+        "notes": "Surface only: <code>#F6F9FD</code> on Default and Cards, <code>#EEF2F9</code> on Option. The border does not change."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Same surface as Pressed; the text drops to <code>#C2CFE5</code>. A selected Option loses its radio dot here."
+      },
+      {
+        "state": "Selected",
+        "ios": "yes",
+        "android": "yes",
+        "property": "isSelected=True",
+        "notes": "Border <code>#005CE5</code> at 1.5px on Default and Cards, with a drop shadow, which leaves the row one pixel taller. Option shows selection on the radio only."
+      },
+      {
+        "state": "Error",
+        "ios": "yes",
+        "android": "yes",
+        "property": "ValidationState=Error",
+        "notes": "Border and text <code>#D61B2C</code>. Overrides the selected border, and reverts to <code>#E5EBF4</code> when disabled."
+      },
+      {
+        "state": "Focus",
+        "ios": "no",
+        "android": "no",
+        "property": "—",
+        "notes": "No focus variant exists. Keyboard and switch users get no visible focus."
+      }
+    ],
+    "resolved": [],
+    "open": [
+      {
+        "headline": "A hidden Badge instance ships in all 30 variants.",
+        "body": "Default and Cards carry a 48 × 18 <code>Badge</code> pinned to the card corner; Option carries a 69 × 12 one inside the text stack. Exporting either on its own renders nothing, so the badge draws in no variant while still shipping in every one. Remove it, or expose it as a boolean property that actually draws.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Selection is invisible while the card is in error.",
+        "body": "<code>isSelected=False, ValidationState=Error</code> and <code>isSelected=True, ValidationState=Error</code> are identical: <code>#FFFFFF</code> surface, <code>#D61B2C</code> border, 66 tall. A user correcting an error cannot see which row they picked.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "A selected Option loses its dot when disabled.",
+        "body": "On <code>Type=Option, State=Disabled, isSelected=True</code> the radio ring is <code>#D7E0EF</code> and the <code>Ellipse 1</code> dot is absent, so a disabled selection reads as unselected. Every other Type keeps its selected border when disabled.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Selecting a card shifts the layout by a pixel.",
+        "body": "Selecting swaps the 1px <code>#E5EBF4</code> border for a 1.5px <code>#005CE5</code> one and adds a drop shadow (no offset, 4px blur, <code>#020E22</code> at 6%). The heavier stroke is drawn on the edge rather than inside, so the card grows from 66 to 67 and a list reflows as the user picks rows.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Type=Option is built without the container the others use.",
+        "body": "Default and Cards put the fill, border and radius on a child frame named <code>container</code>; Option puts them on the component itself and has no <code>container</code>. One set, two structures, so any consumer or generator has to special-case Option.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Type=Option has no Error variants.",
+        "body": "The set builds 30 of the 36 combinations. The six missing are <code>Type=Option × ValidationState=Error</code> across all three states and both selection values, so an option row cannot show a validation failure.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "OptionSlot is empty in every variant and overflows the card.",
+        "body": "The slot measures 294.67 wide against a 300 card, sits flush to the left edge, and its box runs 22px below the card bottom. It holds nothing in all 30 variants.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The amount uses the peseta sign, not the peso.",
+        "body": "The amount text node holds <code>U+20A7 ₧</code> in both Default and Option. Proxima Soft draws it as a peso, so Figma looks right, but any native build in another font renders a peseta and a screen reader announces the wrong currency. The Philippine peso is <code>U+20B1 ₱</code>.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Pressed and Disabled share one surface.",
+        "body": "Both are <code>#F6F9FD</code> with an <code>#E5EBF4</code> border on Default and Cards. Only the text colour separates a row the user is touching from one they cannot touch.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Two fonts share the 10px tier.",
+        "body": "Description is Proxima Soft Bold 10/10 and Subtext is BarkAda SemiBold 10/15, side by side in the same row. The 10/10 leading also leaves no room for descenders.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Type=Option is a list row, not a card.",
+        "body": "Default and Cards are 8px-radius cards with a 1px border on all four sides. Option has square corners and no border: its <code>#E5EBF4</code> renders as a 1px line along the top edge only, which is a list divider. The same set therefore ships two different objects under one name.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "recommendations": [
+      {
+        "headline": "Give error and selection separate signals.",
+        "body": "Keep the red border for the error and mark selection another way — a filled tick, a second inner border, or the selected surface. Today the red border simply replaces the blue one.",
+        "tag": "State"
+      },
+      {
+        "headline": "Draw the selected border inside the box.",
+        "body": "A 2px inner border keeps the card 66 tall in both selection states and stops the list reflowing as the user picks rows.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Rebuild Type=Option on the shared container.",
+        "body": "Move the fill, border and radius onto a <code>container</code> frame like Default and Cards, so all three Types expose the same layer path to a generator and to Code Connect.",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Decide what the Badge is for.",
+        "body": "Either delete the instance from all 30 variants or make it a <code>hasBadge</code> boolean that draws. A layer that ships in every variant and renders in none is a trap for whoever builds this natively.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Add the six missing Option × Error variants, or document the gap.",
+        "body": "If an option row can never fail validation, say so in the component description so nobody looks for the variant.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Swap the peseta sign for the peso.",
+        "body": "Replace <code>U+20A7</code> with <code>U+20B1</code> in the amount text nodes so the glyph survives the hand-off to a font that does not remap it.",
+        "tag": "A11y"
+      }
+    ],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Examples",
+    "description": "",
+    "source": {
+      "set": "3777:363452",
+      "variants": 30,
+      "read": "2026-09-16",
+      "tool": "figma-rest + talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "tsc-type",
+        "demoKey": "type",
+        "title": "Type",
+        "node": "3777:363495",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tsc-spec-type\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--default eb-preview-tsc--default\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext</span></span></div><figcaption class=\"eb-example__label\">Default</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--cards eb-preview-tsc--default\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span></span><span class=\"eb-preview-tsc__action\"><svg viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M8 3.2v9.6M3.2 8h9.6\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg><span>Label</span></span></div><figcaption class=\"eb-example__label\">Cards</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--option eb-preview-tsc--default\"><span class=\"eb-preview-tsc__radio\"><span class=\"eb-preview-tsc__ring\"><span class=\"eb-preview-tsc__dot\"></span></span></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext-link</span></span></div><figcaption class=\"eb-example__label\">Option</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "isSelected",
+                "prop": "isSelected",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "ValidationState",
+                "prop": "validation",
+                "control": "select",
+                "defaultValue": "none",
+                "options": [
+                  {
+                    "value": "none",
+                    "label": "None"
+                  },
+                  {
+                    "value": "error",
+                    "label": "Error"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Default · Cards · Option",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "Pressed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "isSelected",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "isSelected",
+                "variants": [
+                  {
+                    "when": "isSelected:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "ValidationState",
+                "value": "None",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "validation",
+                "variants": [
+                  {
+                    "when": "validation:error",
+                    "value": "Error",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Amount",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Subtext",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "AssetContainer",
+                "value": "Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "OptionSlot",
+                "value": "Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#FFFFFF · #FFFFFF · #F6F9FD",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "#F6F9FD · #F6F9FD · #EEF2F9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "#F6F9FD · #F6F9FD · #F6F9FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4 · #E5EBF4 · #E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "isSelected:true",
+                    "value": "#005CE5 · #005CE5 · #E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "validation:error",
+                    "value": "#D61B2C · #D61B2C · #E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled|validation:error",
+                    "value": "#E5EBF4 · #E5EBF4 · #E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757 · #0A2757 · #0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · #C2CFE5 · #C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "validation:error",
+                    "value": "#D61B2C · #D61B2C · #0A2757",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled|validation:error",
+                    "value": "#F4C7C9 · #F4C7C9 · #C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#445C85 · Not drawn · #445C85",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · Not drawn · #C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "validation:error",
+                    "value": "#D61B2C · Not drawn · #445C85",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled|validation:error",
+                    "value": "#F4C7C9 · Not drawn · #C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Amount",
+                "value": "#0A2757 · Not drawn · #0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · Not drawn · #C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Subtext",
+                "value": "#6780A9 · Not drawn · #005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · Not drawn · #9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Action label",
+                "value": "Not drawn · #005CE5 · Not drawn",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "Not drawn · #9BC5FD · Not drawn",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radio ring",
+                "value": "Not drawn · Not drawn · #D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "isSelected:true",
+                    "value": "Not drawn · Not drawn · #005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "isSelected:true|state:disabled",
+                    "value": "Not drawn · Not drawn · #D7E0EF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radio dot",
+                "value": "Not drawn · Not drawn · Not drawn",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "isSelected:true",
+                    "value": "Not drawn · Not drawn · #005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "isSelected:true|state:disabled",
+                    "value": "Not drawn · Not drawn · Not drawn",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Base · Primary/Label/Base · Primary/Label/Base",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Primary/Label/Tiny · Not drawn · Primary/Label/Tiny",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Amount",
+                "value": "Primary/Label/Light/Base · Not drawn · Primary/Label/Light/Base",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Subtext",
+                "value": "Secondary/Bold/Small Caption · Not drawn · Secondary/Bold/Small Caption",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Action label",
+                "value": "Not drawn · Primary/Label/Small · Not drawn",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "66px · 66px · 56px",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "isSelected:true",
+                    "value": "67px · 67px · 56px",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "isSelected:true|validation:error",
+                    "value": "66px · 66px · 56px",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "300px · 300px · 300px",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "8px · 8px · 0px",
+                "mono": true,
+                "token": "radius/radius-3 · radius/radius-3 · radius/radius-0",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "12px · 12px · 12px",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "16px · 16px · 12px",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "6px · 6px · 6px",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1px · 1px · 1px (top edge only)",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "isSelected:true",
+                    "value": "1.5px · 1.5px · 1px (top edge only)",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Alignment",
+                "value": "Center · Center · Center",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "EBSelectionCard(\"Label\")\n    .ebDescription(\"Description\")\n    .ebAmount(\"Amount\")\n    .ebSubtext(\"Subtext\")\n    .ebType(.default)  // or .cards · .option\n    .ebSelected(false)\n    .ebAsset { EmptyView() }   // AssetContainer slot",
+        "compose": "EBSelectionCard(\n    label = \"Label\",\n    description = \"Description\",\n    amount = \"Amount\",\n    subtext = \"Subtext\",\n    type = EBSelectionType.Default,  // or Cards · Option\n    selected = false,\n    asset = { }\n)"
+      },
+      {
+        "cardKey": "tsc-state",
+        "demoKey": "state",
+        "title": "State",
+        "node": "3777:363372",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tsc-spec-state\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--default eb-preview-tsc--default\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext</span></span></div><figcaption class=\"eb-example__label\">Default</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--default eb-preview-tsc--pressed\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext</span></span></div><figcaption class=\"eb-example__label\">Pressed</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--default eb-preview-tsc--disabled\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext</span></span></div><figcaption class=\"eb-example__label\">Disabled</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "cards",
+                    "label": "Cards"
+                  },
+                  {
+                    "value": "option",
+                    "label": "Option"
+                  }
+                ]
+              },
+              {
+                "label": "isSelected",
+                "prop": "isSelected",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "ValidationState",
+                "prop": "validation",
+                "control": "select",
+                "defaultValue": "none",
+                "options": [
+                  {
+                    "value": "none",
+                    "label": "None"
+                  },
+                  {
+                    "value": "error",
+                    "label": "Error"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "State",
+                "value": "Default · Pressed · Disabled",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Type",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "type",
+                "variants": [
+                  {
+                    "when": "type:cards",
+                    "value": "Cards",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:option",
+                    "value": "Option",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "isSelected",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "isSelected",
+                "variants": [
+                  {
+                    "when": "isSelected:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "ValidationState",
+                "value": "None",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "validation",
+                "variants": [
+                  {
+                    "when": "validation:error",
+                    "value": "Error",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Amount",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Subtext",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "AssetContainer",
+                "value": "Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "OptionSlot",
+                "value": "Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#FFFFFF · #F6F9FD · #F6F9FD",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:option",
+                    "value": "#F6F9FD · #EEF2F9 · #F6F9FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4 · #E5EBF4 · #E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "isSelected:true",
+                    "value": "#005CE5 · #005CE5 · #005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "isSelected:true|type:option",
+                    "value": "#E5EBF4 · #E5EBF4 · #E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "validation:error",
+                    "value": "#D61B2C · #D61B2C · #E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757 · #0A2757 · #C2CFE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "validation:error",
+                    "value": "#D61B2C · #D61B2C · #F4C7C9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#445C85 · #445C85 · #C2CFE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:cards",
+                    "value": "Not drawn · Not drawn · Not drawn",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "validation:error",
+                    "value": "#D61B2C · #D61B2C · #F4C7C9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Amount",
+                "value": "#0A2757 · #0A2757 · #C2CFE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:cards",
+                    "value": "Not drawn · Not drawn · Not drawn",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Subtext",
+                "value": "#6780A9 · #6780A9 · #C2CFE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:option",
+                    "value": "#005CE5 · #005CE5 · #9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:cards",
+                    "value": "Not drawn · Not drawn · Not drawn",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Action label",
+                "value": "Not drawn · Not drawn · Not drawn",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:cards",
+                    "value": "#005CE5 · #005CE5 · #9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "EBSelectionCard(\"Label\")\n    .ebDescription(\"Description\")\n    .ebAmount(\"Amount\")\n    .ebSubtext(\"Subtext\")\n    .ebType(.default)\n    .ebSelected(false)\n    .ebAsset { EmptyView() }   // AssetContainer slot\n    // Pressed: the platform's own highlight · Disabled: .disabled(true)",
+        "compose": "EBSelectionCard(\n    label = \"Label\",\n    description = \"Description\",\n    amount = \"Amount\",\n    subtext = \"Subtext\",\n    type = EBSelectionType.Default,\n    selected = false,\n    asset = { }\n    // Pressed: the platform's own ripple · Disabled: enabled = false\n)"
+      },
+      {
+        "cardKey": "tsc-isSelected",
+        "demoKey": "isSelected",
+        "title": "isSelected",
+        "node": "3777:363506",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tsc-spec-isSelected\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--default eb-preview-tsc--default\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext</span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--default eb-preview-tsc--default eb-preview-tsc--selected\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext</span></span></div><figcaption class=\"eb-example__label\">True</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "cards",
+                    "label": "Cards"
+                  },
+                  {
+                    "value": "option",
+                    "label": "Option"
+                  }
+                ]
+              },
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "ValidationState",
+                "prop": "validation",
+                "control": "select",
+                "defaultValue": "none",
+                "options": [
+                  {
+                    "value": "none",
+                    "label": "None"
+                  },
+                  {
+                    "value": "error",
+                    "label": "Error"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "isSelected",
+                "value": "False · True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Type",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "type",
+                "variants": [
+                  {
+                    "when": "type:cards",
+                    "value": "Cards",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:option",
+                    "value": "Option",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "Pressed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "ValidationState",
+                "value": "None",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "validation",
+                "variants": [
+                  {
+                    "when": "validation:error",
+                    "value": "Error",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Amount",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Subtext",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "AssetContainer",
+                "value": "Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "OptionSlot",
+                "value": "Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Border",
+                "value": "#E5EBF4 · #005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:option",
+                    "value": "#E5EBF4 · #E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "validation:error",
+                    "value": "#D61B2C · #D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled|validation:error",
+                    "value": "#E5EBF4 · #E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radio ring",
+                "value": "Not drawn · Not drawn",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:option",
+                    "value": "#D7E0EF · #005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:option|state:disabled",
+                    "value": "#D7E0EF · #D7E0EF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radio dot",
+                "value": "Not drawn · Not drawn",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:option",
+                    "value": "Not drawn · #005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:option|state:disabled",
+                    "value": "Not drawn · Not drawn",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "66px · 67px",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:option",
+                    "value": "56px · 56px",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "validation:error",
+                    "value": "66px · 66px",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "1px · 1.5px",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:option",
+                    "value": "1px (top edge only) · 1px (top edge only)",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "validation:error",
+                    "value": "1px · 1px",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "EBSelectionCard(\"Label\")\n    .ebDescription(\"Description\")\n    .ebAmount(\"Amount\")\n    .ebSubtext(\"Subtext\")\n    .ebType(.default)\n    .ebSelected(false)  // False: omit\n    .ebAsset { EmptyView() }   // AssetContainer slot",
+        "compose": "EBSelectionCard(\n    label = \"Label\",\n    description = \"Description\",\n    amount = \"Amount\",\n    subtext = \"Subtext\",\n    type = EBSelectionType.Default,\n    selected = false,  // False: omit\n    asset = { }\n)"
+      },
+      {
+        "cardKey": "tsc-validation",
+        "demoKey": "validation",
+        "title": "ValidationState",
+        "node": "3777:363517",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tsc-spec-validation\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--default eb-preview-tsc--default\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext</span></span></div><figcaption class=\"eb-example__label\">None</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tsc eb-preview-tsc--default eb-preview-tsc--default eb-preview-tsc--error\"><span class=\"eb-preview-tsc__asset\"></span><span class=\"eb-preview-tsc__text\"><span class=\"eb-preview-tsc__label\">Label</span><span class=\"eb-preview-tsc__desc\">Description</span></span><span class=\"eb-preview-tsc__trailing\"><span class=\"eb-preview-tsc__amount\"><span class=\"eb-preview-tsc__peso\">₱</span><span>Amount</span></span><span class=\"eb-preview-tsc__subtext\">Subtext</span></span></div><figcaption class=\"eb-example__label\">Error</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "cards",
+                    "label": "Cards"
+                  },
+                  {
+                    "value": "option",
+                    "label": "Option"
+                  }
+                ]
+              },
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "isSelected",
+                "prop": "isSelected",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "ValidationState",
+                "value": "None · Error",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Type",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "type",
+                "variants": [
+                  {
+                    "when": "type:cards",
+                    "value": "Cards",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:option",
+                    "value": "Option",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "Pressed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "isSelected",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "isSelected",
+                "variants": [
+                  {
+                    "when": "isSelected:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Amount",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Subtext",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "AssetContainer",
+                "value": "Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "OptionSlot",
+                "value": "Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Border",
+                "value": "#E5EBF4 · #D61B2C",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#E5EBF4 · #E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "isSelected:true",
+                    "value": "#005CE5 · #D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:option",
+                    "value": "#E5EBF4 · #E5EBF4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757 · #D61B2C",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · #F4C7C9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:option",
+                    "value": "#0A2757 · #0A2757",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#445C85 · #D61B2C",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · #F4C7C9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:cards",
+                    "value": "Not drawn · Not drawn",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:option",
+                    "value": "#445C85 · #445C85",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Amount",
+                "value": "#0A2757 · #0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · #C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:cards",
+                    "value": "Not drawn · Not drawn",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Subtext",
+                "value": "#6780A9 · #6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · #C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:cards",
+                    "value": "Not drawn · Not drawn",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:option",
+                    "value": "#005CE5 · #005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "EBSelectionCard(\"Label\")\n    .ebDescription(\"Description\")\n    .ebAmount(\"Amount\")\n    .ebSubtext(\"Subtext\")\n    .ebType(.default)\n    .ebSelected(false)\n    .ebAsset { EmptyView() }   // AssetContainer slot\n    // Error: .ebValidation(.error)",
+        "compose": "EBSelectionCard(\n    label = \"Label\",\n    description = \"Description\",\n    amount = \"Amount\",\n    subtext = \"Subtext\",\n    type = EBSelectionType.Default,\n    selected = false,\n    asset = { }\n    // Error: validation = EBValidation.Error\n)"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Type",
+        "description": "Resting state (State=Default, isSelected=False, ValidationState=None). Token names resolved by key against the Primitives library on 18 September 2026. 184 of 194 drawn paints are bound, and each bound value matches its token. Of the 10 that are not, the one in this table is the white card surface on <code>Default</code> and <code>Cards</code>, a raw <code>#FFFFFF</code>.",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Default",
+            "element": "Surface",
+            "token": "not bound",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Border",
+            "token": "border/color-border-weak",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Label",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Description",
+            "token": "text/color-text-weak",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Amount",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Subtext",
+            "token": "text/color-text-weaker",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Cards",
+            "element": "Surface",
+            "token": "not bound",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Cards",
+            "element": "Border",
+            "token": "border/color-border-weak",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Cards",
+            "element": "Label",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Cards",
+            "element": "Action label",
+            "token": "text/color-text-primary",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Cards",
+            "element": "Action icon",
+            "token": "text/color-text-primary",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Option",
+            "element": "Surface",
+            "token": "bg/color-bg",
+            "values": [
+              "#F6F9FD"
+            ]
+          },
+          {
+            "role": "Option",
+            "element": "Top divider",
+            "token": "border/color-border-weak",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Option",
+            "element": "Label",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Option",
+            "element": "Description",
+            "token": "text/color-text-weak",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Option",
+            "element": "Amount",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Option",
+            "element": "Subtext-link",
+            "token": "text/color-text-primary",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Option",
+            "element": "Radio ring",
+            "token": "border/color-border",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Option",
+            "element": "Radio dot (selected)",
+            "token": "bg/color-bg-primary",
+            "values": [
+              "#005CE5"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:selection:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EBDesignSystem</span>   <span class=\"syn-cmt\">// SwiftUI</span>\n<span class=\"syn-kw\">import</span> com.eastblue.ds.selection.<span class=\"syn-type\">EBSelectionCard</span>   <span class=\"syn-cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Planned coordinates. No native package ships yet."
+    },
+    "propertyMapping": {
+      "description": "Type, State, isSelected and ValidationState are variant properties. Label, Description, Amount and Subtext are text; AssetContainer and OptionSlot are Slots.",
+      "rows": [
+        {
+          "figma": "Type — Default, Cards, Option",
+          "swift": "<code>.ebType(.default / .cards / .option)</code>",
+          "compose": "<code>type = EBSelectionType.Default / Cards / Option</code>"
+        },
+        {
+          "figma": "State — Default, Pressed, Disabled",
+          "swift": "<code>.disabled(true)</code>; pressed is the platform highlight",
+          "compose": "<code>enabled = false</code>; pressed is the platform ripple"
+        },
+        {
+          "figma": "isSelected — False, True",
+          "swift": "<code>.ebSelected(true)</code>",
+          "compose": "<code>selected = true</code>"
+        },
+        {
+          "figma": "ValidationState — None, Error",
+          "swift": "<code>.ebValidation(.error)</code>",
+          "compose": "<code>validation = EBValidation.Error</code>"
+        },
+        {
+          "figma": "Label, Description, Amount, Subtext (text)",
+          "swift": "<code>EBSelectionCard(\"Label\")</code> plus <code>.ebDescription</code>, <code>.ebAmount</code>, <code>.ebSubtext</code>",
+          "compose": "<code>label</code>, <code>description</code>, <code>amount</code>, <code>subtext</code>"
+        },
+        {
+          "figma": "AssetContainer, OptionSlot (Slot)",
+          "swift": "<code>.ebAsset { }</code> and <code>.ebOption { }</code>",
+          "compose": "<code>asset = { }</code> and <code>option = { }</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Receipt row (Type=Default)",
+        "swift": "EBSelectionCard(\"Label\")\n    .ebDescription(\"Description\")\n    .ebAmount(\"Amount\")\n    .ebSubtext(\"Subtext\")\n    .ebType(.default)",
+        "compose": "EBSelectionCard(\n    label = \"Label\",\n    description = \"Description\",\n    amount = \"Amount\",\n    subtext = \"Subtext\",\n    type = EBSelectionType.Default\n)"
+      },
+      {
+        "subheading": "Action card (Type=Cards)",
+        "swift": "EBSelectionCard(\"Label\")\n    .ebType(.cards)\n    .ebAction(\"Label\") { add() }",
+        "compose": "EBSelectionCard(\n    label = \"Label\",\n    type = EBSelectionType.Cards,\n    action = EBAction(\"Label\") { add() }\n)"
+      },
+      {
+        "subheading": "Option row, selected (Type=Option)",
+        "swift": "EBSelectionCard(\"Label\")\n    .ebDescription(\"Description\")\n    .ebAmount(\"Amount\")\n    .ebSubtext(\"Subtext-link\")\n    .ebType(.option)\n    .ebSelected(true)",
+        "compose": "EBSelectionCard(\n    label = \"Label\",\n    description = \"Description\",\n    amount = \"Amount\",\n    subtext = \"Subtext-link\",\n    type = EBSelectionType.Option,\n    selected = true\n)"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Row as one control",
+        "ios": "Wrap the row in <code>Button</code> with one <code>accessibilityLabel</code> joining label, description, amount and subtext.",
+        "android": "<code>Modifier.clickable { onTap() }.semantics(mergeDescendants = true)</code> on the row."
+      },
+      {
+        "requirement": "Selection announced",
+        "ios": "<code>.accessibilityAddTraits(.isSelected)</code> when <code>isSelected</code>.",
+        "android": "<code>Modifier.selectable(selected = selected, role = Role.RadioButton)</code> for Type=Option."
+      },
+      {
+        "requirement": "Error announced, not only coloured",
+        "ios": "Add the validation message to the label; the red border alone carries no meaning.",
+        "android": "<code>semantics { error(\"…\") }</code> alongside the red border."
+      },
+      {
+        "requirement": "Focus visible",
+        "ios": "No focus variant exists in Figma — decide the focus treatment before the native build.",
+        "android": "Same. <code>Modifier.focusable()</code> needs a visible indicator to pair with."
+      },
+      {
+        "requirement": "Currency read correctly",
+        "ios": "Announce the amount as currency; the glyph in Figma is <code>U+20A7</code>, not the peso.",
+        "android": "Same. Format with a locale-aware currency formatter rather than the literal glyph."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Type=Option when the rows are mutually exclusive, so the radio carries the selection.",
+        "dontText": "Do not use Type=Default for a single-choice list; its selected border is the only cue and it shifts the layout."
+      },
+      {
+        "doText": "Keep the label to one line. Its box is 165px wide on Default and 180px on Cards.",
+        "dontText": "Do not rely on the Badge layer to mark a row — it draws in none of the 30 variants."
+      },
+      {
+        "doText": "Pair an error border with a message under the list.",
+        "dontText": "Do not show error and selection at once and expect both to read; the error border replaces the selected one."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Frames are lower-case and consistent (<code>container</code>, <code>content</code>, <code>leading-container</code>, <code>trailing-content</code>) and text layers carry the <code>#</code> prefix. Against that: Option has no <code>container</code>, the Badge draws in no variant, and <code>OptionSlot</code> is empty and overflows."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Four properties, Title Case values, a boolean named <code>isSelected</code> — all clean. The matrix is 30 of 36: Type=Option ships no Error."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Not scored, but partly answered. Type is bound: all five text layers carry a DS text style id that resolves through the typography database. Colour is bound too — the label fill carries a variable alias (<code>VariableID:005b7faa…/9323:754</code>) — but the variables live in a library the plugin cannot enumerate, so no token <em>name</em> can be read. Needs a Dev Mode read."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Four properties map to one enum, one boolean and one validation enum; the two Slots map to content slots. Nothing here forces a fork between iOS and Android."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "No focus state anywhere. Selection is invisible in error, and a selected Option loses its dot when disabled. Pressed and Disabled share a surface."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Radio and action button are instances, which is right. The amount glyph is <code>U+20A7</code>, and the Cards button carries a second <code>Add_Full</code> icon instance that sits outside its 56px bounds and draws nothing."
+      }
+    ],
+    "variants": {
+      "total": 30,
+      "description": "3 Type × 3 State × 2 isSelected × 2 ValidationState = 36; 30 built. Type=Option ships no ValidationState=Error.",
+      "columns": [
+        "Type",
+        "State",
+        "isSelected",
+        "ValidationState",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "False",
+            "None",
+            "<code>3777:363495</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Default",
+            "False",
+            "None",
+            "<code>3777:364602</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Option",
+            "Default",
+            "False",
+            "None",
+            "<code>3777:364872</code>",
+            "300 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "False",
+            "None",
+            "<code>3777:363372</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Pressed",
+            "False",
+            "None",
+            "<code>3777:364614</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Option",
+            "Pressed",
+            "False",
+            "None",
+            "<code>3777:364883</code>",
+            "300 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "False",
+            "None",
+            "<code>3777:363412</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Disabled",
+            "False",
+            "None",
+            "<code>3777:364626</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Option",
+            "Disabled",
+            "False",
+            "None",
+            "<code>3777:364894</code>",
+            "300 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "True",
+            "None",
+            "<code>3777:363506</code>",
+            "300 × 67"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Default",
+            "True",
+            "None",
+            "<code>3777:364638</code>",
+            "300 × 67"
+          ]
+        },
+        {
+          "cells": [
+            "Option",
+            "Default",
+            "True",
+            "None",
+            "<code>3777:364905</code>",
+            "300 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "True",
+            "None",
+            "<code>3777:363382</code>",
+            "300 × 67"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Pressed",
+            "True",
+            "None",
+            "<code>3777:364650</code>",
+            "300 × 67"
+          ]
+        },
+        {
+          "cells": [
+            "Option",
+            "Pressed",
+            "True",
+            "None",
+            "<code>3777:364916</code>",
+            "300 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "True",
+            "None",
+            "<code>3777:363422</code>",
+            "300 × 67"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Disabled",
+            "True",
+            "None",
+            "<code>3777:364662</code>",
+            "300 × 67"
+          ]
+        },
+        {
+          "cells": [
+            "Option",
+            "Disabled",
+            "True",
+            "None",
+            "<code>3777:364927</code>",
+            "300 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "False",
+            "Error",
+            "<code>3777:363517</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Default",
+            "False",
+            "Error",
+            "<code>3777:364674</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "False",
+            "Error",
+            "<code>3777:363392</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Pressed",
+            "False",
+            "Error",
+            "<code>3777:364686</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "False",
+            "Error",
+            "<code>3777:363432</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Disabled",
+            "False",
+            "Error",
+            "<code>3777:364698</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "True",
+            "Error",
+            "<code>3777:363528</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Default",
+            "True",
+            "Error",
+            "<code>3777:364710</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "True",
+            "Error",
+            "<code>3777:363402</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Pressed",
+            "True",
+            "Error",
+            "<code>3777:364722</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "True",
+            "Error",
+            "<code>3777:363442</code>",
+            "300 × 66"
+          ]
+        },
+        {
+          "cells": [
+            "Cards",
+            "Disabled",
+            "True",
+            "Error",
+            "<code>3777:364734</code>",
+            "300 × 66"
+          ]
+        }
+      ],
+      "summary": {
+        "columns": [
+          "Type",
+          "Combinations",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Default",
+              "Default · Pressed · Disabled × False · True × None · Error",
+              "12"
+            ]
+          },
+          {
+            "cells": [
+              "Cards",
+              "Default · Pressed · Disabled × False · True × None · Error",
+              "12"
+            ]
+          },
+          {
+            "cells": [
+              "Option",
+              "Default · Pressed · Disabled × False · True × None",
+              "6"
+            ]
+          }
+        ]
+      },
+      "collapseLabel": "View all 30 variants"
+    }
+  },
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "September 2026",
+      "kind": "initial",
+      "kindLabel": "Initial",
+      "header": "Test read · node 3777:363452",
+      "rows": [
+        {
+          "body": "<strong>Trial run of the assessment on a component outside the inventory.</strong> Selection Card comes from Cashier · Receipt Sticker Sheets, not from the GCash DS. The page proves the framework holds on an unfamiliar component, and stays out of the sidebar, search, the grid and the counts.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>30 of 36 variants read.</strong> Type, State, isSelected and ValidationState read off the set with the Talk To Figma plugin on 16 September 2026, every colour and size taken from the variants and checked against the exported image.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Text styles and border widths resolved; token names did not.</strong> All five text layers resolve to DS text styles through the typography database, and every border width is read from the variants' SVG exports. Colour fills are bound to variables, but the variables sit in a library the plugin cannot enumerate, so the colours-table tokens carry an em dash. A Dev Mode read would close them.",
+          "delta": {
+            "kind": "open",
+            "label": "Missing"
+          }
+        }
+      ]
+    }
+  ]
+}

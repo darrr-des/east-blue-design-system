@@ -147,17 +147,10 @@ function setDemoState(state) {
   _demo.state = state;
   _applyDemo();
 }
-function setDemoIcon(slot, value) {
-  if (slot === 'leading') _demo.leadingIcon = value;
-  else if (slot === 'trailing') _demo.trailingIcon = value;
-  _applyDemo();
-}
 function setDemoIconPlacement(placement) {
   _demo.iconPlacement = placement;
   _applyDemo();
 }
-/* Keep old function names as aliases for backward compat */
-function setDemoVariant(v) { setDemoAppearance(v === 'brand' ? 'default' : v); }
 
 /* ── Spec card previews ──────────────────────────────────────────── */
 var _specCards = {

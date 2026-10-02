@@ -146,10 +146,3 @@ if (document.readyState === 'loading') {
 }
 document.addEventListener('astro:page-load', _avgInit);
 
-/* Legacy aliases — keep older entry points wired during the cascade. */
-function toggleAvgSpecMode(cardKey, toggleEl) {
-  if (typeof window.toggleSpecMode === 'function') return window.toggleSpecMode(cardKey, toggleEl);
-}
-function switchAvgCodeTab(tabBtn, lang, cardKey) {
-  if (typeof window.switchCodeTab === 'function') return window.switchCodeTab(tabBtn, lang, cardKey);
-}
