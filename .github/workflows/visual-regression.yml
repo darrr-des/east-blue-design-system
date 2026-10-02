@@ -28,7 +28,9 @@ defaults:
 jobs:
   visual:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # 681 snapshots since the Playground variants joined the suite; 20 minutes
+    # cut the run off at 546 with no failures.
+    timeout-minutes: 45
 
     steps:
       - uses: actions/checkout@v4
