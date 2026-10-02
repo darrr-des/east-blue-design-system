@@ -1,239 +1,128 @@
-/* Auto-extracted from assessment-src/components/inline-text.html.
- * Powers the live-preview dropdowns/toggles for the inline-text component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs inline-text
+/* Inline Text — live preview + spec cards.
+ * Set 4419:24515 (2026 Working File): Type = Copy Icon | Badge | Checkmark |
+ * Slot × hasDescription × hasTextLink = 16 variants. The default variant is
+ * Type=Copy Icon, hasDescription=True, hasTextLink=True (4419:20913).
+ *
+ * Read off the variants and checked against export_node_as_image:
+ *   Copy Icon 5643:34623 · Badge 5652:37006 · Checkmark 5652:37217 ·
+ *   Slot 5652:37590 (all hasDescription=False, hasTextLink=False) and
+ *   4419:20913 for the SupportingRow.
  */
-/* ── Inline Text JS ─────────────────────────────────────────────── */
-/* 5 variants = 5 trailing-slot compositions. Preview renders each
-   honestly so the "one enum, five layouts" critique in Open Issues
-   is visible in the live demo.                                       */
 
 function _itxEscape(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+/* Trailing Elements › Copy — paths and stroke from get_svg(5643:34711). */
 function _itxCopyIcon() {
-  return '<span style="display:inline-flex;color:#445C85;" aria-hidden="true">' +
-    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-      '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>' +
-      '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>' +
-    '</svg>' +
-  '</span>';
+  return '<svg class="eb-preview-itx__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+    '<path opacity="0.4" d="M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
+    '<path d="M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
+  '</svg>';
 }
 
+/* Trailing Elements › Checkmark — path and stroke from get_svg(5652:37222). */
+function _itxCheckIcon() {
+  return '<svg class="eb-preview-itx__icon eb-preview-itx__icon--check" viewBox="0 4 16 16" fill="none" aria-hidden="true">' +
+    '<path d="M3 12L6.5 15L13 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
+  '</svg>';
+}
+
+function _itxTrailing(type, badge) {
+  if (type === 'badge') return '<span class="eb-preview-itx__badge">' + _itxEscape(badge) + '</span>';
+  if (type === 'checkmark') return _itxCheckIcon();
+  if (type === 'slot') return '<span class="eb-preview-itx__slot" aria-hidden="true"></span>';
+  return _itxCopyIcon();
+}
+
+/* opts: { type: copy-icon|badge|checkmark|slot, hasDescription: 'true'|'false',
+           hasTextLink: 'true'|'false', label, value, description, link, badge } */
 function _itxRender(opts) {
-  var type  = opts.type  || 'default';
+  var type = opts.type || 'copy-icon';
+  var hasDescription = String(opts.hasDescription == null ? 'true' : opts.hasDescription) === 'true';
+  var hasTextLink = String(opts.hasTextLink == null ? 'true' : opts.hasTextLink) === 'true';
   var label = opts.label || 'Label';
   var value = opts.value || '0.00';
-  var desc  = opts.desc  || 'Description goes here';
-  var cta   = opts.cta   || 'CTA';
+  var description = opts.description || 'Description goes here';
+  var link = opts.link || 'CTA';
   var badge = opts.badge || 'Label';
-  var state = opts.state || 'default';
 
-  /* State styling — dim everything 50% on disabled, shift colors
-     subtly on pressed. Mirrors the C5 Pressed-state recommendation. */
-  var stateOpacity = state === 'disabled' ? '0.4' : '1';
-  var labelColor   = state === 'pressed'  ? '#072592' : '#0A2757';
-  var valueColor   = state === 'pressed'  ? '#072592' : '#445C85';
-  var linkColor    = state === 'pressed'  ? '#003ea0' : '#005CE5';
-
-  var rowStyle    = "display:flex;align-items:center;justify-content:space-between;gap:12px;width:320px;font-family:'Proxima Soft',sans-serif;opacity:" + stateOpacity + ";";
-  var labelStyle  = "font-weight:600;font-size:16px;color:" + labelColor + ";margin:0;line-height:20px;";
-  var valueStyle  = "font-weight:600;font-size:16px;color:" + valueColor + ";margin:0;line-height:20px;";
-  var descStyle   = "font-family:'BarkAda',sans-serif;font-weight:600;font-size:12px;color:#6780A9;margin:2px 0 0;line-height:18px;";
-  var linkStyle   = "font-weight:600;font-size:12px;color:" + linkColor + ";margin:2px 0 0;line-height:18px;letter-spacing:0.5px;";
-  var badgeStyle  = "display:inline-flex;align-items:center;background:#E5F1FF;color:#005CE5;font-weight:700;font-size:12px;letter-spacing:0.5px;padding:4px 10px;border-radius:99px;";
-  var clipStyle   = "display:inline-flex;align-items:center;gap:8px;color:" + valueColor + ";font-weight:600;font-size:16px;line-height:20px;";
-
-  if (type === 'with-description' || type === 'with-text-link') {
-    var leftCol  = '<div style="display:flex;flex-direction:column;align-items:flex-start;">' +
-                     '<p style="' + labelStyle + '">' + _itxEscape(label) + '</p>' +
-                     '<p style="' + descStyle + '">' + _itxEscape(desc) + '</p>' +
-                   '</div>';
-    var rightCol = '<div style="display:flex;flex-direction:column;align-items:flex-end;">' +
-                     '<p style="' + valueStyle + '">' + _itxEscape(value) + '</p>' +
-                     (type === 'with-text-link' ? '<p style="' + linkStyle + '">' + _itxEscape(cta) + '</p>' : '') +
-                   '</div>';
-    return '<div style="' + rowStyle + 'align-items:flex-start;">' + leftCol + rightCol + '</div>';
+  var html = '<div class="eb-preview eb-preview-itx eb-preview-itx--' + type + '">';
+  html += '<div class="eb-preview-itx__main">';
+  html += '<p class="eb-preview-itx__label">' + _itxEscape(label) + '</p>';
+  html += '<div class="eb-preview-itx__value-group"><span class="eb-preview-itx__value">' + _itxEscape(value) + '</span>' + _itxTrailing(type, badge) + '</div>';
+  html += '</div>';
+  if (hasDescription || hasTextLink) {
+    html += '<div class="eb-preview-itx__supporting">';
+    html += '<span class="eb-preview-itx__description">' + (hasDescription ? _itxEscape(description) : '') + '</span>';
+    if (hasTextLink) html += '<span class="eb-preview-itx__link">' + _itxEscape(link) + '</span>';
+    html += '</div>';
   }
-
-  var trailing;
-  if (type === 'with-badge') {
-    trailing = '<span style="' + badgeStyle + '">' + _itxEscape(badge) + '</span>';
-  } else if (type === 'with-clipboard') {
-    trailing = '<span style="' + clipStyle + '"><span>' + _itxEscape(value) + '</span>' + _itxCopyIcon() + '</span>';
-  } else {
-    trailing = '<p style="' + valueStyle + '">' + _itxEscape(value) + '</p>';
-  }
-  return '<div style="' + rowStyle + '">' +
-           '<p style="' + labelStyle + '">' + _itxEscape(label) + '</p>' +
-           trailing +
-         '</div>';
+  html += '</div>';
+  return html;
 }
 
-function _itxContextMarkup() {
-  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm">' +
-    _itxRender({type:'default',        label:'Amount',         value:'PHP 1,500.00'}) +
-    _itxRender({type:'default',        label:'Service fee',    value:'PHP 10.00'}) +
-    _itxRender({type:'with-badge',     label:'Voucher',        badge:'Applied'}) +
-    _itxRender({type:'with-clipboard', label:'Reference No',   value:'GC123456789'}) +
-    _itxRender({type:'with-text-link', label:'Promo code',     value:'GC50OFF', desc:'Saved PHP 50.00', cta:'Change'}) +
-  '</div>';
-}
-
+/* ── Overview live preview — the three Figma properties + text slots ── */
 function _itxUpdate() {
   var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
   var preview = document.getElementById('itx-demo-preview');
   if (!preview) return;
   preview.innerHTML = _itxRender({
-    type:  getVal('itx-ctrl-type',  'default'),
-    label: getVal('itx-ctrl-label', 'Amount'),
-    value: getVal('itx-ctrl-value', 'PHP 1,500.00'),
-    desc:  getVal('itx-ctrl-desc',  'Description goes here'),
-    cta:   getVal('itx-ctrl-cta',   'CTA'),
-    badge: getVal('itx-ctrl-badge', 'Label')
+    type:           getVal('itx-ctrl-type', 'copy-icon'),
+    hasDescription: getVal('itx-ctrl-hasdescription', 'true'),
+    hasTextLink:    getVal('itx-ctrl-hastextlink', 'true'),
+    label:          getVal('itx-ctrl-label', 'Label'),
+    value:          getVal('itx-ctrl-value', '0.00'),
+    description:    getVal('itx-ctrl-description', 'Description goes here'),
+    link:           getVal('itx-ctrl-link', 'CTA'),
+    badge:          getVal('itx-ctrl-badge', 'Label')
   });
 }
+window._itxUpdate = _itxUpdate;
 
-/* ── Spec Cards ──────────────────────────────────────────────────── */
+/* ── Spec cards — one per Type value, keyed by demoKey ──────────────── */
 var _specCards = {
-  default:     { type: 'default',         label: 'Amount',      value: 'PHP 1,500.00', state: 'default' },
-  clipboard:   { type: 'with-clipboard',  label: 'Reference No',value: 'GC123456789',  state: 'default' },
-  badge:       { type: 'with-badge',      label: 'Voucher',     badge: 'Applied',      state: 'default' },
-  description: { type: 'with-description',label: 'Service fee', value: 'PHP 10.00', desc: 'Includes ₱10 service fee', state: 'default' },
-  link:        { type: 'with-text-link',  label: 'Promo code',  value: 'GC50OFF', desc: 'Saved PHP 50.00', cta: 'Change', state: 'default' }
+  'copy-icon': { type: 'copy-icon', hasDescription: 'true', hasTextLink: 'true' },
+  'badge':     { type: 'badge',     hasDescription: 'true', hasTextLink: 'true' },
+  'checkmark': { type: 'checkmark', hasDescription: 'true', hasTextLink: 'true' },
+  'slot':      { type: 'slot',      hasDescription: 'true', hasTextLink: 'true' }
 };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  var label = card.label || 'Label';
-  var state = card.state || 'default';
-  var snippet;
-  switch (card.type) {
-    case 'with-clipboard':
-      snippet = 'EBInlineText(\n    label: "' + label + '",\n    value: "' + (card.value || '') + '",\n    trailing: .clipboard\n)';
-      break;
-    case 'with-badge':
-      snippet = 'EBInlineText(\n    label: "' + label + '",\n    trailing: .badge("' + (card.badge || 'Label') + '")\n)';
-      break;
-    case 'with-description':
-      snippet = 'EBInlineText(\n    label: "' + label + '",\n    value: "' + (card.value || '') + '",\n    description: "' + (card.desc || '') + '"\n)';
-      break;
-    case 'with-text-link':
-      snippet = 'EBInlineText(\n    label: "' + label + '",\n    value: "' + (card.value || '') + '",\n    description: "' + (card.desc || '') + '",\n    trailing: .link("' + (card.cta || 'CTA') + '", action: { })\n)';
-      break;
-    default:
-      snippet = 'EBInlineText(label: "' + label + '", value: "' + (card.value || '') + '")';
+/* Component-API snippets that follow the panel — plain text. */
+function getSnippet(cardKey, lang, card) {
+  var c = card || _specCards[cardKey] || {};
+  var type = c.type || 'copy-icon';
+  var hasDescription = String(c.hasDescription) !== 'false';
+  var hasTextLink = String(c.hasTextLink) !== 'false';
+  if (lang === 'swift') {
+    var trailing = { 'copy-icon': '.copy', 'badge': '.badge("Label")', 'checkmark': '.checkmark', 'slot': '.slot { Image("custom") }' }[type];
+    var s = 'EBInlineText("Label", value: "0.00")\n    .ebTrailing(' + trailing + ')';
+    if (hasDescription) s += '\n    .ebDescription("Description goes here")';
+    if (hasTextLink) s += '\n    .ebTextLink("CTA") { }';
+    return s;
   }
-  if (state === 'disabled') snippet += '\n    .disabled(true)';
-  return snippet;
-}
-
-function buildComposeSnippet(type, card) {
-  var label = card.label || 'Label';
-  var state = card.state || 'default';
-  var snippet;
-  switch (card.type) {
-    case 'with-clipboard':
-      snippet = 'EBInlineText(\n    label = "' + label + '",\n    value = "' + (card.value || '') + '",\n    trailing = EBInlineTextTrailing.Clipboard';
-      break;
-    case 'with-badge':
-      snippet = 'EBInlineText(\n    label = "' + label + '",\n    trailing = { EBBadge("' + (card.badge || 'Label') + '") }';
-      break;
-    case 'with-description':
-      snippet = 'EBInlineText(\n    label = "' + label + '",\n    value = "' + (card.value || '') + '",\n    description = "' + (card.desc || '') + '"';
-      break;
-    case 'with-text-link':
-      snippet = 'EBInlineText(\n    label = "' + label + '",\n    value = "' + (card.value || '') + '",\n    description = "' + (card.desc || '') + '",\n    trailing = { EBTextLink("' + (card.cta || 'CTA') + '") { } }';
-      break;
-    default:
-      snippet = 'EBInlineText(\n    label = "' + label + '",\n    value = "' + (card.value || '') + '"';
-  }
-  if (state === 'disabled') snippet += ',\n    enabled = false';
-  snippet += '\n)';
-  return snippet;
-}
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+  var kt = { 'copy-icon': 'EBInlineTextTrailing.Copy', 'badge': 'EBInlineTextTrailing.Badge("Label")', 'checkmark': 'EBInlineTextTrailing.Checkmark', 'slot': 'EBInlineTextTrailing.Slot { Icon(…) }' }[type];
+  var lines = ['    label = "Label"', '    value = "0.00"', '    trailing = ' + kt];
+  if (hasDescription) lines.push('    description = "Description goes here"');
+  if (hasTextLink) lines.push('    textLink = EBTextLink("CTA") { }');
+  return 'EBInlineText(\n' + lines.join(',\n') + '\n)';
 }
 window.getSnippet = getSnippet;
 
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
   if (!card) return;
   card[prop] = value;
-
-  /* Update the inner #itx-spec-${cardStyle} preview body */
-  var previewBody = document.getElementById('itx-spec-' + cardStyle);
-  if (previewBody) {
-    previewBody.innerHTML = _itxRender(card);
-  }
-
-  /* Update Properties readout — data-sp="${cardStyle}-label" */
-  var spLabel = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
-  if (spLabel) spLabel.textContent = value;
-
-  /* Update DEV code */
-  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
-  if (codeEl) {
-    var activeTab = null;
-    var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-    if (devView) activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var code = getSnippet(cardStyle, lang, card);
-    codeEl.setAttribute('data-final', code);
-    codeEl.setAttribute('data-lang', lang);
-    codeEl.textContent = code;
-    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-  }
+  var host = document.getElementById('itx-spec-' + cardKey);
+  if (host) host.innerHTML = _itxRender(card);
 }
 window.updateSpecCard = updateSpecCard;
 
 function _itxInit() {
-  var ctx = document.getElementById('itx-context-preview');
-  if (ctx) ctx.innerHTML = _itxContextMarkup();
   _itxUpdate();
-
-  /* Initialize each spec card preview using the current _specCards state */
-  Object.keys(_specCards).forEach(function (key) {
-    updateSpecCard(key, 'label', _specCards[key].label);
-  });
-
-  /* Sync each spec card's per-prop dropdowns to the card's defaults.
-     SpecCard.astro renders selects with option-0 selected by default;
-     force-select the right option per row (type / label / state). */
-  Object.keys(_specCards).forEach(function (key) {
-    var card$ = document.getElementById('spec-card-' + key);
-    /* The cardKey in the data file is the human-readable slug (e.g.
-       "default-—-label-+-value"); demoKey is the short key (e.g.
-       "default"). updateSpecCard uses demoKey as the card-id, but the
-       DOM id is `spec-card-${cardKey}`. Walk up via the inner preview
-       body to find the correct outer card. */
-    if (!card$) {
-      var inner = document.getElementById('itx-spec-' + key);
-      if (inner) card$ = inner.closest('.spec-card');
-    }
-    if (!card$) return;
-    var card = _specCards[key];
-    var rows = card$.querySelectorAll('.demo-figma-panel .demo-panel-row');
-    rows.forEach(function (row) {
-      var labelEl = row.querySelector('.demo-panel-label');
-      var sel     = row.querySelector('select');
-      if (!labelEl || !sel) return;
-      var k = (labelEl.textContent || '').trim().toLowerCase();
-      var p = k === 'type' ? 'type' : k === 'label' ? 'label' : k === 'state' ? 'state' : null;
-      if (!p || card[p] == null) return;
-      for (var i = 0; i < sel.options.length; i++) {
-        if (sel.options[i].value === card[p]) { sel.selectedIndex = i; break; }
-      }
-    });
-  });
+  Object.keys(_specCards).forEach(function (k) { updateSpecCard(k, 'type', _specCards[k].type); });
 }
-
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _itxInit);
 else _itxInit();
-
-/* ── Re-init after Astro view-transition swaps ─────────────── */
-(function () {
-  document.addEventListener('astro:page-load', _itxInit);
-})();
+document.addEventListener('astro:page-load', _itxInit);

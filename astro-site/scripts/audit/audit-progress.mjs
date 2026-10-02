@@ -3,15 +3,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { fromJson } from '../../src/data/components/from-json.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
-const DATA_DIR = path.resolve(path.dirname(__filename), '../../src/data/components');
+const DATA_DIR = path.resolve(path.dirname(__filename), '../../src/content/components');
 const REQUIRED = ['Properties', 'Colors', 'Layout', 'Typography'];
 // Verdicts where a component is intentionally cardless (deprecation / consolidation /
 // product-screen scope). The infobox in overview.open + overview.recommendations
 // already documents the canonical sibling — spec cards aren't expected.
 const CARDLESS_VERDICTS = new Set(['remove', 'consolidate', 'product-layer']);
-const files = fs.readdirSync(DATA_DIR).filter((f) => f.endsWith('.ts') && f !== '_index.ts').sort();
+const files = fs.readdirSync(DATA_DIR).filter((f) => f.endsWith('.json')).sort();
 
 let totalCards = 0;
 let fullyDone = 0;
@@ -24,19 +25,8 @@ const componentScores = {};
 const totalComponents = files.length;
 
 for (const f of files) {
-  const slug = f.replace(/\.ts$/, '');
-  const raw = fs.readFileSync(path.join(DATA_DIR, f), 'utf8');
-  const m = raw.match(/= ({[\s\S]*});\s*$/);
-  if (!m) continue;
-  let data;
-  try {
-    /* Eval the export object inside a `with` Proxy so any external identifier
-       (e.g. `accordionDemoControls`) resolves to `[]` instead of throwing.
-       This lets us parse files that reference helper consts declared above
-       the export. */
-    const proxyEnv = new Proxy({}, { get: () => [], has: () => true });
-    data = (new Function('proxy', `with (proxy) { return ${m[1]}; }`))(proxyEnv);
-  } catch { continue; }
+  const slug = f.replace(/\.json$/, '');
+  const data = fromJson(slug, JSON.parse(fs.readFileSync(path.join(DATA_DIR, f), 'utf8')));
   const cards = data.style?.specCards || [];
 
   let fullCnt = 0;
@@ -60,13 +50,14 @@ for (const f of files) {
     if (cLen >= 20) sectionCount.compose++;
   }
 
-  // Detect a verdict that makes a component intentionally cardless.
+  // A remove / consolidate / product-layer component has no Style tab —
+  // the page hides it — so it is complete whatever its data still holds.
   const verdictKind = (data.meta?.badges || []).map((b) => b.kind).find((k) => CARDLESS_VERDICTS.has(k));
   componentScores[slug] = {
     name: data.meta?.name || slug,
-    total: cards.length,
-    full: fullCnt,
-    cardlessByVerdict: !!verdictKind && cards.length === 0,
+    total: verdictKind ? 0 : cards.length,
+    full: verdictKind ? 0 : fullCnt,
+    cardlessByVerdict: !!verdictKind,
   };
 }
 

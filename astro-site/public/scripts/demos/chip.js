@@ -80,10 +80,6 @@ function updateChipDemo() {
 }
 
 /* Style — per-spec-card live preview + readout */
-function updateChipSpecCard(card, prop, val) {
-  return updateSpecCard(card, prop, val);
-}
-
 function updateSpecCard(card, prop, val) {
   var state = _chipSpec[card];
   if (!state) return;
@@ -180,29 +176,6 @@ function getSnippet(type, lang, card) {
   return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
 }
 window.getSnippet = getSnippet;
-
-/* SwiftUI / Compose tab toggle within DEV view */
-function switchChipCodeTab(tabBtn, lang, cardKey) {
-  var block = tabBtn.closest('.spec-card-code');
-  if (!block) return;
-  block.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
-  tabBtn.classList.add('active');
-  block.querySelectorAll('.spec-code-block').forEach(function(pre) {
-    pre.style.display = pre.getAttribute('data-lang') === lang ? '' : 'none';
-  });
-}
-
-/* DES/DEV toggle */
-function toggleChipSpecMode(cardKey, toggleEl) {
-  var labels = toggleEl.querySelectorAll('.spec-mode-label');
-  var isDes = labels[0].classList.contains('active');
-  labels[0].classList.toggle('active', !isDes);
-  labels[1].classList.toggle('active', isDes);
-  var desEl = document.querySelector('[data-view="' + cardKey + '-des"]');
-  var devEl = document.querySelector('[data-view="' + cardKey + '-dev"]');
-  if (desEl) desEl.style.display = isDes ? 'none' : '';
-  if (devEl) devEl.style.display = isDes ? '' : 'none';
-}
 
 function _chipInitSpecCards() {
   Object.keys(_chipSpec).forEach(function(card) {

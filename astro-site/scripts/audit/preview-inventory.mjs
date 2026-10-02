@@ -16,8 +16,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
-const DATA_DIR = path.resolve(path.dirname(__filename), '../../src/data/components');
-const files = fs.readdirSync(DATA_DIR).filter((f) => f.endsWith('.ts') && f !== '_index.ts').sort();
+const DATA_DIR = path.resolve(path.dirname(__filename), '../../src/content/components');
+const files = fs.readdirSync(DATA_DIR).filter((f) => f.endsWith('.json')).sort();
 
 function classify(live) {
   if (!live || live.replace(/<[^>]+>/g, '').trim().length < 10) return 'no preview';
@@ -37,15 +37,11 @@ function classify(live) {
 
 const rows = [];
 for (const f of files) {
-  const slug = f.replace(/\.ts$/, '');
-  const raw = fs.readFileSync(path.join(DATA_DIR, f), 'utf8');
-  const m = raw.match(/= ({[\s\S]*});\s*$/);
-  if (!m) continue;
-  let data;
-  try { data = (new Function('return ' + m[1]))(); } catch { continue; }
+  const slug = f.replace(/\.json$/, '');
+  const data = JSON.parse(fs.readFileSync(path.join(DATA_DIR, f), 'utf8'));
   rows.push({
     slug,
-    name: data.meta?.name || slug,
+    name: data.name || slug,
     node: data.meta?.node || '',
     figmaUrl: data.meta?.figmaUrl || '',
     family: data.meta?.navGroup || '—',

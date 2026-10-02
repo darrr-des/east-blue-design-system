@@ -50,8 +50,10 @@ function _babRender(card, scale) {
 }
 
 /* ── Per-card state ─────────────────────────────────────────────────── */
+/* One card per Surface value (the driving property); nothing else to control. */
 var _specCards = {
-  main: { surface: 'default' }
+  brand:   { surface: 'brand' },
+  'default': { surface: 'default' }
 };
 window._specCards = _specCards;
 
@@ -76,25 +78,8 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
-  var host = document.getElementById('brand-app-bar-spec-' + cardStyle);
+  var host = document.getElementById('bab-spec-' + cardStyle);
   if (host) host.innerHTML = _babRender(card, BAB_PREVIEW_SCALE);
-
-  var el = document.querySelector('[data-sp="' + cardStyle + '-surface"]');
-  if (el) el.textContent = card.surface.charAt(0).toUpperCase() + card.surface.slice(1);
-
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
 }
 window.updateSpecCard = updateSpecCard;
 
@@ -102,9 +87,9 @@ window.updateSpecCard = updateSpecCard;
 function _headerWithLogoUpdate() {
   var el = document.getElementById('hwl-demo-preview');
   if (!el) return;
-  var n = document.getElementById('hwl-ctrl-surface') || document.getElementById('hwl-demo-variant');
-  var v = (n && n.value || 'default').toLowerCase();
-  el.innerHTML = _babRender({ surface: BAB_SURFACE[v] ? v : (v === 'dark' ? 'brand' : 'default') }, 1);
+  var n = document.getElementById('hwl-ctrl-surface');
+  var v = (n && n.value || 'brand').toLowerCase();
+  el.innerHTML = _babRender({ surface: BAB_SURFACE[v] ? v : 'brand' }, 1);
 }
 window._headerWithLogoUpdate = _headerWithLogoUpdate;
 
@@ -112,7 +97,7 @@ window._headerWithLogoUpdate = _headerWithLogoUpdate;
 function _babInit() {
   _headerWithLogoUpdate();
   Object.keys(_specCards).forEach(function (k) {
-    var host = document.getElementById('brand-app-bar-spec-' + k);
+    var host = document.getElementById('bab-spec-' + k);
     if (host) host.innerHTML = _babRender(_specCards[k], BAB_PREVIEW_SCALE);
   });
 }

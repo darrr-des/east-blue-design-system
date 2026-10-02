@@ -1,0 +1,124 @@
+---
+/**
+ * StampTypeCard — the kinetic-type poster loop.
+ *
+ * Display-only canvas card. Mounts one StampType engine per instance and runs
+ * the standard card lifecycle: on-screen only (IntersectionObserver), paused
+ * when the tab is hidden, redrawn on resize, one parked poster frame under
+ * `prefers-reduced-motion`.
+ *
+ * Usage:
+ *   import StampTypeCard from '../components/StampTypeCard.astro';
+ *   <StampTypeCard />
+ */
+import { WORLDS } from '../lib/stamptype/params';
+
+interface Props {
+  /** Optional a11y label override. */
+  label?: string;
+}
+
+const {
+  label = 'A looping kinetic-type poster. Four lines of type on flat highlight bars fly in from the edges in square hops, hold still to be read, then scatter off. Every moving line leaves chunky blocks of flat colour where it just was. Each pass repeats the same choreography in a new palette with new words, and the two passes overlap so their trails flood the screen as the colour changes.',
+} = Astro.props;
+---
+
+<div
+  class="stamptype-card"
+  data-stamptype
+  role="img"
+  aria-label={label}
+  data-bg={WORLDS[0].bg}
+>
+  <canvas class="stamptype-canvas"></canvas>
+</div>
+
+<style>
+  .stamptype-card {
+    position: relative;
+    width: 100%;
+    margin-inline: auto;
+    aspect-ratio: 1344 / 620;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    user-select: none;
+    /* Field colour of world 0 — the canvas paints over it on the first frame. */
+    background-color: #3f40ff;
+  }
+
+  .stamptype-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  import { StampType } from '../lib/stamptype/engine';
+
+  /** The display face this site sets headlines in. Semibold (600) is a real cut. */
+  const FAMILY = 'Proxima Soft';
+
+  function mount(card: HTMLElement) {
+    const canvas = card.querySelector<HTMLCanvasElement>('canvas');
+    if (!canvas) return;
+
+    const bg = card.dataset.bg;
+    if (bg) card.style.backgroundColor = bg;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const engine = new StampType(canvas);
+    if (!engine.ok) return;
+
+    let onScreen = false;
+    let hidden = document.hidden;
+
+    const sync = () => {
+      if (reduced) return;
+      if (onScreen && !hidden) engine.start();
+      else engine.stop();
+    };
+
+    if (reduced) engine.renderStill();
+
+    if (document.fonts?.load) {
+      document.fonts.load(`600 1em "${FAMILY}"`).then(
+        () => engine.setFont(`"${FAMILY}", system-ui, sans-serif`),
+        () => {},
+      );
+    }
+
+    const io = new IntersectionObserver(
+      (es) => {
+        onScreen = es[0]?.isIntersecting ?? false;
+        sync();
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(card);
+
+    const onVis = () => {
+      hidden = document.hidden;
+      sync();
+    };
+    document.addEventListener('visibilitychange', onVis);
+
+    let rt = 0;
+    const onResize = () => {
+      window.clearTimeout(rt);
+      rt = window.setTimeout(() => engine.resize(), 120);
+    };
+    window.addEventListener('resize', onResize);
+
+    window.addEventListener('pagehide', () => {
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('resize', onResize);
+      window.clearTimeout(rt);
+      engine.destroy();
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-stamptype]').forEach(mount);
+</script>

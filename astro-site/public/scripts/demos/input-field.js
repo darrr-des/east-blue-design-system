@@ -150,15 +150,6 @@ function updateSpecCard(cardStyle, prop, value) {
 }
 window.updateSpecCard = updateSpecCard;
 
-/* Legacy alias */
-function updateInputFieldSpecCard(state, filled) {
-  var key = state.toLowerCase();
-  if (_specCards[key]) {
-    _specCards[key].filled = filled;
-    updateSpecCard(key, 'filled', filled);
-  }
-}
-
 function _infInitSpecCards() {
   Object.keys(_specCards).forEach(function (key) {
     /* Re-render preview + code by toggling the same value. */

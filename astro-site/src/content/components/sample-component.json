@@ -1,0 +1,1928 @@
+{
+  "name": "Sample Component",
+  "meta": {
+    "node": "1234:5678",
+    "figmaUrl": "https://www.figma.com/design/SAMPLE00000000000000000/Sample-Component?node-id=1234-5678",
+    "description": "The assessment framework as one built page. Every section a component page carries, filled with sample data: a tappable tile with a slotted icon, a title, a description and an optional badge that exists nowhere in Figma.",
+    "badges": [
+      {
+        "kind": "fix",
+        "label": "Fix"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix — three findings to close",
+      "text": "The icon container is not a Slot (C1), no loading state is built (C5), and the badge is drawn locally (C6). Sample data — nothing on this page was read from Figma."
+    },
+    "navGroup": "Sample",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Sample Component stacks into a vertical list on a services screen — Filled for the featured entry, Outlined for the rest. The screen is drawn for this reference page, not a screenshot.",
+    "inContextHtml": "<svg class=\"ctx-img\" viewBox=\"0 0 960 430\" width=\"960\" height=\"430\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Sample Component tiles stacked in a list on a drawn services screen\"><defs><linearGradient id=\"smp-ctx-bg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#F6F9FD\"/><stop offset=\"1\" stop-color=\"#D9E8FA\"/></linearGradient><clipPath id=\"smp-ctx-screen\"><rect x=\"357\" y=\"-58\" width=\"246\" height=\"476\" rx=\"34\"/></clipPath></defs><rect width=\"960\" height=\"430\" fill=\"url(#smp-ctx-bg)\"/><rect x=\"345\" y=\"-70\" width=\"270\" height=\"500\" rx=\"44\" fill=\"#1F2024\"/><rect x=\"353\" y=\"-62\" width=\"254\" height=\"484\" rx=\"38\" fill=\"#000\"/><g clip-path=\"url(#smp-ctx-screen)\"><rect x=\"357\" y=\"-58\" width=\"246\" height=\"476\" fill=\"#F6F9FD\"/><text x=\"368\" y=\"36\" fill=\"#0A2757\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-weight=\"700\" font-size=\"15\">Services</text><text x=\"368\" y=\"50\" fill=\"#6780A9\" font-family=\"'BarkAda', system-ui, sans-serif\" font-weight=\"700\" font-size=\"7.5\">Sample screen — drawn for the reference page, not a screenshot</text><rect x=\"368\" y=\"66\" width=\"224\" height=\"44.8\" rx=\"7.5\" fill=\"#005CE5\"/><g transform=\"translate(377.9555555555556 80.9) scale(0.622)\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"#FFFFFF\"/></g><text x=\"400.4\" y=\"86.4\" fill=\"#FFFFFF\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-weight=\"700\" font-size=\"9.955555555555556\">Pay Bills</text><text x=\"400.4\" y=\"97.4\" fill=\"#E5F1FF\" font-family=\"'BarkAda', system-ui, sans-serif\" font-weight=\"700\" font-size=\"7.466666666666667\">Utilities, telco, government</text><rect x=\"552.0444444444445\" y=\"82.2\" width=\"30\" height=\"12.5\" rx=\"6.2\" fill=\"#FFFFFF\"/><text x=\"567.0444444444445\" y=\"90.6\" text-anchor=\"middle\" fill=\"#005CE5\" font-family=\"'BarkAda', system-ui, sans-serif\" font-weight=\"700\" font-size=\"6.2\" letter-spacing=\"0.3\">NEW</text><rect x=\"368\" y=\"120\" width=\"224\" height=\"44.8\" rx=\"7.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"0.7\"/><g transform=\"translate(377.9555555555556 134.9) scale(0.622)\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"#005CE5\"/></g><text x=\"400.4\" y=\"140.4\" fill=\"#0A2757\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-weight=\"700\" font-size=\"9.955555555555556\">Send Money</text><text x=\"400.4\" y=\"151.4\" fill=\"#445C85\" font-family=\"'BarkAda', system-ui, sans-serif\" font-weight=\"700\" font-size=\"7.466666666666667\">To any account or wallet</text><rect x=\"368\" y=\"174\" width=\"224\" height=\"44.8\" rx=\"7.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"0.7\"/><g transform=\"translate(377.9555555555556 188.9) scale(0.622)\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"#005CE5\"/></g><text x=\"400.4\" y=\"194.4\" fill=\"#0A2757\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-weight=\"700\" font-size=\"9.955555555555556\">Cash In</text><text x=\"400.4\" y=\"205.4\" fill=\"#445C85\" font-family=\"'BarkAda', system-ui, sans-serif\" font-weight=\"700\" font-size=\"7.466666666666667\">Banks, cards, over the counter</text><rect x=\"552.0444444444445\" y=\"190.2\" width=\"30\" height=\"12.5\" rx=\"6.2\" fill=\"#E5F1FF\"/><text x=\"567.0444444444445\" y=\"198.6\" text-anchor=\"middle\" fill=\"#005CE5\" font-family=\"'BarkAda', system-ui, sans-serif\" font-weight=\"700\" font-size=\"6.2\" letter-spacing=\"0.3\">NEW</text><rect x=\"368\" y=\"228\" width=\"224\" height=\"34.8\" rx=\"7.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"0.7\"/><g transform=\"translate(377.9555555555556 238.0) scale(0.622)\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"#005CE5\"/></g><text x=\"400.4\" y=\"243.4\" fill=\"#0A2757\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-weight=\"700\" font-size=\"8.711111111111112\">Buy Load</text><text x=\"400.4\" y=\"254.4\" fill=\"#445C85\" font-family=\"'BarkAda', system-ui, sans-serif\" font-weight=\"700\" font-size=\"7.466666666666667\">Prepaid and data packs</text><rect x=\"368\" y=\"271\" width=\"224\" height=\"34.8\" rx=\"7.5\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"0.7\"/><g transform=\"translate(377.9555555555556 281.0) scale(0.622)\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"#C2CFE5\"/></g><text x=\"400.4\" y=\"286.4\" fill=\"#C2CFE5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-weight=\"700\" font-size=\"8.711111111111112\">Invest</text><text x=\"400.4\" y=\"297.4\" fill=\"#C2CFE5\" font-family=\"'BarkAda', system-ui, sans-serif\" font-weight=\"700\" font-size=\"7.466666666666667\">Temporarily unavailable</text></g></svg>",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"smp-demo-preview\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--filled eb-preview-smp--default eb-preview-smp--medium\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span><span class=\"eb-preview-smp__badge\">New</span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Style</span><select id=\"smp-ctrl-style\" class=\"demo-panel-select\" onchange=\"_smpUpdate()\"><option value=\"filled\" selected=\"\">Filled</option><option value=\"outlined\">Outlined</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"smp-ctrl-state\" class=\"demo-panel-select\" onchange=\"_smpUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select id=\"smp-ctrl-size\" class=\"demo-panel-select\" onchange=\"_smpUpdate()\"><option value=\"medium\" selected=\"\">Medium</option><option value=\"small\">Small</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasBadge</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"smp-ctrl-hasbadge\" checked=\"\" onchange=\"_smpUpdate(); this.parentElement.classList.toggle('is-on', this.checked);\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Carries any title, description and icon without knowing what service it stands for; the same tile serves a catalog, a settings list or a dashboard."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its container, spacing and text styles; every fill is bound to a <code>main/sample/color/…</code> token, so nothing depends on the screen behind it."
+      },
+      {
+        "name": "Consistent",
+        "rating": "partial",
+        "note": "<code>Style</code>, <code>State</code> and <code>Size</code> are PascalCase with Title Case values per §1 and §5, but the trailing badge is drawn inside the component rather than instanced from the shared Badge, so its styling can drift from the rest of the system."
+      },
+      {
+        "name": "Composable",
+        "rating": "partial",
+        "note": "<code>IconContainer</code> holds a fixed Placeholder instance instead of a Figma Slot; a consumer detaches to swap the artwork, and native hand-off has no content slot to bind."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default",
+        "notes": "Resting tile — all content visible, badge shown when <code>hasBadge</code>."
+      },
+      {
+        "state": "Pressed",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Pressed",
+        "notes": "Background darkens (Filled) or tints (Outlined) for the duration of the touch."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Text and icon dimmed; taps ignored. Used for a service that is temporarily unavailable."
+      },
+      {
+        "state": "Loading",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "No skeleton or spinner treatment exists in the set — consumers hide the tile while data loads. Raises C5."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "<code>state</code> renamed to <code>State</code> with Title Case values.",
+        "body": "v1.1: <code>default | pressed | disabled</code> became <code>Default | Pressed | Disabled</code> per §1 and §5, so a generated enum reads the same as the Figma panel. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Pressed built at both sizes.",
+        "body": "v1.1: The set gained <code>State=Pressed</code> for Medium and Small, closing half of the state-coverage finding. Loading is still open below. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Colours bound to semantic tokens.",
+        "body": "v1.2: Every fill and text colour resolves to a <code>main/sample/color/{style}/{state}/{role}</code> variable; no raw hex remains on the tile. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      }
+    ],
+    "open": [
+      {
+        "headline": "The icon container is not a Figma Slot.",
+        "body": "<code>IconContainer</code> on 1234:5679 holds a fixed Placeholder instance. A consumer must detach the tile to swap the artwork, and native hand-off has no slot to bind. Convert it to a Slot with the placeholder as the swap target.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "No loading treatment is built.",
+        "body": "The set covers Default, Pressed and Disabled at both sizes but has no skeleton or spinner. A tile that waits on data has nothing to show, so every consumer improvises. Add a <code>Status=Skeleton</code> axis, as Generic Card does.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "The badge is drawn locally.",
+        "body": "The trailing pill is a rectangle and a text layer inside the component rather than an instance of the shared Badge, so a Badge change does not reach it and its colours are bound separately. Instance the shared component.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      }
+    ],
+    "recommendations": [
+      {
+        "headline": "Convert IconContainer to a Figma Slot.",
+        "body": "Keep the Placeholder instance as the swap target so the default render is unchanged; consumers then swap without detaching and the native API gets a real <code>icon</code> slot.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Instance the shared Badge for the trailing pill.",
+        "body": "Replace the local rectangle and text with a Badge instance at its Small Caption size; drop the two local badge tokens once it inherits the Badge colours.",
+        "tag": "Composition"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Rename <code>state</code> to <code>State</code> with Title Case values.",
+        "body": "Applied in v1.1 — the three values now match the §5 vocabulary and the generated enum.",
+        "tag": "Rename"
+      }
+    ]
+  },
+  "style": {
+    "heading": "Examples",
+    "description": "",
+    "source": {
+      "set": "1234:5678",
+      "variants": 12,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "smp-style",
+        "demoKey": "style",
+        "title": "Style",
+        "node": "1234:5678",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"smp-spec-style\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--filled eb-preview-smp--default eb-preview-smp--medium\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span><span class=\"eb-preview-smp__badge\">New</span></div><figcaption class=\"eb-example__label\">Filled</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--outlined eb-preview-smp--default eb-preview-smp--medium\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span><span class=\"eb-preview-smp__badge\">New</span></div><figcaption class=\"eb-example__label\">Outlined</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "medium",
+                "options": [
+                  {
+                    "value": "medium",
+                    "label": "Medium"
+                  },
+                  {
+                    "value": "small",
+                    "label": "Small"
+                  }
+                ]
+              },
+              {
+                "label": "hasBadge",
+                "prop": "hasBadge",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Style",
+                "value": "Filled · Outlined",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "Pressed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Size",
+                "value": "Medium",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:small",
+                    "value": "Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasBadge",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasBadge",
+                "variants": [
+                  {
+                    "when": "hasBadge:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Title",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#005CE5 · #FFFFFF",
+                "mono": false,
+                "token": "main/sample/color/{style}/default/bg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "#0047B3 · #F6F9FD",
+                    "token": "main/sample/color/{style}/pressed/bg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · #FFFFFF",
+                    "token": "main/sample/color/{style}/disabled/bg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "None · #D7E0EF",
+                "mono": false,
+                "token": "main/sample/color/{style}/default/border",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "None · #D7E0EF",
+                    "token": "main/sample/color/{style}/pressed/border",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "None · #E5EBF4",
+                    "token": "main/sample/color/{style}/disabled/border",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Title",
+                "value": "#FFFFFF · #0A2757",
+                "mono": false,
+                "token": "main/sample/color/{style}/default/title",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "#FFFFFF · #0A2757",
+                    "token": "main/sample/color/{style}/pressed/title",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "#FFFFFF · #C2CFE5",
+                    "token": "main/sample/color/{style}/disabled/title",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#E5F1FF · #445C85",
+                "mono": false,
+                "token": "main/sample/color/{style}/default/desc",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "#E5F1FF · #445C85",
+                    "token": "main/sample/color/{style}/pressed/desc",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "#F6F9FD · #C2CFE5",
+                    "token": "main/sample/color/{style}/disabled/desc",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Icon",
+                "value": "#FFFFFF · #005CE5",
+                "mono": false,
+                "token": "main/sample/color/{style}/default/icon",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "#FFFFFF · #005CE5",
+                    "token": "main/sample/color/{style}/pressed/icon",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "#FFFFFF · #C2CFE5",
+                    "token": "main/sample/color/{style}/disabled/icon",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Badge background",
+                "value": "#FFFFFF · #E5F1FF",
+                "mono": false,
+                "token": "main/sample/color/{style}/default/bbg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasBadge:false",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  },
+                  {
+                    "when": "state:pressed",
+                    "value": "#FFFFFF · #E5F1FF",
+                    "token": "main/sample/color/{style}/pressed/bbg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "#FFFFFF · #EEF2F9",
+                    "token": "main/sample/color/{style}/disabled/bbg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Badge label",
+                "value": "#005CE5 · #005CE5",
+                "mono": false,
+                "token": "main/sample/color/{style}/default/bfg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasBadge:false",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  },
+                  {
+                    "when": "state:pressed",
+                    "value": "#005CE5 · #005CE5",
+                    "token": "main/sample/color/{style}/pressed/bfg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · #C2CFE5",
+                    "token": "main/sample/color/{style}/disabled/bfg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Border",
+                "value": "0 · 1",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.filled</span><span class=\"syn-punc\">)</span>  <span class=\"syn-cmt\">// or .outlined</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.medium</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Title\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBSampleStyle</span><span class=\"syn-dot\">.Filled</span>,  <span class=\"syn-cmt\">// or Outlined</span>\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBSampleSize</span><span class=\"syn-dot\">.Medium</span>,\n    <span class=\"syn-param\">badge</span> = <span class=\"syn-str\">\"New\"</span>,\n    <span class=\"syn-param\">icon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-dot\">.Star</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      },
+      {
+        "cardKey": "smp-state",
+        "demoKey": "state",
+        "title": "State",
+        "node": "1234:5678",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"smp-spec-state\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--filled eb-preview-smp--default eb-preview-smp--medium\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span><span class=\"eb-preview-smp__badge\">New</span></div><figcaption class=\"eb-example__label\">Default</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--filled eb-preview-smp--pressed eb-preview-smp--medium\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span><span class=\"eb-preview-smp__badge\">New</span></div><figcaption class=\"eb-example__label\">Pressed</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--filled eb-preview-smp--disabled eb-preview-smp--medium\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span><span class=\"eb-preview-smp__badge\">New</span></div><figcaption class=\"eb-example__label\">Disabled</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Style",
+                "prop": "style",
+                "control": "select",
+                "defaultValue": "filled",
+                "options": [
+                  {
+                    "value": "filled",
+                    "label": "Filled"
+                  },
+                  {
+                    "value": "outlined",
+                    "label": "Outlined"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "medium",
+                "options": [
+                  {
+                    "value": "medium",
+                    "label": "Medium"
+                  },
+                  {
+                    "value": "small",
+                    "label": "Small"
+                  }
+                ]
+              },
+              {
+                "label": "hasBadge",
+                "prop": "hasBadge",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Style",
+                "value": "Filled",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "style",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "Outlined",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "State",
+                "value": "Default · Pressed · Disabled",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Size",
+                "value": "Medium",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:small",
+                    "value": "Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasBadge",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasBadge",
+                "variants": [
+                  {
+                    "when": "hasBadge:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Title",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#005CE5 · #0047B3 · #C2CFE5",
+                "mono": false,
+                "token": "main/sample/color/filled/{state}/bg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "#FFFFFF · #F6F9FD · #FFFFFF",
+                    "token": "main/sample/color/outlined/{state}/bg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "None · None · None",
+                "mono": false,
+                "token": "main/sample/color/filled/{state}/border",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "#D7E0EF · #D7E0EF · #E5EBF4",
+                    "token": "main/sample/color/outlined/{state}/border",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Title",
+                "value": "#FFFFFF · #FFFFFF · #FFFFFF",
+                "mono": false,
+                "token": "main/sample/color/filled/{state}/title",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "#0A2757 · #0A2757 · #C2CFE5",
+                    "token": "main/sample/color/outlined/{state}/title",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#E5F1FF · #E5F1FF · #F6F9FD",
+                "mono": false,
+                "token": "main/sample/color/filled/{state}/desc",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "#445C85 · #445C85 · #C2CFE5",
+                    "token": "main/sample/color/outlined/{state}/desc",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Icon",
+                "value": "#FFFFFF · #FFFFFF · #FFFFFF",
+                "mono": false,
+                "token": "main/sample/color/filled/{state}/icon",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "#005CE5 · #005CE5 · #C2CFE5",
+                    "token": "main/sample/color/outlined/{state}/icon",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Badge background",
+                "value": "#FFFFFF · #FFFFFF · #FFFFFF",
+                "mono": false,
+                "token": "main/sample/color/filled/{state}/bbg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasBadge:false",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  },
+                  {
+                    "when": "style:outlined",
+                    "value": "#E5F1FF · #E5F1FF · #EEF2F9",
+                    "token": "main/sample/color/outlined/{state}/bbg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Badge label",
+                "value": "#005CE5 · #005CE5 · #C2CFE5",
+                "mono": false,
+                "token": "main/sample/color/filled/{state}/bfg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasBadge:false",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  },
+                  {
+                    "when": "style:outlined",
+                    "value": "#005CE5 · #005CE5 · #C2CFE5",
+                    "token": "main/sample/color/outlined/{state}/bfg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.filled</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.medium</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-cmt\">// Pressed: the platform's own highlight · Disabled: .disabled(true)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Title\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBSampleStyle</span><span class=\"syn-dot\">.Filled</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBSampleSize</span><span class=\"syn-dot\">.Medium</span>,\n    <span class=\"syn-param\">badge</span> = <span class=\"syn-str\">\"New\"</span>,\n    <span class=\"syn-param\">icon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-dot\">.Star</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n    <span class=\"syn-cmt\">// Pressed: the platform's own ripple · Disabled: enabled = false</span>\n<span class=\"syn-punc\">)</span></code>"
+      },
+      {
+        "cardKey": "smp-size",
+        "demoKey": "size",
+        "title": "Size",
+        "node": "1234:5678",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"smp-spec-size\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--filled eb-preview-smp--default eb-preview-smp--medium\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span><span class=\"eb-preview-smp__badge\">New</span></div><figcaption class=\"eb-example__label\">Medium</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--filled eb-preview-smp--default eb-preview-smp--small\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span><span class=\"eb-preview-smp__badge\">New</span></div><figcaption class=\"eb-example__label\">Small</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Style",
+                "prop": "style",
+                "control": "select",
+                "defaultValue": "filled",
+                "options": [
+                  {
+                    "value": "filled",
+                    "label": "Filled"
+                  },
+                  {
+                    "value": "outlined",
+                    "label": "Outlined"
+                  }
+                ]
+              },
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "hasBadge",
+                "prop": "hasBadge",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Style",
+                "value": "Filled",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "style",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "Outlined",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "Pressed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Size",
+                "value": "Medium · Small",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "hasBadge",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasBadge",
+                "variants": [
+                  {
+                    "when": "hasBadge:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Title",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Label/Large · Primary/Label/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "72 · 56",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "16 · 11",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.filled</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.medium</span><span class=\"syn-punc\">)</span>  <span class=\"syn-cmt\">// or .small</span>\n    .<span class=\"syn-fn\">ebBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Title\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBSampleStyle</span><span class=\"syn-dot\">.Filled</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBSampleSize</span><span class=\"syn-dot\">.Medium</span>,  <span class=\"syn-cmt\">// or Small</span>\n    <span class=\"syn-param\">badge</span> = <span class=\"syn-str\">\"New\"</span>,\n    <span class=\"syn-param\">icon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-dot\">.Star</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      },
+      {
+        "cardKey": "smp-hasBadge",
+        "demoKey": "hasBadge",
+        "title": "hasBadge",
+        "node": "1234:5678",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"smp-spec-hasBadge\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--filled eb-preview-smp--default eb-preview-smp--medium\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span><span class=\"eb-preview-smp__badge\">New</span></div><figcaption class=\"eb-example__label\">True</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-smp eb-preview-smp--filled eb-preview-smp--default eb-preview-smp--medium\"><span class=\"eb-preview-smp__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-smp__text\"><span class=\"eb-preview-smp__title\">Title</span><span class=\"eb-preview-smp__desc\">Description</span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Style",
+                "prop": "style",
+                "control": "select",
+                "defaultValue": "filled",
+                "options": [
+                  {
+                    "value": "filled",
+                    "label": "Filled"
+                  },
+                  {
+                    "value": "outlined",
+                    "label": "Outlined"
+                  }
+                ]
+              },
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "medium",
+                "options": [
+                  {
+                    "value": "medium",
+                    "label": "Medium"
+                  },
+                  {
+                    "value": "small",
+                    "label": "Small"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Style",
+                "value": "Filled",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "style",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "Outlined",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "Pressed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Size",
+                "value": "Medium",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:small",
+                    "value": "Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasBadge",
+                "value": "True · False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Title",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Text",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Badge background",
+                "value": "#FFFFFF · Not drawn",
+                "mono": false,
+                "token": "main/sample/color/filled/default/bbg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "#E5F1FF · Not drawn",
+                    "token": "main/sample/color/outlined/default/bbg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Badge label",
+                "value": "#005CE5 · Not drawn",
+                "mono": false,
+                "token": "main/sample/color/filled/default/bfg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:outlined",
+                    "value": "#005CE5 · Not drawn",
+                    "token": "main/sample/color/outlined/default/bfg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5 · Not drawn",
+                    "token": "main/sample/color/filled/disabled/bfg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Badge",
+                "value": "Secondary/Bold/Small Caption · Not drawn",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.filled</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.medium</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">)</span>  <span class=\"syn-cmt\">// hasBadge false: omit</span>\n    .<span class=\"syn-fn\">ebIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Title\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBSampleStyle</span><span class=\"syn-dot\">.Filled</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBSampleSize</span><span class=\"syn-dot\">.Medium</span>,\n    <span class=\"syn-param\">badge</span> = <span class=\"syn-str\">\"New\"</span>,  <span class=\"syn-cmt\">// hasBadge false: null</span>\n    <span class=\"syn-param\">icon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-dot\">.Star</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Style",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Filled",
+            "element": "Background",
+            "token": "main/sample/color/filled/default/bg",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Filled",
+            "element": "Title",
+            "token": "main/sample/color/filled/default/title",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Filled",
+            "element": "Description",
+            "token": "main/sample/color/filled/default/description",
+            "values": [
+              "#E5F1FF"
+            ]
+          },
+          {
+            "role": "Filled",
+            "element": "Icon",
+            "token": "main/sample/color/filled/default/icon",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Filled",
+            "element": "Badge background",
+            "token": "main/sample/color/filled/default/badge-bg",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Filled",
+            "element": "Badge label",
+            "token": "main/sample/color/filled/default/badge-label",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Filled · Pressed",
+            "element": "Background",
+            "token": "main/sample/color/filled/pressed/bg",
+            "values": [
+              "#0047B3"
+            ]
+          },
+          {
+            "role": "Filled · Disabled",
+            "element": "Background",
+            "token": "main/sample/color/filled/disabled/bg",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Filled · Disabled",
+            "element": "Description",
+            "token": "main/sample/color/filled/disabled/description",
+            "values": [
+              "#F6F9FD"
+            ]
+          },
+          {
+            "role": "Filled · Disabled",
+            "element": "Badge label",
+            "token": "main/sample/color/filled/disabled/badge-label",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Outlined",
+            "element": "Background",
+            "token": "main/sample/color/outlined/default/bg",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Outlined",
+            "element": "Border",
+            "token": "main/sample/color/outlined/default/border",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Outlined",
+            "element": "Title",
+            "token": "main/sample/color/outlined/default/title",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Outlined",
+            "element": "Description",
+            "token": "main/sample/color/outlined/default/description",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Outlined",
+            "element": "Icon",
+            "token": "main/sample/color/outlined/default/icon",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Outlined",
+            "element": "Badge background",
+            "token": "main/sample/color/outlined/default/badge-bg",
+            "values": [
+              "#E5F1FF"
+            ]
+          },
+          {
+            "role": "Outlined",
+            "element": "Badge label",
+            "token": "main/sample/color/outlined/default/badge-label",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Outlined · Pressed",
+            "element": "Background",
+            "token": "main/sample/color/outlined/pressed/bg",
+            "values": [
+              "#F6F9FD"
+            ]
+          },
+          {
+            "role": "Outlined · Disabled",
+            "element": "Border",
+            "token": "main/sample/color/outlined/disabled/border",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Outlined · Disabled",
+            "element": "Title",
+            "token": "main/sample/color/outlined/disabled/title",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Outlined · Disabled",
+            "element": "Description",
+            "token": "main/sample/color/outlined/disabled/description",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Outlined · Disabled",
+            "element": "Icon",
+            "token": "main/sample/color/outlined/disabled/icon",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Outlined · Disabled",
+            "element": "Badge background",
+            "token": "main/sample/color/outlined/disabled/badge-bg",
+            "values": [
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Outlined · Disabled",
+            "element": "Badge label",
+            "token": "main/sample/color/outlined/disabled/badge-label",
+            "values": [
+              "#C2CFE5"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:sample:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>sample<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Style, State and Size are variant properties; hasBadge is a boolean; Title and Description are text properties; Icon-Slot is a Slot.",
+      "rows": [
+        {
+          "figma": "Style — Filled, Outlined",
+          "swift": "<code>.ebStyle(.filled / .outlined)</code>",
+          "compose": "<code>style = EBSampleStyle.Filled / Outlined</code>"
+        },
+        {
+          "figma": "State — Default, Pressed, Disabled",
+          "swift": "<code>.disabled(true)</code> — Pressed is the platform’s own highlight",
+          "compose": "<code>enabled = false</code> — Pressed is the platform’s own ripple"
+        },
+        {
+          "figma": "Size — Medium, Small",
+          "swift": "<code>.ebSize(.medium / .small)</code>",
+          "compose": "<code>size = EBSampleSize.Medium / Small</code>"
+        },
+        {
+          "figma": "hasBadge — True, False",
+          "swift": "<code>.ebBadge(\"New\")</code>, omitted when False",
+          "compose": "<code>badge = \"New\"</code>, <code>null</code> when False"
+        },
+        {
+          "figma": "Title (text)",
+          "swift": "<code>EBSampleComponent(\"Title\")</code>",
+          "compose": "<code>title = \"…\"</code>"
+        },
+        {
+          "figma": "Description (text)",
+          "swift": "<code>.ebDescription(\"…\")</code>",
+          "compose": "<code>description = \"…\"</code>"
+        },
+        {
+          "figma": "Icon-Slot (slot)",
+          "swift": "<code>.ebIcon(Image)</code>",
+          "compose": "<code>icon = { Icon(…) }</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Filled",
+        "swift": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.filled</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.medium</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Title\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBSampleStyle</span><span class=\"syn-dot\">.Filled</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBSampleSize</span><span class=\"syn-dot\">.Medium</span>,\n    <span class=\"syn-param\">badge</span> = <span class=\"syn-str\">\"New\"</span>,\n    <span class=\"syn-param\">icon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-dot\">.Star</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      },
+      {
+        "subheading": "Outlined",
+        "swift": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.outlined</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.medium</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSampleComponent</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Title\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBSampleStyle</span><span class=\"syn-dot\">.Outlined</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBSampleSize</span><span class=\"syn-dot\">.Medium</span>,\n    <span class=\"syn-param\">badge</span> = <span class=\"syn-str\">\"New\"</span>,\n    <span class=\"syn-param\">icon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-dot\">.Star</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Tile as a button",
+        "ios": "Whole tile in <code>Button</code>; one <code>accessibilityLabel</code> combining title, description and badge.",
+        "android": "<code>Modifier.clickable { onTap() }.semantics(mergeDescendants = true)</code> on the tile."
+      },
+      {
+        "requirement": "Disabled",
+        "ios": "<code>.disabled(true)</code> adds the <code>.notEnabled</code> trait.",
+        "android": "<code>enabled = false</code> sets the disabled semantics."
+      },
+      {
+        "requirement": "Badge",
+        "ios": "The badge text joins the label — “Pay Bills, Utilities, New”.",
+        "android": "<code>contentDescription</code> on the tile includes the badge text."
+      },
+      {
+        "requirement": "Dynamic type",
+        "ios": "16 pt title and 12 pt description scale with Dynamic Type; the tile grows past 72 pt.",
+        "android": "Text in <code>sp</code>; the tile grows with the font scale."
+      },
+      {
+        "requirement": "Minimum target",
+        "ios": "56 pt Small tile ≥ 44 pt.",
+        "android": "56 dp Small tile ≥ 48 dp."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Filled for the one featured tile on a screen.",
+        "dontText": "Don’t stack two Filled tiles — the emphasis cancels out."
+      },
+      {
+        "doText": "Keep the Title to one line; the tile truncates with an ellipsis.",
+        "dontText": "Don’t put a price or a count in the Description — that is what the badge is for."
+      },
+      {
+        "doText": "Swap Icon-Slot for the service’s own 24 px icon.",
+        "dontText": "Don’t ship the star placeholder to production."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Frames PascalCase on 1234:5679. <code>IconContainer</code> holds a fixed Placeholder instance rather than a Figma Slot, so consumers detach to swap artwork."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Style</code>, <code>State</code> and <code>Size</code> PascalCase with Title Case values; <code>hasBadge</code> follows the boolean convention."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Every fill is bound to <code>main/sample/color/…</code>; Title resolves to <code>Primary/Label/Large</code>, Description to <code>Secondary/Bold/Caption</code>, Badge to <code>Secondary/Bold/Small Caption</code>."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Two enums, one boolean, two text values and one slot — maps 1:1 onto <code>EBSampleComponent</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Default, Pressed and Disabled built at both sizes; no loading treatment exists in the set."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The icon is a vector placeholder; the trailing badge is drawn locally rather than instanced from the shared Badge."
+      }
+    ],
+    "variants": {
+      "total": 12,
+      "description": "2 Style × 3 State × 2 Size = 12 variants",
+      "columns": [
+        "Style",
+        "State",
+        "Size",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Filled",
+            "Default",
+            "Medium",
+            "<code>1234:5679</code>",
+            "360 × 72"
+          ]
+        },
+        {
+          "cells": [
+            "Filled",
+            "Default",
+            "Small",
+            "<code>1234:5680</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Filled",
+            "Pressed",
+            "Medium",
+            "<code>1234:5681</code>",
+            "360 × 72"
+          ]
+        },
+        {
+          "cells": [
+            "Filled",
+            "Pressed",
+            "Small",
+            "<code>1234:5682</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Filled",
+            "Disabled",
+            "Medium",
+            "<code>1234:5683</code>",
+            "360 × 72"
+          ]
+        },
+        {
+          "cells": [
+            "Filled",
+            "Disabled",
+            "Small",
+            "<code>1234:5684</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Outlined",
+            "Default",
+            "Medium",
+            "<code>1234:5685</code>",
+            "360 × 72"
+          ]
+        },
+        {
+          "cells": [
+            "Outlined",
+            "Default",
+            "Small",
+            "<code>1234:5686</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Outlined",
+            "Pressed",
+            "Medium",
+            "<code>1234:5687</code>",
+            "360 × 72"
+          ]
+        },
+        {
+          "cells": [
+            "Outlined",
+            "Pressed",
+            "Small",
+            "<code>1234:5688</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Outlined",
+            "Disabled",
+            "Medium",
+            "<code>1234:5689</code>",
+            "360 × 72"
+          ]
+        },
+        {
+          "cells": [
+            "Outlined",
+            "Disabled",
+            "Small",
+            "<code>1234:5690</code>",
+            "360 × 56"
+          ]
+        }
+      ],
+      "summary": {
+        "columns": [
+          "Style",
+          "Variants",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Filled",
+              "Default · Pressed · Disabled × Medium · Small",
+              "6"
+            ]
+          },
+          {
+            "cells": [
+              "Outlined",
+              "Default · Pressed · Disabled × Medium · Small",
+              "6"
+            ]
+          }
+        ]
+      },
+      "collapseLabel": "View full Style × State × Size breakdown (12 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.2.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Reference page built · node 1234:5678",
+      "rows": [
+        {
+          "body": "<strong>Every section of the framework, on sample data.</strong> Header, Overview, Style, Code and Changelog written in the target shape so the assessment can be seen whole. Nothing on this page was read from Figma; the set, its nodes and every value are invented.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Style tab as Examples.</strong> One card per Figma property — Style, State, Size, hasBadge — each drawing every value of its property with the other properties in its panel, and carrying only the sections that property changes; the inventory lists all 12 nodes with a summary and a collapsed breakdown.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.2.0",
+      "date": "August 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Colours bound to semantic tokens · node 1234:5678",
+      "rows": [
+        {
+          "body": "<strong>Every fill and text colour bound to <code>main/sample/color/{style}/{state}/{role}</code>.</strong> The raw hex values flagged in 1.0.0 are gone from the tile; the colors table now carries a token on every row.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Badge still drawn locally.</strong> The two badge tokens were bound with the rest, but the pill remains a rectangle and a text layer rather than a Badge instance.",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "date": "June 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "State axis renamed and Pressed added · node 1234:5678",
+      "rows": [
+        {
+          "body": "<strong><code>state</code> → <code>State</code>, values Title Case.</strong> <code>Default | Pressed | Disabled</code> per §1 and §5; the generated enum now reads like the panel.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Pressed built at Medium and Small.</strong> The set grew from 8 to 12 variants; the pressed fills are <code>#0047B3</code> (Filled) and <code>#F6F9FD</code> (Outlined).",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Recommendation applied:</strong> Rename <code>state</code> to <code>State</code> with Title Case values — moved to Applied.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Rename"
+          }
+        },
+        {
+          "body": "<strong>Loading still not built.</strong> Pressed closes half of the C5 finding; a skeleton or spinner treatment is still missing.",
+          "delta": {
+            "kind": "partial",
+            "label": "C5"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "initial",
+      "kindLabel": "Initial",
+      "header": "Initial Assessment · node 1234:5678",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Fix</strong> — belongs in the system; four findings block native hand-off.",
+          "delta": {
+            "kind": "open",
+            "label": "Schema"
+          }
+        },
+        {
+          "body": "<strong>C1 — Icon container is not a Slot.</strong> Consumers detach to swap the artwork.",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C3 — Raw hex fills.</strong> Background, text and badge colours are unbound.",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>C5 — Pressed and Loading missing.</strong> Only Default and Disabled are built.",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>C6 — Local badge.</strong> The trailing pill is drawn inside the component.",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        }
+      ]
+    }
+  ]
+}

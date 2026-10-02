@@ -25,6 +25,13 @@ const { title, bodyClass = '', activeSlug } = Astro.props;
   </head>
   <body class={bodyClass}>
     <AuthGate />
+    {/* Phone-width navigation: the sidebar slides in from this bar (global.css › Mobile Top Bar). */}
+    <header class="topbar" transition:persist>
+      <button type="button" class="topbar-hamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="eb-sidebar" onclick="toggleSidebar(this)">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <span class="topbar-title">East Blue</span>
+    </header>
     <Sidebar activeSlug={activeSlug} transition:persist />
     <main class="main" transition:animate="fade">
       <slot />

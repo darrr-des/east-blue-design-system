@@ -87,6 +87,12 @@ function updateAmountTextFieldDemo() {
   });
 }
 window.updateAmountTextFieldDemo = updateAmountTextFieldDemo;
+/* The Overview panel's handlers write `_amtDemo` and call
+   `updateAmountFieldDemo()` — the names this demo shipped with. */
+var _amtDemo = _atfDemo;
+window._amtDemo = _amtDemo;
+function updateAmountFieldDemo() { updateAmountTextFieldDemo(); }
+window.updateAmountFieldDemo = updateAmountFieldDemo;
 
 /* ── Spec card (Style tab) ───────────────────────────────────────── */
 var _specCards = {

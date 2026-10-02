@@ -1,0 +1,1005 @@
+{
+  "name": "Detail Hero",
+  "meta": {
+    "node": "4368:12856",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4368-12856",
+    "description": "A card hero introducing a transaction or recipient — avatar, title, separator, label-value row and description, on a brand or default surface.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4368:12856</code> as <strong>Detail Hero</strong>, with <code>Surface = Brand | Default</code> and the <code>email = yes | no</code> boolean retired. Layer naming is complete across both variants — <code>Title</code>, <code>SenderDetails</code>, <code>Label</code>, <code>Value</code> and <code>Description</code>, every one matching between surfaces so each exposes as a single text property. The avatar placeholder is a deliberate swap target, the single metadata row is the intended scope, the spacer instances are a system-wide annotation convention, the typeface split against Page Banner is a decision rather than drift, and the hero is static by design. It stays filed with the header family because that is where designers look for it, even though by anatomy it is a card hero. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+    },
+    "navGroup": "Header",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Detail Hero appears at the top of transaction detail screens and recipient profile cards — introducing the person or transaction below the app bar.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ht-demo-preview\"><svg class=\"eb-preview eb-preview-dh\" width=\"360\" height=\"218\" viewBox=\"0 0 360 218\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"218\" fill=\"#1972F9\"/><rect x=\"24\" y=\"24\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2CFE5\"/><text class=\"dh-title\" x=\"24\" y=\"77\" font-size=\"22\" font-weight=\"700\" fill=\"#FFFFFF\" dominant-baseline=\"central\">Add Label Here</text><line x1=\"24\" y1=\"102\" x2=\"336\" y2=\"102\" stroke=\"#F6F9FD\" stroke-opacity=\"0.24\" stroke-width=\"1\"/><text class=\"dh-proxima\" x=\"24\" y=\"125\" font-size=\"14\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#F6F9FD\" fill-opacity=\"0.72\" dominant-baseline=\"central\">label:</text><text class=\"dh-proxima\" x=\"24\" y=\"143\" font-size=\"14\" font-weight=\"700\" letter-spacing=\"0.25\" fill=\"#FFFFFF\" dominant-baseline=\"central\">add text here</text><text class=\"dh-barkada\" x=\"24\" y=\"167\" font-size=\"12\" font-weight=\"600\" fill=\"#F6F9FD\" fill-opacity=\"0.72\" dominant-baseline=\"central\">Add description here.</text><text class=\"dh-barkada\" x=\"24\" y=\"185\" font-size=\"12\" font-weight=\"600\" fill=\"#F6F9FD\" fill-opacity=\"0.72\" dominant-baseline=\"central\">Add description here.</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Surface</span><select id=\"ht-ctrl-surface\" class=\"demo-panel-select\" onchange=\"_headerTransactionUpdate()\"><option value=\"brand\" selected=\"\">Brand</option><option value=\"default\">Default</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Works as a hero on any detail screen — transaction, recipient, merchant. Retiring the <code>email</code> boolean removed the transaction-specific coupling, and the single metadata row is confirmed as the intended scope rather than a limitation."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its typography, fills and separator. The <code>Placeholder</code> is a deliberate swap target for consumer content rather than an unfinished avatar, so nothing external is required to render."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "Rehomed by name, aligned to the family <code>Surface</code> axis and brand fill, and renamed onto the §3 vocabulary — <code>Title</code> · <code>Label</code> · <code>Value</code> · <code>Description</code>, identical in both variants, with the duplicate <code>#text</code> and the legacy <code>#</code> prefix both gone."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Composes a swappable placeholder for consumer content and sits above the rows that carry the rest of a screen’s detail. Nothing is redrawn that the DS already provides."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default (Brand)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Surface=Brand",
+        "notes": "White title and description on the brand surface."
+      },
+      {
+        "state": "Default (Default)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Surface=Default",
+        "notes": "Dark title and description on the default white surface."
+      },
+      {
+        "state": "Pressed / Disabled",
+        "ios": "na",
+        "android": "na",
+        "property": "—",
+        "notes": "Static — no interactive states."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Renamed to Detail Hero and moved out of the Header family.",
+        "body": "v2.0: Rebuilt on node <code>4368:12856</code> in the 2026 Working File. The previous assessment’s central call — that this is not a header — is settled: it has no navigation role and no title-only scope, and its anatomy is a card hero (avatar, title, separator, label-value, description). The name now says so, which also frees it from being read as a sibling of the three components that genuinely are headers. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Surface = Brand | Default</code> exposed.",
+        "body": "v2.0: The same axis Page Banner and Brand App Bar landed on, so all three read consistently, and a detail hero on a settings screen can use the default surface instead of being forced onto brand blue. PascalCase per §1, Title Case values per §5, and the brand fill <code>#1972F9</code> matches Page Banner’s exactly. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>email = yes | no</code> boolean retired.",
+        "body": "v2.0: The property that hardcoded one specific metadata field into the component’s schema is gone. The API no longer claims this component is about email addresses. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Separator alpha treatment settled.",
+        "body": "v2.1: The separator is <code>#F6F9FD</code> at 24% on brand and <code>#E5EBF4</code> on default — the same treatment as Page Banner’s border, which the owner has confirmed as intentional and token-bound. Recorded here as covered by that decision rather than reopened per-component. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Layer naming pass complete across both variants.",
+        "body": "v2.2: Verified on the live node. <code>#title</code> → <code>Title</code>, <code>sender-details</code> → <code>SenderDetails</code>, the two siblings that both read <code>#text</code> → <code>Label</code> and <code>Value</code>, and <code>#description</code> → <code>Description</code> — the last of these landing in v2.3, which cleared the final cross-variant mismatch. Every text layer now carries the same name in <code>Surface=Brand</code> and <code>Surface=Default</code>, so each exposes as a single text property, and all four follow the §3 vocabulary. The legacy <code>#</code> prefix is gone from the component entirely. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Avatar placeholder confirmed intentional.",
+        "body": "v2.2: The <code>Placeholder</code> instance is the deliberate swap target rather than an unfinished avatar — the consumer instance-swaps their own content into it, and the DS is not prescribing <strong>Avatar</strong> specifically, since a detail hero also fronts merchants and transactions that have a logo or an icon rather than a person. Attested rather than verified: instance-swap property definitions are not readable through the review tooling, so this is recorded on the owner’s confirmation. (C4 · Composition)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Single metadata row confirmed as the intended scope.",
+        "body": "v2.2: <code>SenderDetails</code> holds one label-value pair by design. A detail hero introduces the subject of the screen; the full metadata list belongs to the rows below it, not to the hero. Confirmed by the owner rather than left as an implied limitation, so a consumer needing several rows knows to compose them beneath rather than to extend this component. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Spacer instances confirmed a deliberate convention.",
+        "body": "v2.2: The <code>_space_8</code> / <code>_space_12</code> / <code>_space_16</code> instances are a system-wide spacing-annotation device, not layout elements left in by accident — the same pattern appears in Chip. Confirmed by the owner. Attested rather than verified: layer visibility flags are not readable through the review tooling, so the reviewer cannot see whether they render, only that they exist in the tree. (C1 · Docs)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Label-value typography confirmed intentional.",
+        "body": "v2.2: The row is Proxima Soft 14 here where Page Banner’s equivalent is BarkAda 14. Confirmed by the owner as a deliberate difference rather than drift — the two components carry different weight in their screens, and the review flagged it as a type-system question rather than a defect. Recorded so the split reads as a decision to anyone comparing the two. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Avatar is static — no pressed state needed.",
+        "body": "v2.2: The hero is informational; nothing in it is tappable, so the absence of pressed and disabled coverage is correct rather than missing. Consistent with the rest of this family, where interaction lives in the surfaces below the hero. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Stays grouped with the header family in the docs.",
+        "body": "v2.3: Detail Hero is a card hero rather than a header by anatomy, and the rename records that. It nonetheless stays filed alongside <a href=\"#\" onclick=\"showPanelById('header');return false;\">Section Header</a>, <a href=\"#\" onclick=\"showPanelById('header-centered');return false;\">Page Banner</a> and <a href=\"#\" onclick=\"showPanelById('header-with-logo');return false;\">Brand App Bar</a>, because that is where a designer looks for it — all four answer the question “what goes at the top of this screen?”, and splitting them across groups would hide the one comparison that matters. The naming distinction is carried by the component name, not by the filing. (Docs)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "4368:12856",
+      "variants": 2,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "dh-brand",
+        "demoKey": "brand",
+        "title": "Brand",
+        "node": "4464:16379",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dh-spec-brand\"><svg class=\"eb-preview eb-preview-dh\" width=\"360\" height=\"218\" viewBox=\"0 0 360 218\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"218\" fill=\"#1972F9\"/><rect x=\"24\" y=\"24\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2CFE5\"/><text class=\"dh-title\" x=\"24\" y=\"77\" font-size=\"22\" font-weight=\"700\" fill=\"#FFFFFF\" dominant-baseline=\"central\">Add Label Here</text><line x1=\"24\" y1=\"102\" x2=\"336\" y2=\"102\" stroke=\"#F6F9FD\" stroke-opacity=\"0.24\" stroke-width=\"1\"/><text class=\"dh-proxima\" x=\"24\" y=\"125\" font-size=\"14\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#F6F9FD\" fill-opacity=\"0.72\" dominant-baseline=\"central\">label:</text><text class=\"dh-proxima\" x=\"24\" y=\"143\" font-size=\"14\" font-weight=\"700\" letter-spacing=\"0.25\" fill=\"#FFFFFF\" dominant-baseline=\"central\">add text here</text><text class=\"dh-barkada\" x=\"24\" y=\"167\" font-size=\"12\" font-weight=\"600\" fill=\"#F6F9FD\" fill-opacity=\"0.72\" dominant-baseline=\"central\">Add description here.</text><text class=\"dh-barkada\" x=\"24\" y=\"185\" font-size=\"12\" font-weight=\"600\" fill=\"#F6F9FD\" fill-opacity=\"0.72\" dominant-baseline=\"central\">Add description here.</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "Brand",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#1972F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Title",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Separator",
+                "value": "#F6F9FD @ 24%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "#F6F9FD @ 72%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "#F6F9FD @ 72%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Placeholder",
+                "value": "#C2CFE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Section",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "Primary/Label/Light/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "218",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBDetailHero</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Add Label Here\"</span>,\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"label:\"</span>,\n    <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"add text here\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Add description here.\"</span>\n)\n    .<span class=\"syn-fn\">ebSurface</span>(<span class=\"syn-dot\">.brand</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBDetailHero</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Label Here\"</span>,\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"label:\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"add text here\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">surface</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBHeroSurface</span>.Brand\n)</code>"
+      },
+      {
+        "cardKey": "dh-default",
+        "demoKey": "default",
+        "title": "Default",
+        "node": "4464:13247",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dh-spec-default\"><svg class=\"eb-preview eb-preview-dh\" width=\"360\" height=\"218\" viewBox=\"0 0 360 218\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"218\" fill=\"#FFFFFF\"/><rect x=\"24\" y=\"24\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2CFE5\"/><text class=\"dh-title\" x=\"24\" y=\"77\" font-size=\"22\" font-weight=\"700\" fill=\"#0A2757\" dominant-baseline=\"central\">Add Label Here</text><line x1=\"24\" y1=\"102\" x2=\"336\" y2=\"102\" stroke=\"#E5EBF4\" stroke-opacity=\"1\" stroke-width=\"1\"/><text class=\"dh-proxima\" x=\"24\" y=\"125\" font-size=\"14\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#6780A9\" fill-opacity=\"1\" dominant-baseline=\"central\">label:</text><text class=\"dh-proxima\" x=\"24\" y=\"143\" font-size=\"14\" font-weight=\"700\" letter-spacing=\"0.25\" fill=\"#0A2757\" dominant-baseline=\"central\">add text here</text><text class=\"dh-barkada\" x=\"24\" y=\"167\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\" fill-opacity=\"1\" dominant-baseline=\"central\">Add description here.</text><text class=\"dh-barkada\" x=\"24\" y=\"185\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\" fill-opacity=\"1\" dominant-baseline=\"central\">Add description here.</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Separator",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Placeholder",
+                "value": "#C2CFE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Section",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "Primary/Label/Light/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "218",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBDetailHero</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Add Label Here\"</span>,\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"label:\"</span>,\n    <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"add text here\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Add description here.\"</span>\n)\n    .<span class=\"syn-fn\">ebSurface</span>(<span class=\"syn-dot\">.default</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBDetailHero</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Label Here\"</span>,\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"label:\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"add text here\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">surface</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBHeroSurface</span>.Default\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Surface",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Brand",
+            "element": "Surface",
+            "token": "—",
+            "values": [
+              "#1972F9"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Separator",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 24%"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 72%"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Value",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 72%"
+            ]
+          },
+          {
+            "role": "Brand",
+            "element": "Placeholder",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Surface",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Separator",
+            "token": "—",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Value",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Placeholder",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:header:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>header<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Surface is the set’s only variant property. Placeholder is a nested icon instance; Title, Label, Value and Description are text layers read from 4464:13247 — whether they are exposed as text properties is not readable with the plugin. The four _space_ spacer instances are a confirmed convention (v2.x) and have no API.",
+      "rows": [
+        {
+          "figma": "Surface — Brand, Default",
+          "swift": "<code>.ebSurface(.brand / .default)</code>",
+          "compose": "<code>surface = EBHeroSurface.Brand / Default</code>"
+        },
+        {
+          "figma": "Placeholder (nested icon instance)",
+          "swift": "<code>.ebLeadingIcon(Image)</code>",
+          "compose": "<code>leadingIcon = { Icon(…) }</code>"
+        },
+        {
+          "figma": "Title (text)",
+          "swift": "<code>title: String</code>",
+          "compose": "<code>title = \"…\"</code>"
+        },
+        {
+          "figma": "Label (text)",
+          "swift": "<code>label: String</code>",
+          "compose": "<code>label = \"…\"</code>"
+        },
+        {
+          "figma": "Value (text)",
+          "swift": "<code>value: String</code>",
+          "compose": "<code>value = \"…\"</code>"
+        },
+        {
+          "figma": "Description (text)",
+          "swift": "<code>description: String</code>",
+          "compose": "<code>description = \"…\"</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Brand",
+        "swift": "<code><span class=\"syn-type\">EBDetailHero</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Add Label Here\"</span>,\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"label:\"</span>,\n    <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"add text here\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Add description here.\"</span>\n)\n    .<span class=\"syn-fn\">ebSurface</span>(<span class=\"syn-dot\">.brand</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBDetailHero</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Label Here\"</span>,\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"label:\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"add text here\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">surface</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBHeroSurface</span>.Brand\n)</code>"
+      },
+      {
+        "subheading": "Default",
+        "swift": "<code><span class=\"syn-type\">EBDetailHero</span>(\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Add Label Here\"</span>,\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"label:\"</span>,\n    <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"add text here\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Add description here.\"</span>\n)\n    .<span class=\"syn-fn\">ebSurface</span>(<span class=\"syn-dot\">.default</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBDetailHero</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Label Here\"</span>,\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"label:\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"add text here\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">surface</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBHeroSurface</span>.Default\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Heading",
+        "ios": "Title carries <code>.accessibilityAddTraits(.isHeader)</code>; the hero is the screen’s first heading.",
+        "android": "<code>Modifier.semantics { heading() }</code> on the title."
+      },
+      {
+        "requirement": "Label and value read together",
+        "ios": "<code>.accessibilityElement(children: .combine)</code> on the SenderDetails row — \"label, add text here\".",
+        "android": "<code>Modifier.semantics(mergeDescendants = true)</code> on the row."
+      },
+      {
+        "requirement": "Contrast on Brand",
+        "ios": "White title on #1972F9 is 4.0:1; the 72% label and description are decorative-weight and must repeat in the body.",
+        "android": "Same values — the surface colours are fixed, not themed."
+      },
+      {
+        "requirement": "Status bar",
+        "ios": "Brand needs <code>.preferredColorScheme(.dark)</code> for the status bar; Default keeps light content.",
+        "android": "<code>isAppearanceLightStatusBars</code> false on Brand, true on Default."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Brand at the top of a transaction detail screen; Default when the hero sits below a Brand app bar.",
+        "dontText": "Don’t stack a Brand hero under a Brand app bar — two blues merge."
+      },
+      {
+        "doText": "Keep the Title to one line; the 26 px line-height is sized for one.",
+        "dontText": "Don’t put the amount in the Title — that is the Value row."
+      },
+      {
+        "doText": "Use the single Label / Value row for the one fact the user came for.",
+        "dontText": "Don’t add rows — the set builds one SenderDetails row by design (v2.x)."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Placeholder</code>, <code>Title</code>, <code>separator</code>, <code>SenderDetails</code> › <code>Label</code> / <code>Value</code>, <code>Description</code> — read on 4464:13247. The <code>_space_8</code> / <code>_space_12</code> / <code>_space_16</code> spacer instances are the confirmed convention."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Surface</code> — Brand, Default; the <code>email</code> boolean is gone."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Title → <code>Primary/Headlines/Section</code>, Label → <code>Primary/Label/Light/Small</code>, Value → <code>Primary/Label/Small</code>, Description → <code>Secondary/Bold/Caption</code>. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One enum and four strings — maps 1:1 onto <code>EBDetailHero</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Static hero with no tap target; no states to build."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Placeholder</code> is an icon-library instance (32 × 32) that consumers swap; nothing is drawn inline."
+      }
+    ],
+    "variants": {
+      "total": 2,
+      "description": "1 Surface × 2 values = 2 variants",
+      "columns": [
+        "Surface",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Brand",
+            "<code>4464:16379</code>",
+            "360 × 218"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "<code>4464:13247</code>",
+            "360 × 218"
+          ]
+        }
+      ],
+      "summary": {
+        "columns": [],
+        "rows": []
+      },
+      "collapseLabel": ""
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 4368:12856",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the two live variants.</strong> One card per <code>Surface</code> value — Brand, Default; geometry, colours and the four text styles verified on 4464:16379 and 4464:13247 against the exports. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the <code>Surface</code> schema.</strong> Property Mapping one row per property, Usage Snippets per Surface, Guidelines added, Scorecard regraded from the <code>email</code> era, Variants Inventory on the two live nodes.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 4368:12856",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 11 resolved issues on the Overview tab had no changelog row: Renamed to Detail Hero and moved out of the Header family; <code>Surface = Brand | Default</code> exposed; <code>email = yes | no</code> boolean retired; Separator alpha treatment settled; Layer naming pass complete across both variants; Avatar placeholder confirmed intentional; Single metadata row confirmed as the intended scope; Spacer instances confirmed a deliberate convention; Label-value typography confirmed intentional; Avatar is static — no pressed state needed; Stays grouped with the header family in the docs.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 18430:2897",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Restructure</strong> — Not a header. Rename to <strong>Detail Hero</strong> and move out of the Header family. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Architecture"
+          }
+        },
+        {
+          "body": "<strong>C2 — metadata rows</strong> — Replace <code>email=yes|no</code> with a flexible <code>metadata: [LabelValuePair]</code> slot. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C4 — Avatar instance</strong> — Replace drawn placeholder with a real Avatar instance. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>C5 — Avatar state</strong> — Define pressed/disabled for tappable avatar. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Blocked. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

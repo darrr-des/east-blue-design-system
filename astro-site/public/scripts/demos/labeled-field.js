@@ -148,15 +148,6 @@ function updateSpecCard(cardStyle, prop, value) {
 }
 window.updateSpecCard = updateSpecCard;
 
-/* Legacy alias */
-function updateLabeledFieldSpecCard(state, filled) {
-  var key = state.toLowerCase();
-  if (_specCards[key]) {
-    _specCards[key].filled = filled;
-    updateSpecCard(key, 'filled', filled);
-  }
-}
-
 function _lfSyncSelects() {
   /* For each card, sync its dropdowns to the card's actual values
      (since defaultValue in DemoControlSection is shared across cards). */

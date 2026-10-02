@@ -1,31 +1,29 @@
 # astro-site/scripts
 
-Tooling for the Astro docs site. Three categories:
+Tooling for the docs site. Every script reads the component JSON in `src/content/components/` through the same loader the site uses (`src/data/components/from-json.mjs`).
 
-## `audit/` — run anytime to inspect coverage
+## `audit/` — measure, any time
 
-| Script | Purpose |
-|---|---|
-| `audit.mjs` | High-level summary across all components |
-| `audit-progress.mjs` | Per-section coverage report (Properties / Colors / Layout / Typography / swift / compose) |
-| `audit-honest.mjs` | Per-component DES + DEV completion (a card only counts when both are populated) |
-| `audit-spec-gaps.mjs` | Lists every spec card with missing DES sections |
-| `audit-dev-code.mjs` | Lists every spec card with missing or stubby SwiftUI/Compose snippets |
+| Script | npm | Purpose |
+|---|---|---|
+| `framework-sweep.mjs` | `npm run audit` · `audit:matrix` · `audit:gate` | Every component against every guide rule; `--gate` fails on the structural rules and is what CI runs |
+| `preview-structure-lint.mjs` | `npm run lint:previews` | Overview preview wrappers and a server-rendered preview on every spec card |
+| `colors-table-coverage.mjs` | `npm run lint:colors` | Which components have a colors table |
+| `audit-progress.mjs` | `npm run audit:progress` | Spec-card completion by section |
+| `preview-inventory.mjs` | — | One row per component with a rendering hint, for preview audits |
 
-Run from the repo root:
-```bash
-node astro-site/scripts/audit/audit-progress.mjs
-```
+`npm run check` = build + `audit:gate` + lint. Run it before any hand-off.
 
-## `fills/` — historical one-shot data fillers
+## `playground/` — build and check a Playground
 
-These ran once to populate spec cards across batches of components (e.g. `fill-last-25.mjs` filled the final 23 cards on 2026-04-27). Kept for reference and reproducibility — re-running them on already-filled data is a no-op or overwrite.
+`build.mjs` · `drift.mjs` · `smoke.mjs` · `reflow.mjs` · `a11y.mjs` · `fidelity.mjs` — `npm run playground:*`. Script list: [playground/README.md](playground/README.md). How to build one: `Playground Build` in `workflows/build/PLAYGROUND-BUILD-GUIDE.md`.
 
-## `utils/` — reusable helpers
+## Root — maintenance
 
-| Script | Purpose |
-|---|---|
-| `migrate.mjs` | Original migration from the legacy `assessment-src/` HTML files into structured `src/data/components/<slug>.ts` |
-| `snapshot-previews.mjs` | Captures live-preview HTML from the legacy site for offline use |
-| `extract-demos.mjs` | Extracts demo JS payloads referenced by previews |
-| `desc-inventory.mjs` | Inventories component descriptions for review |
+| Script | npm | Purpose |
+|---|---|---|
+| `sync-previews.mjs` | `npm run sync-previews` | Capture each component's JS-rendered preview and write it back into its JSON (dev server must be running) |
+| `export-figma-baselines.mjs` | `npm run baselines:refresh` | Export Figma nodes for the visual-regression baselines |
+| `build-visual-review.mjs` | `npm run review` | Assemble the visual review page |
+
+Keep this folder to the scripts above. A one-off smoke test or screenshot capture belongs in a scratch directory, not here.
