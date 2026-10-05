@@ -190,10 +190,3 @@ if (document.readyState === 'loading') document.addEventListener('DOMContentLoad
 else _bnrInit();
 document.addEventListener('astro:page-load', _bnrInit);
 
-/* Legacy aliases */
-function toggleBnrSpecMode(cardKey, toggleEl) {
-  if (typeof window.toggleSpecMode === 'function') return window.toggleSpecMode(cardKey, toggleEl);
-}
-function switchBnrCodeTab(tabBtn, lang, cardKey) {
-  if (typeof window.switchCodeTab === 'function') return window.switchCodeTab(tabBtn, lang, cardKey);
-}

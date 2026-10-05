@@ -1,7 +1,7 @@
 ---
 import { url } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
-import { componentMap, componentManifest } from '../../data/components/_index';
+import { componentMap, navManifest } from '../../data/components/_index';
 
 type CompCard = {
   slug: string;
@@ -14,7 +14,7 @@ type CompCard = {
 const cards: CompCard[] = [];
 let openTotal = 0;
 let resolvedTotal = 0;
-for (const item of componentManifest) {
+for (const item of navManifest) {
   const data = componentMap[item.slug];
   if (!data) continue;
   cards.push({
@@ -458,11 +458,12 @@ function verdictTone(kind?: string): string {
       pointer-events: none;
       z-index: 1;
     }
-    .cmp-card-badge--positive { background: #12AF80; }
-    .cmp-card-badge--warning  { background: #D97706; }
+    /* Filled chips pair text and ground at ≥ 4.5:1 in both themes. */
+    .cmp-card-badge--positive { background: #E6F4ED; color: #1A7A4A; }
+    .cmp-card-badge--warning  { background: #FEF3C7; color: #B45309; }
     .cmp-card-badge--negative { background: #DC2626; }
     .cmp-card-badge--info     { background: #3C4A5C; }
-    .cmp-card-badge--neutral  { background: #6780A9; }
+    .cmp-card-badge--neutral  { background: #EEF2F9; color: #3C4A5C; }
     .cmp-card-body {
       display: flex;
       flex-direction: column;

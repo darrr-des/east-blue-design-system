@@ -1,234 +1,130 @@
-/* Auto-extracted from assessment-src/components/action-list.html.
- * Powers the live-preview dropdowns/toggles for the action-list component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs action-list
+/* Action Row (slug action-list) — live preview + spec cards.
+ * Set 4628:19843 (2026 Working File): TrailingContent = CTA | Counter ×
+ * State = Default | Pressed | Disabled | Loading × Density = Compact |
+ * Expanded = 16 variants, plus the hasDescription boolean.
+ *
+ * Read off the variants and checked against export_node_as_image:
+ *   CTA 4628:19844 · Counter 4628:19883 · Pressed 4628:20022 ·
+ *   Disabled 4628:19939 / 4628:19965 · Loading 4649:16649 · Expanded 4628:19857
  */
-/* ── Action List JS ─────────────────────────────────────────── */
-/* 3 sibling shapes × 3 states. Preview renders the shape + state picked
-   in the playground. Counter sibling intentionally renders its label in
-   the brand-blue Bold 18 style to visualize the C2 inconsistency.      */
 
-function _litEscape(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function _arowEscape(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function _litIcon(disabled, loading) {
-  if (loading) {
-    return '<div style="width:32px;height:32px;border-radius:50%;background:#EEF2F9;flex-shrink:0;"></div>';
-  }
-  var fill = '#C2C6CF';
-  return '<div style="width:32px;height:32px;border-radius:50%;background:' + fill + ';flex-shrink:0;opacity:' + (disabled ? '.5' : '1') + ';"></div>';
+/* Chevron Right — path and stroke from get_svg(4628:20854). */
+function _arowChevron() {
+  return '<svg class="eb-preview-arow__chevron" viewBox="0 0 32 32" fill="none" aria-hidden="true">' +
+    '<path d="M13 23L20 16L13 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+  '</svg>';
 }
 
-function _litChevron(color) {
-  return '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M10 6l6 6-6 6" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-}
-
-function _litRender(opts) {
-  var variant = opts.variant || 'base';
-  var state   = opts.state   || 'default';
+/* opts: { trailing: cta|counter, state: default|pressed|disabled|loading,
+           density: compact|expanded, hasDescription: 'true'|'false',
+           label, description, cta, count } */
+function _arowRender(opts) {
+  var trailing = opts.trailing || 'cta';
+  var state = opts.state || 'default';
   var density = opts.density || 'compact';
-  var label   = opts.label   || 'Label';
-  var desc    = opts.desc    || 'description';
-  var counter = opts.counter || '3';
+  var hasDescription = String(opts.hasDescription == null ? 'true' : opts.hasDescription) === 'true';
+  var label = opts.label || 'Label';
+  var description = opts.description || 'description';
+  var cta = opts.cta || 'CTA';
+  var count = opts.count == null || opts.count === '' ? '0' : opts.count;
 
-  var isLoading  = state === 'loading';
-  var isDisabled = state === 'disabled';
-  var labelColor   = isDisabled ? '#C2CFE5' : (variant === 'counter' ? '#005CE5' : '#0A2757');
-  var descColor    = isDisabled ? '#C2CFE5' : '#6780A9';
-  var ctaColor     = isDisabled ? '#9BC5FD' : '#005CE5';
-  // Chevron is the brand blue accent across all variants in the
-  // Default / Pressed states (matches `action-list/color/default/chevron`
-  // documented in each spec card's Colors section).
-  var chevColor    = isDisabled ? '#9BC5FD' : '#005CE5';
-  var counterBg    = '#EEF2F9';
-  var counterColor = isDisabled ? '#C2CFE5' : '#072592';
+  var cls = 'eb-preview eb-preview-arow eb-preview-arow--' + trailing + ' eb-preview-arow--' + density;
+  if (state !== 'default') cls += ' eb-preview-arow--' + state;
 
-  var padV = density === 'expanded' ? 12 : 8;
-  var rowExtra = variant === 'counter' ? 'border-radius:6px;box-shadow:0 1px 3px 0 rgba(232,238,242,.79);' : '';
-  var bg = '#FFFFFF';
-
-  var labelFontSize = variant === 'counter' ? 18 : 16;
-  var labelWeight   = variant === 'counter' ? 700 : 600;
-
-  var html = '<div style="width:360px;background:' + bg + ';' + rowExtra + '">';
-  html += '<div style="display:flex;align-items:center;gap:12px;padding:' + padV + 'px 12px;">';
-
-  // Leading icon (always present except loading w/ no icon — we always show)
-  html += _litIcon(isDisabled, isLoading);
-
-  // Body
-  if (isLoading) {
-    html += '<div style="flex:1 0 0;display:flex;flex-direction:column;gap:6px;min-width:0;">';
-    html += '<div style="height:16px;border-radius:2px;background:#EEF2F9;"></div>';
-    if (variant === 'description') {
-      html += '<div style="height:12px;border-radius:2px;background:#EEF2F9;width:60%;"></div>';
-    }
-    html += '</div>';
-    html += '<div style="height:16px;width:51px;border-radius:2px;background:#EEF2F9;flex-shrink:0;"></div>';
-  } else {
-    html += '<div style="flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;">';
-    html += '<div style="font-family:\'Proxima Soft\',system-ui;font-size:' + labelFontSize + 'px;line-height:' + labelFontSize + 'px;font-weight:' + labelWeight + ';letter-spacing:0.25px;color:' + labelColor + ';">' + _litEscape(label) + '</div>';
-    if (variant === 'description') {
-      html += '<div style="font-family:\'Proxima Soft\',system-ui;font-size:12px;line-height:14px;font-weight:600;letter-spacing:0.5px;color:' + descColor + ';">' + _litEscape(desc) + '</div>';
-    }
-    html += '</div>';
-
-    // Trailing
-    if (variant === 'counter') {
-      html += '<div style="display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;background:' + counterBg + ';color:' + counterColor + ';font-family:\'Proxima Soft\',system-ui;font-size:14px;font-weight:700;letter-spacing:0.25px;flex-shrink:0;">' + _litEscape(counter) + '</div>';
-    } else {
-      html += '<span style="font-family:\'Proxima Soft\',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:' + ctaColor + ';flex-shrink:0;">CTA</span>';
-    }
-    html += _litChevron(chevColor);
+  if (state === 'loading') {
+    return '<div class="' + cls + '">' +
+      '<span class="eb-preview-arow__sk eb-preview-arow__sk--asset"></span>' +
+      '<div class="eb-preview-arow__sk-lines"><span class="eb-preview-arow__sk eb-preview-arow__sk--line1"></span><span class="eb-preview-arow__sk eb-preview-arow__sk--line2"></span></div>' +
+      '<div class="eb-preview-arow__sk-actions"><span class="eb-preview-arow__sk eb-preview-arow__sk--square"></span><span class="eb-preview-arow__sk eb-preview-arow__sk--square"></span></div>' +
+    '</div>';
   }
 
+  var html = '<div class="' + cls + '">';
+  html += '<span class="eb-preview-arow__asset" aria-hidden="true"></span>';
+  html += '<div class="eb-preview-arow__text">';
+  html += '<p class="eb-preview-arow__label">' + _arowEscape(label) + '</p>';
+  if (hasDescription) html += '<p class="eb-preview-arow__description">' + _arowEscape(description) + '</p>';
+  html += '</div>';
+  html += '<div class="eb-preview-arow__trailing">';
+  if (trailing === 'counter') {
+    html += _arowChevron() + '<span class="eb-preview-arow__counter">' + _arowEscape(count) + '</span>';
+  } else {
+    html += '<span class="eb-preview-arow__cta">' + _arowEscape(cta) + '</span>' + _arowChevron();
+  }
   html += '</div>';
   html += '</div>';
   return html;
 }
 
-function updateLitDemo() {
+/* ── Overview live preview — the Figma properties + text slots ─────── */
+function _arowUpdate() {
   var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
-  var el = document.getElementById('lit-demo-preview');
-  if (!el) return;
-  el.innerHTML = _litRender({
-    variant: getVal('lit-ctrl-variant', 'base'),
-    state:   getVal('lit-ctrl-state',   'default'),
-    density: getVal('lit-ctrl-density', 'compact'),
-    label:   getVal('lit-ctrl-label',   'Label'),
-    desc:    getVal('lit-ctrl-desc',    'description'),
-    counter: getVal('lit-ctrl-counter', '3')
+  var preview = document.getElementById('arow-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _arowRender({
+    trailing:       getVal('arow-ctrl-trailing', 'cta'),
+    state:          getVal('arow-ctrl-state', 'default'),
+    density:        getVal('arow-ctrl-density', 'compact'),
+    hasDescription: getVal('arow-ctrl-hasdescription', 'true'),
+    label:          getVal('arow-ctrl-label', 'Label'),
+    description:    getVal('arow-ctrl-description', 'description'),
+    cta:            getVal('arow-ctrl-cta', 'CTA'),
+    count:          getVal('arow-ctrl-count', '0')
   });
 }
+window._arowUpdate = _arowUpdate;
 
-/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
+/* ── Spec cards — one per TrailingContent value, keyed by demoKey ──── */
 var _specCards = {
-  base:        { variant: 'base',        state: 'default', density: 'compact' },
-  counter:     { variant: 'counter',     state: 'default', density: 'compact' },
-  description: { variant: 'description', state: 'default', density: 'compact' }
+  'cta':     { trailing: 'cta',     state: 'default', density: 'compact', hasDescription: 'true' },
+  'counter': { trailing: 'counter', state: 'default', density: 'compact', hasDescription: 'true' }
 };
 window._specCards = _specCards;
 
-/* ── Code snippet builders (called by updateSpecCard + switchCodeTab) ── */
-function buildSwiftSnippet(type, card) {
-  var stateMap = { default: '.default', disabled: '.disabled', loading: '.loading' };
-  var stateVal = stateMap[card.state] || '.default';
-  var lines = [];
-  if (type === 'counter') {
-    lines.push('EBActionRow("Notifications", icon: icon, counter: 5)');
-  } else if (type === 'description') {
-    lines.push('EBActionRow("Account settings", icon: icon, description: "Subtitle")');
-  } else {
-    lines.push('EBActionRow("Account settings", icon: icon)');
+/* Component-API snippets that follow the panel — plain text. */
+function getSnippet(cardKey, lang, card) {
+  var c = card || _specCards[cardKey] || {};
+  var trailing = c.trailing || 'cta';
+  var state = c.state || 'default';
+  var density = c.density || 'compact';
+  var hasDescription = String(c.hasDescription) !== 'false';
+  if (lang === 'swift') {
+    var s = 'EBActionRow("Label"' + (hasDescription ? ', description: "description"' : '') + ')';
+    s += '\n    .ebLeadingAsset(Image("placeholder"))';
+    s += '\n    .ebTrailing(' + (trailing === 'counter' ? '.counter(0)' : '.cta("CTA")') + ')';
+    s += '\n    .ebDensity(.' + density + ')';
+    if (state === 'disabled') s += '\n    .disabled(true)';
+    if (state === 'loading') s += '\n    .ebLoading(true)';
+    return s;
   }
-  lines.push('    .ebState(' + stateVal + ')');
-  if (card.density === 'expanded') lines.push('    .ebDensity(.expanded)');
-  lines.push('    .onTap { }');
-  return lines.join('\n');
-}
-
-function buildComposeSnippet(type, card) {
-  var stateMap = { default: 'Default', disabled: 'Disabled', loading: 'Loading' };
-  var stateVal = stateMap[card.state] || 'Default';
-  var lines = [];
-  lines.push('EBActionRow(');
-  if (type === 'counter') {
-    lines.push('    label = "Notifications",');
-    lines.push('    leadingIcon = { icon },');
-    lines.push('    counter = 5,');
-  } else if (type === 'description') {
-    lines.push('    label = "Account settings",');
-    lines.push('    description = "Subtitle",');
-    lines.push('    leadingIcon = { icon },');
-  } else {
-    lines.push('    label = "Account settings",');
-    lines.push('    leadingIcon = { icon },');
-  }
-  lines.push('    state = EBRowState.' + stateVal + ',');
-  if (card.density === 'expanded') lines.push('    density = EBRowDensity.Expanded,');
-  lines.push('    onClick = { }');
-  lines.push(')');
-  return lines.join('\n');
-}
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+  var lines = ['    label = "Label"'];
+  if (hasDescription) lines.push('    description = "description"');
+  lines.push('    leadingAsset = { Icon(…) }');
+  lines.push('    trailing = ' + (trailing === 'counter' ? 'EBActionRowTrailing.Counter(0)' : 'EBActionRowTrailing.Cta("CTA")'));
+  lines.push('    density = EBActionRowDensity.' + (density === 'expanded' ? 'Expanded' : 'Compact'));
+  if (state === 'disabled') lines.push('    enabled = false');
+  if (state === 'loading') lines.push('    isLoading = true');
+  return 'EBActionRow(\n' + lines.join(',\n') + '\n)';
 }
 window.getSnippet = getSnippet;
 
-function _titleCase(s) {
-  if (!s) return s;
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
   if (!card) return;
   card[prop] = value;
-
-  /* Update the preview wrapper's HTML (we wrap the preview in #lit-spec-{key}) */
-  var preview = document.getElementById('lit-spec-' + cardStyle);
-  if (preview) {
-    var rendered = _litRender({
-      variant: card.variant,
-      state:   card.state,
-      density: card.density,
-      label:   'Label',
-      desc:    'description',
-      counter: '3'
-    });
-    /* _litRender returns a wrapping <div>; replace the wrapper's inner content */
-    var temp = document.createElement('div');
-    temp.innerHTML = rendered;
-    var inner = temp.firstChild;
-    if (inner) {
-      preview.innerHTML = inner.innerHTML;
-      /* Carry width/styles from rendered onto the wrapper for shape parity */
-      if (inner.getAttribute && inner.getAttribute('style')) {
-        preview.setAttribute('style', inner.getAttribute('style'));
-      }
-    }
-  }
-
-  /* Update Properties text — data-sp="${cardStyle}-${prop}" */
-  var spState   = document.querySelector('[data-sp="' + cardStyle + '-state"]');
-  var spDensity = document.querySelector('[data-sp="' + cardStyle + '-density"]');
-  if (spState)   spState.textContent   = _titleCase(card.state);
-  if (spDensity) spDensity.textContent = _titleCase(card.density);
-
-  /* Colors + Layout sections are server-rendered from action-list.ts;
-     Plan A's `_patchSpecCardRows` handles state- and density-keyed overrides. */
-
-  /* Update DEV code — always */
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
+  var host = document.getElementById('arow-spec-' + cardKey);
+  if (host) host.innerHTML = _arowRender(card);
 }
+window.updateSpecCard = updateSpecCard;
 
-function _litInitSpecCards() {
-  /* Initialize each card by triggering one update */
-  Object.keys(_specCards).forEach(function(k) {
-    updateSpecCard(k, 'state', _specCards[k].state);
-  });
+function _arowInit() {
+  _arowUpdate();
+  Object.keys(_specCards).forEach(function (k) { updateSpecCard(k, 'state', _specCards[k].state); });
 }
-
-function _litInit() {
-  updateLitDemo();
-  _litInitSpecCards();
-}
-
-(function () {
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _litInit);
-  else _litInit();
-  document.addEventListener('astro:page-load', _litInit);
-})();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _arowInit);
+else _arowInit();
+document.addEventListener('astro:page-load', _arowInit);

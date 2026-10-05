@@ -1,155 +1,112 @@
-/* Auto-extracted from assessment-src/components/stepper-bullet.html.
- * Powers the live-preview dropdowns/toggles for the stepper-bullet component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs stepper-bullet
+/* Stepper (slug stepper-bullet) — live preview + spec cards.
+ * Set 4337:11140 (2026 Working File): Type = Bullet | Circular | Dash ×
+ * Steps = 2…10 × Current = 0…10 × Status = Current | Completed | Upcoming |
+ * Error — 225 built variants (Bullet: Current + N/N Completed; Circular:
+ * Current + Steps=2 Upcoming/Completed; Dash: Current, Error, N/N Completed).
+ *
+ * Read off the variants and checked against export_node_as_image:
+ *   Bullet 4337:11205 / 4337:11586 · Circular 4365:12137 / 4773:31490 /
+ *   4695:22509 · Dash 4695:22253 / 4773:32386 / 4773:32832
  */
-/* ── Stepper - Bullet JS ────────────────────────────────────────── */
-/* Renders a horizontal row of 8×8 dots. One dot (at `current` index)
-   fills in brand blue; the rest use the track color. Dots are drawn
-   as SVG circles, not raster — this is the proposed vector model.   */
 
-function _stepperBulletDotMarkup(index, current) {
-  var size = 8;
-  var activeColor = '#005CE5';
-  var trackColor  = '#D2E5FF';
-  var fill = (index <= current) ? activeColor : trackColor;
-  return '<span class="eb-preview-stepper-bullet-dot" style="display:inline-block;width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:' + fill + ';"></span>';
-}
+var STP = { fill: '#005CE5', track: '#D2E5FF', error: '#D61B2C', done: '#12AF80', upcomingIndex: '#9BC5FD' };
+var STP_STATUS = { bullet: ['current', 'completed'], circular: ['current', 'upcoming', 'completed'], dash: ['current', 'error', 'completed'] };
 
-function _stepperBulletRender(current, total) {
-  var parts = [];
-  for (var i = 1; i <= total; i++) {
-    parts.push(_stepperBulletDotMarkup(i, current));
+function _stpInt(v, fallback) { var n = parseInt(v, 10); return isNaN(n) ? fallback : n; }
+
+/* Circular — ring r 20 stroke 5 (get_svg 4365:12140); arc is a round-capped
+   stroke from 12 o'clock, sweep = current / steps; Completed is a full
+   #12AF80 ring with the 16 × 16 Checkmark instance (get_svg 4695:22588). */
+function _stpCircular(steps, current, status) {
+  var svg = '<svg class="eb-preview eb-preview-stp eb-preview-stp--circular eb-preview-stp--' + status + '" viewBox="0 0 45 45" width="45" height="45" fill="none" aria-hidden="true">';
+  if (status === 'completed') {
+    svg += '<circle cx="22.5" cy="22.5" r="20" stroke="' + STP.done + '" stroke-width="5"/>';
+    svg += '<path d="M17.5 22.5L21 25.5L27.5 19.5" stroke="' + STP.done + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+    return svg + '</svg>';
   }
-  return '<div class="eb-preview eb-preview-stepper-bullet" style="display:inline-flex;align-items:center;gap:8px;padding:4px 0;">' +
-    parts.join('') +
-  '</div>';
+  svg += '<circle cx="22.5" cy="22.5" r="20" stroke="' + STP.track + '" stroke-width="5"/>';
+  var f = status === 'upcoming' ? 0 : Math.max(0, Math.min(1, current / steps));
+  if (f >= 1) svg += '<circle cx="22.5" cy="22.5" r="20" stroke="' + STP.fill + '" stroke-width="5"/>';
+  else if (f > 0) {
+    var a = f * 2 * Math.PI, x = 22.5 + 20 * Math.sin(a), y = 22.5 - 20 * Math.cos(a);
+    svg += '<path d="M22.5 2.5A20 20 0 ' + (f > 0.5 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + '" stroke="' + STP.fill + '" stroke-width="5" stroke-linecap="round"/>';
+  }
+  svg += '<text class="eb-preview-stp__index" x="22.5" y="23.5" text-anchor="middle" dominant-baseline="central">' + current + '</text>';
+  return svg + '</svg>';
 }
 
-function _stepperBulletContextMarkup() {
-  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm" style="padding:8px 0;">' +
-    '<div style="font:500 13px system-ui;color:#3C4A5C;margin-bottom:6px;">Onboarding carousel · page 2 of 4</div>' +
-    _stepperBulletRender(2, 4) +
-    '<div style="font:500 13px system-ui;color:#3C4A5C;margin:18px 0 6px;">Tutorial swipe · page 3 of 5</div>' +
-    _stepperBulletRender(3, 5) +
-    '<div style="font:500 13px system-ui;color:#3C4A5C;margin:18px 0 6px;">Image gallery · slide 1 of 3</div>' +
-    _stepperBulletRender(1, 3) +
-  '</div>';
+/* opts: { type: bullet|circular|dash, steps, current, status } */
+function _stpRender(opts) {
+  var type = opts.type || 'bullet';
+  var steps = Math.max(type === 'bullet' ? 3 : 2, Math.min(10, _stpInt(opts.steps, 3)));
+  var status = STP_STATUS[type].indexOf(opts.status) !== -1 ? opts.status : 'current';
+  var current = Math.max(type === 'circular' ? 0 : 1, Math.min(steps, _stpInt(opts.current, 1)));
+  if (status === 'completed') current = steps;
+  if (status === 'upcoming') current = 0;
+  if (type === 'circular') return _stpCircular(steps, current, status);
+
+  var html = '<div class="eb-preview eb-preview-stp eb-preview-stp--' + type + ' eb-preview-stp--' + status + '">';
+  for (var i = 1; i <= steps; i++) {
+    var cls = type === 'bullet' ? 'eb-preview-stp__dot' : 'eb-preview-stp__dash';
+    if (status === 'completed') cls += ' is-done';
+    else if (i < current) cls += ' is-on';
+    else if (i === current) cls += status === 'error' ? ' is-error' : ' is-on';
+    html += '<span class="' + cls + '"></span>';
+  }
+  return html + '</div>';
 }
 
-function _stepperBulletUpdate() {
-  var stepsEl   = document.getElementById('stepper-bullet-ctrl-steps');
-  var currentEl = document.getElementById('stepper-bullet-ctrl-current');
-  var valueEl   = document.getElementById('stepper-bullet-ctrl-value');
-  var preview   = document.getElementById('stepper-bullet-demo-preview');
+/* ── Overview live preview ─────────────────────────────────────────── */
+function _stpUpdate() {
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var preview = document.getElementById('stp-demo-preview');
   if (!preview) return;
-
-  var steps = stepsEl ? parseInt(stepsEl.value, 10) : 4;
-  if (isNaN(steps) || steps < 3) steps = 3;
-  if (steps > 10) steps = 10;
-
-  if (currentEl) {
-    currentEl.max = steps;
-    var current = parseInt(currentEl.value, 10);
-    if (isNaN(current) || current < 1) current = 1;
-    if (current > steps) { current = steps; currentEl.value = steps; }
-    if (valueEl) valueEl.textContent = current + ' of ' + steps;
-    preview.innerHTML = _stepperBulletRender(current, steps);
-  }
+  preview.innerHTML = _stpRender({
+    type:    getVal('stp-ctrl-type', 'bullet'),
+    steps:   getVal('stp-ctrl-steps', '3'),
+    current: getVal('stp-ctrl-current', '1'),
+    status:  getVal('stp-ctrl-status', 'current')
+  });
 }
+window._stpUpdate = _stpUpdate;
 
-/* ── Stepper Bullet Spec Cards (canonical) ───────────────────────── */
-var _stepperBulletSpecCards = {
-  bullet: { steps: '4', current: '2' }
+/* ── Spec cards — one per Type value, keyed by demoKey ─────────────── */
+var _specCards = {
+  'bullet':   { type: 'bullet',   steps: '3', current: '1', status: 'current' },
+  'circular': { type: 'circular', steps: '3', current: '1', status: 'current' },
+  'dash':     { type: 'dash',     steps: '3', current: '1', status: 'current' }
 };
-var _specCards = _stepperBulletSpecCards;
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  return getSnippet(type, 'swift', card);
-}
-function buildComposeSnippet(type, card) {
-  return getSnippet(type, 'compose', card);
-}
-function getSnippet(type, lang, card) {
-  var steps = parseInt(card && card.steps ? card.steps : '4', 10);
-  var current = parseInt(card && card.current ? card.current : '2', 10);
-  if (isNaN(steps)) steps = 4;
-  if (isNaN(current)) current = 2;
-  if (current > steps) current = steps;
-
+function getSnippet(cardKey, lang, card) {
+  var c = card || _specCards[cardKey] || {};
+  var type = c.type || 'bullet', status = c.status || 'current';
+  var steps = _stpInt(c.steps, 3), current = _stpInt(c.current, 1);
   if (lang === 'swift') {
-    return 'EBStepper(currentStep: ' + current + ')\n    .ebTotalSteps(' + steps + ')\n    .ebStyle(.bullet)';
+    var s = 'EBStepper(steps: ' + steps + ', current: ' + current + ')\n    .ebType(.' + type + ')';
+    if (status !== 'current') s += '\n    .ebStatus(.' + status + ')';
+    return s;
   }
-  return 'EBStepper(\n    currentStep = ' + current + ',\n    totalSteps = ' + steps + ',\n    style = EBStepperStyle.Bullet\n)';
+  var cap = function (v) { return v.charAt(0).toUpperCase() + v.slice(1); };
+  var lines = ['    steps = ' + steps, '    current = ' + current, '    type = EBStepperType.' + cap(type)];
+  if (status !== 'current') lines.push('    status = EBStepperStatus.' + cap(status));
+  return 'EBStepper(\n' + lines.join(',\n') + '\n)';
 }
 window.getSnippet = getSnippet;
 
-function _stepperBulletRenderSpec(card) {
-  var steps = parseInt(card.steps, 10);
-  var current = parseInt(card.current, 10);
-  if (isNaN(steps)) steps = 4;
-  if (isNaN(current)) current = 1;
-  if (current > steps) current = steps;
-  if (current < 1) current = 1;
-  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm" style="padding:12px 0;">' +
-    _stepperBulletRender(current, steps) +
-  '</div>';
-}
-
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _stepperBulletSpecCards[cardStyle];
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
   if (!card) return;
   card[prop] = value;
-
-  /* Clamp current ≤ steps */
-  if (prop === 'steps') {
-    var s = parseInt(value, 10);
-    var c = parseInt(card.current, 10);
-    if (!isNaN(s) && !isNaN(c) && c > s) card.current = String(s);
-  }
-
-  /* Update the spec preview */
-  var s1 = document.getElementById('stepper-bullet-spec-1');
-  if (s1) s1.innerHTML = _stepperBulletRenderSpec(card);
-
-  /* Update Properties row text via [data-sp="<cardStyle>-<prop>"] */
-  ['steps', 'current'].forEach(function(p) {
-    var spVal = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
-    if (spVal) {
-      var hexEl = spVal.querySelector('.spec-prop-hex');
-      var v = card[p];
-      if (hexEl) hexEl.textContent = v;
-      else spVal.textContent = v;
-    }
-  });
-
-  /* Update DEV code via [data-code-content="<cardStyle>"]. Always run. */
-  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
-  if (codeEl) {
-    var lang = codeEl.getAttribute('data-lang') || 'swift';
-    var code = getSnippet(cardStyle, lang, card);
-    codeEl.setAttribute('data-final', code);
-    codeEl.textContent = code;
-    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-  }
+  var host = document.getElementById('stp-spec-' + cardKey);
+  if (host) host.innerHTML = _stpRender(card);
 }
 window.updateSpecCard = updateSpecCard;
 
-function _stepperBulletInit() {
-  var ctx = document.getElementById('stepper-bullet-context-preview');
-  if (ctx) ctx.innerHTML = _stepperBulletContextMarkup();
-  _stepperBulletUpdate();
-
-  var s1 = document.getElementById('stepper-bullet-spec-1');
-  if (s1) s1.innerHTML = _stepperBulletRenderSpec(_stepperBulletSpecCards.bullet);
+function _stpInit() {
+  _stpUpdate();
+  Object.keys(_specCards).forEach(function (k) { updateSpecCard(k, 'status', _specCards[k].status); });
 }
-
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _stepperBulletInit);
-else _stepperBulletInit();
-
-(function(){
-  function reinit(){
-    if (typeof _stepperBulletInit === 'function') _stepperBulletInit();
-  }
-  document.addEventListener('astro:page-load', reinit);
-})();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _stpInit);
+else _stpInit();
+document.addEventListener('astro:page-load', _stpInit);

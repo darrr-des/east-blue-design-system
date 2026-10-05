@@ -16,27 +16,27 @@ var _bdColors = {
     Medium: { bg: '#1972F9', label: '#FFFFFF' },
     Light:  { bg: '#1972F9', label: '#FFFFFF' }
   },
-  Info: {
+  Information: {
     Light:  { bg: '#E5F1FF', label: '#005CE5' },
     Medium: { bg: '#D2E5FF', label: '#005CE5' },
     Heavy:  { bg: '#2340A9', label: '#FFFFFF' }
   },
-  Success: {
+  Positive: {
     Light:  { bg: '#E7F8F0', label: '#048570' },
     Medium: { bg: '#CAF2E0', label: '#048570' },
     Heavy:  { bg: '#12AF80', label: '#FFFFFF' }
   },
-  Warning: {
+  Notice: {
     Light:  { bg: '#FCF0CA', label: '#966F0B' },
     Medium: { bg: '#F7D96E', label: '#966F0B' },
     Heavy:  { bg: '#CA970C', label: '#FFFFFF' }
   },
-  Danger: {
+  Negative: {
     Light:  { bg: '#F8E6E6', label: '#B50707' },
     Medium: { bg: '#F4C7C9', label: '#8D0710' },
     Heavy:  { bg: '#D61B2C', label: '#FFFFFF' }
   },
-  Disabled: {
+  Muted: {
     Light:  { bg: '#C2C5CA', label: '#FFFFFF' },
     Medium: { bg: '#9A9FA7', label: '#FFFFFF' },
     Heavy:  { bg: '#717883', label: '#FFFFFF' }
@@ -56,8 +56,8 @@ var _bdTypes = {
 
 /* Token semantic name mapping */
 var _bdTokenNames = {
-  Primary: 'primary', Brand: 'brand', Info: 'information',
-  Success: 'positive', Warning: 'notice', Danger: 'negative', Disabled: 'muted'
+  Primary: 'primary', Brand: 'brand', Information: 'information',
+  Positive: 'positive', Notice: 'notice', Negative: 'negative', Muted: 'muted'
 };
 
 function _bdGetColors(state, level) {
@@ -220,57 +220,10 @@ function _getBadgeSnippet(cardType, lang) {
   }
 }
 
-function buildSwiftSnippet(type, card) {
-  return _getBadgeSnippet(type, 'swift');
-}
-function buildComposeSnippet(type, card) {
-  return _getBadgeSnippet(type, 'compose');
-}
 function getSnippet(type, lang, card) {
   return _getBadgeSnippet(type, lang);
 }
 window.getSnippet = getSnippet;
-
-function switchBadgeCodeTab(tabBtn, lang, cardType) {
-  var parent = tabBtn.parentElement;
-  parent.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
-  tabBtn.classList.add('active');
-  var codeEl = document.getElementById('bd-code-' + cardType);
-  if (codeEl) {
-    var raw = _getBadgeSnippet(cardType, lang);
-    codeEl.setAttribute('data-final', raw);
-    codeEl.textContent = raw;
-    if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
-  }
-}
-
-function toggleBadgeSpecMode(type, toggleEl) {
-  var labels = toggleEl.querySelectorAll('.spec-mode-label');
-  var isDes = labels[0].classList.contains('active');
-  labels[0].classList.toggle('active', !isDes);
-  labels[1].classList.toggle('active', isDes);
-  var desView = document.querySelector('[data-view="' + type + '-des"]');
-  var devView = document.querySelector('[data-view="' + type + '-dev"]');
-  if (isDes) {
-    if (desView) desView.style.display = 'none';
-    if (devView) {
-      devView.style.display = '';
-      var shortType = type.replace('bd-', '');
-      var activeTab = devView.querySelector('.spec-code-tab.active');
-      var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-      var codeEl = devView.querySelector('code');
-      if (codeEl) {
-        var raw = _getBadgeSnippet(shortType, lang);
-        codeEl.setAttribute('data-final', raw);
-        codeEl.textContent = raw;
-        if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
-      }
-    }
-  } else {
-    if (devView) devView.style.display = 'none';
-    if (desView) desView.style.display = '';
-  }
-}
 
 /* ── Init ──────────────────────────────────────────────────────── */
 function _bdInit() {

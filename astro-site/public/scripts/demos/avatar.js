@@ -182,59 +182,10 @@ function _getAvatarSnippet(cardType, lang, size) {
   }
 }
 
-function buildSwiftSnippet(type, card) {
-  return _getAvatarSnippet(type, 'swift', card.size);
-}
-function buildComposeSnippet(type, card) {
-  return _getAvatarSnippet(type, 'compose', card.size);
-}
 function getSnippet(type, lang, card) {
   return _getAvatarSnippet(type, lang, card.size);
 }
 window.getSnippet = getSnippet;
-
-function switchAvatarCodeTab(tabBtn, lang, cardType) {
-  var parent = tabBtn.parentElement;
-  parent.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
-  tabBtn.classList.add('active');
-  var codeEl = document.getElementById('ava-code-' + cardType);
-  if (codeEl) {
-    var card = _avatarSpecCards[cardType];
-    var raw = _getAvatarSnippet(cardType, lang, card.size);
-    codeEl.setAttribute('data-final', raw);
-    codeEl.textContent = raw;
-    if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
-  }
-}
-
-function toggleAvatarSpecMode(type, toggleEl) {
-  var labels = toggleEl.querySelectorAll('.spec-mode-label');
-  var isDes = labels[0].classList.contains('active');
-  labels[0].classList.toggle('active', !isDes);
-  labels[1].classList.toggle('active', isDes);
-  var desView = document.querySelector('[data-view="' + type + '-des"]');
-  var devView = document.querySelector('[data-view="' + type + '-dev"]');
-  if (isDes) {
-    if (desView) desView.style.display = 'none';
-    if (devView) {
-      devView.style.display = '';
-      var shortType = type.replace('ava-', '');
-      var card = _avatarSpecCards[shortType];
-      var activeTab = devView.querySelector('.spec-code-tab.active');
-      var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-      var codeEl = devView.querySelector('code');
-      if (codeEl && card) {
-        var raw = _getAvatarSnippet(shortType, lang, card.size);
-        codeEl.setAttribute('data-final', raw);
-        codeEl.textContent = raw;
-        if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
-      }
-    }
-  } else {
-    if (devView) devView.style.display = 'none';
-    if (desView) desView.style.display = '';
-  }
-}
 
 /* Initialize avatar spec cards on load */
 function initAvatarSpecCards() {
@@ -248,7 +199,6 @@ if (document.readyState === 'loading') {
 } else {
   initAvatarSpecCards();
 }
-
 
 /* ── Re-init after Astro view-transition swaps ─────────────── */
 (function(){

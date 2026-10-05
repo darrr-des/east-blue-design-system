@@ -141,12 +141,6 @@ function updateSpecCard(cardType, prop, value) {
   }
 }
 
-function buildSwiftSnippet(type, card) {
-  return _getCheckboxSnippet(type, 'swift', card.size, card.state);
-}
-function buildComposeSnippet(type, card) {
-  return _getCheckboxSnippet(type, 'compose', card.size, card.state);
-}
 function getSnippet(type, lang, card) {
   return _getCheckboxSnippet(type, lang, card.size, card.state);
 }
@@ -173,49 +167,6 @@ function _getCheckboxSnippet(cardType, lang, size, state) {
   if (st === 'Disabled') extra = ',\n    enabled = false';
   if (st === 'Error') extra = ',\n    isError = true';
   return 'EBCheckbox(\n    checked = ' + chkVal + ',\n    onCheckedChange = { isSelected = it },\n    size = EBCheckboxSize.' + co + extra + '\n)';
-}
-
-function switchCheckboxCodeTab(tabBtn, lang, cardType) {
-  var parent = tabBtn.parentElement;
-  parent.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
-  tabBtn.classList.add('active');
-  var card = _cbSpecCards[cardType];
-  var codeEl = document.getElementById('cb-code-' + cardType);
-  if (codeEl && card) {
-    var raw = _getCheckboxSnippet(cardType, lang, card.size, card.state || 'Default');
-    codeEl.setAttribute('data-final', raw);
-    codeEl.textContent = raw;
-    if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
-  }
-}
-
-function toggleCheckboxSpecMode(type, toggleEl) {
-  var labels = toggleEl.querySelectorAll('.spec-mode-label');
-  var isDes = labels[0].classList.contains('active');
-  labels[0].classList.toggle('active', !isDes);
-  labels[1].classList.toggle('active', isDes);
-  var desView = document.querySelector('[data-view="' + type + '-des"]');
-  var devView = document.querySelector('[data-view="' + type + '-dev"]');
-  if (isDes) {
-    if (desView) desView.style.display = 'none';
-    if (devView) {
-      devView.style.display = '';
-      var shortType = type.replace('cb-', '');
-      var card = _cbSpecCards[shortType];
-      var activeTab = devView.querySelector('.spec-code-tab.active');
-      var lang = (activeTab && activeTab.textContent.indexOf('COMPOSE') !== -1) ? 'compose' : 'swift';
-      var codeEl = devView.querySelector('code');
-      if (codeEl && card) {
-        var raw = _getCheckboxSnippet(shortType, lang, card.size, card.state || 'Default');
-        codeEl.setAttribute('data-final', raw);
-        codeEl.textContent = raw;
-        if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
-      }
-    }
-  } else {
-    if (devView) devView.style.display = 'none';
-    if (desView) desView.style.display = '';
-  }
 }
 
 function _cbInit() {

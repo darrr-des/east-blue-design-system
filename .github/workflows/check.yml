@@ -1,0 +1,75 @@
+name: Check
+
+# The merge gate. Every pull request and every push to a working branch must
+# build, and every component must pass the structural framework rules
+# (framework-sweep --gate). Lint runs too; it stays advisory until the last
+# component without previews (tooltip) is reviewed.
+
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: astro-site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: astro-site/package-lock.json
+      - run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Framework gate
+        run: npm run audit:gate
+      - name: Framework report
+        run: npm run audit
+      - name: Lint (advisory)
+        run: npm run lint
+        continue-on-error: true
+
+  # The Playground renders Figma's layer data in a browser, so nothing above can
+  # see it: `npm run check` stayed green through every Playground bug we found by
+  # hand. These three need only the built site — they never call Figma — so they
+  # gate every pull request. Fidelity does call Figma and runs in playground-fidelity.yml.
+  playground:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: astro-site
+    env:
+      # The harnesses drive real pages; without this the AuthGate redirects to /login.
+      PUBLIC_AUTH_DISABLED: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: astro-site/package-lock.json
+      - run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build
+        run: npm run build
+      - name: Serve
+        run: |
+          npm run preview -- --port 4321 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null http://localhost:4321/playground && exit 0
+            sleep 1
+          done
+          echo "preview server did not come up" && exit 1
+      - name: Smoke
+        run: npm run playground:smoke
+      - name: Reflow
+        run: npm run playground:reflow
+      - name: Accessibility
+        run: npm run playground:a11y

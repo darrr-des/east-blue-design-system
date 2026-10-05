@@ -1,11 +1,13 @@
 /*
  * Shared TypeScript types for component assessment data.
- * One schema used by all 79 component data files.
+ * One schema for every component file in src/content/components/<slug>.json,
+ * loaded through src/data/components/from-json.mjs.
+ * Rules for each field live in workflows/build/ — one guide per tab.
  */
 
 // ── Badges ─────────────────────────────────────────────────────────────
 export type DSVerdict = 'keep' | 'fix' | 'restructure' | 'consolidate' | 'product-layer' | 'remove';
-export type NativeStatus = 'ready' | 'refine' | 'rework' | 'na' | 'fix' | 'empty';
+export type NativeStatus = 'ready' | 'refine' | 'rework' | 'na' | 'fix';
 
 export interface Badge {
   kind: DSVerdict | NativeStatus;
@@ -51,7 +53,9 @@ export interface BehaviorRow {
 }
 
 // ── Issue lists (resolved / open) ─────────────────────────────────────
-export type CriterionId = 'C1' | 'C2' | 'C3' | 'C4' | 'C5' | 'C6' | 'C7';
+// C7 (Code Connect Linkability) is not scored until the native library
+// ships, so it never appears on a page.
+export type CriterionId = 'C1' | 'C2' | 'C3' | 'C4' | 'C5' | 'C6';
 
 export interface IssueItem {
   headline?: string;
@@ -139,16 +143,7 @@ export interface SpecRow {
    *   component's `window.updateSpecCard()` and patches matching rows
    *   on each demo-control change.
    * - Per-component state lives on `window._specCards[<cardKey>]` (set
-   *   up by each component's demo script — already present for all 79).
-   *
-   * ## Caveat — legacy demo scripts
-   * 18 demo scripts (button, accordion, dropdown, action-list*, badge,
-   * checkbox, chip, etc.) currently rebuild Colors / Layout / Typography
-   * sections via `innerHTML =` in their own `updateSpecCard`. For those,
-   * Plan A overrides are wiped on every control change; they have to be
-   * refactored to remove the section-rebuild blocks before `variants`
-   * takes effect. Tracked as a follow-up — pure schema additions in
-   * those data files are inert until the JS is migrated.
+   *   up by each component's demo script).
    */
   variants?: Record<string, Partial<Pick<SpecRow, 'value' | 'token' | 'mono' | 'swatch'>> & { hide?: boolean }>;
 }
@@ -198,9 +193,10 @@ export interface SpecCardData {
       (e.g. `'filled'` instead of `'btn-spec-filled'`). Defaults to
       `cardKey` when omitted. */
   demoKey?: string;
+  /** The driving-property value, bare: "Banner", not "Style=Banner". */
   title: string;
+  /** Figma node id — wiring for reviewers, not rendered. */
   node: string;
-  description: string;
   previewHtml?: string;
   /** Optional interactive controls — when present, the spec card
       renders the legacy preview-plus-panel layout instead of the
@@ -211,9 +207,15 @@ export interface SpecCardData {
   compose: string;
 }
 
-// ── Colors by State (shared table under spec cards) ───────────────────
+// ── Colors table (shared table under spec cards) ──────────────────────
+// Target shape: Role │ Element │ Token │ Value — `columns: ['Value']`,
+// one row per element, grouped by the driving-property value (`role`).
+// Rows without `element` render as Role │ Token │ …columns until they
+// are rewritten to the target shape.
 export interface ColorsTableRow {
   role: string;
+  /** The part a developer paints: Background, Border, Title, Icon… */
+  element?: string;
   token: string;
   values: string[];      // aligned to columns
 }
@@ -221,7 +223,7 @@ export interface ColorsTableRow {
 export interface ColorsTable {
   title: string;
   description?: string;
-  columns: string[];     // e.g. ['Default', 'Pressed', 'Disabled']
+  columns: string[];     // target: ['Value']
   rows: ColorsTableRow[];
 }
 
@@ -274,15 +276,7 @@ export interface GuidelinePair {
 export interface ScorecardRow {
   id: CriterionId;
   criterion: string;
-  status: 'ready' | 'refine' | 'rework' | 'na' | 'fix' | 'empty';
-  statusLabel: string;
-  notes: string;
-}
-
-// ── Code tab: Code Connect readiness ──────────────────────────────────
-export interface CodeConnectRow {
-  aspect: string;
-  status: 'ready' | 'refine' | 'rework' | 'na' | 'fix' | 'empty';
+  status: NativeStatus;
   statusLabel: string;
   notes: string;
 }
@@ -326,12 +320,15 @@ export interface ChangelogEntry {
 export interface ComponentData {
   meta: ComponentMeta;
 
-  // Overview tab
+  // Overview tab — In Context → Live Preview → DS Health → Behavior → Issues → Recommendations
   overview: {
+    /** In Context — the component on a real screen. `inContextHtml` is raw
+        HTML inside `.ctx-wrap` (an <img>, or the `.ctx-placeholder` SVG
+        pattern until a screenshot exists); the note sits above it. */
+    inContextNote?: string;
+    inContextHtml?: string;
     inContextImage?: string;
     inContextAlt?: string;
-    inContextNote?: string;
-    inContextHtml?: string;      // raw HTML inside .ctx-wrap (SVG placeholder, <img>, etc.)
     /**
      * Live preview HTML rendered on the Overview tab.
      *
@@ -356,7 +353,9 @@ export interface ComponentData {
      * 2-column layout stays consistent across components.
      */
     livePreviewHtml?: string;
+    /** Exactly four: Reusable · Self-contained · Consistent · Composable. */
     traits: Trait[];
+    /** Required for interactive components; empty for display-only ones. */
     behavior: BehaviorRow[];
     resolved: IssueItem[];
     open: IssueItem[];
@@ -371,11 +370,34 @@ export interface ComponentData {
   style: {
     heading?: string;
     description?: string;
+    /**
+     * Where this tab was read from. Written by every `Style Review` run.
+     * `set` must equal `meta.node`; the sweep flags a Style tab whose stamp
+     * is missing or points at another set — that is how a page that kept
+     * an old node's values gets caught.
+     */
+    source?: {
+      set: string;                   // component-set node id
+      variants: number;              // variant count at read time
+      read: string;                  // YYYY-MM-DD
+      tool: 'talk-to-figma' | 'dev-mode-mcp';
+    };
+    /**
+     * Opt in to the Playground tab. When true this component's Style tab is the
+     * Playground — the layer data in `public/playground/<slug>.json`, read from
+     * Figma by `scripts/playground/build.mjs` — and the hand-authored spec-card
+     * rules (`S1`–`S12`) no longer apply to it; the `P*` rules do.
+     *
+     * The rollout is per component and deliberate: everything without this flag
+     * still renders spec cards and is still governed by STYLE-REVIEW-GUIDE.md.
+     */
+    playground?: boolean;
     specCards: SpecCardData[];
     colorsTables?: ColorsTable[];    // one per card, in same order
   };
 
-  // Code tab
+  // Code tab — Installation → Property Mapping → Usage Snippets →
+  // Accessibility → Usage Guidelines → Scorecard (C1–C6) → Variants
   code: {
     installation: Installation;
     propertyMapping: PropertyMapping;
@@ -383,7 +405,6 @@ export interface ComponentData {
     accessibility: AccessibilityRow[];
     usageGuidelines: GuidelinePair[];
     scorecard: ScorecardRow[];
-    codeConnect: CodeConnectRow[];
     variants: VariantsInventoryData;
   };
 

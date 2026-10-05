@@ -145,18 +145,18 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['day'];
   var swift = lang !== 'compose';
-  var sep = swift ? '<span class="syn-punc">:</span> ' : ' <span class="syn-eq">=</span> ';
+  var sep = swift ? ': ' : ' = ';
   var mode = card.mode === 'monthyear' ? 'month' : card.mode;
   var cased = mode.charAt(0).toUpperCase() + mode.slice(1);
   var args = ['mode' + sep + (swift
-    ? '<span class="syn-dot">.' + mode + '</span>'
-    : '<span class="syn-type">EBDatePickerCalendarMode</span><span class="syn-punc">.</span><span class="syn-dot">' + cased + '</span>')];
+    ? '.' + mode + ''
+    : 'EBDatePickerCalendarMode.' + cased + '')];
   if (card.mode === 'day') {
     args.push('weeks' + sep + (card.week6 === 'false' ? '5' : '6'));
   }
-  return '<span class="syn-type">EBDatePickerCalendar</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  return 'EBDatePickerCalendar(\n    ' +
+    args.join(',\n    ') +
+    '\n)';
 }
 window.getSnippet = getSnippet;
 

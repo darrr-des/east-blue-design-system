@@ -307,17 +307,16 @@
          parent `.spec-prop` element wraps both the key label and value.
          Hiding the row requires hiding the parent. */
       var rowEl = cell.closest('.spec-prop') || cell;
+      /* Cache the default once so we can revert later — the server writes
+         it on data-row-value; older markup falls back to the hex text. */
+      if (!cell.hasAttribute('data-row-default')) {
+        var hexEl = cell.querySelector('.spec-prop-hex');
+        cell.setAttribute('data-row-default', cell.getAttribute('data-row-value') || (hexEl ? hexEl.textContent : '') || '');
+      }
       if (!matched) {
         /* Ensure row is visible (in case a previous flip hid it). */
         rowEl.style.display = '';
-        /* Restore defaults from data-row-default-* attributes. */
-        var def = cell.getAttribute('data-row-default');
-        if (def !== null) {
-          var hex = cell.querySelector('.spec-prop-hex');
-          if (hex) hex.textContent = def;
-          var swatch = cell.querySelector('.spec-swatch');
-          if (swatch) swatch.style.background = def;
-        }
+        _applyRowValue(cell, cell.getAttribute('data-row-default'));
         return;
       }
       /* Hide row when variant says so — used for specs that don't apply
@@ -327,22 +326,57 @@
         return;
       }
       rowEl.style.display = '';
-      /* Cache the default once so we can revert later. */
-      if (!cell.hasAttribute('data-row-default')) {
-        var hexEl = cell.querySelector('.spec-prop-hex');
-        if (hexEl) cell.setAttribute('data-row-default', hexEl.textContent || '');
-      }
-      var hex2 = cell.querySelector('.spec-prop-hex');
-      if (hex2 && typeof matched.value !== 'undefined') {
-        hex2.textContent = matched.value;
-      }
-      var swatch2 = cell.querySelector('.spec-swatch');
-      if (swatch2 && typeof matched.value === 'string' && matched.value.trim().charAt(0) === '#') {
-        swatch2.style.background = matched.value;
-      }
+      if (typeof matched.value !== 'undefined') _applyRowValue(cell, matched.value);
     });
   }
-  window._patchSpecCardRows = _patchSpecCardRows;
+
+  /* Write a row value into its cell. A value with " · " separators is one
+     value per drawn example (Examples cards): every hex part gets its own
+     swatch, the same markup SpecCard.astro renders on the server. A single
+     value keeps the server's swatch + text pair and just updates them. */
+  function _applyRowValue(cell, value) {
+    if (value === null || typeof value === 'undefined') return;
+    var text = String(value);
+    var parts = text.split(' · ');
+    var esc = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+    /* Only a cell the server marked `multi` (an Examples card) splits on
+       " · " — elsewhere the dot is punctuation inside one value. */
+    if (cell.classList.contains('multi')) {
+      cell.innerHTML = parts.map(function (p, i) {
+        var t = p.trim();
+        return (i > 0 ? '<span class="spec-prop-sep" aria-hidden="true">·</span>' : '')
+          + '<span class="spec-prop-part">' + (t.charAt(0) === '#' ? '<span class="spec-swatch" style="background:' + esc(t) + '" aria-hidden="true"></span>' : '')
+          + '<span class="spec-prop-hex">' + esc(p) + '</span></span>';
+      }).join('');
+      return;
+    }
+    var hex = cell.querySelector('.spec-prop-hex');
+    if (hex) hex.textContent = text;
+    var swatch = cell.querySelector('.spec-swatch');
+    if (swatch && text.trim().charAt(0) === '#') swatch.style.background = text;
+  }
+
+  /* Repaint the DEV code block from getSnippet after a control change, so
+     the visible SwiftUI/Compose stays in sync without every demo script
+     having to wire its own repaint. No-op when the component defines no
+     getSnippet, or the card has no single-code DEV block. */
+  function _repaintSpecCode(cardKey) {
+    if (typeof window.getSnippet !== 'function') return;
+    var card = window._specCards && window._specCards[cardKey];
+    if (!card) return;
+    var devView = document.querySelector('[data-view="' + cardKey + '-dev"]');
+    if (!devView) return;
+    var codeEl = devView.querySelector('[data-code-content="' + cardKey + '"]');
+    if (!codeEl) return;
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
+    var code = window.getSnippet(cardKey, lang, card);
+    if (typeof code !== 'string') return;
+    codeEl.setAttribute('data-final', code);
+    codeEl.setAttribute('data-lang', lang);
+    codeEl.textContent = code;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  }
 
   /* Wrap window.updateSpecCard so every component's demo script
      automatically triggers our row patcher in addition to its own
@@ -353,6 +387,7 @@
     var wrapper = function (cardKey, prop, value) {
       var result = existing.call(this, cardKey, prop, value);
       try { _patchSpecCardRows(cardKey); } catch (e) {}
+      try { _repaintSpecCode(cardKey); } catch (e) {}
       return result;
     };
     wrapper.__ebPatched = true;
@@ -372,46 +407,39 @@
   });
 
   // ── DES / DEV toggle ─────────────────────────────────────────────────
-  window.toggleSpecMode = function (cardKey, toggleEl) {
+  // `mode` ('des' | 'dev') sets the view — each label is its own button.
+  window.toggleSpecMode = function (cardKey, toggleEl, mode) {
     var labels = toggleEl.querySelectorAll('.spec-mode-label');
-    var isDes = labels[0].classList.contains('active');
-    labels[0].classList.toggle('active', !isDes);
-    labels[1].classList.toggle('active', isDes);
+    var showDev = mode === 'dev';
+    labels[0].classList.toggle('active', !showDev);
+    labels[1].classList.toggle('active', showDev);
+    labels[0].setAttribute('aria-selected', String(!showDev));
+    labels[1].setAttribute('aria-selected', String(showDev));
     var des = document.querySelector('[data-view="' + cardKey + '-des"]');
     var dev = document.querySelector('[data-view="' + cardKey + '-dev"]');
-    if (des) des.style.display = isDes ? 'none' : '';
-    if (dev) dev.style.display = isDes ? '' : 'none';
+    if (des) des.style.display = showDev ? 'none' : '';
+    if (dev) dev.style.display = showDev ? '' : 'none';
   };
 
   // ── SwiftUI / Compose code tab switch ────────────────────────────────
-  // Two call signatures:
-  //   switchCodeTab(btn, 'swift')              — legacy two-pre layout
-  //   switchCodeTab(btn, 'swift', 'filled')    — single-code block;
-  //     re-runs `getSnippet(cardStyle, lang, _specCards[cardStyle])`
-  //     and `highlightSyntax()` so the visible language updates live.
+  // switchCodeTab(btn, 'swift', cardKey) re-runs
+  // `getSnippet(cardKey, lang, _specCards[cardKey])` and `highlightSyntax()`
+  // so the visible language updates live.
   window.switchCodeTab = function (tabBtn, lang, cardStyle) {
     var block = tabBtn.closest('.spec-card-code');
     if (!block) return;
     block.querySelectorAll('.spec-code-tab').forEach(function (t) { t.classList.remove('active'); });
     tabBtn.classList.add('active');
+    if (typeof window.getSnippet !== 'function') return;
 
-    if (cardStyle && typeof window.getSnippet === 'function') {
-      var codeEl = block.querySelector('[data-code-content="' + cardStyle + '"]');
-      var card = window._specCards && window._specCards[cardStyle];
-      if (codeEl && card) {
-        var code = window.getSnippet(cardStyle, lang, card);
-        codeEl.setAttribute('data-final', code);
-        codeEl.setAttribute('data-lang', lang);
-        codeEl.textContent = code;
-        if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-      }
-      return;
-    }
-
-    // Legacy two-pre fallback
-    block.querySelectorAll('.spec-code-block').forEach(function (pre) {
-      pre.style.display = pre.getAttribute('data-lang') === lang ? '' : 'none';
-    });
+    var codeEl = block.querySelector('[data-code-content="' + cardStyle + '"]');
+    var card = window._specCards && window._specCards[cardStyle];
+    if (!codeEl || !card) return;
+    var code = window.getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', code);
+    codeEl.setAttribute('data-lang', lang);
+    codeEl.textContent = code;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
   };
 
   // ── Lightweight syntax highlighter for spec-card code blocks ────────
@@ -419,24 +447,36 @@
   // span wrappers via regex, and writes innerHTML. Same set of token
   // classes (.syn-cmt, .syn-str, .syn-kw, .syn-val, .syn-type,
   // .syn-param, .syn-dot, .syn-punc) that already exist in global.css.
+  // One tokenizer for SwiftUI and Compose: comments, strings, numbers,
+  // keywords, values, EB* and platform types, parameter labels (any
+  // identifier before `:` or `=`), modifier/function calls after a dot,
+  // enum cases after a dot, punctuation. Each token is escaped and wrapped
+  // once, so no regex ever sees markup it inserted earlier.
+  var SYN_TYPES = /^(?:EB[A-Z]\w*|Image|Icon|Icons|Text|Row|Column|Box|HStack|VStack|ZStack|Modifier|RoundedRectangle|RoundedCornerShape|Color|Arrangement|Alignment|Dp|CGFloat|Constants|Variables)$/;
+  var SYN_KW = /^(?:fun|val|var|let|struct|static|object|import|return|if|else|listOf|to|in|for|while)$/;
+  var SYN_VAL = /^(?:true|false|null|nil)$/;
+  var SYN_TOKEN = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|(\b\d+(?:\.\d+)?\b)|(\.[A-Za-z_]\w*)|([A-Za-z_]\w*)|([{}()\[\]])|([\s\S])/g;
+  var escHtml = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+  var wrap = function (cls, s) { return '<span class="' + cls + '">' + escHtml(s) + '</span>'; };
   window.highlightSyntax = function (el) {
     if (!el) return;
     var code = el.getAttribute('data-final') || el.textContent || '';
-    var html = code
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/(\/\/[^\n]*)/g, '\x00CMT_S$1\x00CMT_E')
-      .replace(/("(?:[^"\\]|\\.)*")/g, '\x00STR_S$1\x00STR_E');
-    html = html
-      .replace(/\x00CMT_S([\s\S]*?)\x00CMT_E/g, '<span class="syn-cmt">$1</span>')
-      .replace(/\x00STR_S([\s\S]*?)\x00STR_E/g, '<span class="syn-str">$1</span>')
-      .replace(/\b(fun|val|var|let|struct|static|object|import|return|if|else)\b/g, '<span class="syn-kw">$1</span>')
-      .replace(/\b(true|false|null|nil)\b/g, '<span class="syn-val">$1</span>')
-      .replace(/\b(\d+(?:\.\w+)?)\b/g, '<span class="syn-val">$1</span>')
-      .replace(/\b(EBButton|EBOutlinedButton|EBTextButton|EBButtonSize|EBButtonDefaults|EBAppearance|Image|Icon|Icons|Text|Row|HStack|VStack|Modifier|RoundedRectangle|RoundedCornerShape|Color|Arrangement|Alignment|Dp|CGFloat)\b/g, '<span class="syn-type">$1</span>')
-      .replace(/\b(Constants|Variables)\b/g, '<span class="syn-type">$1</span>')
-      .replace(/\b(alignment|spacing|horizontalArrangement|verticalAlignment|modifier|color|shape|width|start|top|maxWidth|onClick|leadingIcon|trailingIcon|colors|enabled|size|appearance|contentDescription)\b(?=\s*[=:])/g, '<span class="syn-param">$1</span>')
-      .replace(/(\.\w+)/g, '<span class="syn-dot">$1</span>')
-      .replace(/([{}()\[\]])/g, '<span class="syn-punc">$1</span>');
+    var html = code.replace(SYN_TOKEN, function (m, cmt, str, num, dotted, ident, punc, other, offset) {
+      if (cmt) return wrap('syn-cmt', cmt);
+      if (str) return wrap('syn-str', str);
+      if (num) return wrap('syn-val', num);
+      var rest = code.slice(offset + m.length);
+      if (dotted) return /^\s*\(/.test(rest) ? '.' + wrap('syn-fn', dotted.slice(1)) : wrap('syn-dot', dotted);
+      if (ident) {
+        if (SYN_KW.test(ident)) return wrap('syn-kw', ident);
+        if (SYN_VAL.test(ident)) return wrap('syn-val', ident);
+        if (SYN_TYPES.test(ident)) return wrap('syn-type', ident);
+        if (/^\s*(?::|=(?!=))/.test(rest)) return wrap('syn-param', ident);
+        return escHtml(ident);
+      }
+      if (punc) return wrap('syn-punc', punc);
+      return escHtml(other);
+    });
     el.innerHTML = html;
   };
 
@@ -463,17 +503,6 @@
     });
   };
 
-  window.copyNode = function (btn) {
-    var node = btn.getAttribute('data-node');
-    if (!node) return;
-    navigator.clipboard.writeText(node).then(function () {
-      var span = btn.querySelector('span');
-      if (!span) return;
-      var orig = span.textContent;
-      span.textContent = 'Copied!';
-      setTimeout(function () { span.textContent = orig; }, 1200);
-    });
-  };
 
   // ── Tab pill positioning ─────────────────────────────────────────────
   function positionPill(tabBar, activeTab) {
@@ -504,14 +533,38 @@
   }
 
   // ── Tab bar (Overview / Style / Code / Changelog) ────────────────────
+  // ── Phone-width sidebar (topbar hamburger) ───────────────────────────
+  window.toggleSidebar = function (btn, force) {
+    var sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+    var open = typeof force === 'boolean' ? force : !sidebar.classList.contains('open');
+    sidebar.classList.toggle('open', open);
+    var b = btn || document.querySelector('.topbar-hamburger');
+    if (b) b.setAttribute('aria-expanded', String(open));
+  };
+  document.addEventListener('click', function (e) {
+    var sidebar = document.querySelector('.sidebar.open');
+    if (!sidebar) return;
+    if (e.target.closest('.sidebar') && !e.target.closest('a')) return;
+    if (e.target.closest('.topbar-hamburger')) return;
+    window.toggleSidebar(null, false);
+  });
+  document.addEventListener('astro:page-load', function () { window.toggleSidebar(null, false); });
+
   window.switchTab = function (tabBtn, tabId, groupId) {
     var root = groupId
       ? document.querySelector('[data-tab-group="' + groupId + '"]')
       : tabBtn.closest('[data-tab-group]');
     if (!root) return;
     var tabBar = root.querySelector('.comp-tabs');
-    root.querySelectorAll('.comp-tab').forEach(function (t) { t.classList.remove('active'); });
+    root.querySelectorAll('.comp-tab').forEach(function (t) {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+      t.setAttribute('tabindex', '-1');
+    });
     tabBtn.classList.add('active');
+    tabBtn.setAttribute('aria-selected', 'true');
+    tabBtn.removeAttribute('tabindex');
     positionPill(tabBar, tabBtn);
     root.querySelectorAll('.comp-tab-content').forEach(function (c) {
       c.classList.toggle('active', c.dataset.tab === tabId);
@@ -521,6 +574,20 @@
     }
     buildToc();
   };
+
+  // Arrow keys move between tabs in a tablist (Left/Right, Home/End).
+  document.addEventListener('keydown', function (e) {
+    var tab = e.target && e.target.closest && e.target.closest('.comp-tab');
+    if (!tab || ['ArrowLeft', 'ArrowRight', 'Home', 'End'].indexOf(e.key) < 0) return;
+    var tabs = Array.prototype.slice.call(tab.parentElement.querySelectorAll('.comp-tab'));
+    var i = tabs.indexOf(tab);
+    var next = e.key === 'ArrowLeft' ? tabs[(i - 1 + tabs.length) % tabs.length]
+      : e.key === 'ArrowRight' ? tabs[(i + 1) % tabs.length]
+      : e.key === 'Home' ? tabs[0] : tabs[tabs.length - 1];
+    e.preventDefault();
+    next.focus();
+    next.click();
+  });
 
   // ── Segmented sub-tabs (Open/Resolved · Design/Applied) ──────────────
   window.switchSeg = function (btn, groupId, target) {
@@ -568,9 +635,14 @@
       html += '<a class="page-toc-link' + (isChild ? ' page-toc-child' : '') + '" href="#' + id + '" data-toc-target="' + id + '">' + label + '</a>';
     });
     nav.innerHTML = html;
+    // A tab with no sub-headings has nothing to list — the Playground's panels
+    // carry their own titles. Hide the aside rather than leave a bare "On this
+    // page" label, but keep it in the flow: .panel-layout reserves 180px + 56px
+    // for it, and removing the element would slide the content across.
+    var aside = nav.closest ? nav.closest('.page-toc') : null;
+    if (aside) aside.classList.toggle('is-empty', !html);
     initScrollSpy();
   }
-  window.buildToc = buildToc;
 
   function initScrollSpy() {
     var scrollEl = window.matchMedia('(min-width: 768px)').matches
@@ -612,7 +684,6 @@
     window._tocSpy = { target: scrollEl, handler: handler };
     update();
   }
-  window.initScrollSpy = initScrollSpy;
 
   // Smooth-scroll on TOC click within the .main scroll container
   document.addEventListener('click', function (e) {
@@ -666,25 +737,6 @@
   } else {
     initPage();
   }
-
-  // Fallback for non-transition contexts (e.g. direct hits, no ClientRouter)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPage);
-  } else {
-    initPage();
-  }
-
-  // ── Theme toggle ─────────────────────────────────────────────────────
-  window.toggleTheme = function (isDark) {
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    try { localStorage.setItem('eb-theme', isDark ? 'dark' : 'light'); } catch (e) {}
-  };
-
-  // Restore theme on load
-  try {
-    var saved = localStorage.getItem('eb-theme');
-    if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-  } catch (e) {}
 
   // ── Restore tab state from hash on load ──────────────────────────────
   function restoreTabsFromHash() {

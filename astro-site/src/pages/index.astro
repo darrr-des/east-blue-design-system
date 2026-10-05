@@ -1,13 +1,16 @@
 ---
 import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
+import { navManifest } from '../data/components/_index';
+
+const componentCount = navManifest.length;
 
 const steps = [
   {
     num: '01',
     eyebrow: 'Assess',
     title: 'Evaluate',
-    body: 'Inspect each Figma component against 7 criteria covering structure, naming, tokens, states, and Code Connect readiness.',
+    body: 'Inspect each Figma component against six scored criteria covering structure, naming, tokens, native mapping, states, and assets.',
   },
   {
     num: '02',
@@ -19,7 +22,7 @@ const steps = [
     num: '03',
     eyebrow: 'Build',
     title: 'Assemble',
-    body: 'Run npm run build — Astro compiles all 79 component pages into static HTML automatically.',
+    body: `Run npm run build — Astro compiles all ${componentCount} component pages into static HTML automatically.`,
   },
   {
     num: '04',
@@ -36,7 +39,7 @@ const criteria = [
   { id: 'C4', name: 'Native Mappability',           check: 'The component should map cleanly to a native SwiftUI / Compose primitive. No web-only patterns (CSS-only effects, hover-dependent UX, etc.).' },
   { id: 'C5', name: 'Interaction State Coverage',   check: 'All required states should exist as variants: default, pressed, focused, disabled, and any feature-specific states (loading, error, etc.).' },
   { id: 'C6', name: 'Asset & Icon Quality',         check: 'Icons should be vector instances with token-based coloring. No raster PNGs, no flattened paths, no hardcoded fills.' },
-  { id: 'C7', name: 'Code Connect Linkability',     check: 'Property names should map 1:1 to native parameters with no transformation needed. Code Connect mapping should be straightforward.' },
+  { id: 'C7', name: 'Code Connect Linkability',     check: 'Property names should map 1:1 to native parameters. Not scored until the native library ships.' },
 ];
 
 const traits = [
@@ -80,7 +83,7 @@ const verdicts = [
 
       <section class="page-section">
         <h2>Assessment Criteria</h2>
-        <p class="section-desc">The overall status reflects the weakest criterion — one unresolved issue can block Code Connect linkability.</p>
+        <p class="section-desc">The overall status reflects the weakest criterion — one unresolved issue can block native handoff.</p>
 
         <div class="table-wrap">
           <table>

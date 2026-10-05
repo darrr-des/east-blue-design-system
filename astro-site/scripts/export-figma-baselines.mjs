@@ -3,7 +3,7 @@
  * Figma baseline exporter — fetches one PNG per component spec card.
  *
  * Reads each component's `meta.node` AND `style.specCards[].node` from
- * `src/data/components/<slug>.ts` and calls Figma REST
+ * `src/content/components/<slug>.json` and calls Figma REST
  * `GET /v1/images?ids=<node>&scale=2` for each.
  *
  * Output:
@@ -11,7 +11,7 @@
  *   tests/figma-reference/<slug>__<key>.png    — one per spec card (compare against live render)
  *
  * Usage:
- *   npm run baselines:refresh                  # all 79 components, all spec cards
+ *   npm run baselines:refresh                  # every component, all spec cards
  *   npm run baselines:refresh -- button        # one component
  *   npm run baselines:refresh -- toast,modal   # several
  */
@@ -49,37 +49,24 @@ if (!TOKEN) {
 }
 
 /* ── Build (slug, cardKey, nodeId) targets ────────────────────── */
-const DATA_DIR = path.join(ROOT, 'src/data/components');
+const DATA_DIR = path.join(ROOT, 'src/content/components');
 const argv = process.argv.slice(2);
 const requested = argv.length ? argv.flatMap((a) => a.split(',')).filter(Boolean) : null;
 
 function readComponent(filePath) {
-  const text = fs.readFileSync(filePath, 'utf8');
-  const slugMatch = text.match(/"slug"\s*:\s*"([^"]+)"/);
-  if (!slugMatch) return null;
-  const slug = slugMatch[1];
-
-  /* meta.node — first non-empty `"node": "..."` */
-  const nodeMatches = [...text.matchAll(/"node"\s*:\s*"([^"]*)"/g)];
-  const metaNode = nodeMatches.find((m) => m[1])?.[1] || null;
-
-  /* spec cards — each one starts with `"cardKey": "X"` and shortly after has `"node": "Y"`.
-     Walk and pair them. */
-  const cardKeyMatches = [...text.matchAll(/"cardKey"\s*:\s*"([^"]+)"/g)];
-  const specCards = [];
-  for (const km of cardKeyMatches) {
-    /* Find the next `"node"` after this cardKey position. */
-    const after = text.slice(km.index);
-    const nodeM = after.match(/"node"\s*:\s*"([^"]+)"/);
-    if (nodeM) specCards.push({ cardKey: km[1], node: nodeM[1] });
-  }
+  /* src/content/components/<slug>.json — the CMS files. */
+  const d = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  const slug = path.basename(filePath, '.json');
+  const metaNode = d.meta?.node || null;
+  const specCards = (d.style?.specCards || []).filter((c) => c.node).map((c) => ({ cardKey: c.cardKey, node: c.node }));
 
   return { slug, metaNode, specCards };
 }
 
 const ALL = fs
   .readdirSync(DATA_DIR)
-  .filter((f) => f.endsWith('.ts') && !f.startsWith('_'))
+  /* sample-* is the framework reference page on sample data — no Figma node. */
+  .filter((f) => f.endsWith('.json') && !f.startsWith('sample-'))
   .map((f) => readComponent(path.join(DATA_DIR, f)))
   .filter((x) => x);
 

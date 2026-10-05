@@ -288,45 +288,6 @@ function scrambleAccCode(cardType) {
   highlightSyntax(codeEl);
 }
 
-function switchAccCodeTab(tabBtn, lang, cardType) {
-  var block = tabBtn.closest('.spec-card-code');
-  block.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
-  tabBtn.classList.add('active');
-  var codeEl = block.querySelector('code');
-  if (!codeEl) return;
-  var card = _accSpecCards[cardType] || { state: 'default', leadingIcon: true, description: false };
-  var code = buildAccSnippet(cardType, lang, card);
-  codeEl.textContent = '// Loading...';
-  codeEl.setAttribute('data-final', code);
-  scrambleAccCode(cardType);
-}
-
-/* Accordion DES/DEV toggle — standalone function */
-function toggleAccSpecMode(type, toggleEl) {
-  var labels = toggleEl.querySelectorAll('.spec-mode-label');
-  var isDes = labels[0].classList.contains('active');
-  labels[0].classList.toggle('active', !isDes);
-  labels[1].classList.toggle('active', isDes);
-  var desView = document.querySelector('[data-view="'+type+'-des"]');
-  var devView = document.querySelector('[data-view="'+type+'-dev"]');
-  if (isDes) {
-    if (desView) desView.style.display = 'none';
-    if (devView) {
-      devView.style.display = '';
-      var cardType = type.replace('acc-', '');
-      var card = _accSpecCards[cardType] || { state: 'default', leadingIcon: true, description: false };
-      var activeTab = devView.querySelector('.spec-code-tab.active');
-      var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-      var codeEl = devView.querySelector('code');
-      if (codeEl) { codeEl.setAttribute('data-final', buildAccSnippet(cardType, lang, card)); }
-      scrambleAccCode(cardType);
-    }
-  } else {
-    if (devView) devView.style.display = 'none';
-    if (desView) desView.style.display = '';
-  }
-}
-
 /* Initialize accordion spec card colors and accordion demo on load */
 function initAccSpecCards() {
   updateAccSpecCard('collapsed', 'state', 'default');
@@ -340,7 +301,6 @@ if (document.readyState === 'loading') {
 } else {
   initAccSpecCards();
 }
-
 
 /* ── Re-init after Astro view-transition swaps ─────────────── */
 (function(){

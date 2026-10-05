@@ -20,6 +20,12 @@ Standalone authentication backend. **Google OAuth login + JWT sessions.** Reusab
 
 The JWT carries: `googleId`, `email`, `name`, `picture`.
 
+### How the East Blue site uses it
+
+The Astro site gates content with a client-side AuthGate that hits `/auth/me` on every page load and redirects to `/login` on 401. Set `PUBLIC_AUTH_DISABLED=true` in `astro-site/.env` to bypass the gate locally.
+
+Frontend files: `src/components/AuthGate.astro` · `src/pages/login.astro` · `src/lib/auth.ts` · the Sidebar shows the signed-in user with a sign-out button.
+
 ---
 
 ## Setup

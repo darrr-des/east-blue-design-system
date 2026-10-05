@@ -101,28 +101,28 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['middleinset'];
   var compose = lang === 'compose';
-  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var sep = compose ? ' = ' : ': ';
   var cased = { none: 'None', middleinset: 'MiddleInset', fullwidth: 'FullWidth' }[card.border];
   var dens = card.density.charAt(0).toUpperCase() + card.density.slice(1);
   var val = function (type, c) {
     return compose
-      ? '<span class="syn-type">' + type + '</span><span class="syn-punc">.</span><span class="syn-dot">' + c + '</span>'
-      : '<span class="syn-dot">.' + c.charAt(0).toLowerCase() + c.slice(1) + '</span>';
+      ? '' + type + '.' + c + ''
+      : '.' + c.charAt(0).toLowerCase() + c.slice(1) + '';
   };
 
   var args = [
     'borderType' + sep + val('EBBorderType', cased),
     'density' + sep + val('EBDensity', dens)
   ];
-  return '<span class="syn-type">EBSelectGroup</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">) {</span>\n    ' +
-    '<span class="syn-type">EBSelectItem</span><span class="syn-punc">(</span>label' + sep +
-    '<span class="syn-str">"Text"</span><span class="syn-punc">,</span> isSelected' + sep +
-    '<span class="syn-kw">true</span><span class="syn-punc">)</span>\n    ' +
-    '<span class="syn-type">EBSelectItem</span><span class="syn-punc">(</span>label' + sep +
-    '<span class="syn-str">"Text"</span><span class="syn-punc">)</span>\n' +
-    '<span class="syn-punc">}</span>';
+  return 'EBSelectGroup(\n    ' +
+    args.join(',\n    ') +
+    '\n) {\n    ' +
+    'EBSelectItem(label' + sep +
+    '"Text", isSelected' + sep +
+    'true)\n    ' +
+    'EBSelectItem(label' + sep +
+    '"Text")\n' +
+    '}';
 }
 window.getSnippet = getSnippet;
 

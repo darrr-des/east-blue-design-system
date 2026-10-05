@@ -107,26 +107,26 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['vertical'];
   var compose = lang === 'compose';
-  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var sep = compose ? ' = ' : ': ';
   var cased = card.actions === 'horizontal' ? 'Horizontal' : 'Vertical';
   var orientation = compose
-    ? '<span class="syn-type">EBActionOrientation</span><span class="syn-punc">.</span>' +
-      '<span class="syn-dot">' + cased + '</span>'
-    : '<span class="syn-dot">.' + card.actions + '</span>';
+    ? 'EBActionOrientation.' +
+      '' + cased + ''
+    : '.' + card.actions + '';
 
   var args = [
-    'title' + sep + '<span class="syn-str">"Put the title here"</span>',
+    'title' + sep + '"Put the title here"',
     'actionOrientation' + sep + orientation
   ];
   if (card.hasdescription === 'false') {
-    args.push('hasDescription' + sep + '<span class="syn-kw">false</span>');
+    args.push('hasDescription' + sep + 'false');
   }
   if (card.hasreferenceno === 'false') {
-    args.push('hasReferenceNo' + sep + '<span class="syn-kw">false</span>');
+    args.push('hasReferenceNo' + sep + 'false');
   }
-  return '<span class="syn-type">EBTransactionReceiptModal</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  return 'EBTransactionReceiptModal(\n    ' +
+    args.join(',\n    ') +
+    '\n)';
 }
 window.getSnippet = getSnippet;
 

@@ -156,6 +156,11 @@ window.updateSpecCard = updateSpecCard;
 /* The Overview panel still ships a `Selected` control (first / second) that
    the set does not have — the first segment is active in all three variants.
    Draw the Figma component and ignore the retired control. */
+/* The Overview panel's handler writes `_tscDemo.selected` before calling this;
+   the component set has no selection axis, so the render does not vary. */
+var _tscDemo = { selected: '1' };
+window._tscDemo = _tscDemo;
+
 function updateToggleSegmentedControlDemo() {
   var el = document.getElementById('tsc-demo-preview');
   if (el) el.innerHTML = _tscRender({ numberOfTabs: '2' }, 1);
