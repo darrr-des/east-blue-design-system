@@ -1,45 +1,30 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/recipient-field.js`.
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)` in
+// `public/scripts/demos/recipient-field.js`. The panel mirrors the property
+// panel of set 17758:3867: two variant axes and nothing else. The set
+// defines no booleans and no slots.
 const recipientFieldDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'state',
+        label: 'State',
         prop: 'state',
+        defaultValue: 'Default',
         options: [
-          { value: 'Default', label: 'Default' },
-          { value: 'Active', label: 'Active' },
-          { value: 'Error', label: 'Error' },
+          { value: 'Default',  label: 'Default' },
+          { value: 'Active',   label: 'Active' },
+          { value: 'Error',    label: 'Error' },
           { value: 'Disabled', label: 'Disabled' },
         ],
       },
       {
         label: 'isFilled',
-        prop: 'filled',
-        defaultValue: 'false',
-        options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
-        ],
-      },
-      {
-        label: 'showLabel',
-        prop: 'showLabel',
+        prop: 'isfilled',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
-        ],
-      },
-      {
-        label: 'trailingIcons',
-        prop: 'trailingIcons',
-        defaultValue: 'true',
-        options: [
-          { value: 'true', label: 'true' },
+          { value: 'true',  label: 'true' },
           { value: 'false', label: 'false' },
         ],
       },
@@ -74,7 +59,7 @@ export const recipientField: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"5\" width=\"100\" height=\"70\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"28\" y=\"18\" font-size=\"6\" fill=\"currentColor\" opacity=\".3\" font-family=\"system-ui\">Send Money</text>\n          <rect x=\"18\" y=\"24\" width=\"84\" height=\"24\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".2\"></rect>\n          <rect x=\"24\" y=\"29\" width=\"22\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".12\"></rect>\n          <rect x=\"24\" y=\"35\" width=\"35\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <circle cx=\"86\" cy=\"36\" r=\"4\" fill=\"currentColor\" opacity=\".08\"></circle>\n          <circle cx=\"96\" cy=\"36\" r=\"4\" fill=\"currentColor\" opacity=\".08\"></circle>\n          <rect x=\"18\" y=\"54\" width=\"84\" height=\"12\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".12\"></rect>\n          <rect x=\"24\" y=\"59\" width=\"40\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"rf-demo-preview\"><svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_rfDemo.state=this.value;updateRecipientFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_rfDemo.filled=this.value;updateRecipientFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\"><div id=\"recipient-field-demo-preview\"></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"rf-demo-state\" class=\"demo-panel-select\" onchange=\"updateRecipientFieldDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select id=\"rf-demo-isfilled\" class=\"demo-panel-select\" onchange=\"updateRecipientFieldDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -140,29 +125,92 @@ export const recipientField: ComponentData = {
     ],
     "open": [
       {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Structural work is complete — registration can proceed against the 8-variant <code>State × isFilled</code> schema.",
+        "headline": "The two trailing actions have no property at all.",
+        "body": "<code>icon-group</code> draws two 32 circles in all eight variants. Nothing names them, nothing distinguishes them, and nothing turns either off — so a field that needs one action, or none, cannot be expressed. Its siblings <a href=\"/components/labeled-field\">Labeled Field</a> and <a href=\"/components/input-field\">Input Field</a> handle the same problem three different ways.",
         "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "<code>isFilled=true</code> shows no recipient.",
+        "body": "<code>#value</code> reads “Placeholder” in all eight variants; the flag only darkens it from <code>#90A8D0</code> to <code>#0A2757</code>. The same gap as Input Field.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The empty value fails contrast at 2.41:1.",
+        "body": "<code>#90A8D0</code> on white against a 4.5:1 minimum — and here it is the recipient line, the most important text in the component.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "The resting border fails non-text contrast at 1.33:1.",
+        "body": "<code>#D7E0EF</code> on white, against the 3:1 WCAG 1.4.11 asks of an input boundary. Active and Error pass.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Disabled carries a hidden <code>#D6DDE9</code> stroke.",
+        "body": "Present on the node, visibility off. Across the family this is the third different answer: Input Field hides <code>#0057E4</code>, Labeled Field has no stroke array at all, and this one hides <code>#D6DDE9</code>.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The icon gap is 4 where the family uses 8.",
+        "body": "The two circles sit 4 apart. Every other gap in the field family — and in Labeled Field's icon frames — is 8.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "No token bindings readable.",
+        "body": "Seven colours across the set, none resolving to a variable through the plugin.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
         }
       }
     ],
     "recommendations": [
       {
-        "headline": "Replace icon placeholders with swappable icon instances.",
-        "body": "The two <code>icon-placeholder</code> RECTANGLEs block instance-swap — phonebook, scan-QR, and other trailing actions can't be dropped in without detaching the master.",
+        "headline": "Give the two actions properties, and name them.",
+        "body": "At minimum <code>hasPrimaryAction</code> / <code>hasSecondaryAction</code> booleans and real layer names. Better still, align the whole field family on one trailing-slot pattern instead of three.",
         "tag": "Slot"
       },
       {
-        "headline": "Document the 56px height rationale.",
-        "body": "Recipient Field is taller than the standard 46px form fields because of the two-line label + value layout. Call this out in the DS guidelines so it's not mistaken for a design error.",
-        "tag": "Docs"
+        "headline": "Make <code>isFilled=true</code> show a recipient.",
+        "body": "A name or number in the filled variants, so the difference between states is visible rather than inferred from a colour shift.",
+        "tag": "State"
       },
       {
-        "headline": "Add an <code>errorMessage</code> slot below the field.",
-        "body": "Inline validation text keeps the field self-contained and matches the pattern proposed for the other form fields.",
-        "tag": "Slot"
+        "headline": "Darken the empty value and the resting border.",
+        "body": "The value needs 4.5:1 and the border 3:1.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Delete the hidden stroke on the Disabled variants.",
+        "body": "<code>#D6DDE9</code>, invisible, and the only place that colour appears.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Use 8 for the icon gap.",
+        "body": "4 is the only such value in the family.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Settle one trailing-affordance pattern across the field family.",
+        "body": "Input Field has no slot, Labeled Field has three booleans and a link button, Recipient Field has two unnamed always-on circles. One pattern would let all three share a native signature.",
+        "tag": "Family"
       }
     ]
   },
@@ -170,40 +218,33 @@ export const recipientField: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "rf-spec-default",
-        "demoKey": "default",
+        "cardKey": "rf-spec-main",
+        "demoKey": "main",
+        "title": "Recipient Field",
+        "node": "17758:3867",
+        "description": "One card for the whole set: State × isFilled. Every reading below tracks the selection.",
+        "previewHtml": "<div id=\"recipient-field-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": recipientFieldDemoControls,
-        "title": "Default",
-        "node": "17758:3868",
-        "description": "Idle state with gray border. Two-line layout: small label above, value/placeholder below. Two trailing icon placeholders.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "state",
+                "key": "State",
                 "value": "Default",
-                "mono": false,
                 "prop": "state"
               },
               {
                 "key": "isFilled",
-                "value": "false",
-                "mono": false,
-                "prop": "filled"
+                "value": "true",
+                "prop": "isfilled"
               },
               {
-                "key": "showLabel",
-                "value": "true",
-                "mono": false,
-                "prop": "showLabel"
-              },
-              {
-                "key": "trailingIcons",
-                "value": "true",
-                "mono": false,
-                "prop": "trailingIcons"
+                "key": "Resolved variant",
+                "value": "17758:3868 · 366 × 56",
+                "prop": "variantNode",
+                "mono": true
               }
             ]
           },
@@ -211,24 +252,35 @@ export const recipientField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "prop": "bg",
+                "swatch": true
               },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
-                "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
+              {
+                "key": "Border",
+                "value": "#D7E0EF",
+                "prop": "border",
+                "swatch": true
               },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
+              {
+                "key": "#label",
+                "value": "#0A2757",
+                "prop": "labelColor",
+                "swatch": true
               },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
+              {
+                "key": "#value",
+                "value": "#0A2757",
+                "prop": "valueColor",
+                "swatch": true
+              },
+              {
+                "key": "Icon placeholder",
+                "value": "#C2C6CF",
+                "prop": "iconFill",
+                "swatch": true
               }
             ]
           },
@@ -237,33 +289,44 @@ export const recipientField: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Field height",
-                "value": "48px",
+                "key": "Frame",
+                "value": "366 × 56",
                 "mono": true
               },
               {
-                "key": "Padding H",
-                "value": "12px",
+                "key": "Radius",
+                "value": "6",
                 "mono": true
               },
               {
-                "key": "Padding V",
-                "value": "14px",
+                "key": "Stroke",
+                "value": "1 inside",
+                "prop": "stroke",
                 "mono": true
               },
               {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
+                "key": "Padding",
+                "value": "12 all sides",
                 "mono": true
               },
               {
-                "key": "Border",
-                "value": "1px solid",
+                "key": "text-container",
+                "value": "274 × 32 @ (12, 12)",
                 "mono": true
               },
               {
-                "key": "Icon size",
-                "value": "20 × 20",
+                "key": "Label → value gap",
+                "value": "6",
+                "mono": true
+              },
+              {
+                "key": "icon-group",
+                "value": "68 × 32 @ x 286",
+                "mono": true
+              },
+              {
+                "key": "Icons",
+                "value": "2 × 32 circle, gap 4",
                 "mono": true
               }
             ]
@@ -273,460 +336,163 @@ export const recipientField: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
+                "key": "#label",
+                "value": "Primary/Label/Light/Fine",
                 "mono": true
               },
               {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
+                "key": "#value",
+                "value": "Primary/Label/Light/Small",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>recipient<span class=\"syn-punc\">: </span>selectedRecipient<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    recipient <span class=\"syn-eq\">=</span> selectedRecipient<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
-      },
-      {
-        "cardKey": "rf-spec-active",
-        "demoKey": "active",
-        "demoControls": recipientFieldDemoControls,
-        "title": "Active (Focused)",
-        "node": "17758:3882",
-        "description": "Focused state with blue border indicating active input.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Active",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "isFilled",
-                "value": "false",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "showLabel",
-                "value": "true",
-                "mono": false,
-                "prop": "showLabel"
-              },
-              {
-                "key": "trailingIcons",
-                "value": "true",
-                "mono": false,
-                "prop": "trailingIcons"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/active/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#005CE5", "token": "input-field/active/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "input-field/default/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/active/text",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
-              },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/active/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>recipient<span class=\"syn-punc\">: </span>selectedRecipient<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.active</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    recipient <span class=\"syn-eq\">=</span> selectedRecipient<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Active</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
-      },
-      {
-        "cardKey": "rf-spec-error",
-        "demoKey": "error",
-        "demoControls": recipientFieldDemoControls,
-        "title": "Error",
-        "node": "17758:3896",
-        "description": "Validation error state with red border.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Error",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "isFilled",
-                "value": "false",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "showLabel",
-                "value": "true",
-                "mono": false,
-                "prop": "showLabel"
-              },
-              {
-                "key": "trailingIcons",
-                "value": "true",
-                "mono": false,
-                "prop": "trailingIcons"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/error/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#D61B2C", "token": "input-field/error/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "input-field/default/border" },
-                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/error/text",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
-              },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/error/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>recipient<span class=\"syn-punc\">: </span>selectedRecipient<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    recipient <span class=\"syn-eq\">=</span> selectedRecipient<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
-      },
-      {
-        "cardKey": "rf-spec-disabled",
-        "demoKey": "disabled",
-        "demoControls": recipientFieldDemoControls,
-        "title": "Disabled",
-        "node": "17758:3910",
-        "description": "Non-interactive state with gray background and hidden border. Muted label and text colors.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Disabled",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "isFilled",
-                "value": "false",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "showLabel",
-                "value": "true",
-                "mono": false,
-                "prop": "showLabel"
-              },
-              {
-                "key": "trailingIcons",
-                "value": "true",
-                "mono": false,
-                "prop": "trailingIcons"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#EEF2F9", "token": "input-field/disabled/bg",
-                "variants": {
-                  "state:Default": { "value": "#FFFFFF", "token": "input-field/default/bg" },
-                  "state:Active":  { "value": "#FFFFFF", "token": "input-field/active/bg" },
-                  "state:Error":   { "value": "#FFFFFF", "token": "input-field/error/bg" }
-                }
-              },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
-                "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#90A8D0", "token": "input-field/disabled/text",
-                "variants": {
-                  "state:Default": { "value": "#0A2757", "token": "input-field/default/text" },
-                  "state:Active":  { "value": "#0A2757", "token": "input-field/active/text" },
-                  "state:Error":   { "value": "#0A2757", "token": "input-field/error/text" }
-                }
-              },
-              { "key": "Placeholder", "value": "#C2CFE5", "token": "input-field/disabled/placeholder",
-                "variants": {
-                  "state:Default": { "value": "#90A8D0", "token": "input-field/default/placeholder" },
-                  "state:Active":  { "value": "#90A8D0", "token": "input-field/active/placeholder" },
-                  "state:Error":   { "value": "#90A8D0", "token": "input-field/error/placeholder" },
-                  "filled:true":   { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>recipient<span class=\"syn-punc\">: </span>selectedRecipient<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    recipient <span class=\"syn-eq\">=</span> selectedRecipient<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
+        "swift": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value<span class=\"syn-punc\">: </span>$value\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> value <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "All states share the same two-line container (56px height, 6px radius). Border color is the primary state indicator. Two trailing icon placeholders use a fixed fill across all states.",
+        "description": "Read off <code>get_node_info</code> on all eight variants, with stroke weights and drawn positions confirmed by <code>get_svg</code>. No token binding could be read. Disabled draws no border, but the stroke is still present on the node — <code>#D6DDE9</code>, switched off.",
         "columns": [
-          "DEFAULT",
-          "ACTIVE",
-          "ERROR",
-          "DISABLED"
+          "isFilled = true",
+          "isFilled = false"
         ],
         "rows": [
           {
-            "role": "Border",
-            "token": "field/border",
+            "role": "Default · bg",
+            "token": "—",
             "values": [
-              "#D7E0EF",
-              "#005CE5",
-              "#D61B2C",
-              "hidden"
+              "#FFFFFF",
+              "#FFFFFF"
             ]
           },
           {
-            "role": "Background",
-            "token": "field/bg",
+            "role": "Default · border",
+            "token": "— · 1 inside",
+            "values": [
+              "#D7E0EF",
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Default · #label",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default · #value",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Active · bg",
+            "token": "—",
             "values": [
               "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Active · border",
+            "token": "— · 2 inside",
+            "values": [
+              "#005CE5",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Active · #label",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Active · #value",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Error · bg",
+            "token": "—",
+            "values": [
               "#FFFFFF",
-              "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Error · border",
+            "token": "— · 2 inside",
+            "values": [
+              "#D61B2C",
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Error · #label",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Error · #value",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Disabled · bg",
+            "token": "—",
+            "values": [
+              "#EEF2F9",
               "#EEF2F9"
             ]
           },
           {
-            "role": "Label text",
-            "token": "field/label",
+            "role": "Disabled · border",
+            "token": "— · hidden #D6DDE9",
             "values": [
-              "#0A2757",
-              "#0A2757",
-              "#0A2757",
+              "– (hidden)",
+              "– (hidden)"
+            ]
+          },
+          {
+            "role": "Disabled · #label",
+            "token": "—",
+            "values": [
+              "#90A8D0",
               "#90A8D0"
             ]
           },
           {
-            "role": "Value (filled)",
-            "token": "field/text/filled",
+            "role": "Disabled · #value",
+            "token": "—",
             "values": [
-              "#0A2757",
-              "#0A2757",
-              "#0A2757",
-              "#90A8D0"
-            ]
-          },
-          {
-            "role": "Value (empty)",
-            "token": "field/text/placeholder",
-            "values": [
-              "#90A8D0",
-              "#90A8D0",
               "#90A8D0",
               "#C2CFE5"
             ]
           },
           {
-            "role": "Icon placeholder",
-            "token": "field/icon",
+            "role": "All states · icon placeholder",
+            "token": "— · 32 circle × 2",
             "values": [
-              "#C2C6CF",
-              "#C2C6CF",
               "#C2C6CF",
               "#C2C6CF"
             ]
@@ -755,51 +521,57 @@ export const recipientField: ComponentData = {
       "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "Two variant axes and nothing else. The two trailing actions are always drawn and have no property, so the native API has to invent the slot the set does not model.",
       "rows": [
         {
-          "figma": "isFilled (true/false)",
-          "swift": "text: Binding&lt;String&gt;",
-          "compose": "value: String"
+          "figma": "<code>State=Default</code>",
+          "swift": "(default)",
+          "compose": "(default)"
         },
         {
-          "figma": "#label",
-          "swift": "label: String",
-          "compose": "label: String"
+          "figma": "<code>State=Active</code>",
+          "swift": "<code>isFocused: true</code>",
+          "compose": "focus drawn by the field"
         },
         {
-          "figma": "#text-placeholder",
-          "swift": "placeholder: String",
-          "compose": "placeholder: String"
+          "figma": "<code>State=Error</code>",
+          "swift": "<code>isError: true</code>",
+          "compose": "<code>isError = true</code>"
         },
         {
-          "figma": "icon-group (2x icons)",
-          "swift": "trailingIcons: [Image]",
-          "compose": "trailingIcons: @Composable"
+          "figma": "<code>State=Disabled</code>",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
         },
         {
-          "figma": "State = Default",
-          "swift": "—",
-          "compose": "—"
+          "figma": "<code>isFilled=true / false</code>",
+          "swift": "Derived from <code>value.isEmpty</code>",
+          "compose": "Derived from <code>value.isEmpty()</code>"
         },
         {
-          "figma": "State = Active",
-          "swift": ".focused()",
-          "compose": "interactionSource"
+          "figma": "<code>#label</code> (text layer)",
+          "swift": "<code>label</code> argument",
+          "compose": "<code>label</code> argument"
         },
         {
-          "figma": "State = Error",
-          "swift": ".ebError(true)",
-          "compose": "isError = true"
+          "figma": "<code>#value</code> (text layer)",
+          "swift": "<code>value</code> binding",
+          "compose": "<code>value</code> + <code>onValueChange</code>"
         },
         {
-          "figma": "State = Disabled",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
+          "figma": "<code>icon-group</code> — 2 × 32, no property",
+          "swift": "<code>actions: […]</code> — native only",
+          "compose": "<code>actions = { … }</code> — native only"
+        },
+        {
+          "figma": "366 fixed width",
+          "swift": "<code>.frame(maxWidth: .infinity)</code>",
+          "compose": "<code>Modifier.fillMaxWidth()</code>"
         }
       ],
       "filePaths": {
-        "swift": "ios/Components/FormElements/EBRecipientField.swift",
-        "compose": "android/components/form/EBRecipientField.kt"
+        "swift": "ios/Components/RecipientField/EBRecipientField.swift",
+        "compose": "android/components/recipientfield/EBRecipientField.kt"
       }
     },
     "usageSnippets": [
@@ -855,51 +627,51 @@ export const recipientField: ComponentData = {
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Layer renamed to <code>#value</code>, now consistent with sibling fields."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Clean and consistent: <code>text-container</code> holding <code>#label</code> and <code>#value</code>, and <code>icon-group</code> holding two <code>Placeholder</code> instances. One leftover: the Disabled variants keep a <code>#D6DDE9</code> stroke with visibility switched off."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>isFilled=true/false</code> — correctly uses native boolean values."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>State</code> and <code>isFilled</code> are clean and all 8 combinations are built. But <code>#value</code> reads “Placeholder” in every variant, so <code>isFilled=true</code> never shows a recipient — only a darker placeholder."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Colors appear correct but token binding not verified. Icon placeholders use hardcoded #C2C6CF."
+        "notes": "Seven colours, no readable binding. The empty <code>#value</code> is 2.41:1 and the resting border 1.33:1 — both below their WCAG thresholds."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Maps to custom <code>EBRecipientField</code> (SwiftUI + Compose). Two-line layout with trailing icon slots."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The two-line label-over-value row maps cleanly to a native text field with a caption. The gap is the <code>icon-group</code>: two 32 tap targets with no property, no naming and no way to turn either off, so the native signature has to invent the slot."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All 4 states defined: Default, Active, Error, Disabled."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Default, Active, Error and Disabled all present. Missing a read-only state, and the two icons are tap targets with no press feedback modelled anywhere."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Both trailing icons are <code>icon-placeholder</code> RECTANGLEs — not swappable icon instances."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Both icons are 32 <code>Placeholder</code> instances — vectors, but flat <code>#C2C6CF</code> stand-ins. Nothing distinguishes the two, so what each is for is unreadable from the set."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Nothing registered. The two axes map cleanly; the unmodelled icon group is what blocks a complete mapping."
       }
     ],
     "codeConnect": [
@@ -936,73 +708,176 @@ export const recipientField: ComponentData = {
     ],
     "variants": {
       "total": 8,
-      "description": "4 <code>State</code> values × 2 <code>isFilled</code> values (true/false).",
+      "description": "<code>State</code> (4) × <code>isFilled</code> (2) = <strong>8 variants</strong>, every one 366 × 56 with a 6 radius. No booleans and no slots — the two 32 trailing circles are drawn in all eight and nothing turns either off.",
       "columns": [
+        "#",
         "State",
         "isFilled",
-        "Node ID"
+        "Node",
+        "Border",
+        "Weight",
+        "#label",
+        "#value"
       ],
       "rows": [
         {
           "cells": [
-            "Default",
-            "true",
-            "17758:3868"
+            "1",
+            "<code>Default</code>",
+            "<code>true</code>",
+            "<code>17758:3868</code>",
+            "#D7E0EF",
+            "1",
+            "#0A2757",
+            "#0A2757"
           ]
         },
         {
           "cells": [
-            "Default",
-            "false",
-            "17758:3875"
+            "2",
+            "<code>Default</code>",
+            "<code>false</code>",
+            "<code>17758:3875</code>",
+            "#D7E0EF",
+            "1",
+            "#0A2757",
+            "#90A8D0"
           ]
         },
         {
           "cells": [
-            "Active",
-            "true",
-            "17758:3882"
+            "3",
+            "<code>Active</code>",
+            "<code>true</code>",
+            "<code>17758:3882</code>",
+            "#005CE5",
+            "2",
+            "#0A2757",
+            "#0A2757"
           ]
         },
         {
           "cells": [
-            "Active",
-            "false",
-            "17758:3889"
+            "4",
+            "<code>Active</code>",
+            "<code>false</code>",
+            "<code>17758:3889</code>",
+            "#005CE5",
+            "2",
+            "#0A2757",
+            "#90A8D0"
           ]
         },
         {
           "cells": [
-            "Error",
-            "true",
-            "17758:3896"
+            "5",
+            "<code>Error</code>",
+            "<code>true</code>",
+            "<code>17758:3896</code>",
+            "#D61B2C",
+            "2",
+            "#0A2757",
+            "#0A2757"
           ]
         },
         {
           "cells": [
-            "Error",
-            "false",
-            "17758:3903"
+            "6",
+            "<code>Error</code>",
+            "<code>false</code>",
+            "<code>17758:3903</code>",
+            "#D61B2C",
+            "2",
+            "#0A2757",
+            "#90A8D0"
           ]
         },
         {
           "cells": [
-            "Disabled",
-            "true",
-            "17758:3910"
+            "7",
+            "<code>Disabled</code>",
+            "<code>true</code>",
+            "<code>17758:3910</code>",
+            "– (hidden)",
+            "–",
+            "#90A8D0",
+            "#90A8D0"
           ]
         },
         {
           "cells": [
-            "Disabled",
-            "false",
-            "17758:3917"
+            "8",
+            "<code>Disabled</code>",
+            "<code>false</code>",
+            "<code>17758:3917</code>",
+            "– (hidden)",
+            "–",
+            "#90A8D0",
+            "#C2CFE5"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "October 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Set re-read; Style tab collapsed to one card · node 17758:3867",
+      "rows": [
+        {
+          "body": "<strong>Style tab collapsed to a single card.</strong> Four per-state cards replaced by one whose panel mirrors the Figma property panel: <code>State</code> and <code>isFilled</code>, nothing else. Colours and the resolved variant node track the selection across all 8 variants.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Geometry recorded from the set.</strong> 366 × 56, radius 6, padding 12 on all four sides — symmetric, unlike Labeled Field. <code>text-container</code> 274 × 32 at (12, 12) with a 6 gap between <code>#label</code> and <code>#value</code>; <code>icon-group</code> 68 × 32 at x 286 holding two 32 circles. Confirmed against the drawn output: the circles land at x 286 and x 322.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Verified"
+          }
+        },
+        {
+          "body": "<strong>Text styles resolved.</strong> <code>#label</code> is <code>Primary/Label/Light/Fine</code> (12/12 @ 0.5) and <code>#value</code> <code>Primary/Label/Light/Small</code> (14/14 @ 0.25) — both matched by id and by value. Stroke ramp matches the family: Default <code>1</code> inside, Active and Error <code>2</code>, Disabled none.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Verified"
+          }
+        },
+        {
+          "body": "<strong>The two trailing actions have no property.</strong> <code>icon-group</code> draws two 32 circles in every variant; nothing names them, distinguishes them or turns either off. A field needing one action, or none, cannot be expressed. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4 Open"
+          }
+        },
+        {
+          "body": "<strong>Two contrast failures.</strong> The empty <code>#value</code> is <strong>2.41:1</strong> on white — and here it is the recipient line — and the resting border is <strong>1.33:1</strong> against the 3:1 WCAG 1.4.11 asks of an input boundary. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3 Open"
+          }
+        },
+        {
+          "body": "<strong>Disabled carries a hidden <code>#D6DDE9</code> stroke.</strong> Across the field family this is the third different answer — Input Field hides <code>#0057E4</code>, Labeled Field has no stroke array at all. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1 Open"
+          }
+        },
+        {
+          "body": "<strong>The icon gap is 4 where the family uses 8.</strong> <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3 Open"
+          }
+        }
+      ]
+    },
     {
       "version": "1.2.0",
       "date": "March 2026 Fix",

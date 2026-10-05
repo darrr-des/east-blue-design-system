@@ -32,8 +32,8 @@ export const progressBar: ComponentData = {
   "meta": {
     "slug": "progress-bar",
     "name": "Progress Bar",
-    "node": "18577:13227",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-13227",
+    "node": "4244:187349",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4244-187349",
     "description": "A linear progress indicator showing completion percentage; supports determinate and indeterminate modes.",
     "badges": [
       {
@@ -48,7 +48,7 @@ export const progressBar: ComponentData = {
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"3\" y=\"14\" width=\"26\" height=\"4\" rx=\"2\" fill=\"#D2E5FF\"/>\n      <rect x=\"3\" y=\"14\" width=\"15\" height=\"4\" rx=\"2\" fill=\"#005CE5\"/>\n    </svg>",
     "verdict": {
       "kind": "restructure",
-      "title": "Restructure — collapse 11 percentage variants into one component with a continuous <code>progress</code> value",
+      "title": "Restructure — collapse the 11-value <code>Progress</code> enum into one component taking a continuous value",
       "text": "Progress is a scalar — not an enum. The current schema cannot represent 37% or 62%, and every variant ships two raster PNGs for what should be two token-bound rectangles. Rebuild as a single component: <code>progress: Float</code> (0–1), <code>state: determinate | indeterminate | success | error</code>. Replace the raster <code>back</code> / <code>front</code> layers with vector strokes bound to <code>main/progress-bar/color/border-track</code> and <code>main/progress-bar/color/border</code>. Native side maps 1:1 to <code>ProgressView</code> / <code>LinearProgressIndicator</code>."
     }
   },
@@ -69,7 +69,7 @@ export const progressBar: ComponentData = {
       {
         "name": "Consistent",
         "rating": "fail",
-        "note": "Progress modelled as a discrete <code>percentage</code> enum with 11 variants — cannot express 37%, 62%, or any non-decile value. Every other slider-style value in the DS is continuous."
+        "note": "Progress modelled as a discrete <code>Progress</code> enum with 11 variants — cannot express 37%, 62%, or any non-decile value. Every other slider-style value in the DS is continuous."
       },
       {
         "name": "Composable",
@@ -82,7 +82,7 @@ export const progressBar: ComponentData = {
         "state": "Determinate",
         "ios": "yes",
         "android": "yes",
-        "property": "percentage=0…100",
+        "property": "Progress=0…100",
         "notes": "Fill grows left-to-right in 10% steps today. Should be continuous (0–1)."
       },
       {
@@ -118,7 +118,7 @@ export const progressBar: ComponentData = {
     "open": [
       {
         "headline": "Progress is an enum of 10% steps, not a value.",
-        "body": "The Figma component exposes <code>percentage</code> as 11 discrete options (0, 10, 20, …, 100). Consumers can't spec 37% or animate smoothly — they must pick the closest variant. Every scalar value in the DS should be continuous.",
+        "body": "The Figma component exposes <code>Progress</code> as 11 discrete options (0, 10, 20, …, 100). Consumers can't spec 37% or animate smoothly — they must pick the closest variant. Every scalar value in the DS should be continuous.",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
@@ -149,8 +149,8 @@ export const progressBar: ComponentData = {
         }
       },
       {
-        "headline": "Property name <code>percentage</code> reads as a unit, not a ratio.",
-        "body": "Native APIs use <code>progress</code> as a 0–1 <code>Float</code>. Renaming to <code>progress</code> (with a 0–1 range, or 0–100 if kept as integer) aligns the DS with iOS / Compose conventions.",
+        "headline": "<code>Progress</code> is typed as an enum where both platforms take a scalar.",
+        "body": "The name now matches native convention — the earlier <code>percentage</code> has been renamed. What is left is the type: 11 discrete options cannot carry 0–1 continuous, so a mapping still has to quantise.",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
@@ -167,13 +167,13 @@ export const progressBar: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Collapse 11 percentage variants into a single component with a continuous <code>progress</code> value.",
-        "body": "Delete the <code>percentage = 0 | 10 | … | 100</code> enum. Expose <code>progress: Float</code> (0–1). In Figma, drive the fill width by layout — either a single variant with a layer the designer resizes, or a published component that lives as a native primitive on the dev side. Variant math drops from 11 to 1 (+ state).",
+        "headline": "Collapse the 11 <code>Progress</code> variants into a single component taking a continuous value.",
+        "body": "Delete the <code>Progress = 0 | 10 | … | 100</code> enum. Expose <code>progress: Float</code> (0–1). In Figma, drive the fill width by layout — either a single variant with a layer the designer resizes, or a published component that lives as a native primitive on the dev side. Variant math drops from 11 to 1 (+ state).",
         "tag": "Property"
       },
       {
-        "headline": "Replace raster <code>back</code> / <code>front</code> images with token-bound rectangles.",
-        "body": "Two filled rectangles (or stroked lines) bound to <code>main/progress-bar/color/border-track</code> and <code>main/progress-bar/color/border</code>. Same visual output, theme-able, resolution-independent, no PNG pairs to ship.",
+        "headline": "Name the two zones and bind their colours to tokens.",
+        "body": "Both zones are already vector strokes — the raster pair is gone. They are still unnamed strokes on the component with no readable variable binding, so give them <code>Track</code> and <code>Fill</code> layers bound to <code>main/progress-bar/color/border-track</code> and <code>main/progress-bar/color/border</code>.",
         "tag": "Asset"
       },
       {
@@ -231,7 +231,7 @@ export const progressBar: ComponentData = {
               },
               {
                 "key": "Layers",
-                "value": "fill-container — 308 wide, no children; both zones are strokes on the component",
+                "value": "fill-container · strokes, no children",
                 "mono": true
               }
             ]
@@ -263,7 +263,7 @@ export const progressBar: ComponentData = {
             "rows": [
               {
                 "key": "Text layers",
-                "value": "None — the bar renders no text; a percentage label is the consumer’s"
+                "value": "None"
               }
             ]
           },
@@ -273,22 +273,22 @@ export const progressBar: ComponentData = {
             "rows": [
               {
                 "key": "Height",
-                "value": "5px — the stroke width; the component’s own bounding box is 0 tall",
+                "value": "5 (stroke width)",
                 "mono": true
               },
               {
                 "key": "Width",
-                "value": "312px",
+                "value": "312",
                 "mono": true
               },
               {
                 "key": "Radius",
-                "value": "Round caps — 2.5px, half the stroke",
+                "value": "2.5 (round caps)",
                 "mono": true
               },
               {
                 "key": "Padding H",
-                "value": "2px — the path runs 2.5 in from each end, so the caps land flush",
+                "value": "2",
                 "mono": true
               },
               {
@@ -298,49 +298,49 @@ export const progressBar: ComponentData = {
               },
               {
                 "key": "Track",
-                "value": "308px",
+                "value": "308",
                 "mono": true
               },
               {
                 "key": "Fill",
-                "value": "0 — Progress=0 ships no fill path at all",
+                "value": "0 (no fill path)",
                 "mono": true,
                 "variants": {
                   "progress:10": {
-                    "value": "30.8px — 308 × 10%"
+                    "value": "30.8"
                   },
                   "progress:20": {
-                    "value": "61.6px — 308 × 20%"
+                    "value": "61.6"
                   },
                   "progress:30": {
-                    "value": "92.4px — 308 × 30%"
+                    "value": "92.4"
                   },
                   "progress:40": {
-                    "value": "123.2px — 308 × 40%"
+                    "value": "123.2"
                   },
                   "progress:50": {
-                    "value": "154px — 308 × 50%"
+                    "value": "154"
                   },
                   "progress:60": {
-                    "value": "184.8px — 308 × 60%"
+                    "value": "184.8"
                   },
                   "progress:70": {
-                    "value": "215.6px — 308 × 70%"
+                    "value": "215.6"
                   },
                   "progress:80": {
-                    "value": "246.4px — 308 × 80%"
+                    "value": "246.4"
                   },
                   "progress:90": {
-                    "value": "277.2px — 308 × 90%"
+                    "value": "277.2"
                   },
                   "progress:100": {
-                    "value": "308px — 308 × 100%"
+                    "value": "308"
                   }
                 }
               },
               {
                 "key": "Alignment",
-                "value": "Leading — the fill grows from the left cap",
+                "value": "Leading",
                 "mono": true
               }
             ]
@@ -382,38 +382,78 @@ export const progressBar: ComponentData = {
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+        },
+        {
+          "label": "Android — Gradle",
+          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:progress-bar:1.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.progressbar.*  <span class=\"cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": "Package not yet published. The component is a Restructure candidate — the API below is the target shape, not a shipped one."
     },
     "propertyMapping": {
+      "description": "The Figma column reads the set as it stands today; the native columns are the target API from the Restructure verdict, so several rows map a Figma value that does not exist yet.",
       "rows": [
         {
-          "figma": "<code>percentage: 0 | 10 | … | 100</code> (enum)",
-          "swift": "<code>progress: Float (0–1)</code>",
-          "compose": "<code>value: Double</code>"
+          "figma": "<code>Progress</code> · 0, 10 … 100 (enum, 11 values)",
+          "swift": "<code>value: Double</code> — continuous 0–1",
+          "compose": "<code>progress: Float</code> — continuous 0f–1f"
         },
         {
           "figma": "(not modeled)",
-          "swift": "<code>state: determinate | indeterminate | success | error</code>",
-          "compose": "<code>ProgressView()</code> (indeterminate) / <code>.tint(.green / .red)</code>"
+          "swift": "<code>EBProgressBar()</code> — indeterminate",
+          "compose": "<code>LinearProgressIndicator()</code> with no progress"
         },
         {
-          "figma": "(raster <code>back</code>)",
-          "swift": "<code>Track</code> (vector, <code>border-track</code>)",
-          "compose": "<code>.progressViewStyle(.linear)</code>"
+          "figma": "(not modeled)",
+          "swift": "<code>.tint(.green)</code> / <code>.tint(.red)</code>",
+          "compose": "<code>color = EBColors.success / error</code>"
         },
         {
-          "figma": "(raster <code>front</code>)",
-          "swift": "<code>Fill</code> (vector, <code>border</code>)",
-          "compose": "<code>.tint(EBColors.progressFill)</code>"
+          "figma": "Track — stroked path, full 308",
+          "swift": "<code>.progressViewStyle(.linear)</code> track",
+          "compose": "<code>trackColor</code>"
         },
         {
-          "figma": "312 fixed",
-          "swift": "fill-container",
-          "compose": "<code>.frame(maxWidth: .infinity)</code>"
+          "figma": "Fill — stroked path, 308 × Progress",
+          "swift": "<code>.tint(EBColors.progressFill)</code>",
+          "compose": "<code>color</code>"
+        },
+        {
+          "figma": "312 fixed width",
+          "swift": "<code>.frame(maxWidth: .infinity)</code>",
+          "compose": "<code>Modifier.fillMaxWidth()</code>"
+        },
+        {
+          "figma": "5 stroke, round caps",
+          "swift": "<code>.frame(height: 5)</code> · <code>.clipShape(.capsule)</code>",
+          "compose": "<code>strokeCap = StrokeCap.Round</code>"
         }
-      ]
+      ],
+      "filePaths": {
+        "swift": "ios/Components/ProgressBar/EBProgressBar.swift",
+        "compose": "android/components/progressbar/EBProgressBar.kt"
+      }
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "Determinate — target API",
+        "swift": "<span class=\"cmt\">// value is continuous, not one of 11 steps</span>\n<span class=\"typ\">EBProgressBar</span>(<span class=\"prp\">value</span>: <span class=\"typ\">0.62</span>)\n    .<span class=\"fn\">accessibilityLabel</span>(<span class=\"str\">\"Verification progress\"</span>)\n\n<span class=\"cmt\">// Driven by state</span>\n<span class=\"kw\">@State</span> <span class=\"kw\">private var</span> uploaded: <span class=\"typ\">Double</span> = <span class=\"typ\">0</span>\n<span class=\"typ\">EBProgressBar</span>(<span class=\"prp\">value</span>: uploaded)",
+        "compose": "<span class=\"cmt\">// progress is continuous, not one of 11 steps</span>\n<span class=\"typ\">EBProgressBar</span>(\n    <span class=\"prp\">progress</span> = <span class=\"typ\">0.62f</span>,\n    <span class=\"prp\">modifier</span> = <span class=\"typ\">Modifier</span>\n        .<span class=\"fn\">fillMaxWidth</span>()\n        .<span class=\"fn\">semantics</span> { contentDescription = <span class=\"str\">\"Verification progress\"</span> }\n)"
+      },
+      {
+        "subheading": "Indeterminate — not modeled in Figma",
+        "swift": "<span class=\"cmt\">// No Figma variant covers this — see C5</span>\n<span class=\"typ\">EBProgressBar</span>()\n    .<span class=\"fn\">accessibilityLabel</span>(<span class=\"str\">\"Loading\"</span>)",
+        "compose": "<span class=\"cmt\">// No Figma variant covers this — see C5</span>\n<span class=\"typ\">EBProgressBar</span>(\n    <span class=\"prp\">modifier</span> = <span class=\"typ\">Modifier</span>.<span class=\"fn\">fillMaxWidth</span>()\n)"
+      }
+    ],
     "accessibility": [
       {
         "requirement": "Progress role",
@@ -441,173 +481,229 @@ export const progressBar: ComponentData = {
         "android": "Native <code>LinearProgressIndicator</code> already respects <code>Animator.getDurationScale</code>."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use for operations with a knowable completion — uploads, multi-step KYC, form wizards.",
+        "dontText": "Use for an operation of unknown length. That is an indeterminate indicator, which the set does not yet model."
+      },
+      {
+        "doText": "Pair the bar with a text label when the exact figure matters. The component renders no text of its own.",
+        "dontText": "Rely on the bar alone to convey a number — a 5px bar is not readable to the nearest percent."
+      },
+      {
+        "doText": "Let the bar stretch to the content width. 312 is the Figma frame, not a fixed native width.",
+        "dontText": "Hard-code 312 in native code — it strands the bar on wider screens."
+      },
+      {
+        "doText": "Give it an accessibility label naming the task it is tracking.",
+        "dontText": "Leave it unlabelled — \"62 percent\" with no subject tells a screen-reader user nothing."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Rename <code>back</code> → <code>Track</code>, <code>front</code> → <code>Fill</code>. Otherwise structurally clean."
+        "notes": "Flat and simple — the only named layer read off the set is <code>fill-container</code>, and both zones are strokes on the component rather than child nodes. The earlier <code>back</code> / <code>front</code> raster pair is gone. What remains is that neither zone is a named layer, so there is nothing for a reviewer or Code Connect to point at."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
         "status": "rework",
         "statusLabel": "Requires Rework",
-        "notes": "<code>percentage</code> is a discrete enum; should be a continuous <code>progress: Float</code> (0–1)."
+        "notes": "<code>Progress</code> is modelled as an 11-value enum (<code>0, 10 … 100</code>). Progress is a scalar — the schema cannot express 37% or 62%, and both native platforms take a continuous value. The name is right; the type is not."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Track + fill colors bound to <code>main/progress-bar/color/*</code>. Add <code>success</code> / <code>error</code> tokens once states are introduced."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Track <code>#9BC5FD</code> and fill <code>#005CE5</code> are consistent across all 11 variants, but no binding could be read — the Talk To Figma plugin returns no variable references, so whether these are tokens or raw values is unconfirmed. Needs a Dev Mode check."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps 1:1 to <code>ProgressView(value:)</code> / <code>LinearProgressIndicator</code>. No custom gesture or web-only patterns."
+        "notes": "Maps 1:1 to <code>ProgressView(value:)</code> and <code>LinearProgressIndicator</code>. A stroked path with round caps is a capsule-clipped bar on both platforms. No gesture or web-only pattern."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
         "status": "rework",
         "statusLabel": "Requires Rework",
-        "notes": "Missing indeterminate, success, error. Only determinate (in 10% steps) modeled today."
+        "notes": "Determinate only, in 10% steps. No indeterminate, success or error — all three are built into the native primitives and all three are needed in product."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Track + fill are raster <code>&lt;img&gt;</code>. Replace with token-bound rectangles or vector strokes."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Both zones are vector stroked paths, 5 wide with round caps — confirmed by <code>get_svg</code> and <code>export_node_as_image</code> on the set. The raster <code>&lt;img&gt;</code> fills recorded against the retired Sticker Sheets set are no longer present."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked until progress is parameterized and rasters replaced."
+        "notes": "Nothing registered. Blocked on C2 — an 11-value enum cannot map to a continuous native parameter, so the mapping waits for the restructure."
       }
     ],
     "codeConnect": [],
     "variants": {
       "total": 11,
-      "description": "A single <code>percentage</code> axis with 11 discrete values (<code>0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100</code>) = <strong>11 variants</strong>. The target architecture collapses this axis into a continuous <code>progress</code> value — variant count drops to <strong>1</strong> (plus the new <code>state</code> axis for indeterminate / success / error).",
+      "description": "One <code>Progress</code> axis with 11 discrete values (<code>0, 10 … 100</code>) = <strong>11 variants</strong>. Fill length is <code>308 × Progress</code>; at <code>0</code> no fill path is drawn at all. The Restructure verdict collapses the axis into a single component taking a continuous value, dropping this to <strong>1</strong> plus a <code>state</code> axis. Per-variant node IDs are not listed — the ones previously here belonged to the retired Sticker Sheets set <code>18577:13227</code>, and the current set has not been re-read.",
       "columns": [
         "#",
-        "Node",
-        "percentage",
-        "Fill width",
-        "Layer pair"
+        "Progress",
+        "Fill length",
+        "Rendering"
       ],
       "rows": [
         {
           "cells": [
             "1",
-            "<code>27:64947</code>",
             "<code>0</code>",
             "0 / 308",
-            "back only (no front rendered)"
+            "Track only — no fill path drawn"
           ]
         },
         {
           "cells": [
             "2",
-            "<code>27:64949</code>",
             "<code>10</code>",
-            "~31 / 308",
-            "back + front raster"
+            "30.8 / 308",
+            "Track + fill"
           ]
         },
         {
           "cells": [
             "3",
-            "<code>27:64953</code>",
             "<code>20</code>",
-            "~62 / 308",
-            "back + front raster"
+            "61.6 / 308",
+            "Track + fill"
           ]
         },
         {
           "cells": [
             "4",
-            "<code>27:64957</code>",
             "<code>30</code>",
-            "~92 / 308",
-            "back + front raster"
+            "92.4 / 308",
+            "Track + fill"
           ]
         },
         {
           "cells": [
             "5",
-            "<code>27:64961</code>",
             "<code>40</code>",
-            "~123 / 308",
-            "back + front raster"
+            "123.2 / 308",
+            "Track + fill"
           ]
         },
         {
           "cells": [
             "6",
-            "<code>27:64965</code>",
             "<code>50</code>",
-            "~154 / 308",
-            "back + front raster"
+            "154 / 308",
+            "Track + fill"
           ]
         },
         {
           "cells": [
             "7",
-            "<code>27:64969</code>",
             "<code>60</code>",
-            "~185 / 308",
-            "back + front raster"
+            "184.8 / 308",
+            "Track + fill"
           ]
         },
         {
           "cells": [
             "8",
-            "<code>27:64973</code>",
             "<code>70</code>",
-            "~216 / 308",
-            "back + front raster"
+            "215.6 / 308",
+            "Track + fill"
           ]
         },
         {
           "cells": [
             "9",
-            "<code>27:64977</code>",
             "<code>80</code>",
-            "~246 / 308",
-            "back + front raster"
+            "246.4 / 308",
+            "Track + fill"
           ]
         },
         {
           "cells": [
             "10",
-            "<code>27:64981</code>",
             "<code>90</code>",
-            "~277 / 308",
-            "back + front raster"
+            "277.2 / 308",
+            "Track + fill"
           ]
         },
         {
           "cells": [
             "11",
-            "<code>27:64985</code>",
             "<code>100</code>",
             "308 / 308",
-            "back + front raster"
+            "Track + fill"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "October 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Repointed to the 2026 Working File set · node 4244:187349",
+      "rows": [
+        {
+          "body": "<strong>Page repointed from Sticker Sheets v2 <code>18577:13227</code> to 2026 Working File <code>4244:187349</code>.</strong> The spec card already documented the newer set; the component meta, the Code tab and the Overview still described the retired one, so the page contradicted itself. Everything now names one set.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Supersession"
+          }
+        },
+        {
+          "body": "<strong>Property is <code>Progress</code>, not <code>percentage</code>.</strong> Read off the property panel: <code>Progress · 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100</code>. The rename closes half of the old C2 finding — the name now matches native convention, and only the enum-versus-scalar typing remains.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Partly closed"
+          }
+        },
+        {
+          "body": "<strong>The raster <code>back</code> / <code>front</code> layers are gone.</strong> Both zones are vector stroked paths, 5 wide with round caps, confirmed by <code>get_svg</code> and <code>export_node_as_image</code> on the set. C6 moves from Requires Rework to Ready, and the raster recommendation is replaced by one about naming and binding the two zones.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>C3 downgraded to Needs Refinement.</strong> It previously claimed track and fill were bound to <code>main/progress-bar/color/*</code>. No binding can actually be read — the plugin returns no variable references — so the claim was unsupported. Recorded as unconfirmed pending a Dev Mode check.",
+          "delta": {
+            "kind": "open",
+            "label": "C3 Corrected"
+          }
+        },
+        {
+          "body": "<strong>Code tab filled in.</strong> Installation blocks, usage snippets for determinate and indeterminate, and usage guidelines were all empty. The property mapping now maps <code>Progress</code> rather than <code>percentage</code> and states plainly which rows describe a Figma value that does not exist yet.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Per-variant node IDs dropped from the inventory.</strong> The eleven listed (<code>27:64947</code> onward) belonged to the retired set. The table now carries the fill maths — <code>308 × Progress</code>, with no fill path drawn at <code>0</code> — and says the current set has not been re-read. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Re-read needed"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

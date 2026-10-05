@@ -365,6 +365,19 @@ body {
    size on the SVG text element (0.25, or 0.5 at XSmall). */
 .btn-preview-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
 
+/* ── Input Field preview — #label is Proxima Soft Semibold at 0.25. */
+.inf-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Labeled Field preview — #label and #value are Proxima Soft Semibold. */
+.lf-text { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Recipient Field preview — both lines are Proxima Soft Semibold;
+   tracking differs (0.5 on the label, 0.25 on the value). */
+.rf-label, .rf-value { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Select Field preview — #value is Proxima Soft Semibold at 0.25. */
+.sf-value { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
 /* ── Checkbox with Label preview ─────────────────────────────────── */
 .ci-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
 .ci-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }

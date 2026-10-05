@@ -1,183 +1,173 @@
-/* Auto-extracted from assessment-src/components/input-field.html.
- * Powers the live-preview dropdowns/toggles for the input-field component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs input-field
+/* Input Field — Style tab demo + Overview preview.
+ * Built from Figma component set 17758:3687 (GCash DS Sticker Sheets v2).
+ *
+ * Panel (set 17758:3687):
+ *   State    · Default, Active, Error, Disabled   (variant)
+ *   isFilled · true, false                        (variant)
+ * 4 x 2 = 8 variants, all built. There is nothing else — no icon slots, no
+ * text property. Each variant is 366 x 46 holding one `text-container`
+ * frame with a single `#label` reading "Placeholder".
+ *
+ * Geometry read off get_node_info; stroke weights off get_svg:
+ *   frame      366 x 46, radius 6
+ *   padding    12 horizontal, 16 vertical
+ *   label      342 x 14, Proxima Soft Semibold 14/14, tracking 0.25, left
+ *   stroke     Default 1 inside · Active 2 · Error 2 · Disabled none
+ *
+ * Note that `isFilled` changes only the label colour — the characters stay
+ * "Placeholder" in all eight variants. See the card.
  */
-/* ── Input Field Component JS ──────────────────────────────────────── */
-var _infDemo = { state: 'Default', filled: 'false', leadingIcon: 'false', trailingIcon: 'false' };
 
-var _infColors = {
-  Default:  { border: '#D7E0EF', bg: '#FFFFFF' },
-  Active:   { border: '#005CE5', bg: '#FFFFFF' },
-  Error:    { border: '#D61B2C', bg: '#FFFFFF' },
-  Disabled: { border: 'none',    bg: '#EEF2F9' }
+var INF_W = 366, INF_H = 46, INF_R = 6, INF_PAD_H = 12, INF_PAD_V = 16;
+var INF_TEXT = 'Placeholder';
+
+/* state → [fill, border, stroke width] — null border means none drawn */
+var INF_STATE = {
+  Default:  ['#FFFFFF', '#D7E0EF', 1],
+  Active:   ['#FFFFFF', '#005CE5', 2],
+  Error:    ['#FFFFFF', '#D61B2C', 2],
+  Disabled: ['#EEF2F9', null,      0]
 };
-var _infTextColors = {
-  Default:  { filled: '#0A2757', empty: '#90A8D0' },
-  Active:   { filled: '#0A2757', empty: '#90A8D0' },
-  Error:    { filled: '#0A2757', empty: '#90A8D0' },
-  Disabled: { filled: '#90A8D0', empty: '#C2CFE5' }
+/* state → [label when isFilled=true, label when isFilled=false] */
+var INF_LABEL = {
+  Default:  ['#0A2757', '#90A8D0'],
+  Active:   ['#0A2757', '#90A8D0'],
+  Error:    ['#0A2757', '#90A8D0'],
+  Disabled: ['#90A8D0', '#C2CFE5']
 };
 
-function _infIconColor(state) {
-  if (state === 'Disabled') return '#C2CFE5';
-  if (state === 'Active')   return '#005CE5';
-  if (state === 'Error')    return '#D61B2C';
-  return '#6780A9';
-}
+var INF_NODES = {
+  'Default|true': '17758:3688',  'Default|false': '17758:3691',
+  'Active|true':  '17758:3694',  'Active|false':  '17758:3697',
+  'Error|true':   '17758:3700',  'Error|false':   '17758:3703',
+  'Disabled|true':'17758:3706',  'Disabled|false':'17758:3709'
+};
 
-function _infBuildSvg(state, filled, leadingIcon, trailingIcon) {
-  var c = _infColors[state] || _infColors.Default;
-  var tc = _infTextColors[state] || _infTextColors.Default;
-  var hasLeading  = leadingIcon === 'true';
-  var hasTrailing = trailingIcon === 'true';
-  var textColor = (filled === 'true') ? tc.filled : tc.empty;
-  var displayText = (filled === 'true') ? 'Sample value' : 'Placeholder';
-  var borderAttr = c.border === 'none' ? '' : ' stroke="' + c.border + '" stroke-width="1.5"';
-  var iconColor = _infIconColor(state);
-  var textX = hasLeading ? 40 : 12;
+function _infRender(c) {
+  var st = INF_STATE[c.state] || INF_STATE.Default;
+  var lab = INF_LABEL[c.state] || INF_LABEL.Default;
+  var fill = st[0], border = st[1], sw = st[2];
+  var labelColor = c.isfilled === 'true' ? lab[0] : lab[1];
 
-  var s = '<svg width="366" height="46" viewBox="0 0 366 46" fill="none">';
-  s += '<rect x="0.5" y="0.5" width="365" height="45" rx="5.5" fill="' + c.bg + '"' + borderAttr + '/>';
-  if (hasLeading) {
-    /* Search-style magnifier icon */
-    s += '<g stroke="' + iconColor + '" stroke-width="1.6" stroke-linecap="round" fill="none">';
-    s += '<circle cx="20" cy="23" r="6"/>';
-    s += '<path d="M25 28 L29 32"/>';
-    s += '</g>';
+  var s = '<svg width="' + INF_W + '" height="' + INF_H + '" viewBox="0 0 ' + INF_W + ' ' + INF_H +
+          '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  if (border) {
+    /* Stroke sits inside, so inset the rect by half its weight. */
+    var o = sw / 2;
+    s += '<rect x="' + o + '" y="' + o + '" width="' + (INF_W - sw) + '" height="' + (INF_H - sw) +
+         '" rx="' + (INF_R - o) + '" fill="' + fill + '" stroke="' + border +
+         '" stroke-width="' + sw + '"/>';
+  } else {
+    s += '<rect x="0" y="0" width="' + INF_W + '" height="' + INF_H + '" rx="' + INF_R +
+         '" fill="' + fill + '"/>';
   }
-  s += '<text x="' + textX + '" y="27" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">' + displayText + '</text>';
-  if (hasTrailing) {
-    /* Clear (x) circle icon */
-    s += '<g stroke="' + iconColor + '" stroke-width="1.6" stroke-linecap="round" fill="none">';
-    s += '<circle cx="346" cy="23" r="7"/>';
-    s += '<path d="M343 20 L349 26 M349 20 L343 26"/>';
-    s += '</g>';
-  }
-  s += '</svg>';
-  return s;
+  s += '<text class="inf-label" x="' + INF_PAD_H + '" y="' + (INF_H / 2) +
+       '" font-size="14" font-weight="600" letter-spacing="0.25" fill="' + labelColor +
+       '" dominant-baseline="central">' + INF_TEXT + '</text>';
+  return s + '</svg>';
 }
 
-function updateInputFieldDemo() {
-  var el = document.getElementById('inf-demo-preview');
-  if (el) el.innerHTML = _infBuildSvg(_infDemo.state, _infDemo.filled, _infDemo.leadingIcon, _infDemo.trailingIcon);
-}
-
-/* ── Spec Cards (state-per-card with isFilled + icon toggles) ─────── */
-var _specCards = {
-  default:  { state: 'Default',  filled: 'false', leadingIcon: 'false', trailingIcon: 'false' },
-  active:   { state: 'Active',   filled: 'false', leadingIcon: 'false', trailingIcon: 'false' },
-  error:    { state: 'Error',    filled: 'false', leadingIcon: 'false', trailingIcon: 'false' },
-  disabled: { state: 'Disabled', filled: 'false', leadingIcon: 'false', trailingIcon: 'false' }
-};
+/* ── Per-card state — Figma's default variant ──────────────────────── */
+var _specCards = { main: { state: 'Default', isfilled: 'true' } };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  var stateDot;
-  switch (card.state) {
-    case 'Active':   stateDot = '.active'; break;
-    case 'Error':    stateDot = '.error'; break;
-    case 'Disabled': stateDot = '.disabled'; break;
-    default:         stateDot = '.default';
-  }
-  var s = 'EBInputField("Label", value: $value)';
-  if (card.leadingIcon === 'true')  s += '\n    .ebLeadingIcon(Image(systemName: "magnifyingglass"))';
-  if (card.trailingIcon === 'true') s += '\n    .ebTrailingIcon(Image(systemName: "xmark.circle.fill"))';
-  s += '\n    .ebState(' + stateDot + ')';
-  s += '\n    .isFilled(' + card.filled + ')';
-  if (card.state === 'Disabled') s += '\n    .disabled(true)';
-  return s;
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function buildSwiftSnippet(cardKey, c) {
+  var lines = ['EBInputField(', '    "' + INF_TEXT + '",', '    text: $value,'];
+  if (c.state === 'Error') lines.push('    isError: true,');
+  lines.push('    isFocused: ' + (c.state === 'Active' ? 'true' : 'false'));
+  lines.push(')');
+  if (c.state === 'Disabled') lines.push('    .disabled(true)');
+  return lines.join('\n');
 }
-
-function buildComposeSnippet(type, card) {
-  var stateName;
-  switch (card.state) {
-    case 'Active':   stateName = 'Active'; break;
-    case 'Error':    stateName = 'Error'; break;
-    case 'Disabled': stateName = 'Disabled'; break;
-    default:         stateName = 'Default';
-  }
-  var lines = ['EBInputField('];
-  lines.push('    label = "Label",');
-  lines.push('    value = value,');
-  if (card.leadingIcon === 'true')  lines.push('    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },');
-  if (card.trailingIcon === 'true') lines.push('    trailingIcon = { Icon(Icons.Default.Clear, contentDescription = null) },');
-  lines.push('    state = EBFieldState.' + stateName + ',');
-  lines.push('    isFilled = ' + card.filled + (card.state === 'Disabled' ? ',' : ''));
-  if (card.state === 'Disabled') lines.push('    enabled = false');
+function buildComposeSnippet(cardKey, c) {
+  var lines = ['EBInputField(', '    value = value,', '    onValueChange = { value = it },',
+               '    placeholder = "' + INF_TEXT + '",'];
+  if (c.state === 'Error') lines.push('    isError = true,');
+  if (c.state === 'Disabled') lines.push('    enabled = false,');
+  var last = lines[lines.length - 1];
+  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
   lines.push(')');
   return lines.join('\n');
 }
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
+/* ── Control handler ────────────────────────────────────────────────── */
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
 
-  /* Update SVG preview — locate by data-view body */
-  var card$ = document.getElementById('spec-card-inf-spec-' + cardStyle);
-  if (card$) {
-    var previewEl = card$.querySelector('.spec-card-preview');
-    if (previewEl) {
-      previewEl.innerHTML = _infBuildSvg(card.state, card.filled, card.leadingIcon, card.trailingIcon);
+  var host = document.getElementById('input-field-spec-' + cardStyle);
+  if (host) host.innerHTML = _infRender(card);
+
+  var st = INF_STATE[card.state] || INF_STATE.Default;
+  var lab = INF_LABEL[card.state] || INF_LABEL.Default;
+  var labelColor = card.isfilled === 'true' ? lab[0] : lab[1];
+
+  var cell = function (n) { return document.querySelector('[data-sp="' + cardStyle + '-' + n + '"]'); };
+  var put = function (n, t) {
+    var el = cell(n); if (!el) return;
+    (el.querySelector('.spec-prop-hex') || el).textContent = t;
+  };
+  var swatch = function (n, hex) {
+    var el = cell(n), dot = el && el.querySelector('.spec-swatch');
+    if (dot) dot.style.background = hex;
+  };
+  var show = function (n, on) {
+    var el = cell(n), row = el && (el.closest('.spec-prop') || el.parentElement);
+    if (row) row.style.display = on ? '' : 'none';
+  };
+
+  put('state', card.state);
+  put('isfilled', card.isfilled);
+  put('variantNode', INF_NODES[card.state + '|' + card.isfilled] + ' · ' + INF_W + ' × ' + INF_H);
+
+  put('bg', st[0]);            swatch('bg', st[0]);
+  show('border', !!st[1]);
+  if (st[1]) { put('border', st[1]); swatch('border', st[1]); }
+  put('labelColor', labelColor); swatch('labelColor', labelColor);
+
+  put('stroke', st[1] ? st[2] + ' inside' : '— (hidden)');
+
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
     }
-  }
-
-  /* Update Properties readouts — data-sp="${cardStyle}-${prop}" */
-  ['state', 'filled', 'leadingIcon', 'trailingIcon'].forEach(function(p) {
-    var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
-    if (spEl) spEl.textContent = card[p];
-  });
-
-  /* Update DEV code — locate via [data-code-content="${cardStyle}"]. Always
-     run, even when DEV view is hidden. Use highlightSyntax. */
-  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
-  if (codeEl) {
-    var activeTab = null;
-    var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-    if (devView) activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var code = getSnippet(cardStyle, lang, card);
-    codeEl.setAttribute('data-final', code);
-    codeEl.setAttribute('data-lang', lang);
-    codeEl.textContent = code;
-    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
   }
 }
 window.updateSpecCard = updateSpecCard;
 
-/* Legacy alias */
-function updateInputFieldSpecCard(state, filled) {
-  var key = state.toLowerCase();
-  if (_specCards[key]) {
-    _specCards[key].filled = filled;
-    updateSpecCard(key, 'filled', filled);
-  }
+/* ── Overview tab ───────────────────────────────────────────────────── */
+var _infDemo = { state: 'Default', isfilled: 'true' };
+function updateInputFieldDemo() {
+  var el = document.getElementById('input-field-demo-preview');
+  if (!el) return;
+  var v = function (id, f) { var n = document.getElementById(id); return n ? n.value : f; };
+  _infDemo.state = v('inf-demo-state', _infDemo.state);
+  _infDemo.isfilled = v('inf-demo-isfilled', _infDemo.isfilled);
+  el.innerHTML = _infRender(_infDemo);
 }
+window.updateInputFieldDemo = updateInputFieldDemo;
 
-function _infInitSpecCards() {
-  Object.keys(_specCards).forEach(function (key) {
-    /* Re-render preview + code by toggling the same value. */
-    updateSpecCard(key, 'filled', _specCards[key].filled);
-  });
-}
-
+/* ── First paint ────────────────────────────────────────────────────── */
 function _infInit() {
   updateInputFieldDemo();
-  _infInitSpecCards();
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'state', _specCards[k].state);
+  });
 }
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _infInit);
-} else {
-  _infInit();
-}
-
-/* ── Re-init after Astro view-transition swaps ─────────────── */
-(function () {
-  document.addEventListener('astro:page-load', _infInit);
-})();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _infInit);
+else _infInit();
+document.addEventListener('astro:page-load', _infInit);

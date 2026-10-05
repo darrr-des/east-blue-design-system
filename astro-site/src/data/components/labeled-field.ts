@@ -1,7 +1,9 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — wired to `updateSpecCard(cardStyle, prop, value)`
-// in `public/scripts/demos/labeled-field.js`.
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)` in
+// `public/scripts/demos/labeled-field.js`. The panel mirrors the property
+// panel of set 17758:3713 in its order: two variant axes then the four
+// booleans, with Figma's own defaults.
 const labeledFieldDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -9,38 +11,61 @@ const labeledFieldDemoControls: DemoControlSection[] = [
       {
         label: 'State',
         prop: 'state',
+        defaultValue: 'Default',
         options: [
-          { value: 'Default', label: 'Default' },
-          { value: 'Active', label: 'Active' },
-          { value: 'Error', label: 'Error' },
+          { value: 'Default',  label: 'Default' },
+          { value: 'Active',   label: 'Active' },
+          { value: 'Error',    label: 'Error' },
           { value: 'Disabled', label: 'Disabled' },
         ],
       },
       {
         label: 'isFilled',
-        prop: 'filled',
+        prop: 'isfilled',
+        defaultValue: 'true',
+        options: [
+          { value: 'true',  label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'show LeadingIcon',
+        prop: 'showleadingicon',
+        control: 'toggle',
         defaultValue: 'false',
         options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
+          { value: 'false', label: 'False' },
+          { value: 'true',  label: 'True' },
         ],
       },
       {
-        label: 'leadingIcon',
-        prop: 'leadingIcon',
+        label: 'has Label',
+        prop: 'haslabel',
+        control: 'toggle',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
+          { value: 'false', label: 'False' },
+          { value: 'true',  label: 'True' },
         ],
       },
       {
-        label: 'action',
-        prop: 'action',
+        label: 'show TrailingIcon',
+        prop: 'showtrailingicon',
+        control: 'toggle',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
+          { value: 'false', label: 'False' },
+          { value: 'true',  label: 'True' },
+        ],
+      },
+      {
+        label: 'show LinkButton',
+        prop: 'showlinkbutton',
+        control: 'toggle',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true',  label: 'True' },
         ],
       },
     ],
@@ -74,7 +99,7 @@ export const labeledField: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"18\" width=\"80\" height=\"16\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <circle cx=\"30\" cy=\"26\" r=\"3\" fill=\"currentColor\" opacity=\".1\"></circle>\n          <rect x=\"37\" y=\"22\" width=\"12\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <rect x=\"37\" y=\"27\" width=\"20\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <circle cx=\"90\" cy=\"26\" r=\"3\" fill=\"currentColor\" opacity=\".1\"></circle>\n          <rect x=\"20\" y=\"40\" width=\"80\" height=\"16\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <circle cx=\"30\" cy=\"48\" r=\"3\" fill=\"currentColor\" opacity=\".1\"></circle>\n          <rect x=\"37\" y=\"44\" width=\"16\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <rect x=\"37\" y=\"49\" width=\"28\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <circle cx=\"90\" cy=\"48\" r=\"3\" fill=\"currentColor\" opacity=\".1\"></circle>\n          <rect x=\"20\" y=\"62\" width=\"80\" height=\"8\" rx=\"4\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"lf-demo-preview\"><svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><rect x=\"12\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"24\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle><text x=\"44\" y=\"19\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\" opacity=\"0.7\">Label</text><text x=\"44\" y=\"33\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><rect x=\"260\" y=\"11\" width=\"60\" height=\"24\" rx=\"12\" fill=\"#005CE5\"></rect><text x=\"290\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#FFFFFF\" text-anchor=\"middle\">Action</text><rect x=\"330\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"342\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_lfDemo.state=this.value;updateLabeledFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_lfDemo.filled=this.value;updateLabeledFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\"><div id=\"labeled-field-demo-preview\"></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"lf-demo-state\" class=\"demo-panel-select\" onchange=\"updateLabeledFieldDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select id=\"lf-demo-isfilled\" class=\"demo-panel-select\" onchange=\"updateLabeledFieldDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">show LeadingIcon</span><select id=\"lf-demo-lead\" class=\"demo-panel-select\" onchange=\"updateLabeledFieldDemo()\"><option value=\"false\" selected=\"\">False</option><option value=\"true\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">has Label</span><select id=\"lf-demo-label\" class=\"demo-panel-select\" onchange=\"updateLabeledFieldDemo()\"><option value=\"false\">False</option><option value=\"true\" selected=\"\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">show TrailingIcon</span><select id=\"lf-demo-trail\" class=\"demo-panel-select\" onchange=\"updateLabeledFieldDemo()\"><option value=\"false\">False</option><option value=\"true\" selected=\"\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">show LinkButton</span><select id=\"lf-demo-link\" class=\"demo-panel-select\" onchange=\"updateLabeledFieldDemo()\"><option value=\"false\" selected=\"\">False</option><option value=\"true\">True</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -143,29 +168,105 @@ export const labeledField: ComponentData = {
     ],
     "open": [
       {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Structural work is complete — registration can proceed against the 8-variant <code>State × isFilled</code> schema.",
+        "headline": "The two Disabled variants are identical.",
+        "body": "<code>State=Disabled, isFilled=true</code> and <code>isFilled=false</code> carry the same fill, the same <code>#90A8D0</code> label and the same <code>#C2CFE5</code> value. Two of the eight variants are duplicates, and a disabled field cannot show whether it holds a value.",
         "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The four boolean names are inconsistent.",
+        "body": "<code>show LeadingIcon</code>, <code>has Label</code>, <code>show TrailingIcon</code>, <code>show LinkButton</code> — two verbs, a space before a PascalCase noun, and no match with the <code>isFilled</code> camelCase on the variant axis. Code Connect would carry the irregularity into the native signature.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The empty value fails contrast at 2.41:1.",
+        "body": "<code>#90A8D0</code> on white, against a 4.5:1 minimum. It is the resting appearance of every unfilled Labeled Field.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "The resting border fails non-text contrast at 1.33:1.",
+        "body": "<code>#D7E0EF</code> on white. WCAG 1.4.11 asks 3:1 for the boundary of an input. Active and Error pass; only the resting state does not.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Content sits 2px above centre.",
+        "body": "The 24-tall content row starts at y 12 in a 46-tall frame, leaving 12 above and 10 below. Confirmed in the drawn output, not just the layer tree — the trailing icon renders at y 12.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The two icon placeholders are different greys.",
+        "body": "Leading ships as <code>#868686</code>, trailing as <code>#C2C6CF</code> — two stand-ins for the same job, in the same row, 2 stops apart. Nothing in the set explains the split.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "The component description belongs to another component.",
+        "body": "It reads “The input field is inactive but ready for interaction, with input field for monetary value (PHP / +63).” — a description of a monetary or mobile-number field, not a labelled row. It is the first thing a consumer reads in the panel.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "No token bindings readable.",
+        "body": "Eight colours across the set, none resolving to a variable. Whether any are bound is unconfirmed.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
         }
       }
     ],
     "recommendations": [
       {
-        "headline": "Replace hardcoded <code>Button - XSmall</code> with an <code>action</code> slot.",
-        "body": "Today the trailing action is baked in — consumers can't swap in other button variants or remove it. A named slot makes the action composable via instance swap.",
-        "tag": "Slot"
+        "headline": "Regularise the four boolean names.",
+        "body": "Pick one verb and one case — <code>hasLeadingIcon</code>, <code>hasLabel</code>, <code>hasTrailingIcon</code>, <code>hasLinkButton</code> — so they match <code>isFilled</code> and map to a clean native signature.",
+        "tag": "Rename"
       },
       {
-        "headline": "Replace <code>trailing-icon</code> placeholder with a swappable icon instance.",
-        "body": "The current <code>icon-placeholder</code> RECTANGLE blocks designers from overriding the trailing icon without detaching. Follow the instance-swap pattern used elsewhere in the DS.",
-        "tag": "Slot"
+        "headline": "Make Disabled respect <code>isFilled</code>, or drop the axis there.",
+        "body": "Two identical variants carry no information. Either give the disabled filled state its own value colour, or document that Disabled collapses the axis.",
+        "tag": "State"
       },
       {
-        "headline": "Add a <code>helperText</code> slot.",
-        "body": "Validation messages and hint copy are handled externally today — a first-class slot keeps the form anatomy self-contained.",
-        "tag": "Slot"
+        "headline": "Darken the empty value and the resting border.",
+        "body": "The value needs 4.5:1 and the border 3:1. Both are decorative rather than perceivable today.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Centre the content row.",
+        "body": "12 above and 10 below in a 46-tall frame. Even padding removes the 2px drift.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Use one placeholder grey for both icon slots.",
+        "body": "Leading is <code>#868686</code> and trailing <code>#C2C6CF</code>. Pick one, or state why they differ.",
+        "tag": "Asset"
+      },
+      {
+        "headline": "Rewrite the component description.",
+        "body": "It currently describes a monetary / mobile-number field. Replace it with what Labeled Field is: a label and value on one row, with optional icons and a trailing link.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Add press states for the trailing icon and the link button.",
+        "body": "Both are tap targets and neither has press feedback modelled anywhere in the set.",
+        "tag": "State"
       }
     ]
   },
@@ -173,40 +274,53 @@ export const labeledField: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "lf-spec-default",
-        "demoKey": "default",
+        "cardKey": "lf-spec-main",
+        "demoKey": "main",
+        "title": "Labeled Field",
+        "node": "17758:3713",
+        "description": "One card for the whole set: State × isFilled plus the four booleans. Every reading below tracks the selection.",
+        "previewHtml": "<div id=\"labeled-field-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": labeledFieldDemoControls,
-        "title": "Default",
-        "node": "17758:3714",
-        "description": "Idle state with gray border. Leading/trailing icon placeholders, label + value text container, and XSmall action button.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "state",
+                "key": "State",
                 "value": "Default",
-                "mono": false,
                 "prop": "state"
               },
               {
                 "key": "isFilled",
+                "value": "true",
+                "prop": "isfilled"
+              },
+              {
+                "key": "show LeadingIcon",
                 "value": "false",
-                "mono": true,
-                "prop": "filled"
+                "prop": "showleadingicon"
               },
               {
-                "key": "leadingIcon",
+                "key": "has Label",
                 "value": "true",
-                "mono": true,
-                "prop": "leadingIcon"
+                "prop": "haslabel"
               },
               {
-                "key": "action",
+                "key": "show TrailingIcon",
                 "value": "true",
-                "mono": true,
-                "prop": "action"
+                "prop": "showtrailingicon"
+              },
+              {
+                "key": "show LinkButton",
+                "value": "false",
+                "prop": "showlinkbutton"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "17758:3714 · 366 × 46",
+                "prop": "variantNode",
+                "mono": true
               }
             ]
           },
@@ -214,27 +328,47 @@ export const labeledField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "labeled-field/disabled/bg" } }
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "prop": "bg",
+                "swatch": true
               },
-              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border",
-                "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "labeled-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "labeled-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
+              {
+                "key": "Border",
+                "value": "#D7E0EF",
+                "prop": "border",
+                "swatch": true
               },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "labeled-field/disabled/label" } }
+              {
+                "key": "#label",
+                "value": "#0A2757",
+                "prop": "labelColor",
+                "swatch": true
               },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text",
-                "variants": { "state:Disabled": { "value": "#C2CFE5", "token": "labeled-field/disabled/value" } }
+              {
+                "key": "#value",
+                "value": "#0A2757",
+                "prop": "valueColor",
+                "swatch": true
               },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "labeled-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
+              {
+                "key": "Leading placeholder",
+                "value": "#868686",
+                "prop": "leadFill",
+                "swatch": true
+              },
+              {
+                "key": "Trailing placeholder",
+                "value": "#C2C6CF",
+                "prop": "trailFill",
+                "swatch": true
+              },
+              {
+                "key": "Link label",
+                "value": "#005CE5",
+                "prop": "linkFg",
+                "swatch": true
               }
             ]
           },
@@ -243,33 +377,58 @@ export const labeledField: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Field height",
-                "value": "48px",
+                "key": "Frame",
+                "value": "366 × 46",
                 "mono": true
               },
               {
-                "key": "Padding H",
-                "value": "12px",
+                "key": "Radius",
+                "value": "6",
                 "mono": true
               },
               {
-                "key": "Padding V",
-                "value": "14px",
+                "key": "Stroke",
+                "value": "1 inside",
+                "prop": "stroke",
                 "mono": true
               },
               {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
+                "key": "Padding",
+                "value": "12 left; right side flush",
                 "mono": true
               },
               {
-                "key": "Border",
-                "value": "1px solid",
+                "key": "Content row",
+                "value": "24 tall at y 12",
                 "mono": true
               },
               {
-                "key": "Icon size",
-                "value": "20 × 20",
+                "key": "Gap",
+                "value": "8 — carried inside each frame",
+                "mono": true
+              },
+              {
+                "key": "text-container",
+                "value": "310 × 24",
+                "prop": "textW",
+                "mono": true
+              },
+              {
+                "key": "leading-icon",
+                "value": "32 frame · icon @ x 12",
+                "prop": "leadRow",
+                "mono": true
+              },
+              {
+                "key": "action-button",
+                "value": "60 × 24 @ x 262",
+                "prop": "linkRow",
+                "mono": true
+              },
+              {
+                "key": "trailing-icon",
+                "value": "44 frame · icon @ x 330",
+                "prop": "trailRow",
                 "mono": true
               }
             ]
@@ -279,485 +438,170 @@ export const labeledField: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Label style",
+                "key": "#label",
                 "value": "Primary/Label/Light/Small",
                 "mono": true
               },
               {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
+                "key": "#value",
                 "value": "Primary/Label/Light/Small",
                 "mono": true
               },
               {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
+                "key": "action-button › #label",
+                "value": "Primary/Label/Small",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Email\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Email\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><rect x=\"12\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"24\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle><text x=\"44\" y=\"19\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\" opacity=\"0.7\">Label</text><text x=\"44\" y=\"33\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><rect x=\"260\" y=\"11\" width=\"60\" height=\"24\" rx=\"12\" fill=\"#005CE5\"></rect><text x=\"290\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#FFFFFF\" text-anchor=\"middle\">Action</text><rect x=\"330\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"342\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle></svg>"
-      },
-      {
-        "cardKey": "lf-spec-active",
-        "demoKey": "active",
-        "demoControls": labeledFieldDemoControls,
-        "title": "Active (Focused)",
-        "node": "17758:3732",
-        "description": "Focused state with blue border indicating active input.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Active",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "isFilled",
-                "value": "false",
-                "mono": true,
-                "prop": "filled"
-              },
-              {
-                "key": "leadingIcon",
-                "value": "true",
-                "mono": true,
-                "prop": "leadingIcon"
-              },
-              {
-                "key": "action",
-                "value": "true",
-                "mono": true,
-                "prop": "action"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/active/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "labeled-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#005CE5", "token": "labeled-field/active/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "labeled-field/default/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "labeled-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/active/label",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "labeled-field/disabled/label" } }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/active/text",
-                "variants": { "state:Disabled": { "value": "#C2CFE5", "token": "labeled-field/disabled/value" } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Email\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.active</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Email\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Active</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"1.5\"></rect><rect x=\"12\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"24\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle><text x=\"44\" y=\"19\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\" opacity=\"0.7\">Label</text><text x=\"44\" y=\"33\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><rect x=\"260\" y=\"11\" width=\"60\" height=\"24\" rx=\"12\" fill=\"#005CE5\"></rect><text x=\"290\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#FFFFFF\" text-anchor=\"middle\">Action</text><rect x=\"330\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"342\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle></svg>"
-      },
-      {
-        "cardKey": "lf-spec-error",
-        "demoKey": "error",
-        "demoControls": labeledFieldDemoControls,
-        "title": "Error",
-        "node": "17758:3750",
-        "description": "Validation error state with red border.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Error",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "isFilled",
-                "value": "false",
-                "mono": true,
-                "prop": "filled"
-              },
-              {
-                "key": "leadingIcon",
-                "value": "true",
-                "mono": true,
-                "prop": "leadingIcon"
-              },
-              {
-                "key": "action",
-                "value": "true",
-                "mono": true,
-                "prop": "action"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/error/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "labeled-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#D61B2C", "token": "labeled-field/error/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "labeled-field/default/border" },
-                  "state:Active":   { "value": "#005CE5", "token": "labeled-field/active/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/error/label",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "labeled-field/disabled/label" } }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/error/text",
-                "variants": { "state:Disabled": { "value": "#C2CFE5", "token": "labeled-field/disabled/value" } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Email\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Email\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"1.5\"></rect><rect x=\"12\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"24\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle><text x=\"44\" y=\"19\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\" opacity=\"0.7\">Label</text><text x=\"44\" y=\"33\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><rect x=\"260\" y=\"11\" width=\"60\" height=\"24\" rx=\"12\" fill=\"#005CE5\"></rect><text x=\"290\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#FFFFFF\" text-anchor=\"middle\">Action</text><rect x=\"330\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"342\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle></svg>"
-      },
-      {
-        "cardKey": "lf-spec-disabled",
-        "demoKey": "disabled",
-        "demoControls": labeledFieldDemoControls,
-        "title": "Disabled",
-        "node": "17758:3768",
-        "description": "Non-interactive state with gray background and hidden border.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Disabled",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "isFilled",
-                "value": "false",
-                "mono": true,
-                "prop": "filled"
-              },
-              {
-                "key": "leadingIcon",
-                "value": "true",
-                "mono": true,
-                "prop": "leadingIcon"
-              },
-              {
-                "key": "action",
-                "value": "true",
-                "mono": true,
-                "prop": "action"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#EEF2F9", "token": "labeled-field/disabled/bg",
-                "variants": {
-                  "state:Default": { "value": "#FFFFFF", "token": "labeled-field/default/bg" },
-                  "state:Active":  { "value": "#FFFFFF", "token": "labeled-field/active/bg" },
-                  "state:Error":   { "value": "#FFFFFF", "token": "labeled-field/error/bg" }
-                }
-              },
-              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border",
-                "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "labeled-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "labeled-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Label", "value": "#90A8D0", "token": "labeled-field/disabled/label",
-                "variants": {
-                  "state:Default": { "value": "#0A2757", "token": "labeled-field/default/label" },
-                  "state:Active":  { "value": "#0A2757", "token": "labeled-field/active/label" },
-                  "state:Error":   { "value": "#0A2757", "token": "labeled-field/error/label" }
-                }
-              },
-              { "key": "Value", "value": "#C2CFE5", "token": "labeled-field/disabled/value",
-                "variants": {
-                  "state:Default": { "value": "#0A2757", "token": "labeled-field/default/text" },
-                  "state:Active":  { "value": "#0A2757", "token": "labeled-field/active/text" },
-                  "state:Error":   { "value": "#0A2757", "token": "labeled-field/error/text" }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Email\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Email\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><rect x=\"12\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#C2CFE5\" opacity=\"0.2\"></rect><circle cx=\"24\" cy=\"23\" r=\"4\" fill=\"#C2CFE5\" opacity=\"0.5\"></circle><text x=\"44\" y=\"19\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\" opacity=\"0.7\">Label</text><text x=\"44\" y=\"33\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text><rect x=\"260\" y=\"11\" width=\"60\" height=\"24\" rx=\"12\" fill=\"#EEF2F9\"></rect><text x=\"290\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#C2CFE5\" text-anchor=\"middle\">Action</text><rect x=\"330\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#C2CFE5\" opacity=\"0.2\"></rect><circle cx=\"342\" cy=\"23\" r=\"4\" fill=\"#C2CFE5\" opacity=\"0.5\"></circle></svg>"
+        "swift": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value<span class=\"syn-punc\">: </span>$value\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> value <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "All states share the same container structure. Border color is the primary state indicator. Text colors depend on isFilled (true/false).",
+        "description": "Read off <code>get_node_info</code> on all eight variants, with stroke weights and drawn positions confirmed by <code>get_svg</code>. No token binding could be read — the plugin returns no variable references. Disabled draws no stroke at all, and its two variants are identical: <code>isFilled</code> changes nothing there.",
         "columns": [
-          "DEFAULT",
-          "ACTIVE",
-          "ERROR",
-          "DISABLED"
+          "isFilled = true",
+          "isFilled = false"
         ],
         "rows": [
           {
-            "role": "Border",
-            "token": "field/border",
+            "role": "Default · bg",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default · border",
+            "token": "— · 1 inside",
             "values": [
               "#D7E0EF",
-              "#005CE5",
-              "#D61B2C",
-              "hidden"
+              "#D7E0EF"
             ]
           },
           {
-            "role": "Background",
-            "token": "field/bg",
+            "role": "Default · #label",
+            "token": "—",
             "values": [
-              "#FFFFFF",
-              "#FFFFFF",
-              "#FFFFFF",
-              "#EEF2F9"
+              "#0A2757",
+              "#0A2757"
             ]
           },
           {
-            "role": "Label (filled)",
-            "token": "field/text/label",
+            "role": "Default · #value",
+            "token": "—",
             "values": [
-              "#0A2757",
-              "#0A2757",
               "#0A2757",
               "#90A8D0"
             ]
           },
           {
-            "role": "Value (filled)",
-            "token": "field/text/value",
+            "role": "Active · bg",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Active · border",
+            "token": "— · 2 inside",
+            "values": [
+              "#005CE5",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Active · #label",
+            "token": "—",
             "values": [
               "#0A2757",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Active · #value",
+            "token": "—",
+            "values": [
               "#0A2757",
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Error · bg",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Error · border",
+            "token": "— · 2 inside",
+            "values": [
+              "#D61B2C",
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Error · #label",
+            "token": "—",
+            "values": [
               "#0A2757",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Error · #value",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Disabled · bg",
+            "token": "—",
+            "values": [
+              "#EEF2F9",
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Disabled · border",
+            "token": "— · no stroke",
+            "values": [
+              "–",
+              "–"
+            ]
+          },
+          {
+            "role": "Disabled · #label",
+            "token": "—",
+            "values": [
+              "#90A8D0",
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Disabled · #value",
+            "token": "—",
+            "values": [
+              "#C2CFE5",
               "#C2CFE5"
             ]
           },
           {
-            "role": "Value (empty)",
-            "token": "field/text/placeholder",
+            "role": "All states · icon placeholder",
+            "token": "— · 24 circle",
             "values": [
-              "#90A8D0",
-              "#90A8D0",
-              "#90A8D0",
-              "#C2CFE5"
+              "#C2C6CF",
+              "#C2C6CF"
             ]
           }
         ]
@@ -784,61 +628,67 @@ export const labeledField: ComponentData = {
       "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "Two variant axes plus four booleans. The booleans map to optional parameters or composable slots; <code>isFilled</code> is derived from the value on both platforms rather than passed.",
       "rows": [
         {
-          "figma": "isFilled (true/false)",
-          "swift": "text: Binding&lt;String&gt;",
-          "compose": "value: String"
+          "figma": "<code>State=Default</code>",
+          "swift": "(default)",
+          "compose": "(default)"
         },
         {
-          "figma": "State = Default",
-          "swift": "—",
-          "compose": "—"
+          "figma": "<code>State=Active</code>",
+          "swift": "<code>isFocused: true</code>",
+          "compose": "focus drawn by the field"
         },
         {
-          "figma": "State = Active",
-          "swift": ".focused()",
-          "compose": "interactionSource"
+          "figma": "<code>State=Error</code>",
+          "swift": "<code>isError: true</code>",
+          "compose": "<code>isError = true</code>"
         },
         {
-          "figma": "State = Error",
-          "swift": ".ebError(true)",
-          "compose": "isError = true"
+          "figma": "<code>State=Disabled</code>",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
         },
         {
-          "figma": "State = Disabled",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
+          "figma": "<code>isFilled=true / false</code>",
+          "swift": "Derived from <code>value.isEmpty</code>",
+          "compose": "Derived from <code>value.isEmpty()</code>"
         },
         {
-          "figma": "#label (TEXT)",
-          "swift": "label: String",
-          "compose": "label: String"
+          "figma": "<code>has Label=True</code>",
+          "swift": "<code>label:</code> argument — omit for False",
+          "compose": "<code>label =</code> argument — omit for False"
         },
         {
-          "figma": "#value (TEXT)",
-          "swift": "text: Binding&lt;String&gt;",
-          "compose": "value: String"
+          "figma": "<code>show LeadingIcon=True</code>",
+          "swift": "<code>leadingIcon: Image(…)</code>",
+          "compose": "<code>leadingIcon = { Icon(…) }</code>"
         },
         {
-          "figma": "leading-icon",
-          "swift": "leadingIcon: Image?",
-          "compose": "leadingIcon: @Composable?"
+          "figma": "<code>show TrailingIcon=True</code>",
+          "swift": "<code>trailingIcon: Image(…)</code>",
+          "compose": "<code>trailingIcon = { Icon(…) }</code>"
         },
         {
-          "figma": "trailing-icon",
-          "swift": "trailingIcon: Image?",
-          "compose": "trailingIcon: @Composable?"
+          "figma": "<code>show LinkButton=True</code>",
+          "swift": "<code>link: EBTextButton(…)</code>",
+          "compose": "<code>link = { EBTextButton(…) }</code>"
         },
         {
-          "figma": "action-button",
-          "swift": "action: EBFieldAction?",
-          "compose": "action: @Composable?"
+          "figma": "<code>#label</code> / <code>#value</code> (text layers)",
+          "swift": "<code>label</code> / <code>value</code>",
+          "compose": "<code>label</code> / <code>value</code>"
+        },
+        {
+          "figma": "366 fixed width",
+          "swift": "<code>.frame(maxWidth: .infinity)</code>",
+          "compose": "<code>Modifier.fillMaxWidth()</code>"
         }
       ],
       "filePaths": {
-        "swift": "ios/Components/FormElements/EBLabeledField.swift",
-        "compose": "android/components/form/EBLabeledField.kt"
+        "swift": "ios/Components/LabeledField/EBLabeledField.swift",
+        "compose": "android/components/labeledfield/EBLabeledField.kt"
       }
     },
     "usageSnippets": [
@@ -896,49 +746,49 @@ export const labeledField: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Layer renamed to <code>action-button</code>, now a semantic slot name."
+        "notes": "Semantic and consistent across all eight: <code>leading-icon</code>, <code>text-container</code> wrapping <code>#label</code> and <code>#value</code>, <code>action-button</code>, <code>trailing-icon</code>. Unlike its Input Field sibling, Disabled carries no leftover hidden stroke."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>isFilled</code> uses <code>true/false</code>. Property renamed to <code>State</code> (capitalized). Both fixes confirmed in Figma."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>State</code> and <code>isFilled</code> are clean, and the four booleans use <code>true</code>/<code>false</code>. Two problems: the boolean names are inconsistent in both case and verb — <code>show LeadingIcon</code>, <code>has Label</code>, <code>show TrailingIcon</code>, <code>show LinkButton</code> mix a space-separated prefix with PascalCase — and the two Disabled variants are byte-identical, so <code>isFilled</code> buys nothing there."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Colors appear correct but token binding not verified."
+        "notes": "Eight distinct colours across the set, none with a readable binding. Three fail contrast: the empty <code>#value</code> at 2.41:1, the resting border at 1.33:1 against the 3:1 WCAG 1.4.11 asks of an input boundary, and the Disabled <code>#value</code> at 1.40:1."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to custom <code>EBLabeledField</code> on both platforms."
+        "notes": "Maps to a labelled row with optional leading, trailing and link slots — ordinary on both platforms. The four booleans become optional parameters, and <code>isFilled</code> is derived rather than passed."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All 4 states defined: Default, Active, Error, Disabled."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Default, Active, Error and Disabled are all present. Missing a read-only state, and nothing shows the trailing icon or link button in a pressed state — both are tappable targets with no press feedback modelled."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "<code>trailing-icon</code> uses <code>icon-placeholder</code> RECTANGLE — not a swappable icon instance."
+        "notes": "Both icon slots take a 24 <code>Placeholder</code> instance — a vector, but a stand-in rather than a real icon, and the two ship in different greys (<code>#868686</code> leading, <code>#C2C6CF</code> trailing). The <code>action-button</code> is an EB text button: a 60 × 24 white pill holding a <code>#005CE5</code> Bold 14 label plus two hidden <code>Add_Full</code> icon slots."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Nothing registered. The axes map cleanly once the boolean names are regularised; <code>isFilled</code> should map to derived state rather than a parameter."
       }
     ],
     "codeConnect": [
@@ -975,73 +825,227 @@ export const labeledField: ComponentData = {
     ],
     "variants": {
       "total": 8,
-      "description": "4 <code>State</code> values × 2 <code>isFilled</code> values.",
+      "description": "<code>State</code> (4) × <code>isFilled</code> (2) = <strong>8 variants</strong>, every one 366 × 46 with a 6 radius. Four booleans — <code>show LeadingIcon</code>, <code>has Label</code>, <code>show TrailingIcon</code>, <code>show LinkButton</code> — ride on top of each, so the set resolves to <strong>128 configurations</strong>. Rows 7 and 8 are identical: <code>isFilled</code> changes nothing in the Disabled state.",
       "columns": [
+        "#",
         "State",
         "isFilled",
-        "Node ID"
+        "Node",
+        "Border",
+        "Weight",
+        "#label",
+        "#value"
       ],
       "rows": [
         {
           "cells": [
-            "Default",
-            "true",
-            "17758:3714"
+            "1",
+            "<code>Default</code>",
+            "<code>true</code>",
+            "<code>17758:3714</code>",
+            "#D7E0EF",
+            "1",
+            "#0A2757",
+            "#0A2757"
           ]
         },
         {
           "cells": [
-            "Default",
-            "false",
-            "17758:3723"
+            "2",
+            "<code>Default</code>",
+            "<code>false</code>",
+            "<code>17758:3723</code>",
+            "#D7E0EF",
+            "1",
+            "#0A2757",
+            "#90A8D0"
           ]
         },
         {
           "cells": [
-            "Active",
-            "true",
-            "17758:3732"
+            "3",
+            "<code>Active</code>",
+            "<code>true</code>",
+            "<code>17758:3732</code>",
+            "#005CE5",
+            "2",
+            "#0A2757",
+            "#0A2757"
           ]
         },
         {
           "cells": [
-            "Active",
-            "false",
-            "17758:3741"
+            "4",
+            "<code>Active</code>",
+            "<code>false</code>",
+            "<code>17758:3741</code>",
+            "#005CE5",
+            "2",
+            "#0A2757",
+            "#90A8D0"
           ]
         },
         {
           "cells": [
-            "Error",
-            "true",
-            "17758:3750"
+            "5",
+            "<code>Error</code>",
+            "<code>true</code>",
+            "<code>17758:3750</code>",
+            "#D61B2C",
+            "2",
+            "#0A2757",
+            "#0A2757"
           ]
         },
         {
           "cells": [
-            "Error",
-            "false",
-            "17758:3759"
+            "6",
+            "<code>Error</code>",
+            "<code>false</code>",
+            "<code>17758:3759</code>",
+            "#D61B2C",
+            "2",
+            "#0A2757",
+            "#90A8D0"
           ]
         },
         {
           "cells": [
-            "Disabled",
-            "true",
-            "17758:3768"
+            "7",
+            "<code>Disabled</code>",
+            "<code>true</code>",
+            "<code>17758:3768</code>",
+            "– (none)",
+            "–",
+            "#90A8D0",
+            "#C2CFE5"
           ]
         },
         {
           "cells": [
-            "Disabled",
-            "false",
-            "17758:3777"
+            "8",
+            "<code>Disabled</code>",
+            "<code>false</code>",
+            "<code>17758:3777</code>",
+            "– (none)",
+            "–",
+            "#90A8D0",
+            "#C2CFE5"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Link button read; layout model corrected · node 17758:3713",
+      "rows": [
+        {
+          "body": "<strong>The <code>action-button</code> is readable after all.</strong> The set's own instance returns no children, but instance <code>32149:5150</code> on the canvas does: it is an EB text button — a 60 × 24 white pill holding a <code>#005CE5</code> Proxima Soft Bold 14/14 label (<code>Primary/Label/Small</code>) between two hidden <code>Add_Full</code> icon slots. The preview drew a hairline stand-in; it now draws the blue label.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Layout model corrected — there is no outer right padding and no inter-element gap.</strong> The right-hand elements stack flush to x 366 and carry their own padding: the trailing frame is 44 (8 gap + 24 icon + 12 pad) at [322, 366], the link pill 60 (8 + 44 + 8). The text container takes whatever is left. This reproduces both widths Figma reports — <strong>310</strong> in the shipped configuration and <strong>294</strong> with the link shown instead of the trailing icon — where the previous model predicted 274.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Corrected"
+          }
+        },
+        {
+          "body": "<strong>The two icon placeholders are different greys.</strong> Leading <code>#868686</code>, trailing <code>#C2C6CF</code> — same job, same row, and nothing in the set explains the split. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6 Open"
+          }
+        },
+        {
+          "body": "<strong>The component description belongs to another component.</strong> It reads “The input field is inactive but ready for interaction, with input field for monetary value (PHP / +63)” — a monetary or mobile-number field, not a labelled row. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2 Open"
+          }
+        },
+        {
+          "body": "<strong>The link label passes contrast at 5.73:1.</strong> <code>#005CE5</code> on white — the one text colour in the set that clears 4.5:1 besides the filled value.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Checked"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "October 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Set re-read; Style tab collapsed to one card · node 17758:3713",
+      "rows": [
+        {
+          "body": "<strong>Style tab collapsed to a single card.</strong> Four per-state cards replaced by one whose panel mirrors the Figma property panel in its order — <code>State</code>, <code>isFilled</code>, then the four booleans at Figma's own defaults. Colours, layout and the resolved variant node all track the selection.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Layout model derived and checked against the drawn output.</strong> The content box runs 12 → 354 and the text container takes what the shown elements leave: <code>342 − 32</code> per icon <code>− 68</code> for the link. That reproduces the 310 Figma reports for the shipped configuration, and the trailing icon lands at x 330 exactly as <code>get_svg</code> draws it.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Verified"
+          }
+        },
+        {
+          "body": "<strong>Stroke weights recorded.</strong> Default <code>1</code> inside, Active and Error <code>2</code>, Disabled none — the same ramp as the Input Field sibling. Both text layers resolve to <code>Primary/Label/Light/Small</code>, matched by id and by value.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Verified"
+          }
+        },
+        {
+          "body": "<strong>The two Disabled variants are identical.</strong> Same fill, same <code>#90A8D0</code> label, same <code>#C2CFE5</code> value — <code>isFilled</code> has no effect in that state, so two of the eight variants are duplicates. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2 Open"
+          }
+        },
+        {
+          "body": "<strong>Boolean naming is inconsistent.</strong> <code>show LeadingIcon</code>, <code>has Label</code>, <code>show TrailingIcon</code>, <code>show LinkButton</code> — two verbs, a space before PascalCase, and no match with <code>isFilled</code>. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2 Open"
+          }
+        },
+        {
+          "body": "<strong>Two contrast failures recorded.</strong> The empty <code>#value</code> is <strong>2.41:1</strong> on white against a 4.5:1 minimum, and the resting border is <strong>1.33:1</strong> against the 3:1 WCAG 1.4.11 asks of an input boundary. The Disabled value sits at 1.40:1. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3 Open"
+          }
+        },
+        {
+          "body": "<strong>Content sits 2px above centre</strong> — the 24-tall row starts at y 12 in a 46-tall frame, leaving 10 below. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1 Open"
+          }
+        },
+        {
+          "body": "<strong>Unlike Input Field, Disabled carries no leftover hidden stroke.</strong> The sibling set keeps an invisible <code>#0057E4</code> stroke on its disabled variants; this one has no strokes array at all. Noted so the two are not “fixed” the same way.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Checked"
+          }
+        }
+      ]
+    },
     {
       "version": "1.2.0",
       "date": "March 2026",

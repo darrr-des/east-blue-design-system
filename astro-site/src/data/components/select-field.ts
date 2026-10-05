@@ -1,48 +1,46 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/select-field.js`.
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)` in
+// `public/scripts/demos/select-field.js`. The panel mirrors the property
+// panel of set 17758:3786 in its order: two variant axes then the three
+// booleans, at Figma's own defaults. `Chevron State` is a nested instance
+// property with one value in the set, so it gets no control.
 const selectFieldDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'state',
+        label: 'State',
         prop: 'state',
+        defaultValue: 'Default',
         options: [
-          { value: 'Default', label: 'Default' },
-          { value: 'Active', label: 'Active' },
-          { value: 'Error', label: 'Error' },
           { value: 'Disabled', label: 'Disabled' },
+          { value: 'Error',    label: 'Error' },
+          { value: 'Active',   label: 'Active' },
+          { value: 'Default',  label: 'Default' },
         ],
       },
       {
         label: 'isFilled',
-        prop: 'filled',
-        defaultValue: 'false',
-        options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
-        ],
-      },
-      {
-        label: 'leadingCurrency',
-        prop: 'leadingCurrency',
+        prop: 'isfilled',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
+          { value: 'true',  label: 'true' },
           { value: 'false', label: 'false' },
         ],
       },
-      {
-        label: 'trailingFlag',
-        prop: 'trailingFlag',
-        defaultValue: 'true',
-        options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
-        ],
-      },
+      { label: 'show PesoSign', prop: 'showpesosign', control: 'toggle', defaultValue: 'true', options: [
+          { value: 'false', label: 'False' },
+          { value: 'true',  label: 'True' },
+        ] },
+      { label: 'show Flag', prop: 'showflag', control: 'toggle', defaultValue: 'true', options: [
+          { value: 'false', label: 'False' },
+          { value: 'true',  label: 'True' },
+        ] },
+      { label: 'show Trailing Icon', prop: 'showtrailingicon', control: 'toggle', defaultValue: 'true', options: [
+          { value: 'false', label: 'False' },
+          { value: 'true',  label: 'True' },
+        ] },
     ],
   },
 ];
@@ -74,7 +72,7 @@ export const selectField: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"20\" y=\"22\" font-size=\"6\" fill=\"currentColor\" opacity=\".15\" font-family=\"system-ui\">Send Money</text>\n          <rect x=\"20\" y=\"28\" width=\"80\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <text x=\"24\" y=\"37\" font-size=\"4\" fill=\"currentColor\" opacity=\".1\" font-family=\"system-ui\">₱ Amount</text>\n          <rect x=\"82\" y=\"32\" width=\"8\" height=\"5\" rx=\"1\" fill=\"currentColor\" opacity=\".08\"></rect>\n          <path d=\"M94 33l2 2.5 2-2.5\" stroke=\"currentColor\" stroke-width=\".8\" stroke-linecap=\"round\" opacity=\".12\"></path>\n          <rect x=\"20\" y=\"50\" width=\"80\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <rect x=\"24\" y=\"55\" width=\"45\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"20\" y=\"68\" width=\"80\" height=\"8\" rx=\"4\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sf-demo-preview\"><svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\" opacity=\"1\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\" opacity=\"1\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\" opacity=\"1\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_sfDemo.state=this.value;updateSelectFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_sfDemo.filled=this.value;updateSelectFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\"><div id=\"select-field-demo-preview\"></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"sf-demo-state\" class=\"demo-panel-select\" onchange=\"updateSelectFieldDemo()\"><option value=\"Disabled\">Disabled</option><option value=\"Error\">Error</option><option value=\"Active\">Active</option><option value=\"Default\" selected=\"\">Default</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select id=\"sf-demo-isfilled\" class=\"demo-panel-select\" onchange=\"updateSelectFieldDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">show PesoSign</span><select id=\"sf-demo-peso\" class=\"demo-panel-select\" onchange=\"updateSelectFieldDemo()\"><option value=\"false\">False</option><option value=\"true\" selected=\"\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">show Flag</span><select id=\"sf-demo-flag\" class=\"demo-panel-select\" onchange=\"updateSelectFieldDemo()\"><option value=\"false\">False</option><option value=\"true\" selected=\"\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">show Trailing Icon</span><select id=\"sf-demo-chev\" class=\"demo-panel-select\" onchange=\"updateSelectFieldDemo()\"><option value=\"false\">False</option><option value=\"true\" selected=\"\">True</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -140,34 +138,100 @@ export const selectField: ComponentData = {
     ],
     "open": [
       {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Structural work is complete — registration can proceed against the 8-variant <code>State × isFilled</code> schema.",
+        "headline": "No expanded state — the one a select field most needs.",
+        "body": "<code>Chevron State</code> offers only <code>Chevron Down</code>, so nothing in the set shows the field while its picker is open. A developer has no reference for the state the control spends half its life in.",
         "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "The flag never dims.",
+        "body": "Peso, value and chevron all take a Disabled colour; the flag keeps full <code>#0038A8</code> / <code>#CE1126</code> / <code>#FCD116</code> saturation. On a disabled field the brightest element is the one that still looks live.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "The flag is hard-coded to the Philippines.",
+        "body": "No country property anywhere in the set. Any other market means detaching the instance.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "A hidden <code>#label</code> sits on top of <code>#value</code>.",
+        "body": "<code>text-container</code> holds both at the same x. <code>#label</code> is <code>Primary/Label/Light/Base</code> at <code>#0A2757</code> and is never shown — it stays full-strength navy even in Disabled, which is how you can tell it is not rendered. Nothing in the panel toggles it.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The <code>State</code> enum is ordered backwards.",
+        "body": "<code>Disabled, Error, Active, Default</code>. Every sibling in the field family reads <code>Default, Active, Error, Disabled</code>. The picker shows the least-used value first.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The peso glyph is <code>#183462</code>, a navy that appears nowhere else.",
+        "body": "Every text layer across the field family is <code>#0A2757</code>. The peso sign is two stops off, and the difference is visible beside the value it sits next to.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "The empty value fails contrast at 2.41:1, the resting border at 1.33:1.",
+        "body": "<code>#90A8D0</code> on white against 4.5:1, and <code>#D7E0EF</code> on white against the 3:1 WCAG 1.4.11 asks of an input boundary. The disabled chevron is 1.59:1.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "A full-bleed <code>container</code> frame wraps everything.",
+        "body": "366 × 46, the same size as the component, holding all four children. It adds a level without doing any layout work — the only sibling in the family with one.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
         }
       }
     ],
     "recommendations": [
       {
-        "headline": "Flatten the Peso Sign <code>shape_full</code> BOOLEAN_OPERATION.",
-        "body": "Boolean-operation paths render inconsistently across SVG export and native platforms. Replace with a single flattened vector path.",
+        "headline": "Add an expanded state.",
+        "body": "Give <code>Chevron State</code> a <code>Chevron Up</code> value and build the open variants, or document that the picker is a separate component.",
+        "tag": "State"
+      },
+      {
+        "headline": "Dim the flag in the Disabled state.",
+        "body": "A desaturated or reduced-opacity flag, so no element on a disabled field reads as live.",
         "tag": "Asset"
       },
       {
-        "headline": "Use a vector flag asset.",
-        "body": "The Philippine flag is currently a raster IMAGE fill. Swap to a vector from the DS icon library so it stays crisp across DPIs and platforms.",
-        "tag": "Asset"
+        "headline": "Make the country a property.",
+        "body": "An instance-swap slot or a country enum. Hard-coding PH blocks every other market.",
+        "tag": "Slot"
       },
       {
-        "headline": "Generalize to multi-currency.",
-        "body": "Expose currency symbol and flag as configurable slots so the field can support other currencies (USD, EUR, SGD) without creating a new component per currency.",
+        "headline": "Delete the hidden <code>#label</code> and the full-bleed <code>container</code>.",
+        "body": "Neither draws anything. The label overlaps <code>#value</code> and the wrapper adds a level with no layout role.",
         "tag": "Property"
       },
       {
-        "headline": "Add a <code>helperText</code> slot.",
-        "body": "Error state has no accompanying text guidance today — add a slot for validation messages consistent with the other form fields.",
-        "tag": "Slot"
+        "headline": "Reorder <code>State</code> to match the family.",
+        "body": "<code>Default, Active, Error, Disabled</code>, as Input, Labeled and Recipient Field all read.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Bring the peso glyph onto <code>#0A2757</code>.",
+        "body": "<code>#183462</code> is the only place that colour appears.",
+        "tag": "Token"
       }
     ]
   },
@@ -175,40 +239,53 @@ export const selectField: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "sf-spec-default",
-        "demoKey": "default",
+        "cardKey": "sf-spec-main",
+        "demoKey": "main",
+        "title": "Select Field",
+        "node": "17758:3786",
+        "description": "One card for the whole set: State × isFilled plus the three booleans. Every reading below tracks the selection.",
+        "previewHtml": "<div id=\"select-field-spec-main\" class=\"spec-preview-body\"></div>",
         "demoControls": selectFieldDemoControls,
-        "title": "Default",
-        "node": "17758:3787",
-        "description": "Idle state with gray border. Peso sign in dark navy, flag visible, chevron down affordance.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "state",
+                "key": "State",
                 "value": "Default",
-                "mono": false,
                 "prop": "state"
               },
               {
                 "key": "isFilled",
-                "value": "false",
-                "mono": false,
-                "prop": "filled"
+                "value": "true",
+                "prop": "isfilled"
               },
               {
-                "key": "leadingCurrency",
+                "key": "show PesoSign",
                 "value": "true",
-                "mono": false,
-                "prop": "leadingCurrency"
+                "prop": "showpesosign"
               },
               {
-                "key": "trailingFlag",
+                "key": "show Flag",
                 "value": "true",
-                "mono": false,
-                "prop": "trailingFlag"
+                "prop": "showflag"
+              },
+              {
+                "key": "show Trailing Icon",
+                "value": "true",
+                "prop": "showtrailingicon"
+              },
+              {
+                "key": "Chevron State",
+                "value": "Chevron Down · nested instance",
+                "mono": true
+              },
+              {
+                "key": "Resolved variant",
+                "value": "17758:3787 · 366 × 46",
+                "prop": "variantNode",
+                "mono": true
               }
             ]
           },
@@ -216,27 +293,41 @@ export const selectField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/default/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "selected-field/disabled/bg" } }
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "prop": "bg",
+                "swatch": true
               },
-              { "key": "Border", "value": "#D7E0EF", "token": "selected-field/default/border",
-                "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "selected-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "selected-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
+              {
+                "key": "Border",
+                "value": "#D7E0EF",
+                "prop": "border",
+                "swatch": true
               },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/default/value",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "selected-field/disabled/value" } }
+              {
+                "key": "#value",
+                "value": "#0A2757",
+                "prop": "valueColor",
+                "swatch": true
               },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/default/icon",
-                "variants": { "state:Disabled": { "value": "#9BC5FD", "token": "selected-field/disabled/icon" } }
+              {
+                "key": "Peso glyph",
+                "value": "#183462",
+                "prop": "pesoColor",
+                "swatch": true
               },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/default/placeholder",
-                "variants": {
-                  "state:Disabled": { "hide": true },
-                  "filled:true":    { "hide": true }
-                }
+              {
+                "key": "Chevron",
+                "value": "#005CE5",
+                "prop": "chevColor",
+                "swatch": true
+              },
+              {
+                "key": "Flag",
+                "value": "#0038A8 / #CE1126 / #FCD116",
+                "prop": "flagColor",
+                "swatch": false
               }
             ]
           },
@@ -245,33 +336,48 @@ export const selectField: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Field height",
-                "value": "48px",
+                "key": "Frame",
+                "value": "366 × 46",
                 "mono": true
               },
               {
-                "key": "Padding H",
-                "value": "12px",
+                "key": "Radius",
+                "value": "6",
                 "mono": true
               },
               {
-                "key": "Padding V",
-                "value": "14px",
+                "key": "Stroke",
+                "value": "1 inside",
+                "prop": "stroke",
                 "mono": true
               },
               {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
+                "key": "Padding",
+                "value": "12 left and right",
                 "mono": true
               },
               {
-                "key": "Border",
-                "value": "1px solid",
+                "key": "peso-sign",
+                "value": "19 frame · 15 glyph @ x 12",
+                "prop": "pesoRow",
                 "mono": true
               },
               {
-                "key": "Icon size",
-                "value": "20 × 20",
+                "key": "text-container",
+                "value": "258 × 16",
+                "prop": "textW",
+                "mono": true
+              },
+              {
+                "key": "flag-container",
+                "value": "25 × 16 @ x 289",
+                "prop": "flagRow",
+                "mono": true
+              },
+              {
+                "key": "Chevron slot",
+                "value": "32 slot @ x 322",
+                "prop": "chevRow",
                 "mono": true
               }
             ]
@@ -281,524 +387,198 @@ export const selectField: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Value style",
+                "key": "#value",
                 "value": "Primary/Label/Light/Small",
                 "mono": true
               },
               {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
+                "key": "#label (hidden)",
+                "value": "Primary/Label/Light/Base",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
-      },
-      {
-        "cardKey": "sf-spec-active",
-        "demoKey": "active",
-        "demoControls": selectFieldDemoControls,
-        "title": "Active (Focused)",
-        "node": "17758:3807",
-        "description": "Focused state with blue border indicating active selection.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Active",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "isFilled",
-                "value": "false",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "leadingCurrency",
-                "value": "true",
-                "mono": false,
-                "prop": "leadingCurrency"
-              },
-              {
-                "key": "trailingFlag",
-                "value": "true",
-                "mono": false,
-                "prop": "trailingFlag"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/active/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "selected-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#005CE5", "token": "selected-field/active/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "selected-field/default/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "selected-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/active/value",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "selected-field/disabled/value" } }
-              },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/active/icon",
-                "variants": { "state:Disabled": { "value": "#9BC5FD", "token": "selected-field/disabled/icon" } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.active</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Active</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
-      },
-      {
-        "cardKey": "sf-spec-error",
-        "demoKey": "error",
-        "demoControls": selectFieldDemoControls,
-        "title": "Error",
-        "node": "17758:3827",
-        "description": "Validation error state with red border.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Error",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "isFilled",
-                "value": "false",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "leadingCurrency",
-                "value": "true",
-                "mono": false,
-                "prop": "leadingCurrency"
-              },
-              {
-                "key": "trailingFlag",
-                "value": "true",
-                "mono": false,
-                "prop": "trailingFlag"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/error/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "selected-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#D61B2C", "token": "selected-field/error/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "selected-field/default/border" },
-                  "state:Active":   { "value": "#005CE5", "token": "selected-field/active/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/error/value",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "selected-field/disabled/value" } }
-              },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/error/icon",
-                "variants": { "state:Disabled": { "value": "#9BC5FD", "token": "selected-field/disabled/icon" } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
-      },
-      {
-        "cardKey": "sf-spec-disabled",
-        "demoKey": "disabled",
-        "demoControls": selectFieldDemoControls,
-        "title": "Disabled",
-        "node": "17758:3847",
-        "description": "Non-interactive state with gray background, hidden border, and muted peso sign.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Disabled",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "isFilled",
-                "value": "false",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "leadingCurrency",
-                "value": "true",
-                "mono": false,
-                "prop": "leadingCurrency"
-              },
-              {
-                "key": "trailingFlag",
-                "value": "true",
-                "mono": false,
-                "prop": "trailingFlag"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#EEF2F9", "token": "selected-field/disabled/bg",
-                "variants": {
-                  "state:Default": { "value": "#FFFFFF", "token": "selected-field/default/bg" },
-                  "state:Active":  { "value": "#FFFFFF", "token": "selected-field/active/bg" },
-                  "state:Error":   { "value": "#FFFFFF", "token": "selected-field/error/bg" }
-                }
-              },
-              { "key": "Border", "value": "#D7E0EF", "token": "selected-field/default/border",
-                "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "selected-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "selected-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Value", "value": "#90A8D0", "token": "selected-field/disabled/value",
-                "variants": {
-                  "state:Default": { "value": "#0A2757", "token": "selected-field/default/value" },
-                  "state:Active":  { "value": "#0A2757", "token": "selected-field/active/value" },
-                  "state:Error":   { "value": "#0A2757", "token": "selected-field/error/value" }
-                }
-              },
-              { "key": "Icon", "value": "#9BC5FD", "token": "selected-field/disabled/icon",
-                "variants": {
-                  "state:Default": { "value": "#005CE5", "token": "selected-field/default/icon" },
-                  "state:Active":  { "value": "#005CE5", "token": "selected-field/active/icon" },
-                  "state:Error":   { "value": "#005CE5", "token": "selected-field/error/icon" }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#7E96BE\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#C2CFE5\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\" opacity=\"0.5\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\" opacity=\"0.5\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\" opacity=\"0.5\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#7E96BE\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+        "swift": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">: </span>$value<span class=\"syn-punc\">,</span>\n    prefix<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.pesoSign</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "All states share the same container structure. Border color is the primary state indicator. Peso sign and text colors shift in disabled state.",
+        "description": "Read off <code>get_node_info</code> on all eight variants and <code>get_svg</code> on one variant per state, which is the only way the peso and chevron glyph colours surface. No token binding could be read. The flag is the one element that keeps its colour in every state.",
         "columns": [
-          "DEFAULT",
-          "ACTIVE",
-          "ERROR",
-          "DISABLED"
+          "isFilled = true",
+          "isFilled = false"
         ],
         "rows": [
           {
-            "role": "Border",
-            "token": "field/border",
+            "role": "Default · bg",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default · border",
+            "token": "— · 1 inside",
             "values": [
               "#D7E0EF",
-              "#005CE5",
-              "#D61B2C",
-              "hidden"
+              "#D7E0EF"
             ]
           },
           {
-            "role": "Background",
-            "token": "field/bg",
+            "role": "Default · #value",
+            "token": "—",
             "values": [
-              "#FFFFFF",
-              "#FFFFFF",
-              "#FFFFFF",
-              "#EEF2F9"
-            ]
-          },
-          {
-            "role": "Label text",
-            "token": "field/text/label",
-            "values": [
-              "#0A2757",
-              "#0A2757",
-              "#0A2757",
-              "#0A2757"
-            ]
-          },
-          {
-            "role": "Value (filled)",
-            "token": "field/text/filled",
-            "values": [
-              "#0A2757",
-              "#0A2757",
               "#0A2757",
               "#90A8D0"
             ]
           },
           {
-            "role": "Value (empty)",
-            "token": "field/text/placeholder",
+            "role": "Default · peso glyph",
+            "token": "—",
             "values": [
-              "#90A8D0",
-              "#90A8D0",
+              "#183462",
+              "#183462"
+            ]
+          },
+          {
+            "role": "Default · chevron",
+            "token": "— · stroke 2",
+            "values": [
+              "#005CE5",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Active · bg",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Active · border",
+            "token": "— · 2 inside",
+            "values": [
+              "#005CE5",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Active · #value",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Active · peso glyph",
+            "token": "—",
+            "values": [
+              "#183462",
+              "#183462"
+            ]
+          },
+          {
+            "role": "Active · chevron",
+            "token": "— · stroke 2",
+            "values": [
+              "#005CE5",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Error · bg",
+            "token": "—",
+            "values": [
+              "#FFFFFF",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Error · border",
+            "token": "— · 2 inside",
+            "values": [
+              "#D61B2C",
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Error · #value",
+            "token": "—",
+            "values": [
+              "#0A2757",
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Error · peso glyph",
+            "token": "—",
+            "values": [
+              "#183462",
+              "#183462"
+            ]
+          },
+          {
+            "role": "Error · chevron",
+            "token": "— · stroke 2",
+            "values": [
+              "#005CE5",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Disabled · bg",
+            "token": "—",
+            "values": [
+              "#EEF2F9",
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Disabled · border",
+            "token": "— · no stroke",
+            "values": [
+              "–",
+              "–"
+            ]
+          },
+          {
+            "role": "Disabled · #value",
+            "token": "—",
+            "values": [
               "#90A8D0",
               "#C2CFE5"
             ]
           },
           {
-            "role": "Peso sign",
-            "token": "field/icon/peso",
+            "role": "Disabled · peso glyph",
+            "token": "—",
             "values": [
-              "#183462",
-              "#183462",
-              "#183462",
+              "#7E96BE",
               "#7E96BE"
             ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [],
-        "rows": [
-          {
-            "role": "Height",
-            "token": "46px",
-            "values": []
           },
           {
-            "role": "Corner radius",
-            "token": "6px",
-            "values": []
-          },
-          {
-            "role": "Peso sign size",
-            "token": "15 × 15",
-            "values": []
-          },
-          {
-            "role": "Flag size",
-            "token": "25 × 16",
-            "values": []
-          },
-          {
-            "role": "Flag corner radius",
-            "token": "2px",
-            "values": []
-          },
-          {
-            "role": "Chevron size",
-            "token": "32 × 32",
-            "values": []
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Value"
-        ],
-        "rows": [
-          {
-            "role": "Label",
-            "token": "Font",
+            "role": "Disabled · chevron",
+            "token": "— · stroke 2",
             "values": [
-              "Proxima Soft Semibold"
+              "#9BC5FD",
+              "#9BC5FD"
             ]
           },
           {
-            "role": "Size",
-            "token": "16px",
-            "values": []
-          },
-          {
-            "role": "Value",
-            "token": "Font",
+            "role": "All states · flag",
+            "token": "— · never dims",
             "values": [
-              "Proxima Soft"
+              "#0038A8 / #CE1126 / #FCD116",
+              "#0038A8 / #CE1126 / #FCD116"
             ]
-          },
-          {
-            "role": "Size",
-            "token": "14px",
-            "values": []
           }
         ]
       }
@@ -824,36 +604,67 @@ export const selectField: ComponentData = {
       "footnote": "Package not yet published. These are the planned distribution paths."
     },
     "propertyMapping": {
+      "description": "Two variant axes, three booleans and one nested instance property. <code>isFilled</code> is derived from the value on both platforms rather than passed.",
       "rows": [
         {
-          "figma": "isFilled (true/false)",
-          "swift": "selection: Binding&lt;String?&gt;",
-          "compose": "selectedValue: String?"
+          "figma": "<code>State=Default</code>",
+          "swift": "(default)",
+          "compose": "(default)"
         },
         {
-          "figma": "State = Default",
-          "swift": "—",
-          "compose": "—"
+          "figma": "<code>State=Active</code>",
+          "swift": "<code>isFocused: true</code>",
+          "compose": "focus drawn by the field"
         },
         {
-          "figma": "State = Active",
-          "swift": ".focused()",
-          "compose": "interactionSource"
+          "figma": "<code>State=Error</code>",
+          "swift": "<code>isError: true</code>",
+          "compose": "<code>isError = true</code>"
         },
         {
-          "figma": "State = Error",
-          "swift": ".ebError(true)",
-          "compose": "isError = true"
+          "figma": "<code>State=Disabled</code>",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
         },
         {
-          "figma": "State = Disabled",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
+          "figma": "<code>isFilled=true / false</code>",
+          "swift": "Derived from <code>value.isEmpty</code>",
+          "compose": "Derived from <code>value.isEmpty()</code>"
+        },
+        {
+          "figma": "<code>show PesoSign=True</code>",
+          "swift": "<code>prefix: .pesoSign</code>",
+          "compose": "<code>prefix = { PesoSign() }</code>"
+        },
+        {
+          "figma": "<code>show Flag=True</code>",
+          "swift": "<code>accessory: Image(…)</code>",
+          "compose": "<code>accessory = { … }</code>"
+        },
+        {
+          "figma": "<code>show Trailing Icon=True</code>",
+          "swift": "<code>chevron: .down</code>",
+          "compose": "<code>chevron = ChevronState.Down</code>"
+        },
+        {
+          "figma": "<code>Chevron State</code> (nested instance)",
+          "swift": "<code>.down</code> — only value in the set",
+          "compose": "<code>ChevronState.Down</code> — only value in the set"
+        },
+        {
+          "figma": "<code>#value</code> (text layer)",
+          "swift": "<code>value</code> binding",
+          "compose": "<code>value</code>"
+        },
+        {
+          "figma": "366 fixed width",
+          "swift": "<code>.frame(maxWidth: .infinity)</code>",
+          "compose": "<code>Modifier.fillMaxWidth()</code>"
         }
       ],
       "filePaths": {
-        "swift": "ios/Components/FormElements/EBSelectField.swift",
-        "compose": "android/components/form/EBSelectField.kt"
+        "swift": "ios/Components/SelectField/EBSelectField.swift",
+        "compose": "android/components/selectfield/EBSelectField.kt"
       }
     },
     "usageSnippets": [
@@ -909,51 +720,51 @@ export const selectField: ComponentData = {
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Semantic layer names: <code>container</code>, <code>peso-sign</code>, <code>text-container</code>, <code>flag-container</code>, <code>Chevron Down</code>."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Semantic names throughout — <code>peso-sign</code>, <code>text-container</code>, <code>flag-container</code>, <code>Chevron Down</code>. Two problems: a full-bleed <code>container</code> frame wraps everything for no layout purpose, and <code>text-container</code> holds a <code>#label</code> that is never shown and sits directly on top of <code>#value</code>."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>isFilled=true/false</code> — correct boolean convention for native mapping."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "All 8 combinations built. The <code>State</code> enum is ordered <code>Disabled, Error, Active, Default</code> — backwards from every sibling in the family — and the booleans mix spacing conventions (<code>show PesoSign</code> vs <code>show Trailing Icon</code>). <code>Chevron State</code> offers a single value."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Colors appear correct but token binding not fully verified."
+        "notes": "Ten colours, no readable binding. The peso glyph is <code>#183462</code> where every text layer in the family is <code>#0A2757</code> — a near-navy that appears nowhere else. The empty <code>#value</code> is 2.41:1 and the resting border 1.33:1."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to custom <code>EBSelectField</code> (SwiftUI) / <code>EBSelectField</code> (Compose)."
+        "notes": "A tappable row with a prefix, a value, an accessory and a chevron — ordinary on both platforms. The three booleans become optional parameters and the chevron a small enum."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All 4 states defined: Default, Active, Error, Disabled."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Default, Active, Error and Disabled are present. Missing: an expanded state. <code>Chevron State</code> offers only <code>Chevron Down</code>, so nothing in the set shows the field while its picker is open — the one state a select field most needs."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Peso sign uses <code>shape_full</code> BOOLEAN_OPERATION (not a vector). Flag uses raster IMAGE fill."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Peso and chevron are real vectors that take a Disabled colour. The flag does not: it keeps full saturation on a disabled field, which reads as an active control. It is also hard-coded to the Philippines with no country property."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Nothing registered. The shape is mappable once the State ordering and the boolean naming are regularised."
       }
     ],
     "codeConnect": [
@@ -984,73 +795,192 @@ export const selectField: ComponentData = {
     ],
     "variants": {
       "total": 8,
-      "description": "4 <code>State</code> values × 2 <code>isFilled</code> values (true/false).",
+      "description": "<code>State</code> (4) × <code>isFilled</code> (2) = <strong>8 variants</strong>, every one 366 × 46 with a 6 radius. Three booleans — <code>show PesoSign</code>, <code>show Flag</code>, <code>show Trailing Icon</code> — ride on top of each, so the set resolves to <strong>64 configurations</strong>. <code>Chevron State</code> is a nested instance property with one value.",
       "columns": [
+        "#",
         "State",
         "isFilled",
-        "Node ID"
+        "Node",
+        "Border",
+        "Weight",
+        "#value",
+        "Peso",
+        "Chevron"
       ],
       "rows": [
         {
           "cells": [
-            "Default",
-            "true",
-            "17758:3787"
+            "1",
+            "<code>Default</code>",
+            "<code>true</code>",
+            "<code>17758:3787</code>",
+            "#D7E0EF",
+            "1",
+            "#0A2757",
+            "#183462",
+            "#005CE5"
           ]
         },
         {
           "cells": [
-            "Default",
-            "false",
-            "17758:3797"
+            "2",
+            "<code>Default</code>",
+            "<code>false</code>",
+            "<code>17758:3797</code>",
+            "#D7E0EF",
+            "1",
+            "#90A8D0",
+            "#183462",
+            "#005CE5"
           ]
         },
         {
           "cells": [
-            "Active",
-            "true",
-            "17758:3807"
+            "3",
+            "<code>Active</code>",
+            "<code>true</code>",
+            "<code>17758:3807</code>",
+            "#005CE5",
+            "2",
+            "#0A2757",
+            "#183462",
+            "#005CE5"
           ]
         },
         {
           "cells": [
-            "Active",
-            "false",
-            "17758:3817"
+            "4",
+            "<code>Active</code>",
+            "<code>false</code>",
+            "<code>17758:3817</code>",
+            "#005CE5",
+            "2",
+            "#90A8D0",
+            "#183462",
+            "#005CE5"
           ]
         },
         {
           "cells": [
-            "Error",
-            "true",
-            "17758:3827"
+            "5",
+            "<code>Error</code>",
+            "<code>true</code>",
+            "<code>17758:3827</code>",
+            "#D61B2C",
+            "2",
+            "#0A2757",
+            "#183462",
+            "#005CE5"
           ]
         },
         {
           "cells": [
-            "Error",
-            "false",
-            "17758:3837"
+            "6",
+            "<code>Error</code>",
+            "<code>false</code>",
+            "<code>17758:3837</code>",
+            "#D61B2C",
+            "2",
+            "#90A8D0",
+            "#183462",
+            "#005CE5"
           ]
         },
         {
           "cells": [
-            "Disabled",
-            "true",
-            "17758:3847"
+            "7",
+            "<code>Disabled</code>",
+            "<code>true</code>",
+            "<code>17758:3847</code>",
+            "– (none)",
+            "–",
+            "#90A8D0",
+            "#7E96BE",
+            "#9BC5FD"
           ]
         },
         {
           "cells": [
-            "Disabled",
-            "false",
-            "17758:3857"
+            "8",
+            "<code>Disabled</code>",
+            "<code>false</code>",
+            "<code>17758:3857</code>",
+            "– (none)",
+            "–",
+            "#C2CFE5",
+            "#7E96BE",
+            "#9BC5FD"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "October 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Set re-read; Style tab collapsed to one card · node 17758:3786",
+      "rows": [
+        {
+          "body": "<strong>Style tab collapsed to a single card.</strong> Four per-state cards replaced by one whose panel mirrors the Figma property panel in its order — <code>State</code>, <code>isFilled</code>, then the three booleans at Figma's own defaults. Every colour and position tracks the selection.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Glyph colours recovered from the drawn output.</strong> The peso and chevron fills are not in the layer tree — both sit inside icon instances the plugin returns empty. <code>get_svg</code> on one variant per state gives them: peso <code>#183462</code>, chevron <code>#005CE5</code>, dimming to <code>#7E96BE</code> and <code>#9BC5FD</code> when Disabled.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Documented"
+          }
+        },
+        {
+          "body": "<strong>Geometry recorded.</strong> 366 × 46, radius 6, padding 12 left and right; <code>peso-sign</code> 19 at x 12, <code>text-container</code> 258 at x 31, <code>flag-container</code> 33 at x 289 holding a 25 × 16 flag, chevron slot 32 at x 322 with a 14-wide stroked glyph centred at x 338. Stroke ramp matches the family: Default <code>1</code>, Active and Error <code>2</code>, Disabled none.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Verified"
+          }
+        },
+        {
+          "body": "<strong>No expanded state.</strong> <code>Chevron State</code> offers only <code>Chevron Down</code>, so nothing in the set shows the field with its picker open. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5 Open"
+          }
+        },
+        {
+          "body": "<strong>The flag never dims.</strong> Peso, value and chevron all take a Disabled colour; the flag keeps full saturation, so the brightest thing on a disabled field is the one that still looks live. It is also hard-coded to PH with no country property. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6 Open"
+          }
+        },
+        {
+          "body": "<strong>A hidden <code>#label</code> sits on top of <code>#value</code>.</strong> Same x, never shown, and it stays full-strength <code>#0A2757</code> even in Disabled — which is how you can tell it is not rendered. A full-bleed <code>container</code> frame also wraps everything without doing any layout work. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1 Open"
+          }
+        },
+        {
+          "body": "<strong>The <code>State</code> enum is ordered <code>Disabled, Error, Active, Default</code></strong> — backwards from every sibling in the field family. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2 Open"
+          }
+        },
+        {
+          "body": "<strong>The peso glyph is <code>#183462</code></strong>, a navy that appears nowhere else; every text layer in the family is <code>#0A2757</code>. <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C3 Open"
+          }
+        }
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "March 2026 Update",
