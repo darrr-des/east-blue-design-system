@@ -29,7 +29,11 @@
     "playground:fidelity": "node scripts/playground/fidelity.mjs",
     "playground:smoke": "node scripts/playground/smoke.mjs",
     "playground:reflow": "node scripts/playground/reflow.mjs",
-    "playground:checks": "npm run playground:smoke && npm run playground:reflow && npm run playground:a11y && npm run playground:fidelity"
+    "playground:checks": "npm run playground:smoke && npm run playground:reflow && npm run playground:a11y && npm run playground:fidelity",
+    "update:check": "node scripts/update/check-set.mjs",
+    "update:trace": "node scripts/update/trace.mjs",
+    "update:context": "node scripts/update/in-context.mjs",
+    "update:tidy": "node scripts/update/tidy-code.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.5",
