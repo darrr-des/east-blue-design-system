@@ -1,0 +1,1740 @@
+{
+  "name": "Radio Button with Label",
+  "meta": {
+    "node": "26184:2712",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26184-2712",
+    "description": "A form row pairing a Radio Button with a text label. 39 variants across <code>Style</code> (Default/Check) × <code>State</code> (Default/Pressed/Disabled) × <code>Size</code> (Large/Medium/Small) × <code>isSelected</code> × <code>isError</code> — mirroring the Radio Button atom exactly.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "ready",
+        "label": "Ready"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — in sync with the atom",
+      "text": "All four DS Health traits pass and nothing is open. <code>Style</code>, <code>State</code>, <code>Size</code>, <code>isSelected</code> and <code>isError</code> mirror the Radio Button atom across all 39 variants, with the radio paired to the label size."
+    },
+    "navGroup": "Radio",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "How the radio button with label appears in real product screens — each Yes / No answer on Fill Information, and each End option on a recurring payment, is a radio with its label.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/radio-button-in-context.png\" alt=\"Radio Button with Label rows on two GCash screens: Yes and No for the PEP and beneficial ownership questions on Fill Information, and On a specific date, After a number of payments and No end date on a recurring payment\" >",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"rbl-demo-preview\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:14px;line-height:16px;letter-spacing:0.25px;\">Label</div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Proposed API</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">size</span><select class=\"demo-panel-select\" id=\"rbl-demo-size\" onchange=\"updateRBLDemo()\"><option value=\"default\" selected=\"\">default</option><option value=\"large\">large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isError</span><select class=\"demo-panel-select\" id=\"rbl-demo-error\" onchange=\"updateRBLDemo()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">selected</span><select class=\"demo-panel-select\" id=\"rbl-demo-selected\" onchange=\"updateRBLDemo()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Used for mutually exclusive form choices: payment method, shipping option, preference questions."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Carries its own gap, vertical padding, and typography, all token-bound. The 12px gap is real auto-layout spacing — the <code>_space_12</code> annotation instance that used to shim it has been removed, so the row maps to native padding rather than a spacer view."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "The compound <code>\"default - error\"</code> / <code>\"large - error\"</code> values are gone. Five orthogonal props — <code>Style</code> × <code>State</code> × <code>Size</code> × <code>isSelected</code> × <code>isError</code> — in the same order as the Radio Button atom, so native enum mapping is clean."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Wraps the Radio Button atom and mirrors its schema exactly — same props, same order, same 39 variants — so every atom state is reachable through the row. Radio size now pairs to label size (<code>Size=Large</code> nests the 24 × 24 atom) instead of always instancing the small radio."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default (unselected)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default, isSelected=false",
+        "notes": "Empty ring, label <code>#445C85</code>. Resting state for every unpicked row."
+      },
+      {
+        "state": "Selected",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default, isSelected=true",
+        "notes": "Brand ring + dot <code>#005CE5</code>. Exactly one row per group carries this."
+      },
+      {
+        "state": "Pressed",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Pressed",
+        "notes": "Radio darkens to <code>#2340A9</code> and the label to <code>#0A2757</code>. Derived at runtime from the touch interaction, not passed as a parameter."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Radio and label both mute. Ships at both <code>isSelected</code> values, so a disabled group renders its unselected rows."
+      },
+      {
+        "state": "Error",
+        "ios": "yes",
+        "android": "yes",
+        "property": "isError=true",
+        "notes": "Radio switches to <code>#D61B2C</code>; the label is unchanged. Orthogonal to <code>State</code> — combines with Default and Pressed."
+      },
+      {
+        "state": "Selected — check style",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Style=Check, isSelected=true",
+        "notes": "Filled circle + vector checkmark. For single-select list rows; only meaningful when selected."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "",
+        "body": "v2.0: <code>size</code> no longer encodes state — the compound <code>\"default - error\"</code> / <code>\"large - error\"</code> strings are gone, replaced by orthogonal <code>Size</code> (Large/Medium/Small) × <code>State</code> (Default/Pressed/Disabled) × <code>isError</code> props. Native enum mapping is now clean. (C2)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "v2.0: Radio size now pairs to label size — <code>Size=Large</code> nests the 24 × 24 atom instead of hardcoding the 16 × 16 small radio into every variant. (C6)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "v2.0: Full state coverage added — <code>isSelected</code>, <code>State=Pressed</code>, <code>State=Disabled</code>, and <code>isError</code>, including <code>Disabled + isSelected=false</code> so a disabled radio group renders its unselected rows. 39 variants total. (C5)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "v2.0: <code>_space_12</code> spacer instance removed — the 12px gap is now real auto-layout spacing. The annotation instance (a <code>#0500FF</code> fill wrapping a Roboto <code>\"12\"</code> text node) no longer ships inside the component, and the layout maps to native padding rather than a spacer view. (C1/C4)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "v2.0: Layer typo fixed — <code>icon-ofsset</code> renamed to <code>icon-offset</code> across all 39 variants. (C1)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "v2.0: Schema aligned with the Radio Button atom — same five props, same property order, same 39-variant coverage. The wrapper can now express everything the atom can. (C2)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "v2.0: Check + Pressed mislabel corrected — three Check variants (<code>26184:2839 / 2845 / 2851</code>) were labelled <code>isError=true</code> while painted pressed-navy, which also left <code>Check + Pressed + isError=false</code> non-existent. Renamed to <code>isError=false</code>; label and paint now agree and the wrapper matches the atom. (C5)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "v2.0: <code>Disabled</code> deliberately excludes <code>isError</code> — confirmed intentional, matching the atom. A locked row offers no path to resolve a validation error, so the combination ships no variants by design. (C5)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "v2.0: Nesting the radio as a plain INSTANCE rather than a Figma Slot reviewed and accepted — the mirrored 39-variant matrix already exposes every atom state through <code>Style</code> / <code>State</code> / <code>Size</code> / <code>isSelected</code> / <code>isError</code>, so a Slot would largely duplicate it. (C4)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [
+      {
+        "headline": "Make the whole row tappable.",
+        "body": "The label should be part of the tap target, not just the radio — standard for form rows and a meaningful hit-area win on mobile. Runtime behaviour, so it can't be expressed in Figma; document it in Accessibility instead.",
+        "tag": "A11y"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Split the <code>size</code> prop.",
+        "body": "v2.0: Applied — and taken further than proposed. <code>Size</code> × <code>State</code> × <code>isError</code> × <code>isSelected</code> × <code>Style</code>, with pressed folded into <code>State</code>. The compound string values are gone.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Pair radio size to label size.",
+        "body": "v2.0: Applied — <code>Size=Large</code> nests the 24 × 24 atom; each size pairs correctly instead of always instancing the small radio.",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Add disabled + selected variants.",
+        "body": "v2.0: Applied — full coverage across <code>isSelected</code>, <code>Pressed</code>, <code>Disabled</code>, and <code>isError</code>, including the disabled-unselected rows.",
+        "tag": "State"
+      },
+      {
+        "headline": "Adopt a Figma Slot for the nested radio.",
+        "body": "v2.0: Reviewed and closed as not needed — the mirrored 39-variant matrix already exposes every atom state, so a Slot would largely duplicate the variant surface. Revisit only if consumers need to nest a radio the matrix can't express.",
+        "tag": "Slot"
+      }
+    ]
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "",
+      "variants": 0,
+      "read": "",
+      "tool": ""
+    },
+    "specCards": [
+      {
+        "cardKey": "rbl-spec-main",
+        "demoKey": "main",
+        "title": "Radio Button - With Label",
+        "node": "26184:2712",
+        "previewHtml": "<div id=\"radio-button-with-label-spec-main\" class=\"spec-preview-body\"><svg width=\"243\" height=\"90\" viewBox=\"0 0 81 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0,3)\"><circle cx=\"12\" cy=\"12\" r=\"10.5\" stroke=\"#D7E0EF\" stroke-width=\"3\"/></g><text class=\"rbl-label\" x=\"36\" y=\"16\" font-size=\"18\" fill=\"#0A2757\" dominant-baseline=\"central\">Label</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Style",
+                "prop": "style",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "check",
+                    "label": "Check"
+                  }
+                ]
+              },
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "large",
+                "options": [
+                  {
+                    "value": "small",
+                    "label": "Small"
+                  },
+                  {
+                    "value": "medium",
+                    "label": "Medium"
+                  },
+                  {
+                    "value": "large",
+                    "label": "Large"
+                  }
+                ]
+              },
+              {
+                "label": "isSelected",
+                "prop": "isSelected",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "false"
+                  },
+                  {
+                    "value": "true",
+                    "label": "true"
+                  }
+                ]
+              },
+              {
+                "label": "isError",
+                "prop": "isError",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "false"
+                  },
+                  {
+                    "value": "true",
+                    "label": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Style",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "style",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": []
+              },
+              {
+                "key": "Size",
+                "value": "Large",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": []
+              },
+              {
+                "key": "isSelected",
+                "value": "false",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "isSelected",
+                "variants": []
+              },
+              {
+                "key": "isError",
+                "value": "false",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "isError",
+                "variants": []
+              },
+              {
+                "key": "Nested instance",
+                "value": "Radio Button · 26184:2588",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Ring",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "main/radio-button/color/default/unselected/border",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:check",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  },
+                  {
+                    "when": "style:default|state:pressed",
+                    "value": "#ADBDDC",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|state:disabled",
+                    "value": "#D7E0EF @ 40%",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|isSelected:true",
+                    "value": "#005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|state:pressed|isSelected:true",
+                    "value": "#2340A9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|state:disabled|isSelected:true",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|isError:true",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|state:pressed|isError:true",
+                    "value": "#B50707",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|isSelected:true|isError:true",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|state:pressed|isSelected:true|isError:true",
+                    "value": "#B50707",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Dot",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "main/radio-button/color/default/selected/bg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:check",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  },
+                  {
+                    "when": "isSelected:false",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  },
+                  {
+                    "when": "style:default|state:pressed|isSelected:true",
+                    "value": "#2340A9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|state:disabled|isSelected:true",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|isSelected:true|isError:true",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:default|state:pressed|isSelected:true|isError:true",
+                    "value": "#B50707",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Disc",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "main/radio-button/color/default/selected/bg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:default",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  },
+                  {
+                    "when": "style:check|state:pressed",
+                    "value": "#2340A9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "style:check|state:disabled",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Checkmark",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "main/radio-button/color/default/selected/icon",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "style:default",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "—",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:default|isSelected:true",
+                    "value": "#445C85",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:default|isError:true",
+                    "value": "#445C85",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:default|style:check",
+                    "value": "#445C85",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Multi-line Label/Light/Large",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "Primary/Multi-line Label/Light/Base",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "Primary/Multi-line Label/Light/Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "Hug · 30px",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "Hug · 28px",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "Hug · 23px",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "Hug · 81px at \"Label\"",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "Hug · 72px at \"Label\"",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "Hug · 63px at \"Label\"",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Padding H",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "12px",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radio",
+                "value": "24 × 24",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "20 × 20",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "16 × 16",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Alignment",
+                "value": "Center — derived from bounding boxes; auto-layout alignment is not exposed",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>isSelected<span class=\"syn-punc\">: </span>$isSelected<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span>controlSize<span class=\"syn-punc\">(.</span>large<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> false<span class=\"syn-punc\">,</span>\n    onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> selected <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">!</span>selected <span class=\"syn-punc\">},</span>\n    size <span class=\"syn-eq\">=</span> EBRadioSize<span class=\"syn-punc\">.</span>Large<span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> true\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Style and State",
+        "description": "Nested-radio fills are the reads from set <code>26184:2588</code>; label fills are read off this set’s own <code>#label</code> layers. Token paths could not be verified — the Talk To Figma plugin returns no variable bindings — so every row here carries <code>—</code> except the four the previous record asserted and whose hex still agrees.",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Radio · unselected",
+            "element": "Ring · default",
+            "token": "main/radio-button/color/default/unselected/border",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "Ring · pressed",
+            "token": "—",
+            "values": [
+              "#ADBDDC"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "Ring · disabled",
+            "token": "—",
+            "values": [
+              "#D7E0EF @ 40%"
+            ]
+          },
+          {
+            "role": "Radio · selected",
+            "element": "Ring + Dot · default",
+            "token": "main/radio-button/color/default/selected/bg",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "Ring + Dot · pressed",
+            "token": "—",
+            "values": [
+              "#2340A9"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "Ring + Dot · disabled",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Radio · error",
+            "element": "Ring (+ Dot) · default",
+            "token": "main/radio-button/color/error/unselected/border",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "Ring (+ Dot) · pressed",
+            "token": "—",
+            "values": [
+              "#B50707"
+            ]
+          },
+          {
+            "role": "Radio · Check",
+            "element": "Disc · default",
+            "token": "main/radio-button/color/default/selected/bg",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "Disc · pressed",
+            "token": "—",
+            "values": [
+              "#2340A9"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "Disc · disabled",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "Checkmark",
+            "token": "main/radio-button/color/default/selected/icon",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Label",
+            "element": "State=Default · unselected, no error",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "State=Default · selected, error, or Check",
+            "token": "—",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "State=Pressed · every combination",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "—",
+            "element": "State=Disabled · every combination",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          }
+        ]
+      }
+    ],
+    "playground": true
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:radio:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>radio<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "",
+      "rows": [
+        {
+          "figma": "size=default / large",
+          "swift": "size: EBRadioSize",
+          "compose": ".controlSize(.small/.large)"
+        },
+        {
+          "figma": "\"- error\" suffix",
+          "swift": "isError: Bool",
+          "compose": ".ebError(true)"
+        },
+        {
+          "figma": "—",
+          "swift": "selected: Bool",
+          "compose": "selected: Bool"
+        },
+        {
+          "figma": "—",
+          "swift": "label: String",
+          "compose": "title: String"
+        },
+        {
+          "figma": "—",
+          "swift": "disabled: Bool",
+          "compose": ".disabled(true)"
+        },
+        {
+          "figma": "—",
+          "swift": "onToggle",
+          "compose": "onChange: (Bool) -&gt; Void"
+        }
+      ],
+      "filePaths": {
+        "swift": "ios/Components/Radio/EBRadioButtonWithLabel.swift",
+        "compose": "android/components/radio/EBRadioButtonWithLabel.kt"
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Usage",
+        "swift": "<code><span class=\"syn-cmt\">// Default row</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Pay with GCash\"</span>, <span class=\"syn-param\">selected</span>: $selection == <span class=\"syn-dot\">.gcash</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-param\">selection</span> = <span class=\"syn-dot\">.gcash</span>\n<span class=\"syn-punc\">}</span>\n\n<span class=\"syn-cmt\">// Large row with error</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Option A\"</span>, <span class=\"syn-param\">selected</span>: isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebError</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Disabled</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Not available\"</span>, <span class=\"syn-param\">selected</span>: <span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Default row</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Pay with GCash\"</span>,\n    <span class=\"syn-param\">selected</span> = selection == Option<span class=\"syn-dot\">.Gcash</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">selection</span> = Option<span class=\"syn-dot\">.Gcash</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Large row with error</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Option A\"</span>,\n    <span class=\"syn-param\">selected</span> = isSelected,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBRadioSize</span><span class=\"syn-dot\">.Large</span>,\n    <span class=\"syn-param\">isError</span> = <span class=\"syn-val\">true</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Disabled</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Not available\"</span>,\n    <span class=\"syn-param\">selected</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span></code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Whole-row tap target",
+        "ios": "Wrap the row in a <code>Button</code> or tap gesture — label must be tappable, not just the radio",
+        "android": "Apply <code>Modifier.selectable(...)</code> to the row"
+      },
+      {
+        "requirement": "Group semantics",
+        "ios": "Wrap options in <code>.accessibilityElement(children: .contain)</code>",
+        "android": "Use <code>Modifier.selectableGroup()</code> on parent"
+      },
+      {
+        "requirement": "Role announcement",
+        "ios": "Radio Button role inherited from the atom",
+        "android": "<code>Role.RadioButton</code> via selectable"
+      },
+      {
+        "requirement": "Error announcement",
+        "ios": "Include error state in the option's accessibility label",
+        "android": "Use <code>semantics { error(...) }</code>"
+      },
+      {
+        "requirement": "Touch target size",
+        "ios": "Row should be at least 44pt tall",
+        "android": "48dp minimum"
+      }
+    ],
+    "usageGuidelines": [],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Semantic names throughout: <code>icon-offset</code> (typo fixed in v2.0), <code>text-container</code>, <code>#label</code>. The <code>_space_12</code> annotation shim was removed — the 12px gap is real auto-layout spacing."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Five orthogonal props — <code>Style</code> × <code>State</code> × <code>Size</code> × <code>isSelected</code> × <code>isError</code> — in the same order as the atom. The compound <code>\"default - error\"</code> values are gone; booleans are lowercase <code>true</code>/<code>false</code>."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Label colors, gap, and padding all token-bound. The radio itself inherits the atom's token-bound vector fills and strokes."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Maps to an HStack / Row of radio + label. Auto-layout spacing translates to native padding — no spacer view to reproduce since <code>_space_12</code> was removed."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Full coverage: <code>isSelected</code> × <code>State</code> (Default / Pressed / Disabled) × <code>isError</code>, including <code>Disabled + isSelected=false</code>. Focused is N/A on mobile; <code>Disabled + isError</code> is a deliberate omission."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Radio size now pairs to label size — <code>Size=Large</code> nests the 24 × 24 atom instead of always instancing the 16 × 16 small radio."
+      }
+    ],
+    "variants": {
+      "total": 39,
+      "description": "<code>Style</code> (2) × <code>State</code> (3) × <code>Size</code> (3) × <code>isSelected</code> (2) × <code>isError</code> (2) = 72 theoretical. 39 ship — mirroring the Radio Button atom exactly. <code>Check</code> is only meaningful when selected, and <code>Disabled</code> deliberately excludes <code>isError</code>. Grouped below by Style × State; each row covers all three sizes (Large / Medium / Small).",
+      "columns": [
+        "Style",
+        "State",
+        "Size",
+        "isSelected",
+        "isError",
+        "Node"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "Large",
+            "false",
+            "false",
+            "26184:2713"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "Medium",
+            "false",
+            "false",
+            "26184:2719"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "Small",
+            "false",
+            "false",
+            "26224:4298"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Small",
+            "false",
+            "false",
+            "26184:2725"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Large",
+            "false",
+            "false",
+            "26184:2731"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Large",
+            "false",
+            "false",
+            "26219:4049"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Medium",
+            "false",
+            "false",
+            "26184:2737"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Medium",
+            "false",
+            "false",
+            "26219:4078"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Small",
+            "false",
+            "false",
+            "26184:2743"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "Large",
+            "true",
+            "false",
+            "26184:2749"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "Medium",
+            "true",
+            "false",
+            "26184:2755"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "Small",
+            "true",
+            "false",
+            "26184:2761"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Disabled",
+            "Large",
+            "true",
+            "false",
+            "26184:2767"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Disabled",
+            "Medium",
+            "true",
+            "false",
+            "26184:2773"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Disabled",
+            "Small",
+            "true",
+            "false",
+            "26184:2779"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Large",
+            "true",
+            "false",
+            "26184:2785"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Medium",
+            "true",
+            "false",
+            "26184:2791"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Small",
+            "true",
+            "false",
+            "26184:2797"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Large",
+            "true",
+            "false",
+            "26184:2803"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Medium",
+            "true",
+            "false",
+            "26184:2809"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Small",
+            "true",
+            "false",
+            "26184:2815"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Default",
+            "Large",
+            "true",
+            "false",
+            "26184:2821"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Default",
+            "Medium",
+            "true",
+            "false",
+            "26184:2827"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Default",
+            "Small",
+            "true",
+            "false",
+            "26184:2833"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Pressed",
+            "Large",
+            "true",
+            "false",
+            "26184:2839"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Pressed",
+            "Medium",
+            "true",
+            "false",
+            "26184:2845"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Pressed",
+            "Small",
+            "true",
+            "false",
+            "26184:2851"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Large",
+            "false",
+            "true",
+            "26184:2857"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Medium",
+            "false",
+            "true",
+            "26184:2863"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Small",
+            "false",
+            "true",
+            "26184:2869"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Large",
+            "false",
+            "true",
+            "26184:2875"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Medium",
+            "false",
+            "true",
+            "26184:2881"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Small",
+            "false",
+            "true",
+            "26184:2887"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Large",
+            "true",
+            "true",
+            "26184:2893"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Medium",
+            "true",
+            "true",
+            "26184:2899"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Default",
+            "Small",
+            "true",
+            "true",
+            "26184:2905"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Large",
+            "true",
+            "true",
+            "26184:2911"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Medium",
+            "true",
+            "true",
+            "26184:2917"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "Small",
+            "true",
+            "true",
+            "26184:2923"
+          ]
+        }
+      ],
+      "summary": {
+        "columns": [
+          "Style",
+          "State",
+          "isSelected",
+          "isError",
+          "Count",
+          "Notes"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Default",
+              "Default",
+              "false",
+              "false",
+              "3",
+              "Empty ring + label"
+            ]
+          },
+          {
+            "cells": [
+              "Default",
+              "Default",
+              "true",
+              "false",
+              "3",
+              "Brand ring + dot, brand label"
+            ]
+          },
+          {
+            "cells": [
+              "Default",
+              "Default",
+              "false",
+              "true",
+              "3",
+              "Error ring #D61B2C"
+            ]
+          },
+          {
+            "cells": [
+              "Default",
+              "Default",
+              "true",
+              "true",
+              "3",
+              "Error ring + dot"
+            ]
+          },
+          {
+            "cells": [
+              "Default",
+              "Pressed",
+              "false",
+              "false",
+              "3",
+              "Pressed ring #2340A9, navy label"
+            ]
+          },
+          {
+            "cells": [
+              "Default",
+              "Pressed",
+              "true",
+              "false",
+              "3",
+              "Pressed ring + dot"
+            ]
+          },
+          {
+            "cells": [
+              "Default",
+              "Pressed",
+              "false",
+              "true",
+              "3",
+              "Pressed error ring"
+            ]
+          },
+          {
+            "cells": [
+              "Default",
+              "Pressed",
+              "true",
+              "true",
+              "3",
+              "Pressed error ring + dot"
+            ]
+          },
+          {
+            "cells": [
+              "Default",
+              "Disabled",
+              "false",
+              "false",
+              "3",
+              "Muted empty ring + muted label"
+            ]
+          },
+          {
+            "cells": [
+              "Default",
+              "Disabled",
+              "true",
+              "false",
+              "3",
+              "Muted ring + dot"
+            ]
+          },
+          {
+            "cells": [
+              "Check",
+              "Default",
+              "true",
+              "false",
+              "3",
+              "Brand fill + vector checkmark"
+            ]
+          },
+          {
+            "cells": [
+              "Check",
+              "Pressed",
+              "true",
+              "false",
+              "3",
+              "Pressed fill + checkmark"
+            ]
+          },
+          {
+            "cells": [
+              "Check",
+              "Disabled",
+              "true",
+              "false",
+              "3",
+              "Muted fill + checkmark"
+            ]
+          }
+        ]
+      },
+      "collapseLabel": "View full Style × State × Size × isSelected × isError breakdown (39 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 26184:2712",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 9 resolved issues on the Overview tab had no changelog row: v2.0: size no longer encodes state — the compound \\\"default - error\\\" / \\\"large - error\\\" strings are gone, replaced by orthogonal Size (Large/Medium/Small) × State (Default/Pressed/Disabled) × isError props; v2.0: Radio size now pairs to label size — Size=Large nests the 24 × 24 atom instead of hardcoding the 16 × 16 small radio into every variant; v2.0: Full state coverage added — isSelected, State=Pressed, State=Disabled, and isError, including Disabled + isSelected=false so a disabled radio group renders its unselected rows; v2.0: _space_12 spacer instance removed — the 12px gap is now real auto-layout spacing; v2.0: Layer typo fixed — icon-ofsset renamed to icon-offset across all 39 variants; v2.0: Schema aligned with the Radio Button atom — same five props, same property order, same 39-variant coverage; v2.0: Check + Pressed mislabel corrected — three Check variants (26184:2839 / 2845 / 2851) were labelled isError=true while painted pressed-navy, which also left Check + Pressed + isError=false non-existent; v2.0: Disabled deliberately excludes isError — confirmed intentional, matching the atom; v2.0: Nesting the radio as a plain INSTANCE rather than a Figma Slot reviewed and accepted — the mirrored 39-variant matrix already exposes every atom state through Style / State / Size / isSelected / isError, so a Slot would largely duplicate it.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "July 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt · node 26184:2712",
+      "rows": [
+        {
+          "body": "<strong>Component rebuilt on a new node</strong> — 39 variants across <code>Style</code> × <code>State</code> × <code>Size</code> × <code>isSelected</code> × <code>isError</code>, mirroring the Radio Button atom exactly (same props, same order, same coverage).\n          <span class=\"tag-fixed\">Restructured</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Rebuild"
+          }
+        },
+        {
+          "body": "<strong><code>size</code> no longer encodes state</strong> — the compound <code>\"default - error\"</code> / <code>\"large - error\"</code> values are replaced by orthogonal <code>Size</code> × <code>State</code> × <code>isError</code> props. Native enum mapping is clean.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Radio size now pairs to label size</strong> — <code>Size=Large</code> nests the 24 × 24 atom instead of hardcoding the 16 × 16 small radio into every variant.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Full state coverage added</strong> — <code>isSelected</code>, <code>Pressed</code>, <code>Disabled</code>, and <code>isError</code>, including <code>Disabled + isSelected=false</code> so disabled groups render their unselected rows.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong><code>_space_12</code> spacer removed</strong> — the 12px gap is now real auto-layout spacing. The annotation instance (<code>#0500FF</code> fill wrapping a Roboto <code>\"12\"</code> text node) no longer ships inside the component, and layout maps to native padding rather than a spacer view.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 · C4 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Layer typo fixed</strong> — <code>icon-ofsset</code> → <code>icon-offset</code> across all 39 variants.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Check + Pressed mislabel corrected</strong> — <code>26184:2839 / 2845 / 2851</code> were labelled <code>isError=true</code> while painted pressed-navy, leaving <code>Check + Pressed + isError=false</code> non-existent. Renamed to <code>isError=false</code>; the wrapper now matches the atom.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong><code>Disabled + isError=true</code> not covered</strong> — same gap as the atom. Likely intentional, but undocumented. Confirm and record.\n          <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5 Open"
+          }
+        },
+        {
+          "body": "<strong>Code Connect mappings</strong> — now unblocked by the rebuild; SwiftUI / Compose mappings not yet registered.\n          <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7 Open"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 18482:35673",
+      "rows": [
+        {
+          "body": "<strong>Component assessed</strong> — 4 variants (default / large × error). <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Initial"
+          }
+        },
+        {
+          "body": "<strong><code>size</code> prop encodes state</strong> — \"default - error\" and \"large - error\" mix size + state. Should split. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2 Open"
+          }
+        },
+        {
+          "body": "<strong>Missing state variants</strong> — No disabled or selected. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5 Open"
+          }
+        },
+        {
+          "body": "<strong>Radio hardcoded to small</strong> — large label still uses 16 × 16 radio. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6 Open"
+          }
+        },
+        {
+          "body": "<strong>Code Connect mappings</strong> — Not registered. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7 Open"
+          }
+        }
+      ]
+    }
+  ]
+}

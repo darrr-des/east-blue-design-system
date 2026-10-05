@@ -67,7 +67,7 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['stacked'];
   var swift = lang !== 'compose';
-  var sep = swift ? '<span class="syn-punc">:</span> ' : ' <span class="syn-eq">=</span> ';
+  var sep = swift ? ': ' : ' = ';
   var cased = card.layout === 'inline' ? 'Inline' : 'Stacked';
 
   /* Figma types the label; the platform takes the unit as an enum and
@@ -80,19 +80,19 @@ function getSnippet(cardKey, lang) {
   var args = [
     'value' + sep + value,
     'unit' + sep + (swift
-      ? '<span class="syn-dot">.' + unit + '</span>'
-      : '<span class="syn-type">EBTimeUnit</span><span class="syn-punc">.</span><span class="syn-dot">' + unitCased + '</span>'),
+      ? '.' + unit + ''
+      : 'EBTimeUnit.' + unitCased + ''),
     'layout' + sep + (swift
-      ? '<span class="syn-dot">.' + card.layout + '</span>'
-      : '<span class="syn-type">EBCountdownUnitLayout</span><span class="syn-punc">.</span><span class="syn-dot">' + cased + '</span>')
+      ? '.' + card.layout + ''
+      : 'EBCountdownUnitLayout.' + cased + '')
   ];
   if (card.hasunit === 'false') {
-    args.push('showsUnit' + sep + '<span class="syn-kw">false</span>');
+    args.push('showsUnit' + sep + 'false');
   }
 
-  return '<span class="syn-type">EBCountdownUnit</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  return 'EBCountdownUnit(\n    ' +
+    args.join(',\n    ') +
+    '\n)';
 }
 window.getSnippet = getSnippet;
 

@@ -1,0 +1,1524 @@
+{
+  "name": "Tooltip",
+  "meta": {
+    "node": "6295:79647",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6295-79647",
+    "description": "A pointered callout for walkthroughs and contextual hints. Carries a header, a description, and three slots — <code>⤷ AssetSlot</code>, <code>⤷ CloseSlot</code>, <code>⤷ ActionSlot</code>.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "ready",
+        "label": "Ready"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Ship as-is",
+      "text": "Consolidates three sibling components — <code>Onboarding - Tooltip</code>, <code>Tooltip Blurred and Transparent</code> and <code>Tooltip V2</code> — into one 24-variant set. Every issue raised against those three is resolved: the pointer is a vector, the close is a DS icon instance, the four pointer booleans became a single <code>Placement</code> enum, and content sits in three named Figma slots. Interaction states are carried by the Button and close icon and are assessed on those components. Code Connect mappings are left open for engineering to register."
+    },
+    "navGroup": "Tooltip",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Contexts are illustrative. Tooltip sits above a dimmed cut-out during walkthroughs, and inline against a target element for contextual hints. The GBonds walkthrough screens in the Figma section show both.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tt-demo-preview\"><svg class=\"eb-preview eb-preview-tt\" width=\"336\" height=\"134\" viewBox=\"0 0 336 134\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"12.5\" width=\"335\" height=\"121\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\"/><g transform=\"translate(15, 1)\"><path d=\"M15.08 2.81459C13.6929 1.30131 11.3071 1.3013 9.91996 2.81459L1.5 12L23.5 12L15.08 2.81459Z\" fill=\"#FFFFFF\"/><path d=\"M0.5 11.5H2.05464C2.33812 11.5 2.60829 11.3797 2.79793 11.169L10.831 2.24329C11.2569 1.77017 11.8635 1.5 12.5 1.5C13.1365 1.5 13.7431 1.77017 14.169 2.24329L22.2021 11.169C22.3917 11.3797 22.6619 11.5 22.9454 11.5H24.5\" stroke=\"#E5EBF4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"/></g><rect x=\"16\" y=\"28\" width=\"46\" height=\"46\" rx=\"23\" fill=\"#D7E0EF\"/><text x=\"74\" y=\"45.5\" fill=\"#0A2757\" font-size=\"18\" font-weight=\"700\" letter-spacing=\"0.25\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Header</text><text x=\"74\" y=\"68.5\" fill=\"#6780A9\" fill-opacity=\"1\" font-size=\"12\" font-weight=\"600\" font-family=\"'BarkAda', system-ui, sans-serif\">Description goes here</text><g transform=\"translate(304, 24.5)\"><path d=\"M11.3652 3.36321C11.7166 3.01174 12.2871 3.01174 12.6386 3.36321C12.9897 3.71472 12.9899 4.28531 12.6386 4.63665L9.27532 7.99993L12.6386 11.3632C12.9897 11.7147 12.9899 12.2853 12.6386 12.6367C12.2873 12.988 11.7167 12.9877 11.3652 12.6367L8.00188 9.27337L4.6386 12.6367C4.28726 12.988 3.71667 12.9877 3.36517 12.6367C3.01369 12.2852 3.01369 11.7147 3.36517 11.3632L6.72845 7.99993L3.36517 4.63665C3.01369 4.28518 3.01369 3.71469 3.36517 3.36321C3.71664 3.01174 4.28713 3.01174 4.6386 3.36321L8.00188 6.72649L11.3652 3.36321Z\" fill=\"#0A2757\"/></g><rect x=\"261\" y=\"90\" width=\"59\" height=\"28\" rx=\"14\" ry=\"14\" fill=\"#005CE5\"/><text x=\"290.5\" y=\"109\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"16\" font-weight=\"700\" letter-spacing=\"0.25\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Next</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Text</span><select id=\"tt-ctrl-text\" class=\"demo-panel-select\" onchange=\"_ttUpdate()\"><option value=\"header\">Header</option><option value=\"description\">Description</option><option value=\"both\" selected=\"\">Both</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Placement</span><select id=\"tt-ctrl-placement\" class=\"demo-panel-select\" onchange=\"_ttUpdate()\"><option value=\"top\" selected=\"\">Top</option><option value=\"bottom\">Bottom</option><option value=\"left\">Left</option><option value=\"right\">Right</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Appearance</span><select id=\"tt-ctrl-appearance\" class=\"demo-panel-select\" onchange=\"_ttUpdate()\"><option value=\"opaque\" selected=\"\">Opaque</option><option value=\"translucent\">Translucent</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "One component covers walkthrough coach-marks and inline hints across both surfaces. 24 variants span every text, placement and appearance combination with no gaps."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Carries its own surface, border, radius, padding and pointer. Height is a hug — <code>Details</code> takes the taller of the 46px asset slot and the text stack, so emptying a slot shrinks the card."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "One vocabulary end to end: the <code>Text</code> axis reads <code>Header</code> / <code>Description</code> / <code>Both</code> and the layers are <code>#header</code> / <code>#description</code>. All three slots use the <code>⤷ …Slot</code> convention shared with the Table family."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Composes DS parts rather than redrawing them — the close is an icon instance and the CTA is a real <code>Button - XSmall</code>, both inside named slots a consumer can swap or empty."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Text × Placement × Appearance",
+        "notes": "Tooltip is a presentation surface with no interaction states of its own. Tap and pressed behaviour belong to the <code>Button - XSmall</code> in <code>⤷ ActionSlot</code> and the close icon in <code>⤷ CloseSlot</code>."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Three sibling Tooltips folded into one component.",
+        "body": "<code>Onboarding - Tooltip</code>, <code>Tooltip Blurred and Transparent</code> and <code>Tooltip V2</code> are gone. The section now holds a single <code>Tooltip</code> set, and the visual treatment that shipped as its own component is now <code>Appearance=Translucent</code>.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Pointer direction is a single enum.",
+        "body": "The four independent booleans on <code>Tooltip V2</code>, and the conflicting pointer schema on <code>Onboarding - Tooltip</code>, are replaced by <code>Placement = Top | Bottom | Left | Right</code>. Geometry follows: 24 × 12 on the vertical placements, 12 × 24 on the horizontal ones.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Pointer is a vector, not a raster.",
+        "body": "All three predecessors shipped the triangle as a raster asset. It is now a real vector — a filled path plus a rounded stroke — that recolours per appearance and rotates per placement.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Close is a DS icon instance.",
+        "body": "Previously an image asset on two of the three siblings. It is now an icon instance sitting in <code>⤷ CloseSlot</code>.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Content sits in named slots.",
+        "body": "The missing body and CTA support is resolved by three Figma slots — <code>⤷ AssetSlot</code> (46 × 46), <code>⤷ CloseSlot</code> (16 × 16) and <code>⤷ ActionSlot</code> holding a real <code>Button - XSmall</code>. The leading gray placeholder circle is now the slot default rather than baked artwork.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "One vocabulary across property, layer and content.",
+        "body": "The <code>Text</code> axis, the layer names and the slot names were reconciled in the same pass — <code>Header</code> / <code>Description</code> / <code>Both</code>, <code>#header</code> / <code>#description</code>, and the <code>⤷ …Slot</code> convention shared with Table.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [
+      {
+        "headline": "Document the dismiss contract and walkthrough lifecycle.",
+        "body": "Tooltip renders a close affordance but owns no dismiss behaviour. Write down who dismisses it, whether dismissal advances a walkthrough step, and what happens to the backdrop cut-out — otherwise each consumer invents it. No Figma change required.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Fold Tooltip into the library-wide slot naming rule.",
+        "body": "Tooltip now follows the Table family convention (<code>⤷ AssetSlot</code>, <code>⤷ CloseSlot</code>, <code>⤷ ActionSlot</code>), making it two families to one against the carousel components’ unsuffixed form. Table already carries an open recommendation to write a single rule into the guidelines — this component should be named in it.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "6295:79647",
+      "variants": 24,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "tt-opaque",
+        "demoKey": "opaque",
+        "title": "Opaque",
+        "node": "6295:79678",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tt-spec-opaque\"><svg class=\"eb-preview eb-preview-tt\" width=\"336\" height=\"134\" viewBox=\"0 0 336 134\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"12.5\" width=\"335\" height=\"121\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\"/><g transform=\"translate(15, 1)\"><path d=\"M15.08 2.81459C13.6929 1.30131 11.3071 1.3013 9.91996 2.81459L1.5 12L23.5 12L15.08 2.81459Z\" fill=\"#FFFFFF\"/><path d=\"M0.5 11.5H2.05464C2.33812 11.5 2.60829 11.3797 2.79793 11.169L10.831 2.24329C11.2569 1.77017 11.8635 1.5 12.5 1.5C13.1365 1.5 13.7431 1.77017 14.169 2.24329L22.2021 11.169C22.3917 11.3797 22.6619 11.5 22.9454 11.5H24.5\" stroke=\"#E5EBF4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"/></g><rect x=\"16\" y=\"28\" width=\"46\" height=\"46\" rx=\"23\" fill=\"#D7E0EF\"/><text x=\"74\" y=\"45.5\" fill=\"#0A2757\" font-size=\"18\" font-weight=\"700\" letter-spacing=\"0.25\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Header</text><text x=\"74\" y=\"68.5\" fill=\"#6780A9\" fill-opacity=\"1\" font-size=\"12\" font-weight=\"600\" font-family=\"'BarkAda', system-ui, sans-serif\">Description goes here</text><g transform=\"translate(304, 24.5)\"><path d=\"M11.3652 3.36321C11.7166 3.01174 12.2871 3.01174 12.6386 3.36321C12.9897 3.71472 12.9899 4.28531 12.6386 4.63665L9.27532 7.99993L12.6386 11.3632C12.9897 11.7147 12.9899 12.2853 12.6386 12.6367C12.2873 12.988 11.7167 12.9877 11.3652 12.6367L8.00188 9.27337L4.6386 12.6367C4.28726 12.988 3.71667 12.9877 3.36517 12.6367C3.01369 12.2852 3.01369 11.7147 3.36517 11.3632L6.72845 7.99993L3.36517 4.63665C3.01369 4.28518 3.01369 3.71469 3.36517 3.36321C3.71664 3.01174 4.28713 3.01174 4.6386 3.36321L8.00188 6.72649L11.3652 3.36321Z\" fill=\"#0A2757\"/></g><rect x=\"261\" y=\"90\" width=\"59\" height=\"28\" rx=\"14\" ry=\"14\" fill=\"#005CE5\"/><text x=\"290.5\" y=\"109\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"16\" font-weight=\"700\" letter-spacing=\"0.25\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Next</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Text",
+                "prop": "text",
+                "control": "select",
+                "defaultValue": "both",
+                "options": [
+                  {
+                    "value": "header",
+                    "label": "Header"
+                  },
+                  {
+                    "value": "description",
+                    "label": "Description"
+                  },
+                  {
+                    "value": "both",
+                    "label": "Both"
+                  }
+                ]
+              },
+              {
+                "label": "Placement",
+                "prop": "placement",
+                "control": "select",
+                "defaultValue": "top",
+                "options": [
+                  {
+                    "value": "top",
+                    "label": "Top"
+                  },
+                  {
+                    "value": "bottom",
+                    "label": "Bottom"
+                  },
+                  {
+                    "value": "left",
+                    "label": "Left"
+                  },
+                  {
+                    "value": "right",
+                    "label": "Right"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Appearance",
+                "value": "Opaque",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Text",
+                "value": "Both",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "text",
+                "variants": [
+                  {
+                    "when": "text:header",
+                    "value": "Header",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "text:description",
+                    "value": "Description",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Placement",
+                "value": "Top",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "placement",
+                "variants": [
+                  {
+                    "when": "placement:bottom",
+                    "value": "Bottom",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "placement:left",
+                    "value": "Left",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "placement:right",
+                    "value": "Right",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Container",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Pointer",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Header",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Close",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Asset placeholder",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Action button",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Action label",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "#header",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "#description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "134",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "placement:left",
+                    "value": "122",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "placement:right",
+                    "value": "122",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "336",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "placement:left",
+                    "value": "348",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "placement:right",
+                    "value": "348",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radius",
+                "value": "6",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBTooltip</span>(\n    <span class=\"syn-param\">header</span>: <span class=\"syn-str\">\"Header\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">placement</span>: <span class=\"syn-dot\">.top</span>,\n    <span class=\"syn-param\">appearance</span>: <span class=\"syn-dot\">.opaque</span>\n)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"illustration\"</span>))\n    .<span class=\"syn-fn\">ebAction</span>(<span class=\"syn-str\">\"Next\"</span>) { }\n    .onDismiss { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBTooltip</span>(\n    <span class=\"syn-param\">header</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">placement</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTooltipPlacement</span>.Top,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTooltipAppearance</span>.Opaque,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">action</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButton</span>(<span class=\"syn-str\">\"Next\"</span>, <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonSize</span>.XSmall) { },\n    <span class=\"syn-param\">onDismiss</span> <span class=\"syn-eq\">=</span> { }\n)</code>"
+      },
+      {
+        "cardKey": "tt-translucent",
+        "demoKey": "translucent",
+        "title": "Translucent",
+        "node": "6295:79724",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tt-spec-translucent\"><svg class=\"eb-preview eb-preview-tt\" width=\"336\" height=\"134\" viewBox=\"0 0 336 134\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"12.5\" width=\"335\" height=\"121\" rx=\"6\" fill=\"#0A2757\" stroke=\"#0A2757\"/><g transform=\"translate(15, 1)\"><path d=\"M15.08 2.81459C13.6929 1.30131 11.3071 1.3013 9.91996 2.81459L1.5 12L23.5 12L15.08 2.81459Z\" fill=\"#0A2757\"/><path d=\"M0.5 11.5H2.05464C2.33812 11.5 2.60829 11.3797 2.79793 11.169L10.831 2.24329C11.2569 1.77017 11.8635 1.5 12.5 1.5C13.1365 1.5 13.7431 1.77017 14.169 2.24329L22.2021 11.169C22.3917 11.3797 22.6619 11.5 22.9454 11.5H24.5\" stroke=\"#0A2757\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"/></g><rect x=\"16\" y=\"28\" width=\"46\" height=\"46\" rx=\"23\" fill=\"#D7E0EF\"/><text x=\"74\" y=\"45.5\" fill=\"#FFFFFF\" font-size=\"18\" font-weight=\"700\" letter-spacing=\"0.25\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Header</text><text x=\"74\" y=\"68.5\" fill=\"#F6F9FD\" fill-opacity=\"0.8\" font-size=\"12\" font-weight=\"600\" font-family=\"'BarkAda', system-ui, sans-serif\">Description goes here</text><g transform=\"translate(304, 24.5)\"><path d=\"M11.3652 3.36321C11.7166 3.01174 12.2871 3.01174 12.6386 3.36321C12.9897 3.71472 12.9899 4.28531 12.6386 4.63665L9.27532 7.99993L12.6386 11.3632C12.9897 11.7147 12.9899 12.2853 12.6386 12.6367C12.2873 12.988 11.7167 12.9877 11.3652 12.6367L8.00188 9.27337L4.6386 12.6367C4.28726 12.988 3.71667 12.9877 3.36517 12.6367C3.01369 12.2852 3.01369 11.7147 3.36517 11.3632L6.72845 7.99993L3.36517 4.63665C3.01369 4.28518 3.01369 3.71469 3.36517 3.36321C3.71664 3.01174 4.28713 3.01174 4.6386 3.36321L8.00188 6.72649L11.3652 3.36321Z\" fill=\"#FFFFFF\"/></g><rect x=\"261\" y=\"90\" width=\"59\" height=\"28\" rx=\"14\" ry=\"14\" fill=\"#005CE5\"/><text x=\"290.5\" y=\"109\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"16\" font-weight=\"700\" letter-spacing=\"0.25\" font-family=\"'Proxima Soft', system-ui, sans-serif\">Next</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Text",
+                "prop": "text",
+                "control": "select",
+                "defaultValue": "both",
+                "options": [
+                  {
+                    "value": "header",
+                    "label": "Header"
+                  },
+                  {
+                    "value": "description",
+                    "label": "Description"
+                  },
+                  {
+                    "value": "both",
+                    "label": "Both"
+                  }
+                ]
+              },
+              {
+                "label": "Placement",
+                "prop": "placement",
+                "control": "select",
+                "defaultValue": "top",
+                "options": [
+                  {
+                    "value": "top",
+                    "label": "Top"
+                  },
+                  {
+                    "value": "bottom",
+                    "label": "Bottom"
+                  },
+                  {
+                    "value": "left",
+                    "label": "Left"
+                  },
+                  {
+                    "value": "right",
+                    "label": "Right"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Appearance",
+                "value": "Translucent",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Text",
+                "value": "Both",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "text",
+                "variants": [
+                  {
+                    "when": "text:header",
+                    "value": "Header",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "text:description",
+                    "value": "Description",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Placement",
+                "value": "Top",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "placement",
+                "variants": [
+                  {
+                    "when": "placement:bottom",
+                    "value": "Bottom",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "placement:left",
+                    "value": "Left",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "placement:right",
+                    "value": "Right",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Container",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Pointer",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Header",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "#F6F9FD @ 80%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Close",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Asset placeholder",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Action button",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Action label",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "#header",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "#description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "134",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "placement:left",
+                    "value": "122",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "placement:right",
+                    "value": "122",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "336",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "placement:left",
+                    "value": "348",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "placement:right",
+                    "value": "348",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radius",
+                "value": "6",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBTooltip</span>(\n    <span class=\"syn-param\">header</span>: <span class=\"syn-str\">\"Header\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">placement</span>: <span class=\"syn-dot\">.top</span>,\n    <span class=\"syn-param\">appearance</span>: <span class=\"syn-dot\">.translucent</span>\n)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"illustration\"</span>))\n    .<span class=\"syn-fn\">ebAction</span>(<span class=\"syn-str\">\"Next\"</span>) { }\n    .onDismiss { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBTooltip</span>(\n    <span class=\"syn-param\">header</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">placement</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTooltipPlacement</span>.Top,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTooltipAppearance</span>.Translucent,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">action</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButton</span>(<span class=\"syn-str\">\"Next\"</span>, <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonSize</span>.XSmall) { },\n    <span class=\"syn-param\">onDismiss</span> <span class=\"syn-eq\">=</span> { }\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Appearance",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Opaque",
+            "element": "Container",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Opaque",
+            "element": "Border",
+            "token": "—",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Opaque",
+            "element": "Pointer",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Opaque",
+            "element": "Header",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Opaque",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Opaque",
+            "element": "Close",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Opaque",
+            "element": "Asset placeholder",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Opaque",
+            "element": "Action button",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Opaque",
+            "element": "Action label",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Translucent",
+            "element": "Container",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Translucent",
+            "element": "Border",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Translucent",
+            "element": "Pointer",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Translucent",
+            "element": "Header",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Translucent",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 80%"
+            ]
+          },
+          {
+            "role": "Translucent",
+            "element": "Close",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Translucent",
+            "element": "Asset placeholder",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Translucent",
+            "element": "Action button",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Translucent",
+            "element": "Action label",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:tooltip:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>tooltip<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": "Native components are not yet implemented — all snippets show the planned API."
+    },
+    "propertyMapping": {
+      "description": "Text, Placement and Appearance are the set’s three variant properties. ⤷ AssetSlot, ⤷ CloseSlot and ⤷ ActionSlot are Figma Slots; #header and #description are text layers read from 6295:79678 — their exposure as text properties is not readable with the plugin.",
+      "rows": [
+        {
+          "figma": "Text — Header, Description, Both",
+          "swift": "<code>header:</code> and <code>description:</code> — pass one or both",
+          "compose": "<code>header =</code> and <code>description =</code> — pass one or both"
+        },
+        {
+          "figma": "Placement — Top, Bottom, Left, Right",
+          "swift": "<code>placement: .top / .bottom / .left / .right</code>",
+          "compose": "<code>placement = EBTooltipPlacement.Top / Bottom / Left / Right</code>"
+        },
+        {
+          "figma": "Appearance — Opaque, Translucent",
+          "swift": "<code>appearance: .opaque / .translucent</code>",
+          "compose": "<code>appearance = EBTooltipAppearance.Opaque / Translucent</code>"
+        },
+        {
+          "figma": "⤷ AssetSlot (slot)",
+          "swift": "<code>.ebLeadingAsset(Image)</code>",
+          "compose": "<code>leadingAsset = { Icon(…) }</code>"
+        },
+        {
+          "figma": "⤷ CloseSlot (slot)",
+          "swift": "<code>.onDismiss { }</code>",
+          "compose": "<code>onDismiss = { }</code>"
+        },
+        {
+          "figma": "⤷ ActionSlot (slot)",
+          "swift": "<code>.ebAction(\"Next\") { }</code>",
+          "compose": "<code>action = EBButton(\"Next\", size = EBButtonSize.XSmall) { }</code>"
+        },
+        {
+          "figma": "#header (text)",
+          "swift": "<code>header: String?</code>",
+          "compose": "<code>header = \"…\"</code>"
+        },
+        {
+          "figma": "#description (text)",
+          "swift": "<code>description: String?</code>",
+          "compose": "<code>description = \"…\"</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Opaque",
+        "swift": "<code><span class=\"syn-type\">EBTooltip</span>(\n    <span class=\"syn-param\">header</span>: <span class=\"syn-str\">\"Header\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">placement</span>: <span class=\"syn-dot\">.top</span>,\n    <span class=\"syn-param\">appearance</span>: <span class=\"syn-dot\">.opaque</span>\n)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"illustration\"</span>))\n    .<span class=\"syn-fn\">ebAction</span>(<span class=\"syn-str\">\"Next\"</span>) { }\n    .onDismiss { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBTooltip</span>(\n    <span class=\"syn-param\">header</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">placement</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTooltipPlacement</span>.Top,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTooltipAppearance</span>.Opaque,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">action</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButton</span>(<span class=\"syn-str\">\"Next\"</span>, <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonSize</span>.XSmall) { },\n    <span class=\"syn-param\">onDismiss</span> <span class=\"syn-eq\">=</span> { }\n)</code>"
+      },
+      {
+        "subheading": "Translucent",
+        "swift": "<code><span class=\"syn-type\">EBTooltip</span>(\n    <span class=\"syn-param\">header</span>: <span class=\"syn-str\">\"Header\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">placement</span>: <span class=\"syn-dot\">.top</span>,\n    <span class=\"syn-param\">appearance</span>: <span class=\"syn-dot\">.translucent</span>\n)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"illustration\"</span>))\n    .<span class=\"syn-fn\">ebAction</span>(<span class=\"syn-str\">\"Next\"</span>) { }\n    .onDismiss { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBTooltip</span>(\n    <span class=\"syn-param\">header</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">placement</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTooltipPlacement</span>.Top,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTooltipAppearance</span>.Translucent,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">action</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButton</span>(<span class=\"syn-str\">\"Next\"</span>, <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonSize</span>.XSmall) { },\n    <span class=\"syn-param\">onDismiss</span> <span class=\"syn-eq\">=</span> { }\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Announced as one unit",
+        "ios": "<code>.accessibilityElement(children: .combine)</code> on the container — header then description.",
+        "android": "<code>Modifier.semantics(mergeDescendants = true)</code> on the container."
+      },
+      {
+        "requirement": "Dismiss is reachable",
+        "ios": "Close is a <code>Button</code> with <code>accessibilityLabel(\"Dismiss\")</code>; the 16 pt glyph gets a 44 pt hit area; <code>.accessibilityAction(.escape)</code> also dismisses.",
+        "android": "<code>IconButton</code> with <code>contentDescription = \"Dismiss\"</code> and a 48 dp touch target; back press dismisses."
+      },
+      {
+        "requirement": "Focus order",
+        "ios": "Header, description, then Next, then Dismiss — a walkthrough moves focus to the next tooltip after Next.",
+        "android": "Same order; request focus on the new tooltip after Next."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Opaque: #0A2757 on white (13.9:1); Translucent: white on #0A2757 (13.9:1), description at 80% still 9.4:1.",
+        "android": "Same values — the surfaces are fixed, not themed."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Point Placement at the anchor and keep the 336 px container inside the safe area.",
+        "dontText": "Don’t let the pointer sit over the anchor’s edge — move the tooltip, not the pointer."
+      },
+      {
+        "doText": "Use Translucent over imagery and dimmed walkthrough backdrops.",
+        "dontText": "Don’t use Translucent on a plain white screen; Opaque is the default there."
+      },
+      {
+        "doText": "Use Text Both for walkthrough steps, Header alone for a one-line hint.",
+        "dontText": "Don’t exceed one line in the header; the description is the place for detail."
+      },
+      {
+        "doText": "Fill ⤷ ActionSlot with the Next step of a walkthrough.",
+        "dontText": "Don’t put a destructive action in the slot."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>Container</code> › <code>Details</code> › <code>⤷ AssetSlot</code> / <code>Text Container</code> / <code>⤷ CloseSlot</code>, <code>⤷ ActionSlot</code>, <code>pointer-adjustment</code> — read on 6295:79678. The slots keep the <code>⤷</code> glyph and the text layers the <code>#</code> sigil that the rest of the system has dropped."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Text</code>, <code>Placement</code>, <code>Appearance</code> with Title Case values."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "#header → <code>Primary/Headlines/Block</code>, #description → <code>Secondary/Bold/Caption</code>. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Three enums, three slots, two strings — maps 1:1 onto <code>EBTooltip</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Interaction lives on the Button - XSmall and the Close icon and is assessed there."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The pointer is a vector and the asset a swappable instance; the <code>Close</code> icon carries a <code>shape_full</code> BOOLEAN_OPERATION — flatten it in the icon library."
+      }
+    ],
+    "variants": {
+      "total": 24,
+      "description": "3 Text × 4 Placement × 2 Appearance = 24 variants, a complete matrix",
+      "summary": {
+        "columns": [
+          "Appearance",
+          "Text × Placement",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Opaque",
+              "Header, Description, Both × Top, Bottom, Left, Right",
+              "12"
+            ]
+          },
+          {
+            "cells": [
+              "Translucent",
+              "Header, Description, Both × Top, Bottom, Left, Right",
+              "12"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "Text",
+        "Placement",
+        "Appearance",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Header",
+            "Top",
+            "Opaque",
+            "<code>6295:79648</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Header",
+            "Top",
+            "Translucent",
+            "<code>6295:79694</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Description",
+            "Top",
+            "Opaque",
+            "<code>6295:79663</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Description",
+            "Top",
+            "Translucent",
+            "<code>6295:79709</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Both",
+            "Top",
+            "Opaque",
+            "<code>6295:79678</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Both",
+            "Top",
+            "Translucent",
+            "<code>6295:79724</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Header",
+            "Bottom",
+            "Opaque",
+            "<code>6295:79740</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Header",
+            "Bottom",
+            "Translucent",
+            "<code>6295:79786</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Description",
+            "Bottom",
+            "Opaque",
+            "<code>6295:79755</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Description",
+            "Bottom",
+            "Translucent",
+            "<code>6295:79801</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Both",
+            "Bottom",
+            "Opaque",
+            "<code>6295:79770</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Both",
+            "Bottom",
+            "Translucent",
+            "<code>6295:79816</code>",
+            "336 × 134"
+          ]
+        },
+        {
+          "cells": [
+            "Header",
+            "Left",
+            "Opaque",
+            "<code>6295:79832</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Header",
+            "Left",
+            "Translucent",
+            "<code>6295:79878</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Description",
+            "Left",
+            "Opaque",
+            "<code>6295:79847</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Description",
+            "Left",
+            "Translucent",
+            "<code>6295:79893</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Both",
+            "Left",
+            "Opaque",
+            "<code>6295:79862</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Both",
+            "Left",
+            "Translucent",
+            "<code>6295:79908</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Header",
+            "Right",
+            "Opaque",
+            "<code>6295:79924</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Header",
+            "Right",
+            "Translucent",
+            "<code>6295:79970</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Description",
+            "Right",
+            "Opaque",
+            "<code>6295:79939</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Description",
+            "Right",
+            "Translucent",
+            "<code>6295:79985</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Both",
+            "Right",
+            "Opaque",
+            "<code>6295:79954</code>",
+            "348 × 122"
+          ]
+        },
+        {
+          "cells": [
+            "Both",
+            "Right",
+            "Translucent",
+            "<code>6295:80000</code>",
+            "348 × 122"
+          ]
+        }
+      ],
+      "collapseLabel": "View full Text × Placement × Appearance breakdown (24 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 6295:79647",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the 24 live variants.</strong> Cards follow <code>Appearance</code> — Opaque, Translucent — with <code>Text</code> and <code>Placement</code> as panel controls and the three slots drawn filled as Figma ships them; the asset placeholder is now the solid <code>#D7E0EF</code> instance and the Close the library glyph. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the three-property schema.</strong> Property Mapping one row per property with the three slots, Usage Snippets per Appearance, Guidelines trimmed to four, Scorecard regraded, Variants Inventory on the 24 live nodes with a summary and collapsed breakdown.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Layer names keep the retired glyph and sigil.</strong> <code>⤷ AssetSlot</code>, <code>⤷ CloseSlot</code>, <code>⤷ ActionSlot</code>, <code>#header</code> and <code>#description</code> on 6295:79678 predate the family convention (<code>-Slot</code> suffix, no sigil). Filed from the scorecard for the Component Review.",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "August 2026",
+      "kind": "initial",
+      "kindLabel": "Initial",
+      "header": "Consolidated assessment · node 6295:79647",
+      "rows": [
+        {
+          "body": "<strong>Three components became one</strong> — <code>Onboarding - Tooltip</code>, <code>Tooltip Blurred and Transparent</code> and <code>Tooltip V2</code> are superseded by this 24-variant set. Their pages are retained as <code>remove</code> stubs pointing here.\n          <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Initial"
+          }
+        },
+        {
+          "body": "<strong>Pointer booleans became an enum</strong> — four independent booleans replaced by <code>Placement = Top | Bottom | Left | Right</code>.\n          <span class=\"tag-fixed tag-c2\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Raster assets replaced</strong> — the pointer is a vector path that recolours per appearance and rotates per placement; the close is a DS icon instance.\n          <span class=\"tag-fixed tag-c6\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>Content moved into named slots</strong> — <code>⤷ AssetSlot</code>, <code>⤷ CloseSlot</code> and <code>⤷ ActionSlot</code>, the last holding a real <code>Button - XSmall</code>.\n          <span class=\"tag-fixed tag-c1\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Naming reconciled post-consolidation</strong> — <code>Text</code> values recased to <code>Header</code> / <code>Description</code> / <code>Both</code>, the wrapper frame unified to <code>Text Container</code>, layers renamed to <code>#header</code> / <code>#description</code>, <code>Appearance</code> changed from <code>Onboarding</code> to <code>Opaque</code>, and the slots adopted the <code>⤷ …Slot</code> convention.\n          <span class=\"tag-fixed tag-c2\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Interaction states delegated</strong> — Tooltip is a presentation surface; pressed and disabled are carried by the Button and close icon and assessed there.\n          <span class=\"tag-fixed tag-c5\">Reassigned</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Code Connect mappings not registered</strong> — left open for engineering.\n          <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

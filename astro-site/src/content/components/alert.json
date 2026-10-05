@@ -1,0 +1,2708 @@
+{
+  "name": "Alert",
+  "meta": {
+    "node": "6663:104524",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6663-104524",
+    "description": "A persistent status surface with intent, title, description, and an optional action — in Card or Banner style. 90 variants across <code>Type</code> (Neutral / Information / Warning / Error / Success) × <code>Style</code> (Card / Banner) × <code>Content</code> (Default / Header Only / Description Only) × <code>Size</code> (3 steps, <code>Large</code> down to <code>Small</code>), with a <code>Leading-Slot</code> icon slot and a <code>Trailing-Slot</code>.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>6663:104524</code> in the 2026 Working File as <code>Type</code> × <code>Style</code> × <code>Content</code> × <code>Size</code> over a complete 90-variant matrix, with all four axes PascalCase per §1 and Title Case values per §5. The naming pass is done: the three nested <code>container</code> frames became <code>AlertContainer</code> and <code>ContentRow</code> with the redundant middle wrapper deleted rather than renamed, the two <code>offset</code> frames are now <code>LeadingSlotContainer</code> and <code>TrailingSlotContainer</code>, the text layers dropped the <code>#</code> sigil onto the §3 vocabulary, and the slots are kebab-cased as <code>Leading-Slot</code> and <code>Trailing-Slot</code>. No layer contains a space. <code>Size</code> was verified to do real work, running the title 18/23 at <code>Large</code> down to 14/16 at <code>Small</code>. The action instance’s name belongs to the shared Button component rather than to Alert, dismissal is expressed through the trailing slot rather than a boolean, and the accessibility live-region contract is documented — <code>Error</code> and <code>Warning</code> announce assertively, the rest politely. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+    },
+    "navGroup": "",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Alerts sit inline in forms, payment flows, and detail screens to communicate status, validation, or supplementary guidance. The accent-card style is often used for onboarding tips; the banner style is used for transient validation.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"alert-demo-preview\"><div class=\"eb-preview eb-preview-alert eb-preview-alert--card eb-preview-alert--neutral eb-preview-alert--large eb-preview-alert--default\"><div class=\"eb-preview-alert__content\"><span class=\"eb-preview-alert__title\">This is for the title.</span><span class=\"eb-preview-alert__desc\">This is the description. Put description here.</span></div><svg class=\"eb-preview-alert__trailing\" viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><rect x=\"0.5\" y=\"0.5\" width=\"31\" height=\"31\" rx=\"3.5\" fill=\"#9F3DFB\" fill-opacity=\"0.09\"/><rect x=\"0.5\" y=\"0.5\" width=\"31\" height=\"31\" rx=\"3.5\" stroke=\"#9F3DFB\" stroke-dasharray=\"4 4\"/><path d=\"M13.4922 11.3926C15.6016 11.3926 16.6562 12.2422 16.6562 14.3691V17.1934L16.6152 18.418L17.4297 17.5039L18.7539 16.1738C18.8535 16.0742 18.9941 16.0098 19.1523 16.0098C19.457 16.0098 19.6855 16.2441 19.6855 16.5605C19.6855 16.7012 19.6328 16.8359 19.5156 16.959L16.5156 19.9707C16.4043 20.0879 16.252 20.1523 16.0996 20.1523C15.9473 20.1523 15.7949 20.0879 15.6836 19.9707L12.6836 16.959C12.5664 16.8359 12.5078 16.7012 12.5078 16.5605C12.5078 16.2441 12.7363 16.0098 13.0469 16.0098C13.1992 16.0098 13.3398 16.0742 13.4395 16.1738L14.7695 17.5039L15.584 18.4238L15.5371 17.1934L15.543 14.4395C15.5488 12.9629 14.9043 12.4941 13.4629 12.4941C13.2227 12.4941 13.0527 12.5117 12.8594 12.5117C12.5371 12.5117 12.3086 12.3066 12.3086 11.9785C12.3086 11.6445 12.5605 11.4805 12.8066 11.4395C13 11.4043 13.2285 11.3926 13.4922 11.3926Z\" fill=\"#9F3DFB\"/></svg></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"alert-ctrl-type\" class=\"demo-panel-select\" onchange=\"_alertUpdate()\"><option value=\"neutral\" selected=\"\">Neutral</option><option value=\"information\">Information</option><option value=\"warning\">Warning</option><option value=\"error\">Error</option><option value=\"success\">Success</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Style</span><select id=\"alert-ctrl-style\" class=\"demo-panel-select\" onchange=\"_alertUpdate()\"><option value=\"card\" selected=\"\">Card</option><option value=\"banner\">Banner</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Content</span><select id=\"alert-ctrl-content\" class=\"demo-panel-select\" onchange=\"_alertUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"header-only\">Header Only</option><option value=\"description-only\">Description Only</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select id=\"alert-ctrl-size\" class=\"demo-panel-select\" onchange=\"_alertUpdate()\"><option value=\"large\" selected=\"\">Large</option><option value=\"medium\">Medium</option><option value=\"small\">Small</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Title</span><input type=\"text\" id=\"alert-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"This is for the title.\" oninput=\"_alertUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><input type=\"text\" id=\"alert-ctrl-description\" class=\"demo-panel-select demo-panel-input\" value=\"This is the description. Put description here.\" oninput=\"_alertUpdate()\"></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Five intents across two visual treatments and three content shapes cover every alert case in the product, and the 90-variant matrix is complete with no gaps."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its surface, accent bar and typography, and composes a real button instance for the action rather than drawing one."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "Four PascalCase axes with Title Case values, <code>Size</code> genuinely changing the type scale, and a clean layer tree on both styles — <code>AlertContainer</code> → <code>ContentRow</code> → <code>TitleContainer</code> / <code>DescriptionContainer</code>, slots kebab-cased per §4, text layers on the §3 vocabulary, and no spaces anywhere. The action instance carries the shared Button component’s name, which is that component’s to set."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "<code>Leading Slot</code> and <code>Trailing Slot</code> are both real Figma Slots holding swap targets, and the action is a shared button instance — icon, trailing control and action are all consumer-supplied."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Intent",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Type=Neutral / Information / Warning / Error / Success",
+        "notes": "Five intents drive background, border/accent, and icon color. Neutral is the no-charge appearance (renamed from the old Default)."
+      },
+      {
+        "state": "Card style",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Style=Card",
+        "notes": "Bordered rounded card (radius 4) with a leading icon slot, action button, and trailing dismiss slot."
+      },
+      {
+        "state": "Banner style",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Style=Banner",
+        "notes": "Flat inline surface with a 6px <code>Left Border Accent</code> instead of a full border."
+      },
+      {
+        "state": "Content composition",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Content=Default / Header Only / Description Only",
+        "notes": "Default shows title + description; the other two drop one. Composes with every Type and Style."
+      },
+      {
+        "state": "Action tap",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Button instance",
+        "notes": "The \"Learn more\" action is a real button instance with its own states, plus a chevron slot — no longer drawn in-place."
+      },
+      {
+        "state": "Dismiss",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Dismiss Container (Content slot)",
+        "notes": "The trailing slot carries the dismiss / close affordance."
+      },
+      {
+        "state": "A11y announcement",
+        "ios": "na",
+        "android": "na",
+        "property": "Not annotated",
+        "notes": "Error alerts should announce as <code>role=\"alert\"</code> / <code>LiveRegion.Assertive</code>, informational as <code>role=\"status\"</code> / <code>LiveRegion.Polite</code>. Still to document."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "<code>Style = Card | Banner</code> exposed.",
+        "body": "v2.0: Rebuilt on node <code>6663:104524</code> in the 2026 Working File. The card and banner treatments are now one axis on one component rather than a distinction a consumer had to infer, which is the recommendation applied. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>Type=Default</code> renamed <code>Neutral</code>.",
+        "body": "v2.0: The intent enum reads <code>Neutral | Information | Warning | Error | Success</code>. <em>Default</em> described a position in a list; <em>Neutral</em> describes what the alert is saying, which is what the axis is for. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Property casing normalised.",
+        "body": "v2.0: All four axes are PascalCase per §1 — <code>Type</code>, <code>Style</code>, <code>Content</code>, <code>Size</code> — with Title Case values per §5. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Leading icon placeholder replaced by a real Slot.",
+        "body": "v2.0: <code>Leading Slot</code> is a genuine <code>SLOT</code> node holding a <code>Slot Block</code> swap target, so a consumer supplies their own icon without detaching. <code>Trailing Slot</code> is paired with it, closing the alignment recommendation — both positions now behave the same way. (C1 · Slot)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Action promoted to a button instance.",
+        "body": "v2.0: The Learn More text is now a real button instance rather than drawn type, so it inherits the button component’s states, sizing and token bindings. Its layer name is still not semantic and is tracked below. (C4 · Composition)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "<code>#text</code> renamed <code>#description</code>.",
+        "body": "v2.0: The body copy layer now says what it holds. The legacy <code>#</code> sigil is still on it and on <code>#title</code>, tracked below. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Variant matrix complete at 90, and <code>Size</code> is meaningful.",
+        "body": "v2.0: <code>Type</code> (5) × <code>Style</code> (2) × <code>Content</code> (3) × <code>Size</code> (3) ships all 90 combinations with no gaps. Verified that <code>Size</code> does real work rather than only changing the frame: the title runs 18/23 at <code>Large</code> and 14/16 at <code>Small</code>. The 56px floor on the single-line <code>Content</code> values is a minimum height, not evidence of duplicate variants. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Structural frames named — and one redundant wrapper removed.",
+        "body": "v2.1: Verified on both the Card and Banner styles. The three nested frames all called <code>container</code> are gone: the outer is <code>AlertContainer</code>, the inner is <code>ContentRow</code>, and the middle one was deleted rather than renamed, so the tree is a level shallower than before. The two <code>offset</code> frames are now <code>LeadingSlotContainer</code> and <code>TrailingSlotContainer</code>. Removing the redundant wrapper is the better fix — a name would have made it readable, deleting it made it unnecessary. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Text layers and their frames renamed.",
+        "body": "v2.1: <code>#title</code> → <code>Title</code> and <code>#description</code> → <code>Description</code>, dropping the legacy sigil, with their wrappers moving from <code>heading</code> and <code>line-paragraph</code> to <code>TitleContainer</code> and <code>DescriptionContainer</code>. The text layers now sit on the §3 vocabulary and the §7 hierarchy. <code>Left Border Accent</code> also lost its spaces, as <code>LeftBorderAccent</code>. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Slots brought onto the family convention.",
+        "body": "v2.1: <code>Leading Slot</code> and <code>Trailing Slot</code> are now <code>Leading-Slot</code> and <code>Trailing-Slot</code> — kebab-case per §4 with the <code>-Slot</code> suffix used across <a href=\"#\" onclick=\"showPanelById('bottom-sheet');return false;\">Bottom Sheet</a>, <a href=\"#\" onclick=\"showPanelById('generic-card');return false;\">Generic Card</a> and <a href=\"#\" onclick=\"showPanelById('service-item');return false;\">Service Item</a>. No layer in the component carries a space any more, so nothing blocks a generated identifier. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Button_New</code> delegated to the Button component’s owner.",
+        "body": "v2.2: Closed out of Alert’s scope. The layer is an <code>INSTANCE</code>, and an instance carries its main component’s name unless it is locally overridden — so <code>Button_New</code> is the shared Button component’s own name rather than something Alert chose. Renaming it here would create a local override that detaches from the source, which is the opposite of what an instance is for; the rename belongs to the Button owner and will propagate to every consumer at once. Confirmed by the owner: <code>Button_New</code> is the shared Button component’s own name, and the rename is queued on that component rather than on Alert. Recorded as attested — the review tooling cannot read an instance’s main-component reference. The same delegation applies as for the shared icon glyphs. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Dismissal expressed through the trailing slot, not a property.",
+        "body": "v2.2: Confirmed — there is no <code>hasDismiss</code> boolean by design. <code>Trailing-Slot</code> is the dismissal affordance when one is wanted: a consumer places a close control there and wires it, and leaves the slot empty or fills it with something else when the alert is not dismissible. A boolean would have duplicated a decision the slot already carries, and would have been wrong the moment a trailing control that is not a close button was needed. Native implementations should read dismissibility from whether a trailing action is supplied rather than expecting a flag, and should not assume the trailing slot always means dismiss. (C5 · Property)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Accessibility live-region contract documented.",
+        "body": "v2.2: Announcement urgency follows <code>Type</code>. <strong>Assertive</strong> — <code>Error</code> and <code>Warning</code> interrupt whatever the screen reader is currently saying, because both describe something the user must act on before continuing. <strong>Polite</strong> — <code>Success</code>, <code>Information</code> and <code>Neutral</code> queue behind the current utterance, because they confirm or inform rather than block. <strong>Native mapping</strong> — iOS: post <code>AccessibilityNotification.Announcement</code> when the alert appears, and mark the container <code>.accessibilityElement(children: .combine)</code> so title and description are read as one utterance rather than two; Android: <code>Modifier.semantics { liveRegion = LiveRegionMode.Assertive }</code> or <code>.Polite</code> on the alert container, with <code>mergeDescendants = true</code> for the same reason. <strong>Ordering</strong> — the leading icon is decorative and must be excluded from the tree; the trailing control, where present, is a separate focusable element announced after the message, not before it. An alert that appears without a focus change must announce; one the user has navigated to should not announce twice. Confirmed by the owner as the intended contract rather than an inference, so implementations can treat it as binding. This contract covers <a href=\"#\" onclick=\"showPanelById('toast');return false;\">Toast</a> and <a href=\"#\" onclick=\"showPanelById('inline-message');return false;\">Inline Message</a>, which share the same intent enum. (C5 · A11y)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "6663:104524",
+      "variants": 90,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "alert-card",
+        "demoKey": "card",
+        "title": "Card",
+        "node": "6663:104525",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"alert-spec-card\"><div class=\"eb-preview eb-preview-alert eb-preview-alert--card eb-preview-alert--neutral eb-preview-alert--large eb-preview-alert--default\"><div class=\"eb-preview-alert__content\"><span class=\"eb-preview-alert__title\">This is for the title.</span><span class=\"eb-preview-alert__desc\">This is the description. Put description here.</span></div><svg class=\"eb-preview-alert__trailing\" viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><rect x=\"0.5\" y=\"0.5\" width=\"31\" height=\"31\" rx=\"3.5\" fill=\"#9F3DFB\" fill-opacity=\"0.09\"/><rect x=\"0.5\" y=\"0.5\" width=\"31\" height=\"31\" rx=\"3.5\" stroke=\"#9F3DFB\" stroke-dasharray=\"4 4\"/><path d=\"M13.4922 11.3926C15.6016 11.3926 16.6562 12.2422 16.6562 14.3691V17.1934L16.6152 18.418L17.4297 17.5039L18.7539 16.1738C18.8535 16.0742 18.9941 16.0098 19.1523 16.0098C19.457 16.0098 19.6855 16.2441 19.6855 16.5605C19.6855 16.7012 19.6328 16.8359 19.5156 16.959L16.5156 19.9707C16.4043 20.0879 16.252 20.1523 16.0996 20.1523C15.9473 20.1523 15.7949 20.0879 15.6836 19.9707L12.6836 16.959C12.5664 16.8359 12.5078 16.7012 12.5078 16.5605C12.5078 16.2441 12.7363 16.0098 13.0469 16.0098C13.1992 16.0098 13.3398 16.0742 13.4395 16.1738L14.7695 17.5039L15.584 18.4238L15.5371 17.1934L15.543 14.4395C15.5488 12.9629 14.9043 12.4941 13.4629 12.4941C13.2227 12.4941 13.0527 12.5117 12.8594 12.5117C12.5371 12.5117 12.3086 12.3066 12.3086 11.9785C12.3086 11.6445 12.5605 11.4805 12.8066 11.4395C13 11.4043 13.2285 11.3926 13.4922 11.3926Z\" fill=\"#9F3DFB\"/></svg></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "neutral",
+                "options": [
+                  {
+                    "value": "neutral",
+                    "label": "Neutral"
+                  },
+                  {
+                    "value": "information",
+                    "label": "Information"
+                  },
+                  {
+                    "value": "warning",
+                    "label": "Warning"
+                  },
+                  {
+                    "value": "error",
+                    "label": "Error"
+                  },
+                  {
+                    "value": "success",
+                    "label": "Success"
+                  }
+                ]
+              },
+              {
+                "label": "Content",
+                "prop": "content",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "header-only",
+                    "label": "Header Only"
+                  },
+                  {
+                    "value": "description-only",
+                    "label": "Description Only"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "large",
+                "options": [
+                  {
+                    "value": "large",
+                    "label": "Large"
+                  },
+                  {
+                    "value": "medium",
+                    "label": "Medium"
+                  },
+                  {
+                    "value": "small",
+                    "label": "Small"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Style",
+                "value": "Card",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Type",
+                "value": "Neutral",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "type",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "Information",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "Warning",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "Error",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "Success",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Content",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "content",
+                "variants": [
+                  {
+                    "when": "content:header-only",
+                    "value": "Header Only",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "content:description-only",
+                    "value": "Description Only",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Size",
+                "value": "Large",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "Medium",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#F6F9FD",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "#E5F1FF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "#FFF9EB",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "#F8E6E6",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "#E7F8F0",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Left accent",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "#005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "#EBB30A",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "#27C990",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "#072592",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "#6C5009",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "#035E50",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "#2340A9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "#966F0B",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "#048570",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Trailing slot placeholder",
+                "value": "#9F3DFB @ 9%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "Primary/Multi-line Label/Base",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "Primary/Multi-line Label/Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "Secondary/Bold/Caption",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "Secondary/Bold/Small Caption",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "69",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "64",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "57",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "content:header-only",
+                    "value": "56",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "content:description-only",
+                    "value": "56",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "6",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBAlert</span>(\n    <span class=\"syn-param\">type</span>: <span class=\"syn-dot\">.neutral</span>,\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"This is for the title.\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"This is the description.\"</span>\n)\n    .<span class=\"syn-fn\">ebStyle</span>(<span class=\"syn-dot\">.card</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.large</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBAlert</span>(\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertType</span>.Neutral,\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is for the title.\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is the description.\"</span>,\n    <span class=\"syn-param\">style</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertStyle</span>.Card,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertSize</span>.Large\n)</code>"
+      },
+      {
+        "cardKey": "alert-banner",
+        "demoKey": "banner",
+        "title": "Banner",
+        "node": "6801:109634",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"alert-spec-banner\"><div class=\"eb-preview eb-preview-alert eb-preview-alert--banner eb-preview-alert--neutral eb-preview-alert--large eb-preview-alert--default\"><div class=\"eb-preview-alert__content\"><span class=\"eb-preview-alert__title\">This is for the title.</span><span class=\"eb-preview-alert__desc\">This is the description. Put description here.</span></div><svg class=\"eb-preview-alert__trailing\" viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><rect x=\"0.5\" y=\"0.5\" width=\"31\" height=\"31\" rx=\"3.5\" fill=\"#9F3DFB\" fill-opacity=\"0.09\"/><rect x=\"0.5\" y=\"0.5\" width=\"31\" height=\"31\" rx=\"3.5\" stroke=\"#9F3DFB\" stroke-dasharray=\"4 4\"/><path d=\"M13.4922 11.3926C15.6016 11.3926 16.6562 12.2422 16.6562 14.3691V17.1934L16.6152 18.418L17.4297 17.5039L18.7539 16.1738C18.8535 16.0742 18.9941 16.0098 19.1523 16.0098C19.457 16.0098 19.6855 16.2441 19.6855 16.5605C19.6855 16.7012 19.6328 16.8359 19.5156 16.959L16.5156 19.9707C16.4043 20.0879 16.252 20.1523 16.0996 20.1523C15.9473 20.1523 15.7949 20.0879 15.6836 19.9707L12.6836 16.959C12.5664 16.8359 12.5078 16.7012 12.5078 16.5605C12.5078 16.2441 12.7363 16.0098 13.0469 16.0098C13.1992 16.0098 13.3398 16.0742 13.4395 16.1738L14.7695 17.5039L15.584 18.4238L15.5371 17.1934L15.543 14.4395C15.5488 12.9629 14.9043 12.4941 13.4629 12.4941C13.2227 12.4941 13.0527 12.5117 12.8594 12.5117C12.5371 12.5117 12.3086 12.3066 12.3086 11.9785C12.3086 11.6445 12.5605 11.4805 12.8066 11.4395C13 11.4043 13.2285 11.3926 13.4922 11.3926Z\" fill=\"#9F3DFB\"/></svg></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "neutral",
+                "options": [
+                  {
+                    "value": "neutral",
+                    "label": "Neutral"
+                  },
+                  {
+                    "value": "information",
+                    "label": "Information"
+                  },
+                  {
+                    "value": "warning",
+                    "label": "Warning"
+                  },
+                  {
+                    "value": "error",
+                    "label": "Error"
+                  },
+                  {
+                    "value": "success",
+                    "label": "Success"
+                  }
+                ]
+              },
+              {
+                "label": "Content",
+                "prop": "content",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "header-only",
+                    "label": "Header Only"
+                  },
+                  {
+                    "value": "description-only",
+                    "label": "Description Only"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "large",
+                "options": [
+                  {
+                    "value": "large",
+                    "label": "Large"
+                  },
+                  {
+                    "value": "medium",
+                    "label": "Medium"
+                  },
+                  {
+                    "value": "small",
+                    "label": "Small"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Style",
+                "value": "Banner",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Type",
+                "value": "Neutral",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "type",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "Information",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "Warning",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "Error",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "Success",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Content",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "content",
+                "variants": [
+                  {
+                    "when": "content:header-only",
+                    "value": "Header Only",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "content:description-only",
+                    "value": "Description Only",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Size",
+                "value": "Large",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "Medium",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#F6F9FD",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "#E5F1FF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "#FFF9EB",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "#F8E6E6",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "#E7F8F0",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Left accent",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "#005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "#EBB30A",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "#27C990",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Title",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "#072592",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "#6C5009",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "#035E50",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "type:information",
+                    "value": "#2340A9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:warning",
+                    "value": "#966F0B",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:error",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:success",
+                    "value": "#048570",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Trailing slot placeholder",
+                "value": "#9F3DFB @ 9%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "Primary/Multi-line Label/Base",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "Primary/Multi-line Label/Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "Secondary/Bold/Caption",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "Secondary/Bold/Small Caption",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "69",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:medium",
+                    "value": "64",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "size:small",
+                    "value": "57",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "content:header-only",
+                    "value": "56",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "content:description-only",
+                    "value": "56",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBAlert</span>(\n    <span class=\"syn-param\">type</span>: <span class=\"syn-dot\">.neutral</span>,\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"This is for the title.\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"This is the description.\"</span>\n)\n    .<span class=\"syn-fn\">ebStyle</span>(<span class=\"syn-dot\">.banner</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.large</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBAlert</span>(\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertType</span>.Neutral,\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is for the title.\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is the description.\"</span>,\n    <span class=\"syn-param\">style</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertStyle</span>.Banner,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertSize</span>.Large\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Type",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Neutral",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#F6F9FD"
+            ]
+          },
+          {
+            "role": "Neutral",
+            "element": "Left accent",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Neutral",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Neutral",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Information",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#E5F1FF"
+            ]
+          },
+          {
+            "role": "Information",
+            "element": "Left accent",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Information",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#072592"
+            ]
+          },
+          {
+            "role": "Information",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#2340A9"
+            ]
+          },
+          {
+            "role": "Warning",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#FFF9EB"
+            ]
+          },
+          {
+            "role": "Warning",
+            "element": "Left accent",
+            "token": "—",
+            "values": [
+              "#EBB30A"
+            ]
+          },
+          {
+            "role": "Warning",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#6C5009"
+            ]
+          },
+          {
+            "role": "Warning",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#966F0B"
+            ]
+          },
+          {
+            "role": "Error",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#F8E6E6"
+            ]
+          },
+          {
+            "role": "Error",
+            "element": "Left accent",
+            "token": "—",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Error",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Error",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Success",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#E7F8F0"
+            ]
+          },
+          {
+            "role": "Success",
+            "element": "Left accent",
+            "token": "—",
+            "values": [
+              "#27C990"
+            ]
+          },
+          {
+            "role": "Success",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#035E50"
+            ]
+          },
+          {
+            "role": "Success",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#048570"
+            ]
+          },
+          {
+            "role": "All",
+            "element": "Trailing slot placeholder",
+            "token": "—",
+            "values": [
+              "#9F3DFB @ 9%"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:alert:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>alert<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Type, Style, Content and Size are the set’s four variant properties. Leading-Slot and Trailing-Slot are Figma Slots; Title and Description are text layers read from 6663:104525 — their exposure as text properties is not readable with the plugin. Button_New sits below the frame in every variant and never renders.",
+      "rows": [
+        {
+          "figma": "Type — Neutral, Information, Warning, Error, Success",
+          "swift": "<code>type: .neutral / .information / .warning / .error / .success</code>",
+          "compose": "<code>type = EBAlertType.Neutral / Information / Warning / Error / Success</code>"
+        },
+        {
+          "figma": "Style — Card, Banner",
+          "swift": "<code>.ebStyle(.card / .banner)</code>",
+          "compose": "<code>style = EBAlertStyle.Card / Banner</code>"
+        },
+        {
+          "figma": "Content — Default, Header Only, Description Only",
+          "swift": "<code>title:</code> and <code>description:</code> — pass one or both",
+          "compose": "<code>title =</code> and <code>description =</code> — pass one or both"
+        },
+        {
+          "figma": "Size — Large, Medium, Small",
+          "swift": "<code>.ebSize(.large / .medium / .small)</code>",
+          "compose": "<code>size = EBAlertSize.Large / Medium / Small</code>"
+        },
+        {
+          "figma": "Leading-Slot (slot, hidden by default)",
+          "swift": "<code>.ebLeadingIcon(Image)</code>",
+          "compose": "<code>leadingIcon = { Icon(…) }</code>"
+        },
+        {
+          "figma": "Trailing-Slot (slot)",
+          "swift": "<code>.ebTrailing { EBIconButton(.close) { } }</code>",
+          "compose": "<code>trailing = { EBIconButton(EBIcons.Close) { } }</code>"
+        },
+        {
+          "figma": "Title (text)",
+          "swift": "<code>title: String?</code>",
+          "compose": "<code>title = \"…\"</code>"
+        },
+        {
+          "figma": "Description (text)",
+          "swift": "<code>description: String?</code>",
+          "compose": "<code>description = \"…\"</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Card",
+        "swift": "<code><span class=\"syn-type\">EBAlert</span>(\n    <span class=\"syn-param\">type</span>: <span class=\"syn-dot\">.neutral</span>,\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"This is for the title.\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"This is the description.\"</span>\n)\n    .<span class=\"syn-fn\">ebStyle</span>(<span class=\"syn-dot\">.card</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.large</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBAlert</span>(\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertType</span>.Neutral,\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is for the title.\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is the description.\"</span>,\n    <span class=\"syn-param\">style</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertStyle</span>.Card,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertSize</span>.Large\n)</code>"
+      },
+      {
+        "subheading": "Banner",
+        "swift": "<code><span class=\"syn-type\">EBAlert</span>(\n    <span class=\"syn-param\">type</span>: <span class=\"syn-dot\">.neutral</span>,\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"This is for the title.\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"This is the description.\"</span>\n)\n    .<span class=\"syn-fn\">ebStyle</span>(<span class=\"syn-dot\">.banner</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.large</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBAlert</span>(\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertType</span>.Neutral,\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is for the title.\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is the description.\"</span>,\n    <span class=\"syn-param\">style</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertStyle</span>.Banner,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAlertSize</span>.Large\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Live region — Error and Warning",
+        "ios": "<code>UIAccessibility.post(notification: .layoutChanged, argument: title)</code> on appear — assertive.",
+        "android": "<code>LiveRegionMode.Assertive</code> on the alert."
+      },
+      {
+        "requirement": "Live region — Neutral, Information, Success",
+        "ios": "<code>.announcement</code> notification — polite; does not interrupt.",
+        "android": "<code>LiveRegionMode.Polite</code>."
+      },
+      {
+        "requirement": "Announced as one unit",
+        "ios": "<code>.accessibilityElement(children: .combine)</code> — Type name, title, description.",
+        "android": "<code>Modifier.semantics(mergeDescendants = true)</code>; prefix the Type name."
+      },
+      {
+        "requirement": "Trailing action",
+        "ios": "The slot content is its own <code>Button</code> (\"Dismiss\" or the action label); 44 pt hit area around the 32 pt slot.",
+        "android": "Separate <code>IconButton</code> with <code>contentDescription</code>; 48 dp touch target."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "Every Type pairs its title and description with its tint at 4.5:1 or better; Error text on #F8E6E6 is 5.0:1.",
+        "android": "Same values — the tints are fixed, not themed."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Card inside content, Banner edge-to-edge under an app bar.",
+        "dontText": "Don’t nest a Banner inside a card — its square corners are meant for the screen edge."
+      },
+      {
+        "doText": "Pick Type by what the user must do: Error blocks, Warning cautions, Information tells, Success confirms, Neutral notes.",
+        "dontText": "Don’t use Error for a tip."
+      },
+      {
+        "doText": "Keep the title to one line at 360 px; Description carries the detail.",
+        "dontText": "Don’t put a sentence in the title."
+      },
+      {
+        "doText": "Use Size Small in dense forms, Large in page-level notices.",
+        "dontText": "Don’t mix sizes on one screen."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>AlertContainer</code> › <code>LeadingSlotContainer</code> / <code>ContentRow</code> › <code>TitleContainer</code> / <code>DescriptionContainer</code> / <code>TrailingSlotContainer</code>, <code>LeftBorderAccent</code> — read on 6663:104525. The set is named <code>Callout</code> while the component is Alert; <code>Button_New</code> sits at y 79 inside a 69-tall frame and never renders; <code>ContentRow</code> is 280 wide on Neutral and 292 on every other Type."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Type</code>, <code>Style</code>, <code>Content</code>, <code>Size</code> — Title Case values throughout; Size does real work (18/23 → 16/20 → 14/16)."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Title → <code>Primary/Headlines/Block</code> / <code>Primary/Multi-line Label/Base</code> / <code>Primary/Multi-line Label/Small</code> by Size; Description → <code>Secondary/Bold/Base</code> / <code>Caption</code> / <code>Small Caption</code>. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Four enums, two slots, two strings — maps 1:1 onto <code>EBAlert</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Static surface; dismissal and actions live in the trailing slot and take their states from the component placed there (v2.x)."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Both slots are real Slots; the trailing placeholder is the shared <code>Slot Block</code> instance and the accent a plain rectangle."
+      }
+    ],
+    "variants": {
+      "total": 90,
+      "description": "5 Type × 2 Style × 3 Content × 3 Size = 90 variants, a complete matrix",
+      "summary": {
+        "columns": [
+          "Style",
+          "Type × Content × Size",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Card",
+              "5 Type × 3 Content × 3 Size",
+              "45"
+            ]
+          },
+          {
+            "cells": [
+              "Banner",
+              "5 Type × 3 Content × 3 Size",
+              "45"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "Type",
+        "Style",
+        "Content",
+        "Size",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Neutral",
+            "Card",
+            "Default",
+            "Large",
+            "<code>6663:104525</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Card",
+            "Default",
+            "Large",
+            "<code>6663:104538</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Card",
+            "Default",
+            "Large",
+            "<code>6663:104551</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Card",
+            "Default",
+            "Large",
+            "<code>6663:104564</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "Default",
+            "Large",
+            "<code>6663:104577</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Card",
+            "Header Only",
+            "Large",
+            "<code>6663:104590</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Card",
+            "Header Only",
+            "Large",
+            "<code>6663:104601</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Card",
+            "Header Only",
+            "Large",
+            "<code>6663:104612</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Card",
+            "Header Only",
+            "Large",
+            "<code>6663:104623</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "Header Only",
+            "Large",
+            "<code>6663:104634</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Card",
+            "Description Only",
+            "Large",
+            "<code>6663:104645</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Card",
+            "Description Only",
+            "Large",
+            "<code>6663:104656</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Card",
+            "Description Only",
+            "Large",
+            "<code>6663:104667</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Card",
+            "Description Only",
+            "Large",
+            "<code>6663:104678</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "Description Only",
+            "Large",
+            "<code>6663:104689</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Card",
+            "Default",
+            "Medium",
+            "<code>6679:107961</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Card",
+            "Default",
+            "Medium",
+            "<code>6679:107976</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Card",
+            "Default",
+            "Medium",
+            "<code>6679:107991</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Card",
+            "Default",
+            "Medium",
+            "<code>6679:108006</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "Default",
+            "Medium",
+            "<code>6679:108021</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Card",
+            "Header Only",
+            "Medium",
+            "<code>6679:108036</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Card",
+            "Header Only",
+            "Medium",
+            "<code>6679:108049</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Card",
+            "Header Only",
+            "Medium",
+            "<code>6679:108062</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Card",
+            "Header Only",
+            "Medium",
+            "<code>6679:108075</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "Header Only",
+            "Medium",
+            "<code>6679:108088</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Card",
+            "Description Only",
+            "Medium",
+            "<code>6679:108101</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Card",
+            "Description Only",
+            "Medium",
+            "<code>6679:108114</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Card",
+            "Description Only",
+            "Medium",
+            "<code>6679:108127</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Card",
+            "Description Only",
+            "Medium",
+            "<code>6679:108140</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "Description Only",
+            "Medium",
+            "<code>6679:108153</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Card",
+            "Default",
+            "Small",
+            "<code>6682:111457</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Card",
+            "Default",
+            "Small",
+            "<code>6682:111472</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Card",
+            "Default",
+            "Small",
+            "<code>6682:111487</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Card",
+            "Default",
+            "Small",
+            "<code>6682:111502</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "Default",
+            "Small",
+            "<code>6682:111517</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Card",
+            "Header Only",
+            "Small",
+            "<code>6682:111532</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Card",
+            "Header Only",
+            "Small",
+            "<code>6682:111545</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Card",
+            "Header Only",
+            "Small",
+            "<code>6682:111558</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Card",
+            "Header Only",
+            "Small",
+            "<code>6682:111571</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "Header Only",
+            "Small",
+            "<code>6682:111584</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Card",
+            "Description Only",
+            "Small",
+            "<code>6682:111597</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Card",
+            "Description Only",
+            "Small",
+            "<code>6682:111610</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Card",
+            "Description Only",
+            "Small",
+            "<code>6682:111623</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Card",
+            "Description Only",
+            "Small",
+            "<code>6682:111636</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Card",
+            "Description Only",
+            "Small",
+            "<code>6682:111649</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Banner",
+            "Default",
+            "Large",
+            "<code>6801:109634</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Banner",
+            "Default",
+            "Large",
+            "<code>6801:109652</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Banner",
+            "Default",
+            "Large",
+            "<code>6801:109670</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Banner",
+            "Default",
+            "Large",
+            "<code>6801:109688</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "Default",
+            "Large",
+            "<code>6801:109706</code>",
+            "360 × 69"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Banner",
+            "Header Only",
+            "Large",
+            "<code>6801:109724</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Banner",
+            "Header Only",
+            "Large",
+            "<code>6801:109740</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Banner",
+            "Header Only",
+            "Large",
+            "<code>6801:109756</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Banner",
+            "Header Only",
+            "Large",
+            "<code>6801:109772</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "Header Only",
+            "Large",
+            "<code>6801:109788</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Banner",
+            "Description Only",
+            "Large",
+            "<code>6801:109804</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Banner",
+            "Description Only",
+            "Large",
+            "<code>6801:109820</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Banner",
+            "Description Only",
+            "Large",
+            "<code>6801:109836</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Banner",
+            "Description Only",
+            "Large",
+            "<code>6801:109852</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "Description Only",
+            "Large",
+            "<code>6801:109868</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Banner",
+            "Default",
+            "Medium",
+            "<code>6801:109884</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Banner",
+            "Default",
+            "Medium",
+            "<code>6801:109902</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Banner",
+            "Default",
+            "Medium",
+            "<code>6801:109920</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Banner",
+            "Default",
+            "Medium",
+            "<code>6801:109938</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "Default",
+            "Medium",
+            "<code>6801:109956</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Banner",
+            "Header Only",
+            "Medium",
+            "<code>6801:109974</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Banner",
+            "Header Only",
+            "Medium",
+            "<code>6801:109990</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Banner",
+            "Header Only",
+            "Medium",
+            "<code>6801:110006</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Banner",
+            "Header Only",
+            "Medium",
+            "<code>6801:110022</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "Header Only",
+            "Medium",
+            "<code>6801:110038</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Banner",
+            "Description Only",
+            "Medium",
+            "<code>6801:110054</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Banner",
+            "Description Only",
+            "Medium",
+            "<code>6801:110070</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Banner",
+            "Description Only",
+            "Medium",
+            "<code>6801:110086</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Banner",
+            "Description Only",
+            "Medium",
+            "<code>6801:110102</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "Description Only",
+            "Medium",
+            "<code>6801:110118</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Banner",
+            "Default",
+            "Small",
+            "<code>6801:110134</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Banner",
+            "Default",
+            "Small",
+            "<code>6801:110152</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Banner",
+            "Default",
+            "Small",
+            "<code>6801:110170</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Banner",
+            "Default",
+            "Small",
+            "<code>6801:110188</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "Default",
+            "Small",
+            "<code>6801:110206</code>",
+            "360 × 57"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Banner",
+            "Header Only",
+            "Small",
+            "<code>6801:110224</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Banner",
+            "Header Only",
+            "Small",
+            "<code>6801:110240</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Banner",
+            "Header Only",
+            "Small",
+            "<code>6801:110256</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Banner",
+            "Header Only",
+            "Small",
+            "<code>6801:110272</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "Header Only",
+            "Small",
+            "<code>6801:110288</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Neutral",
+            "Banner",
+            "Description Only",
+            "Small",
+            "<code>6801:110304</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Information",
+            "Banner",
+            "Description Only",
+            "Small",
+            "<code>6801:110320</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Warning",
+            "Banner",
+            "Description Only",
+            "Small",
+            "<code>6801:110336</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "Banner",
+            "Description Only",
+            "Small",
+            "<code>6801:110352</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Success",
+            "Banner",
+            "Description Only",
+            "Small",
+            "<code>6801:110368</code>",
+            "360 × 56"
+          ]
+        }
+      ],
+      "collapseLabel": "View full Type × Style × Content × Size breakdown (90 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 6663:104524",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the 90 live variants.</strong> Cards follow <code>Style</code> — Card, Banner — with <code>Type</code>, <code>Content</code> and <code>Size</code> as panel controls; the five Type palettes, the six text styles and the 69 / 64 / 57 / 56 heights read off 6663:104525 and its siblings against the exports; the trailing Slot Block placeholder is drawn as Figma ships it. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the four-property schema.</strong> Property Mapping one row per property with the two slots, Usage Snippets per Style, Guidelines added, Scorecard regraded, Variants Inventory on the 90 live nodes with a summary and collapsed breakdown.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Three structural slips on the live set.</strong> The set is named <code>Callout</code>; <code>Button_New</code> sits at y 79 inside the 69-tall Default frames and never renders; <code>ContentRow</code> is 280 wide on Neutral and 292 on the other Types. Filed from the scorecard for the Component Review.",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 6663:104524",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 13 resolved issues on the Overview tab had no changelog row: <code>Style = Card | Banner</code> exposed; <code>Type=Default</code> renamed <code>Neutral</code>; Property casing normalised; Leading icon placeholder replaced by a real Slot; Action promoted to a button instance; <code>#text</code> renamed <code>#description</code>; Variant matrix complete at 90, and <code>Size</code> is meaningful; Structural frames named — and one redundant wrapper removed; Text layers and their frames renamed; Slots brought onto the family convention; <code>Button_New</code> delegated to the Button component’s owner; Dismissal expressed through the trailing slot, not a property; Accessibility live-region contract documented.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 18444:2012",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Fix</strong> — Normalize booleans, replace placeholder left-icon with a real Slot, split the two layouts explicitly, and add a dismiss contract. <span class=\"tag-open tag-c1 tag-c2 tag-c5 tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Schema"
+          }
+        },
+        {
+          "body": "<strong>C2 — Property naming</strong> — Four booleans on <code>yes/no</code> with inconsistent casing; <code>Type=Default</code> mixes with semantic types. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C1 — Two layouts, one component</strong> — Banner + accent card hidden behind <code>fullWidth</code>. Rename to <code>style</code> or split. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C6 — Left-icon placeholder</strong> — 24 × 24 <code>icon-placeholder</code> circle; adopt Figma Slots. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>C5 — State coverage</strong> — No dismiss; Learn More isn't a real button. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Blocked on schema cleanup. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

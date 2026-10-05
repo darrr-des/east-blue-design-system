@@ -160,14 +160,19 @@ window.updateSpecCard = updateSpecCard;
 /* ── Overview tab live preview ──────────────────────────────────────── */
 /* The Overview panel still ships the pre-rebuild control set. Map what
    it has onto the real axes so the preview draws the Figma component. */
+/* The Overview panel's handlers write `_stmDemo` before calling this. */
+var _stmDemo = {};
+window._stmDemo = _stmDemo;
+
 function updateSubtextMessageDemo() {
   var el = document.getElementById('stm-demo-preview');
   if (!el) return;
   var g = function (id) { var n = document.getElementById(id); return n ? n.value : null; };
-  var variant = (g('stm-demo-variant') || g('stm-demo-intent') || 'default').toLowerCase();
+  var variant = (_stmDemo.variant || g('stm-demo-variant') || g('stm-demo-intent') || 'default').toLowerCase();
+  var sizeRaw = (_stmDemo.size || g('stm-demo-size') || 'small').toLowerCase();
   var card = {
     status: STM_COLOR[variant] ? variant : (variant === 'primary' ? 'default' : 'default'),
-    size: (g('stm-demo-size') || 'small').toLowerCase() === 'base' ? 'default' : 'small',
+    size: (sizeRaw === 'base' || sizeRaw === 'default') ? 'default' : 'small',
     hasLeadingIcon: 'true',
     hasTrailingLabel: 'false'
   };

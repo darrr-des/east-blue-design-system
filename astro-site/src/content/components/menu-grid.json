@@ -1,0 +1,1048 @@
+{
+  "name": "Menu Grid",
+  "meta": {
+    "node": "5973:70111",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5973-70111",
+    "description": "A 2D grid of Service Item tiles used for top-level service navigation. <code>Column</code> (2–5) sets the tiles across, <code>Row</code> (1–5) the tiles down.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "ready",
+        "label": "Ready"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Ship as-is",
+      "text": "All four traits pass. The rebuilt component set uses plain numeric variant values (<code>Column=4, Row=2</code>) — string values are the correct approach here, since Figma variant properties cannot be typed as integers. Interaction states are owned by the <a href=\"/components/service-item\">Service Item</a> child and are assessed there, not on this layout container. Code Connect mappings are left open for engineering to register."
+    },
+    "navGroup": "",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Menu Grid sits on the dashboard as the primary service shortcut surface — typically <code>Column=4, Row=2</code> (8 services) on the home screen.",
+    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"180\" height=\"120\" viewBox=\"0 0 180 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          \n          <rect x=\"34\" y=\"6\" width=\"112\" height=\"108\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          \n          <rect x=\"34\" y=\"6\" width=\"112\" height=\"22\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"34\" y=\"20\" width=\"112\" height=\"8\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"90\" y=\"20\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">GCash</text>\n          \n          <rect x=\"42\" y=\"34\" width=\"96\" height=\"14\" rx=\"3\" fill=\"currentColor\" opacity=\".06\"></rect>\n          <rect x=\"46\" y=\"38\" width=\"34\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".18\"></rect>\n          <rect x=\"46\" y=\"43\" width=\"22\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".12\"></rect>\n          \n          <rect x=\"42\" y=\"54\" width=\"96\" height=\"44\" rx=\"4\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"0.8\"></rect>\n          \n          <g fill=\"#005CE5\" opacity=\".9\">\n            <rect x=\"48\" y=\"58\" width=\"14\" height=\"14\" rx=\"2\"></rect>\n            <rect x=\"68\" y=\"58\" width=\"14\" height=\"14\" rx=\"2\"></rect>\n            <rect x=\"88\" y=\"58\" width=\"14\" height=\"14\" rx=\"2\"></rect>\n            <rect x=\"108\" y=\"58\" width=\"14\" height=\"14\" rx=\"2\"></rect>\n            <rect x=\"48\" y=\"80\" width=\"14\" height=\"14\" rx=\"2\"></rect>\n            <rect x=\"68\" y=\"80\" width=\"14\" height=\"14\" rx=\"2\"></rect>\n            <rect x=\"88\" y=\"80\" width=\"14\" height=\"14\" rx=\"2\"></rect>\n            <rect x=\"108\" y=\"80\" width=\"14\" height=\"14\" rx=\"2\"></rect>\n          </g>\n          <g fill=\"#072592\" opacity=\".55\">\n            <rect x=\"49\" y=\"74\" width=\"12\" height=\"2\" rx=\"1\"></rect>\n            <rect x=\"69\" y=\"74\" width=\"12\" height=\"2\" rx=\"1\"></rect>\n            <rect x=\"89\" y=\"74\" width=\"12\" height=\"2\" rx=\"1\"></rect>\n            <rect x=\"109\" y=\"74\" width=\"12\" height=\"2\" rx=\"1\"></rect>\n            <rect x=\"49\" y=\"96\" width=\"12\" height=\"2\" rx=\"1\"></rect>\n            <rect x=\"69\" y=\"96\" width=\"12\" height=\"2\" rx=\"1\"></rect>\n            <rect x=\"89\" y=\"96\" width=\"12\" height=\"2\" rx=\"1\"></rect>\n            <rect x=\"109\" y=\"96\" width=\"12\" height=\"2\" rx=\"1\"></rect>\n          </g>\n          \n          <rect x=\"42\" y=\"104\" width=\"96\" height=\"6\" rx=\"3\" fill=\"currentColor\" opacity=\".07\"></rect>\n        </svg>\n      </div>",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"mg-demo-preview\"><svg class=\"eb-preview eb-preview-mg\" width=\"336\" height=\"164\" viewBox=\"0 0 336 164\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"336\" height=\"164\" fill=\"#FFFFFF\"/><text x=\"46.5\" y=\"68\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"127.5\" y=\"68\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"208.5\" y=\"68\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"289.5\" y=\"68\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"46.5\" y=\"144\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"127.5\" y=\"144\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"208.5\" y=\"144\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"289.5\" y=\"144\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Column</span><select id=\"mg-ctrl-column\" class=\"demo-panel-select\" onchange=\"_mgUpdate()\"><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\" selected=\"\">4</option><option value=\"5\">5</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Row</span><select id=\"mg-ctrl-row\" class=\"demo-panel-select\" onchange=\"_mgUpdate()\"><option value=\"1\">1</option><option value=\"2\" selected=\"\">2</option><option value=\"3\">3</option><option value=\"4\">4</option><option value=\"5\">5</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Used on dashboard surfaces and any screen needing a uniform service shortcut grid. 20 row/column combinations cover most layout needs from a single column list to a 5×5 grid."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "The container is a fixed 336 wide and carries its own background, padding (8 vertical; 8 horizontal, tightening to 6.4 at <code>Column=5</code>), 4 row gap, and 6 radius."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "Both axes read the conventional way — <code>Column</code> counts tiles across, <code>Row</code> counts tiles down. Values are plain numbers across all 20 variants."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Composes <strong>Service Item</strong> instances and nothing else. Icons arrive through a Figma <code>SLOT</code>, so each cell is overridable without detaching."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Column × Row",
+        "notes": "Menu Grid is a layout container and has no interaction states of its own. Tap, pressed and disabled behaviour belong to the <a href=\"/components/service-item\">Service Item</a> child."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Variant values are plain numbers.",
+        "body": "The earlier set used pseudo-numeric strings (<code>Row=\"by 4\"</code>). The rebuild uses <code>Column=4, Row=2</code>. String values are the correct and only option here — Figma variant properties cannot be typed as integers — so the prior recommendation to switch to integer props has been withdrawn.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Service Item is a first-class DS component.",
+        "body": "Previously flagged as a child of Menu Grid only. It is now published standalone with its own <code>State</code> / <code>Orientation</code> / <code>Badge</code> / <code>Action</code> axes, and Menu Grid instances it rather than redefining tiles.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Container metrics are uniform across all 20 variants.",
+        "body": "Two <code>Row=5</code> variants previously broke the shared metrics — <code>Column=5, Row=5</code> was 352 wide against 336 everywhere else, and <code>Column=2, Row=5</code> used 60-tall tiles against 64. Both were corrected in Figma. Every variant is now a 336-wide container at a 4 row gap, with 64-tall tiles at <code>Column=2</code> and 72-tall tiles at <code>Column=3</code>–<code>5</code>.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Icons come through a slot.",
+        "body": "Each tile's icon is a Figma <code>SLOT</code>, not baked artwork, so cells are swappable without detaching the instance.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [
+      {
+        "headline": "Document that <code>Column=2</code> switches the tile to horizontal.",
+        "body": "At <code>Column=2</code> the Service Item child renders at <code>Orientation=Horizontal</code> (158 × 64, icon left of the label); <code>Column=3</code>–<code>5</code> render vertical. Menu Grid exposes no orientation property, so a native lazy grid will not reproduce the switch on its own — it has to be stated in the property mapping. No Figma change required.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "5973:70111",
+      "variants": 20,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "mg-menu-grid",
+        "demoKey": "menu-grid",
+        "title": "Menu Grid",
+        "node": "5973:70256",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"mg-spec-menu-grid\"><svg class=\"eb-preview eb-preview-mg\" width=\"336\" height=\"164\" viewBox=\"0 0 336 164\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"336\" height=\"164\" fill=\"#FFFFFF\"/><text x=\"46.5\" y=\"68\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"127.5\" y=\"68\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"208.5\" y=\"68\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"289.5\" y=\"68\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"46.5\" y=\"144\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"127.5\" y=\"144\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"208.5\" y=\"144\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text><text x=\"289.5\" y=\"144\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"0.5\" font-family=\"'Proxima Soft', system-ui, sans-serif\" dominant-baseline=\"central\">Label</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Column",
+                "prop": "column",
+                "control": "select",
+                "defaultValue": "4",
+                "options": [
+                  {
+                    "value": 2,
+                    "label": "2"
+                  },
+                  {
+                    "value": 3,
+                    "label": "3"
+                  },
+                  {
+                    "value": 4,
+                    "label": "4"
+                  },
+                  {
+                    "value": 5,
+                    "label": "5"
+                  }
+                ]
+              },
+              {
+                "label": "Row",
+                "prop": "row",
+                "control": "select",
+                "defaultValue": "2",
+                "options": [
+                  {
+                    "value": 1,
+                    "label": "1"
+                  },
+                  {
+                    "value": 2,
+                    "label": "2"
+                  },
+                  {
+                    "value": 3,
+                    "label": "3"
+                  },
+                  {
+                    "value": 4,
+                    "label": "4"
+                  },
+                  {
+                    "value": 5,
+                    "label": "5"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Column",
+                "value": "4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "column",
+                "variants": [
+                  {
+                    "when": "column:2",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:3",
+                    "value": "3",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:5",
+                    "value": "5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Row",
+                "value": "2",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "row",
+                "variants": [
+                  {
+                    "when": "row:1",
+                    "value": "1",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "row:3",
+                    "value": "3",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "row:4",
+                    "value": "4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "row:5",
+                    "value": "5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Container",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "#072592",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Row divider (Column 2)",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": []
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "164",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "column:2|row:1",
+                    "value": "80",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:2|row:2",
+                    "value": "148",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:2|row:3",
+                    "value": "216",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:2|row:4",
+                    "value": "284",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:2|row:5",
+                    "value": "352",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:3|row:1",
+                    "value": "88",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:3|row:2",
+                    "value": "164",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:3|row:3",
+                    "value": "240",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:3|row:4",
+                    "value": "316",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:3|row:5",
+                    "value": "392",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:4|row:1",
+                    "value": "88",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:4|row:3",
+                    "value": "240",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:4|row:4",
+                    "value": "316",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:4|row:5",
+                    "value": "392",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:5|row:1",
+                    "value": "88",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:5|row:2",
+                    "value": "164",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:5|row:3",
+                    "value": "240",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:5|row:4",
+                    "value": "316",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "column:5|row:5",
+                    "value": "392",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "336",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBMenuGrid</span>(<span class=\"syn-param\">items</span>: services, <span class=\"syn-param\">columns</span>: 4, <span class=\"syn-param\">rows</span>: 2)</code>",
+        "compose": "<code><span class=\"syn-type\">EBMenuGrid</span>(\n    <span class=\"syn-param\">items</span> <span class=\"syn-eq\">=</span> services,\n    <span class=\"syn-param\">columns</span> <span class=\"syn-eq\">=</span> 4,\n    <span class=\"syn-param\">rows</span> <span class=\"syn-eq\">=</span> 2\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "All variants",
+            "element": "Container",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "All variants",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#072592"
+            ]
+          },
+          {
+            "role": "All variants",
+            "element": "Row divider (Column 2)",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:menu-grid:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>menugrid<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Column and Row are the set’s two variant properties; every cell is a Service Item instance and takes its own properties from that component. The icon slot is hidden in every instance in this set.",
+      "rows": [
+        {
+          "figma": "Column — 2, 3, 4, 5",
+          "swift": "<code>columns: Int</code>",
+          "compose": "<code>columns = 4</code>"
+        },
+        {
+          "figma": "Row — 1, 2, 3, 4, 5",
+          "swift": "<code>rows: Int</code>",
+          "compose": "<code>rows = 2</code>"
+        },
+        {
+          "figma": "Service Item (nested instances)",
+          "swift": "<code>items: [EBServiceItem.Model]</code>",
+          "compose": "<code>items = listOf(EBServiceItemModel(…))</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Menu Grid",
+        "swift": "<code><span class=\"syn-type\">EBMenuGrid</span>(<span class=\"syn-param\">items</span>: services, <span class=\"syn-param\">columns</span>: 4, <span class=\"syn-param\">rows</span>: 2)</code>",
+        "compose": "<code><span class=\"syn-type\">EBMenuGrid</span>(\n    <span class=\"syn-param\">items</span> <span class=\"syn-eq\">=</span> services,\n    <span class=\"syn-param\">columns</span> <span class=\"syn-eq\">=</span> 4,\n    <span class=\"syn-param\">rows</span> <span class=\"syn-eq\">=</span> 2\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Grid semantics",
+        "ios": "<code>.accessibilityElement(children: .contain)</code> with a label such as \"Services\"; each tile is its own button.",
+        "android": "<code>LazyVerticalGrid</code> exposes collection info; each tile is a button."
+      },
+      {
+        "requirement": "Reading order",
+        "ios": "Left to right, top to bottom — the same order as the layout.",
+        "android": "Same order; do not reorder for column count."
+      },
+      {
+        "requirement": "Tile target",
+        "ios": "The 77 × 72 and 64 × 72 tiles exceed 44 pt; the 158 × 64 horizontal tile too.",
+        "android": "All tiles exceed 48 dp."
+      },
+      {
+        "requirement": "Overflow",
+        "ios": "Rows beyond five paginate or scroll; announce the page.",
+        "android": "Same — the set builds up to five rows."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Column 4 for the home services grid; 5 for dense category pages.",
+        "dontText": "Don’t use Column 5 with long labels — the 64 px tile truncates them."
+      },
+      {
+        "doText": "Use Column 2 for two-word services; it switches the tile to Horizontal.",
+        "dontText": "Don’t mix column counts in one section."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Each variant is a flat list of Service Item instances — read on 5973:70256, 5973:70287, 5973:70150."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Column</code> and <code>Row</code> with plain numeric values (Figma variant values are strings by nature)."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "No text or fills of its own; every colour belongs to Service Item."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Two integers and a list — maps onto <code>EBMenuGrid</code> over the platform grid."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "States live on the Service Item cells."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Icons come through the Service Item slot; the slot is hidden in this set so the grid ships label-only."
+      }
+    ],
+    "variants": {
+      "total": 20,
+      "description": "4 Column × 5 Row = 20 variants",
+      "summary": {
+        "columns": [
+          "Column",
+          "Rows",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "2",
+              "1 – 5 · Horizontal tiles 158 × 64",
+              "5"
+            ]
+          },
+          {
+            "cells": [
+              "3",
+              "1 – 5 · Vertical tiles 104 × 72",
+              "5"
+            ]
+          },
+          {
+            "cells": [
+              "4",
+              "1 – 5 · Vertical tiles 77 × 72",
+              "5"
+            ]
+          },
+          {
+            "cells": [
+              "5",
+              "1 – 5 · Vertical tiles 64 × 72",
+              "5"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "Column",
+        "Row",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "2",
+            "1",
+            "<code>5973:70192</code>",
+            "336 × 80"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "2",
+            "<code>5973:70186</code>",
+            "336 × 148"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "3",
+            "<code>5973:70177</code>",
+            "336 × 216"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "4",
+            "<code>5973:70150</code>",
+            "336 × 284"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "5",
+            "<code>5973:70162</code>",
+            "336 × 352"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "1",
+            "<code>5973:70202</code>",
+            "336 × 88"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "2",
+            "<code>5973:70195</code>",
+            "336 × 164"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "3",
+            "<code>5973:70342</code>",
+            "336 × 240"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "4",
+            "<code>5973:70329</code>",
+            "336 × 316"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "5",
+            "<code>5973:70313</code>",
+            "336 × 392"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "1",
+            "<code>5973:70282</code>",
+            "336 × 88"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "2",
+            "<code>5973:70256</code>",
+            "336 × 164"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "3",
+            "<code>5973:70227</code>",
+            "336 × 240"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "4",
+            "<code>5973:70112</code>",
+            "336 × 316"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "5",
+            "<code>5973:70129</code>",
+            "336 × 392"
+          ]
+        },
+        {
+          "cells": [
+            "5",
+            "1",
+            "<code>5973:70276</code>",
+            "336 × 88"
+          ]
+        },
+        {
+          "cells": [
+            "5",
+            "2",
+            "<code>5973:70265</code>",
+            "336 × 164"
+          ]
+        },
+        {
+          "cells": [
+            "5",
+            "3",
+            "<code>5973:70240</code>",
+            "336 × 240"
+          ]
+        },
+        {
+          "cells": [
+            "5",
+            "4",
+            "<code>5973:70206</code>",
+            "336 × 316"
+          ]
+        },
+        {
+          "cells": [
+            "5",
+            "5",
+            "<code>5973:70287</code>",
+            "336 × 392"
+          ]
+        }
+      ],
+      "collapseLabel": "View full Column × Row breakdown (20 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "2.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 5973:70111",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the 20 live variants.</strong> One card with <code>Column</code> and <code>Row</code> in the panel (count axes never drive cards); the preview now matches the exports — no frame stroke, no icon circles, row dividers at Column 2. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the two-count schema.</strong> Property Mapping one row per property plus the nested instance, one Usage Snippet, Guidelines trimmed, Scorecard notes tied to the live nodes, Variants Inventory on the 20 live nodes with a summary and collapsed breakdown.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.1",
+      "date": "August 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Changes Applied via Figma · node 5973:70111",
+      "rows": [
+        {
+          "body": "<strong><code>Row=5</code> dimensions corrected</strong> — <code>Column=5, Row=5</code> (<code>5973:70287</code>) narrowed from 352 to 336 to match every sibling, and <code>Column=2, Row=5</code> (<code>5973:70162</code>) moved from 60-tall to 64-tall tiles, taking the container from 332 to 352. All 20 variants now share the same container width and per-column tile height.\n          <span class=\"tag-fixed tag-c1\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C3 scoped to what Menu Grid owns</strong> — the container surface and its spacing. All tokenised colour inside a tile belongs to <a href=\"/components/service-item\">Service Item</a> and is audited on that component, the same delegation already applied to C5. The Colors table no longer restates Service Item's icon and label tokens.\n          <span class=\"tag-fixed tag-c3\">Scoped</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Container padding corrected</strong> — the Layout table documented 10px top and 6px bottom. Measured values are 8px on both, and the icon slot is 48 × 48 rather than the 40 × 40 carried over from the v1 assessment.\n          <span class=\"tag-fixed tag-c1\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Revalidated against the v2 rebuild · node 5973:70111",
+      "rows": [
+        {
+          "body": "<strong>Repointed to the 2026 Working File</strong> — assessment now tracks <code>5973:70111</code> in <em>GCash Design System · 2026 Working File</em>, replacing <code>18320:14332</code> in Sticker Sheets v2. Still 20 variants: 4 <code>Column</code> × 5 <code>Row</code>, all individually verified.\n          <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Updated"
+          }
+        },
+        {
+          "body": "<strong>Variant values are plain numbers</strong> — <code>Column=4, Row=2</code> replaces the earlier <code>Row=\"by 4\"</code> strings. The prior recommendation to move to integer props is withdrawn: Figma variant properties are string-only, so numeric strings are the correct representation.\n          <span class=\"tag-fixed tag-c2\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Interaction states reassigned to Service Item</strong> — Menu Grid is a layout container with no states of its own, so the earlier pressed/disabled token gap is assessed on <a href=\"/components/service-item\">Service Item</a> instead. C5 is Not Applicable here.\n          <span class=\"tag-fixed tag-c5\">Reassigned</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Two <code>Row=5</code> variants break the shared metrics</strong> — <code>Column=5, Row=5</code> is 352 wide against 336 everywhere else, and <code>Column=2, Row=5</code> uses 60-tall tiles against 64.\n          <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Live preview rebuilt from measured geometry</strong> — controls now read <code>Column</code> 2–5 × <code>Row</code> 1–5 with plain numeric labels, the preview renders columns across instead of down, and a readout surfaces the <code>Column=2 → Orientation=Horizontal</code> switch.\n          <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 18320:14332",
+      "rows": [
+        {
+          "body": "<strong>Component assessed</strong> — 20 variants formed by Row × Column (Row 2/3/4/5, Column 1/2/3/4/5). Layout container of Service Item children. 336px fixed width.\n          <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Initial"
+          }
+        },
+        {
+          "body": "<strong>Variant property values are strings, not integers</strong> — <code>Row=\"by 4\"</code>, <code>Column=\"by 4\"</code>. Native takes <code>Int</code>; the string prefix forces parsing.\n          <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2 Open"
+          }
+        },
+        {
+          "body": "<strong>Service Item missing pressed/disabled tokens</strong> — Only <code>dashboard/service-item/color/active/{icon,label}</code> defined. Other states must be improvised.\n          <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5 Open"
+          }
+        },
+        {
+          "body": "<strong>Code Connect mappings</strong> — No CLI mappings registered yet.\n          <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7 Open"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -151,12 +151,6 @@ function _vaRenderPreview(cardStyle, card) {
   el.innerHTML = _vaBuildAsset(card.status, card.badge === 'Yes', card.badgeLabel);
 }
 
-function buildSwiftSnippet(cardStyle, card) {
-  return getSnippet(cardStyle, 'swift', card);
-}
-function buildComposeSnippet(cardStyle, card) {
-  return getSnippet(cardStyle, 'compose', card);
-}
 function getSnippet(cardStyle, lang, card) {
   var hasBadge = card.badge === 'Yes';
   var isExpired = card.status === 'Expired';

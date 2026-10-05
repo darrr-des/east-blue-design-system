@@ -603,7 +603,10 @@ function compare(
   if (reading.fontFamily != null && reading.fontFamily !== resolved.fontFamily) {
     out.push(`family ${reading.fontFamily} ≠ ${resolved.fontFamily}`);
   }
-  if (reading.fontWeight != null && reading.fontWeight !== resolved.fontWeight) {
+  // Fonts spell the same weight differently ("SemiBold" vs "Semibold",
+  // "Extra Bold" vs "ExtraBold"); compare the name, not its casing or spacing.
+  const weightKey = (w: string) => w.toLowerCase().replace(/[\s_-]+/g, '');
+  if (reading.fontWeight != null && weightKey(reading.fontWeight) !== weightKey(resolved.fontWeight)) {
     out.push(`weight ${reading.fontWeight} ≠ ${resolved.fontWeight}`);
   }
   if (reading.fontSize != null && reading.fontSize !== resolved.fontSize) {

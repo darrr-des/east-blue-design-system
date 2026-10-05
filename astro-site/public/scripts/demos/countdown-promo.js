@@ -97,28 +97,28 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['high'];
   var swift = lang !== 'compose';
-  var sep = swift ? '<span class="syn-punc">:</span> ' : ' <span class="syn-eq">=</span> ';
+  var sep = swift ? ': ' : ' = ';
   var cased = card.emphasis === 'high' ? 'High' : 'Low';
 
   /* The placeholder carries a real line break. Show it escaped, the way a
      developer would have to write it, rather than splitting the literal. */
   var literal = _cdpEscape(card.header).split('\n').join('\\n');
   var args = [
-    'headerText' + sep + '<span class="syn-str">"' + literal + '"</span>',
+    'headerText' + sep + '"' + literal + '"',
     'until' + sep + 'saleEnds',
     'emphasis' + sep + (swift
-      ? '<span class="syn-dot">.' + card.emphasis + '</span>'
-      : '<span class="syn-type">EBCountdownPromoEmphasis</span><span class="syn-punc">.</span>' +
-        '<span class="syn-dot">' + cased + '</span>')
+      ? '.' + card.emphasis + ''
+      : 'EBCountdownPromoEmphasis.' +
+        '' + cased + '')
   ];
   /* Both slots are filled by default; naming them only when switched off
      keeps the call to the three arguments that carry content. */
-  if (card.hascta === 'false') args.push('hasCTA' + sep + '<span class="syn-kw">false</span>');
-  if (card.hasclose === 'false') args.push('hasCloseButton' + sep + '<span class="syn-kw">false</span>');
+  if (card.hascta === 'false') args.push('hasCTA' + sep + 'false');
+  if (card.hasclose === 'false') args.push('hasCloseButton' + sep + 'false');
 
-  return '<span class="syn-type">EBCountdownPromo</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  return 'EBCountdownPromo(\n    ' +
+    args.join(',\n    ') +
+    '\n)';
 }
 window.getSnippet = getSnippet;
 

@@ -1,0 +1,89 @@
+---
+/**
+ * The Component Playground — the Style tab on a component opted in with
+ * `style.playground: true`, and the whole of /playground/<slug>.
+ *
+ * One copy, used by both, so the tab cannot drift between the preview route and
+ * the real page. It carries no data: the page inlines `meta` into #pg-data and
+ * public/scripts/playground.js fetches public/playground/<slug>.json on open.
+ *
+ * Rules and workflow: workflows/review/PLAYGROUND-REVIEW-GUIDE.md
+ */
+interface Props { slug: string; meta: any; }
+const { slug, meta } = Astro.props;
+const json = JSON.stringify({ meta }).replace(/</g, '\\u003c');
+const src = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/playground/${slug}.json`;
+---
+    <div class="pg-panel">
+      <!-- Component Playground -->
+      <section class="pg-card">
+        <div class="pg-play-head">
+          <h2 class="pg-title">Component Playground</h2>
+        </div>
+        <div class="pg-play-body">
+          <div class="pg-stage" id="pg-stage">
+            <div class="pg-canvas" id="pg-canvas"></div>
+          </div>
+          <aside class="pg-props">
+            <section class="pg-side">
+              <div class="pg-side-head">Properties</div>
+              <div class="pg-side-body pg-side-controls" id="pg-controls"></div>
+            </section>
+            <section class="pg-side">
+              <div class="pg-side-head">Layers</div>
+              <div class="pg-side-body pg-layers" id="pg-layers" role="tree" aria-label="Layers"></div>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Layout · Code · Typography · Colors -->
+      <section class="pg-card">
+        <div class="pg-sec">
+          <div class="pg-code-head">
+            <h2 class="pg-title">Layout</h2>
+            <!-- Icons: Lucide 1.47.0 (ISC) — spline-pointer (Design), code-xml (Development), as chosen by the designer. -->
+            <div class="pg-lang" role="group" aria-label="Mode">
+              <button type="button" id="pg-des" class="pg-lang-opt is-on" aria-pressed="true"><svg class="pg-lang-logo pg-mode-des" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z" /><path d="M5 17A12 12 0 0 1 17 5" /><circle cx="19" cy="5" r="2" /><circle cx="5" cy="19" r="2" /></svg>Design</button>
+              <button type="button" id="pg-dev" class="pg-lang-opt" aria-pressed="false"><svg class="pg-lang-logo pg-mode-dev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4" /><path d="m6 8-4 4 4 4" /><path d="m14.5 4-5 16" /></svg>Development</button>
+            </div>
+          </div>
+          <div class="pg-layout" id="pg-layout"></div>
+          <div class="pg-layout-meta" id="pg-layout-meta"></div>
+        </div>
+        <div class="pg-sec pg-sec-code" id="pg-code-sec" hidden>
+          <div class="pg-code-head">
+            <h2 class="pg-title" id="pg-code-title">VStack</h2>
+            <div class="pg-lang" id="pg-lang" role="radiogroup" aria-label="Code language">
+              <button type="button" class="pg-lang-opt is-on" role="radio" aria-checked="true" data-lang="swift">
+                SwiftUI
+              </button>
+              <button type="button" class="pg-lang-opt" role="radio" aria-checked="false" data-lang="compose">
+                Compose
+              </button>
+            </div>
+          </div>
+          <div class="pg-code">
+            <button type="button" class="pg-copy" id="pg-copy" aria-label="Copy code" data-tip="Copy">
+              <svg class="pg-copy-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" stroke="#111" stroke-width="1.33"/><path d="M10.5 3.2V3A1.5 1.5 0 0 0 9 1.5H3A1.5 1.5 0 0 0 1.5 3v6A1.5 1.5 0 0 0 3 10.5h.2" stroke="#111" stroke-width="1.33" stroke-linecap="round"/></svg>
+              <svg class="pg-copy-done" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5 6.5 11.5 12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <pre id="pg-code"></pre>
+          </div>
+        </div>
+        <div class="pg-sec">
+          <h2 class="pg-title">Typography</h2>
+          <div id="pg-type"></div>
+        </div>
+        <div class="pg-sec">
+          <h2 class="pg-title">Colors</h2>
+          <div id="pg-colors"></div>
+        </div>
+      </section>
+    </div>
+    <div class="pg-toast" id="pg-toast" role="status" aria-live="polite"></div>
+
+<script type="application/json" id="pg-data" data-src={src} set:html={json}></script>
+
+<!-- The tab is one cached file; the page carries only `meta` and the data-src above. -->
+<script is:inline src="/scripts/playground.js"></script>

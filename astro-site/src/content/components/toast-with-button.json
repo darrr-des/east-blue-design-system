@@ -1,0 +1,808 @@
+{
+  "name": "Toast - With Button",
+  "meta": {
+    "node": "27:53205",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=27-53205",
+    "description": "A toast variant with a trailing action button used for undo or in-flight confirmations.",
+    "badges": [
+      {
+        "kind": "consolidate",
+        "label": "Consolidate"
+      },
+      {
+        "kind": "na",
+        "label": "Not Applicable"
+      }
+    ],
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate — merged into Toast",
+      "text": "This component no longer exists on its own. Its trailing button is now a <code>hasTrailingAction</code> boolean on <a href=\"/components/toast\">Toast</a> (node <code>4915:25141</code>), with the button in a swappable <code>addon</code> slot. Assessment for this pattern lives on the Toast page."
+    },
+    "navGroup": "Toast",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "The actionable toast appears after reversible operations — \"Transfer sent · Undo\", \"Message failed · Retry\", \"Photo uploaded · View\". The action button sits right-aligned, tappable without dismissing the toast. Auto-dismiss is suppressed while an action is present.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"toast-with-button-demo-preview\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--default eb-preview-toastwb--has-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p><p class=\"eb-preview-toastwb__desc\">Add description here.</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--white\">Label</div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"toast-with-button-ctrl-type\" class=\"demo-panel-select\" onchange=\"_toastWithButtonUpdate()\"><option value=\"default\" selected=\"\">default</option><option value=\"light\">light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><select id=\"toast-with-button-ctrl-description\" class=\"demo-panel-select\" onchange=\"_toastWithButtonUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "partial",
+        "note": "Historical rating from the standalone assessment. This component is merged into Toast — see that page for the current DS Health."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "warn",
+        "note": "Historical rating from the standalone assessment. This component is merged into Toast — see that page for the current DS Health."
+      },
+      {
+        "name": "Consistent",
+        "rating": "fail",
+        "note": "Historical rating from the standalone assessment. This component is merged into Toast — see that page for the current DS Health."
+      },
+      {
+        "name": "Composable",
+        "rating": "warn",
+        "note": "Historical rating from the standalone assessment. This component is merged into Toast — see that page for the current DS Health."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Action tap",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Button instance embedded",
+        "notes": "The deprecated Button - Small/XS is the action surface. Only one fixed appearance; consumers can't disable or show a loading spinner on the action."
+      },
+      {
+        "state": "Whole-container tap",
+        "ios": "na",
+        "android": "na",
+        "property": "Root is a <button> in some variants",
+        "notes": "The <code>default, description=no</code> variant wraps the whole toast in a <code>button</code> element, overlapping the inner action — tap target is unclear."
+      },
+      {
+        "state": "Auto-dismiss when action present",
+        "ios": "na",
+        "android": "na",
+        "property": "Not annotated",
+        "notes": "Toasts with actions should stay visible until the action is taken or explicitly dismissed. Not spec'd."
+      },
+      {
+        "state": "Action loading / disabled state",
+        "ios": "na",
+        "android": "na",
+        "property": "Not modeled",
+        "notes": "\"Retry\" actions often need a loading state after tap. No provision in the component."
+      },
+      {
+        "state": "A11y — action label",
+        "ios": "na",
+        "android": "na",
+        "property": "Text \"Label\"",
+        "notes": "The default text in the instance is literally \"Label\". Needs a content contract and an accessibility label override."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Merged into Toast.",
+        "body": "v2.0: Confirmed by the component owner — Toast - With Button no longer exists as a standalone component. Its trailing button is now a <code>hasTrailingAction</code> boolean on <a href=\"/components/toast\">Toast</a> (node <code>4915:25141</code>), with the button itself living in an <code>addon</code> slot so it can be swapped without detaching. This page is kept as a pointer; all assessment for this pattern lives on Toast. (Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Types",
+    "description": "",
+    "source": {
+      "set": "",
+      "variants": 0,
+      "read": "",
+      "tool": ""
+    },
+    "specCards": [
+      {
+        "cardKey": "default",
+        "demoKey": "darkdesc",
+        "title": "Default",
+        "node": "813:31117",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-1\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--default eb-preview-toastwb--has-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p><p class=\"eb-preview-toastwb__desc\">Add description here.</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--white\">Label</div></div></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Theme",
+                "prop": "theme",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "default"
+                  },
+                  {
+                    "value": "light",
+                    "label": "light"
+                  }
+                ]
+              },
+              {
+                "label": "Description",
+                "prop": "description",
+                "control": "select",
+                "defaultValue": "yes",
+                "options": [
+                  {
+                    "value": "yes",
+                    "label": "yes"
+                  },
+                  {
+                    "value": "no",
+                    "label": "no"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Theme",
+                "value": "default",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "theme",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "yes",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "description",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "toast/color/default/bg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#FFFFFF",
+                    "token": "toast/color/light/bg",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "toast/color/default/label",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#0A2757",
+                    "token": "toast/color/light/label",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#F6F9FDCC",
+                "mono": false,
+                "token": "toast/color/default/description",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#445C85",
+                    "token": "toast/color/light/description",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "description:no",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  }
+                ]
+              },
+              {
+                "key": "Button label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "button/v1/default/label",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Button bg",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "button/v1/default/bg",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Proxima Soft Bold · 14 / 16 · +0.25",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "BarkAda Medium · 10 / 15",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "description:no",
+                    "value": "",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": true
+                  }
+                ]
+              },
+              {
+                "key": "Button",
+                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Width",
+                "value": "330",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding",
+                "value": "16 × 12",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "description:no",
+                    "value": "16 × 8",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radius",
+                "value": "8",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Button height",
+                "value": "24",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Removed from favorites\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tap undo to revert\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Undo\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    message <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Removed from favorites\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tap undo to revert\"</span><span class=\"syn-punc\">,</span>\n    action <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Undo\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Default — Colors by Theme",
+        "description": "Default toast with a trailing action button. Theme axis flips surface + label between Dark and Light.",
+        "columns": [
+          "Theme · Dark",
+          "Theme · Light"
+        ],
+        "rows": [
+          {
+            "role": "Surface bg",
+            "element": "",
+            "token": "toast/color/{theme}/bg",
+            "values": [
+              "#0A2757",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Border",
+            "element": "",
+            "token": "toast/color/{theme}/border",
+            "values": [
+              "#E5EBF4",
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Label",
+            "element": "",
+            "token": "toast/color/{theme}/label",
+            "values": [
+              "#FFFFFF",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Description",
+            "element": "",
+            "token": "toast/color/{theme}/description",
+            "values": [
+              "#F6F9FD @ 80%",
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Action label",
+            "element": "",
+            "token": "toast/color/{theme}/action",
+            "values": [
+              "#9BC5FD",
+              "#005CE5"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Light — Colors",
+        "description": "Light toast variant with brand-blue trailing action.",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Surface bg",
+            "element": "",
+            "token": "main/toast/light/bg",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Label",
+            "element": "",
+            "token": "main/toast/light/label",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Description",
+            "element": "",
+            "token": "main/toast/light/description",
+            "values": [
+              "#3C4A5C"
+            ]
+          },
+          {
+            "role": "Action label",
+            "element": "",
+            "token": "main/toast/light/action",
+            "values": [
+              "#005CE5"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Pending — Colors by Theme",
+        "description": "In-progress toast — same theme palette as Default.",
+        "columns": [
+          "Theme · Dark",
+          "Theme · Light"
+        ],
+        "rows": [
+          {
+            "role": "Surface bg",
+            "element": "",
+            "token": "toast/color/pending/{theme}/bg",
+            "values": [
+              "#0A2757",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Label",
+            "element": "",
+            "token": "toast/color/pending/{theme}/label",
+            "values": [
+              "#FFFFFF",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Spinner",
+            "element": "",
+            "token": "toast/color/pending/{theme}/spinner",
+            "values": [
+              "#FFFFFF",
+              "#0A2757"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Error — Colors",
+        "description": "Critical error toast with white text on red.",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Surface bg",
+            "element": "",
+            "token": "main/toast/error/bg",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Border",
+            "element": "",
+            "token": "main/toast/error/border",
+            "values": [
+              "#F4C7C9"
+            ]
+          },
+          {
+            "role": "Label",
+            "element": "",
+            "token": "main/toast/error/label",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Action",
+            "element": "",
+            "token": "main/toast/error/action",
+            "values": [
+              "#FFFFFF"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:toast:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>toast<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "This component collapses into the base Toast. Figma properties map to the consolidated Toast API, not to a standalone EBToastWithButton.",
+      "rows": [
+        {
+          "figma": "<code>Type: default | light</code>",
+          "swift": "<code>theme: light | dark</code> (shared with Toast)",
+          "compose": "<code>.ebToastTheme(.dark)</code>"
+        },
+        {
+          "figma": "<code>Description: yes | no</code>",
+          "swift": "<code>supportingText?: String</code> (slot)",
+          "compose": "<code>supportingText: String?</code>"
+        },
+        {
+          "figma": "(embedded Button - Small/XS — deprecated)",
+          "swift": "<code>action?: ToastAction</code> (slot)",
+          "compose": "<code>action: EBToastAction?</code>"
+        },
+        {
+          "figma": "(implicit label text)",
+          "swift": "<code>message: String</code>",
+          "compose": "<code>message: String</code>"
+        },
+        {
+          "figma": "(no icon axis)",
+          "swift": "<code>leadingIcon?: Icon</code> (inherited from Toast)",
+          "compose": "<code>leadingIcon: Image?</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [],
+    "accessibility": [
+      {
+        "requirement": "Action label",
+        "ios": "Action passes <code>accessibilityLabel</code> through to the inner Button. Default: the visible label.",
+        "android": "Action passes <code>contentDescription</code> to the inner Button. Default: the visible label."
+      },
+      {
+        "requirement": "Live region",
+        "ios": "Polite announcement; use the Toast's appearance to decide (destructive → assertive).",
+        "android": "<code>LiveRegionMode.Polite</code> by default; assertive for destructive."
+      },
+      {
+        "requirement": "Suppress auto-dismiss",
+        "ios": "When <code>action</code> is non-nil, host overlay keeps the toast on screen until the action is tapped or the user swipes.",
+        "android": "<code>SnackbarDuration.Indefinite</code> when an action is present."
+      },
+      {
+        "requirement": "Action loading state",
+        "ios": "Swap label for a ProgressView; keep the button reachable for VoiceOver (don't disable mid-announcement).",
+        "android": "Swap label for a <code>CircularProgressIndicator</code>; set <code>enabled = false</code> after the state is announced."
+      },
+      {
+        "requirement": "Tap target",
+        "ios": "Action button must have a ≥ 44 × 44 hit area; the 24 px pill extends via <code>.contentShape</code> if visual size is smaller.",
+        "android": "Action button must have a ≥ 48 dp touch target; use <code>Modifier.minimumInteractiveComponentSize()</code>."
+      }
+    ],
+    "usageGuidelines": [],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "Separate component for a property slot. Consolidate into base Toast; normalize width from 330 to 312."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "<code>type</code> values drift from base Toast; <code>description=yes|no</code> should be a content slot."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Surface, label, description, border tokens all bound via <code>main/toast/color/{default|light}/*</code>. Action uses <code>comp/button-v1/default/*</code>."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "Action surface uses the deprecated Button - Small/XS; maps cleanly to Snackbar's action slot once migrated."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "No action states (pressed / disabled / loading); whole-container tap overlaps the inner action."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "No leading-icon axis at all — consolidation recovers it from base Toast."
+      }
+    ],
+    "variants": {
+      "total": 4,
+      "description": "Axes: <code>Type</code> (2) × <code>Description</code> (2) = <strong>4 variants</strong>. Flat matrix — no collapsed axes, no illegal combinations. Every variant embeds the deprecated <code>.[DEPRECATED] Button - Small/XS</code> instance.",
+      "columns": [
+        "#",
+        "Node",
+        "Type",
+        "Description",
+        "Dimensions",
+        "Notes"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "1",
+            "<code>813:31117</code>",
+            "default",
+            "yes",
+            "330 × 74",
+            "Root is a <code>&lt;button&gt;</code> element"
+          ]
+        },
+        {
+          "cells": [
+            "2",
+            "<code>27:53213</code>",
+            "light",
+            "yes",
+            "330 × 74",
+            "Root is a <code>&lt;div&gt;</code> element"
+          ]
+        },
+        {
+          "cells": [
+            "3",
+            "<code>813:31125</code>",
+            "default",
+            "no",
+            "330 × 41",
+            "Root is a <code>&lt;button&gt;</code> element (tap conflict)"
+          ]
+        },
+        {
+          "cells": [
+            "4",
+            "<code>27:53225</code>",
+            "light",
+            "no",
+            "330 × 41",
+            "Root is a <code>&lt;div&gt;</code> element"
+          ]
+        }
+      ],
+      "summary": {
+        "columns": [],
+        "rows": []
+      },
+      "collapseLabel": ""
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 27:53205",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 1 resolved issue on the Overview tab had no changelog row: Merged into Toast.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 27:53205",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Consolidate</strong> — Fold into the base Toast. Action becomes an optional slot; supporting text becomes an optional content slot. Remove this sibling from the family. <span class=\"tag-open tag-c1 tag-c2 tag-c4 tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Family"
+          }
+        },
+        {
+          "body": "<strong>C1 — Duplicate component</strong> — Exists to add an action slot to Toast. Collapse into base Toast with <code>action?: EBToastAction</code>. Width drifts from base (330 vs. 312). <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C2 — Axis drift</strong> — <code>type=default|light</code> here vs. <code>type=default|pending|error</code> + <code>theme=default|light|dark</code> on base Toast. <code>description=yes|no</code> should be <code>supportingText?: String</code>. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C4 — Deprecated Button embedded</strong> — Action surface uses <code>.[DEPRECATED] Button - Small/XS</code> (node 21:164490), slated for deletion Aug 22, 2025. Rebind to Button - XSmall before migration. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>C5 — Tap conflict + missing action states</strong> — <code>description=no</code> variants wrap the root in a <code>&lt;button&gt;</code> overlapping the inner action. No pressed/disabled/loading states for the action. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>C6 — No icon axis</strong> — Silently drops the <code>With Icon</code> axis that base Toast exposes. Consolidation recovers it. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Blocked on family consolidation. No standalone entry expected. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

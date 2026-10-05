@@ -1,0 +1,1872 @@
+{
+  "name": "Inline Text",
+  "meta": {
+    "node": "4419:24515",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4419-24515",
+    "description": "A label-and-value row with an optional trailing element, description line and text link — used for inline detail pairs within lists and cards.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4419:24515</code> in the 2026 Working File as <code>Type</code> (Copy Icon · Badge · Checkmark · Slot) × <code>hasDescription</code> × <code>hasTextLink</code> = <strong>16 variants</strong>. The enum that hid five compositions is split into orthogonal axes, so clipboard plus description plus link is now a real combination rather than an unreachable one. The trailing element routes through a shared <code>Trailing Elements</code> instance holding a real Badge or DS icon, and every layer carries a distinct semantic name mapping onto §3. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+    },
+    "navGroup": "",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Inline Text is a composition primitive. You'll find stacks of it inside Generic Transaction Card's detail modal, Send Money confirmation screens, receipt summaries, and fee-breakdown list items. Rarely used standalone.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"itx-demo-preview\"><div class=\"eb-preview eb-preview-itx eb-preview-itx--copy-icon\"><div class=\"eb-preview-itx__main\"><p class=\"eb-preview-itx__label\">Label</p><div class=\"eb-preview-itx__value-group\"><span class=\"eb-preview-itx__value\">0.00</span><svg class=\"eb-preview-itx__icon\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" d=\"M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></div></div><div class=\"eb-preview-itx__supporting\"><span class=\"eb-preview-itx__description\">Description goes here</span><span class=\"eb-preview-itx__link\">CTA</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"itx-ctrl-type\" class=\"demo-panel-select\" onchange=\"_itxUpdate()\"><option value=\"copy-icon\" selected=\"\">Copy Icon</option><option value=\"badge\">Badge</option><option value=\"checkmark\">Checkmark</option><option value=\"slot\">Slot</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select id=\"itx-ctrl-hasdescription\" class=\"demo-panel-select\" onchange=\"_itxUpdate()\"><option value=\"true\" selected=\"\">True</option><option value=\"false\">False</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTextLink</span><select id=\"itx-ctrl-hastextlink\" class=\"demo-panel-select\" onchange=\"_itxUpdate()\"><option value=\"true\" selected=\"\">True</option><option value=\"false\">False</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Label</span><input type=\"text\" id=\"itx-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Value</span><input type=\"text\" id=\"itx-ctrl-value\" class=\"demo-panel-select demo-panel-input\" value=\"0.00\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><input type=\"text\" id=\"itx-ctrl-description\" class=\"demo-panel-select demo-panel-input\" value=\"Description goes here\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Link label</span><input type=\"text\" id=\"itx-ctrl-link\" class=\"demo-panel-select demo-panel-input\" value=\"CTA\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Badge</span><input type=\"text\" id=\"itx-ctrl-badge\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_itxUpdate()\"></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Genuinely reused across transaction cards, modal summaries, and list items. A strong primitive."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Binds tokens cleanly and routes the trailing element through a shared <code>Trailing Elements</code> instance holding a real <code>Badge</code> or DS icon, so styling propagates rather than being redrawn here."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "<code>Type</code> × <code>hasDescription</code> × <code>hasTextLink</code> are orthogonal, boolean values are genuine <code>True</code>/<code>False</code>, and every layer carries a distinct semantic name — the text layers mapping onto §3 as <code>Label</code>, <code>Value</code>, <code>Description</code>, plus <code>LinkLabel</code>. <code>Type=Slot</code> is a deliberate, documented choice."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Stacks inside transaction cards, modal summaries and list items, and the three axes combine freely — clipboard plus description plus link is now a real combination rather than an unreachable one. <code>Type=Slot</code> accepts arbitrary trailing content."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=Default",
+        "notes": "Label leading, value trailing. The baseline receipt row."
+      },
+      {
+        "state": "With Clipboard",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=with Clipboard",
+        "notes": "Value + 24 × 24 copy icon. Tapping the icon copies the value to clipboard."
+      },
+      {
+        "state": "With Badge",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=with Badge",
+        "notes": "Replaces the value with a trailing badge pill. Used for voucher / discount selection."
+      },
+      {
+        "state": "With Description",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=with Description",
+        "notes": "Adds a second row below the label with secondary caption text."
+      },
+      {
+        "state": "With Text Link",
+        "ios": "yes",
+        "android": "yes",
+        "property": "type=with Text Link",
+        "notes": "Second row adds a trailing text link (CTA) next to the description."
+      },
+      {
+        "state": "Pressed (copy icon)",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "Copy icon has no pressed state or success toast hook — users get no feedback when the tap lands."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "<code>type</code> enum split into orthogonal axes.",
+        "body": "v2.0: Rebuilt on node <code>4419:24515</code> in the 2026 Working File. The single enum that hid five layouts is now <code>Type</code> (Copy Icon · Badge · Checkmark · Slot) × <code>hasDescription</code> × <code>hasTextLink</code> = 16 variants. Trailing-element kind, description presence and link presence are independent, so no combination is unreachable. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Enum values cleaned up.",
+        "body": "v2.0: The \"with X\" phrasing is gone — values are now <code>Copy Icon</code>, <code>Badge</code>, <code>Checkmark</code> and <code>Slot</code>, each naming the trailing element rather than describing a composite layout. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Badge is instance-swapped, not drawn inline.",
+        "body": "v2.0: The trailing element goes through a shared <code>Trailing Elements</code> instance which in turn holds a real <code>Badge</code> instance. Badge styling changes now propagate rather than needing to be redrawn here. (C6 · Composition)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Copy icon uses the shared wrapper.",
+        "body": "v2.1: Confirmed by the component owner — <code>Type=Copy Icon</code> routes through the same <code>Trailing Elements</code> instance as Badge rather than drawing the glyph inline, so it inherits the DS icon. (C6)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Clipboard property renamed to describe the element.",
+        "body": "v2.0: The property value now reads <code>Type=Copy Icon</code>, naming what appears rather than the clipboard mechanism behind it. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Layer naming completed.",
+        "body": "v2.1: Seven renames — the 16px <code>#label</code> → <code>Label</code>, the 12px link <code>#label</code> → <code>LinkLabel</code>, <code>#amount</code> → <code>Value</code>, <code>description</code> → <code>Description</code>, the two <code>container</code> frames → <code>ValueGroup</code> and <code>DescriptionGroup</code>, and <code>bottom-container</code> → <code>SupportingRow</code>. Resolves the duplicate <code>#label</code> and duplicate <code>container</code> collisions, and the text names now map onto §3 — <code>Label</code>, <code>Value</code>, <code>Description</code>. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Row frame renamed to <code>MainRow</code>.",
+        "body": "v2.2: The top row no longer shares the component set's own name, pairing cleanly with <code>SupportingRow</code> below it. Every layer this component owns now carries a distinct semantic name. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Type=Slot</code> confirmed intentional.",
+        "body": "v2.2: Closed by owner decision — <code>Slot</code> stays. The team treats Slot as a first-class concept in the system rather than an implementation detail, so the value reads as a named content mode to anyone working in the library. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Pressed state ruled out of scope.",
+        "body": "v2.2: Closed by owner decision — nested buttons and links across the system do not currently carry pressed states, so adding one here would make Inline Text the outlier rather than the standard. Revisit at family level if pressed states are introduced for nested interactive elements generally. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Stacking and typography documented.",
+        "body": "v2.2: Documented rather than deferred. <strong>Stacking</strong> — rows carry no separator of their own and no vertical padding: a row is 24px tall without a description and 44px with one, at 368 wide. The containing list or card supplies the gap between rows and any dividers, so a run of Inline Text rows sits flush unless the parent spaces them. <strong>Typography reconciliation with Generic Transaction Card</strong> — the supporting scale is already shared: <code>Description</code> and the card's <code>Metadata</code> are both BarkAda Semibold 12/18 at <code>#6780A9</code>, identical. The primary scale differs deliberately: the card's own title is Proxima Soft Semibold 18/18 while Inline Text's <code>Label</code> and <code>Value</code> are 16/16. That gap is the hierarchy — the card heading sits above the detail rows beneath it — not a drift to correct. (Docs)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "4419:24515",
+      "variants": 16,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "itx-copy-icon",
+        "demoKey": "copy-icon",
+        "title": "Copy Icon",
+        "node": "4419:20913",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-copy-icon\"><div class=\"eb-preview eb-preview-itx eb-preview-itx--copy-icon\"><div class=\"eb-preview-itx__main\"><p class=\"eb-preview-itx__label\">Label</p><div class=\"eb-preview-itx__value-group\"><span class=\"eb-preview-itx__value\">0.00</span><svg class=\"eb-preview-itx__icon\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" d=\"M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></div></div><div class=\"eb-preview-itx__supporting\"><span class=\"eb-preview-itx__description\">Description goes here</span><span class=\"eb-preview-itx__link\">CTA</span></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasTextLink",
+                "prop": "hasTextLink",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Copy Icon",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasTextLink",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTextLink",
+                "variants": [
+                  {
+                    "when": "hasTextLink:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#445C85",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Link label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Copy icon",
+                "value": "#445C85",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Light/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Label/Light/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "LinkLabel",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "44",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasDescription:false|hasTextLink:false",
+                    "value": "24",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "368",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBInlineText</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span>)\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.copy</span>)\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBInlineText</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBInlineTextTrailing</span>.Copy,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">textLink</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }\n)</code>"
+      },
+      {
+        "cardKey": "itx-badge",
+        "demoKey": "badge",
+        "title": "Badge",
+        "node": "5652:36979",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-badge\"><div class=\"eb-preview eb-preview-itx eb-preview-itx--badge\"><div class=\"eb-preview-itx__main\"><p class=\"eb-preview-itx__label\">Label</p><div class=\"eb-preview-itx__value-group\"><span class=\"eb-preview-itx__value\">0.00</span><span class=\"eb-preview-itx__badge\">Label</span></div></div><div class=\"eb-preview-itx__supporting\"><span class=\"eb-preview-itx__description\">Description goes here</span><span class=\"eb-preview-itx__link\">CTA</span></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasTextLink",
+                "prop": "hasTextLink",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Badge",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasTextLink",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTextLink",
+                "variants": [
+                  {
+                    "when": "hasTextLink:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#445C85",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Link label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Badge background",
+                "value": "#E5F1FF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Badge label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Light/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Label/Light/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "LinkLabel",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "44",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasDescription:false|hasTextLink:false",
+                    "value": "24",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "368",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBInlineText</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span>)\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.badge</span>(<span class=\"syn-str\">\"Label\"</span>))\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBInlineText</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBInlineTextTrailing</span>.Badge(<span class=\"syn-str\">\"Label\"</span>),\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">textLink</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }\n)</code>"
+      },
+      {
+        "cardKey": "itx-checkmark",
+        "demoKey": "checkmark",
+        "title": "Checkmark",
+        "node": "5652:37190",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-checkmark\"><div class=\"eb-preview eb-preview-itx eb-preview-itx--checkmark\"><div class=\"eb-preview-itx__main\"><p class=\"eb-preview-itx__label\">Label</p><div class=\"eb-preview-itx__value-group\"><span class=\"eb-preview-itx__value\">0.00</span><svg class=\"eb-preview-itx__icon eb-preview-itx__icon--check\" viewBox=\"0 4 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3 12L6.5 15L13 9\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div></div><div class=\"eb-preview-itx__supporting\"><span class=\"eb-preview-itx__description\">Description goes here</span><span class=\"eb-preview-itx__link\">CTA</span></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasTextLink",
+                "prop": "hasTextLink",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Checkmark",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasTextLink",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTextLink",
+                "variants": [
+                  {
+                    "when": "hasTextLink:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#445C85",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Link label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Checkmark",
+                "value": "#445C85",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Light/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Label/Light/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "LinkLabel",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "44",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasDescription:false|hasTextLink:false",
+                    "value": "24",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "368",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBInlineText</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span>)\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.checkmark</span>)\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBInlineText</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBInlineTextTrailing</span>.Checkmark,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">textLink</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }\n)</code>"
+      },
+      {
+        "cardKey": "itx-slot",
+        "demoKey": "slot",
+        "title": "Slot",
+        "node": "5652:37563",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-slot\"><div class=\"eb-preview eb-preview-itx eb-preview-itx--slot\"><div class=\"eb-preview-itx__main\"><p class=\"eb-preview-itx__label\">Label</p><div class=\"eb-preview-itx__value-group\"><span class=\"eb-preview-itx__value\">0.00</span><span class=\"eb-preview-itx__slot\" aria-hidden=\"true\"></span></div></div><div class=\"eb-preview-itx__supporting\"><span class=\"eb-preview-itx__description\">Description goes here</span><span class=\"eb-preview-itx__link\">CTA</span></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasTextLink",
+                "prop": "hasTextLink",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasTextLink",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTextLink",
+                "variants": [
+                  {
+                    "when": "hasTextLink:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#445C85",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Link label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Light/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Label/Light/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "LinkLabel",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "44",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasDescription:false|hasTextLink:false",
+                    "value": "24",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "368",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBInlineText</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span>)\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.slot</span> { <span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"custom\"</span>) })\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBInlineText</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBInlineTextTrailing</span>.Slot { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">textLink</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Type",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "All types",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "All types",
+            "element": "Value",
+            "token": "—",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "All types",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "All types",
+            "element": "Link label",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Copy Icon",
+            "element": "Copy icon",
+            "token": "—",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Badge",
+            "element": "Badge background",
+            "token": "—",
+            "values": [
+              "#E5F1FF"
+            ]
+          },
+          {
+            "role": "Badge",
+            "element": "Badge label",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Checkmark",
+            "element": "Checkmark",
+            "token": "—",
+            "values": [
+              "#445C85"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:inline-text:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>inlinetext<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Type, hasDescription and hasTextLink are the set’s three variant properties. The trailing element routes through a nested Trailing Elements instance whose Slot value holds a Figma Slot. Label, Value, Description and LinkLabel are text layers read from 4419:20913; whether they are exposed on the property panel is not readable with the plugin.",
+      "rows": [
+        {
+          "figma": "Type — Copy Icon, Badge, Checkmark, Slot",
+          "swift": "<code>.ebTrailing(.copy / .badge(\"…\") / .checkmark / .slot { … })</code>",
+          "compose": "<code>trailing = EBInlineTextTrailing.Copy / Badge(\"…\") / Checkmark / Slot { … }</code>"
+        },
+        {
+          "figma": "hasDescription — True, False",
+          "swift": "<code>.ebDescription(\"…\")</code> when True",
+          "compose": "<code>description = \"…\"</code> when True, else <code>null</code>"
+        },
+        {
+          "figma": "hasTextLink — True, False",
+          "swift": "<code>.ebTextLink(\"CTA\") { }</code> when True",
+          "compose": "<code>textLink = EBTextLink(\"CTA\") { }</code> when True, else <code>null</code>"
+        },
+        {
+          "figma": "Trailing Elements › Slot (slot)",
+          "swift": "<code>.ebTrailing(.slot { Image(\"custom\") })</code>",
+          "compose": "<code>EBInlineTextTrailing.Slot { Icon(…) }</code>"
+        },
+        {
+          "figma": "Label (text)",
+          "swift": "<code>EBInlineText(\"Label\", …)</code>",
+          "compose": "<code>label = \"…\"</code>"
+        },
+        {
+          "figma": "Value (text)",
+          "swift": "<code>value: String</code>",
+          "compose": "<code>value = \"…\"</code>"
+        },
+        {
+          "figma": "Description (text)",
+          "swift": "<code>.ebDescription(_:)</code>",
+          "compose": "<code>description = \"…\"</code>"
+        },
+        {
+          "figma": "LinkLabel (text)",
+          "swift": "<code>.ebTextLink(_:action:)</code>",
+          "compose": "<code>EBTextLink(\"…\") { }</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Copy Icon",
+        "swift": "<code><span class=\"syn-type\">EBInlineText</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span>)\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.copy</span>)\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBInlineText</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBInlineTextTrailing</span>.Copy,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">textLink</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }\n)</code>"
+      },
+      {
+        "subheading": "Badge",
+        "swift": "<code><span class=\"syn-type\">EBInlineText</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span>)\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.badge</span>(<span class=\"syn-str\">\"Label\"</span>))\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBInlineText</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBInlineTextTrailing</span>.Badge(<span class=\"syn-str\">\"Label\"</span>),\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">textLink</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }\n)</code>"
+      },
+      {
+        "subheading": "Checkmark",
+        "swift": "<code><span class=\"syn-type\">EBInlineText</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span>)\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.checkmark</span>)\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBInlineText</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBInlineTextTrailing</span>.Checkmark,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">textLink</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }\n)</code>"
+      },
+      {
+        "subheading": "Slot",
+        "swift": "<code><span class=\"syn-type\">EBInlineText</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span>)\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.slot</span> { <span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"custom\"</span>) })\n    .<span class=\"syn-fn\">ebDescription</span>(<span class=\"syn-str\">\"Description goes here\"</span>)\n    .<span class=\"syn-fn\">ebTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }</code>",
+        "compose": "<code><span class=\"syn-type\">EBInlineText</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBInlineTextTrailing</span>.Slot { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">textLink</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTextLink</span>(<span class=\"syn-str\">\"CTA\"</span>) { }\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Label and value read together",
+        "ios": "<code>.accessibilityElement(children: .combine)</code> on the row — \"Label, 0.00\".",
+        "android": "<code>Modifier.semantics(mergeDescendants = true)</code> on the row."
+      },
+      {
+        "requirement": "Copy Icon action",
+        "ios": "<code>Button</code> with <code>accessibilityLabel(\"Copy Label\")</code>; announce \"Copied\" via <code>UIAccessibility.post(notification: .announcement)</code>.",
+        "android": "<code>IconButton</code> with <code>contentDescription = \"Copy Label\"</code>; announce \"Copied\" through <code>LiveRegionMode.Polite</code>."
+      },
+      {
+        "requirement": "Checkmark meaning",
+        "ios": "<code>.accessibilityValue(\"Verified\")</code> — the glyph alone is not announced.",
+        "android": "<code>stateDescription = \"Verified\"</code> on the row."
+      },
+      {
+        "requirement": "Text link",
+        "ios": "<code>Button</code> role with the LinkLabel text; <code>.accessibilityAddTraits(.isLink)</code>.",
+        "android": "<code>Modifier.clickable</code> with <code>role = Role.Button</code> and the LinkLabel as <code>contentDescription</code>."
+      },
+      {
+        "requirement": "Minimum target",
+        "ios": "The 24 pt copy icon and the 18 pt text link need a 44 pt hit area.",
+        "android": "The 24 dp copy icon and the 18 dp text link need a 48 dp touch target."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Copy Icon for references and IDs the user needs to paste elsewhere.",
+        "dontText": "Don’t put Copy Icon on an amount or a date."
+      },
+      {
+        "doText": "Use Badge when the value is a status, and keep the badge text to one word.",
+        "dontText": "Don’t use Badge to restyle a plain value."
+      },
+      {
+        "doText": "Keep the Label to one line — it shares the 368 px row with the value.",
+        "dontText": "Don’t wrap the label; move the detail into Description."
+      },
+      {
+        "doText": "Put a DS icon in the Slot at 24 × 24.",
+        "dontText": "Don’t place text or a second value in the Slot."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>MainRow</code> / <code>SupportingRow</code>, <code>ValueGroup</code>, <code>DescriptionGroup</code> and the four text layers <code>Label</code>, <code>Value</code>, <code>Description</code>, <code>LinkLabel</code> — read on 4419:20913."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Type</code> with Title Case values; <code>hasDescription</code> and <code>hasTextLink</code> are real True / False booleans."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Label and Value resolve to <code>Primary/Label/Light/Base</code>, Description and LinkLabel to <code>Secondary/Bold/Caption</code>. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One enum, two booleans, one slot and four text values — maps 1:1 onto <code>EBInlineText</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "No State property: the copy icon and the text link have no pressed or disabled variant in the set."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Copy and Checkmark are icon-library instances inside <code>Trailing Elements</code>; Badge is a Badge instance."
+      }
+    ],
+    "variants": {
+      "total": 16,
+      "description": "4 Type × 2 hasDescription × 2 hasTextLink = 16 variants",
+      "summary": {
+        "columns": [
+          "Type",
+          "hasDescription × hasTextLink",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Copy Icon",
+              "True · True, True · False, False · True, False · False",
+              "4"
+            ]
+          },
+          {
+            "cells": [
+              "Badge",
+              "True · True, True · False, False · True, False · False",
+              "4"
+            ]
+          },
+          {
+            "cells": [
+              "Checkmark",
+              "True · True, True · False, False · True, False · False",
+              "4"
+            ]
+          },
+          {
+            "cells": [
+              "Slot",
+              "True · True, True · False, False · True, False · False",
+              "4"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "Type",
+        "hasDescription",
+        "hasTextLink",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Copy Icon",
+            "True",
+            "True",
+            "<code>4419:20913</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Copy Icon",
+            "True",
+            "False",
+            "<code>5643:34601</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Copy Icon",
+            "False",
+            "True",
+            "<code>4419:24516</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Copy Icon",
+            "False",
+            "False",
+            "<code>5643:34623</code>",
+            "368 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "True",
+            "True",
+            "<code>5652:36979</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "True",
+            "False",
+            "<code>5652:36989</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "False",
+            "True",
+            "<code>5652:36998</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "False",
+            "False",
+            "<code>5652:37006</code>",
+            "368 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Checkmark",
+            "True",
+            "True",
+            "<code>5652:37190</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Checkmark",
+            "True",
+            "False",
+            "<code>5652:37200</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Checkmark",
+            "False",
+            "True",
+            "<code>5652:37209</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Checkmark",
+            "False",
+            "False",
+            "<code>5652:37217</code>",
+            "368 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Slot",
+            "True",
+            "True",
+            "<code>5652:37563</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Slot",
+            "True",
+            "False",
+            "<code>5652:37573</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Slot",
+            "False",
+            "True",
+            "<code>5652:37582</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Slot",
+            "False",
+            "False",
+            "<code>5652:37590</code>",
+            "368 × 24"
+          ]
+        }
+      ],
+      "collapseLabel": "View full Type × hasDescription × hasTextLink breakdown (16 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 4419:24515",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the 16 live variants.</strong> Cards follow <code>Type</code> — Copy Icon, Badge, Checkmark, Slot — with <code>hasDescription</code> and <code>hasTextLink</code> as panel toggles; colours, text styles and the 44 / 24 heights read off 4419:20913 and the four base variants. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the <code>Type</code> × <code>hasDescription</code> × <code>hasTextLink</code> schema.</strong> Installation added on the solo coordinates, Property Mapping is one row per property, Usage Snippets and Guidelines added, Scorecard regraded, Variants Inventory moved from the five <code>type</code> nodes to the 16 live nodes with a summary and full breakdown.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 4419:24515",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 10 resolved issues on the Overview tab had no changelog row: <code>type</code> enum split into orthogonal axes; Enum values cleaned up; Badge is instance-swapped, not drawn inline; Copy icon uses the shared wrapper; Clipboard property renamed to describe the element; Layer naming completed; Row frame renamed to <code>MainRow</code>; <code>Type=Slot</code> confirmed intentional; Pressed state ruled out of scope; Stacking and typography documented.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 18652:71101",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Restructure</strong> — Replace <code>type</code> enum (5 layouts) with orthogonal booleans + unified trailing slot. Instance-swap Badge. Add pressed state on copy icon. <span class=\"tag-open tag-c1 tag-c2 tag-c5 tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Architecture"
+          }
+        },
+        {
+          "body": "<strong>C1 — Type enum hides compositions</strong> — 5 <code>type</code> values conflate two axes (trailing slot + sub-row). Split into <code>hasCopy</code>, <code>hasDescription</code>, <code>hasTextLink</code>, unified <code>trailing</code> slot. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C2 — \"with X\" value phrasing</strong> — Figma enum values describe what's added, not what the row IS. Rename under boolean-prop schema. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C6 — Badge drawn inline</strong> — <code>with Badge</code> hardcodes information/light fill + label instead of instance-swapping Badge. Parallel source of truth. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>C5 — Copy / link pressed states</strong> — Copy icon and text link have no pressed tint, focus ring, or success feedback hook. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Tokens ✓</strong> — All four semantic color roles (<code>label</code>, <code>label-value</code>, <code>description</code>, <code>label-link</code>) plus <code>icon</code> bound correctly. <span class=\"tag-fixed\">Noted</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Praise"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Blocked on restructure. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -9,13 +9,13 @@ import IssuesList from '../../components/IssuesList.astro';
 import RecommendationsList from '../../components/RecommendationsList.astro';
 import SpecCard from '../../components/SpecCard.astro';
 import ColorsTable from '../../components/ColorsTable.astro';
+import Playground from '../../components/Playground.astro';
 import Installation from '../../components/Installation.astro';
 import PropertyMapping from '../../components/PropertyMapping.astro';
 import UsageSnippets from '../../components/UsageSnippets.astro';
 import AccessibilityTable from '../../components/AccessibilityTable.astro';
 import UsageGuidelines from '../../components/UsageGuidelines.astro';
 import CriteriaScorecard from '../../components/CriteriaScorecard.astro';
-import CodeConnect from '../../components/CodeConnect.astro';
 import VariantsInventory from '../../components/VariantsInventory.astro';
 import Changelog from '../../components/Changelog.astro';
 import { componentMap, componentManifest } from '../../data/components/_index';
@@ -40,9 +40,9 @@ const __astroDir = path.dirname(fileURLToPath(import.meta.url));
 const demoScriptPath = path.resolve(__astroDir, '../../../public/scripts/demos/', `${slug}.js`);
 const hasDemoScript = fs.existsSync(demoScriptPath);
 
+const hasContext = !!(data.overview.inContextNote || data.overview.inContextHtml || data.overview.inContextImage);
 const hasOverview =
-  data.overview.inContextNote ||
-  data.overview.inContextHtml ||
+  hasContext ||
   data.overview.livePreviewHtml ||
   data.overview.traits.length ||
   data.overview.behavior.length ||
@@ -51,16 +51,23 @@ const hasOverview =
   data.overview.recommendations.length ||
   data.overview.appliedRecommendations?.length;
 
-const hasStyle = data.style.specCards.length > 0;
-const hasCode =
+// A component the system is retiring (remove / consolidate / product-layer)
+// has no Style or Code tab: its Overview points at the canonical sibling.
+const CARDLESS_VERDICTS = new Set(['remove', 'consolidate', 'product-layer']);
+const cardless = data.meta.badges.some((b) => CARDLESS_VERDICTS.has(b.kind));
+
+// A component opted in to the Playground has no spec cards — its Style tab is
+// the Playground — so the tab exists on either kind of content.
+const isPlayground = data.style.playground === true;
+const hasStyle = !cardless && (isPlayground || data.style.specCards.length > 0);
+const hasCode = !cardless && (
   data.code.installation.blocks.length ||
   data.code.propertyMapping.rows.length ||
   data.code.usageSnippets.length ||
   data.code.accessibility.length ||
   data.code.usageGuidelines.length ||
   data.code.scorecard.length ||
-  data.code.codeConnect.length ||
-  (data.code.variants.rows && data.code.variants.rows.length);
+  (data.code.variants.rows && data.code.variants.rows.length));
 
 const hasChangelog = data.changelog.length > 0;
 ---
@@ -78,28 +85,31 @@ const hasChangelog = data.changelog.length > 0;
         />
 
         <div data-tab-group={group}>
-          <div class="comp-tabs">
-            {hasOverview && <button class="comp-tab active" data-tab-id="usage" onclick={`switchTab(this, 'usage', '${group}')`}>Overview</button>}
-            {hasStyle && <button class={hasOverview ? 'comp-tab' : 'comp-tab active'} data-tab-id="style" onclick={`switchTab(this, 'style', '${group}')`}>Style</button>}
-            {hasCode && <button class="comp-tab" data-tab-id="code" onclick={`switchTab(this, 'code', '${group}')`}>Code</button>}
-            {hasChangelog && <button class="comp-tab" data-tab-id="changelog" onclick={`switchTab(this, 'changelog', '${group}')`}>Changelog</button>}
+          <div class="comp-tabs" role="tablist" aria-label="Component tabs">
+            {hasOverview && <button class="comp-tab active" role="tab" aria-selected="true" data-tab-id="usage" onclick={`switchTab(this, 'usage', '${group}')`}>Overview</button>}
+            {hasStyle && <button class={hasOverview ? 'comp-tab' : 'comp-tab active'} role="tab" aria-selected={hasOverview ? 'false' : 'true'} tabindex={hasOverview ? '-1' : undefined} data-tab-id="style" onclick={`switchTab(this, 'style', '${group}')`}>{isPlayground ? 'Playground' : 'Style'}</button>}
+            {hasCode && <button class="comp-tab" role="tab" aria-selected="false" tabindex="-1" data-tab-id="code" onclick={`switchTab(this, 'code', '${group}')`}>Code</button>}
+            {hasChangelog && <button class="comp-tab" role="tab" aria-selected="false" tabindex="-1" data-tab-id="changelog" onclick={`switchTab(this, 'changelog', '${group}')`}>Changelog</button>}
           </div>
 
           {/* ── Overview ───────────────────────────────────────── */}
           {hasOverview && (
             <div class={`comp-tab-content active`} data-tab="usage" role="tabpanel">
-              {(data.overview.inContextNote || data.overview.inContextHtml) && (
+              {hasContext && (
                 <>
                   <div class="sub-heading" id={`${data.meta.slug}-context`} style="margin-top:0">In Context</div>
-                  {data.overview.inContextNote && <p class="section-desc">{data.overview.inContextNote}</p>}
+                  {data.overview.inContextNote && <p class="section-desc" set:html={data.overview.inContextNote} />}
                   {data.overview.inContextHtml && (
                     <div class="ctx-wrap" set:html={withBase(data.overview.inContextHtml)} />
+                  )}
+                  {!data.overview.inContextHtml && data.overview.inContextImage && (
+                    <div class="ctx-wrap"><img class="ctx-img" src={withBase(data.overview.inContextImage)} alt={data.overview.inContextAlt || `${data.meta.name} in context`} /></div>
                   )}
                 </>
               )}
               {data.overview.livePreviewHtml && (
                 <>
-                  <div class="sub-heading" id={`${data.meta.slug}-preview`}>Live Preview</div>
+                  <div class="sub-heading" id={`${data.meta.slug}-preview`} style={hasContext ? undefined : 'margin-top:0'}>Live Preview</div>
                   <div class="demo-panel eb-preview-scope" set:html={withBase(data.overview.livePreviewHtml)} />
                 </>
               )}
@@ -175,15 +185,21 @@ const hasChangelog = data.changelog.length > 0;
           {/* ── Style ──────────────────────────────────────────── */}
           {hasStyle && (
             <div class={`comp-tab-content${!hasOverview ? ' active' : ''}`} data-tab="style" role="tabpanel">
-              {data.style.heading && <div class="sub-heading" style="margin-top:0">{data.style.heading}</div>}
-              {data.style.specCards.map((card, i) => (
+              {isPlayground ? (
+                <Playground slug={data.meta.slug} meta={{ name: data.meta.name, setId: data.meta.node }} />
+              ) : (
                 <>
-                  <SpecCard {...card} />
-                  {data.style.colorsTables && data.style.colorsTables[i] && (
-                    <ColorsTable table={data.style.colorsTables[i]} />
-                  )}
+                  {data.style.heading && <div class="sub-heading" style="margin-top:0">{data.style.heading}</div>}
+                  {data.style.specCards.map((card, i) => (
+                    <>
+                      <SpecCard {...card} />
+                      {data.style.colorsTables && data.style.colorsTables[i] && (
+                        <ColorsTable table={data.style.colorsTables[i]} />
+                      )}
+                    </>
+                  ))}
                 </>
-              ))}
+              )}
             </div>
           )}
 
@@ -196,7 +212,6 @@ const hasChangelog = data.changelog.length > 0;
               {data.code.accessibility.length > 0 && <AccessibilityTable slug={data.meta.slug} rows={data.code.accessibility} />}
               {data.code.usageGuidelines.length > 0 && <UsageGuidelines slug={data.meta.slug} pairs={data.code.usageGuidelines} />}
               {data.code.scorecard.length > 0 && <CriteriaScorecard slug={data.meta.slug} rows={data.code.scorecard} />}
-              {data.code.codeConnect.length > 0 && <CodeConnect slug={data.meta.slug} rows={data.code.codeConnect} />}
               {data.code.variants.rows && data.code.variants.rows.length > 0 && <VariantsInventory slug={data.meta.slug} data={data.code.variants} />}
             </div>
           )}

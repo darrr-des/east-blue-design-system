@@ -69,21 +69,21 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['stacked'];
   var compose = lang === 'compose';
-  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var sep = compose ? ' = ' : ': ';
   var cased = card.layout === 'inline' ? 'Inline' : 'Stacked';
   var layoutValue = compose
-    ? '<span class="syn-type">EBEntryLayout</span><span class="syn-punc">.</span>' +
-      '<span class="syn-dot">' + cased + '</span>'
-    : '<span class="syn-dot">.' + card.layout + '</span>';
+    ? 'EBEntryLayout.' +
+      '' + cased + ''
+    : '.' + card.layout + '';
 
   var args = [
-    'label' + sep + '<span class="syn-str">"Label"</span>',
-    'value' + sep + '<span class="syn-str">"Put content here"</span>',
+    'label' + sep + '"Label"',
+    'value' + sep + '"Put content here"',
     'layout' + sep + layoutValue
   ];
-  return '<span class="syn-type">EBTransactionReceiptEntry</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  return 'EBTransactionReceiptEntry(\n    ' +
+    args.join(',\n    ') +
+    '\n)';
 }
 window.getSnippet = getSnippet;
 

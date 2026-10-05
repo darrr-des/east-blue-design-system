@@ -1,0 +1,2338 @@
+{
+  "name": "Toast",
+  "meta": {
+    "node": "4915:25141",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4915-25141",
+    "description": "A transient bottom-anchored message for confirmations and inline alerts, with optional leading icon, description and trailing action. Auto-dismisses after a short delay.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — documentation gaps only",
+      "text": "Rebuilt on node <code>4915:25141</code> in the 2026 Working File as <code>Appearance</code> × <code>Theme</code> × <code>Size</code> × three <code>has*</code> booleans, authored as a sparse 22-variant set. The family restructure is complete: Toast and Toast - With Button are merged, the overloaded <code>theme</code> axis is split, every variant value follows §5, layer naming is clean, and the description and trailing action are real Figma Slots composing shared components. All four DS Health traits pass. What remains is documentation — the dismiss and auto-duration contract, the native primitive mapping, and the a11y live-region behaviour."
+    },
+    "navGroup": "Toast",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Toasts float over the app screen — not inline with content. Success toasts confirm completed actions (\"Transfer sent\"), pending toasts acknowledge background work (\"Uploading…\"), and error toasts surface failures that don't block the flow. They auto-dismiss after ~3 seconds unless swiped.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"toast-demo-preview\"><div class=\"eb-preview eb-preview-tst eb-preview-tst--default eb-preview-tst--dark eb-preview-tst--md\"><svg class=\"eb-preview-tst__icon\" viewBox=\"0 7 24 24\" aria-hidden=\"true\"><path d=\"M12.002 10.0996C16.9171 10.0998 20.9023 14.0848 20.9023 19C20.9021 23.915 16.917 27.9002 12.002 27.9004C7.08675 27.9004 3.10177 23.9152 3.10156 19C3.10156 14.0847 7.08662 10.0996 12.002 10.0996ZM12.002 11.9004C8.08073 11.9004 4.90234 15.0788 4.90234 19C4.90255 22.921 8.08086 26.0996 12.002 26.0996C15.9229 26.0994 19.1014 22.9209 19.1016 19C19.1016 15.0789 15.923 11.9006 12.002 11.9004ZM15.4004 16.3301C15.7703 15.9982 16.3399 16.0287 16.6719 16.3984C17.0034 16.7683 16.9731 17.338 16.6035 17.6699L11.0312 22.6699C10.6717 22.9923 10.1218 22.9731 9.78516 22.627L7.35645 20.127C7.01016 19.7704 7.01849 19.2008 7.375 18.8545C7.73153 18.5082 8.30114 18.5165 8.64746 18.873L10.4727 20.752L15.4004 16.3301Z\" fill=\"currentColor\"/></svg><div class=\"eb-preview-tst__text\"><p class=\"eb-preview-tst__title\">Add the popup message here</p></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Appearance</span><select id=\"toast-ctrl-appearance\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"destructive\">Destructive</option><option value=\"pending\">Pending</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Theme</span><select id=\"toast-ctrl-theme\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"dark\" selected=\"\">Dark</option><option value=\"light\">Light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select id=\"toast-ctrl-size\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"md\" selected=\"\">MD</option><option value=\"sm\">SM</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeadingIcon</span><select id=\"toast-ctrl-hasleadingicon\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"true\" selected=\"\">True</option><option value=\"false\">False</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailingAction</span><select id=\"toast-ctrl-hastrailingaction\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"false\" selected=\"\">False</option><option value=\"true\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select id=\"toast-ctrl-hasdescription\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"false\" selected=\"\">False</option><option value=\"true\">True</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Title</span><input type=\"text\" id=\"toast-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"Add the popup message here\" oninput=\"_toastUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><input type=\"text\" id=\"toast-ctrl-description\" class=\"demo-panel-select demo-panel-input\" value=\"Add description here.\" oninput=\"_toastUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Action label</span><input type=\"text\" id=\"toast-ctrl-action\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_toastUpdate()\"></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Drops into any transient-feedback moment — transfers, uploads, validation errors. Not tied to a specific screen."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its colors and typography, composes a shared <code>Subtext Message</code> for the description and a <code>Button - XSmall</code> for the action, and each Appearance carries its own icon instance from the library. Nothing external required to render."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "<code>Appearance</code> and <code>Theme</code> are separate axes, <code>Size</code> uses the standard <code>MD | SM</code> scale, the three <code>has*</code> booleans carry correct verb prefixes and are genuine Figma booleans, and every variant value is Title Cased per §5."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "The trailing action is an <code>addon</code> <code>SLOT</code> holding a <code>Button - XSmall</code> instance — <code>addon</code> being §4's canonical name for this pattern — and the description is a <code>content</code> <code>SLOT</code> carrying a shared <code>Subtext Message</code>. The separate Toast - With Button sibling is retired."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Show / auto-dismiss",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Not modeled",
+        "notes": "Toasts appear on a host overlay and auto-dismiss after a duration (~3s short, ~5s long). Host-screen concern — no visual state variant needed."
+      },
+      {
+        "state": "Swipe to dismiss",
+        "ios": "na",
+        "android": "na",
+        "property": "Not annotated",
+        "notes": "Standard gesture on both platforms. Not called out in the component spec."
+      },
+      {
+        "state": "Tap to dismiss",
+        "ios": "na",
+        "android": "na",
+        "property": "Not annotated",
+        "notes": "Pending variants already wrap the container in a <code>button</code> element in the Figma code — but no interaction callback is documented."
+      },
+      {
+        "state": "Pending spinner animation",
+        "ios": "na",
+        "android": "na",
+        "property": "Gray circle",
+        "notes": "Pending icon is a static gray circle (<code>icon-placeholder</code>) — should be an animated spinner (ProgressView / CircularProgressIndicator)."
+      },
+      {
+        "state": "A11y announcement",
+        "ios": "na",
+        "android": "na",
+        "property": "Not annotated",
+        "notes": "Error toasts should announce as assertive; default/pending as polite. Not spec'd."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Toast and Toast - With Button consolidated.",
+        "body": "v2.0: Rebuilt on node <code>4915:25141</code> in the 2026 Working File. The two components that modelled one primitive are now a single set — the trailing button is a <code>hasTrailingAction</code> boolean rather than a separate component. Confirmed as a permanent merge by the component owner. (C4 · Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "<code>theme</code> axis split into Appearance and Theme.",
+        "body": "v2.0: The overloaded axis that mixed status with light/dark is now <code>Appearance</code> (default · destructive · pending) × <code>Theme</code> (dark · light), exactly as recommended. Semantic meaning and visual mode are independent. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>Large Label</code> replaced by a real Size axis.",
+        "body": "v2.0: The content flag masquerading as a size is now <code>Size = base | sm</code>. Value naming still needs work — see open issues — but the axis itself is correct. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Boolean values normalised.",
+        "body": "v2.0: <code>hasLeadingIcon</code>, <code>hasTrailingAction</code> and <code>hasDescription</code> use <code>true</code>/<code>false</code> rather than <code>yes</code>/<code>no</code> strings, and all three carry the correct <code>has</code> verb prefix per §2. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Action slot added.",
+        "body": "v2.0: The trailing action is an <code>addon</code> <code>SLOT</code> holding a <code>Button - XSmall</code> instance — and <code>addon</code> is the canonical name §4 gives for exactly this pattern. Consumers can swap the button without detaching. (Slot)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Description composed from the shared Subtext Message.",
+        "body": "v2.0: The description is a <code>content</code> <code>SLOT</code> carrying a shared <code>Subtext Message</code> instance, matching Text Area, Upload File and View Only Field. Copy changes propagate from one source. (Composition)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Size and Theme values aligned to the standard sets.",
+        "body": "v2.1: <code>Size = base | sm</code> → <code>MD | SM</code>, matching §5's <code>XS · SM · MD · LG · XL</code> scale and the values Amount Text Field and View Only Field use. <code>Theme</code> is now <code>Dark | Light</code> in Title Case per §5. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Booleans confirmed as real Figma booleans.",
+        "body": "v2.1: <code>hasLeadingIcon</code>, <code>hasTrailingAction</code> and <code>hasDescription</code> now render <code>True</code>/<code>False</code> capitalised, matching every genuine Figma boolean elsewhere in the file. They map directly to Swift <code>Bool</code> and Kotlin <code>Boolean</code>. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Layer naming completed.",
+        "body": "v2.2: <code>container</code> → <code>ToastRow</code>, the two sibling <code>offset</code> frames → <code>LeadingIcon</code> and <code>TextContent</code>, <code>text-container</code> → <code>TextGroup</code>, and <code>#content</code> → <code>Title</code>. The two anonymous slots also gained names — <code>Text-Slot</code> for the description and <code>Component-Slot</code> for the trailing action. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Pending placeholder replaced with a real icon.",
+        "body": "v2.2: The <code>icon-placeholder</code> rectangle is gone. <code>LeadingIcon</code> now holds an <code>Information</code> instance from the icon library — chosen by the owner over a spinner, so Pending reads as an informational notice rather than an in-flight progress state. Each Appearance carries its own icon instance, which keeps glyph and semantic meaning in step and removes the need for a leading-icon slot. (C6 · Asset)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "All variant values Title Cased.",
+        "body": "v2.3: <code>Appearance=pending</code> → <code>Pending</code>, the last value the casing sweep had missed. Every one of the 22 variant names now conforms to §5 — <code>Appearance = Default | Destructive | Pending</code>, <code>Theme = Dark | Light</code>, <code>Size = MD | SM</code>, and three <code>has*</code> booleans on <code>True | False</code>. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Dismiss and auto-duration contract documented.",
+        "body": "v2.4: Documented. <strong>Auto-hide</strong> — 4 seconds by default; 8 seconds when <code>hasTrailingAction=True</code>, since the user needs time to read the message and reach the action. <code>Appearance=Pending</code> does not auto-hide at all: it represents an in-flight operation and is replaced by a Default or Destructive toast when that operation resolves. <strong>Dismissal</strong> — a horizontal swipe in either direction dismisses. Tapping the toast body does nothing; only the trailing action is a tap target, and triggering it dismisses the toast. <strong>Stacking</strong> — one toast at a time; a new message replaces the current one rather than queueing behind it. Durations follow Material 3 Snackbar convention (4s short, longer when an action is present) rather than a product measurement, so they are a starting contract — say the word if product has specific numbers and I will amend. (C5 · Docs)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Native mapping and a11y live region documented.",
+        "body": "v2.4: Documented. <strong>iOS</strong> — there is no system toast; build a custom view presented through a <code>ViewModifier</code> over the root, anchored to the bottom safe area. <strong>Android</strong> — Material 3 <code>Snackbar</code> with <code>SnackbarHost</code> covers the Default and Destructive appearances and maps <code>hasTrailingAction</code> onto its action slot, though the Pending appearance and the Theme axis need a custom composable. <strong>Accessibility</strong> — a transient message that is never focused must be announced, not merely rendered. On iOS post an <code>AccessibilityNotification.Announcement</code> with the message text; on Android set <code>Modifier.semantics { liveRegion = LiveRegionMode.Polite }</code>, raised to <code>Assertive</code> for <code>Appearance=Destructive</code> so an error interrupts rather than queues. The trailing action carries its own label; the leading icon is decorative and should be hidden from the accessibility tree. (C4 · A11y · Docs)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Types",
+    "description": "",
+    "source": {
+      "set": "4915:25141",
+      "variants": 22,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "toast-default",
+        "demoKey": "default",
+        "title": "Default",
+        "node": "4915:25142",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-default\"><div class=\"eb-preview eb-preview-tst eb-preview-tst--default eb-preview-tst--dark eb-preview-tst--md\"><svg class=\"eb-preview-tst__icon\" viewBox=\"0 7 24 24\" aria-hidden=\"true\"><path d=\"M12.002 10.0996C16.9171 10.0998 20.9023 14.0848 20.9023 19C20.9021 23.915 16.917 27.9002 12.002 27.9004C7.08675 27.9004 3.10177 23.9152 3.10156 19C3.10156 14.0847 7.08662 10.0996 12.002 10.0996ZM12.002 11.9004C8.08073 11.9004 4.90234 15.0788 4.90234 19C4.90255 22.921 8.08086 26.0996 12.002 26.0996C15.9229 26.0994 19.1014 22.9209 19.1016 19C19.1016 15.0789 15.923 11.9006 12.002 11.9004ZM15.4004 16.3301C15.7703 15.9982 16.3399 16.0287 16.6719 16.3984C17.0034 16.7683 16.9731 17.338 16.6035 17.6699L11.0312 22.6699C10.6717 22.9923 10.1218 22.9731 9.78516 22.627L7.35645 20.127C7.01016 19.7704 7.01849 19.2008 7.375 18.8545C7.73153 18.5082 8.30114 18.5165 8.64746 18.873L10.4727 20.752L15.4004 16.3301Z\" fill=\"currentColor\"/></svg><div class=\"eb-preview-tst__text\"><p class=\"eb-preview-tst__title\">Add the popup message here</p></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Theme",
+                "prop": "theme",
+                "control": "select",
+                "defaultValue": "dark",
+                "options": [
+                  {
+                    "value": "dark",
+                    "label": "Dark"
+                  },
+                  {
+                    "value": "light",
+                    "label": "Light"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "md",
+                "options": [
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  }
+                ]
+              },
+              {
+                "label": "hasLeadingIcon",
+                "prop": "hasLeadingIcon",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingAction",
+                "prop": "hasTrailingAction",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Appearance",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Theme",
+                "value": "Dark",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "theme",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "Light",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Size",
+                "value": "MD",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:sm",
+                    "value": "SM",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasLeadingIcon",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasLeadingIcon",
+                "variants": [
+                  {
+                    "when": "hasLeadingIcon:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasTrailingAction",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTrailingAction",
+                "variants": [
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasDescription",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#FFFFFF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Title",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#0A2757",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Leading icon",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#0A2757",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#F6F9FD @ 72%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#6780A9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Action background",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Action label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#FFFFFF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Label/Light/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:sm",
+                    "value": "Primary/Multi-line Label/Light/Fine",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "Primary/Multi-line Label/Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasDescription:true",
+                    "value": "Primary/Multi-line Label/Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "38",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "41",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasDescription:true",
+                    "value": "59",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasTrailingAction:true|hasDescription:true",
+                    "value": "59",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "312",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "8",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBToast</span>(<span class=\"syn-str\">\"Add the popup message here\"</span>)\n    .<span class=\"syn-fn\">ebAppearance</span>(<span class=\"syn-dot\">.default</span>)\n    .<span class=\"syn-fn\">ebTheme</span>(<span class=\"syn-dot\">.dark</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.md</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBToast</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span>.Default,\n    <span class=\"syn-param\">theme</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastTheme</span>.Dark,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastSize</span>.MD\n)</code>"
+      },
+      {
+        "cardKey": "toast-destructive",
+        "demoKey": "destructive",
+        "title": "Destructive",
+        "node": "4915:25154",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-destructive\"><div class=\"eb-preview eb-preview-tst eb-preview-tst--destructive eb-preview-tst--dark eb-preview-tst--md\"><svg class=\"eb-preview-tst__icon\" viewBox=\"0 7 24 24\" aria-hidden=\"true\"><path d=\"M12.002 10.0996C16.9171 10.0998 20.9023 14.0848 20.9023 19C20.9021 23.915 16.917 27.9002 12.002 27.9004C7.08675 27.9004 3.10177 23.9152 3.10156 19C3.10156 14.0847 7.08662 10.0996 12.002 10.0996ZM12.002 11.9004C8.08073 11.9004 4.90234 15.0788 4.90234 19C4.90255 22.921 8.08086 26.0996 12.002 26.0996C15.9229 26.0994 19.1014 22.9209 19.1016 19C19.1016 15.0789 15.923 11.9006 12.002 11.9004ZM13.7949 15.793C14.1854 15.4024 14.8185 15.4024 15.209 15.793C15.5991 16.1835 15.5994 16.8166 15.209 17.207L13.416 19L15.209 20.793C15.5991 21.1835 15.5994 21.8166 15.209 22.207C14.8186 22.5974 14.1855 22.5972 13.7949 22.207L12.002 20.4141L10.209 22.207C9.81859 22.5974 9.18548 22.5972 8.79492 22.207C8.4044 21.8165 8.4044 21.1835 8.79492 20.793L10.5879 19L8.79492 17.207C8.4044 16.8165 8.4044 16.1835 8.79492 15.793C9.18545 15.4024 9.81846 15.4024 10.209 15.793L12.002 17.5859L13.7949 15.793Z\" fill=\"currentColor\"/></svg><div class=\"eb-preview-tst__text\"><p class=\"eb-preview-tst__title\">Add the popup message here</p></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Theme",
+                "prop": "theme",
+                "control": "select",
+                "defaultValue": "dark",
+                "options": [
+                  {
+                    "value": "dark",
+                    "label": "Dark"
+                  },
+                  {
+                    "value": "light",
+                    "label": "Light"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "md",
+                "options": [
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  }
+                ]
+              },
+              {
+                "label": "hasLeadingIcon",
+                "prop": "hasLeadingIcon",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingAction",
+                "prop": "hasTrailingAction",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Appearance",
+                "value": "Destructive",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Theme",
+                "value": "Dark",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "theme",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "Light",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Size",
+                "value": "MD",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:sm",
+                    "value": "SM",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasLeadingIcon",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasLeadingIcon",
+                "variants": [
+                  {
+                    "when": "hasLeadingIcon:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasTrailingAction",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTrailingAction",
+                "variants": [
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasDescription",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#D61B2C",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "#F4C7C9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Title",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Leading icon",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "#F6F9FD @ 80%",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Action background",
+                "value": "None",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Action label",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Label/Light/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:sm",
+                    "value": "Primary/Multi-line Label/Light/Fine",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "Primary/Multi-line Label/Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasDescription:true",
+                    "value": "Primary/Multi-line Label/Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "38",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "41",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasDescription:true",
+                    "value": "59",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasTrailingAction:true|hasDescription:true",
+                    "value": "59",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "312",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "8",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBToast</span>(<span class=\"syn-str\">\"Add the popup message here\"</span>)\n    .<span class=\"syn-fn\">ebAppearance</span>(<span class=\"syn-dot\">.destructive</span>)\n    .<span class=\"syn-fn\">ebTheme</span>(<span class=\"syn-dot\">.dark</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.md</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBToast</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span>.Destructive,\n    <span class=\"syn-param\">theme</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastTheme</span>.Dark,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastSize</span>.MD\n)</code>"
+      },
+      {
+        "cardKey": "toast-pending",
+        "demoKey": "pending",
+        "title": "Pending",
+        "node": "4915:25160",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-pending\"><div class=\"eb-preview eb-preview-tst eb-preview-tst--pending eb-preview-tst--dark eb-preview-tst--md\"><svg class=\"eb-preview-tst__icon\" viewBox=\"0 7 24 24\" aria-hidden=\"true\"><path d=\"M12.002 10.0996C16.9171 10.0998 20.9023 14.0848 20.9023 19C20.9021 23.915 16.917 27.9002 12.002 27.9004C7.08675 27.9004 3.10177 23.9152 3.10156 19C3.10156 14.0847 7.08662 10.0996 12.002 10.0996ZM12.002 11.9004C8.08073 11.9004 4.90234 15.0788 4.90234 19C4.90255 22.921 8.08086 26.0996 12.002 26.0996C15.9229 26.0994 19.1014 22.9209 19.1016 19C19.1016 15.0789 15.923 11.9006 12.002 11.9004ZM12.002 17.2002C12.4436 17.2004 12.8018 17.5583 12.8018 18V22.2002H13.002C13.4436 22.2004 13.8018 22.5583 13.8018 23C13.8015 23.4415 13.4435 23.7996 13.002 23.7998H11.002C10.5603 23.7998 10.2024 23.4416 10.2021 23C10.2021 22.5582 10.5601 22.2002 11.002 22.2002H11.2021V18.7998H11.002C10.5603 18.7998 10.2024 18.4416 10.2021 18C10.2021 17.5582 10.5601 17.2002 11.002 17.2002H12.002ZM12.002 14C12.5541 14.0002 13.002 14.4478 13.002 15C13.0017 15.552 12.5539 15.9998 12.002 16C11.4498 16 11.0022 15.5521 11.002 15C11.002 14.4477 11.4497 14 12.002 14Z\" fill=\"currentColor\"/></svg><div class=\"eb-preview-tst__text\"><p class=\"eb-preview-tst__title\">Add the popup message here</p></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Theme",
+                "prop": "theme",
+                "control": "select",
+                "defaultValue": "dark",
+                "options": [
+                  {
+                    "value": "dark",
+                    "label": "Dark"
+                  },
+                  {
+                    "value": "light",
+                    "label": "Light"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "md",
+                "options": [
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  }
+                ]
+              },
+              {
+                "label": "hasLeadingIcon",
+                "prop": "hasLeadingIcon",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingAction",
+                "prop": "hasTrailingAction",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Appearance",
+                "value": "Pending",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Theme",
+                "value": "Dark",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "theme",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "Light",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Size",
+                "value": "MD",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:sm",
+                    "value": "SM",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasLeadingIcon",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasLeadingIcon",
+                "variants": [
+                  {
+                    "when": "hasLeadingIcon:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasTrailingAction",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTrailingAction",
+                "variants": [
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasDescription",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#FFFFFF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Title",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#0A2757",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Leading icon",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#0A2757",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Label/Light/Small",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "size:sm",
+                    "value": "Primary/Multi-line Label/Light/Fine",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "Primary/Multi-line Label/Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasDescription:true",
+                    "value": "Primary/Multi-line Label/Small",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "38",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "41",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasDescription:true",
+                    "value": "59",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "hasTrailingAction:true|hasDescription:true",
+                    "value": "59",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "312",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "8",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBToast</span>(<span class=\"syn-str\">\"Add the popup message here\"</span>)\n    .<span class=\"syn-fn\">ebAppearance</span>(<span class=\"syn-dot\">.pending</span>)\n    .<span class=\"syn-fn\">ebTheme</span>(<span class=\"syn-dot\">.dark</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.md</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBToast</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span>.Pending,\n    <span class=\"syn-param\">theme</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastTheme</span>.Dark,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastSize</span>.MD\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Appearance and Theme",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Default · Dark",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default · Light",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default · Dark",
+            "element": "Border",
+            "token": "—",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Default · Dark",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default · Light",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default · Dark",
+            "element": "Leading icon",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default · Light",
+            "element": "Leading icon",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default · Dark",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 72%"
+            ]
+          },
+          {
+            "role": "Default · Light",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Default · Dark",
+            "element": "Action background",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default · Light",
+            "element": "Action background",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Default · Dark",
+            "element": "Action label",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Default · Light",
+            "element": "Action label",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Destructive · Dark",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Destructive · Dark",
+            "element": "Border",
+            "token": "—",
+            "values": [
+              "#F4C7C9"
+            ]
+          },
+          {
+            "role": "Destructive · Dark",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Destructive · Dark",
+            "element": "Leading icon",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Destructive · Dark",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#F6F9FD @ 80%"
+            ]
+          },
+          {
+            "role": "Destructive · Dark",
+            "element": "Action background",
+            "token": "—",
+            "values": [
+              "None"
+            ]
+          },
+          {
+            "role": "Destructive · Dark",
+            "element": "Action label",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Pending · Dark",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Pending · Light",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Pending · Dark",
+            "element": "Border",
+            "token": "—",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Pending · Dark",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Pending · Light",
+            "element": "Title",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Pending · Dark",
+            "element": "Leading icon",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Pending · Light",
+            "element": "Leading icon",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:toast:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>toast<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Appearance, Theme, Size and the three has… booleans are all variant properties; 22 of the 48 combinations are built. Text-Slot (the Subtext Message) and Component-Slot (the Button - XSmall) are Figma Slots. Title is a text layer read from 4915:25142; its exposure as a text property is not readable with the plugin.",
+      "rows": [
+        {
+          "figma": "Appearance — Default, Destructive, Pending",
+          "swift": "<code>.ebAppearance(.default / .destructive / .pending)</code>",
+          "compose": "<code>appearance = EBToastAppearance.Default / Destructive / Pending</code>"
+        },
+        {
+          "figma": "Theme — Dark, Light",
+          "swift": "<code>.ebTheme(.dark / .light)</code>",
+          "compose": "<code>theme = EBToastTheme.Dark / Light</code>"
+        },
+        {
+          "figma": "Size — MD, SM",
+          "swift": "<code>.ebSize(.md / .sm)</code>",
+          "compose": "<code>size = EBToastSize.MD / SM</code>"
+        },
+        {
+          "figma": "hasLeadingIcon — True, False",
+          "swift": "<code>.ebLeadingIcon(false)</code> to hide the Appearance icon",
+          "compose": "<code>leadingIcon = false</code>"
+        },
+        {
+          "figma": "hasTrailingAction — True, False",
+          "swift": "<code>.ebAction(\"…\") { }</code> when True",
+          "compose": "<code>action = EBToastAction(\"…\") { }</code> when True, else <code>null</code>"
+        },
+        {
+          "figma": "hasDescription — True, False",
+          "swift": "<code>.ebDescription(\"…\")</code> when True",
+          "compose": "<code>description = \"…\"</code> when True, else <code>null</code>"
+        },
+        {
+          "figma": "Text-Slot (slot)",
+          "swift": "<code>.ebDescription(_:)</code>",
+          "compose": "<code>description = \"…\"</code>"
+        },
+        {
+          "figma": "Component-Slot (slot)",
+          "swift": "<code>.ebAction(_:action:)</code>",
+          "compose": "<code>action = EBToastAction(…)</code>"
+        },
+        {
+          "figma": "Title (text)",
+          "swift": "<code>EBToast(\"…\")</code>",
+          "compose": "<code>title = \"…\"</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Default",
+        "swift": "<code><span class=\"syn-type\">EBToast</span>(<span class=\"syn-str\">\"Add the popup message here\"</span>)\n    .<span class=\"syn-fn\">ebAppearance</span>(<span class=\"syn-dot\">.default</span>)\n    .<span class=\"syn-fn\">ebTheme</span>(<span class=\"syn-dot\">.dark</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.md</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBToast</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span>.Default,\n    <span class=\"syn-param\">theme</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastTheme</span>.Dark,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastSize</span>.MD\n)</code>"
+      },
+      {
+        "subheading": "Destructive",
+        "swift": "<code><span class=\"syn-type\">EBToast</span>(<span class=\"syn-str\">\"Add the popup message here\"</span>)\n    .<span class=\"syn-fn\">ebAppearance</span>(<span class=\"syn-dot\">.destructive</span>)\n    .<span class=\"syn-fn\">ebTheme</span>(<span class=\"syn-dot\">.dark</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.md</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBToast</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span>.Destructive,\n    <span class=\"syn-param\">theme</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastTheme</span>.Dark,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastSize</span>.MD\n)</code>"
+      },
+      {
+        "subheading": "Pending",
+        "swift": "<code><span class=\"syn-type\">EBToast</span>(<span class=\"syn-str\">\"Add the popup message here\"</span>)\n    .<span class=\"syn-fn\">ebAppearance</span>(<span class=\"syn-dot\">.pending</span>)\n    .<span class=\"syn-fn\">ebTheme</span>(<span class=\"syn-dot\">.dark</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.md</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBToast</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span>.Pending,\n    <span class=\"syn-param\">theme</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastTheme</span>.Dark,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastSize</span>.MD\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Announcement",
+        "ios": "<code>UIAccessibility.post(notification: .announcement, argument: title)</code> when the toast appears; Destructive uses <code>.layoutChanged</code> so it interrupts.",
+        "android": "<code>LiveRegionMode.Polite</code> on the toast; <code>Assertive</code> for Destructive."
+      },
+      {
+        "requirement": "Action reachable",
+        "ios": "The action is a <code>Button</code> inside the toast; keep the toast on screen while VoiceOver focus is on it.",
+        "android": "<code>TextButton</code> with its own <code>onClick</code>; the toast does not auto-dismiss while it has focus."
+      },
+      {
+        "requirement": "Icon is decorative",
+        "ios": "<code>.accessibilityHidden(true)</code> on the leading icon — Appearance is said in the announcement (\"Error: …\").",
+        "android": "<code>contentDescription = null</code> on the icon; prefix the announcement with the appearance."
+      },
+      {
+        "requirement": "Duration",
+        "ios": "Auto-dismiss no sooner than 4 s; never auto-dismiss a toast with an action.",
+        "android": "<code>SnackbarDuration.Long</code>; <code>Indefinite</code> when an action is present."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "White on #0A2757 is 13.9:1; white on #D61B2C is 5.0:1; #0A2757 on white is 13.9:1.",
+        "android": "Same values — the toast colours are fixed, not themed."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Default for confirmations, Destructive for failures, Pending while something is still in flight.",
+        "dontText": "Don’t use Pending as a warning — it has no Error semantics."
+      },
+      {
+        "doText": "Keep the title to one line at 312 px; add hasDescription only for the second fact.",
+        "dontText": "Don’t wrap the title — the Size MD title is a single 14 px line."
+      },
+      {
+        "doText": "Use hasTrailingAction for one undo or retry; the button is the XSmall size.",
+        "dontText": "Don’t put two actions in a toast — the set builds one Component-Slot."
+      },
+      {
+        "doText": "Use SM inside dense sheets; MD everywhere else.",
+        "dontText": "Don’t combine SM with an action or description — the set does not build them."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>ToastRow</code> › <code>LeadingIcon</code> / <code>TextContent</code> › <code>Title</code> on 4915:25142. Two variants slip: 4915:25240 names its title <code>#content</code> and 4915:25232 names it <code>LeadingIcon</code>."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Appearance</code>, <code>Theme</code>, <code>Size</code> with Title Case values; the three <code>has…</code> booleans are real True / False."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Title → <code>Primary/Label/Light/Small</code> (MD), <code>Primary/Multi-line Label/Light/Fine</code> (SM), <code>Primary/Multi-line Label/Small</code> with an action or description. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Three enums, three booleans, two slots, one string — maps 1:1 onto <code>EBToast</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Dismiss and auto-duration contract documented (v2.x); the action button takes its states from Button - XSmall."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The Checkmark (Circular), Close and Information icons are icon-library instances that each carry a <code>shape_full</code> BOOLEAN_OPERATION — flatten them in the icon library."
+      }
+    ],
+    "variants": {
+      "total": 22,
+      "description": "3 Appearance × 2 Theme × 2 Size × hasLeadingIcon × hasTrailingAction × hasDescription, authored sparse = 22 variants (Default 14, Destructive 6, Pending 4)",
+      "summary": {
+        "columns": [
+          "Appearance",
+          "Built",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Default",
+              "Dark and Light; MD and SM; with and without icon; action and action + description at MD",
+              "14"
+            ]
+          },
+          {
+            "cells": [
+              "Destructive",
+              "Dark MD and SM with and without icon; Light action and action + description at MD",
+              "6"
+            ]
+          },
+          {
+            "cells": [
+              "Pending",
+              "Dark and Light; MD and SM; icon only",
+              "4"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "Appearance",
+        "Theme",
+        "Size",
+        "hasLeadingIcon",
+        "hasTrailingAction",
+        "hasDescription",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25142</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25148</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25154</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Dark",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25160</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Light",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25166</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "MD",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25172</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25175</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25178</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25181</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25186</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25192</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "SM",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25197</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Dark",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25200</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Light",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25205</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "SM",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25210</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "SM",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25213</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "False",
+            "True",
+            "True",
+            "<code>4915:25216</code>",
+            "312 × 59"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "False",
+            "True",
+            "True",
+            "<code>4915:25224</code>",
+            "312 × 59"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Light",
+            "MD",
+            "False",
+            "True",
+            "True",
+            "<code>4915:25232</code>",
+            "312 × 59"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "False",
+            "True",
+            "False",
+            "<code>4915:25240</code>",
+            "312 × 41"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "False",
+            "True",
+            "False",
+            "<code>4915:25245</code>",
+            "312 × 41"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Light",
+            "MD",
+            "False",
+            "True",
+            "False",
+            "<code>4915:25250</code>",
+            "312 × 41"
+          ]
+        }
+      ],
+      "collapseLabel": "View full Appearance × Theme × Size × booleans breakdown (22 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 4915:25141",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the 22 live variants.</strong> Cards follow <code>Appearance</code> — Default, Destructive, Pending — with <code>Theme</code>, <code>Size</code> and the three booleans as panel controls; colours, the three Title styles and the 38 / 41 / 59 heights read off 4915:25142 and its siblings against the exports; icon glyphs from <code>get_svg</code>. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>. Combinations Figma does not build are composed from the same parts.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the six-property schema.</strong> Installation on the Toast family coordinates, Property Mapping one row per property with the two slots, Usage Snippets per Appearance, Guidelines added, Scorecard regraded, Variants Inventory on the 22 live nodes with a summary and collapsed breakdown.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Two title layers are misnamed and the icons carry boolean operations.</strong> 4915:25240 names its title <code>#content</code>, 4915:25232 names it <code>LeadingIcon</code>; the three Appearance icons contain <code>shape_full</code>. Filed from the scorecard for the Component Review.",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 4915:25141",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 13 resolved issues on the Overview tab had no changelog row: Toast and Toast - With Button consolidated; <code>theme</code> axis split into Appearance and Theme; <code>Large Label</code> replaced by a real Size axis; Boolean values normalised; Action slot added; Description composed from the shared Subtext Message; Size and Theme values aligned to the standard sets; Booleans confirmed as real Figma booleans; Layer naming completed; Pending placeholder replaced with a real icon; All variant values Title Cased; Dismiss and auto-duration contract documented; Native mapping and a11y live region documented.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 27:53135",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Restructure</strong> — Consolidate with Toast - With Button, split the overloaded <code>theme</code> axis, rename <code>Large Label</code> to <code>size</code>, and replace the Pending placeholder with a real spinner. <span class=\"tag-open tag-c1 tag-c2 tag-c5 tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Schema"
+          }
+        },
+        {
+          "body": "<strong>C1 — Family duplication</strong> — Toast + Toast - With Button model one primitive; merge via optional <code>action</code> slot. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C2 — Axis overload</strong> — <code>theme</code> mixes appearance + status; <code>Large Label</code> is a size flag; booleans on <code>yes/no</code>. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C6 — Pending placeholder</strong> — 16/24 gray <code>icon-placeholder</code> circle; adopt a real spinner instance. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>C5 — Dismiss + duration</strong> — No auto-dismiss, swipe, or tap-to-dismiss documented. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>C4 — Native mapping</strong> — Document ToastManager overlay (iOS) + SnackbarHost wrapper (Android). <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Blocked on family consolidation + schema cleanup. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

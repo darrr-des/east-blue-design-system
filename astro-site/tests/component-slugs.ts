@@ -1,6 +1,6 @@
 /**
  * Component slug list — regenerated whenever a new component is added.
- * Source of truth: ls of `src/data/components/*.ts` (excluding _index and _template).
+ * Source of truth: ls of `src/content/components/*.json`.
  *
  * 79 entries.
  */

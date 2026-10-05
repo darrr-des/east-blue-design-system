@@ -1,0 +1,1058 @@
+{
+  "name": "Text Area",
+  "meta": {
+    "node": "4781:35856",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4781-35856",
+    "description": "Test read. A multi-line free-text field with a label, a helper message and a character counter. Read independently of the existing Text Area page to measure whether the framework reproduces its own result.",
+    "badges": [
+      {
+        "kind": "fix",
+        "label": "Fix"
+      },
+      {
+        "kind": "rework",
+        "label": "Requires Rework"
+      }
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix — the error state and the disabled value colour",
+      "text": "Two axes, a complete 8-variant matrix and three text layers all bound to DS styles. But error changes only the border, and a disabled field renders real content at the placeholder colour — so content and emptiness look the same."
+    },
+    "navGroup": "",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "A comment or message box inside a form — a label above, the field, and a helper line carrying both the hint and the character count. Sketched; no screenshot of a shipping screen was read in this pass.",
+    "inContextHtml": "<div class=\"ctx-placeholder\"><svg width=\"240\" height=\"150\" viewBox=\"0 0 240 150\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-hidden=\"true\"><rect x=\"0.5\" y=\"0.5\" width=\"239\" height=\"149\" rx=\"10\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"/><rect x=\"20\" y=\"18\" width=\"88\" height=\"8\" rx=\"4\" fill=\"#C2CFE5\"/><rect x=\"20\" y=\"36\" width=\"34\" height=\"7\" rx=\"3.5\" fill=\"#0A2757\"/><rect x=\"20\" y=\"50\" width=\"200\" height=\"46\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\"/><rect x=\"32\" y=\"62\" width=\"150\" height=\"7\" rx=\"3.5\" fill=\"#90A8D0\"/><rect x=\"32\" y=\"76\" width=\"96\" height=\"7\" rx=\"3.5\" fill=\"#90A8D0\"/><rect x=\"20\" y=\"104\" width=\"72\" height=\"7\" rx=\"3.5\" fill=\"#6780A9\"/><rect x=\"184\" y=\"104\" width=\"36\" height=\"7\" rx=\"3.5\" fill=\"#6780A9\"/><rect x=\"20\" y=\"126\" width=\"200\" height=\"12\" rx=\"6\" fill=\"#E5EBF4\"/></svg></div>",
+    "inContextImage": "",
+    "inContextAlt": "A form screen with a labelled multi-line text field, helper text at the lower left and a character counter at the lower right, above a submit button.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tta-demo-preview\"><div class=\"eb-preview eb-preview-tta eb-preview-tta--default\"><span class=\"eb-preview-tta__label\">Label</span><span class=\"eb-preview-tta__box\"><span class=\"eb-preview-tta__value\">Write your message…</span></span><span class=\"eb-preview-tta__sub\"><span class=\"eb-preview-tta__helper\">Message content</span><span class=\"eb-preview-tta__count\">0/100</span></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"tta-ctrl-state\" onchange=\"_ttaUpdate()\"><option value=\"default\" selected>Default</option><option value=\"focused\">Focused</option><option value=\"error\">Error</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasValue</span><label class=\"demo-panel-toggle\"><input type=\"checkbox\" id=\"tta-ctrl-hasvalue\" onchange=\"this.parentElement.classList.toggle('is-on', this.checked); _ttaUpdate()\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Any free-text input that needs more than one line and a length limit. Nothing in the set is bound to one product, and the label, helper and counter are all content rather than baked copy."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "It owns its schema and every part it draws: the header, the field box and the helper line are all inside the component, and it depends on nothing above it in the tree."
+      },
+      {
+        "name": "Consistent",
+        "rating": "partial",
+        "note": "Three of the four states behave alike — white surface, coloured border, navy value when filled. <code>Disabled</code> breaks all three: no border at all, a tinted surface, and a filled value left at the placeholder colour. <code>Error</code> is the only state whose meaning is not carried anywhere but the border."
+      },
+      {
+        "name": "Composable",
+        "rating": "partial",
+        "note": "The header and the helper line are real instances (<code>FormGroup Header</code>, <code>Subtext Message</code>), but the field box between them is a plain <code>FRAME</code> redrawn inside all eight variants. Half the component composes, half is drawn in place."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default",
+        "notes": "Resting field. Surface <code>#FFFFFF</code>, border <code>#D7E0EF</code> at 1, placeholder <code>#90A8D0</code>."
+      },
+      {
+        "state": "Focused",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Focused",
+        "notes": "Border turns <code>#005CE5</code> and thickens to 2. Surface, value and helper are unchanged."
+      },
+      {
+        "state": "Error",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Error",
+        "notes": "Border turns <code>#D61B2C</code> at 2 — and nothing else changes. The helper text stays <code>#6780A9</code>, exactly as in Default."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Surface <code>#EEF2F9</code> and the border is removed entirely. The helper line does <em>not</em> dim; it stays <code>#6780A9</code>."
+      },
+      {
+        "state": "Filled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "hasValue=True",
+        "notes": "The box grows 34 → 50 as the value wraps to two lines and the counter reads 71/100. The value goes <code>#0A2757</code> in every state but Disabled, where it stays <code>#90A8D0</code>."
+      }
+    ],
+    "resolved": [],
+    "open": [
+      {
+        "headline": "Error is carried by the border colour alone.",
+        "body": "Between <code>State=Default</code> and <code>State=Error</code> the only difference is the box border: <code>#D7E0EF</code> at 1 becomes <code>#D61B2C</code> at 2. The helper text stays <code>#6780A9</code> in both, there is no error message, and no icon appears. Colour is the sole carrier of the error, which fails WCAG 2.2 §1.4.1 Use of Color at Level A.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "A disabled field renders real content at the placeholder colour.",
+        "body": "On <code>State=Disabled, hasValue=True</code> (node <code>4781:35854</code>) the value is <code>#90A8D0</code> — the same fill the placeholder uses. Every other state takes a filled value to <code>#0A2757</code>. A disabled field holding real text is therefore the same tone as an empty one, at 2.15:1 against the <code>#EEF2F9</code> surface.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Helper text and placeholder are both below the contrast minimum.",
+        "body": "The helper and counter are <code>#6780A9</code> on <code>#FFFFFF</code> — <strong>4.01:1</strong>, under the 4.5:1 that 12px text needs. The placeholder is <code>#90A8D0</code> on <code>#FFFFFF</code> — <strong>2.41:1</strong>. Both computed from the read fills with the WCAG relative-luminance formula, so both are checkable.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Two sibling layers share the name <code>#subtext</code>.",
+        "body": "The <code>Subtext Message</code> instance holds two text nodes, both named <code>#subtext</code>: the helper on the left and the counter on the right. They carry different content and would map to different parameters, but nothing in the layer tree tells them apart.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The field box is a local frame, not a component.",
+        "body": "The header and helper line are instances, but the box between them is a plain <code>FRAME</code> named <code>Text Area</code>, drawn again inside each of the eight variants. Any change to the field shape has to be made eight times, and the box cannot be reused by the other field components that need the same treatment.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      }
+    ],
+    "recommendations": [
+      {
+        "headline": "Give the error a second signal.",
+        "body": "Swap the helper line for an error message in the error state, or add a leading icon. The border may stay as reinforcement, but it cannot be the only thing that says \"error\".",
+        "tag": "State"
+      },
+      {
+        "headline": "Separate the disabled value colour from the placeholder colour.",
+        "body": "A disabled field still shows what the user wrote. Give it its own dimmed value token — dark enough to read, clearly not editable — instead of reusing the placeholder fill.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Raise the helper and placeholder to 4.5:1.",
+        "body": "Both sit below the minimum on white. The helper carries the character limit, which is information the user needs before they hit it, so it is not decorative text.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Name the helper and the counter apart.",
+        "body": "Two layers called <code>#subtext</code> cannot be mapped to two parameters without guessing which is which. <code>#helper</code> and <code>#counter</code> would carry straight into the API.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Make the field box its own component.",
+        "body": "Input Field, Search Field, Select Field and this one all draw the same bordered box. Extracting it once would let all of them compose it, and would stop the eight copies here drifting apart.",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Say what the counter counts and what happens at the limit.",
+        "body": "The counter reads 0/100 and 71/100, but nothing on the component says whether input is blocked at 100, whether the count is characters or bytes, or whether crossing it sets the error state.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Examples",
+    "description": "",
+    "source": {
+      "set": "4781:35856",
+      "variants": 8,
+      "read": "2026-09-17",
+      "tool": "figma-rest + talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "state",
+        "demoKey": "state",
+        "title": "State",
+        "node": "4781:35856",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tta-spec-state\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tta eb-preview-tta--default\"><span class=\"eb-preview-tta__label\">Label</span><span class=\"eb-preview-tta__box\"><span class=\"eb-preview-tta__value\">Write your message…</span></span><span class=\"eb-preview-tta__sub\"><span class=\"eb-preview-tta__helper\">Message content</span><span class=\"eb-preview-tta__count\">0/100</span></span></div><figcaption class=\"eb-example__label\">Default</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tta eb-preview-tta--focused\"><span class=\"eb-preview-tta__label\">Label</span><span class=\"eb-preview-tta__box\"><span class=\"eb-preview-tta__value\">Write your message…</span></span><span class=\"eb-preview-tta__sub\"><span class=\"eb-preview-tta__helper\">Message content</span><span class=\"eb-preview-tta__count\">0/100</span></span></div><figcaption class=\"eb-example__label\">Focused</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tta eb-preview-tta--error\"><span class=\"eb-preview-tta__label\">Label</span><span class=\"eb-preview-tta__box\"><span class=\"eb-preview-tta__value\">Write your message…</span></span><span class=\"eb-preview-tta__sub\"><span class=\"eb-preview-tta__helper\">Message content</span><span class=\"eb-preview-tta__count\">0/100</span></span></div><figcaption class=\"eb-example__label\">Error</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tta eb-preview-tta--disabled\"><span class=\"eb-preview-tta__label\">Label</span><span class=\"eb-preview-tta__box\"><span class=\"eb-preview-tta__value\">Write your message…</span></span><span class=\"eb-preview-tta__sub\"><span class=\"eb-preview-tta__helper\">Message content</span><span class=\"eb-preview-tta__count\">0/100</span></span></div><figcaption class=\"eb-example__label\">Disabled</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "hasValue",
+                "prop": "hasValue",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "State",
+                "value": "Default · Focused · Error · Disabled",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Error signal",
+                "value": "Border colour only — the helper text does not change",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:default",
+                    "value": "Not applicable",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:focused",
+                    "value": "Not applicable",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Not applicable",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Box surface",
+                "value": "#FFFFFF",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#EEF2F9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Box border",
+                "value": "#D7E0EF",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:focused",
+                    "value": "#005CE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:error",
+                    "value": "#D61B2C",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "none",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Placeholder",
+                "value": "#90A8D0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#0A2757",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#90A8D0",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Helper and counter",
+                "value": "#6780A9",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Light/Small",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Multi-line Label/Light/Small",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Helper and counter",
+                "value": "Secondary/Bold/Caption",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "34",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "358",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "6",
+                "mono": true,
+                "token": "radius/radius-2",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "12 left · 8 right",
+                "mono": true,
+                "token": "space/space-12 · space/space-8",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "10 top · 8 bottom",
+                "mono": true,
+                "token": "space/space-10 · not bound",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "0",
+                "mono": true,
+                "token": "space/space-0",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:focused",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:error",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "none",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Alignment",
+                "value": "Leading · Center",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">text</span>: $message<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPlaceholder</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Write your message…\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSubtext</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Message content\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLimit</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">100</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-cmt\">// Focused: .ebFocused(true)</span>",
+        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = message,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">message</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Write your message…\"</span>,\n    <span class=\"syn-param\">subtext</span> = <span class=\"syn-str\">\"Message content\"</span>,\n    <span class=\"syn-param\">limit</span> = <span class=\"syn-val\">100</span>\n    <span class=\"syn-cmt\">// Focused: focused = true</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "hasValue",
+        "demoKey": "hasValue",
+        "title": "hasValue",
+        "node": "4781:35856",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tta-spec-hasValue\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tta eb-preview-tta--default\"><span class=\"eb-preview-tta__label\">Label</span><span class=\"eb-preview-tta__box\"><span class=\"eb-preview-tta__value\">Write your message…</span></span><span class=\"eb-preview-tta__sub\"><span class=\"eb-preview-tta__helper\">Message content</span><span class=\"eb-preview-tta__count\">0/100</span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tta eb-preview-tta--default eb-preview-tta--filled\"><span class=\"eb-preview-tta__label\">Label</span><span class=\"eb-preview-tta__box\"><span class=\"eb-preview-tta__value\">This a text area. This a text area. This a text area. This a text area.</span></span><span class=\"eb-preview-tta__sub\"><span class=\"eb-preview-tta__helper\">Message content</span><span class=\"eb-preview-tta__count\">71/100</span></span></div><figcaption class=\"eb-example__label\">True</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "focused",
+                    "label": "Focused"
+                  },
+                  {
+                    "value": "error",
+                    "label": "Error"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "hasValue",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasValue",
+                "variants": [
+                  {
+                    "when": "hasValue:true",
+                    "value": "True",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Field text",
+                "value": "Write your message…",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasValue",
+                "variants": [
+                  {
+                    "when": "hasValue:true",
+                    "value": "This a text area. This a text area. This a text area. This a text area.",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Counter",
+                "value": "0/100",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasValue",
+                "variants": [
+                  {
+                    "when": "hasValue:true",
+                    "value": "71/100",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Value",
+                "value": "#90A8D0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasValue",
+                "variants": [
+                  {
+                    "when": "hasValue:true",
+                    "value": "#0A2757",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "34",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasValue",
+                "variants": [
+                  {
+                    "when": "hasValue:true",
+                    "value": "50",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "358",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">text</span>: $message<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPlaceholder</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Write your message…\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSubtext</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Message content\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLimit</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">100</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-cmt\">// True: .ebValue(\"…\")</span>",
+        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = message,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">message</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Write your message…\"</span>,\n    <span class=\"syn-param\">subtext</span> = <span class=\"syn-str\">\"Message content\"</span>,\n    <span class=\"syn-param\">limit</span> = <span class=\"syn-val\">100</span>\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors",
+        "description": "Read off the set on 18 September 2026. Every visible paint is bound, 46 of 46, and every one resolves by key against the Primitives library. Each drawn value matches its token. The disabled box draws no border, so it has no token.",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Default",
+            "element": "Box surface",
+            "token": "bg/color-bg-main",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Box border",
+            "token": "border/color-border",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Label",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Placeholder",
+            "token": "text/color-text-weakest",
+            "values": [
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Value, filled",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Default",
+            "element": "Helper and counter",
+            "token": "text/color-text-weaker",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Focused",
+            "element": "Box border",
+            "token": "border/color-border-focus",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Error",
+            "element": "Box border",
+            "token": "border/color-border-error",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Error",
+            "element": "Helper and counter",
+            "token": "text/color-text-weaker",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Box surface",
+            "token": "bg/color-bg-strong",
+            "values": [
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Box border",
+            "token": "none",
+            "values": [
+              "none"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Value, filled",
+            "token": "text/color-text-weakest",
+            "values": [
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Disabled",
+            "element": "Helper and counter",
+            "token": "text/color-text-weaker",
+            "values": [
+              "#6780A9"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:text-area:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EBDesignSystem</span>   <span class=\"syn-cmt\">// SwiftUI</span>\n<span class=\"syn-kw\">import</span> com.eastblue.ds.textarea.<span class=\"syn-type\">EBTextArea</span>   <span class=\"syn-cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "State and hasValue are the two variant properties. Label, placeholder, helper text and the character limit are content the caller supplies.",
+      "rows": [
+        {
+          "figma": "State — Default, Focused, Error, Disabled",
+          "swift": "<code>.ebFocused(true)</code>, <code>.ebValidation(.error)</code>, <code>.disabled(true)</code>",
+          "compose": "<code>focused = true</code>, <code>validation = EBValidation.Error</code>, <code>enabled = false</code>"
+        },
+        {
+          "figma": "hasValue — whether the field holds text",
+          "swift": "Not a parameter — it follows from the bound <code>text</code> being non-empty",
+          "compose": "Not a parameter — it follows from <code>value</code> being non-empty"
+        },
+        {
+          "figma": "The label, from the FormGroup Header instance",
+          "swift": "<code>EBTextArea(\"Label\", text: $message)</code>",
+          "compose": "<code>label = \"Label\"</code>"
+        },
+        {
+          "figma": "The placeholder, from the Value text layer when empty",
+          "swift": "<code>.ebPlaceholder(\"Write your message…\")</code>",
+          "compose": "<code>placeholder = \"Write your message…\"</code>"
+        },
+        {
+          "figma": "The helper line, the left #subtext in the Subtext Message instance",
+          "swift": "<code>.ebSubtext(\"Message content\")</code>",
+          "compose": "<code>subtext = \"Message content\"</code>"
+        },
+        {
+          "figma": "The counter, the right #subtext reading 0/100",
+          "swift": "<code>.ebLimit(100)</code> — the component renders the count",
+          "compose": "<code>limit = 100</code> — the component renders the count"
+        }
+      ]
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Resting field (State=Default)",
+        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">text</span>: $message<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPlaceholder</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Write your message…\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSubtext</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Message content\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLimit</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">100</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = message,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">message</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Write your message…\"</span>,\n    <span class=\"syn-param\">subtext</span> = <span class=\"syn-str\">\"Message content\"</span>,\n    <span class=\"syn-param\">limit</span> = <span class=\"syn-val\">100</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Invalid entry (State=Error)",
+        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">text</span>: $message<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPlaceholder</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Write your message…\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSubtext</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Message content\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLimit</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">100</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebValidation</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = message,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">message</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Write your message…\"</span>,\n    <span class=\"syn-param\">subtext</span> = <span class=\"syn-str\">\"Message content\"</span>,\n    <span class=\"syn-param\">limit</span> = <span class=\"syn-val\">100</span>,\n    <span class=\"syn-param\">validation</span> = <span class=\"syn-type\">EBValidation</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Read-only (State=Disabled)",
+        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">text</span>: $message<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSubtext</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Message content\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLimit</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">100</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = message,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">subtext</span> = <span class=\"syn-str\">\"Message content\"</span>,\n    <span class=\"syn-param\">limit</span> = <span class=\"syn-val\">100</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Field and label bound",
+        "ios": "Pass the label to <code>EBTextArea</code> so it becomes the <code>accessibilityLabel</code>; never rely on the visual label alone.",
+        "android": "<code>Modifier.semantics { contentDescription = label }</code>, or a <code>TextField</code> label slot so TalkBack reads it before the value."
+      },
+      {
+        "requirement": "Error is not colour alone",
+        "ios": "The red border carries nothing to VoiceOver. Set <code>accessibilityValue</code> to the error message and post <code>.announcement</code> when it appears.",
+        "android": "<code>Modifier.semantics { error(errorMessage) }</code> so the state is spoken, not only drawn."
+      },
+      {
+        "requirement": "Character count announced",
+        "ios": "Expose the remaining count through <code>accessibilityValue</code>, and announce when the limit is reached rather than silently truncating.",
+        "android": "Put the count in <code>stateDescription</code> and use <code>liveRegion</code> when it crosses the limit."
+      },
+      {
+        "requirement": "Disabled state conveyed",
+        "ios": "<code>.disabled(true)</code> sets <code>.notEnabled</code>; do not fake it by making the field read-only, or VoiceOver still offers editing.",
+        "android": "<code>enabled = false</code> so the node reports itself disabled instead of merely looking it."
+      },
+      {
+        "requirement": "Multi-line growth is not a trap",
+        "ios": "The field grows with content; keep it inside a scroll view so the caret stays visible with the keyboard up.",
+        "android": "Pair with <code>imePadding()</code> and a scrollable parent so the growing field is not hidden behind the IME."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Text Area when the answer runs past one line — a message, a reason, an address.",
+        "dontText": "Do not use it for a single short value; Input Field is the one-line control and keeps the counter off screen."
+      },
+      {
+        "doText": "Set a limit the user can actually reach, and show the counter from the start.",
+        "dontText": "Do not hide the counter until the limit is close — the user has already written past it by then."
+      },
+      {
+        "doText": "Write the helper line as the rule the field enforces.",
+        "dontText": "Do not repeat the label in the helper line; it is the only place the limit and format can be explained."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The conventions hold — <code>ValueContainer</code> and <code>Value</code> inside the box, <code>#</code>-prefixed text layers, Title Case variant values. Against that: the <code>Subtext Message</code> instance carries two sibling layers both named <code>#subtext</code>, and the field box repeats the component's own name."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Two orthogonal axes, all eight combinations built, Title Case state values and a boolean correctly named <code>hasValue</code>. Boolean, instance-swap and text properties are not readable with this toolchain, so any beyond these two are unverified rather than absent."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Not scorable with this toolchain, but half-answered. Type is fully bound: all three text roles resolve to DS styles — <code>Primary/Label/Light/Small</code>, <code>Primary/Multi-line Label/Light/Small</code> and <code>Secondary/Bold/Caption</code>. Colour cannot be resolved to token names: the file exposes only a <code>Prototype States</code> collection and the DS variables sit in an unenumerable library. Needs a Dev Mode read."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>State</code> maps to focus, validation and enabled; <code>hasValue</code> is content rather than a parameter, which is correct. What costs it a Ready: the field box is a local frame rather than a component, so nothing tells a developer that this box is the same box Input Field and Search Field draw."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "All four states are built and are visually distinct, but two of them are wrong rather than merely thin. Error changes only the border, so colour is the sole carrier — a Level A failure of WCAG §1.4.1. Disabled renders entered content at the placeholder fill, at 2.15:1. The helper text is 4.01:1 and the placeholder 2.41:1 on white, both under the minimum."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "The component draws no icons, images or vectors — a label, a bordered box and two lines of caption text. Nothing to score."
+      }
+    ],
+    "variants": {
+      "total": 8,
+      "description": "4 State × 2 hasValue = 8 variants — a complete matrix, no gaps and no correlated axes.",
+      "columns": [
+        "State",
+        "hasValue",
+        "Node",
+        "Size",
+        "Border"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Default",
+            "False",
+            "<code>4781:35853</code>",
+            "358 × 78",
+            "#D7E0EF · 1"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "True",
+            "<code>4781:35851</code>",
+            "358 × 94",
+            "#D7E0EF · 1"
+          ]
+        },
+        {
+          "cells": [
+            "Focused",
+            "False",
+            "<code>4781:35850</code>",
+            "358 × 78",
+            "#005CE5 · 2"
+          ]
+        },
+        {
+          "cells": [
+            "Focused",
+            "True",
+            "<code>4781:35852</code>",
+            "358 × 94",
+            "#005CE5 · 2"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "False",
+            "<code>4781:35849</code>",
+            "358 × 78",
+            "#D61B2C · 2"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "True",
+            "<code>4781:35855</code>",
+            "358 × 94",
+            "#D61B2C · 2"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "False",
+            "<code>4781:35848</code>",
+            "358 × 78",
+            "none"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "True",
+            "<code>4781:35854</code>",
+            "358 × 94",
+            "none"
+          ]
+        }
+      ]
+    }
+  },
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "September 2026",
+      "kind": "initial",
+      "kindLabel": "Initial",
+      "header": "Test read · node 4781:35856",
+      "rows": [
+        {
+          "body": "<strong>Independent trial read of Text Area, run against the refined framework.</strong> The component already has a page at <a href=\"/components/text-area\">Text Area</a>; this one was written from a fresh Figma read without consulting it, so the two can be compared. It stays out of the sidebar, search, the grid and the counts.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "All 8 variants were read off set <code>4781:35856</code>, and the whole set plus three box frames were exported — the frames as SVG, which is how the border weights below were read (Default 1, Focused and Error 2, Disabled none). <code>get_node_info</code> does not return stroke weight.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "The three contrast ratios are computed from the read fills with the WCAG 2.2 relative-luminance formula, not read from Figma. The inputs are printed beside them so each one can be checked.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "Padding, gap and alignment are reported unread: the Talk To Figma plugin returns no auto-layout fields and the Dev Mode toolchain was not authorised in this session. They are left blank rather than derived from bounding boxes.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        }
+      ]
+    }
+  ]
+}

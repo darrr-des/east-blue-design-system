@@ -8,14 +8,14 @@
  * Behaviours
  *   • Centered modal card over a scrim+blur backdrop
  *   • Empty state: rotating placeholder ("Are you looking for X?")
- *   • Typing: live filtered results from componentManifest + static pages
+ *   • Typing: live filtered results from navManifest + static pages
  *   • ↑/↓ to move highlight, Enter to navigate, ESC to close
  *
  * Data is rendered into <script type="application/json"> at build time so
  * the runtime script can read it without a fetch.
  */
 
-import { componentManifest } from '../data/components/_index';
+import { navManifest } from '../data/components/_index';
 import { url } from '../lib/url';
 
 type SearchEntry = {
@@ -38,7 +38,7 @@ const PAGES: SearchEntry[] = [
 // Components: each manifest entry → an entry. If it has navGroup, breadcrumb
 // shows /components/<group> so "Action List - with Counter" reads as a child
 // of the Action List group (matches the user's spec).
-const COMPONENTS: SearchEntry[] = componentManifest.map((c) => ({
+const COMPONENTS: SearchEntry[] = navManifest.map((c) => ({
   name: c.name,
   path: `/components/${c.slug}`,
   breadcrumb: c.navGroup

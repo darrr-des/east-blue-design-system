@@ -1,59 +1,31 @@
 ---
 /*
- * SpecCard — the canonical Style-tab card.
+ * SpecCard — the canonical Style-tab card (STYLE-REVIEW-GUIDE.md).
  *
- * Props:
- *   cardKey       unique id for DES/DEV toggle wiring (e.g. "btn-filled-large")
- *   title         card heading (e.g. "Filled · Large · Default")
- *   node          Figma node id (e.g. "17104:184842")
- *   description   one-line card description
- *   previewHtml   raw HTML for the visual preview area (optional)
- *   sections      DES-view spec sections — array of { label, rows: [{ key, value, mono? }] }
- *   swift         SwiftUI code block (already syntax-marked with syn-* spans, or plain)
- *   compose       Compose code block
+ * Header: title + DES/DEV toggle. Preview with the demo panel when the
+ * card has controls, a static frame otherwise. The four DES sections
+ * (Properties → Colors → Typography → Layout) in the two-column detail
+ * grid, then the DEV code block that the demo script keeps live via
+ * `getSnippet`.
  */
+import type { SpecCardData } from '../data/types';
 
-interface SpecRow {
-  key: string;
-  value: string;
-  mono?: boolean;
-  token?: string;
-  swatch?: boolean;
-  prop?: string;
-}
-interface SpecSection {
-  label: string;
-  rows: SpecRow[];
-  slug?: string;
-}
-interface DemoControlOption {
-  value: string;
-  label: string;
-}
-interface DemoControlRow {
-  label: string;
-  prop: string;
-  options: DemoControlOption[];
-  defaultValue?: string;
-}
-interface DemoControlSection {
-  heading: string;
-  rows: DemoControlRow[];
-}
-interface Props {
-  cardKey: string;
-  demoKey?: string;
-  title: string;
-  node: string;
-  description: string;
-  previewHtml?: string;
-  demoControls?: DemoControlSection[];
-  sections: SpecSection[];
-  swift: string;
-  compose: string;
-}
-const { cardKey, demoKey, title, node, description, previewHtml, demoControls, sections, swift, compose } = Astro.props;
+type Props = SpecCardData;
+const { cardKey, demoKey, title, previewHtml, demoControls, sections, swift } = Astro.props;
 const updateKey = demoKey || cardKey;
+
+/* Examples card (STYLE-REVIEW-GUIDE §3.1): the Properties row named after the
+   card is the card's own property, and it lists every drawn value " · "-joined.
+   Only on such a card does " · " mean one value per example — everywhere else
+   it is punctuation inside a single value ("Proxima Soft Semibold · 16 / 16"),
+   which must stay one string. */
+const ownRow = sections.find((s) => s.label === 'Properties')?.rows.find((r) => r.key === title);
+const exampleCount = ownRow ? String(ownRow.value).split(' · ').length : 1;
+const isExamples = exampleCount > 1;
+/* Two values sit beside the key; three or more fit on some rows only, which
+   leaves the column ragged. Past two, every multi-value row in the card drops
+   to its own line, so the treatment is the same down the whole card. */
+const stack = exampleCount > 2;
 ---
 <div class="spec-card" id={`spec-card-${cardKey}`}>
   <div class="spec-card-header">
@@ -61,19 +33,11 @@ const updateKey = demoKey || cardKey;
       <div class="sub-heading toc-child" id={`variant-${cardKey}`} style="margin-top:0">
         {title}
       </div>
-      <button class="spec-node-copy" onclick="copyNode(this)" data-node={node} title="Copy Figma node ID">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-          <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3" />
-          <path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3" />
-        </svg>
-        <span>{node}</span>
-      </button>
-      <div class="spec-mode-toggle" onclick={`toggleSpecMode('${updateKey}', this)`}>
-        <span class="spec-mode-label active">DES</span>
-        <span class="spec-mode-label">DEV</span>
+      <div class="spec-mode-toggle" role="tablist" aria-label="Design or developer view">
+        <button type="button" class="spec-mode-label active" role="tab" aria-selected="true" onclick={`toggleSpecMode('${updateKey}', this.parentElement, 'des')`}>DES</button>
+        <button type="button" class="spec-mode-label" role="tab" aria-selected="false" onclick={`toggleSpecMode('${updateKey}', this.parentElement, 'dev')`}>DEV</button>
       </div>
     </div>
-    <p class="spec-card-desc">{description}</p>
   </div>
 
   {previewHtml && demoControls && demoControls.length > 0 ? (
@@ -138,10 +102,9 @@ const updateKey = demoKey || cardKey;
     </div>
   ) : null}
 
-  <div class="spec-card-detail spec-view-des" data-view={`${updateKey}-des`}>
+  <div class={`spec-card-detail spec-view-des${stack ? ' spec-view-des--stack' : ''}`} data-view={`${updateKey}-des`}>
     {sections.map((section) => {
-      const sectionSlug = section.slug || section.label.toLowerCase();
-      const sectionId = `spec-${updateKey}-${sectionSlug}`;
+      const sectionId = `spec-${updateKey}-${section.slug || section.label.toLowerCase()}`;
       return (
         <div class="spec-detail-section" id={sectionId}>
           <div class="spec-detail-label">{section.label}</div>
@@ -150,30 +113,44 @@ const updateKey = demoKey || cardKey;
               const isHex = typeof row.value === 'string' && row.value.trim().startsWith('#');
               const showSwatch = row.swatch ?? isHex;
               const dataSp = row.prop ? `${updateKey}-${row.prop}` : undefined;
-              /* Serialize variants map for client-side patching. The shared
-                 assessment.js listens for spec-card control changes and uses
-                 this attribute to swap the row's value/token. */
+              /* `variants` is serialized for assessment.js → _patchSpecCardRows,
+                 which swaps value/token on each demo-control change. */
               const variantsJson = row.variants && Object.keys(row.variants).length > 0
                 ? JSON.stringify(row.variants)
                 : undefined;
+              /* An Examples card lists one value per drawn example, joined
+                 with " · " — each part gets its own swatch when it is a hex.
+                 assessment.js → _applyRowValue rebuilds the same markup on
+                 every control change. */
+              const parts = isExamples ? String(row.value ?? '').split(' · ') : [];
+              const multi = parts.length > 1;
               return (
                 <div class={`spec-prop${row.token ? ' has-token' : ''}`}>
                   <span class="spec-prop-key">{row.key}</span>
                   <span
-                    class={`spec-prop-val${row.mono ? ' mono' : ''}`}
+                    class={`spec-prop-val${row.mono ? ' mono' : ''}${multi ? ' multi' : ''}`}
                     data-sp={dataSp}
                     data-row-card={variantsJson ? updateKey : undefined}
                     data-row-variants={variantsJson}
+                    data-row-value={variantsJson ? row.value : undefined}
                   >
-                    {showSwatch && (
-                      <span class="spec-swatch" style={`background:${row.value}`} aria-hidden="true"></span>
+                    {multi ? parts.map((p, i) => (
+                      <>
+                        {i > 0 && <span class="spec-prop-sep" aria-hidden="true">·</span>}
+                        <span class="spec-prop-part">
+                          {p.trim().startsWith('#') && <span class="spec-swatch" style={`background:${p.trim()}`} aria-hidden="true"></span>}
+                          <span class="spec-prop-hex" set:html={p} />
+                        </span>
+                      </>
+                    )) : (
+                      <>
+                        {showSwatch && (
+                          <span class="spec-swatch" style={`background:${row.value}`} aria-hidden="true"></span>
+                        )}
+                        <span class="spec-prop-hex" set:html={row.value} />
+                      </>
                     )}
-                    <span class="spec-prop-hex" set:html={row.value} />
                   </span>
-                  {/* Token path is documented in the standalone
-                      `colorsTables` block below the spec cards — no
-                      need to repeat it here. The `row.token` data
-                      stays in case we want to surface it later. */}
                 </div>
               );
             })}
@@ -181,6 +158,10 @@ const updateKey = demoKey || cardKey;
         </div>
       );
     })}
+    {/* The detail is a two-column grid: an odd number of sections would
+        leave the last cell empty, showing the grid's rule colour as a grey
+        void. This fills it with the section surface instead. */}
+    {sections.length % 2 === 1 && <div class="spec-detail-section spec-detail-filler" aria-hidden="true"></div>}
   </div>
 
   <div class="spec-card-detail spec-card-code" data-view={`${updateKey}-dev`} style="display:none">
@@ -188,11 +169,8 @@ const updateKey = demoKey || cardKey;
       <button class="spec-code-tab active" onclick={`switchCodeTab(this, 'swift', '${updateKey}')`}>SWIFTUI</button>
       <button class="spec-code-tab" onclick={`switchCodeTab(this, 'compose', '${updateKey}')`}>COMPOSE</button>
     </div>
-    {/* Single <code> block — initial content is the SwiftUI HTML from
-        the data file (gives us a syntax-highlighted SSR fallback when
-        JS is off). On JS load, the per-component demo script's
-        `updateSpecCard()` swaps `data-final` to plaintext and the
-        shared `highlightSyntax()` re-applies highlighting. */}
+    {/* Server-rendered SwiftUI fallback; the demo script's getSnippet()
+        replaces it on load and on every control change. */}
     <pre class="spec-code-block"><code data-code-content={updateKey} data-lang="swift" set:html={swift} /></pre>
   </div>
 </div>

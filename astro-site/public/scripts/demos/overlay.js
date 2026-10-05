@@ -1,156 +1,64 @@
-/* Auto-extracted from assessment-src/components/overlay.html.
- * Powers the live-preview dropdowns/toggles for the overlay component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs overlay
+/* Overlay — live preview + spec cards.
+ * Set 4465:20631 (2026 Working File): Strength = Weak | Default | Strong =
+ * 3 variants, each a 360 × 800 `dim` rectangle of #020E22 at 24% / 40% /
+ * 56% (read off 4465:20549, 4465:20632, 4465:20634 on 2026-09-14).
+ *
+ * A scrim is invisible on its own, so the preview draws it over a
+ * miniature app surface (.eb-preview-overlay-stage*) — the stage is a
+ * preview aid, not part of the component.
  */
-/* ── Overlay JS ─────────────────────────────────────────────────── */
-/* Renders the Overlay (scrim) over a miniature phone-like surface so
-   the translucent 56% dim is actually visible. Uses class-based
-   primitives from styles.css (.eb-preview-overlay-stage*).            */
 
 function _overlayStageMarkup(opts) {
-  var surface  = opts.surface || 'sheet';
-  var bgTone   = opts.bg || 'light';
-  var showDim  = opts.dim !== false;
-  var strength = opts.strength || 'strong';
-
-  // Background content — a fake app screen sitting behind the dim.
-  var content =
+  var strength = ['weak', 'default', 'strong'].indexOf(opts.strength) !== -1 ? opts.strength : 'default';
+  return '<div class="eb-preview eb-preview-overlay-stage">' +
     '<div class="eb-preview-overlay-stage__content">' +
-      '<div class="eb-preview-overlay-stage__content-title eb-preview">Activity</div>' +
-      '<div class="eb-preview-overlay-stage__card"></div>' +
-      '<div class="eb-preview-overlay-stage__card"></div>' +
-      '<div class="eb-preview-overlay-stage__card"></div>' +
-      '<div class="eb-preview-overlay-stage__card"></div>' +
-    '</div>';
-
-  var dim = showDim
-    ? '<div class="eb-preview-overlay-stage__dim eb-preview-overlay-stage__dim--' + strength + '"></div>'
-    : '';
-
-  var floatingSurface = '';
-  if (surface === 'sheet') {
-    floatingSurface =
-      '<div class="eb-preview-overlay-stage__sheet eb-preview">' +
-        '<div class="eb-preview-overlay-stage__handle"></div>' +
-        '<p class="eb-preview-overlay-stage__sheet-title">Send Money</p>' +
-        '<p class="eb-preview-overlay-stage__sheet-body">Choose a recipient from your contacts or enter a mobile number.</p>' +
-        '<div class="eb-preview-overlay-stage__sheet-btn">Continue</div>' +
-      '</div>';
-  } else if (surface === 'dialog') {
-    floatingSurface =
-      '<div class="eb-preview-overlay-stage__dialog eb-preview">' +
-        '<p class="eb-preview-overlay-stage__sheet-title">Confirm transfer?</p>' +
-        '<p class="eb-preview-overlay-stage__sheet-body">You are about to send ₱1,500.00 to Juan Dela Cruz. This cannot be undone.</p>' +
-        '<div class="eb-preview-overlay-stage__dialog-actions">' +
-          '<div class="eb-preview-overlay-stage__dialog-btn eb-preview-overlay-stage__dialog-btn--ghost">Cancel</div>' +
-          '<div class="eb-preview-overlay-stage__dialog-btn eb-preview-overlay-stage__dialog-btn--primary">Confirm</div>' +
-        '</div>' +
-      '</div>';
-  }
-
-  var stageBg = bgTone === 'dark'  ? 'background:#0A1628;' :
-                bgTone === 'image' ? 'background:linear-gradient(135deg,#4876D6 0%,#6B93E5 100%);' : '';
-
-  return '<div class="eb-preview-overlay-stage" ' + (stageBg ? 'style="' + stageBg + '"' : '') + '>' +
-    content + dim + floatingSurface +
+      '<div class="eb-preview-overlay-stage__content-title">Activity</div>' +
+      '<div class="eb-preview-overlay-stage__card"></div><div class="eb-preview-overlay-stage__card"></div>' +
+      '<div class="eb-preview-overlay-stage__card"></div><div class="eb-preview-overlay-stage__card"></div>' +
+    '</div>' +
+    '<div class="eb-preview-overlay-stage__dim eb-preview-overlay-stage__dim--' + strength + '"></div>' +
+    '<div class="eb-preview-overlay-stage__sheet">' +
+      '<div class="eb-preview-overlay-stage__handle"></div>' +
+      '<p class="eb-preview-overlay-stage__sheet-title">Send Money</p>' +
+      '<p class="eb-preview-overlay-stage__sheet-body">Choose a recipient from your contacts or enter a mobile number.</p>' +
+      '<div class="eb-preview-overlay-stage__sheet-btn">Continue</div>' +
+    '</div>' +
   '</div>';
 }
 
+/* ── Overview live preview ─────────────────────────────────────────── */
 function _overlayUpdate() {
-  var bg       = document.getElementById('overlay-ctrl-bg');
-  var surface  = document.getElementById('overlay-ctrl-surface');
-  var strength = document.getElementById('overlay-ctrl-strength');
-  var preview  = document.getElementById('overlay-demo-preview');
-  if (!preview) return;
-  preview.innerHTML = _overlayStageMarkup({
-    bg: bg ? bg.value : 'light',
-    surface: surface ? surface.value : 'sheet',
-    strength: strength ? strength.value : 'default',
-    dim: true
-  });
+  var el = document.getElementById('overlay-demo-preview');
+  if (!el) return;
+  var n = document.getElementById('overlay-ctrl-strength');
+  el.innerHTML = _overlayStageMarkup({ strength: (n && n.value) || 'default' });
 }
+window._overlayUpdate = _overlayUpdate;
 
-/* ── Overlay Spec Cards (canonical) ──────────────────────────────── */
-var _overlaySpecCards = {
-  main: { strength: 'default' }
-};
-var _specCards = _overlaySpecCards;
+/* ── Spec cards — one per Strength value; nothing else to control ───── */
+var _specCards = { 'weak': { strength: 'weak' }, 'default': { strength: 'default' }, 'strong': { strength: 'strong' } };
 window._specCards = _specCards;
 
-var slug = 'overlay';
-
-function buildSwiftSnippet(type, card) {
-  return getSnippet(type, 'swift', card);
-}
-function buildComposeSnippet(type, card) {
-  return getSnippet(type, 'compose', card);
-}
-function getSnippet(type, lang, card) {
-  var s = (card && card.strength) || 'default';
-  var swiftCase = s;                                    // .weak / .default / .strong
-  var composeCase = s.charAt(0).toUpperCase() + s.slice(1); // Weak / Default / Strong
-  if (lang === 'swift') {
-    return 'EBOverlay(isPresented: $showSheet)\n    .ebStrength(.' + swiftCase + ') {\n    // content shown above the scrim\n}';
-  }
-  return 'EBOverlay(\n    visible = showSheet,\n    onDismiss = { },\n    strength = EBOverlayStrength.' + composeCase + '\n) {\n    // content shown above the scrim\n}';
+function getSnippet(cardKey, lang, card) {
+  var s = ((card || _specCards[cardKey] || {}).strength) || 'default';
+  if (lang === 'swift') return 'EBOverlay(isPresented: $showSheet)\n    .ebStrength(.' + s + ')';
+  return 'EBOverlay(\n    visible = showSheet,\n    onDismiss = { },\n    strength = EBOverlayStrength.' + s.charAt(0).toUpperCase() + s.slice(1) + '\n)';
 }
 window.getSnippet = getSnippet;
 
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _overlaySpecCards[cardStyle];
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
   if (!card) return;
   card[prop] = value;
-
-  /* Only Strength is a Figma property — Surface and Background are preview
-     aids, so they have no row in the Properties section to mirror. */
-  var spStrength = document.querySelector('[data-sp="' + cardStyle + '-strength"]');
-  if (spStrength) spStrength.textContent = card.strength.charAt(0).toUpperCase() + card.strength.slice(1);
-
-  /* Update the stage preview inside the spec card */
-  var specPreview = document.getElementById('overlay-spec-preview');
-  if (specPreview) {
-    specPreview.innerHTML = _overlayStageMarkup({
-      bg: 'light',
-      surface: 'sheet',
-      strength: card.strength || 'default',
-      dim: true
-    });
-  }
-
-  /* Update Properties row text via [data-sp="<cardStyle>-<prop>"] */
-  var spVal = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
-  if (spVal) {
-    var hexEl = spVal.querySelector('.spec-prop-hex');
-    if (hexEl) hexEl.textContent = value;
-    else spVal.textContent = value;
-  }
-
-  /* Update DEV code via [data-code-content="<cardStyle>"]. Always run. */
-  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
-  if (codeEl) {
-    var lang = codeEl.getAttribute('data-lang') || 'swift';
-    var code = getSnippet(cardStyle, lang, card);
-    codeEl.setAttribute('data-final', code);
-    codeEl.textContent = code;
-    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-  }
+  var host = document.getElementById('ov-spec-' + cardKey);
+  if (host) host.innerHTML = _overlayStageMarkup(card);
 }
 window.updateSpecCard = updateSpecCard;
 
 function _overlayInit() {
-  var ctx = document.getElementById('overlay-context-preview');
-  if (ctx) ctx.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', strength:'strong', dim:true});
   _overlayUpdate();
-  var spec = document.getElementById('overlay-spec-preview');
-  if (spec) spec.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', strength:'strong', dim:true});
+  Object.keys(_specCards).forEach(function (k) { updateSpecCard(k, 'strength', _specCards[k].strength); });
 }
-
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _overlayInit);
 else _overlayInit();
-
-(function(){
-  function reinit(){
-    if (typeof _overlayInit === 'function') _overlayInit();
-  }
-  document.addEventListener('astro:page-load', reinit);
-})();
+document.addEventListener('astro:page-load', _overlayInit);

@@ -156,42 +156,42 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['default'];
   var compose = lang === 'compose';
-  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var sep = compose ? ' = ' : ': ';
   /* Compose takes the Figma value verbatim; Swift lowerCamels it, which is
      the shape Select Group already uses and what check 9 compares against
      the Code tab. */
   var cased = { 'default': 'Default', 'pesosignvector': 'PesoSignVector', 'pesosigntext': 'PesoSignText' }[card.type];
   var swiftCase = { 'default': 'default', 'pesosignvector': 'pesoSignVector', 'pesosigntext': 'pesoSignText' }[card.type];
   var typeVal = compose
-    ? '<span class="syn-type">EBSelectType</span><span class="syn-punc">.</span><span class="syn-dot">' + cased + '</span>'
-    : '<span class="syn-dot">.' + swiftCase + '</span>';
+    ? 'EBSelectType.' + cased + ''
+    : '.' + swiftCase + '';
 
   /* Same copy the preview draws, so the card and its code agree. */
   var copy = _SEL_COPY[card.type] || _SEL_COPY['default'];
   var args = [
-    'label' + sep + '<span class="syn-str">"Label"</span>',
-    'placeholder' + sep + '<span class="syn-str">"' + copy.empty + '"</span>',
+    'label' + sep + '"Label"',
+    'placeholder' + sep + '"' + copy.empty + '"',
     'type' + sep + typeVal
   ];
   if (card.isfilled === 'true') {
-    args.push('selection' + sep + '<span class="syn-str">"' + copy.filled + '"</span>');
+    args.push('selection' + sep + '"' + copy.filled + '"');
   }
   if (card.state === 'error') {
-    args.push('errorMessage' + sep + '<span class="syn-str">"Pick an option"</span>');
+    args.push('errorMessage' + sep + '"Pick an option"');
   }
   if (compose && card.state === 'disabled') {
-    args.push('enabled' + sep + '<span class="syn-kw">false</span>');
+    args.push('enabled' + sep + 'false');
   }
 
-  var call = '<span class="syn-type">EBSelect</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">) {</span>\n    ' +
-    '<span class="syn-type">EBSelectItem</span><span class="syn-punc">(</span>label' + sep +
-    '<span class="syn-str">"Text"</span><span class="syn-punc">)</span>\n' +
-    '<span class="syn-punc">}</span>';
+  var call = 'EBSelect(\n    ' +
+    args.join(',\n    ') +
+    '\n) {\n    ' +
+    'EBSelectItem(label' + sep +
+    '"Text")\n' +
+    '}';
   if (!compose && card.state === 'disabled') {
-    call += '\n<span class="syn-punc">.</span><span class="syn-fn">disabled</span>' +
-            '<span class="syn-punc">(</span><span class="syn-kw">true</span><span class="syn-punc">)</span>';
+    call += '\n.disabled' +
+            '(true)';
   }
   return call;
 }

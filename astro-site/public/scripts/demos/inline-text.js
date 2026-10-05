@@ -1,189 +1,127 @@
-/* Inline Text — Style tab demo.
- * Rebuilt from Figma component set 4419:24515 (GCash DS 2026 Working File).
- * Every size, offset and colour below is read off get_node_info / get_svg
- * on the variants and checked against export_node_as_image.
+/* Inline Text — live preview + spec cards.
+ * Set 4419:24515 (2026 Working File): Type = Copy Icon | Badge | Checkmark |
+ * Slot × hasDescription × hasTextLink = 16 variants. The default variant is
+ * Type=Copy Icon, hasDescription=True, hasTextLink=True (4419:20913).
  *
- * Panel (set 4419:24515):
- *   Type               · Copy Icon, Badge, Checkmark, Slot   (variant)
- *   hasDescription     · False, True                         (variant)
- *   hasTextLink        · True, False                         (variant)
- *   hasTrailingElement · True                                (boolean)
- *   Nested instance    · Trailing Elements                   (no control)
- *
- * 4 x 2 x 2 = 16 variants, all built.
+ * Read off the variants and checked against export_node_as_image:
+ *   Copy Icon 5643:34623 · Badge 5652:37006 · Checkmark 5652:37217 ·
+ *   Slot 5652:37590 (all hasDescription=False, hasTextLink=False) and
+ *   4419:20913 for the SupportingRow.
  */
 
-var ITX_W = 368;
-
-/* ── Geometry ────────────────────────────────────────────────────────
-   MainRow is 24 tall; SupportingRow is 18 tall at y 26 (2px gap), so a
-   row with either supporting element is 44 and a bare row 24. Label
-   fills; ValueGroup hugs — Value 34 wide at "0.00", 4px, then the
-   trailing element. */
-var ITX_MAIN_H = 24, ITX_SUP_Y = 26, ITX_SUP_H = 18;
-var ITX_VALUE_W = 34, ITX_TRAIL_GAP = 4;
-var ITX_LINK_X = 345;           /* LinkLabel x on every Type, with or without Description */
-var ITX_TRAIL_W = { 'copy-icon': 24, 'badge': 48, 'checkmark': 16, 'slot': 24 };
-
-/* ── Colours ───────────────────────────────────────────────────────── */
-var ITX_C = {
-  label: '#0A2757', value: '#445C85', description: '#6780A9', link: '#005CE5',
-  icon: '#445C85', badgeBg: '#E5F1FF', badgeLabel: '#005CE5'
-};
-
-/* Paths from get_svg on the Trailing Elements instances. */
-function _itxCopy(x) {
-  return '<g transform="translate(' + x + ' 0)">' +
-    '<path opacity="0.4" d="M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111" stroke="' + ITX_C.icon + '" stroke-width="1.8" stroke-linecap="round"/>' +
-    '<path d="M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z" stroke="' + ITX_C.icon + '" stroke-width="1.8" stroke-linecap="round"/>' +
-  '</g>';
-}
-function _itxCheck(x) {
-  return '<g transform="translate(' + x + ' 0)">' +
-    '<path d="M3 12L6.5 15L13 9" stroke="' + ITX_C.icon + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
-  '</g>';
-}
-function _itxBadge(x) {
-  return '<rect x="' + x + '" y="3" width="48" height="18" rx="9" fill="' + ITX_C.badgeBg + '"/>' +
-    '<text class="itx-badge" x="' + (x + 24) + '" y="12" font-size="12" font-weight="700" fill="' + ITX_C.badgeLabel +
-    '" text-anchor="middle" dominant-baseline="central">Label</text>';
-}
-/* An empty SLOT draws nothing in Figma. The dashed outline marks its
-   24 × 24 footprint in the preview only. */
-function _itxSlot(x) {
-  return '<rect x="' + (x + 0.5) + '" y="0.5" width="23" height="23" rx="2" stroke="#C2CFE5" stroke-dasharray="3 2"/>';
+function _itxEscape(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-/* ── Renderer ───────────────────────────────────────────────────────── */
-function _itxRender(card, scale) {
-  scale = scale || 1;
-  var hasDesc = card.hasdescription === 'true';
-  var hasLink = card.hastextlink === 'true';
-  var hasTrail = card.hastrailingelement !== 'false';
-  var h = (hasDesc || hasLink) ? ITX_SUP_Y + ITX_SUP_H : ITX_MAIN_H;
+/* Trailing Elements › Copy — paths and stroke from get_svg(5643:34711). */
+function _itxCopyIcon() {
+  return '<svg class="eb-preview-itx__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+    '<path opacity="0.4" d="M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
+    '<path d="M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
+  '</svg>';
+}
 
-  var trailW = hasTrail ? ITX_TRAIL_W[card.type] : 0;
-  var groupW = ITX_VALUE_W + (hasTrail ? ITX_TRAIL_GAP + trailW : 0);
-  var valueX = ITX_W - groupW;
-  var trailX = ITX_W - trailW;
+/* Trailing Elements › Checkmark — path and stroke from get_svg(5652:37222). */
+function _itxCheckIcon() {
+  return '<svg class="eb-preview-itx__icon eb-preview-itx__icon--check" viewBox="0 4 16 16" fill="none" aria-hidden="true">' +
+    '<path d="M3 12L6.5 15L13 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
+  '</svg>';
+}
 
-  var out = '<svg width="' + (ITX_W * scale) + '" height="' + (h * scale) +
-            '" viewBox="0 0 ' + ITX_W + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+function _itxTrailing(type, badge) {
+  if (type === 'badge') return '<span class="eb-preview-itx__badge">' + _itxEscape(badge) + '</span>';
+  if (type === 'checkmark') return _itxCheckIcon();
+  if (type === 'slot') return '<span class="eb-preview-itx__slot" aria-hidden="true"></span>';
+  return _itxCopyIcon();
+}
 
-  out += '<text class="itx-proxima" x="0" y="12" font-size="16" font-weight="600" fill="' + ITX_C.label +
-         '" dominant-baseline="central">Label</text>';
-  out += '<text class="itx-proxima" x="' + valueX + '" y="12" font-size="16" font-weight="600" fill="' + ITX_C.value +
-         '" dominant-baseline="central">0.00</text>';
+/* opts: { type: copy-icon|badge|checkmark|slot, hasDescription: 'true'|'false',
+           hasTextLink: 'true'|'false', label, value, description, link, badge } */
+function _itxRender(opts) {
+  var type = opts.type || 'copy-icon';
+  var hasDescription = String(opts.hasDescription == null ? 'true' : opts.hasDescription) === 'true';
+  var hasTextLink = String(opts.hasTextLink == null ? 'true' : opts.hasTextLink) === 'true';
+  var label = opts.label || 'Label';
+  var value = opts.value || '0.00';
+  var description = opts.description || 'Description goes here';
+  var link = opts.link || 'CTA';
+  var badge = opts.badge || 'Label';
 
-  if (hasTrail) {
-    if (card.type === 'copy-icon') out += _itxCopy(trailX);
-    else if (card.type === 'badge') out += _itxBadge(trailX);
-    else if (card.type === 'checkmark') out += _itxCheck(trailX);
-    else out += _itxSlot(trailX);
+  var html = '<div class="eb-preview eb-preview-itx eb-preview-itx--' + type + '">';
+  html += '<div class="eb-preview-itx__main">';
+  html += '<p class="eb-preview-itx__label">' + _itxEscape(label) + '</p>';
+  html += '<div class="eb-preview-itx__value-group"><span class="eb-preview-itx__value">' + _itxEscape(value) + '</span>' + _itxTrailing(type, badge) + '</div>';
+  html += '</div>';
+  if (hasDescription || hasTextLink) {
+    html += '<div class="eb-preview-itx__supporting">';
+    html += '<span class="eb-preview-itx__description">' + (hasDescription ? _itxEscape(description) : '') + '</span>';
+    if (hasTextLink) html += '<span class="eb-preview-itx__link">' + _itxEscape(link) + '</span>';
+    html += '</div>';
   }
-
-  var supY = ITX_SUP_Y + ITX_SUP_H / 2;
-  if (hasDesc) {
-    out += '<text class="itx-barkada" x="0" y="' + supY + '" font-size="12" font-weight="600" fill="' + ITX_C.description +
-           '" dominant-baseline="central">Description goes here</text>';
-  }
-  if (hasLink) {
-    out += '<text class="itx-barkada" x="' + ITX_LINK_X + '" y="' + supY + '" font-size="12" font-weight="600" fill="' + ITX_C.link +
-           '" dominant-baseline="central">CTA</text>';
-  }
-  return out + '</svg>';
+  html += '</div>';
+  return html;
 }
 
-/* ── Per-card state — Figma's default variant ──────────────────────── */
-var _specCards = {
-  main: { type: 'copy-icon', hasdescription: 'true', hastextlink: 'true', hastrailingelement: 'true' }
-};
-window._specCards = _specCards;
-
-var ITX_LABELS = {
-  type: { 'copy-icon': 'Copy Icon', 'badge': 'Badge', 'checkmark': 'Checkmark', 'slot': 'Slot' },
-  bool: { 'true': 'True', 'false': 'False' }
-};
-
-/* ── DEV code ───────────────────────────────────────────────────────── */
-var ITX_SWIFT_TRAIL = { 'copy-icon': '.copyIcon', 'badge': '.badge("Label")', 'checkmark': '.checkmark', 'slot': '.slot { content }' };
-var ITX_COMPOSE_TRAIL = { 'copy-icon': 'EBInlineTextTrailing.CopyIcon', 'badge': 'EBInlineTextTrailing.Badge("Label")', 'checkmark': 'EBInlineTextTrailing.Checkmark', 'slot': 'EBInlineTextTrailing.Slot { content() }' };
-
-function buildSwiftSnippet(cardKey, card) {
-  var s = 'EBInlineText(label: "Label", value: "0.00")';
-  if (card.hastrailingelement !== 'false') s += '\n    .ebTrailing(' + ITX_SWIFT_TRAIL[card.type] + ')';
-  if (card.hasdescription === 'true') s += '\n    .ebDescription("Description goes here")';
-  if (card.hastextlink === 'true') s += '\n    .ebTextLink("CTA") { }';
-  return s;
-}
-function buildComposeSnippet(cardKey, card) {
-  var a = ['    label = "Label"', '    value = "0.00"'];
-  if (card.hastrailingelement !== 'false') a.push('    trailing = ' + ITX_COMPOSE_TRAIL[card.type]);
-  if (card.hasdescription === 'true') a.push('    description = "Description goes here"');
-  if (card.hastextlink === 'true') { a.push('    linkLabel = "CTA"'); a.push('    onLinkClick = { }'); }
-  return 'EBInlineText(\n' + a.join(',\n') + '\n)';
-}
-function getSnippet(cardKey, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
-}
-window.getSnippet = getSnippet;
-
-/* ── Control handler ────────────────────────────────────────────────── */
-var ITX_PREVIEW_SCALE = 1;
-
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
-  if (!card) return;
-  card[prop] = value;
-
-  var host = document.getElementById('inline-text-spec-' + cardStyle);
-  if (host) host.innerHTML = _itxRender(card, ITX_PREVIEW_SCALE);
-
-  ['type', 'hasdescription', 'hastextlink', 'hastrailingelement'].forEach(function (p) {
-    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
-    if (el) el.textContent = p === 'type' ? ITX_LABELS.type[card.type] : ITX_LABELS.bool[card[p]];
-  });
-
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
-}
-window.updateSpecCard = updateSpecCard;
-
-/* ── Overview tab shims ──────────────────────────────────────────────
-   The Overview still carries the retired five-value panel; it renders
-   Figma's default variant until that tab is rebuilt. */
+/* ── Overview live preview — the three Figma properties + text slots ── */
 function _itxUpdate() {
-  var el = document.getElementById('itx-demo-preview');
-  if (el) el.innerHTML = _itxRender(_specCards.main, 1);
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var preview = document.getElementById('itx-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _itxRender({
+    type:           getVal('itx-ctrl-type', 'copy-icon'),
+    hasDescription: getVal('itx-ctrl-hasdescription', 'true'),
+    hasTextLink:    getVal('itx-ctrl-hastextlink', 'true'),
+    label:          getVal('itx-ctrl-label', 'Label'),
+    value:          getVal('itx-ctrl-value', '0.00'),
+    description:    getVal('itx-ctrl-description', 'Description goes here'),
+    link:           getVal('itx-ctrl-link', 'CTA'),
+    badge:          getVal('itx-ctrl-badge', 'Label')
+  });
 }
 window._itxUpdate = _itxUpdate;
 
-function _itxContextMarkup() {
-  return ['copy-icon', 'badge', 'checkmark'].map(function (t) {
-    return '<div>' + _itxRender({ type: t, hasdescription: 'false', hastextlink: 'false', hastrailingelement: 'true' }, 1) + '</div>';
-  }).join('');
-}
+/* ── Spec cards — one per Type value, keyed by demoKey ──────────────── */
+var _specCards = {
+  'copy-icon': { type: 'copy-icon', hasDescription: 'true', hasTextLink: 'true' },
+  'badge':     { type: 'badge',     hasDescription: 'true', hasTextLink: 'true' },
+  'checkmark': { type: 'checkmark', hasDescription: 'true', hasTextLink: 'true' },
+  'slot':      { type: 'slot',      hasDescription: 'true', hasTextLink: 'true' }
+};
+window._specCards = _specCards;
 
-/* ── First paint ────────────────────────────────────────────────────── */
+/* Component-API snippets that follow the panel — plain text. */
+function getSnippet(cardKey, lang, card) {
+  var c = card || _specCards[cardKey] || {};
+  var type = c.type || 'copy-icon';
+  var hasDescription = String(c.hasDescription) !== 'false';
+  var hasTextLink = String(c.hasTextLink) !== 'false';
+  if (lang === 'swift') {
+    var trailing = { 'copy-icon': '.copy', 'badge': '.badge("Label")', 'checkmark': '.checkmark', 'slot': '.slot { Image("custom") }' }[type];
+    var s = 'EBInlineText("Label", value: "0.00")\n    .ebTrailing(' + trailing + ')';
+    if (hasDescription) s += '\n    .ebDescription("Description goes here")';
+    if (hasTextLink) s += '\n    .ebTextLink("CTA") { }';
+    return s;
+  }
+  var kt = { 'copy-icon': 'EBInlineTextTrailing.Copy', 'badge': 'EBInlineTextTrailing.Badge("Label")', 'checkmark': 'EBInlineTextTrailing.Checkmark', 'slot': 'EBInlineTextTrailing.Slot { Icon(…) }' }[type];
+  var lines = ['    label = "Label"', '    value = "0.00"', '    trailing = ' + kt];
+  if (hasDescription) lines.push('    description = "Description goes here"');
+  if (hasTextLink) lines.push('    textLink = EBTextLink("CTA") { }');
+  return 'EBInlineText(\n' + lines.join(',\n') + '\n)';
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
+  if (!card) return;
+  card[prop] = value;
+  var host = document.getElementById('itx-spec-' + cardKey);
+  if (host) host.innerHTML = _itxRender(card);
+}
+window.updateSpecCard = updateSpecCard;
+
 function _itxInit() {
-  var ctx = document.getElementById('itx-context-preview');
-  if (ctx) ctx.innerHTML = _itxContextMarkup();
   _itxUpdate();
-  Object.keys(_specCards).forEach(function (k) {
-    var host = document.getElementById('inline-text-spec-' + k);
-    if (host) host.innerHTML = _itxRender(_specCards[k], ITX_PREVIEW_SCALE);
-  });
+  Object.keys(_specCards).forEach(function (k) { updateSpecCard(k, 'type', _specCards[k].type); });
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _itxInit);
 else _itxInit();

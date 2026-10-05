@@ -1,0 +1,1756 @@
+{
+  "name": "Action Row",
+  "meta": {
+    "node": "4628:19843",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4628-19843",
+    "description": "A tappable list row with a leading asset slot, label and description, and a trailing chevron with optional counter. Merges the former Action List, Action List with Counter and Action List with Description.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4628:19843</code> in the 2026 Working File and renamed <strong>Action Row</strong>, merging the three former Action List siblings into <code>TrailingContent</code> (2) × <code>State</code> (4) × <code>Density</code> (2) = 16 variants, plus a <code>hasDescription</code> boolean. Interaction states now exist where there were none, the leading asset and counter are real Figma Slots, and layer and property naming matches the conventions the rest of the family settled on. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+    },
+    "navGroup": "Action List",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Action-list rows stack inside Settings / Profile / Help menus. A typical screen mixes variants with/without description and with/without trailing counter.",
+    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"120\" viewBox=\"0 0 200 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"108\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"20\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"34\" y=\"16\" width=\"132\" height=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"100\" y=\"19\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Settings</text>\n          \n          <circle cx=\"44\" cy=\"38\" r=\"3\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"50\" y=\"35\" width=\"40\" height=\"5\" rx=\"1\" fill=\"#0A2757\"></rect>\n          <text x=\"146\" y=\"40\" fill=\"#005CE5\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">View</text>\n          <path d=\"M158 37l2 2-2 2\" stroke=\"#005CE5\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path>\n          \n          <circle cx=\"44\" cy=\"54\" r=\"3\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"50\" y=\"51\" width=\"52\" height=\"5\" rx=\"1\" fill=\"#005CE5\" opacity=\".9\"></rect>\n          <rect x=\"146\" y=\"50\" width=\"10\" height=\"7\" rx=\"3.5\" fill=\"#EEF2F9\"></rect>\n          <text x=\"151\" y=\"56\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"4.5\" font-weight=\"700\" font-family=\"system-ui\">3</text>\n          \n          <circle cx=\"44\" cy=\"70\" r=\"3\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"50\" y=\"67\" width=\"36\" height=\"5\" rx=\"1\" fill=\"#0A2757\"></rect>\n          <rect x=\"50\" y=\"74\" width=\"60\" height=\"3\" rx=\"1\" fill=\"#6780A9\"></rect>\n          <path d=\"M158 69l2 2-2 2\" stroke=\"#0A2757\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path>\n          \n          <rect x=\"40\" y=\"90\" width=\"8\" height=\"8\" rx=\"4\" fill=\"#EEF2F9\"></rect>\n          <rect x=\"52\" y=\"91\" width=\"80\" height=\"5\" rx=\"1\" fill=\"#EEF2F9\"></rect>\n          <rect x=\"146\" y=\"91\" width=\"14\" height=\"5\" rx=\"1\" fill=\"#EEF2F9\"></rect>\n        </svg>\n      </div>",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"arow-demo-preview\"><div class=\"eb-preview eb-preview-arow eb-preview-arow--cta eb-preview-arow--compact\"><span class=\"eb-preview-arow__asset\" aria-hidden=\"true\"></span><div class=\"eb-preview-arow__text\"><p class=\"eb-preview-arow__label\">Label</p><p class=\"eb-preview-arow__description\">description</p></div><div class=\"eb-preview-arow__trailing\"><span class=\"eb-preview-arow__cta\">CTA</span><svg class=\"eb-preview-arow__chevron\" viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M13 23L20 16L13 9\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">TrailingContent</span><select id=\"arow-ctrl-trailing\" class=\"demo-panel-select\" onchange=\"_arowUpdate()\"><option value=\"cta\" selected=\"\">CTA</option><option value=\"counter\">Counter</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"arow-ctrl-state\" class=\"demo-panel-select\" onchange=\"_arowUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option><option value=\"loading\">Loading</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select id=\"arow-ctrl-density\" class=\"demo-panel-select\" onchange=\"_arowUpdate()\"><option value=\"compact\" selected=\"\">Compact</option><option value=\"expanded\">Expanded</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select id=\"arow-ctrl-hasdescription\" class=\"demo-panel-select\" onchange=\"_arowUpdate()\"><option value=\"true\" selected=\"\">True</option><option value=\"false\">False</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Label</span><input type=\"text\" id=\"arow-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_arowUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><input type=\"text\" id=\"arow-ctrl-description\" class=\"demo-panel-select demo-panel-input\" value=\"description\" oninput=\"_arowUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">CTA label</span><input type=\"text\" id=\"arow-ctrl-cta\" class=\"demo-panel-select demo-panel-input\" value=\"CTA\" oninput=\"_arowUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Count</span><input type=\"text\" id=\"arow-ctrl-count\" class=\"demo-panel-select demo-panel-input\" value=\"0\" oninput=\"_arowUpdate()\"></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Used across Settings, Help Center, Profile, Wallet sub-screens. Covers the main action-list row patterns."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Carries its own surface, dividers and state colors, and composes a chevron and counter from library instances. Nothing external required to render a complete row."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "<code>TrailingContent</code>, <code>State</code> and <code>Density</code> are orthogonal, <code>Density</code> is used exactly as §1 defines it, <code>hasDescription</code> carries the correct verb prefix, and <code>TrailingContent</code> matches View Only Field for the same concept. Every addressable layer is semantically named; the skeleton loader keeps working names by design."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "<code>Asset Slot</code> and <code>Counter Slot</code> are real Figma Slots, and the chevron and counter come from library instances — teams drop in content without detaching. Stacks cleanly into lists."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default",
+        "notes": "Baseline row. Label in Neutral Dark (or Brand Blue on the Counter variant)."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Label → <code>#C2CFE5</code>, chevron → <code>#9BC5FD</code>, CTA → <code>#9BC5FD</code>, counter bg stays <code>#EEF2F9</code> but label → <code>#C2CFE5</code>."
+      },
+      {
+        "state": "Loading",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Loading",
+        "notes": "Icon becomes a neutral ring; label + trailing become 16 px pill placeholders filled with <code>#EEF2F9</code>."
+      },
+      {
+        "state": "Pressed",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "Action rows are tap targets — a pressed state (row tint + possibly label darken) is a baseline expectation for native."
+      },
+      {
+        "state": "Focused",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "TV / keyboard focus ring not defined. Android a11y also relies on it."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Three Action List components merged into Action Row.",
+        "body": "v2.0: Rebuilt on node <code>4628:19843</code> in the 2026 Working File and renamed <strong>Action Row</strong>. Action List, Action List with Counter and Action List with Description are now one set: the counter is a <code>Trailing=Counter</code> value, and the description is part of the row rather than a separate component. Confirmed as a permanent merge by the component owner. (C4 · Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Variant matrix is orthogonal and complete.",
+        "body": "v2.0: <code>Trailing</code> (CTA · Counter) × <code>State</code> (Default · Pressed · Disabled · Loading) × <code>Density</code> (Compact · Expanded) = <strong>16 variants</strong>, all authored. <code>Density</code> is used exactly as §1 defines it — adjusting row height and padding, 56px against 64px — rather than gating content. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Interaction states added.",
+        "body": "v2.0: <code>State</code> now covers Default, Pressed, Disabled and Loading, where the original components had no state coverage at all. Pressed carries its own <code>#F6F9FD</code> surface. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Leading asset and counter are real Figma Slots.",
+        "body": "v2.0: <code>Asset Slot</code> and <code>Counter Slot</code> are <code>SLOT</code> nodes, and the chevron and counter are library instances. Teams can drop in real content without detaching — the composition pattern the rest of the family has converged on. (C6 · Slot)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Frame naming aligned to the family.",
+        "body": "v2.1: The two frames both called <code>Container</code> are now <code>Row</code> and <code>TrailingGroup</code>, and the spaced names are hyphenated to match the convention Toast, Upload File and Section Header settled on — <code>Asset-Slot</code>, <code>Counter-Slot</code>, <code>Text-Container</code>, <code>Icon-Container</code>, <code>Bottom-Stroke</code>. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Trailing</code> renamed to <code>TrailingContent</code>.",
+        "body": "v2.1: The axis now carries the same name View Only Field uses for the same concept, satisfying §6 on consistent terminology. Any future component with a trailing area has one name to adopt rather than a choice between two. (C2 · Family)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Text and action layer naming completed.",
+        "body": "v2.2: <code>#label</code> → <code>Label</code> and <code>#blurb</code> → <code>Description</code>, mapping onto §3 — the content is supporting text beneath a label rather than the promotional summary <code>Blurb</code> denotes. <code>leading icon</code> → <code>Leading-Icon</code> and <code>Action Button</code> → <code>Action-Button</code> complete the hyphenated convention. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>hasDescription</code> boolean added.",
+        "body": "v2.3: Confirmed by the component owner — a <code>hasDescription</code> boolean now toggles the description line, restoring the label-only row the original Action List provided. Implemented as a boolean component property rather than a fourth variant axis, so the matrix stays at 16 rather than doubling. Not independently verifiable from the assessment tooling, which cannot read component property definitions. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Nested <code>Wrapper</code> collision resolved.",
+        "body": "v2.3: The <code>Wrapper</code> frame nested inside another <code>Wrapper</code> in the Loading variants is now <code>Skeleton-Trailing</code>, naming what it actually holds. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Skeleton loader retained as authored.",
+        "body": "v2.3: Closed by owner decision — the Loading variants keep their skeleton geometry as built, including the repeated <code>trailing icon</code> and <code>line</code> rectangle names. These are internal placeholder shapes with no property surface and no override target, so their names never reach a consumer or a Code Connect mapping — the same reasoning applied to View Only Field's wrapper frames. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [
+      {
+        "headline": "Record <code>State=Loading</code> under the existing State/Status exception.",
+        "body": "<code>Loading</code> is a process status rather than an interaction state, the same shape as <code>Error</code> on the form fields. It falls under the exception already documented for that family rather than needing its own justification.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Variants",
+    "description": "",
+    "source": {
+      "set": "4628:19843",
+      "variants": 16,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "arow-cta",
+        "demoKey": "cta",
+        "title": "CTA",
+        "node": "4628:19844",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"arow-spec-cta\"><div class=\"eb-preview eb-preview-arow eb-preview-arow--cta eb-preview-arow--compact\"><span class=\"eb-preview-arow__asset\" aria-hidden=\"true\"></span><div class=\"eb-preview-arow__text\"><p class=\"eb-preview-arow__label\">Label</p><p class=\"eb-preview-arow__description\">description</p></div><div class=\"eb-preview-arow__trailing\"><span class=\"eb-preview-arow__cta\">CTA</span><svg class=\"eb-preview-arow__chevron\" viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M13 23L20 16L13 9\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  },
+                  {
+                    "value": "loading",
+                    "label": "Loading"
+                  }
+                ]
+              },
+              {
+                "label": "Density",
+                "prop": "density",
+                "control": "select",
+                "defaultValue": "compact",
+                "options": [
+                  {
+                    "value": "compact",
+                    "label": "Compact"
+                  },
+                  {
+                    "value": "expanded",
+                    "label": "Expanded"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "TrailingContent",
+                "value": "CTA",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "Pressed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:loading",
+                    "value": "Loading",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Density",
+                "value": "Compact",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "density",
+                "variants": [
+                  {
+                    "when": "density:expanded",
+                    "value": "Expanded",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "#F6F9FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Bottom stroke",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Asset placeholder",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#EEF2F9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:loading",
+                    "value": "#EEF2F9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "CTA label",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Chevron",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Loading placeholders",
+                "value": "#EEF2F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Primary/Multi-line Label/Light/Fine",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "56",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "density:expanded",
+                    "value": "64",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1 · bottom",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBActionRow</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"description\"</span>)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"placeholder\"</span>))\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.cta</span>(<span class=\"syn-str\">\"CTA\"</span>))\n    .<span class=\"syn-fn\">ebDensity</span>(<span class=\"syn-dot\">.compact</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBActionRow</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"description\"</span>,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowTrailing</span>.Cta(<span class=\"syn-str\">\"CTA\"</span>),\n    <span class=\"syn-param\">density</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowDensity</span>.Compact\n)</code>"
+      },
+      {
+        "cardKey": "arow-counter",
+        "demoKey": "counter",
+        "title": "Counter",
+        "node": "4628:19883",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"arow-spec-counter\"><div class=\"eb-preview eb-preview-arow eb-preview-arow--counter eb-preview-arow--compact\"><span class=\"eb-preview-arow__asset\" aria-hidden=\"true\"></span><div class=\"eb-preview-arow__text\"><p class=\"eb-preview-arow__label\">Label</p><p class=\"eb-preview-arow__description\">description</p></div><div class=\"eb-preview-arow__trailing\"><svg class=\"eb-preview-arow__chevron\" viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M13 23L20 16L13 9\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg><span class=\"eb-preview-arow__counter\">0</span></div></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "State",
+                "prop": "state",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "pressed",
+                    "label": "Pressed"
+                  },
+                  {
+                    "value": "disabled",
+                    "label": "Disabled"
+                  },
+                  {
+                    "value": "loading",
+                    "label": "Loading"
+                  }
+                ]
+              },
+              {
+                "label": "Density",
+                "prop": "density",
+                "control": "select",
+                "defaultValue": "compact",
+                "options": [
+                  {
+                    "value": "compact",
+                    "label": "Compact"
+                  },
+                  {
+                    "value": "expanded",
+                    "label": "Expanded"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "TrailingContent",
+                "value": "Counter",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "state",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "Pressed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:disabled",
+                    "value": "Disabled",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:loading",
+                    "value": "Loading",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Density",
+                "value": "Compact",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "density",
+                "variants": [
+                  {
+                    "when": "density:expanded",
+                    "value": "Expanded",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:pressed",
+                    "value": "#F6F9FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Bottom stroke",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Asset placeholder",
+                "value": "#D7E0EF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#EEF2F9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "state:loading",
+                    "value": "#EEF2F9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#90A8D0",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Chevron",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Counter background",
+                "value": "#EEF2F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Counter value",
+                "value": "#072592",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "state:disabled",
+                    "value": "#C2CFE5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Loading placeholders",
+                "value": "#EEF2F9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Base",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Primary/Multi-line Label/Light/Fine",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "56",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "density:expanded",
+                    "value": "64",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1 · bottom",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBActionRow</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"description\"</span>)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"placeholder\"</span>))\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.counter</span>(0))\n    .<span class=\"syn-fn\">ebDensity</span>(<span class=\"syn-dot\">.compact</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBActionRow</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"description\"</span>,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowTrailing</span>.Counter(0),\n    <span class=\"syn-param\">density</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowDensity</span>.Compact\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by TrailingContent and State",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "CTA · Default",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "CTA · Default",
+            "element": "Bottom stroke",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "CTA · Default",
+            "element": "Asset placeholder",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "CTA · Default",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "CTA · Default",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "CTA · Default",
+            "element": "CTA label",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "CTA · Default",
+            "element": "Chevron",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "CTA · Pressed",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#F6F9FD"
+            ]
+          },
+          {
+            "role": "CTA · Disabled",
+            "element": "Asset placeholder",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "CTA · Disabled",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "CTA · Disabled",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "CTA · Disabled",
+            "element": "CTA label",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "CTA · Disabled",
+            "element": "Chevron",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Counter · Default",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Counter · Default",
+            "element": "Bottom stroke",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Counter · Default",
+            "element": "Asset placeholder",
+            "token": "—",
+            "values": [
+              "#D7E0EF"
+            ]
+          },
+          {
+            "role": "Counter · Default",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Counter · Default",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Counter · Default",
+            "element": "Chevron",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Counter · Default",
+            "element": "Counter background",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Counter · Default",
+            "element": "Counter value",
+            "token": "—",
+            "values": [
+              "#072592"
+            ]
+          },
+          {
+            "role": "Counter · Pressed",
+            "element": "Background",
+            "token": "—",
+            "values": [
+              "#F6F9FD"
+            ]
+          },
+          {
+            "role": "Counter · Disabled",
+            "element": "Asset placeholder",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Counter · Disabled",
+            "element": "Label",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Counter · Disabled",
+            "element": "Description",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Counter · Disabled",
+            "element": "Chevron",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Counter · Disabled",
+            "element": "Counter value",
+            "token": "—",
+            "values": [
+              "#C2CFE5"
+            ]
+          },
+          {
+            "role": "Loading",
+            "element": "Asset placeholder",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "Loading",
+            "element": "Placeholder bars",
+            "token": "—",
+            "values": [
+              "#EEF2F9"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:action-list:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>actionlist<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "TrailingContent, State and Density are the set’s three variant properties; hasDescription is the boolean the rebuild added. Asset-Slot, Leading-Slot (the CTA) and Counter-Slot are Figma Slots. Label and Description are text layers read from 4628:19844; whether they are exposed on the property panel, and the boolean’s default, are not readable with the plugin.",
+      "rows": [
+        {
+          "figma": "TrailingContent — CTA, Counter",
+          "swift": "<code>.ebTrailing(.cta(\"…\") / .counter(0))</code>",
+          "compose": "<code>trailing = EBActionRowTrailing.Cta(\"…\") / Counter(0)</code>"
+        },
+        {
+          "figma": "State — Default, Pressed, Disabled, Loading",
+          "swift": "<code>.disabled(true)</code> · <code>.ebLoading(true)</code> · Pressed is the platform touch-down",
+          "compose": "<code>enabled = false</code> · <code>isLoading = true</code> · Pressed from <code>interactionSource</code>"
+        },
+        {
+          "figma": "Density — Compact, Expanded",
+          "swift": "<code>.ebDensity(.compact / .expanded)</code>",
+          "compose": "<code>density = EBActionRowDensity.Compact / Expanded</code>"
+        },
+        {
+          "figma": "hasDescription — True, False",
+          "swift": "<code>description:</code> present or <code>nil</code>",
+          "compose": "<code>description = \"…\"</code> or <code>null</code>"
+        },
+        {
+          "figma": "Asset-Slot (slot)",
+          "swift": "<code>.ebLeadingAsset(Image)</code>",
+          "compose": "<code>leadingAsset = { Icon(…) }</code>"
+        },
+        {
+          "figma": "Leading-Slot (slot)",
+          "swift": "<code>.ebTrailing(.cta(\"CTA\"))</code> — the CTA text button",
+          "compose": "<code>EBActionRowTrailing.Cta(\"CTA\")</code>"
+        },
+        {
+          "figma": "Counter-Slot (slot)",
+          "swift": "<code>.ebTrailing(.counter(0))</code>",
+          "compose": "<code>EBActionRowTrailing.Counter(0)</code>"
+        },
+        {
+          "figma": "Label (text)",
+          "swift": "<code>EBActionRow(\"Label\", …)</code>",
+          "compose": "<code>label = \"…\"</code>"
+        },
+        {
+          "figma": "Description (text)",
+          "swift": "<code>description: String?</code>",
+          "compose": "<code>description = \"…\"</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "CTA",
+        "swift": "<code><span class=\"syn-type\">EBActionRow</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"description\"</span>)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"placeholder\"</span>))\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.cta</span>(<span class=\"syn-str\">\"CTA\"</span>))\n    .<span class=\"syn-fn\">ebDensity</span>(<span class=\"syn-dot\">.compact</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBActionRow</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"description\"</span>,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowTrailing</span>.Cta(<span class=\"syn-str\">\"CTA\"</span>),\n    <span class=\"syn-param\">density</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowDensity</span>.Compact\n)</code>"
+      },
+      {
+        "subheading": "Counter",
+        "swift": "<code><span class=\"syn-type\">EBActionRow</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"description\"</span>)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"placeholder\"</span>))\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.counter</span>(0))\n    .<span class=\"syn-fn\">ebDensity</span>(<span class=\"syn-dot\">.compact</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBActionRow</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"description\"</span>,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowTrailing</span>.Counter(0),\n    <span class=\"syn-param\">density</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowDensity</span>.Compact\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Row as a button",
+        "ios": "Whole row in <code>Button</code>; <code>accessibilityLabel</code> combines label and description.",
+        "android": "<code>Modifier.clickable { onTap() }.semantics(mergeDescendants = true)</code> on the row."
+      },
+      {
+        "requirement": "CTA as a second action",
+        "ios": "The CTA is its own <code>Button</code> inside the row — two accessibility elements, not one.",
+        "android": "Separate <code>TextButton</code> with its own <code>onClick</code>; do not merge it into the row."
+      },
+      {
+        "requirement": "Counter value",
+        "ios": "<code>.accessibilityValue(\"3 items\")</code> on the row — a bare number is ambiguous.",
+        "android": "<code>stateDescription = \"3 items\"</code> on the row."
+      },
+      {
+        "requirement": "Disabled",
+        "ios": "<code>.disabled(true)</code> adds the <code>.notEnabled</code> trait.",
+        "android": "<code>enabled = false</code> sets the disabled semantics."
+      },
+      {
+        "requirement": "Loading",
+        "ios": "Announce \"Loading\" once; <code>.accessibilityHidden(true)</code> on the placeholder bars.",
+        "android": "<code>contentDescription = \"Loading\"</code> on the skeleton container; placeholders cleared with <code>clearAndSetSemantics</code>."
+      },
+      {
+        "requirement": "Minimum target",
+        "ios": "56 pt row ≥ 44 pt; 64 pt when Expanded.",
+        "android": "56 dp row ≥ 48 dp; 64 dp when Expanded."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use CTA when the row carries a second action beside the tap, and keep it to one word.",
+        "dontText": "Don’t use CTA to repeat what tapping the row already does."
+      },
+      {
+        "doText": "Use Counter for unread or pending counts; the pill is 24 px and takes up to two digits.",
+        "dontText": "Don’t put text or a status word in the Counter."
+      },
+      {
+        "doText": "Use Expanded in Settings and Profile menus, Compact inside dense lists.",
+        "dontText": "Don’t mix Compact and Expanded rows in one list."
+      },
+      {
+        "doText": "Turn hasDescription off when the label says everything.",
+        "dontText": "Don’t leave the Description as filler under a self-explanatory label."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>Wrapper</code> › <code>Row</code> › <code>Asset-Slot</code>, <code>Text-Container</code>, <code>TrailingGroup</code> on 4628:19844. Loading variants are a separate <code>Wrapper</code> + <code>Action-Button</code> structure, and <code>4649:16639</code> (CTA · Loading · Expanded) is 56 tall where every other Expanded variant is 64."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>TrailingContent</code>, <code>State</code>, <code>Density</code> with Title Case values; <code>hasDescription</code> is a real boolean."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Label resolves to <code>Primary/Label/Base</code>, Description to <code>Primary/Multi-line Label/Light/Fine</code>. Description is <code>#6780A9</code> on the CTA variants and <code>#90A8D0</code> on the Counter variants — one binding is wrong. Colour variable bindings are not readable with the plugin."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Three enums, one boolean, three slots and two text values — maps 1:1 onto <code>EBActionRow</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default, Pressed, Disabled and Loading built for both TrailingContent values and both densities."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Chevron Right</code> is a vector instance; the CTA is a <code>Leading</code> instance and the counter a <code>Counter</code> instance, each inside a Slot."
+      }
+    ],
+    "variants": {
+      "total": 16,
+      "description": "2 TrailingContent × 4 State × 2 Density = 16 variants; hasDescription is a boolean and does not multiply the count",
+      "summary": {
+        "columns": [
+          "TrailingContent",
+          "State × Density",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "CTA",
+              "Default, Pressed, Disabled, Loading × Compact, Expanded",
+              "8"
+            ]
+          },
+          {
+            "cells": [
+              "Counter",
+              "Default, Pressed, Disabled, Loading × Compact, Expanded",
+              "8"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "TrailingContent",
+        "State",
+        "Density",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "CTA",
+            "Default",
+            "Compact",
+            "<code>4628:19844</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Default",
+            "Expanded",
+            "<code>4628:19857</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Pressed",
+            "Compact",
+            "<code>4628:20022</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Pressed",
+            "Expanded",
+            "<code>4628:19870</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Disabled",
+            "Compact",
+            "<code>4628:19939</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Disabled",
+            "Expanded",
+            "<code>4628:19952</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Loading",
+            "Compact",
+            "<code>4649:16649</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "CTA",
+            "Loading",
+            "Expanded",
+            "<code>4649:16639</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Default",
+            "Compact",
+            "<code>4628:19883</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Default",
+            "Expanded",
+            "<code>4628:19911</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Pressed",
+            "Compact",
+            "<code>4628:19897</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Pressed",
+            "Expanded",
+            "<code>4628:19925</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Disabled",
+            "Compact",
+            "<code>4628:19965</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Disabled",
+            "Expanded",
+            "<code>4628:19979</code>",
+            "360 × 64"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Loading",
+            "Compact",
+            "<code>4628:20010</code>",
+            "360 × 56"
+          ]
+        },
+        {
+          "cells": [
+            "Counter",
+            "Loading",
+            "Expanded",
+            "<code>4628:20016</code>",
+            "360 × 64"
+          ]
+        }
+      ],
+      "collapseLabel": "View full TrailingContent × State × Density breakdown (16 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 4628:19843",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the 16 live variants.</strong> Cards follow <code>TrailingContent</code> — CTA, Counter — with <code>State</code>, <code>Density</code> and <code>hasDescription</code> as panel controls; colours, text styles and the 56 / 64 heights read off 4628:19844, 4628:19883 and the state variants. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>; the row height with <code>hasDescription</code> off could not be read either.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the <code>TrailingContent</code> × <code>State</code> × <code>Density</code> schema.</strong> Installation on the Action List family coordinates, Property Mapping one row per property with the three slots, Usage Snippets and Guidelines added, Scorecard regraded, Variants Inventory moved from the three sibling nodes to the 16 live nodes.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Description colour differs by TrailingContent.</strong> <code>#6780A9</code> on the CTA variants, <code>#90A8D0</code> on the Counter variants (4628:19844 vs 4628:19883). One binding is off. Filed from the scorecard for the Component Review.",
+          "delta": {
+            "kind": "open",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>One Expanded variant is Compact-height.</strong> <code>4649:16639</code> (CTA · Loading · Expanded) is 360 × 56; every other Expanded variant is 64. Filed from the scorecard for the Component Review.",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 4628:19843",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 10 resolved issues on the Overview tab had no changelog row: Three Action List components merged into Action Row; Variant matrix is orthogonal and complete; Interaction states added; Leading asset and counter are real Figma Slots; Frame naming aligned to the family; <code>Trailing</code> renamed to <code>TrailingContent</code>; Text and action layer naming completed; <code>hasDescription</code> boolean added; Nested <code>Wrapper</code> collision resolved; Skeleton loader retained as authored.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · nodes 18577:14545, 18577:14637, 18577:14604",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Restructure</strong> — Collapse 3 sibling components into one slot-driven <code>List</code> row. Reconcile label typography. Add Pressed state. <span class=\"tag-open tag-c1 tag-c2 tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Architecture"
+          }
+        },
+        {
+          "body": "<strong>C1 — 3 siblings for 1 pattern</strong> — Description and Counter are <em>additive</em> features, not different components. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C1 — Spacer annotations leak</strong> — <code>_space_2</code> / <code>_space_16</code> are authoring artifacts exported as opacity-0 layers. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C2 — Divergent label typography</strong> — Semibold 16 Neutral vs. Bold 18 Brand across siblings. Same family must read as one. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C4 — Trailing baked per sibling</strong> — Replace CTA / Counter / Chevron booleans with a single <code>trailing</code> enum. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>C5 — Missing Pressed state</strong> — Action rows are the primary nav tap target. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>C6 — Placeholder icon</strong> — Leading is a gray <code>#C2C6CF</code> circle. Adopt a Figma Slot. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Blocked on consolidation. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        },
+        {
+          "body": "<strong>Tokens ✓</strong> — Colors / paddings / radii all bound to <code>main/action-list/*</code>. <span class=\"tag-fixed\">Noted</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Praise"
+          }
+        }
+      ]
+    }
+  ]
+}

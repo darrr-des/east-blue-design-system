@@ -1,5 +1,6 @@
 /**
- * Visual regression — every component spec card's preview is screenshotted
+ * Visual regression — every component spec card's preview (or, for a
+ * component with the Playground on, every Playground variant) is screenshotted
  * and compared against a SELF-baseline captured from our own Chromium
  * rendering (stored in `tests/visual-baselines/`).
  *
@@ -21,7 +22,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = path.resolve(__dirname, '../src/data/components');
+const DATA_DIR = path.resolve(__dirname, '../src/content/components');
+const PLAYGROUND_DIR = path.resolve(__dirname, '../public/playground');
 
 /* Sanitize cardKey for filesystem (matches export-figma-baselines.mjs). */
 function sanitize(s: string): string {
@@ -31,36 +33,92 @@ function sanitize(s: string): string {
     .replace(/^-|-$/g, '');
 }
 
-/* Discover (slug, cardKey) pairs from data files. Skip spec cards
-   that have no `previewHtml` field — they render nothing. */
+/* Discover cases from the component JSON (src/content/components). Reference
+   (`sample-`) and trial (`test-`) pages are left out — they are not shipped
+   components. A component with `style.playground: true` no longer renders its
+   spec cards: its Playground variants are snapshotted instead. Spec cards with
+   no `previewHtml` render nothing and are skipped. */
 type Case = { slug: string; cardKey: string };
-function loadCases(): Case[] {
-  const out: Case[] = [];
-  for (const file of fs.readdirSync(DATA_DIR)) {
-    if (!file.endsWith('.ts') || file.startsWith('_')) continue;
-    const text = fs.readFileSync(path.join(DATA_DIR, file), 'utf8');
-    const slug = file.replace(/\.ts$/, '');
-    /* Walk each cardKey occurrence and check whether its block contains a
-       `previewHtml` field before the next `cardKey` (or end of array).
-       Data files come in two shapes — JSON-style ("cardKey": "…") from the
-       migration, and hand-written TS (cardKey: '…'). Matching only the
-       first silently skipped six components, so both are accepted. */
-    const cardKeyRe = /["']?cardKey["']?\s*:\s*["']([^"']+)["']/g;
-    const matches = [...text.matchAll(cardKeyRe)];
-    for (let i = 0; i < matches.length; i++) {
-      const ck = matches[i];
-      const nextStart = i + 1 < matches.length ? matches[i + 1].index : text.length;
-      const blockEnd = nextStart != null ? nextStart : text.length;
-      const block = text.slice(ck.index ?? 0, blockEnd);
-      if (/["']?previewHtml["']?\s*:\s*["']/.test(block)) {
-        out.push({ slug, cardKey: ck[1] });
-      }
-    }
+type PlaygroundCase = { slug: string; id: string; name: string };
+function walk(o: unknown, cb: (o: Record<string, unknown>) => void): void {
+  if (Array.isArray(o)) o.forEach((x) => walk(x, cb));
+  else if (o && typeof o === 'object') {
+    cb(o as Record<string, unknown>);
+    Object.values(o).forEach((x) => walk(x, cb));
   }
-  return out;
+}
+function loadCases(): { cards: Case[]; playground: PlaygroundCase[] } {
+  const cards: Case[] = [];
+  const playground: PlaygroundCase[] = [];
+  for (const file of fs.readdirSync(DATA_DIR)) {
+    if (!file.endsWith('.json')) continue;
+    const slug = file.replace(/\.json$/, '');
+    if (/^(sample|test)-/.test(slug)) continue;
+    const data = JSON.parse(fs.readFileSync(path.join(DATA_DIR, file), 'utf8'));
+    /* Remove / consolidate / product-layer verdicts render no spec cards —
+       the same `cardlessVerdict` the framework sweep uses. */
+    const badges: string[] = (data.meta?.badges || []).map((b: { kind: string }) => b.kind);
+    if (badges.some((k) => ['remove', 'consolidate', 'product-layer'].includes(k))) continue;
+    if (data.style?.playground) {
+      const pg = JSON.parse(fs.readFileSync(path.join(PLAYGROUND_DIR, `${slug}.json`), 'utf8'));
+      for (const v of pg.variants) playground.push({ slug, id: v.id, name: v.name });
+      continue;
+    }
+    walk(data, (o) => {
+      if (typeof o.cardKey === 'string' && typeof o.previewHtml === 'string' && o.previewHtml.trim()) {
+        cards.push({ slug, cardKey: o.cardKey });
+      }
+    });
+  }
+  return { cards, playground };
 }
 
-const CASES = loadCases();
+const { cards: CASES, playground: PLAYGROUND_CASES } = loadCases();
+
+/* A suite that finds nothing is not a pass: the data moved once and this
+   file reported "No tests found" instead of failing loudly. */
+test('visual suite found its cases', () => {
+  expect(CASES.length).toBeGreaterThan(0);
+});
+
+/* Playground variants, on the real component page — the tab boots hidden
+   there, which is where the 0 × 0 layout bug lived. `?nochrome` hides the
+   overlay, as in fidelity.mjs. */
+for (const { slug, id, name } of PLAYGROUND_CASES) {
+  test(`${slug} / playground / ${name}`, async ({ page }) => {
+    await page.goto(`/components/${slug}?nochrome=1#v=${encodeURIComponent(id)}`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => document.fonts.ready);
+    await page.getByRole('tab', { name: 'Playground' }).click();
+    const root = page.locator('.pg-canvas > .pg-n').first();
+    await expect(root).toBeAttached();
+    await expect(page.locator('.pg-layer[aria-level="1"] .pg-lname').first()).toHaveText(name);
+    const shot = { maxDiffPixels: 0, threshold: 0, animations: 'disabled' as const };
+    const file = [slug, 'playground', `${sanitize(name)}.png`];
+    /* A component whose box is zero in one dimension still draws: Progress Bar is
+       a 312 × 0 frame of stroked zero-height lines, so all of it is stroke spilling
+       outside the box, and Playwright calls the element hidden. Clip the page to
+       what the layers actually cover instead. Every other component keeps its
+       element screenshot, so their baselines are untouched. */
+    const box = await root.boundingBox();
+    if (box && box.width > 0 && box.height > 0) {
+      await expect(root).toHaveScreenshot(file, shot);
+    } else {
+      await root.scrollIntoViewIfNeeded();
+      const clip = await root.evaluate((el) => {
+        let l = Infinity, t = Infinity, r = -Infinity, b = -Infinity;
+        for (const n of [el, ...el.querySelectorAll('*')]) {
+          const x = n.getBoundingClientRect();
+          if (!x.width && !x.height) continue;
+          l = Math.min(l, x.left); t = Math.min(t, x.top); r = Math.max(r, x.right); b = Math.max(b, x.bottom);
+        }
+        return { x: Math.floor(l), y: Math.floor(t), width: Math.ceil(r - l), height: Math.ceil(b - t) };
+      });
+      expect(clip.width, 'drawn area').toBeGreaterThan(0);
+      expect(clip.height, 'drawn area').toBeGreaterThan(0);
+      await expect(page).toHaveScreenshot(file, { ...shot, clip });
+    }
+  });
+}
 
 for (const { slug, cardKey } of CASES) {
   const safeKey = sanitize(cardKey);

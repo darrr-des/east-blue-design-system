@@ -1,0 +1,1370 @@
+{
+  "name": "Inline Text",
+  "meta": {
+    "node": "4419:24515",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4419-24515",
+    "description": "Test read. A label-and-value row with an optional trailing element, description and text link. Read independently of the existing Inline Text page to measure whether the framework reproduces its own result.",
+    "badges": [
+      {
+        "kind": "fix",
+        "label": "Fix"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix — the property model and the caption contrast",
+      "text": "Every paint is bound and every text node styled. But Type multiplies the set by four for presets its own slot already covers, the three has-properties are built two different ways, and the description reads at 4.01:1."
+    },
+    "navGroup": "",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "Rows on a transaction or account-detail screen: a label on the left, its value on the right, with a copy action, a status badge or a check where the row needs one. Sketched; no screenshot of a shipping screen was read in this pass.",
+    "inContextHtml": "<div class=\"ctx-placeholder\"><svg width=\"240\" height=\"150\" viewBox=\"0 0 240 150\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-hidden=\"true\"><rect x=\"0.5\" y=\"0.5\" width=\"239\" height=\"149\" rx=\"10\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"/><rect x=\"16\" y=\"16\" width=\"208\" height=\"118\" rx=\"8\" fill=\"#FFFFFF\"/><rect x=\"28\" y=\"30\" width=\"54\" height=\"8\" rx=\"4\" fill=\"#0A2757\"/><rect x=\"164\" y=\"30\" width=\"30\" height=\"8\" rx=\"4\" fill=\"#445C85\"/><rect x=\"200\" y=\"28\" width=\"12\" height=\"12\" rx=\"2\" stroke=\"#445C85\" stroke-width=\"1.5\"/><rect x=\"28\" y=\"44\" width=\"92\" height=\"6\" rx=\"3\" fill=\"#6780A9\"/><rect x=\"194\" y=\"44\" width=\"18\" height=\"6\" rx=\"3\" fill=\"#005CE5\"/><rect x=\"28\" y=\"66\" width=\"184\" height=\"1\" fill=\"#E5EBF4\"/><rect x=\"28\" y=\"80\" width=\"64\" height=\"8\" rx=\"4\" fill=\"#0A2757\"/><rect x=\"160\" y=\"80\" width=\"30\" height=\"8\" rx=\"4\" fill=\"#445C85\"/><rect x=\"194\" y=\"78\" width=\"18\" height=\"12\" rx=\"6\" fill=\"#E5F1FF\"/><rect x=\"28\" y=\"102\" width=\"46\" height=\"8\" rx=\"4\" fill=\"#0A2757\"/><rect x=\"170\" y=\"102\" width=\"30\" height=\"8\" rx=\"4\" fill=\"#445C85\"/><path d=\"M204 106l2.5 2.5L211 103\" stroke=\"#445C85\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div>",
+    "inContextImage": "",
+    "inContextAlt": "A detail card listing three label-and-value rows: the first with a copy icon, a description and a CTA link, the second with a status badge, the third with a checkmark.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tit-demo-preview\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--copy\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail eb-preview-tit__trail--icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" d=\"M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--both\"><span class=\"eb-preview-tit__desc\">Description goes here</span><span class=\"eb-preview-tit__link\">CTA</span></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"tit-ctrl-type\" onchange=\"_titUpdate()\"><option value=\"copy\" selected>Copy Icon</option><option value=\"badge\">Badge</option><option value=\"check\">Checkmark</option><option value=\"slot\">Slot</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"tit-ctrl-hasdescription\" checked onchange=\"this.parentElement.classList.toggle('is-on', this.checked); _titUpdate()\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTextLink</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"tit-ctrl-hastextlink\" checked onchange=\"this.parentElement.classList.toggle('is-on', this.checked); _titUpdate()\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailingElement</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"tit-ctrl-hastrailing\" checked onchange=\"this.parentElement.classList.toggle('is-on', this.checked); _titUpdate()\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Any label-and-value pair on a detail or receipt screen. Label, value, description and link are all content, and the trailing element is a slot, so nothing in the set is tied to one product."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its layout and every text layer; the trailing element comes from its own <code>Trailing Elements</code> component. All 64 visible paints are bound to variables and all 52 text nodes carry a DS style, so it depends on nothing unbound."
+      },
+      {
+        "name": "Consistent",
+        "rating": "partial",
+        "note": "The copy is identical across all 16 variants and the tokens hold throughout. What breaks: three <code>has…</code> properties built two ways — two string variants, one boolean — and a 2px right inset on the supporting row that appears only when description and link are both shown."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "The trailing element is an instance of <code>Trailing Elements</code>, the badge an instance of <code>Badge</code>, the icons DS icon instances. Nothing is redrawn locally."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Copy Icon",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Type=Copy Icon",
+        "notes": "A 24 × 24 copy icon after the value, <code>#445C85</code> at 1.8, back sheet at 40%. The icon is the copy action; no pressed state is drawn."
+      },
+      {
+        "state": "Badge",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Type=Badge",
+        "notes": "A 48 × 18 <code>Badge</code> instance after the value: <code>#E5F1FF</code> pill, <code>#005CE5</code> label, radius 99."
+      },
+      {
+        "state": "Checkmark",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Type=Checkmark",
+        "notes": "A 16 × 16 check, one path at <code>#445C85</code>, stroke 3. Display only."
+      },
+      {
+        "state": "Slot",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Type=Slot",
+        "notes": "An empty 24 × 24 Slot — space is reserved, nothing is drawn until content is placed."
+      },
+      {
+        "state": "Trailing hidden",
+        "ios": "yes",
+        "android": "yes",
+        "property": "hasTrailingElement=false",
+        "notes": "Hides <code>Trailing Elements</code> in all 16 variants — read from the layer binding, not inferred."
+      },
+      {
+        "state": "Link pressed",
+        "ios": "no",
+        "android": "no",
+        "property": "—",
+        "notes": "The CTA link is tappable but no pressed or disabled look is built for it, or for the copy icon."
+      }
+    ],
+    "resolved": [],
+    "open": [
+      {
+        "headline": "The Type axis multiplies the set for presets its own slot covers.",
+        "body": "Each <code>Type</code> value only sets the nested <code>Trailing Elements</code> instance's own <code>Type</code> — and <code>Type=Slot</code> already accepts any trailing content. Copy Icon, Badge and Checkmark are presets of that slot, yet they multiply the set by four. The names do not match either: <code>Copy Icon</code> here, <code>Icon</code> on the nested instance.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Three <code>has…</code> properties, built two different ways.",
+        "body": "<code>hasDescription</code> and <code>hasTextLink</code> are VARIANT properties with string values <code>True</code> / <code>False</code>; <code>hasTrailingElement</code> is a real BOOLEAN. Their value order disagrees too — <code>False | True</code> on one, <code>True | False</code> on the other. The two variants remove their layer outright; the only thing a boolean could not reproduce is the link right-aligning when it stands alone.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The description reads at 4.01:1.",
+        "body": "<code>Description</code> is <code>#6780A9</code>, <code>Secondary/Bold/Caption</code> at 12px, on a white surface — 4.01:1, under the 4.5:1 that 12px text needs. Computed from the read fill with the WCAG relative-luminance formula. The label (14.6:1), value (6.74:1), link (5.73:1) and badge (5.01:1) all pass.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "The link is a 21 × 18 target with no pressed state.",
+        "body": "<code>LinkLabel</code> draws at 21 × 18, under the 24 × 24 minimum of WCAG 2.2 §2.5.8 unless the spacing around it makes up the difference, and well under the 44 pt a native platform expects. Neither the link nor the copy icon has a pressed or disabled look.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "A 2px inset appears only when description and link are both shown.",
+        "body": "<code>SupportingRow</code> has 0 padding in every variant except the eight with both description and link, where it carries 2 on the right. So the link sits 2px inside the trailing element's edge in those eight, and flush with it everywhere else.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "recommendations": [
+      {
+        "headline": "Collapse Type into the trailing slot.",
+        "body": "Keep one Inline Text with a trailing slot and ship Copy Icon, Badge and Checkmark as preferred instances of <code>Trailing Elements</code>. The set drops from 16 variants to 4, and a new trailing element needs no new variant.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Make every <code>has…</code> a boolean.",
+        "body": "Turn <code>hasDescription</code> and <code>hasTextLink</code> into BOOLEAN properties like <code>hasTrailingElement</code>, and let <code>SupportingRow</code> use space-between so the link keeps its right edge on its own.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Name the value after the nested one.",
+        "body": "Use <code>Icon</code> on both levels, or <code>Copy Icon</code> on both. A value that changes name one level down is one more lookup for every developer mapping it.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Raise the description to 4.5:1.",
+        "body": "The description carries the context for the value — a date, a reference, a condition — so it is information, not decoration.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Give the link and the copy action a hit area and a pressed state.",
+        "body": "State the tappable area separately from the drawn text (44 pt is the safe native answer) and draw a pressed look for both actions, so each platform does not invent its own.",
+        "tag": "State"
+      },
+      {
+        "headline": "Drop the 2px inset or apply it everywhere.",
+        "body": "Either the link aligns to the trailing column or it does not; today it depends on whether a description is present.",
+        "tag": "Composition"
+      }
+    ],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Examples",
+    "description": "",
+    "source": {
+      "set": "4419:24515",
+      "variants": 16,
+      "read": "2026-09-18",
+      "tool": "figma-rest + talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "type",
+        "demoKey": "type",
+        "title": "Type",
+        "node": "4419:24515",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tit-spec-type\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--copy\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail eb-preview-tit__trail--icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" d=\"M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--both\"><span class=\"eb-preview-tit__desc\">Description goes here</span><span class=\"eb-preview-tit__link\">CTA</span></span></div><figcaption class=\"eb-example__label\">Copy Icon</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--badge\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail\"><span class=\"eb-preview-tit__badge\">Label</span></span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--both\"><span class=\"eb-preview-tit__desc\">Description goes here</span><span class=\"eb-preview-tit__link\">CTA</span></span></div><figcaption class=\"eb-example__label\">Badge</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--check\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail eb-preview-tit__trail--check\"><svg viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3 8L6.5 11L13 5\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--both\"><span class=\"eb-preview-tit__desc\">Description goes here</span><span class=\"eb-preview-tit__link\">CTA</span></span></div><figcaption class=\"eb-example__label\">Checkmark</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--slot\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail eb-preview-tit__trail--slot\"></span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--both\"><span class=\"eb-preview-tit__desc\">Description goes here</span><span class=\"eb-preview-tit__link\">CTA</span></span></div><figcaption class=\"eb-example__label\">Slot</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasTextLink",
+                "prop": "hasTextLink",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingElement",
+                "prop": "hasTrailingElement",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Copy Icon · Badge · Checkmark · Slot",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Trailing element",
+                "value": "Copy icon, 24 × 24",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "type",
+                "variants": [
+                  {
+                    "when": "type:badge",
+                    "value": "Badge instance, 48 × 18",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:check",
+                    "value": "Check, 16 × 16",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:slot",
+                    "value": "Empty Slot, 24 × 24",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "#445C85",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Trailing icon",
+                "value": "#445C85",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "type",
+                "variants": [
+                  {
+                    "when": "type:badge",
+                    "value": "#005CE5 on #E5F1FF",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "type:slot",
+                    "value": "none",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Label",
+                "value": "Primary/Label/Light/Base",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Value",
+                "value": "Primary/Label/Light/Base",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Badge label",
+                "value": "Primary/Label/Fine",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "44",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "368",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "radius/radius-0",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "0",
+                "mono": true,
+                "token": "space/space-0",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "0",
+                "mono": true,
+                "token": "space/space-0",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "2 between rows · 4 value to trailing",
+                "mono": true,
+                "token": "space/space-2 · space/space-4",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "Vertical stack, centre / left",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description goes here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n    .<span class=\"syn-fn\">ebTrailing</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.copyIcon</span><span class=\"syn-punc\">)</span>   <span class=\"syn-cmt\">// or .copyIcon · .badge · .checkmark · .custom</span>",
+        "compose": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">link</span> = <span class=\"syn-type\">EBTextLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBInlineTextTrailing</span><span class=\"syn-dot\">.CopyIcon</span>   <span class=\"syn-cmt\">// or CopyIcon · Badge · Checkmark · Custom</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "hasDescription",
+        "demoKey": "hasDescription",
+        "title": "hasDescription",
+        "node": "4419:24515",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tit-spec-hasDescription\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--copy\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail eb-preview-tit__trail--icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" d=\"M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--both\"><span class=\"eb-preview-tit__desc\">Description goes here</span><span class=\"eb-preview-tit__link\">CTA</span></span></div><figcaption class=\"eb-example__label\">True</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--copy\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail eb-preview-tit__trail--icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" d=\"M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--end\"><span class=\"eb-preview-tit__link\">CTA</span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "copy",
+                "options": [
+                  {
+                    "value": "copy",
+                    "label": "Copy Icon"
+                  },
+                  {
+                    "value": "badge",
+                    "label": "Badge"
+                  },
+                  {
+                    "value": "check",
+                    "label": "Checkmark"
+                  },
+                  {
+                    "value": "slot",
+                    "label": "Slot"
+                  }
+                ]
+              },
+              {
+                "label": "hasTextLink",
+                "prop": "hasTextLink",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingElement",
+                "prop": "hasTrailingElement",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "hasDescription",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:false",
+                    "value": "False — the layer is removed, not hidden",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Caption",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "44",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:false",
+                    "value": "44 with the link · 24 without",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Padding H",
+                "value": "0 · 2 right when the link is also shown",
+                "mono": true,
+                "token": "space/space-0 · space/space-2",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description goes here\"</span><span class=\"syn-punc\">)</span>   <span class=\"syn-cmt\">// False: omit</span>\n    .<span class=\"syn-fn\">ebLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n    .<span class=\"syn-fn\">ebTrailing</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.copyIcon</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description goes here\"</span>   <span class=\"syn-cmt\">// False: omit,</span>\n    <span class=\"syn-param\">link</span> = <span class=\"syn-type\">EBTextLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBInlineTextTrailing</span><span class=\"syn-dot\">.CopyIcon</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "hasTextLink",
+        "demoKey": "hasTextLink",
+        "title": "hasTextLink",
+        "node": "4419:24515",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tit-spec-hasTextLink\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--copy\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail eb-preview-tit__trail--icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" d=\"M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--both\"><span class=\"eb-preview-tit__desc\">Description goes here</span><span class=\"eb-preview-tit__link\">CTA</span></span></div><figcaption class=\"eb-example__label\">True</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--copy\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail eb-preview-tit__trail--icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" d=\"M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span></span></span><span class=\"eb-preview-tit__support\"><span class=\"eb-preview-tit__desc\">Description goes here</span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "copy",
+                "options": [
+                  {
+                    "value": "copy",
+                    "label": "Copy Icon"
+                  },
+                  {
+                    "value": "badge",
+                    "label": "Badge"
+                  },
+                  {
+                    "value": "check",
+                    "label": "Checkmark"
+                  },
+                  {
+                    "value": "slot",
+                    "label": "Slot"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingElement",
+                "prop": "hasTrailingElement",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "hasTextLink",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTextLink",
+                "variants": [
+                  {
+                    "when": "hasTextLink:false",
+                    "value": "False — the layer is removed, not hidden",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Link copy",
+                "value": "CTA",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Link",
+                "value": "#005CE5",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Link",
+                "value": "Secondary/Bold/Caption",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Width",
+                "value": "21",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Height",
+                "value": "18",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "Right when alone (MAX) · after the description otherwise",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description goes here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>   <span class=\"syn-cmt\">// False: omit</span>\n    .<span class=\"syn-fn\">ebTrailing</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.copyIcon</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">link</span> = <span class=\"syn-type\">EBTextLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>   <span class=\"syn-cmt\">// False: omit,</span>\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBInlineTextTrailing</span><span class=\"syn-dot\">.CopyIcon</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "hasTrailingElement",
+        "demoKey": "hasTrailingElement",
+        "title": "hasTrailingElement",
+        "node": "4419:24515",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tit-spec-hasTrailingElement\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--copy\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span><span class=\"eb-preview-tit__trail eb-preview-tit__trail--icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" d=\"M8 7H7.4C6.6268 7 6 7.6268 6 8.4V18.6C6 19.3732 6.6268 20 7.4 20H13.6C14.3732 20 15 19.3732 15 18.6V17.1111\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><path d=\"M18 15.6V5.4C18 4.6268 17.3732 4 16.6 4H10.4C9.6268 4 9 4.6268 9 5.4V15.6C9 16.3732 9.6268 17 10.4 17H16.6C17.3732 17 18 16.3732 18 15.6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg></span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--both\"><span class=\"eb-preview-tit__desc\">Description goes here</span><span class=\"eb-preview-tit__link\">CTA</span></span></div><figcaption class=\"eb-example__label\">True</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tit eb-preview-tit--copy\"><span class=\"eb-preview-tit__main\"><span class=\"eb-preview-tit__label\">Label</span><span class=\"eb-preview-tit__value-group\"><span class=\"eb-preview-tit__value\">0.00</span></span></span><span class=\"eb-preview-tit__support eb-preview-tit__support--both\"><span class=\"eb-preview-tit__desc\">Description goes here</span><span class=\"eb-preview-tit__link\">CTA</span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Type",
+                "prop": "type",
+                "control": "select",
+                "defaultValue": "copy",
+                "options": [
+                  {
+                    "value": "copy",
+                    "label": "Copy Icon"
+                  },
+                  {
+                    "value": "badge",
+                    "label": "Badge"
+                  },
+                  {
+                    "value": "check",
+                    "label": "Checkmark"
+                  },
+                  {
+                    "value": "slot",
+                    "label": "Slot"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasTextLink",
+                "prop": "hasTextLink",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "hasTrailingElement",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTrailingElement",
+                "variants": [
+                  {
+                    "when": "hasTrailingElement:false",
+                    "value": "False",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Bound to",
+                "value": "Trailing Elements · visible",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description goes here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n    .<span class=\"syn-fn\">ebTrailing</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.copyIcon</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">link</span> = <span class=\"syn-type\">EBTextLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBInlineTextTrailing</span><span class=\"syn-dot\">.CopyIcon</span>\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors",
+        "description": "Read off the set on 18 September 2026. Every visible paint in all 16 variants is bound to a variable, 68 of 68, and every one resolves by key against the Primitives library. Each drawn value matches its token.",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Main row",
+            "element": "Label",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Main row",
+            "element": "Value",
+            "token": "text/color-text-weak",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Copy Icon",
+            "element": "Icon stroke",
+            "token": "text/color-text-weak",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Checkmark",
+            "element": "Check stroke",
+            "token": "text/color-text-weak",
+            "values": [
+              "#445C85"
+            ]
+          },
+          {
+            "role": "Badge",
+            "element": "Surface",
+            "token": "bg/color-bg-info-weakest",
+            "values": [
+              "#E5F1FF"
+            ]
+          },
+          {
+            "role": "Badge",
+            "element": "Label",
+            "token": "text/color-text-primary",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Supporting row",
+            "element": "Description",
+            "token": "text/color-text-weaker",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Supporting row",
+            "element": "Link",
+            "token": "text/color-text-primary",
+            "values": [
+              "#005CE5"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:inline-text:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EBDesignSystem</span>   <span class=\"syn-cmt\">// SwiftUI</span>\n<span class=\"syn-kw\">import</span> com.eastblue.ds.inlinetext.<span class=\"syn-type\">EBInlineText</span>   <span class=\"syn-cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Type, hasDescription and hasTextLink are variant properties; hasTrailingElement is a boolean. Label, value, description and link copy are content.",
+      "rows": [
+        {
+          "figma": "Type — Copy Icon, Badge, Checkmark, Slot",
+          "swift": "<code>.ebTrailing(.copyIcon / .badge(\"…\") / .checkmark / .custom { })</code>",
+          "compose": "<code>trailing = EBInlineTextTrailing.CopyIcon / Badge(\"…\") / Checkmark / Custom { }</code>"
+        },
+        {
+          "figma": "hasTrailingElement — shows or hides the trailing element",
+          "swift": "Omit <code>.ebTrailing</code> to hide it",
+          "compose": "Omit <code>trailing</code> to hide it"
+        },
+        {
+          "figma": "hasDescription — True, False",
+          "swift": "<code>.ebDescription(\"…\")</code>, omitted when False",
+          "compose": "<code>description = \"…\"</code>, omitted when False"
+        },
+        {
+          "figma": "hasTextLink — True, False",
+          "swift": "<code>.ebLink(\"CTA\") { }</code>, omitted when False",
+          "compose": "<code>link = EBTextLink(\"CTA\") { }</code>, omitted when False"
+        },
+        {
+          "figma": "Label and value, the two text layers of the main row",
+          "swift": "<code>EBInlineText(\"Label\", value: \"0.00\")</code>",
+          "compose": "<code>label = \"Label\", value = \"0.00\"</code>"
+        }
+      ]
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Copyable value (Type=Copy Icon)",
+        "swift": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Reference no.\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTrailing</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.copyIcon</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Reference no.\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBInlineTextTrailing</span><span class=\"syn-dot\">.CopyIcon</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Status (Type=Badge)",
+        "swift": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Status\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTrailing</span><span class=\"syn-punc\">(</span>.<span class=\"syn-fn\">badge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Status\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBInlineTextTrailing</span>.<span class=\"syn-fn\">Badge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Confirmed (Type=Checkmark)",
+        "swift": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Verified\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTrailing</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.checkmark</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Verified\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBInlineTextTrailing</span><span class=\"syn-dot\">.Checkmark</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Custom trailing (Type=Slot)",
+        "swift": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">value</span>: <span class=\"syn-str\">\"0.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description goes here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n    .<span class=\"syn-fn\">ebTrailing</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.custom</span> <span class=\"syn-punc\">{</span> MyView<span class=\"syn-punc\">(</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"0.00\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Description goes here\"</span>,\n    <span class=\"syn-param\">link</span> = <span class=\"syn-type\">EBTextLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBInlineTextTrailing</span><span class=\"syn-dot\">.Custom</span> <span class=\"syn-punc\">{</span> MyView<span class=\"syn-punc\">(</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Label and value read as one",
+        "ios": "Combine the row with <code>.accessibilityElement(children: .combine)</code> so VoiceOver reads \"Label, 0.00\" once.",
+        "android": "<code>Modifier.semantics(mergeDescendants = true)</code> on the main row."
+      },
+      {
+        "requirement": "Copy action named",
+        "ios": "The copy icon is a <code>Button</code> with <code>accessibilityLabel(\"Copy Label\")</code>, and a confirmation is announced after copying.",
+        "android": "<code>IconButton</code> with <code>contentDescription = \"Copy $label\"</code>; announce the result through a <code>liveRegion</code> or a snackbar."
+      },
+      {
+        "requirement": "Link hit area",
+        "ios": "Give the CTA a 44 × 44 pt tappable frame with <code>.contentShape</code>, independent of its 21 × 18 drawn text.",
+        "android": "Use <code>Modifier.minimumInteractiveComponentSize()</code> so the link reaches 48 dp."
+      },
+      {
+        "requirement": "Checkmark not colour alone",
+        "ios": "Give the check an <code>accessibilityLabel(\"Verified\")</code>; it is otherwise a silent decoration.",
+        "android": "Set <code>contentDescription = \"Verified\"</code> on the check icon."
+      },
+      {
+        "requirement": "Badge text read",
+        "ios": "The badge label is part of the combined row element, not a separate stop.",
+        "android": "Include the badge text in the merged semantics of the row."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Inline Text for a label and its value on a detail or receipt screen.",
+        "dontText": "Do not use it for editable values — it is display only, with a link or copy action at most."
+      },
+      {
+        "doText": "Use Type=Copy Icon when the user is likely to paste the value elsewhere, such as a reference number.",
+        "dontText": "Do not add a copy icon to a value that cannot be pasted usefully, like a status."
+      },
+      {
+        "doText": "Keep the description to one line of context for the value.",
+        "dontText": "Do not put instructions in the description; it reads at caption size and below the contrast minimum today."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Clear, role-named frames — <code>MainRow</code>, <code>ValueGroup</code>, <code>SupportingRow</code>, <code>DescriptionGroup</code> — and every text layer named for its content. The one wrinkle: <code>SupportingRow</code> carries 2 right padding in only the eight variants that show both description and link."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The whole property panel was read over REST, boolean included. <code>Type</code> duplicates the nested instance's own type under a different value name (<code>Copy Icon</code> vs <code>Icon</code>) and multiplies the set by four; <code>hasDescription</code> and <code>hasTextLink</code> are string variants while <code>hasTrailingElement</code> is a boolean, with their value orders reversed."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Measured, not assumed: all 64 visible paints across the 16 variants carry a bound variable, and all 52 text nodes carry a DS text style — <code>Primary/Label/Light/Base</code>, <code>Primary/Label/Fine</code>, <code>Secondary/Bold/Caption</code>. The variable names themselves still need a Dev Mode read; the five ids are listed under the colors table."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Label and value map to two strings, description and link to two optional parameters, and the trailing element to one enum with a custom case. Nothing forces iOS and Android apart."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The component is mostly display, but it carries two actions — the CTA link and the copy icon — and neither has a pressed or disabled look. The link draws at 21 × 18, under the 24 × 24 minimum, and the description reads at 4.01:1."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Both icons export as clean stroked paths bound to <code>#445C85</code> — the copy icon as two sheets at 1.8, the check as one path at 3 — with the icon-template grid hidden. The badge is a DS <code>Badge</code> instance."
+      }
+    ],
+    "variants": {
+      "total": 16,
+      "description": "4 Type × 2 hasDescription × 2 hasTextLink = 16 variants, all built. hasTrailingElement is a boolean, so it does not multiply the count.",
+      "summary": {
+        "columns": [
+          "Type",
+          "Combinations",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Copy Icon",
+              "hasDescription True · False × hasTextLink True · False",
+              "4"
+            ]
+          },
+          {
+            "cells": [
+              "Badge",
+              "hasDescription True · False × hasTextLink True · False",
+              "4"
+            ]
+          },
+          {
+            "cells": [
+              "Checkmark",
+              "hasDescription True · False × hasTextLink True · False",
+              "4"
+            ]
+          },
+          {
+            "cells": [
+              "Slot",
+              "hasDescription True · False × hasTextLink True · False",
+              "4"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "Type",
+        "hasDescription",
+        "hasTextLink",
+        "Node",
+        "Size"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Copy Icon",
+            "True",
+            "True",
+            "<code>4419:20913</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Copy Icon",
+            "True",
+            "False",
+            "<code>5643:34601</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Copy Icon",
+            "False",
+            "True",
+            "<code>4419:24516</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Copy Icon",
+            "False",
+            "False",
+            "<code>5643:34623</code>",
+            "368 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "True",
+            "True",
+            "<code>5652:36979</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "True",
+            "False",
+            "<code>5652:36989</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "False",
+            "True",
+            "<code>5652:36998</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "False",
+            "False",
+            "<code>5652:37006</code>",
+            "368 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Checkmark",
+            "True",
+            "True",
+            "<code>5652:37190</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Checkmark",
+            "True",
+            "False",
+            "<code>5652:37200</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Checkmark",
+            "False",
+            "True",
+            "<code>5652:37209</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Checkmark",
+            "False",
+            "False",
+            "<code>5652:37217</code>",
+            "368 × 24"
+          ]
+        },
+        {
+          "cells": [
+            "Slot",
+            "True",
+            "True",
+            "<code>5652:37563</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Slot",
+            "True",
+            "False",
+            "<code>5652:37573</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Slot",
+            "False",
+            "True",
+            "<code>5652:37582</code>",
+            "368 × 44"
+          ]
+        },
+        {
+          "cells": [
+            "Slot",
+            "False",
+            "False",
+            "<code>5652:37590</code>",
+            "368 × 24"
+          ]
+        }
+      ],
+      "collapseLabel": "View all 16 variants"
+    }
+  },
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "September 2026",
+      "kind": "initial",
+      "kindLabel": "Initial",
+      "header": "Test read · node 4419:24515",
+      "rows": [
+        {
+          "body": "<strong>Independent trial read of Inline Text, run against the refined framework.</strong> The component already has a page at <a href=\"/components/inline-text\">Inline Text</a>; this one was written from a fresh read without consulting it. It stays out of the sidebar, search, the grid and the counts.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "First test to use both toolchains. The Figma REST API supplied the full property panel (the boolean <code>hasTrailingElement</code> included), auto-layout padding, gap and alignment, text-style names, bound variable ids and the layer-to-property bindings — so no Layout row is left unread. The Talk To Figma plugin supplied the PNG and SVG exports.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "The plugin's <code>get_node_info</code> omitted the checkmark's one visible vector from its child list; REST returned it. The layer tree from either tool is checked against an export before it is written down.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "Contrast ratios are computed from the read fills with the WCAG 2.2 relative-luminance formula, on a white surface. Token names are unread: the variables sit in a library, and neither toolchain can name library variables from this file.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        }
+      ]
+    }
+  ]
+}

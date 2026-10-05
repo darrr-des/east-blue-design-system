@@ -1,4 +1,11 @@
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import keystatic from '@keystatic/astro';
+
+// The CMS (Keystatic, local storage) is a dev-time editor over
+// src/content/components/*.json. Its routes are server-rendered, so they are
+// only mounted for `npm run cms`; the production build stays fully static.
+const cms = process.env.KEYSTATIC === '1';
 
 // Base path is deploy-target specific:
 //   Droplet (eb-ds.frostdesigngroup.com) serves dist/ at the domain root → '/'
@@ -21,4 +28,9 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
+  integrations: cms ? [react(), keystatic()] : [],
+  // Vite's dependency pre-bundler cannot resolve Astro's virtual
+  // `astro:env/server` that the Keystatic API route imports; serve that
+  // module through Astro's own pipeline instead.
+  vite: cms ? { optimizeDeps: { exclude: ['@keystatic/astro/api'] }, ssr: { noExternal: ['@keystatic/astro'] } } : {},
 });

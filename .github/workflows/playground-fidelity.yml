@@ -1,0 +1,71 @@
+name: Playground fidelity
+
+# Pixel-compares every Playground variant against Figma's own export, and runs
+# the functional checks on Firefox and WebKit as well as Chromium.
+#
+# Not on the pull-request gate, for two reasons: it reads Figma over the REST API
+# (so it needs FIGMA_ACCESS_TOKEN and is only as available as Figma is), and a
+# full run is ~15 minutes. A drift in Figma is also not a reason to block someone
+# else's pull request — it is a reason to rebuild the component.
+#
+# Needs the repository secret FIGMA_ACCESS_TOKEN, scope `file_content:read`.
+
+on:
+  schedule:
+    - cron: '0 18 * * *'   # 02:00 Manila, after the working day
+  workflow_dispatch:
+
+jobs:
+  fidelity:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: astro-site
+    env:
+      PUBLIC_AUTH_DISABLED: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: astro-site/package-lock.json
+      - run: npm ci
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Build
+        run: npm run build
+      - name: Serve
+        run: |
+          npm run preview -- --port 4321 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null http://localhost:4321/playground && exit 0
+            sleep 1
+          done
+          echo "preview server did not come up" && exit 1
+
+      # build.mjs and drift.mjs read the token from astro-site/.env; the secret is
+      # written there and never echoed.
+      - name: Figma token
+        run: echo "FIGMA_ACCESS_TOKEN=${{ secrets.FIGMA_ACCESS_TOKEN }}" >> .env
+
+      - name: Fidelity
+        run: npm run playground:fidelity
+
+      - name: Drift report (never fails the run)
+        run: npm run playground:drift
+        continue-on-error: true
+
+      - name: Cross-browser smoke
+        run: |
+          npm run playground:smoke -- --browser firefox
+          npm run playground:smoke -- --browser webkit
+
+      - name: Side-by-sides for anything over 1%
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fidelity-diffs
+          path: astro-site/.fidelity/
+          if-no-files-found: ignore
+          retention-days: 14

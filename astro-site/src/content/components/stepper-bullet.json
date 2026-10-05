@@ -1,0 +1,4408 @@
+{
+  "name": "Stepper",
+  "meta": {
+    "node": "4337:11140",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4337-11140",
+    "description": "A progress indicator for multi-step flows, in bullet, circular and dash forms. Merges the former Stepper - Bullet, Stepper - Circular and Stepper - Dash.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4337:11140</code> in the 2026 Working File as a single <strong>Stepper</strong>, merging the former Bullet, Circular and Dash components into <code>Type</code> × <code>Steps</code> × <code>Current</code> × <code>Status</code>. Step count is a property rather than sibling components, the ordinal position enum is now an integer, Status states exist where the originals had almost none, property naming follows the guidelines throughout, and the step markers are vectors. The full 2–10 range, the per-Type Status coverage and horizontal-only orientation are all deliberate. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+    },
+    "navGroup": "Stepper",
+    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <circle cx=\"9\" cy=\"16\" r=\"2.5\" fill=\"#005CE5\"/>\n      <circle cx=\"16\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n      <circle cx=\"23\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n    </svg>"
+  },
+  "overview": {
+    "inContextNote": "Stepper - Bullet appears at the top or bottom of multi-step flows — most commonly paginated onboarding, swipeable carousels of tutorial cards, and photo galleries where the user needs a minimal position indicator without numerical labels.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"stp-demo-preview\"><div class=\"eb-preview eb-preview-stp eb-preview-stp--bullet eb-preview-stp--current\"><span class=\"eb-preview-stp__dot is-on\"></span><span class=\"eb-preview-stp__dot\"></span><span class=\"eb-preview-stp__dot\"></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"stp-ctrl-type\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"bullet\" selected=\"\">Bullet</option><option value=\"circular\">Circular</option><option value=\"dash\">Dash</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Steps</span><select id=\"stp-ctrl-steps\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"2\">2</option><option value=\"3\" selected=\"\">3</option><option value=\"4\">4</option><option value=\"5\">5</option><option value=\"6\">6</option><option value=\"7\">7</option><option value=\"8\">8</option><option value=\"9\">9</option><option value=\"10\">10</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Current</span><select id=\"stp-ctrl-current\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"0\">0</option><option value=\"1\" selected=\"\">1</option><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\">4</option><option value=\"5\">5</option><option value=\"6\">6</option><option value=\"7\">7</option><option value=\"8\">8</option><option value=\"9\">9</option><option value=\"10\">10</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Status</span><select id=\"stp-ctrl-status\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"current\" selected=\"\">Current</option><option value=\"completed\">Completed</option><option value=\"upcoming\">Upcoming</option><option value=\"error\">Error</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "One component now covers all three visual forms and every step count from 2 to 10, where the same coverage previously took three components and twelve siblings between them."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its typography, spacing and status colours, and the step markers are vector shapes bound to tokens rather than baked assets. Nothing external required to render."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "<code>Type</code>, <code>Steps</code>, <code>Current</code> and <code>Status</code> are orthogonal and correctly named — <code>Type</code> is a §1 standard property, integers replace the old ordinal enum, and every value is Title Cased per §5."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Drops into any multi-step flow, and all three visual forms share one API so a screen can switch between them without swapping components. Horizontal-only is a deliberate scope decision."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Current step",
+        "ios": "yes",
+        "android": "yes",
+        "property": "fill = bg",
+        "notes": "Dot at <code>current</code> index fills in <code>main/stepper/color/bg</code> (#005CE5)."
+      },
+      {
+        "state": "Other steps",
+        "ios": "yes",
+        "android": "yes",
+        "property": "fill = bg-track",
+        "notes": "All other dots fill in <code>main/stepper/color/bg-track</code> (#D2E5FF). Note: the spec does not distinguish completed vs upcoming — both look identical."
+      },
+      {
+        "state": "Completed vs upcoming",
+        "ios": "na",
+        "android": "na",
+        "property": "Not modeled",
+        "notes": "Bullet steppers in other systems often shade completed dots differently from upcoming ones. This family collapses both into the track color — direction of travel is lost."
+      },
+      {
+        "state": "Clickable / interactive",
+        "ios": "na",
+        "android": "na",
+        "property": "Not modeled",
+        "notes": "Used in carousels, some implementations let the user tap a dot to jump to that page. No pressed / focused state exists today."
+      },
+      {
+        "state": "Connector line",
+        "ios": "na",
+        "android": "na",
+        "property": "Not modeled",
+        "notes": "Classic Material / iOS bullet steppers draw a thin line between dots tinted to match completed / upcoming. This family uses blank 8-px gaps instead."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Three Stepper components merged into one.",
+        "body": "v2.0: Rebuilt on node <code>4337:11140</code> in the 2026 Working File as a single <strong>Stepper</strong> set. Stepper - Bullet, Stepper - Circular and Stepper - Dash are now <code>Type = Bullet | Circular | Dash</code> — the unification all three assessments recommended independently. (C4 · Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Step count is a property, not sibling components.",
+        "body": "v2.0: Bullet had three siblings and Circular nine, each hard-coding a step count; Dash encoded it as ten <code>propNStepper</code> booleans. All of that is now a single <code>Steps</code> axis. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Ordinal position replaced by an integer.",
+        "body": "v2.0: The <code>highlighted = 1st | 2nd | … | Nth</code> ordinal enum is now <code>Current</code> carrying integers, which maps directly to a <code>currentStep: Int</code> parameter rather than needing a lookup table. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Status states added.",
+        "body": "v2.0: <code>Status = Current | Completed | Upcoming | Error</code> now exists where none of the three originals distinguished completed from upcoming, and only Dash had any notion of error. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "<code>Style</code> renamed to <code>Type</code>.",
+        "body": "v2.1: §6 names <code>Style</code> explicitly as a catch-all to avoid, alongside <code>Configuration</code> and <code>Settings</code>. <code>Type</code> is a standard variant property from §1 and says the same thing without the anti-pattern. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "All variant values Title Cased.",
+        "body": "v2.1: <code>Bullet | Circular | Dash</code> and <code>Current | Completed | Upcoming | Error</code> now follow §5, replacing the lowercase values. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Uneven Status coverage confirmed intentional.",
+        "body": "v2.1: Closed by owner decision — Bullet carries only Current and Completed, Circular is almost entirely Current with single Completed and Upcoming entries, and Dash carries Error throughout. Each Type supports the statuses its usage actually calls for rather than filling out a uniform matrix. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Full 2–10 step range retained.",
+        "body": "v2.1: Closed by owner decision, superseding an earlier intent to cap the range — the set keeps all <strong>225 variants</strong>. Figma cannot parameterise a repeating count, so enumerating every combination is the only way to make each one selectable; capping would mean any flow longer than the cap had no variant and a designer would have to detach. The cost is set size in Figma only — the native API takes <code>steps</code> and <code>current</code> as integers and has no such limit. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Dots and ring arcs confirmed as vectors.",
+        "body": "v2.1: Confirmed by the component owner — the step markers are vector shapes, not the raster PNGs all three original assessments flagged. They recolour with tokens and stay crisp at any density. Not independently verifiable from the assessment tooling, whose response limit the node exceeds. (C6 · Asset)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Horizontal-only orientation confirmed intentional.",
+        "body": "v2.1: Closed by owner decision — Stepper ships horizontal only. An <code>Orientation</code> axis would multiply an already large set for a layout the product does not use, and vertical progress indication is better served by a different pattern than a rotated stepper. Revisit only if a long-flow screen genuinely calls for it. (Composition)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [
+      {
+        "headline": "Announce \"Step X of Y\" to screen readers.",
+        "body": "All three original assessments raised this and it is still unaddressed. A progress indicator that conveys position only visually is invisible to assistive technology — the native component should expose the position as an accessibility value.",
+        "tag": "A11y"
+      }
+    ],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "4337:11140",
+      "variants": 225,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "stp-bullet",
+        "demoKey": "bullet",
+        "title": "Bullet",
+        "node": "4337:11138",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"stp-spec-bullet\"><div class=\"eb-preview eb-preview-stp eb-preview-stp--bullet eb-preview-stp--current\"><span class=\"eb-preview-stp__dot is-on\"></span><span class=\"eb-preview-stp__dot\"></span><span class=\"eb-preview-stp__dot\"></span></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Steps",
+                "prop": "steps",
+                "control": "select",
+                "defaultValue": "3",
+                "options": [
+                  {
+                    "value": "3",
+                    "label": "3"
+                  },
+                  {
+                    "value": "4",
+                    "label": "4"
+                  },
+                  {
+                    "value": "5",
+                    "label": "5"
+                  },
+                  {
+                    "value": "6",
+                    "label": "6"
+                  },
+                  {
+                    "value": "7",
+                    "label": "7"
+                  },
+                  {
+                    "value": "8",
+                    "label": "8"
+                  },
+                  {
+                    "value": "9",
+                    "label": "9"
+                  },
+                  {
+                    "value": "10",
+                    "label": "10"
+                  }
+                ]
+              },
+              {
+                "label": "Current",
+                "prop": "current",
+                "control": "select",
+                "defaultValue": "1",
+                "options": [
+                  {
+                    "value": "1",
+                    "label": "1"
+                  },
+                  {
+                    "value": "2",
+                    "label": "2"
+                  },
+                  {
+                    "value": "3",
+                    "label": "3"
+                  },
+                  {
+                    "value": "4",
+                    "label": "4"
+                  },
+                  {
+                    "value": "5",
+                    "label": "5"
+                  },
+                  {
+                    "value": "6",
+                    "label": "6"
+                  },
+                  {
+                    "value": "7",
+                    "label": "7"
+                  },
+                  {
+                    "value": "8",
+                    "label": "8"
+                  },
+                  {
+                    "value": "9",
+                    "label": "9"
+                  },
+                  {
+                    "value": "10",
+                    "label": "10"
+                  }
+                ]
+              },
+              {
+                "label": "Status",
+                "prop": "status",
+                "control": "select",
+                "defaultValue": "current",
+                "options": [
+                  {
+                    "value": "current",
+                    "label": "Current"
+                  },
+                  {
+                    "value": "completed",
+                    "label": "Completed"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Bullet",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Steps",
+                "value": "3",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "steps",
+                "variants": [
+                  {
+                    "when": "steps:2",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:4",
+                    "value": "4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:5",
+                    "value": "5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:6",
+                    "value": "6",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:7",
+                    "value": "7",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:8",
+                    "value": "8",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:9",
+                    "value": "9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:10",
+                    "value": "10",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Current",
+                "value": "1",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "current",
+                "variants": [
+                  {
+                    "when": "current:0",
+                    "value": "0",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:2",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:3",
+                    "value": "3",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:4",
+                    "value": "4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:5",
+                    "value": "5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:6",
+                    "value": "6",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:7",
+                    "value": "7",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:8",
+                    "value": "8",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:9",
+                    "value": "9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:10",
+                    "value": "10",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Status",
+                "value": "Current",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "status",
+                "variants": [
+                  {
+                    "when": "status:completed",
+                    "value": "Completed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Current and completed steps",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Upcoming steps",
+                "value": "#D2E5FF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": []
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "16",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "40",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "steps:4",
+                    "value": "56",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:5",
+                    "value": "72",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:6",
+                    "value": "88",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:7",
+                    "value": "104",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:8",
+                    "value": "120",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:9",
+                    "value": "136",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:10",
+                    "value": "152",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBStepper</span>(<span class=\"syn-param\">steps</span>: 3, <span class=\"syn-param\">current</span>: 1)\n    .<span class=\"syn-fn\">ebType</span>(<span class=\"syn-dot\">.bullet</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBStepper</span>(\n    <span class=\"syn-param\">steps</span> <span class=\"syn-eq\">=</span> 3,\n    <span class=\"syn-param\">current</span> <span class=\"syn-eq\">=</span> 1,\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperType</span>.Bullet\n)</code>"
+      },
+      {
+        "cardKey": "stp-circular",
+        "demoKey": "circular",
+        "title": "Circular",
+        "node": "4365:11913",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"stp-spec-circular\"><svg class=\"eb-preview eb-preview-stp eb-preview-stp--circular eb-preview-stp--current\" viewBox=\"0 0 45 45\" width=\"45\" height=\"45\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" stroke=\"#D2E5FF\" stroke-width=\"5\"/><path d=\"M22.5 2.5A20 20 0 0 1 39.82 32.50\" stroke=\"#005CE5\" stroke-width=\"5\" stroke-linecap=\"round\"/><text class=\"eb-preview-stp__index\" x=\"22.5\" y=\"23.5\" text-anchor=\"middle\" dominant-baseline=\"central\">1</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Steps",
+                "prop": "steps",
+                "control": "select",
+                "defaultValue": "3",
+                "options": [
+                  {
+                    "value": "2",
+                    "label": "2"
+                  },
+                  {
+                    "value": "3",
+                    "label": "3"
+                  },
+                  {
+                    "value": "4",
+                    "label": "4"
+                  },
+                  {
+                    "value": "5",
+                    "label": "5"
+                  },
+                  {
+                    "value": "6",
+                    "label": "6"
+                  },
+                  {
+                    "value": "7",
+                    "label": "7"
+                  },
+                  {
+                    "value": "8",
+                    "label": "8"
+                  },
+                  {
+                    "value": "9",
+                    "label": "9"
+                  },
+                  {
+                    "value": "10",
+                    "label": "10"
+                  }
+                ]
+              },
+              {
+                "label": "Current",
+                "prop": "current",
+                "control": "select",
+                "defaultValue": "1",
+                "options": [
+                  {
+                    "value": "0",
+                    "label": "0"
+                  },
+                  {
+                    "value": "1",
+                    "label": "1"
+                  },
+                  {
+                    "value": "2",
+                    "label": "2"
+                  },
+                  {
+                    "value": "3",
+                    "label": "3"
+                  },
+                  {
+                    "value": "4",
+                    "label": "4"
+                  },
+                  {
+                    "value": "5",
+                    "label": "5"
+                  },
+                  {
+                    "value": "6",
+                    "label": "6"
+                  },
+                  {
+                    "value": "7",
+                    "label": "7"
+                  },
+                  {
+                    "value": "8",
+                    "label": "8"
+                  },
+                  {
+                    "value": "9",
+                    "label": "9"
+                  },
+                  {
+                    "value": "10",
+                    "label": "10"
+                  }
+                ]
+              },
+              {
+                "label": "Status",
+                "prop": "status",
+                "control": "select",
+                "defaultValue": "current",
+                "options": [
+                  {
+                    "value": "current",
+                    "label": "Current"
+                  },
+                  {
+                    "value": "upcoming",
+                    "label": "Upcoming"
+                  },
+                  {
+                    "value": "completed",
+                    "label": "Completed"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Circular",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Steps",
+                "value": "3",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "steps",
+                "variants": [
+                  {
+                    "when": "steps:2",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:4",
+                    "value": "4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:5",
+                    "value": "5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:6",
+                    "value": "6",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:7",
+                    "value": "7",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:8",
+                    "value": "8",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:9",
+                    "value": "9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:10",
+                    "value": "10",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Current",
+                "value": "1",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "current",
+                "variants": [
+                  {
+                    "when": "current:0",
+                    "value": "0",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:2",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:3",
+                    "value": "3",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:4",
+                    "value": "4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:5",
+                    "value": "5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:6",
+                    "value": "6",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:7",
+                    "value": "7",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:8",
+                    "value": "8",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:9",
+                    "value": "9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:10",
+                    "value": "10",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Status",
+                "value": "Current",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "status",
+                "variants": [
+                  {
+                    "when": "status:upcoming",
+                    "value": "Upcoming",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "status:completed",
+                    "value": "Completed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Ring",
+                "value": "#D2E5FF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "status:completed",
+                    "value": "#12AF80",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Arc",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "status:completed",
+                    "value": "#12AF80",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Index",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "status:upcoming",
+                    "value": "#9BC5FD",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Checkmark",
+                "value": "#12AF80",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Step label",
+                "value": "#90A8D0",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "#index",
+                "value": "Primary/Headlines/Block",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "#label",
+                "value": "Primary/Label/Fine",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "45",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "45",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBStepper</span>(<span class=\"syn-param\">steps</span>: 3, <span class=\"syn-param\">current</span>: 1)\n    .<span class=\"syn-fn\">ebType</span>(<span class=\"syn-dot\">.circular</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBStepper</span>(\n    <span class=\"syn-param\">steps</span> <span class=\"syn-eq\">=</span> 3,\n    <span class=\"syn-param\">current</span> <span class=\"syn-eq\">=</span> 1,\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperType</span>.Circular\n)</code>"
+      },
+      {
+        "cardKey": "stp-dash",
+        "demoKey": "dash",
+        "title": "Dash",
+        "node": "4695:22297",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"stp-spec-dash\"><div class=\"eb-preview eb-preview-stp eb-preview-stp--dash eb-preview-stp--current\"><span class=\"eb-preview-stp__dash is-on\"></span><span class=\"eb-preview-stp__dash\"></span><span class=\"eb-preview-stp__dash\"></span></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Steps",
+                "prop": "steps",
+                "control": "select",
+                "defaultValue": "3",
+                "options": [
+                  {
+                    "value": "2",
+                    "label": "2"
+                  },
+                  {
+                    "value": "3",
+                    "label": "3"
+                  },
+                  {
+                    "value": "4",
+                    "label": "4"
+                  },
+                  {
+                    "value": "5",
+                    "label": "5"
+                  },
+                  {
+                    "value": "6",
+                    "label": "6"
+                  },
+                  {
+                    "value": "7",
+                    "label": "7"
+                  },
+                  {
+                    "value": "8",
+                    "label": "8"
+                  },
+                  {
+                    "value": "9",
+                    "label": "9"
+                  },
+                  {
+                    "value": "10",
+                    "label": "10"
+                  }
+                ]
+              },
+              {
+                "label": "Current",
+                "prop": "current",
+                "control": "select",
+                "defaultValue": "1",
+                "options": [
+                  {
+                    "value": "1",
+                    "label": "1"
+                  },
+                  {
+                    "value": "2",
+                    "label": "2"
+                  },
+                  {
+                    "value": "3",
+                    "label": "3"
+                  },
+                  {
+                    "value": "4",
+                    "label": "4"
+                  },
+                  {
+                    "value": "5",
+                    "label": "5"
+                  },
+                  {
+                    "value": "6",
+                    "label": "6"
+                  },
+                  {
+                    "value": "7",
+                    "label": "7"
+                  },
+                  {
+                    "value": "8",
+                    "label": "8"
+                  },
+                  {
+                    "value": "9",
+                    "label": "9"
+                  },
+                  {
+                    "value": "10",
+                    "label": "10"
+                  }
+                ]
+              },
+              {
+                "label": "Status",
+                "prop": "status",
+                "control": "select",
+                "defaultValue": "current",
+                "options": [
+                  {
+                    "value": "current",
+                    "label": "Current"
+                  },
+                  {
+                    "value": "error",
+                    "label": "Error"
+                  },
+                  {
+                    "value": "completed",
+                    "label": "Completed"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Type",
+                "value": "Dash",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Steps",
+                "value": "3",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "steps",
+                "variants": [
+                  {
+                    "when": "steps:2",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:4",
+                    "value": "4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:5",
+                    "value": "5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:6",
+                    "value": "6",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:7",
+                    "value": "7",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:8",
+                    "value": "8",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:9",
+                    "value": "9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:10",
+                    "value": "10",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Current",
+                "value": "1",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "current",
+                "variants": [
+                  {
+                    "when": "current:0",
+                    "value": "0",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:2",
+                    "value": "2",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:3",
+                    "value": "3",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:4",
+                    "value": "4",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:5",
+                    "value": "5",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:6",
+                    "value": "6",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:7",
+                    "value": "7",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:8",
+                    "value": "8",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:9",
+                    "value": "9",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "current:10",
+                    "value": "10",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Status",
+                "value": "Current",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "status",
+                "variants": [
+                  {
+                    "when": "status:error",
+                    "value": "Error",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "status:completed",
+                    "value": "Completed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Current and completed steps",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "status:completed",
+                    "value": "#12AF80",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Current step in error",
+                "value": "#D61B2C",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Upcoming steps",
+                "value": "#D2E5FF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": []
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "4",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "74",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": [
+                  {
+                    "when": "steps:2",
+                    "value": "48",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:4",
+                    "value": "100",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:5",
+                    "value": "126",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:6",
+                    "value": "152",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:7",
+                    "value": "178",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:8",
+                    "value": "204",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:9",
+                    "value": "230",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "steps:10",
+                    "value": "256",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBStepper</span>(<span class=\"syn-param\">steps</span>: 3, <span class=\"syn-param\">current</span>: 1)\n    .<span class=\"syn-fn\">ebType</span>(<span class=\"syn-dot\">.dash</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBStepper</span>(\n    <span class=\"syn-param\">steps</span> <span class=\"syn-eq\">=</span> 3,\n    <span class=\"syn-param\">current</span> <span class=\"syn-eq\">=</span> 1,\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperType</span>.Dash\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Type and Status",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Bullet · Current",
+            "element": "Current and completed steps",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Bullet · Current",
+            "element": "Upcoming steps",
+            "token": "—",
+            "values": [
+              "#D2E5FF"
+            ]
+          },
+          {
+            "role": "Circular · Current",
+            "element": "Ring",
+            "token": "—",
+            "values": [
+              "#D2E5FF"
+            ]
+          },
+          {
+            "role": "Circular · Completed",
+            "element": "Ring",
+            "token": "—",
+            "values": [
+              "#12AF80"
+            ]
+          },
+          {
+            "role": "Circular · Current",
+            "element": "Arc",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Circular · Completed",
+            "element": "Arc",
+            "token": "—",
+            "values": [
+              "#12AF80"
+            ]
+          },
+          {
+            "role": "Circular · Current",
+            "element": "Index",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Circular · Upcoming",
+            "element": "Index",
+            "token": "—",
+            "values": [
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Circular · Current",
+            "element": "Checkmark",
+            "token": "—",
+            "values": [
+              "#12AF80"
+            ]
+          },
+          {
+            "role": "Circular · Current",
+            "element": "Step label",
+            "token": "—",
+            "values": [
+              "#90A8D0"
+            ]
+          },
+          {
+            "role": "Dash · Current",
+            "element": "Current and completed steps",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Dash · Completed",
+            "element": "Current and completed steps",
+            "token": "—",
+            "values": [
+              "#12AF80"
+            ]
+          },
+          {
+            "role": "Dash · Current",
+            "element": "Current step in error",
+            "token": "—",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Dash · Current",
+            "element": "Upcoming steps",
+            "token": "—",
+            "values": [
+              "#D2E5FF"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:stepper:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>stepper<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Type, Steps, Current and Status are the set’s four variant properties. Circular carries two text layers, #index and #label; Bullet and Dash have none. Colour variable bindings and the text property exposure are not readable with the plugin.",
+      "rows": [
+        {
+          "figma": "Type — Bullet, Circular, Dash",
+          "swift": "<code>.ebType(.bullet / .circular / .dash)</code>",
+          "compose": "<code>type = EBStepperType.Bullet / Circular / Dash</code>"
+        },
+        {
+          "figma": "Steps — 2 … 10 (Bullet from 3)",
+          "swift": "<code>steps: Int</code>",
+          "compose": "<code>steps = 3</code>"
+        },
+        {
+          "figma": "Current — 0 … 10",
+          "swift": "<code>current: Int</code>",
+          "compose": "<code>current = 1</code>"
+        },
+        {
+          "figma": "Status — Current, Completed, Upcoming, Error",
+          "swift": "<code>.ebStatus(.completed / .upcoming / .error)</code>",
+          "compose": "<code>status = EBStepperStatus.Completed / Upcoming / Error</code>"
+        },
+        {
+          "figma": "#index (text, Circular)",
+          "swift": "Drawn from <code>current</code> — no parameter",
+          "compose": "Drawn from <code>current</code> — no parameter"
+        },
+        {
+          "figma": "#label (text, Circular)",
+          "swift": "<code>.ebLabel(\"Step 1 of 10\")</code> — the layer sits outside the 45 × 45 frame in Figma",
+          "compose": "<code>label = \"Step 1 of 10\"</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Bullet",
+        "swift": "<code><span class=\"syn-type\">EBStepper</span>(<span class=\"syn-param\">steps</span>: 3, <span class=\"syn-param\">current</span>: 1)\n    .<span class=\"syn-fn\">ebType</span>(<span class=\"syn-dot\">.bullet</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBStepper</span>(\n    <span class=\"syn-param\">steps</span> <span class=\"syn-eq\">=</span> 3,\n    <span class=\"syn-param\">current</span> <span class=\"syn-eq\">=</span> 1,\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperType</span>.Bullet\n)</code>"
+      },
+      {
+        "subheading": "Circular",
+        "swift": "<code><span class=\"syn-type\">EBStepper</span>(<span class=\"syn-param\">steps</span>: 3, <span class=\"syn-param\">current</span>: 1)\n    .<span class=\"syn-fn\">ebType</span>(<span class=\"syn-dot\">.circular</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBStepper</span>(\n    <span class=\"syn-param\">steps</span> <span class=\"syn-eq\">=</span> 3,\n    <span class=\"syn-param\">current</span> <span class=\"syn-eq\">=</span> 1,\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperType</span>.Circular\n)</code>"
+      },
+      {
+        "subheading": "Dash",
+        "swift": "<code><span class=\"syn-type\">EBStepper</span>(<span class=\"syn-param\">steps</span>: 3, <span class=\"syn-param\">current</span>: 1)\n    .<span class=\"syn-fn\">ebType</span>(<span class=\"syn-dot\">.dash</span>)</code>",
+        "compose": "<code><span class=\"syn-type\">EBStepper</span>(\n    <span class=\"syn-param\">steps</span> <span class=\"syn-eq\">=</span> 3,\n    <span class=\"syn-param\">current</span> <span class=\"syn-eq\">=</span> 1,\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperType</span>.Dash\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Progress semantics",
+        "ios": "<code>.accessibilityValue(\"Step 2 of 4\")</code> on the stepper; <code>.accessibilityAddTraits(.updatesFrequently)</code> while it moves.",
+        "android": "<code>Modifier.semantics { progressBarRangeInfo = ProgressBarRangeInfo(2f, 0f..4f) }</code> plus <code>stateDescription = \"Step 2 of 4\"</code>."
+      },
+      {
+        "requirement": "Decorative marks",
+        "ios": "The dots, dashes and ring are <code>.accessibilityHidden(true)</code>; the value carries the meaning.",
+        "android": "Marks are <code>clearAndSetSemantics</code>; the value carries the meaning."
+      },
+      {
+        "requirement": "Error and completed",
+        "ios": "Append \"error on step 2\" or \"completed\" to the value — colour alone is not announced.",
+        "android": "Same phrasing in <code>stateDescription</code>."
+      },
+      {
+        "requirement": "Not interactive",
+        "ios": "No button trait; steps are not tap targets.",
+        "android": "No <code>clickable</code>; steps are not touch targets."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Bullet for short flows of 3 to 5 steps where position is enough.",
+        "dontText": "Don’t use Bullet above 6 steps — the row of dots stops reading as progress."
+      },
+      {
+        "doText": "Use Circular when the screen has room for one 45 px marker and the step number matters.",
+        "dontText": "Don’t stack Circular per step; it shows one step at a time."
+      },
+      {
+        "doText": "Use Dash when steps can fail — it is the only Type with an Error status.",
+        "dontText": "Don’t use Error on Bullet or Circular; the set does not build it."
+      },
+      {
+        "doText": "Keep Current between 1 and Steps; Completed sets it to Steps.",
+        "dontText": "Don’t pass Current 0 outside the Circular Upcoming state."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Circular’s <code>label-container</code> sits below the 45 × 45 frame and never renders; <code>#index</code> and <code>#label</code> keep the <code>#</code> sigil; Bullet dots are eight layers all named <code>ellipse</code>. Dash segments are <code>1st</code> … <code>10th</code> — read on 4365:12137, 4337:11205, 4695:22253."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Type</code>, <code>Steps</code>, <code>Current</code>, <code>Status</code> — Title Case values, integers for the two counts."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>#index</code> resolves to <code>Primary/Headlines/Block</code>, <code>#label</code> to <code>Primary/Label/Fine</code>. Colour variable bindings are not readable with the plugin — confirm in Dev Mode."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One enum, two integers, one status enum — maps 1:1 onto <code>EBStepper</code>; the arc is a stroked path."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Status coverage differs by Type by design (v2.x confirmation): Bullet Current and Completed, Circular adds Upcoming, Dash adds Error. Not interactive, so no Pressed."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Dots, dashes, ring and arc are vectors; the Completed check is the 16 × 16 <code>Checkmark</code> instance."
+      }
+    ],
+    "variants": {
+      "total": 225,
+      "description": "3 Type × Steps 2–10 × Current × Status, built where the Type needs it (Bullet 52, Circular 56, Dash 117) = 225 variants",
+      "summary": {
+        "columns": [
+          "Type",
+          "Statuses built",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Bullet",
+              "Current for every Steps × Current; Completed at Current = Steps",
+              "52"
+            ]
+          },
+          {
+            "cells": [
+              "Circular",
+              "Current for every Steps × Current; Upcoming and Completed at Steps = 2",
+              "56"
+            ]
+          },
+          {
+            "cells": [
+              "Dash",
+              "Current and Error for every Steps × Current; Completed at Current = Steps",
+              "117"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "Type",
+        "Steps",
+        "Current",
+        "Status",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Bullet",
+            "3",
+            "1",
+            "Current",
+            "<code>4337:11138</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "3",
+            "2",
+            "Current",
+            "<code>4337:11201</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "3",
+            "3",
+            "Completed",
+            "<code>4337:11470</code>",
+            "40 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "4",
+            "1",
+            "Current",
+            "<code>4337:11137</code>",
+            "56 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "4",
+            "2",
+            "Current",
+            "<code>4337:11205</code>",
+            "56 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "4",
+            "3",
+            "Current",
+            "<code>4337:11474</code>",
+            "56 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "4",
+            "4",
+            "Completed",
+            "<code>4337:11586</code>",
+            "56 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "5",
+            "1",
+            "Current",
+            "<code>4337:11136</code>",
+            "72 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "5",
+            "2",
+            "Current",
+            "<code>4337:11210</code>",
+            "72 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "5",
+            "3",
+            "Current",
+            "<code>4337:11479</code>",
+            "72 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "5",
+            "4",
+            "Current",
+            "<code>4337:11591</code>",
+            "72 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "5",
+            "5",
+            "Completed",
+            "<code>4337:11714</code>",
+            "72 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "6",
+            "1",
+            "Current",
+            "<code>4337:11135</code>",
+            "88 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "6",
+            "2",
+            "Current",
+            "<code>4337:11216</code>",
+            "88 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "6",
+            "3",
+            "Current",
+            "<code>4337:11485</code>",
+            "88 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "6",
+            "4",
+            "Current",
+            "<code>4337:11597</code>",
+            "88 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "6",
+            "5",
+            "Current",
+            "<code>4337:11720</code>",
+            "88 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "6",
+            "6",
+            "Completed",
+            "<code>4337:12034</code>",
+            "88 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "7",
+            "1",
+            "Current",
+            "<code>4337:11134</code>",
+            "104 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "7",
+            "2",
+            "Current",
+            "<code>4337:11223</code>",
+            "104 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "7",
+            "3",
+            "Current",
+            "<code>4337:11492</code>",
+            "104 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "7",
+            "4",
+            "Current",
+            "<code>4337:11604</code>",
+            "104 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "7",
+            "5",
+            "Current",
+            "<code>4337:11727</code>",
+            "104 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "7",
+            "6",
+            "Current",
+            "<code>4337:12041</code>",
+            "104 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "7",
+            "7",
+            "Completed",
+            "<code>4337:12207</code>",
+            "104 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "8",
+            "1",
+            "Current",
+            "<code>4337:11133</code>",
+            "120 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "8",
+            "2",
+            "Current",
+            "<code>4337:11231</code>",
+            "120 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "8",
+            "3",
+            "Current",
+            "<code>4337:11500</code>",
+            "120 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "8",
+            "4",
+            "Current",
+            "<code>4337:11612</code>",
+            "120 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "8",
+            "5",
+            "Current",
+            "<code>4337:11735</code>",
+            "120 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "8",
+            "6",
+            "Current",
+            "<code>4337:12049</code>",
+            "120 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "8",
+            "7",
+            "Current",
+            "<code>4337:12215</code>",
+            "120 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "8",
+            "8",
+            "Completed",
+            "<code>4337:12275</code>",
+            "120 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "9",
+            "1",
+            "Current",
+            "<code>4337:11132</code>",
+            "136 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "9",
+            "2",
+            "Current",
+            "<code>4337:11240</code>",
+            "136 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "9",
+            "3",
+            "Current",
+            "<code>4337:11509</code>",
+            "136 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "9",
+            "4",
+            "Current",
+            "<code>4337:11621</code>",
+            "136 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "9",
+            "5",
+            "Current",
+            "<code>4337:11744</code>",
+            "136 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "9",
+            "6",
+            "Current",
+            "<code>4337:12058</code>",
+            "136 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "9",
+            "7",
+            "Current",
+            "<code>4337:12224</code>",
+            "136 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "9",
+            "8",
+            "Current",
+            "<code>4337:12284</code>",
+            "136 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "9",
+            "9",
+            "Completed",
+            "<code>4337:12386</code>",
+            "136 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "1",
+            "Current",
+            "<code>4337:11139</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "2",
+            "Current",
+            "<code>4337:11250</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "3",
+            "Current",
+            "<code>4337:11519</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "4",
+            "Current",
+            "<code>4337:11631</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "5",
+            "Current",
+            "<code>4337:11754</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "6",
+            "Current",
+            "<code>4337:12068</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "7",
+            "Current",
+            "<code>4337:12234</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "8",
+            "Current",
+            "<code>4337:12294</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "9",
+            "Current",
+            "<code>4337:12396</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Bullet",
+            "10",
+            "10",
+            "Completed",
+            "<code>4337:12460</code>",
+            "152 × 16"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "2",
+            "0",
+            "Upcoming",
+            "<code>4773:31490</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "2",
+            "1",
+            "Current",
+            "<code>4365:11866</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "2",
+            "2",
+            "Completed",
+            "<code>4695:22509</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "2",
+            "2",
+            "Current",
+            "<code>4365:11891</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "3",
+            "1",
+            "Current",
+            "<code>4365:11913</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "3",
+            "2",
+            "Current",
+            "<code>4365:11921</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "3",
+            "3",
+            "Current",
+            "<code>4365:11936</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "4",
+            "1",
+            "Current",
+            "<code>4365:12129</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "4",
+            "2",
+            "Current",
+            "<code>4365:12137</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "4",
+            "3",
+            "Current",
+            "<code>4365:12145</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "4",
+            "4",
+            "Current",
+            "<code>4365:12160</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "5",
+            "1",
+            "Current",
+            "<code>4365:12197</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "5",
+            "2",
+            "Current",
+            "<code>4365:12205</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "5",
+            "3",
+            "Current",
+            "<code>4365:12213</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "5",
+            "4",
+            "Current",
+            "<code>4365:12221</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "5",
+            "5",
+            "Current",
+            "<code>4365:12236</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "6",
+            "1",
+            "Current",
+            "<code>4365:12279</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "6",
+            "2",
+            "Current",
+            "<code>4365:12287</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "6",
+            "3",
+            "Current",
+            "<code>4365:12295</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "6",
+            "4",
+            "Current",
+            "<code>4365:12303</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "6",
+            "5",
+            "Current",
+            "<code>4365:12311</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "6",
+            "6",
+            "Current",
+            "<code>4365:12326</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "7",
+            "1",
+            "Current",
+            "<code>4365:12508</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "7",
+            "2",
+            "Current",
+            "<code>4365:12516</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "7",
+            "3",
+            "Current",
+            "<code>4365:12524</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "7",
+            "4",
+            "Current",
+            "<code>4365:12532</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "7",
+            "5",
+            "Current",
+            "<code>4365:12540</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "7",
+            "6",
+            "Current",
+            "<code>4365:12548</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "7",
+            "7",
+            "Current",
+            "<code>4365:12563</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "8",
+            "1",
+            "Current",
+            "<code>4365:12670</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "8",
+            "2",
+            "Current",
+            "<code>4365:12678</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "8",
+            "3",
+            "Current",
+            "<code>4365:12686</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "8",
+            "4",
+            "Current",
+            "<code>4365:12694</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "8",
+            "5",
+            "Current",
+            "<code>4365:12702</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "8",
+            "6",
+            "Current",
+            "<code>4365:12710</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "8",
+            "7",
+            "Current",
+            "<code>4365:12718</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "8",
+            "8",
+            "Current",
+            "<code>4365:12757</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "9",
+            "1",
+            "Current",
+            "<code>4365:12840</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "9",
+            "2",
+            "Current",
+            "<code>4365:12848</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "9",
+            "3",
+            "Current",
+            "<code>4365:12856</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "9",
+            "4",
+            "Current",
+            "<code>4365:12864</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "9",
+            "5",
+            "Current",
+            "<code>4365:12872</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "9",
+            "6",
+            "Current",
+            "<code>4365:12880</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "9",
+            "7",
+            "Current",
+            "<code>4365:12888</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "9",
+            "8",
+            "Current",
+            "<code>4365:12896</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "9",
+            "9",
+            "Current",
+            "<code>4365:12911</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "1",
+            "Current",
+            "<code>4365:13233</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "2",
+            "Current",
+            "<code>4365:13241</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "3",
+            "Current",
+            "<code>4365:13249</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "4",
+            "Current",
+            "<code>4365:13257</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "5",
+            "Current",
+            "<code>4365:13265</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "6",
+            "Current",
+            "<code>4365:13273</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "7",
+            "Current",
+            "<code>4365:13281</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "8",
+            "Current",
+            "<code>4365:13289</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "9",
+            "Current",
+            "<code>4365:13297</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Circular",
+            "10",
+            "10",
+            "Current",
+            "<code>4365:13312</code>",
+            "45 × 45"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "2",
+            "1",
+            "Current",
+            "<code>4695:22329</code>",
+            "48 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "2",
+            "1",
+            "Error",
+            "<code>4773:32332</code>",
+            "48 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "2",
+            "2",
+            "Completed",
+            "<code>4773:32825</code>",
+            "48 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "2",
+            "2",
+            "Current",
+            "<code>4695:22333</code>",
+            "48 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "2",
+            "2",
+            "Error",
+            "<code>4773:32395</code>",
+            "48 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "3",
+            "1",
+            "Current",
+            "<code>4695:22297</code>",
+            "74 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "3",
+            "1",
+            "Error",
+            "<code>4773:32328</code>",
+            "74 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "3",
+            "2",
+            "Current",
+            "<code>4695:22302</code>",
+            "74 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "3",
+            "2",
+            "Error",
+            "<code>4773:32391</code>",
+            "74 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "3",
+            "3",
+            "Completed",
+            "<code>4773:32828</code>",
+            "74 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "3",
+            "3",
+            "Current",
+            "<code>4695:22307</code>",
+            "74 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "3",
+            "3",
+            "Error",
+            "<code>4773:32454</code>",
+            "74 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "4",
+            "1",
+            "Current",
+            "<code>4695:22247</code>",
+            "100 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "4",
+            "1",
+            "Error",
+            "<code>4773:32323</code>",
+            "100 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "4",
+            "2",
+            "Current",
+            "<code>4695:22253</code>",
+            "100 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "4",
+            "2",
+            "Error",
+            "<code>4773:32386</code>",
+            "100 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "4",
+            "3",
+            "Current",
+            "<code>4695:22259</code>",
+            "100 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "4",
+            "3",
+            "Error",
+            "<code>4773:32449</code>",
+            "100 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "4",
+            "4",
+            "Completed",
+            "<code>4773:32832</code>",
+            "100 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "4",
+            "4",
+            "Current",
+            "<code>4695:22265</code>",
+            "100 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "4",
+            "4",
+            "Error",
+            "<code>4773:32509</code>",
+            "100 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "1",
+            "Current",
+            "<code>4695:22171</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "1",
+            "Error",
+            "<code>4773:32317</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "2",
+            "Current",
+            "<code>4695:22178</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "2",
+            "Error",
+            "<code>4773:32380</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "3",
+            "Current",
+            "<code>4695:22185</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "3",
+            "Error",
+            "<code>4773:32443</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "4",
+            "Current",
+            "<code>4695:22192</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "4",
+            "Error",
+            "<code>4773:32503</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "5",
+            "Completed",
+            "<code>4773:32837</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "5",
+            "Current",
+            "<code>4695:22199</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "5",
+            "5",
+            "Error",
+            "<code>4773:32559</code>",
+            "126 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "1",
+            "Current",
+            "<code>4695:22073</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "1",
+            "Error",
+            "<code>4773:32310</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "2",
+            "Current",
+            "<code>4695:22081</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "2",
+            "Error",
+            "<code>4773:32373</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "3",
+            "Current",
+            "<code>4695:22089</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "3",
+            "Error",
+            "<code>4773:32436</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "4",
+            "Current",
+            "<code>4695:22097</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "4",
+            "Error",
+            "<code>4773:32496</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "5",
+            "Current",
+            "<code>4695:22105</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "5",
+            "Error",
+            "<code>4773:32552</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "6",
+            "Completed",
+            "<code>4773:32843</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "6",
+            "Current",
+            "<code>4695:22113</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "6",
+            "6",
+            "Error",
+            "<code>4773:32603</code>",
+            "152 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "1",
+            "Current",
+            "<code>4695:21945</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "1",
+            "Error",
+            "<code>4773:32302</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "2",
+            "Current",
+            "<code>4695:21954</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "2",
+            "Error",
+            "<code>4773:32365</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "3",
+            "Current",
+            "<code>4695:21963</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "3",
+            "Error",
+            "<code>4773:32428</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "4",
+            "Current",
+            "<code>4695:21972</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "4",
+            "Error",
+            "<code>4773:32488</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "5",
+            "Current",
+            "<code>4695:21981</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "5",
+            "Error",
+            "<code>4773:32544</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "6",
+            "Current",
+            "<code>4695:21990</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "6",
+            "Error",
+            "<code>4773:32595</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "7",
+            "Completed",
+            "<code>4773:32850</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "7",
+            "Current",
+            "<code>4695:21999</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "7",
+            "7",
+            "Error",
+            "<code>4773:32640</code>",
+            "178 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "1",
+            "Current",
+            "<code>4695:21783</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "1",
+            "Error",
+            "<code>4773:32293</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "2",
+            "Current",
+            "<code>4695:21793</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "2",
+            "Error",
+            "<code>4773:32356</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "3",
+            "Current",
+            "<code>4695:21803</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "3",
+            "Error",
+            "<code>4773:32419</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "4",
+            "Current",
+            "<code>4695:21813</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "4",
+            "Error",
+            "<code>4773:32479</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "5",
+            "Current",
+            "<code>4695:21823</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "5",
+            "Error",
+            "<code>4773:32535</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "6",
+            "Current",
+            "<code>4695:21833</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "6",
+            "Error",
+            "<code>4773:32586</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "7",
+            "Current",
+            "<code>4695:21843</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "7",
+            "Error",
+            "<code>4773:32631</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "8",
+            "Completed",
+            "<code>4773:32858</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "8",
+            "Current",
+            "<code>4695:21853</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "8",
+            "8",
+            "Error",
+            "<code>4773:32669</code>",
+            "204 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "1",
+            "Current",
+            "<code>4695:21583</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "1",
+            "Error",
+            "<code>4773:32283</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "2",
+            "Current",
+            "<code>4695:21594</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "2",
+            "Error",
+            "<code>4773:32346</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "3",
+            "Current",
+            "<code>4695:21605</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "3",
+            "Error",
+            "<code>4773:32409</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "4",
+            "Current",
+            "<code>4695:21616</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "4",
+            "Error",
+            "<code>4773:32469</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "5",
+            "Current",
+            "<code>4695:21627</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "5",
+            "Error",
+            "<code>4773:32525</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "6",
+            "Current",
+            "<code>4695:21638</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "6",
+            "Error",
+            "<code>4773:32576</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "7",
+            "Current",
+            "<code>4695:21649</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "7",
+            "Error",
+            "<code>4773:32621</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "8",
+            "Current",
+            "<code>4695:21660</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "8",
+            "Error",
+            "<code>4773:32659</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "9",
+            "Completed",
+            "<code>4773:32867</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "9",
+            "Current",
+            "<code>4695:21671</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "9",
+            "9",
+            "Error",
+            "<code>4773:32689</code>",
+            "230 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "1",
+            "Current",
+            "<code>4689:18458</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "1",
+            "Error",
+            "<code>4773:32272</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "2",
+            "Current",
+            "<code>4689:18469</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "2",
+            "Error",
+            "<code>4773:32335</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "3",
+            "Current",
+            "<code>4689:18480</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "3",
+            "Error",
+            "<code>4773:32398</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "4",
+            "Current",
+            "<code>4689:18491</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "4",
+            "Error",
+            "<code>4773:32458</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "5",
+            "Current",
+            "<code>4689:18502</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "5",
+            "Error",
+            "<code>4773:32514</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "6",
+            "Current",
+            "<code>4689:18513</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "6",
+            "Error",
+            "<code>4773:32565</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "7",
+            "Current",
+            "<code>4689:18524</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "7",
+            "Error",
+            "<code>4773:32610</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "8",
+            "Current",
+            "<code>4689:18535</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "8",
+            "Error",
+            "<code>4773:32648</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "9",
+            "Current",
+            "<code>4689:18546</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "9",
+            "Error",
+            "<code>4773:32678</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "10",
+            "Completed",
+            "<code>4773:32877</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "10",
+            "Current",
+            "<code>4689:18557</code>",
+            "256 × 4"
+          ]
+        },
+        {
+          "cells": [
+            "Dash",
+            "10",
+            "10",
+            "Error",
+            "<code>4773:32699</code>",
+            "256 × 4"
+          ]
+        }
+      ],
+      "collapseLabel": "View full Type × Steps × Current × Status breakdown (225 rows)"
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 4337:11140",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the 225 live variants.</strong> Cards follow <code>Type</code> — Bullet, Circular, Dash — with <code>Steps</code>, <code>Current</code> and <code>Status</code> as panel controls; geometry, colours and the two Circular text styles read off 4337:11205, 4365:12137, 4695:22253 and the Status variants. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the four-property schema.</strong> Installation on the Stepper family coordinates, Property Mapping one row per property, Usage Snippets per Type, Guidelines added, Scorecard regraded, Variants Inventory built from the 225 live nodes with a summary and a collapsed breakdown.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Circular’s step label never renders.</strong> <code>label-container</code> (e.g. 4365:12143) sits at y 45 under a 45 × 45 frame and is clipped in every export; <code>#index</code> / <code>#label</code> also keep the <code>#</code> sigil and the Bullet dots are all named <code>ellipse</code>. Filed from the scorecard for the Component Review.",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 4337:11140",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 10 resolved issues on the Overview tab had no changelog row: Three Stepper components merged into one; Step count is a property, not sibling components; Ordinal position replaced by an integer; Status states added; <code>Style</code> renamed to <code>Type</code>; All variant values Title Cased; Uneven Status coverage confirmed intentional; Full 2–10 step range retained; Dots and ring arcs confirmed as vectors; Horizontal-only orientation confirmed intentional.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · canonical node 27:48287 (5 Steps) + 2 siblings (27:48254 4 Steps, 27:48235 3 Steps)",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Restructure</strong> — Collapse 3 sibling components (<code>Stepper - Bullet - 3/4/5 Steps</code>) into one <code>Stepper - Bullet</code> with <code>steps: Int</code> and <code>current: Int</code> properties. Replace raster dot PNGs with vector ellipses. Long-term, unify with Dash + Circular under <code>EBStepper(style:)</code>. <span class=\"tag-open tag-c1 tag-c2 tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Schema"
+          }
+        },
+        {
+          "body": "<strong>C1 — Family structure</strong> — 3 top-level components differ only by hardcoded step count. Collapse into one component with a <code>steps</code> property. Same anti-pattern as Stepper - Circular. <span class=\"tag-open tag-c1\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>C2 — Property shape</strong> — Nested <code>highlighted = 1st | 2nd | … | Nth</code> ordinal axis should become a top-level integer <code>current</code>. <span class=\"tag-open tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>C4 — Native mapping</strong> — No native primitive matches. Requires custom <code>EBStepperBullet</code> on both platforms built over HStack/Row of Circle shapes. Consider unifying with Dash + Circular under <code>EBStepper(style:)</code>. <span class=\"tag-open tag-c4\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>C5 — Missing states</strong> — No completed / upcoming distinction, no pressed / focused states for interactive carousels, no connector line, no vertical orientation. <span class=\"tag-open tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>C6 — Raster dots</strong> — Each 8×8 dot is a pre-baked PNG. Replace with vector <code>Ellipse</code> fills bound to <code>main/stepper/color/bg</code> and <code>main/stepper/color/bg-track</code>. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Mappings pending restructure. Mapping 3 separate siblings would codify the anti-pattern. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

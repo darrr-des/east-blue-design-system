@@ -143,16 +143,16 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['default'];
   var compose = lang === 'compose';
-  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
-  var T = function (t) { return '<span class="syn-type">' + t + '</span>'; };
-  var P = function (t) { return '<span class="syn-punc">' + t + '</span>'; };
-  var K = function (t) { return '<span class="syn-kw">' + t + '</span>'; };
-  var Fn = function (t) { return '<span class="syn-fn">' + t + '</span>'; };
-  var N = function (t) { return '<span class="syn-num">' + t + '</span>'; };
+  var sep = compose ? ' = ' : ': ';
+  var T = function (t) { return '' + t + ''; };
+  var P = function (t) { return '' + t + ''; };
+  var K = function (t) { return '' + t + ''; };
+  var Fn = function (t) { return '' + t + ''; };
+  var N = function (t) { return '' + t + ''; };
 
   var args = compose
     ? ['value' + sep + 'amount',
-       'onValueChange' + sep + P('{') + ' amount ' + '<span class="syn-eq">=</span>' + ' it ' + P('}'),
+       'onValueChange' + sep + P('{') + ' amount ' + '=' + ' it ' + P('}'),
        'valueRange' + sep + N('0f') + P('..') + N('100f'),
        'showsTooltip' + sep + K(card.hastooltip === 'true' ? 'true' : 'false')]
     : ['value' + sep + P('$') + 'amount',

@@ -1,0 +1,2125 @@
+{
+  "name": "Toast",
+  "meta": {
+    "node": "4915:25141",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4915-25141",
+    "description": "Test read. A transient message bar with an optional leading icon, trailing action and description. Read independently of the existing Toast page, and the first test to resolve every binding through the token database.",
+    "badges": [
+      {
+        "kind": "restructure",
+        "label": "Restructure"
+      },
+      {
+        "kind": "rework",
+        "label": "Requires Rework"
+      }
+    ],
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — the axes do not describe independent choices",
+      "text": "Tokens hold: 500 fields resolve, none drift. But the six axes allow 96 and build 22, Theme does nothing to Destructive, Pending differs from Default only by icon, and MD and SM are built as two different components."
+    },
+    "navGroup": "",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "A short confirmation that floats above the bottom of a screen after an action — a transfer sent, a setting saved — and clears itself. Sketched; no screenshot of a shipping screen was read in this pass.",
+    "inContextHtml": "<div class=\"ctx-placeholder\"><svg width=\"240\" height=\"150\" viewBox=\"0 0 240 150\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-hidden=\"true\"><rect x=\"0.5\" y=\"0.5\" width=\"239\" height=\"149\" rx=\"10\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"/><rect x=\"20\" y=\"16\" width=\"200\" height=\"10\" rx=\"5\" fill=\"#E5EBF4\"/><rect x=\"20\" y=\"36\" width=\"140\" height=\"8\" rx=\"4\" fill=\"#E5EBF4\"/><rect x=\"20\" y=\"52\" width=\"170\" height=\"8\" rx=\"4\" fill=\"#E5EBF4\"/><rect x=\"20\" y=\"104\" width=\"200\" height=\"30\" rx=\"6\" fill=\"#0A2757\"/><circle cx=\"36\" cy=\"119\" r=\"6\" stroke=\"#FFFFFF\" stroke-width=\"1.6\"/><path d=\"M33.5 119l1.8 1.8 3.4-3.4\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"50\" y=\"115\" width=\"110\" height=\"8\" rx=\"4\" fill=\"#FFFFFF\"/></svg></div>",
+    "inContextImage": "",
+    "inContextAlt": "A mobile screen with a dark Toast near the bottom, a check icon and a one-line confirmation message.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tto-demo-preview\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--dark eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__icon\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.09961C16.9152 3.09982 20.9004 7.0848 20.9004 12C20.9002 16.915 16.915 20.9002 12 20.9004C7.0848 20.9004 3.09982 16.9152 3.09961 12C3.09961 7.08467 7.08467 3.09961 12 3.09961ZM12 4.90039C8.07878 4.90039 4.90039 8.07878 4.90039 12C4.9006 15.921 8.07891 19.0996 12 19.0996C15.9209 19.0994 19.0994 15.9209 19.0996 12C19.0996 8.07891 15.921 4.9006 12 4.90039ZM15.3984 9.33008C15.7683 8.99817 16.3379 9.0287 16.6699 9.39844C17.0015 9.76831 16.9712 10.338 16.6016 10.6699L11.0293 15.6699C10.6698 15.9923 10.1199 15.9731 9.7832 15.627L7.35449 13.127C7.00821 12.7704 7.01654 12.2008 7.37305 11.8545C7.72958 11.5082 8.29919 11.5165 8.64551 11.873L10.4707 13.752L15.3984 9.33008Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Appearance</span><select class=\"demo-panel-select\" id=\"tto-ctrl-appearance\" onchange=\"_ttoUpdate()\"><option value=\"default\" selected>Default</option><option value=\"destructive\">Destructive</option><option value=\"pending\">Pending</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Theme</span><select class=\"demo-panel-select\" id=\"tto-ctrl-theme\" onchange=\"_ttoUpdate()\"><option value=\"dark\" selected>Dark</option><option value=\"light\">Light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" id=\"tto-ctrl-size\" onchange=\"_ttoUpdate()\"><option value=\"md\" selected>MD</option><option value=\"sm\">SM</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeadingIcon</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"tto-ctrl-lead\" checked onchange=\"this.parentElement.classList.toggle('is-on', this.checked); _ttoUpdate()\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailingAction</span><label class=\"demo-panel-toggle\"><input type=\"checkbox\" id=\"tto-ctrl-trail\" onchange=\"this.parentElement.classList.toggle('is-on', this.checked); _ttoUpdate()\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><label class=\"demo-panel-toggle\"><input type=\"checkbox\" id=\"tto-ctrl-desc\" onchange=\"this.parentElement.classList.toggle('is-on', this.checked); _ttoUpdate()\"><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Any short confirmation, error or progress message. The message, description and action are content, and the text and action are slots — nothing is tied to one product."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its surface, layout and icon placement; the action is a DS <code>Button - XSmall</code> instance and the description a <code>Subtext Message</code> instance."
+      },
+      {
+        "name": "Consistent",
+        "rating": "fail",
+        "note": "The same toast is built several ways. MD wraps the icon in a <code>LeadingIcon</code> frame, SM does not; the surface, border and radius sit on <code>ToastRow</code> in plain variants and on the root in action variants; the title layer is named <code>Title</code>, <code>#content</code> or <code>LeadingIcon</code>; the shadow exists on 8 of 22 variants; and the icon colour is bound to three different tokens from three different families."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "The action is a Button instance set to the right appearance per tone — a pill on Dark and Light, a text link on Destructive — and the text and action areas are real Slots."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Appearance=Default",
+        "notes": "Neutral confirmation with a check icon. Dark: <code>#0A2757</code> surface; Light: <code>#FFFFFF</code> surface with a <code>#E5EBF4</code> border."
+      },
+      {
+        "state": "Destructive",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Appearance=Destructive",
+        "notes": "Red <code>#D61B2C</code> surface with a circled-✕ icon — under both Theme values. Its action is a text-link <code>Retry</code>, not a pill."
+      },
+      {
+        "state": "Pending",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Appearance=Pending",
+        "notes": "Identical to Default except the icon, which is the information glyph. Only built with the icon on."
+      },
+      {
+        "state": "Size SM",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Size=SM",
+        "notes": "Same 312 × 38 box. Title drops from 14 to 12 (<code>Primary/Multi-line Label/Light/Fine</code>), icon from 24 to 16 and centres, and the shadow is gone. Never built with an action or description."
+      },
+      {
+        "state": "With action",
+        "ios": "yes",
+        "android": "yes",
+        "property": "hasTrailingAction=True",
+        "notes": "Row becomes 41 tall, title turns bold (<code>Primary/Multi-line Label/Small</code>) and a 24-tall Button sits on the right. Never built with a leading icon."
+      },
+      {
+        "state": "Dismiss",
+        "ios": "no",
+        "android": "no",
+        "property": "—",
+        "notes": "No close control and no timing is specified — nothing on the component says how long it stays or how it leaves."
+      }
+    ],
+    "resolved": [],
+    "open": [
+      {
+        "headline": "Appearance and Theme are not independent.",
+        "body": "Destructive draws red under both Theme values: its four plain variants all sit under <code>Theme=Dark</code> and its two action variants all under <code>Theme=Light</code>, split arbitrarily. Pending differs from Default only in the leading icon. The six axes allow 96 combinations; 22 are built.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The axes gate each other.",
+        "body": "<code>hasDescription=True</code> exists only with <code>hasTrailingAction=True</code>; <code>Size=SM</code> never has an action or a description; an action never has a leading icon; Pending never lacks one. A consumer cannot turn a property on without knowing which others it silently depends on. All three <code>has…</code> properties are also string variants rather than booleans.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "MD and SM are built as two different components.",
+        "body": "MD wraps the icon in a <code>LeadingIcon</code> frame with a raw 7 top padding and tops it; SM places the icon straight in <code>ToastRow</code> and centres it. The surface, border and 8 radius sit on <code>ToastRow</code> in plain variants but on the variant root in action variants, with the border CENTER in one and INSIDE in another.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The title layer has three names.",
+        "body": "The same text role is <code>Title</code> in most variants, <code>#content</code> in <code>Default · Dark · action</code>, and <code>LeadingIcon</code> — an icon name — in both Destructive action variants. Mapped to code, the name tells a developer the wrong thing.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The same values are bound in some variants and typed in others.",
+        "body": "ToastRow padding 12 is <code>space/space-12</code> in 16 variants and raw in 6; padding 8, gap 24 and radius 8 are likewise raw where siblings bind them. The shadow <code>0 1 3 0 #E8EEF2 @79%</code> is unbound on all 8 variants that carry it, and <code>LeadingIcon</code> top padding is a raw, off-scale 7.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "The icon colour is bound to three tokens from three families.",
+        "body": "Default Dark binds <code>border/color-border-primary-inverse</code>, Pending Dark binds <code>bg/color-bg-main</code>, Light binds <code>text/color-text</code>. All draw the right colour today, but a border or background token retuned tomorrow recolours these icons with it.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "The description fails contrast on two tones.",
+        "body": "At 10px (<code>Secondary/Bold/Small Caption</code>): Destructive <code>#F6F9FD @80%</code> on <code>#D61B2C</code> is <strong>3.54:1</strong>; Light <code>#6780A9</code> on <code>#FFFFFF</code> is <strong>4.01:1</strong>. Both under 4.5:1. Dark passes at 7.79:1. Computed from the resolved tokens with the WCAG formula.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "The icons are unflattened unions carrying dead paint.",
+        "body": "Each leading icon is a <code>BOOLEAN_OPERATION</code> whose child vectors still carry raw <code>#025AE9</code> strokes — 30 of them. A union draws its own fill, so they never render, but they ship in every variant. Destructive also uses the <code>Close</code> glyph, which reads as a dismiss button.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      }
+    ],
+    "recommendations": [
+      {
+        "headline": "Split tone from theme.",
+        "body": "Make <code>Appearance</code> a tone — Neutral or Destructive — and apply Theme only where it changes something. Destructive then stops occupying two Theme values it ignores.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Make the leading icon a slot, not an appearance.",
+        "body": "Pending is Default with a different icon. An icon slot with preferred instances (check, information, error) removes the Pending axis and lets new messages pick an icon without a new variant.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Build MD and SM from one structure.",
+        "body": "One frame tree, with Size changing only the title style and icon size. Put the surface, border and radius on one layer in every variant.",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Bind the shadow and the six raw paddings.",
+        "body": "Give the shadow an elevation token and bind the paddings that siblings already bind. Replace the raw 7 with a spacing token or a centred icon.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Bind every icon to one text-family token per tone.",
+        "body": "Use <code>text/color-text-inverse</code> on Dark and Destructive and <code>text/color-text</code> on Light, so icon colour follows text colour and nothing else.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Raise the description to 4.5:1, and name the title layer once.",
+        "body": "Lift the Destructive and Light description tokens; rename every title layer to <code>#title</code> so it maps to one parameter.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Specify duration and dismissal.",
+        "body": "How long it shows, whether it can be swiped away, and how it is announced to assistive technology — none of it is on the component.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Examples",
+    "description": "",
+    "source": {
+      "set": "4915:25141",
+      "variants": 22,
+      "read": "2026-09-18",
+      "tool": "figma-rest + figma-verify + talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "appearance",
+        "demoKey": "appearance",
+        "title": "Appearance",
+        "node": "4915:25141",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tto-spec-appearance\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--dark eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__icon\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.09961C16.9152 3.09982 20.9004 7.0848 20.9004 12C20.9002 16.915 16.915 20.9002 12 20.9004C7.0848 20.9004 3.09982 16.9152 3.09961 12C3.09961 7.08467 7.08467 3.09961 12 3.09961ZM12 4.90039C8.07878 4.90039 4.90039 8.07878 4.90039 12C4.9006 15.921 8.07891 19.0996 12 19.0996C15.9209 19.0994 19.0994 15.9209 19.0996 12C19.0996 8.07891 15.921 4.9006 12 4.90039ZM15.3984 9.33008C15.7683 8.99817 16.3379 9.0287 16.6699 9.39844C17.0015 9.76831 16.9712 10.338 16.6016 10.6699L11.0293 15.6699C10.6698 15.9923 10.1199 15.9731 9.7832 15.627L7.35449 13.127C7.00821 12.7704 7.01654 12.2008 7.37305 11.8545C7.72958 11.5082 8.29919 11.5165 8.64551 11.873L10.4707 13.752L15.3984 9.33008Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">Default</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--destructive eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__icon\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.09961C16.9152 3.09982 20.9004 7.0848 20.9004 12C20.9002 16.915 16.915 20.9002 12 20.9004C7.0848 20.9004 3.09982 16.9152 3.09961 12C3.09961 7.08467 7.08467 3.09961 12 3.09961ZM12 4.90039C8.07878 4.90039 4.90039 8.07878 4.90039 12C4.9006 15.921 8.07891 19.0996 12 19.0996C15.9209 19.0994 19.0994 15.9209 19.0996 12C19.0996 8.07891 15.921 4.9006 12 4.90039ZM13.793 8.79297C14.1835 8.40244 14.8165 8.40244 15.207 8.79297C15.5972 9.18352 15.5974 9.81664 15.207 10.207L13.4141 12L15.207 13.793C15.5972 14.1835 15.5974 14.8166 15.207 15.207C14.8166 15.5974 14.1835 15.5972 13.793 15.207L12 13.4141L10.207 15.207C9.81664 15.5974 9.18352 15.5972 8.79297 15.207C8.40244 14.8165 8.40244 14.1835 8.79297 13.793L10.5859 12L8.79297 10.207C8.40244 9.81651 8.40244 9.18349 8.79297 8.79297C9.18349 8.40244 9.81651 8.40244 10.207 8.79297L12 10.5859L13.793 8.79297Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">Destructive</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--dark eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__icon\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.09961C16.9152 3.09982 20.9004 7.0848 20.9004 12C20.9002 16.915 16.915 20.9002 12 20.9004C7.0848 20.9004 3.09982 16.9152 3.09961 12C3.09961 7.08467 7.08467 3.09961 12 3.09961ZM12 4.90039C8.07878 4.90039 4.90039 8.07878 4.90039 12C4.9006 15.921 8.07891 19.0996 12 19.0996C15.9209 19.0994 19.0994 15.9209 19.0996 12C19.0996 8.07891 15.921 4.9006 12 4.90039ZM12 10.2002C12.4416 10.2004 12.7998 10.5583 12.7998 11V15.2002H13C13.4416 15.2004 13.7998 15.5583 13.7998 16C13.7996 16.4415 13.4415 16.7996 13 16.7998H11C10.5583 16.7998 10.2004 16.4416 10.2002 16C10.2002 15.5582 10.5582 15.2002 11 15.2002H11.2002V11.7998H11C10.5583 11.7998 10.2004 11.4416 10.2002 11C10.2002 10.5582 10.5582 10.2002 11 10.2002H12ZM12 7C12.5521 7.00021 13 7.44785 13 8C12.9998 8.55198 12.552 8.99979 12 9C11.4478 9 11.0002 8.55211 11 8C11 7.44772 11.4477 7 12 7Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">Pending</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Theme",
+                "prop": "theme",
+                "control": "select",
+                "defaultValue": "dark",
+                "options": [
+                  {
+                    "value": "dark",
+                    "label": "Dark"
+                  },
+                  {
+                    "value": "light",
+                    "label": "Light"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "md",
+                "options": [
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  }
+                ]
+              },
+              {
+                "label": "hasLeadingIcon",
+                "prop": "hasLeadingIcon",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingAction",
+                "prop": "hasTrailingAction",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Appearance",
+                "value": "Default · Destructive · Pending",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Leading icon",
+                "value": "Checkmark (Circular)",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "appearance",
+                "variants": [
+                  {
+                    "when": "appearance:destructive",
+                    "value": "Close (circled ✕)",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  },
+                  {
+                    "when": "appearance:pending",
+                    "value": "Information",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#0A2757",
+                "mono": true,
+                "token": "bg/color-bg-inverse",
+                "swatch": "auto",
+                "prop": "appearance",
+                "variants": [
+                  {
+                    "when": "appearance:destructive",
+                    "value": "#D61B2C",
+                    "token": "bg/color-bg-destructive",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "mono": true,
+                "token": "border/color-border-weak",
+                "swatch": "auto",
+                "prop": "appearance",
+                "variants": [
+                  {
+                    "when": "appearance:destructive",
+                    "value": "#F4C7C9",
+                    "token": "border/color-border-destructive-disabled",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Title",
+                "value": "#FFFFFF",
+                "mono": true,
+                "token": "text/color-text-inverse",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Icon",
+                "value": "#FFFFFF",
+                "mono": true,
+                "token": "border/color-border-primary-inverse",
+                "swatch": "auto",
+                "prop": "appearance",
+                "variants": [
+                  {
+                    "when": "appearance:pending",
+                    "value": "#FFFFFF",
+                    "token": "bg/color-bg-main",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add the popup message here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>   <span class=\"syn-cmt\">// or .default · .destructive · .pending</span>\n    .<span class=\"syn-fn\">ebTheme</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.dark</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.md</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Default</span>,   <span class=\"syn-cmt\">// or Default · Destructive · Pending</span>\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Dark</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "theme",
+        "demoKey": "theme",
+        "title": "Theme",
+        "node": "4915:25141",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tto-spec-theme\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--dark eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__icon\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.09961C16.9152 3.09982 20.9004 7.0848 20.9004 12C20.9002 16.915 16.915 20.9002 12 20.9004C7.0848 20.9004 3.09982 16.9152 3.09961 12C3.09961 7.08467 7.08467 3.09961 12 3.09961ZM12 4.90039C8.07878 4.90039 4.90039 8.07878 4.90039 12C4.9006 15.921 8.07891 19.0996 12 19.0996C15.9209 19.0994 19.0994 15.9209 19.0996 12C19.0996 8.07891 15.921 4.9006 12 4.90039ZM15.3984 9.33008C15.7683 8.99817 16.3379 9.0287 16.6699 9.39844C17.0015 9.76831 16.9712 10.338 16.6016 10.6699L11.0293 15.6699C10.6698 15.9923 10.1199 15.9731 9.7832 15.627L7.35449 13.127C7.00821 12.7704 7.01654 12.2008 7.37305 11.8545C7.72958 11.5082 8.29919 11.5165 8.64551 11.873L10.4707 13.752L15.3984 9.33008Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">Dark</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--light eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__icon\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.09961C16.9152 3.09982 20.9004 7.0848 20.9004 12C20.9002 16.915 16.915 20.9002 12 20.9004C7.0848 20.9004 3.09982 16.9152 3.09961 12C3.09961 7.08467 7.08467 3.09961 12 3.09961ZM12 4.90039C8.07878 4.90039 4.90039 8.07878 4.90039 12C4.9006 15.921 8.07891 19.0996 12 19.0996C15.9209 19.0994 19.0994 15.9209 19.0996 12C19.0996 8.07891 15.921 4.9006 12 4.90039ZM15.3984 9.33008C15.7683 8.99817 16.3379 9.0287 16.6699 9.39844C17.0015 9.76831 16.9712 10.338 16.6016 10.6699L11.0293 15.6699C10.6698 15.9923 10.1199 15.9731 9.7832 15.627L7.35449 13.127C7.00821 12.7704 7.01654 12.2008 7.37305 11.8545C7.72958 11.5082 8.29919 11.5165 8.64551 11.873L10.4707 13.752L15.3984 9.33008Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">Light</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Appearance",
+                "prop": "appearance",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "destructive",
+                    "label": "Destructive"
+                  },
+                  {
+                    "value": "pending",
+                    "label": "Pending"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "md",
+                "options": [
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  }
+                ]
+              },
+              {
+                "label": "hasLeadingIcon",
+                "prop": "hasLeadingIcon",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingAction",
+                "prop": "hasTrailingAction",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Theme",
+                "value": "Dark · Light",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "On Destructive",
+                "value": "No effect — red under both",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#0A2757",
+                "mono": true,
+                "token": "bg/color-bg-inverse",
+                "swatch": "auto",
+                "prop": "theme",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#FFFFFF",
+                    "token": "bg/color-bg-main",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Title",
+                "value": "#FFFFFF",
+                "mono": true,
+                "token": "text/color-text-inverse",
+                "swatch": "auto",
+                "prop": "theme",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#0A2757",
+                    "token": "text/color-text",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Icon",
+                "value": "#FFFFFF",
+                "mono": true,
+                "token": "border/color-border-primary-inverse",
+                "swatch": "auto",
+                "prop": "theme",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#0A2757",
+                    "token": "text/color-text",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Description",
+                "value": "#F6F9FD @72%",
+                "mono": true,
+                "token": "text/color-text-inverse-weaker",
+                "swatch": "auto",
+                "prop": "theme",
+                "variants": [
+                  {
+                    "when": "theme:light",
+                    "value": "#6780A9",
+                    "token": "text/color-text-weaker",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add the popup message here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTheme</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.dark</span><span class=\"syn-punc\">)</span>   <span class=\"syn-cmt\">// no effect on .destructive</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.md</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Dark</span>,   <span class=\"syn-cmt\">// no effect on Destructive</span>\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "size",
+        "demoKey": "size",
+        "title": "Size",
+        "node": "4915:25141",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tto-spec-size\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--dark eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__icon\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.09961C16.9152 3.09982 20.9004 7.0848 20.9004 12C20.9002 16.915 16.915 20.9002 12 20.9004C7.0848 20.9004 3.09982 16.9152 3.09961 12C3.09961 7.08467 7.08467 3.09961 12 3.09961ZM12 4.90039C8.07878 4.90039 4.90039 8.07878 4.90039 12C4.9006 15.921 8.07891 19.0996 12 19.0996C15.9209 19.0994 19.0994 15.9209 19.0996 12C19.0996 8.07891 15.921 4.9006 12 4.90039ZM15.3984 9.33008C15.7683 8.99817 16.3379 9.0287 16.6699 9.39844C17.0015 9.76831 16.9712 10.338 16.6016 10.6699L11.0293 15.6699C10.6698 15.9923 10.1199 15.9731 9.7832 15.627L7.35449 13.127C7.00821 12.7704 7.01654 12.2008 7.37305 11.8545C7.72958 11.5082 8.29919 11.5165 8.64551 11.873L10.4707 13.752L15.3984 9.33008Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">MD</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--dark eb-preview-tto--plain eb-preview-tto--sm\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__icon\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.09961C16.9152 3.09982 20.9004 7.0848 20.9004 12C20.9002 16.915 16.915 20.9002 12 20.9004C7.0848 20.9004 3.09982 16.9152 3.09961 12C3.09961 7.08467 7.08467 3.09961 12 3.09961ZM12 4.90039C8.07878 4.90039 4.90039 8.07878 4.90039 12C4.9006 15.921 8.07891 19.0996 12 19.0996C15.9209 19.0994 19.0994 15.9209 19.0996 12C19.0996 8.07891 15.921 4.9006 12 4.90039ZM15.3984 9.33008C15.7683 8.99817 16.3379 9.0287 16.6699 9.39844C17.0015 9.76831 16.9712 10.338 16.6016 10.6699L11.0293 15.6699C10.6698 15.9923 10.1199 15.9731 9.7832 15.627L7.35449 13.127C7.00821 12.7704 7.01654 12.2008 7.37305 11.8545C7.72958 11.5082 8.29919 11.5165 8.64551 11.873L10.4707 13.752L15.3984 9.33008Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">SM</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Appearance",
+                "prop": "appearance",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "destructive",
+                    "label": "Destructive"
+                  },
+                  {
+                    "value": "pending",
+                    "label": "Pending"
+                  }
+                ]
+              },
+              {
+                "label": "Theme",
+                "prop": "theme",
+                "control": "select",
+                "defaultValue": "dark",
+                "options": [
+                  {
+                    "value": "dark",
+                    "label": "Dark"
+                  },
+                  {
+                    "value": "light",
+                    "label": "Light"
+                  }
+                ]
+              },
+              {
+                "label": "hasLeadingIcon",
+                "prop": "hasLeadingIcon",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingAction",
+                "prop": "hasTrailingAction",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Size",
+                "value": "MD · SM",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Icon",
+                "value": "24 × 24, topped",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:sm",
+                    "value": "16 × 16, centred",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Label/Light/Small",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:sm",
+                    "value": "Primary/Multi-line Label/Light/Fine",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "38",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "312",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "8",
+                "mono": true,
+                "token": "radius/radius-3",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "12",
+                "mono": true,
+                "token": "space/space-12",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "12",
+                "mono": true,
+                "token": "space/space-12",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "8",
+                "mono": true,
+                "token": "space/space-8",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "1",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "Icon top, text centre",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "size",
+                "variants": [
+                  {
+                    "when": "size:sm",
+                    "value": "Centre",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add the popup message here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTheme</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.dark</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.md</span><span class=\"syn-punc\">)</span>   <span class=\"syn-cmt\">// or .md · .sm</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Dark</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "hasLeadingIcon",
+        "demoKey": "hasLeadingIcon",
+        "title": "hasLeadingIcon",
+        "node": "4915:25141",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tto-spec-hasLeadingIcon\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--dark eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__icon\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.09961C16.9152 3.09982 20.9004 7.0848 20.9004 12C20.9002 16.915 16.915 20.9002 12 20.9004C7.0848 20.9004 3.09982 16.9152 3.09961 12C3.09961 7.08467 7.08467 3.09961 12 3.09961ZM12 4.90039C8.07878 4.90039 4.90039 8.07878 4.90039 12C4.9006 15.921 8.07891 19.0996 12 19.0996C15.9209 19.0994 19.0994 15.9209 19.0996 12C19.0996 8.07891 15.921 4.9006 12 4.90039ZM15.3984 9.33008C15.7683 8.99817 16.3379 9.0287 16.6699 9.39844C17.0015 9.76831 16.9712 10.338 16.6016 10.6699L11.0293 15.6699C10.6698 15.9923 10.1199 15.9731 9.7832 15.627L7.35449 13.127C7.00821 12.7704 7.01654 12.2008 7.37305 11.8545C7.72958 11.5082 8.29919 11.5165 8.64551 11.873L10.4707 13.752L15.3984 9.33008Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">True</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--dark eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Appearance",
+                "prop": "appearance",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "destructive",
+                    "label": "Destructive"
+                  },
+                  {
+                    "value": "pending",
+                    "label": "Pending"
+                  }
+                ]
+              },
+              {
+                "label": "Theme",
+                "prop": "theme",
+                "control": "select",
+                "defaultValue": "dark",
+                "options": [
+                  {
+                    "value": "dark",
+                    "label": "Dark"
+                  },
+                  {
+                    "value": "light",
+                    "label": "Light"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "md",
+                "options": [
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingAction",
+                "prop": "hasTrailingAction",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "hasLeadingIcon",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasLeadingIcon",
+                "variants": [
+                  {
+                    "when": "hasLeadingIcon:false",
+                    "value": "False — the icon frame is removed",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add the popup message here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTheme</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.dark</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.md</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Dark</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "hasTrailingAction",
+        "demoKey": "hasTrailingAction",
+        "title": "hasTrailingAction",
+        "node": "4915:25141",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tto-spec-hasTrailingAction\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--light eb-preview-tto--plain eb-preview-tto--md eb-preview-tto--shadow\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title\">Add the popup message here</span></span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--light eb-preview-tto--action eb-preview-tto--md\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title eb-preview-tto__title--bold\">Add label here</span></span><span class=\"eb-preview-tto__action\">Label</span></span></div><figcaption class=\"eb-example__label\">True</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Appearance",
+                "prop": "appearance",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "destructive",
+                    "label": "Destructive"
+                  },
+                  {
+                    "value": "pending",
+                    "label": "Pending"
+                  }
+                ]
+              },
+              {
+                "label": "Theme",
+                "prop": "theme",
+                "control": "select",
+                "defaultValue": "light",
+                "options": [
+                  {
+                    "value": "dark",
+                    "label": "Dark"
+                  },
+                  {
+                    "value": "light",
+                    "label": "Light"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "md",
+                "options": [
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  }
+                ]
+              },
+              {
+                "label": "hasLeadingIcon",
+                "prop": "hasLeadingIcon",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasDescription",
+                "prop": "hasDescription",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "hasTrailingAction",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasTrailingAction",
+                "variants": [
+                  {
+                    "when": "hasTrailingAction:true",
+                    "value": "True — Button - XSmall in the Component-Slot",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              },
+              {
+                "key": "Action copy",
+                "value": "Label",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "appearance",
+                "variants": [
+                  {
+                    "when": "appearance:destructive",
+                    "value": "Retry",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Button",
+                "value": "#005CE5",
+                "mono": true,
+                "token": "bg/color-bg-primary",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Button label",
+                "value": "#FFFFFF",
+                "mono": true,
+                "token": "text/color-text-inverse",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Title",
+                "value": "Primary/Multi-line Label/Small",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Button label",
+                "value": "Primary/Label/Small",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "41",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "16",
+                "mono": true,
+                "token": "space/space-16",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "8",
+                "mono": true,
+                "token": "space/space-8",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "24",
+                "mono": true,
+                "token": "space/space-24",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "99 (button)",
+                "mono": true,
+                "token": "button/btn-radius-default",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add the popup message here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTheme</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.light</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.md</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLeadingIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Light</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>,\n    <span class=\"syn-param\">leadingIcon</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "hasDescription",
+        "demoKey": "hasDescription",
+        "title": "hasDescription",
+        "node": "4915:25141",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tto-spec-hasDescription\"><div class=\"eb-examples\"><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--light eb-preview-tto--action eb-preview-tto--md\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title eb-preview-tto__title--bold\">Add label here</span></span><span class=\"eb-preview-tto__action\">Label</span></span></div><figcaption class=\"eb-example__label\">False</figcaption></figure><figure class=\"eb-example\"><div class=\"eb-preview eb-preview-tto eb-preview-tto--light eb-preview-tto--action-desc eb-preview-tto--md\"><span class=\"eb-preview-tto__row\"><span class=\"eb-preview-tto__text\"><span class=\"eb-preview-tto__title eb-preview-tto__title--bold\">Add label here</span><span class=\"eb-preview-tto__desc\">Add description here.</span></span><span class=\"eb-preview-tto__action\">Label</span></span></div><figcaption class=\"eb-example__label\">True</figcaption></figure></div></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "Appearance",
+                "prop": "appearance",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "destructive",
+                    "label": "Destructive"
+                  },
+                  {
+                    "value": "pending",
+                    "label": "Pending"
+                  }
+                ]
+              },
+              {
+                "label": "Theme",
+                "prop": "theme",
+                "control": "select",
+                "defaultValue": "light",
+                "options": [
+                  {
+                    "value": "dark",
+                    "label": "Dark"
+                  },
+                  {
+                    "value": "light",
+                    "label": "Light"
+                  }
+                ]
+              },
+              {
+                "label": "Size",
+                "prop": "size",
+                "control": "select",
+                "defaultValue": "md",
+                "options": [
+                  {
+                    "value": "md",
+                    "label": "MD"
+                  },
+                  {
+                    "value": "sm",
+                    "label": "SM"
+                  }
+                ]
+              },
+              {
+                "label": "hasLeadingIcon",
+                "prop": "hasLeadingIcon",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "true",
+                    "label": "True"
+                  },
+                  {
+                    "value": "false",
+                    "label": "False"
+                  }
+                ]
+              },
+              {
+                "label": "hasTrailingAction",
+                "prop": "hasTrailingAction",
+                "control": "toggle",
+                "defaultValue": "true",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "hasDescription",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "hasDescription",
+                "variants": [
+                  {
+                    "when": "hasDescription:true",
+                    "value": "True — only built with an action",
+                    "token": "",
+                    "mono": "auto",
+                    "swatch": "auto",
+                    "hide": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "mono": true,
+                "token": "text/color-text-weaker",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Description",
+                "value": "Secondary/Bold/Small Caption",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "59",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "12",
+                "mono": true,
+                "token": "space/space-12",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "4",
+                "mono": true,
+                "token": "space/space-4",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "Button bottom-aligned",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add label here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTheme</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.light</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.md</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLeadingIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add label here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Light</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>,\n    <span class=\"syn-param\">leadingIcon</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">action</span> = <span class=\"syn-type\">EBToastAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors",
+        "description": "Every token name below is resolved from <code>src/data/tokens.json</code> (Primitives library) by <code>figma-verify</code>, not read off a swatch: 500 bound fields, 0 drift, 0 unknown. Rows marked <code>not bound</code> are typed values with no token behind them.",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Dark",
+            "element": "Surface",
+            "token": "bg/color-bg-inverse",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Dark",
+            "element": "Border",
+            "token": "border/color-border-weak",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Dark",
+            "element": "Title",
+            "token": "text/color-text-inverse",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Dark",
+            "element": "Icon (Default)",
+            "token": "border/color-border-primary-inverse",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Dark",
+            "element": "Icon (Pending)",
+            "token": "bg/color-bg-main",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Dark",
+            "element": "Description",
+            "token": "text/color-text-inverse-weaker",
+            "values": [
+              "#F6F9FD @72%"
+            ]
+          },
+          {
+            "role": "Dark",
+            "element": "Button",
+            "token": "bg/color-bg-primary-inverse",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Dark",
+            "element": "Button label",
+            "token": "text/color-text-primary",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Light",
+            "element": "Surface",
+            "token": "bg/color-bg-main",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Light",
+            "element": "Border",
+            "token": "border/color-border-weak",
+            "values": [
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Light",
+            "element": "Title",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Light",
+            "element": "Icon",
+            "token": "text/color-text",
+            "values": [
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Light",
+            "element": "Description",
+            "token": "text/color-text-weaker",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Light",
+            "element": "Button",
+            "token": "bg/color-bg-primary",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Light",
+            "element": "Button label",
+            "token": "text/color-text-inverse",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Destructive",
+            "element": "Surface",
+            "token": "bg/color-bg-destructive",
+            "values": [
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "Destructive",
+            "element": "Border",
+            "token": "border/color-border-destructive-disabled",
+            "values": [
+              "#F4C7C9"
+            ]
+          },
+          {
+            "role": "Destructive",
+            "element": "Title and action",
+            "token": "text/color-text-inverse",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Destructive",
+            "element": "Description",
+            "token": "text/color-text-inverse-weak",
+            "values": [
+              "#F6F9FD @80%"
+            ]
+          },
+          {
+            "role": "MD, no action",
+            "element": "Shadow",
+            "token": "not bound",
+            "values": [
+              "#E8EEF2 @79%"
+            ]
+          }
+        ]
+      }
+    ],
+    "playground": true
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:toast:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EBDesignSystem</span>   <span class=\"syn-cmt\">// SwiftUI</span>\n<span class=\"syn-kw\">import</span> com.eastblue.ds.toast.<span class=\"syn-type\">EBToast</span>   <span class=\"syn-cmt\">// Compose</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Six variant properties and two slots. Only 22 of the 96 combinations the variants allow are built, so several parameters are only valid together.",
+      "rows": [
+        {
+          "figma": "Appearance — Default, Destructive, Pending",
+          "swift": "<code>.ebAppearance(.default / .destructive / .pending)</code>",
+          "compose": "<code>appearance = EBToastAppearance.Default / Destructive / Pending</code>"
+        },
+        {
+          "figma": "Theme — Dark, Light (no effect on Destructive)",
+          "swift": "<code>.ebTheme(.dark / .light)</code>",
+          "compose": "<code>theme = EBToastTheme.Dark / Light</code>"
+        },
+        {
+          "figma": "Size — MD, SM",
+          "swift": "<code>.ebSize(.md / .sm)</code>",
+          "compose": "<code>size = EBToastSize.MD / SM</code>"
+        },
+        {
+          "figma": "hasLeadingIcon — True, False",
+          "swift": "<code>.ebLeadingIcon(false)</code> to hide it",
+          "compose": "<code>leadingIcon = false</code> to hide it"
+        },
+        {
+          "figma": "hasTrailingAction — the Button in the Component-Slot",
+          "swift": "<code>.ebAction(\"Label\") { }</code>",
+          "compose": "<code>action = EBToastAction(\"Label\") { }</code>"
+        },
+        {
+          "figma": "hasDescription — the Subtext Message in the Text-Slot (only with an action)",
+          "swift": "<code>.ebDescription(\"…\")</code>",
+          "compose": "<code>description = \"…\"</code>"
+        }
+      ]
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Confirmation (Appearance=Default)",
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add the popup message here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTheme</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.dark</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.md</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Dark</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Error with retry (Appearance=Destructive)",
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add label here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.destructive</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.md</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLeadingIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Retry\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add label here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Destructive</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>,\n    <span class=\"syn-param\">leadingIcon</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">action</span> = <span class=\"syn-type\">EBToastAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Retry\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "In progress (Appearance=Pending)",
+        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add the popup message here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAppearance</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.pending</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTheme</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.light</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.sm</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Pending</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Light</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.SM</span>\n<span class=\"syn-punc\">)</span>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Announced when it appears",
+        "ios": "Post <code>UIAccessibility.post(notification: .announcement, argument: message)</code> — a toast that is only drawn is never heard.",
+        "android": "Give the container <code>liveRegion = LiveRegionMode.Polite</code> (<code>Assertive</code> for Destructive)."
+      },
+      {
+        "requirement": "Long enough to act on",
+        "ios": "Extend the timeout while VoiceOver is running, or keep it until dismissed when it carries an action.",
+        "android": "Use <code>SnackbarDuration.Indefinite</code> when there is an action, so it is reachable by TalkBack."
+      },
+      {
+        "requirement": "Tone not by colour alone",
+        "ios": "Prefix Destructive announcements (\"Error: …\"); the red surface carries nothing to VoiceOver.",
+        "android": "Put the tone in <code>contentDescription</code> for Destructive."
+      },
+      {
+        "requirement": "Action reachable",
+        "ios": "The action is a <code>Button</code> with a 44 pt hit area, not only its 24-tall drawn pill.",
+        "android": "Apply <code>minimumInteractiveComponentSize()</code> to the action."
+      },
+      {
+        "requirement": "Icon is decorative",
+        "ios": "Hide the leading icon with <code>.accessibilityHidden(true)</code>; the message already says it.",
+        "android": "Set <code>contentDescription = null</code> on the leading icon."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Toast for a short, non-blocking confirmation of something that just happened.",
+        "dontText": "Do not use it for errors the user must resolve before continuing — that needs an Alert or an inline error."
+      },
+      {
+        "doText": "Add an action only when it undoes or retries the thing just done.",
+        "dontText": "Do not put navigation in a toast; it disappears before most users reach it."
+      },
+      {
+        "doText": "Keep the message to one line at 312 wide.",
+        "dontText": "Do not rely on the description for anything important; it is 10px and below the contrast minimum on two tones."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "MD and SM use different frame trees, the surface sits on different layers in plain and action variants, and the title is named <code>Title</code>, <code>#content</code> or <code>LeadingIcon</code> depending on the variant."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "22 of 96 combinations built; axes gate each other; Theme is a no-op on Destructive and Pending is an icon preset. The three <code>has…</code> properties are string variants."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Measured through the token database: 500 fields resolve to named tokens with 0 drift and 0 unknown. Against it: an unbound shadow on 8 variants, six paddings raw where siblings bind them, a raw 7, and icon colours bound to border and background tokens."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Maps to one message, an action and an icon, but a native API has to encode which parameters are valid together — Theme ignored on Destructive, description only with an action — or it will render combinations Figma never drew."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The action inherits its states from Button. Nothing specifies duration or dismissal, and the description is 3.54:1 on Destructive and 4.01:1 on Light at 10px."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The icons export cleanly, but each is an unflattened union with 30 raw <code>#025AE9</code> child strokes that never draw, and the error state uses the <code>Close</code> glyph."
+      }
+    ],
+    "variants": {
+      "total": 22,
+      "description": "3 Appearance × 2 Theme × 2 Size × 2 hasLeadingIcon × 2 hasTrailingAction × 2 hasDescription = 96 possible; 22 built — Default 12, Destructive 6, Pending 4.",
+      "summary": {
+        "columns": [
+          "Appearance",
+          "Combinations",
+          "Count"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Default",
+              "Dark · Light × MD (icon, none, action, action + description) · SM (icon, none)",
+              "12"
+            ]
+          },
+          {
+            "cells": [
+              "Destructive",
+              "Dark × MD · SM (icon, none) · Light × MD (action, action + description)",
+              "6"
+            ]
+          },
+          {
+            "cells": [
+              "Pending",
+              "Dark · Light × MD · SM, icon only",
+              "4"
+            ]
+          }
+        ]
+      },
+      "columns": [
+        "Appearance",
+        "Theme",
+        "Size",
+        "hasLeadingIcon",
+        "hasTrailingAction",
+        "hasDescription",
+        "Node",
+        "Size (px)"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25142</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25175</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "False",
+            "True",
+            "False",
+            "<code>4915:25240</code>",
+            "312 × 41"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "MD",
+            "False",
+            "True",
+            "True",
+            "<code>4915:25216</code>",
+            "312 × 59"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25186</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Dark",
+            "SM",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25210</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25148</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25178</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "False",
+            "True",
+            "False",
+            "<code>4915:25245</code>",
+            "312 × 41"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "MD",
+            "False",
+            "True",
+            "True",
+            "<code>4915:25224</code>",
+            "312 × 59"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25192</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Light",
+            "SM",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25213</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25154</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "MD",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25172</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25181</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Dark",
+            "SM",
+            "False",
+            "False",
+            "False",
+            "<code>4915:25197</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Light",
+            "MD",
+            "False",
+            "True",
+            "False",
+            "<code>4915:25250</code>",
+            "312 × 41"
+          ]
+        },
+        {
+          "cells": [
+            "Destructive",
+            "Light",
+            "MD",
+            "False",
+            "True",
+            "True",
+            "<code>4915:25232</code>",
+            "312 × 59"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Dark",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25160</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Dark",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25200</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Light",
+            "MD",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25166</code>",
+            "312 × 38"
+          ]
+        },
+        {
+          "cells": [
+            "Pending",
+            "Light",
+            "SM",
+            "True",
+            "False",
+            "False",
+            "<code>4915:25205</code>",
+            "312 × 38"
+          ]
+        }
+      ],
+      "collapseLabel": "View all 22 variants"
+    }
+  },
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "September 2026",
+      "kind": "initial",
+      "kindLabel": "Initial",
+      "header": "Test read · node 4915:25141",
+      "rows": [
+        {
+          "body": "<strong>Independent trial read of Toast, the first run through the token database.</strong> The component already has a page at <a href=\"/components/toast\">Toast</a>; this one was written from a fresh read without consulting it. It stays out of the sidebar, search, the grid and the counts.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "Every bound field was resolved by <code>scripts/audit/figma-verify.mjs</code> against <code>src/data/tokens.json</code>: 500 token, 0 drift, 0 unknown. Token names on this page come from that lookup, not from matching hex values.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "figma-verify reported 2 drift and 30 extra raw values that are not real: it does not multiply paint opacity into a translucent token's alpha, and it counts paints on the children of a boolean operation, which never draw. Both were corrected by hand for this page and reported for the checker.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        },
+        {
+          "body": "The existing page gives the breakdown as Default 14, Destructive 6, Pending 4 — 24, against its own total of 22. The set holds Default 12.",
+          "delta": {
+            "kind": "note",
+            "label": "Note"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -81,15 +81,15 @@ window.updateSpecCard = updateSpecCard;
    than with the value: Disabled and Error are modifiers on the call. */
 function _dpArgs(card, lang) {
   var swift = lang !== 'compose';
-  var sep = swift ? '<span class="syn-punc">:</span> ' : ' <span class="syn-eq">=</span> ';
-  var args = ['label' + sep + '<span class="syn-str">"Label"</span>'];
+  var sep = swift ? ': ' : ' = ';
+  var args = ['label' + sep + '"Label"'];
   args.push(swift
-    ? 'selection' + sep + '<span class="syn-punc">$</span>date'
+    ? 'selection' + sep + '$date'
     : 'selected' + sep + 'date');
-  if (!swift) args.push('onSelect' + sep + '<span class="syn-punc">{</span> date <span class="syn-eq">=</span> it <span class="syn-punc">}</span>');
-  if (!swift && card.state === 'disabled') args.push('enabled' + sep + '<span class="syn-kw">false</span>');
+  if (!swift) args.push('onSelect' + sep + '{ date = it }');
+  if (!swift && card.state === 'disabled') args.push('enabled' + sep + 'false');
   if (card.state === 'error') {
-    args.push('errorText' + sep + '<span class="syn-str">"Input your subtext here."</span>');
+    args.push('errorText' + sep + '"Input your subtext here."');
   }
   return args;
 }
@@ -97,13 +97,13 @@ function _dpArgs(card, lang) {
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['field'];
   var swift = lang !== 'compose';
-  var call = '<span class="syn-type">EBDatePicker</span><span class="syn-punc">(</span>\n    ' +
-    _dpArgs(card, lang).join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  var call = 'EBDatePicker(\n    ' +
+    _dpArgs(card, lang).join(',\n    ') +
+    '\n)';
   /* Disabled is a modifier in SwiftUI; Compose takes it as a parameter above. */
   if (swift && card.state === 'disabled') {
-    call += '\n<span class="syn-punc">.</span><span class="syn-fn">disabled</span>' +
-      '<span class="syn-punc">(</span><span class="syn-kw">true</span><span class="syn-punc">)</span>';
+    call += '\n.disabled' +
+      '(true)';
   }
   return call;
 }

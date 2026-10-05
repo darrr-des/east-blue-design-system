@@ -120,13 +120,13 @@ window.updateSpecCard = updateSpecCard;
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['per'];
   var swift = lang !== 'compose';
-  var sep = swift ? '<span class="syn-punc">:</span> ' : ' <span class="syn-eq">=</span> ';
+  var sep = swift ? ': ' : ' = ';
   var cap = function (x) { return x.charAt(0).toUpperCase() + x.slice(1); };
   var enumArg = function (type, value, cased) {
     return swift
-      ? '<span class="syn-dot">.' + value + '</span>'
-      : '<span class="syn-type">' + type + '</span><span class="syn-punc">.</span>' +
-        '<span class="syn-dot">' + cased + '</span>';
+      ? '.' + value + ''
+      : '' + type + '.' +
+        '' + cased + '';
   };
 
   var args = ['until' + sep + 'saleEnds'];
@@ -140,15 +140,15 @@ function getSnippet(cardKey, lang) {
   var off = _cdUnits.filter(function (u) { return card[u.prop] === 'false'; });
   off.forEach(function (u) {
     var name = 'has' + cap(u.key === 'hrs' ? 'hours' : u.key === 'mins' ? 'minutes' : u.key === 'secs' ? 'seconds' : 'days');
-    args.push(name + sep + '<span class="syn-kw">false</span>');
+    args.push(name + sep + 'false');
   });
   if (card.style === 'pill' && card.hasicon === 'false') {
-    args.push('hasLeadingIcon' + sep + '<span class="syn-kw">false</span>');
+    args.push('hasLeadingIcon' + sep + 'false');
   }
 
-  return '<span class="syn-type">EBCountdown</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  return 'EBCountdown(\n    ' +
+    args.join(',\n    ') +
+    '\n)';
 }
 window.getSnippet = getSnippet;
 

@@ -178,39 +178,39 @@ var _SITEM_SWIFT = {
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['icon'];
   var compose = lang === 'compose';
-  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var sep = compose ? ' = ' : ': ';
   var enumVal = function (type, value) {
     var cased = value.charAt(0).toUpperCase() + value.slice(1);
     return compose
-      ? '<span class="syn-type">' + type + '</span><span class="syn-punc">.</span><span class="syn-dot">' + cased + '</span>'
-      : '<span class="syn-dot">.' + value + '</span>';
+      ? '' + type + '.' + cased + ''
+      : '.' + value + '';
   };
 
   var args = [
-    'label' + sep + '<span class="syn-str">"Text"</span>',
+    'label' + sep + '"Text"',
     'type' + sep + (compose
-      ? '<span class="syn-type">EBSelectItemType</span><span class="syn-punc">.</span><span class="syn-dot">' + _SITEM_CASED[card.type] + '</span>'
-      : '<span class="syn-dot">.' + _SITEM_SWIFT[card.type] + '</span>'),
+      ? 'EBSelectItemType.' + _SITEM_CASED[card.type] + ''
+      : '.' + _SITEM_SWIFT[card.type] + ''),
     'density' + sep + enumVal('EBDensity', card.density)
   ];
   if (card.isselected === 'true' && card.state === 'default') {
-    args.push('isSelected' + sep + '<span class="syn-kw">true</span>');
+    args.push('isSelected' + sep + 'true');
   }
-  if (card.hasleading === 'false') args.push('hasLeading' + sep + '<span class="syn-kw">false</span>');
-  if (card.hastrailing === 'false') args.push('hasTrailing' + sep + '<span class="syn-kw">false</span>');
+  if (card.hasleading === 'false') args.push('hasLeading' + sep + 'false');
+  if (card.hastrailing === 'false') args.push('hasTrailing' + sep + 'false');
   /* State is not a parameter. Pressed is what the platform does while a
      finger is down, and Disabled is each platform's own idiom — a
      modifier in SwiftUI, a parameter in Compose. */
   if (compose && card.state === 'disabled') {
-    args.push('enabled' + sep + '<span class="syn-kw">false</span>');
+    args.push('enabled' + sep + 'false');
   }
 
-  var call = '<span class="syn-type">EBSelectItem</span><span class="syn-punc">(</span>\n    ' +
-    args.join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  var call = 'EBSelectItem(\n    ' +
+    args.join(',\n    ') +
+    '\n)';
   if (!compose && card.state === 'disabled') {
-    call += '\n<span class="syn-punc">.</span><span class="syn-fn">disabled</span>' +
-            '<span class="syn-punc">(</span><span class="syn-kw">true</span><span class="syn-punc">)</span>';
+    call += '\n.disabled' +
+            '(true)';
   }
   return call;
 }

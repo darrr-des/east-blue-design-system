@@ -1,0 +1,1103 @@
+{
+  "name": "Footer",
+  "meta": {
+    "node": "4227:11068",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4227-11068",
+    "description": "A page-bottom region containing partner logos, regulatory disclaimers, and helper links.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4227:11068</code> in the 2026 Working File as <code>Alignment</code> × <code>LogoType</code> × <code>Label</code> × <code>Description</code>, authored as a curated seven-variant set. The per-partner axes are collapsed into one enum, property and layer naming follow the guidelines throughout, and every dimension is a whole pixel. Five questions the original assessment left open are settled by decision: the raster partner marks, the baked disclaimer, <code>Alignment</code> staying a property, Footer remaining a component, and the variant selection being curated rather than partial. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+    },
+    "navGroup": "Header",
+    "navIconSvg": ""
+  },
+  "overview": {
+    "inContextNote": "The Footer sits at the bottom of lending/savings/investment flows — carrying regulatory disclosures, partner attribution, and a link to more information on the Help Center.",
+    "inContextHtml": "",
+    "inContextImage": "",
+    "inContextAlt": "",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"footer-demo-preview\"><svg class=\"eb-preview eb-preview-ft\" width=\"360\" height=\"150\" viewBox=\"0 0 360 150\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"150\" fill=\"#FFFFFF\"/><foreignObject x=\"24\" y=\"24\" width=\"312\" height=\"54\"><div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"eb-preview-ft__text\">I acknowledge receipt of this statement prior to the consummation of the credit transaction by availing of this loan.</div></foreignObject><rect x=\"86\" y=\"94\" width=\"188\" height=\"32\" rx=\"2\" fill=\"#EEF2F9\" stroke=\"#C2CFE5\" stroke-dasharray=\"3 3\"/><text class=\"ft-placeholder\" x=\"180\" y=\"110\" font-size=\"9\" fill=\"#C2CFE5\" text-anchor=\"middle\" dominant-baseline=\"central\">raster logo 188 × 32</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Alignment</span><select id=\"ft-ctrl-alignment\" class=\"demo-panel-select\" onchange=\"_footerUpdate()\"><option value=\"left\" selected=\"\">Left</option><option value=\"center\">Center</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">LogoType</span><select id=\"ft-ctrl-logotype\" class=\"demo-panel-select\" onchange=\"_footerUpdate()\"><option value=\"none\">None</option><option value=\"single\">Single</option><option value=\"group\" selected=\"\">Group</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Label</span><select id=\"ft-ctrl-label\" class=\"demo-panel-select\" onchange=\"_footerUpdate()\"><option value=\"false\" selected=\"\">False</option><option value=\"true\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><select id=\"ft-ctrl-description\" class=\"demo-panel-select\" onchange=\"_footerUpdate()\"><option value=\"none\">None</option><option value=\"default\" selected=\"\">Default</option><option value=\"link\">Link</option></select></div></div></div></div>",
+    "traits": [
+      {
+        "name": "Reusable",
+        "rating": "pass",
+        "note": "Works as the page-bottom region across the flows that need a regulatory disclaimer. The seven authored variants are a curated set matching real screens rather than a partial matrix, so every supported arrangement is available without detaching."
+      },
+      {
+        "name": "Self-contained",
+        "rating": "pass",
+        "note": "Owns its disclaimer copy, partner marks and layout. The baked legal text is deliberate — fixed wording that must not drift per instance."
+      },
+      {
+        "name": "Consistent",
+        "rating": "pass",
+        "note": "Property names follow §1, the partner axes are collapsed into one <code>LogoType</code> enum, <code>Label</code> reads <code>True</code>/<code>False</code>, and every layer carries a semantic name."
+      },
+      {
+        "name": "Composable",
+        "rating": "pass",
+        "note": "Partner marks come from <code>Logos - Footer</code> instances so a logo change updates from one source, and the component drops into any page bottom without configuration."
+      }
+    ],
+    "behavior": [
+      {
+        "state": "Default",
+        "ios": "yes",
+        "android": "yes",
+        "property": "7 variants",
+        "notes": "The only modeled state — footer is informational."
+      },
+      {
+        "state": "Link pressed",
+        "ios": "na",
+        "android": "na",
+        "property": "Not modeled",
+        "notes": "\"GLoan/GCredit/GSave on Help Center\" should be a Text Button / Link instance with its own pressed state."
+      },
+      {
+        "state": "Link disabled",
+        "ios": "na",
+        "android": "na",
+        "property": "Not modeled",
+        "notes": "Informational link — rarely disabled in practice."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "Property names cleaned up.",
+        "body": "v2.0: Rebuilt on node <code>4227:11068</code> in the 2026 Working File. The spaced, jargon-laden property names are gone — the schema is now <code>Alignment</code> × <code>LogoType</code> × <code>Label</code> × <code>Description</code>, all PascalCase per §1. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Three partner axes collapsed into one enum.",
+        "body": "v2.0: <code>LogoType = Group | Single | None</code> replaces the separate per-partner axes, which is what drove most of the original cartesian blow-up. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>hasDescription</code> renamed to <code>Description</code>.",
+        "body": "v2.1: The property carries three values — <code>Default</code>, <code>None</code>, <code>Link</code> — so a <code>has*</code> prefix was wrong on two counts: §2 reserves it for true/false booleans, and <code>Link</code> describes a content type rather than presence. Now a plain enum. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Layer naming cleaned up.",
+        "body": "v2.1: <code>container</code> → <code>FooterContent</code> and <code>#text</code> → <code>Disclaimer</code>, so the layer names say what they hold. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Raster partner logos accepted.",
+        "body": "v2.1: Closed by owner decision — the partner marks stay as supplied raster assets inside <code>Logos - Footer</code> instances. Partner branding arrives as fixed artwork the DS does not control and may not redraw, so vectorising would mean recreating third-party marks. The instancing is the part that matters: a logo change updates from one source rather than per variant. (C6)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Baked disclaimer copy accepted.",
+        "body": "v2.1: Closed by owner decision — the regulatory disclaimer stays as text in the component rather than becoming a slot. It is legal copy with fixed wording, so making it freely editable per instance would invite exactly the drift the fixed wording exists to prevent. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Alignment</code> retained as a property.",
+        "body": "v2.1: Closed by owner decision — alignment stays on the component rather than moving to the consumer. The original assessment argued it is a layout concern; in practice the two alignments pair with different logo and label arrangements, so treating it as a component property keeps those pairings authored rather than left to each screen. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Footer confirmed as a component.",
+        "body": "v2.1: Closed by owner decision — Footer stays a DS component rather than becoming a screen-level composition. The regulatory disclaimer and partner marks are fixed content that must appear identically wherever they appear, which is precisely what a component guarantees and a composition does not. (Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "<code>Label</code> values normalised.",
+        "body": "v2.2: The <code>No</code> value is renamed <code>False</code>, so <code>Label</code> now reads <code>True</code> / <code>False</code> consistently across all seven variants. It maps cleanly to a Swift <code>Bool</code> or Kotlin <code>Boolean</code>. The property keeps the bare name <code>Label</code> rather than taking a <code>has</code> prefix — worth revisiting only if the family standardises on verb-prefixed booleans. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Variant heights rounded.",
+        "body": "v2.3: All seven variants now measure whole pixels — 150, 182, 120, 116, 95, 108 and 80 — replacing the unrounded auto-layout results. The last outlier, <code>Alignment=Left, LogoType=Single, Label=False, Description=Link</code>, went 115.751 → 116. Every dimension maps cleanly to a native layout value. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Variant selection confirmed curated.",
+        "body": "v2.3: Closed by owner decision — the seven authored variants are the curated set, not a partial fill of a 36-cell matrix. Each corresponds to a screen that exists: left-aligned footers carry no label, <code>LogoType=None</code> and <code>Description=Default</code> each serve a single context. Unauthored combinations are deliberately unsupported rather than pending, so a consumer finding no variant for a pairing has the answer. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      }
+    ],
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": []
+  },
+  "style": {
+    "heading": "Styles",
+    "description": "",
+    "source": {
+      "set": "4227:11068",
+      "variants": 7,
+      "read": "2026-09-14",
+      "tool": "talk-to-figma"
+    },
+    "specCards": [
+      {
+        "cardKey": "ft-left",
+        "demoKey": "left",
+        "title": "Left",
+        "node": "4227:11075",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"ft-spec-left\"><svg class=\"eb-preview eb-preview-ft\" width=\"360\" height=\"150\" viewBox=\"0 0 360 150\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"150\" fill=\"#FFFFFF\"/><foreignObject x=\"24\" y=\"24\" width=\"312\" height=\"54\"><div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"eb-preview-ft__text\">I acknowledge receipt of this statement prior to the consummation of the credit transaction by availing of this loan.</div></foreignObject><rect x=\"86\" y=\"94\" width=\"188\" height=\"32\" rx=\"2\" fill=\"#EEF2F9\" stroke=\"#C2CFE5\" stroke-dasharray=\"3 3\"/><text class=\"ft-placeholder\" x=\"180\" y=\"110\" font-size=\"9\" fill=\"#C2CFE5\" text-anchor=\"middle\" dominant-baseline=\"central\">raster logo 188 × 32</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "LogoType",
+                "prop": "logotype",
+                "control": "select",
+                "defaultValue": "group",
+                "options": [
+                  {
+                    "value": "none",
+                    "label": "None"
+                  },
+                  {
+                    "value": "single",
+                    "label": "Single"
+                  },
+                  {
+                    "value": "group",
+                    "label": "Group"
+                  }
+                ]
+              },
+              {
+                "label": "Label",
+                "prop": "label",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "Description",
+                "prop": "description",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "none",
+                    "label": "None"
+                  },
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "link",
+                    "label": "Link"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Alignment",
+                "value": "Left",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "LogoType",
+                "value": "Group",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "logotype",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "False",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "label",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "Default",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "description",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Disclaimer",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Disclaimer link",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Preamble",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Logos",
+                "value": "Raster — no colour to bind",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Disclaimer",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Preamble",
+                "value": "Secondary/Bold/Small Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "150",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBFooter</span>(\n    <span class=\"syn-param\">alignment</span>: <span class=\"syn-dot\">.left</span>,\n    <span class=\"syn-param\">logoType</span>: <span class=\"syn-dot\">.group</span>,\n    <span class=\"syn-param\">showLabel</span>: <span class=\"syn-kw\">false</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-dot\">.default</span>\n)</code>",
+        "compose": "<code><span class=\"syn-type\">EBFooter</span>(\n    <span class=\"syn-param\">alignment</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterAlignment</span>.Left,\n    <span class=\"syn-param\">logoType</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterLogoType</span>.Group,\n    <span class=\"syn-param\">showLabel</span> <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterDescription</span>.Default\n)</code>"
+      },
+      {
+        "cardKey": "ft-center",
+        "demoKey": "center",
+        "title": "Center",
+        "node": "4227:11093",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"ft-spec-center\"><svg class=\"eb-preview eb-preview-ft\" width=\"360\" height=\"95\" viewBox=\"0 0 360 95\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"95\" fill=\"#FFFFFF\"/><foreignObject x=\"24\" y=\"16\" width=\"312\" height=\"15\"><div xmlns=\"http://www.w3.org/1999/xhtml\" class=\"eb-preview-ft__text eb-preview-ft__text--center eb-preview-ft__text--small\">In partnership with</div></foreignObject><rect x=\"77\" y=\"47\" width=\"206\" height=\"32\" rx=\"2\" fill=\"#EEF2F9\" stroke=\"#C2CFE5\" stroke-dasharray=\"3 3\"/><text class=\"ft-placeholder\" x=\"180\" y=\"63\" font-size=\"9\" fill=\"#C2CFE5\" text-anchor=\"middle\" dominant-baseline=\"central\">raster logo 206 × 32</text></svg></div>",
+        "hasControls": true,
+        "demoControls": [
+          {
+            "heading": "Properties",
+            "rows": [
+              {
+                "label": "LogoType",
+                "prop": "logotype",
+                "control": "select",
+                "defaultValue": "group",
+                "options": [
+                  {
+                    "value": "none",
+                    "label": "None"
+                  },
+                  {
+                    "value": "single",
+                    "label": "Single"
+                  },
+                  {
+                    "value": "group",
+                    "label": "Group"
+                  }
+                ]
+              },
+              {
+                "label": "Label",
+                "prop": "label",
+                "control": "toggle",
+                "defaultValue": "false",
+                "options": [
+                  {
+                    "value": "false",
+                    "label": "False"
+                  },
+                  {
+                    "value": "true",
+                    "label": "True"
+                  }
+                ]
+              },
+              {
+                "label": "Description",
+                "prop": "description",
+                "control": "select",
+                "defaultValue": "default",
+                "options": [
+                  {
+                    "value": "none",
+                    "label": "None"
+                  },
+                  {
+                    "value": "default",
+                    "label": "Default"
+                  },
+                  {
+                    "value": "link",
+                    "label": "Link"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Alignment",
+                "value": "Center",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "LogoType",
+                "value": "Group",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "logotype",
+                "variants": []
+              },
+              {
+                "key": "Label",
+                "value": "True",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "label",
+                "variants": []
+              },
+              {
+                "key": "Description",
+                "value": "None",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "description",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Disclaimer",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Disclaimer link",
+                "value": "#005CE5",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Preamble",
+                "value": "#6780A9",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Logos",
+                "value": "Raster — no colour to bind",
+                "mono": false,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Disclaimer",
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Preamble",
+                "value": "Secondary/Bold/Small Caption",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "95",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding H",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Padding V",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Gap",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Border",
+                "value": "0",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              },
+              {
+                "key": "Alignment",
+                "value": "—",
+                "mono": true,
+                "token": "",
+                "swatch": "auto",
+                "prop": "",
+                "variants": []
+              }
+            ]
+          }
+        ],
+        "swift": "<code><span class=\"syn-type\">EBFooter</span>(\n    <span class=\"syn-param\">alignment</span>: <span class=\"syn-dot\">.center</span>,\n    <span class=\"syn-param\">logoType</span>: <span class=\"syn-dot\">.group</span>,\n    <span class=\"syn-param\">showLabel</span>: <span class=\"syn-kw\">true</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-dot\">.none</span>\n)</code>",
+        "compose": "<code><span class=\"syn-type\">EBFooter</span>(\n    <span class=\"syn-param\">alignment</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterAlignment</span>.Center,\n    <span class=\"syn-param\">logoType</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterLogoType</span>.Group,\n    <span class=\"syn-param\">showLabel</span> <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterDescription</span>.None\n)</code>"
+      }
+    ],
+    "colorsTables": [
+      {
+        "title": "Colors",
+        "description": "",
+        "columns": [
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "All variants",
+            "element": "Surface",
+            "token": "—",
+            "values": [
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "All variants",
+            "element": "Disclaimer",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "All variants",
+            "element": "Disclaimer link",
+            "token": "—",
+            "values": [
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "All variants",
+            "element": "Preamble",
+            "token": "—",
+            "values": [
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "All variants",
+            "element": "Logos",
+            "token": "—",
+            "values": [
+              "Raster — no colour to bind"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "code": {
+    "installation": {
+      "planned": true,
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:header:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>header<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": ""
+    },
+    "propertyMapping": {
+      "description": "Alignment, LogoType, Label and Description are the set’s four variant properties; seven of the 36 combinations are built (v2.x: curated). Disclaimer and Preamble are text layers; the partner logos are raster image fills inside Logos - Footer Group instances.",
+      "rows": [
+        {
+          "figma": "Alignment — Left, Center",
+          "swift": "<code>alignment: .left / .center</code>",
+          "compose": "<code>alignment = EBFooterAlignment.Left / Center</code>"
+        },
+        {
+          "figma": "LogoType — None, Single, Group",
+          "swift": "<code>logoType: .none / .single / .group</code>",
+          "compose": "<code>logoType = EBFooterLogoType.None / Single / Group</code>"
+        },
+        {
+          "figma": "Label — True, False",
+          "swift": "<code>showLabel: Bool</code>",
+          "compose": "<code>showLabel = true</code>"
+        },
+        {
+          "figma": "Description — None, Default, Link",
+          "swift": "<code>description: .none / .default / .link</code>",
+          "compose": "<code>description = EBFooterDescription.None / Default / Link</code>"
+        },
+        {
+          "figma": "Disclaimer (text)",
+          "swift": "<code>disclaimer: AttributedString</code>",
+          "compose": "<code>disclaimer = buildAnnotatedString { … }</code>"
+        },
+        {
+          "figma": "Preamble (text)",
+          "swift": "<code>preamble: String</code>",
+          "compose": "<code>preamble = \"…\"</code>"
+        },
+        {
+          "figma": "Logos - Footer Group (nested instance, raster)",
+          "swift": "<code>logos: [Image]</code>",
+          "compose": "<code>logos = listOf(painterResource(…))</code>"
+        }
+      ],
+      "filePaths": {
+        "swift": "",
+        "compose": ""
+      }
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Left",
+        "swift": "<code><span class=\"syn-type\">EBFooter</span>(\n    <span class=\"syn-param\">alignment</span>: <span class=\"syn-dot\">.left</span>,\n    <span class=\"syn-param\">logoType</span>: <span class=\"syn-dot\">.group</span>,\n    <span class=\"syn-param\">showLabel</span>: <span class=\"syn-kw\">false</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-dot\">.default</span>\n)</code>",
+        "compose": "<code><span class=\"syn-type\">EBFooter</span>(\n    <span class=\"syn-param\">alignment</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterAlignment</span>.Left,\n    <span class=\"syn-param\">logoType</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterLogoType</span>.Group,\n    <span class=\"syn-param\">showLabel</span> <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterDescription</span>.Default\n)</code>"
+      },
+      {
+        "subheading": "Center",
+        "swift": "<code><span class=\"syn-type\">EBFooter</span>(\n    <span class=\"syn-param\">alignment</span>: <span class=\"syn-dot\">.center</span>,\n    <span class=\"syn-param\">logoType</span>: <span class=\"syn-dot\">.group</span>,\n    <span class=\"syn-param\">showLabel</span>: <span class=\"syn-kw\">true</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-dot\">.none</span>\n)</code>",
+        "compose": "<code><span class=\"syn-type\">EBFooter</span>(\n    <span class=\"syn-param\">alignment</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterAlignment</span>.Center,\n    <span class=\"syn-param\">logoType</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterLogoType</span>.Group,\n    <span class=\"syn-param\">showLabel</span> <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterDescription</span>.None\n)</code>"
+      }
+    ],
+    "accessibility": [
+      {
+        "requirement": "Disclaimer readable",
+        "ios": "Plain static text; the link run is its own accessible element with the link trait.",
+        "android": "<code>ClickableText</code> with the link annotation; the rest is static."
+      },
+      {
+        "requirement": "Logos labelled",
+        "ios": "<code>.accessibilityLabel(\"GCash\")</code> etc. on each raster image, or hidden when purely decorative.",
+        "android": "<code>contentDescription</code> per logo, or <code>null</code> when decorative."
+      },
+      {
+        "requirement": "Contrast",
+        "ios": "#6780A9 on white is 4.6:1 at 12 pt; the 10 pt preamble is decorative-weight.",
+        "android": "Same values — the surface is fixed white."
+      },
+      {
+        "requirement": "Dynamic type",
+        "ios": "The disclaimer wraps; the footer grows in height.",
+        "android": "Text in <code>sp</code>; the footer grows."
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use Left with a Default description for regulatory disclaimers under a form.",
+        "dontText": "Don’t centre a three-line disclaimer — Center is for a logo row."
+      },
+      {
+        "doText": "Use Group when two brands share the screen; Single for one partner.",
+        "dontText": "Don’t add a third logo — the group instance holds two."
+      },
+      {
+        "doText": "Use Description Link for the one help-centre pointer.",
+        "dontText": "Don’t put two links in one footer."
+      }
+    ],
+    "scorecard": [
+      {
+        "id": "C1",
+        "criterion": "Layer Structure & Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>FooterContent</code> › <code>Disclaimer</code> / <code>Preamble</code> / <code>Logos - Footer Group</code> — read on 4227:11075, 4227:11093, 4227:11085."
+      },
+      {
+        "id": "C2",
+        "criterion": "Variant & Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Alignment</code>, <code>LogoType</code>, <code>Label</code>, <code>Description</code> — Title Case values; the set is curated to seven variants by decision."
+      },
+      {
+        "id": "C3",
+        "criterion": "Token Coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Disclaimer → <code>Secondary/Bold/Caption</code>, Preamble → <code>Secondary/Bold/Small Caption</code>; the disclaimer body and its link run carry variable bindings on every variant read."
+      },
+      {
+        "id": "C4",
+        "criterion": "Native Mappability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Three enums, one boolean, one attributed string — maps onto <code>EBFooter</code>."
+      },
+      {
+        "id": "C5",
+        "criterion": "Interaction State Coverage",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "The link takes its states from the platform text link; nothing else is interactive."
+      },
+      {
+        "id": "C6",
+        "criterion": "Asset & Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Partner logos are raster image fills (accepted v2.x) — they cannot recolour or scale; the docs draw measured placeholders."
+      }
+    ],
+    "variants": {
+      "total": 7,
+      "description": "2 Alignment × 3 LogoType × 2 Label × 3 Description, curated to the seven layouts in use = 7 variants",
+      "columns": [
+        "Alignment",
+        "LogoType",
+        "Label",
+        "Description",
+        "Node",
+        "Dimensions"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Left",
+            "Group",
+            "False",
+            "Default",
+            "<code>4227:11075</code>",
+            "360 × 150"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Single",
+            "False",
+            "None",
+            "<code>4227:11069</code>",
+            "360 × 182"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Group",
+            "False",
+            "Link",
+            "<code>4227:11085</code>",
+            "360 × 120"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Single",
+            "False",
+            "Link",
+            "<code>4227:11089</code>",
+            "360 × 116"
+          ]
+        },
+        {
+          "cells": [
+            "Center",
+            "Group",
+            "True",
+            "None",
+            "<code>4227:11093</code>",
+            "360 × 95"
+          ]
+        },
+        {
+          "cells": [
+            "Center",
+            "None",
+            "False",
+            "Link",
+            "<code>4227:11079</code>",
+            "360 × 108"
+          ]
+        },
+        {
+          "cells": [
+            "Center",
+            "Group",
+            "False",
+            "None",
+            "<code>4227:11082</code>",
+            "360 × 80"
+          ]
+        }
+      ],
+      "summary": {
+        "columns": [],
+        "rows": []
+      },
+      "collapseLabel": ""
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs re-read · node 4227:11068",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt from the seven live variants.</strong> Cards follow <code>Alignment</code> — Left, Center — with LogoType, Label and Description as panel controls that snap to a built variant; offsets re-verified and the disclaimer now renders its <code>#005CE5</code> link run. Padding, gap, alignment and colour tokens are not readable with the plugin and stay <code>—</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Disclaimer colour corrected.</strong> The previous note of three different fills was wrong: every disclaimer is <code>#6780A9</code> with a <code>#005CE5</code> link run (fills read per segment on 4227:11087, 4227:11081, 4227:11074).",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Code tab regrouped on the four-property schema.</strong> Property Mapping one row per property, Usage Snippets per Alignment, Guidelines added, Scorecard regraded, Variants Inventory on the seven live nodes.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Documentation backfill · node 4227:11068",
+      "rows": [
+        {
+          "body": "<strong>Resolved issues recorded.</strong> 11 resolved issues on the Overview tab had no changelog row: Property names cleaned up; Three partner axes collapsed into one enum; <code>hasDescription</code> renamed to <code>Description</code>; Layer naming cleaned up; Raster partner logos accepted; Baked disclaimer copy accepted; <code>Alignment</code> retained as a property; Footer confirmed as a component; <code>Label</code> values normalised; Variant heights rounded; Variant selection confirmed curated.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "April 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Initial Assessment · node 21:215190",
+      "rows": [
+        {
+          "body": "<strong>Verdict: Restructure</strong> — Rename 6 axes to camelCase, collapse three partner booleans into one <code>partnerLogos</code> enum, expose partner-logo Slot, remove <code>alignment</code> axis (consumer owns layout). <span class=\"tag-open tag-c1 tag-c2\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "Architecture"
+          }
+        },
+        {
+          "body": "<strong>Disclaimer + help link should be slots, not baked copy</strong> — Disclaimer becomes <code>disclaimer: String</code> (or Inline Text instance). Help link becomes a Text Button instance with its own state coverage. <span class=\"tag-open tag-c4 tag-c5\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C4 · C5"
+          }
+        },
+        {
+          "body": "<strong>Partner logos are raster</strong> — Provide vector source in a Partner Logos set; swap raster fills for Logo instances. <span class=\"tag-open tag-c6\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>C7 — Code Connect</strong> — Blocked until property names normalize and content slots are introduced. <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 ---
-import { componentManifest } from '../data/components/_index';
+import { navManifest } from '../data/components/_index';
 import { url } from '../lib/url';
 
 interface Props {
@@ -8,27 +8,19 @@ interface Props {
 const { activeSlug } = Astro.props;
 const pathname = Astro.url.pathname;
 
-type Item = (typeof componentManifest)[number];
+type Item = (typeof navManifest)[number];
 
-// Map a component to its status-dot colour.
+// Map a component to its status-dot colour (OVERVIEW-REVIEW-GUIDE.md, Step 7).
 //
 // Two axes feed this. The DS verdict says whether the component belongs in the
 // system and is structurally sound; Native Readiness says whether a developer
-// can consume it yet. The dot reflects both, because a component that is
-// `keep` but still `refine` is not finished — Code Connect is unregistered on
-// every one of them.
+// can consume it yet.
 //
-//   red    restructure                  — significant structural work
-//   orange fix, or Native `refine`      — something is still outstanding
-//   grey   remove / consolidate         — retired; the work lives elsewhere
+//   red    restructure, or Native `rework`  — significant structural work
+//   orange fix, or Native `refine`          — something is still outstanding
+//   grey   remove / consolidate             — retired; the work lives elsewhere
 //          / product-layer
-//   none   keep + ready                 — nothing outstanding
-//
-// Checked against the data: of the 55 components carrying `refine`, none is
-// actually complete. Fifty list open issues; four more record C7 as `empty`
-// (Code Connect not mapped) with an empty open list; the last has no
-// scorecard at all. So `refine` alone is a sound signal, and testing the open
-// list as well would add a condition that changes no outcome.
+//   none   keep + ready                     — nothing outstanding
 const DS_VERDICTS = ['keep', 'fix', 'restructure', 'consolidate', 'product-layer', 'remove'] as const;
 type DotStatus = 'rework' | 'fix' | 'na';
 
@@ -47,7 +39,7 @@ function statusFromBadges(badges?: { kind: string }[]): DotStatus | null {
 const groups = new Map<string, Item[]>();
 const standalone: Item[] = [];
 
-for (const item of componentManifest) {
+for (const item of navManifest) {
   if (item.navGroup) {
     if (!groups.has(item.navGroup)) groups.set(item.navGroup, []);
     groups.get(item.navGroup)!.push(item);
@@ -88,7 +80,7 @@ const componentsOpen    = isComponentsGrid || route.startsWith('/components/'); 
 const isIcons           = route === '/icons';
 const isStyles          = route === '/styles';
 ---
-<aside class="sidebar">
+<aside class="sidebar" id="eb-sidebar">
   <a class="sidebar-brand" href={url("/")}>
     <div class="sidebar-brand-row">
       <div class="sidebar-logo">

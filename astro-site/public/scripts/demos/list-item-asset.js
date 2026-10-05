@@ -109,27 +109,27 @@ function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['pending'];
   var cased = _LIA_CASED[card.type] || 'Pending';
   var compose = lang === 'compose';
-  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var sep = compose ? ' = ' : ': ';
   var value = compose
-    ? '<span class="syn-type">EBListItemAssetType</span><span class="syn-punc">.</span>' +
-      '<span class="syn-dot">' + cased + '</span>'
-    : '<span class="syn-dot">.' + cased.charAt(0).toLowerCase() + cased.slice(1) + '</span>';
+    ? 'EBListItemAssetType.' +
+      '' + cased + ''
+    : '.' + cased.charAt(0).toLowerCase() + cased.slice(1) + '';
 
   var args = 'type' + sep + value;
   if (card.type === 'numbered') {
-    args += '<span class="syn-punc">,</span> number' + sep + '<span class="syn-val">3</span>';
+    args += ', number' + sep + '3';
   }
 
-  var call = '<span class="syn-type">EBListItemAsset</span><span class="syn-punc">(</span>' +
-    args + '<span class="syn-punc">)</span>';
+  var call = 'EBListItemAsset(' +
+    args + ')';
 
   if (card.type === 'slot') {
     call += compose
-      ? ' <span class="syn-punc">{</span> <span class="syn-fn">Icon</span>' +
-        '<span class="syn-punc">(</span>EBIcons<span class="syn-punc">.</span>Star<span class="syn-punc">) }</span>'
-      : ' <span class="syn-punc">{</span> <span class="syn-type">Image</span>' +
-        '<span class="syn-punc">(</span>systemName<span class="syn-punc">:</span> ' +
-        '<span class="syn-str">"star.fill"</span><span class="syn-punc">) }</span>';
+      ? ' { Icon' +
+        '(EBIcons.Star) }'
+      : ' { Image' +
+        '(systemName: ' +
+        '"star.fill") }';
   }
   return call;
 }

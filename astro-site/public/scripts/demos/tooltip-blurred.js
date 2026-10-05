@@ -1,15 +1,7 @@
-/* Auto-extracted from assessment-src/components/tooltip-blurred.html.
- * Powers the live-preview dropdowns/toggles for the tooltip-blurred component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs tooltip-blurred
- */
 /* ── Tooltip Blurred and Transparent JS ─────────────────────────
    Renders the dark translucent tooltip over a selectable backdrop
    scene (photo / gradient / flat) with a pointer on any of 4 sides.
    No CTA / icon / close — schema is header + description only. */
-
-function _tbtEscape(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
 
 function _tbtPointer(dir) {
   var common = 'position:absolute;width:0;height:0;';

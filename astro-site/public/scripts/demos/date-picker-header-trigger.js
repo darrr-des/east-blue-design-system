@@ -41,9 +41,9 @@ function _dphtArgs(o) {
 
 function _dphtHighlight(line) {
   return line
-    .replace(/"([^"]*)"/g, '<span class="syn-str">"$1"</span>')
-    .replace(/\b(true|false)\b/g, '<span class="syn-kw">$1</span>')
-    .replace(/([:,=()])/g, '<span class="syn-punc">$1</span>');
+    .replace(/"([^"]*)"/g, '"$1"')
+    .replace(/\b(true|false)\b/g, '$1')
+    .replace(/([:,=()])/g, '$1');
 }
 
 function _dphtSnippet(o, lang) {
@@ -51,10 +51,10 @@ function _dphtSnippet(o, lang) {
   if (o.state === 'disabled') {
     args = args.concat(lang === 'swift' ? 'isDisabled: true' : 'isDisabled = true');
   }
-  return '<span class="syn-type">EBDatePickerHeaderTrigger</span>' +
-    '<span class="syn-punc">(</span>\n    ' +
-    args.map(_dphtHighlight).join('<span class="syn-punc">,</span>\n    ') +
-    '\n<span class="syn-punc">)</span>';
+  return 'EBDatePickerHeaderTrigger' +
+    '(\n    ' +
+    args.map(_dphtHighlight).join(',\n    ') +
+    '\n)';
 }
 
 function getSnippet(cardKey, lang) {

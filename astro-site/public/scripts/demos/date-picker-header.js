@@ -36,10 +36,10 @@ window.updateSpecCard = updateSpecCard;
    One definition behind the spec-card fallback and both language tabs. */
 function getSnippet(cardKey, lang) {
   var card = _specCards[cardKey] || _specCards['default'];
-  var sep = lang === 'compose' ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
-  return '<span class="syn-type">EBDatePickerHeader</span><span class="syn-punc">(</span>' +
-    'label' + sep + '<span class="syn-str">"' + _dphEscape(card.label || 'Su') + '"</span>' +
-    '<span class="syn-punc">)</span>';
+  var sep = lang === 'compose' ? ' = ' : ': ';
+  return 'EBDatePickerHeader(' +
+    'label' + sep + '"' + _dphEscape(card.label || 'Su') + '"' +
+    ')';
 }
 window.getSnippet = getSnippet;
 

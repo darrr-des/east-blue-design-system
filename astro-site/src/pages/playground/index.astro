@@ -1,0 +1,53 @@
+---
+/**
+ * /playground — index of the components built for the Playground tab.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import Base from '../../layouts/Base.astro';
+
+// Read at build time from public/playground — the same files the pages fetch at
+// runtime. Nothing here reaches the browser but the counts.
+const dir = path.resolve('public/playground');
+const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.json')) : [];
+const items = files.map((file) => {
+  const d = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
+  const count = (n: any): number => 1 + (n.children ?? []).reduce((s: number, c: any) => s + count(c), 0);
+  return {
+    slug: file.replace(/\.json$/, ''),
+    name: d.meta.name,
+    set: d.meta.setId,
+    file: d.meta.fileKey,
+    variants: d.variants.length,
+    layers: d.variants.reduce((s: number, v: any) => s + count(v.tree), 0),
+  };
+});
+items.sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true, sensitivity: 'base' }));
+---
+<Base title="Sandbox · Playground tests">
+  <main class="pgi">
+    <div class="pgi-test">Preview route · the Style tab still renders the old spec cards</div>
+    <h1>Playground tests</h1>
+    <p>Each page is generated from Figma by <code>_playground/build.mjs</code>.</p>
+    <ul>
+      {items.map((i) => (
+        <li><a href={`/playground/${i.slug}`}>{i.name}</a><span>{i.variants} variants · {i.layers} layers · <code>{i.set}</code></span></li>
+      ))}
+    </ul>
+  </main>
+  <style is:inline>
+    /* Sandbox-index chrome only — this page never ships, so it stays out of global.css.
+       The app shell owns html/body scrolling now; nothing here overrides it. */
+    .pgi { max-width: 640px; margin: 0 auto; padding: 32px 16px 64px; font-family: 'BarkAda', system-ui, sans-serif; color: #111111; }
+    .pgi h1 { font-family: 'Proxima Soft', system-ui, sans-serif; font-weight: 700; font-size: 28px; color: #0A2757; margin: 8px 0 4px; }
+    .pgi p { margin: 0 0 20px; color: #646A78; font-size: 13px; }
+    .pgi-test { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #92400E; background: #FEF3C7; padding: 2px 8px; border-radius: 999px; }
+    .pgi ul { list-style: none; padding: 0; margin: 0; border: 1px solid #E8E9ED; border-radius: 12px; overflow: hidden; }
+    .pgi li { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 16px; font-size: 14px; }
+    .pgi li + li { border-top: 1px solid #EDEEF2; }
+    .pgi a { color: #1A56DB; font-weight: 600; text-decoration: none; }
+    .pgi a:hover { text-decoration: underline; }
+    .pgi span { color: #959CAB; font-size: 12px; }
+    .pgi code { font-size: 11.5px; }
+  </style>
+</Base>

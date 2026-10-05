@@ -3,63 +3,35 @@ import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import fs from 'node:fs';
 import path from 'node:path';
+import { marked } from 'marked';
 
 /**
- * Assessment Guide page.
- *
- * Reads the legacy `eb-ds-assessment-guide.html` (the original design that
- * still ships at https://eb-ds.pages.dev/eb-ds-assessment-guide) and embeds
- * just its <main> body into the new Astro layout — sidebar from Base layout
- * stays in place; only the content panel inherits the legacy design system
- * (cover, page-section, dep-grid, table-wrap, badges, infobox, file-tree,
- * step-cards, pattern-items, etc).
- *
- * Styles are scoped to `.guide-content` so they don't leak to other pages.
+ * Assessment Guide — the methodology (traits, criteria, verdicts, GCash
+ * patterns), rendered from the one source: `../eb-ds-assessment-guide.md`.
+ * Sessions read the same file, so the page and the rule can never differ.
  */
+const MD_PATH = path.resolve(process.cwd(), '..', 'eb-ds-assessment-guide.md');
+const md = fs.readFileSync(MD_PATH, 'utf8');
 
-const HTML_PATH = path.resolve(process.cwd(), '..', 'eb-ds-assessment-guide.html');
-const raw = fs.readFileSync(HTML_PATH, 'utf8');
+const slugify = (s: string) =>
+  s.toLowerCase().replace(/<[^>]+>/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-// Sections rendered into the Table of Contents — order matches the legacy
-// HTML so anchor jumps land on the right page-section.
-const TOC_SECTIONS = [
-  { id: 'dependencies',     label: 'Dependencies' },
-  { id: 'ds-health',        label: 'DS Health — 4 Traits' },
-  { id: 'native-readiness', label: 'Native Mobile Readiness — 7 Criteria' },
-  { id: 'combined',         label: 'Combined Status' },
-  { id: 'architecture',     label: 'Report Architecture' },
-  { id: 'patterns',         label: 'GCash-Specific Patterns' },
-  { id: 'workflow',         label: 'Assessment Workflow' },
-  { id: 'output',           label: 'Output Format' },
-  { id: 'progress',         label: 'Assessment Progress' },
-  { id: 'ownership',        label: 'Ownership' },
-  { id: 'mobile-doc',       label: 'Mobile Documentation Criteria' },
-];
+const toc: { id: string; label: string }[] = [];
+marked.use({
+  renderer: {
+    heading({ tokens, depth }) {
+      const text = this.parser.parseInline(tokens);
+      const id = slugify(text);
+      if (depth === 2) toc.push({ id, label: text.replace(/<[^>]+>/g, '') });
+      const cls = depth === 1 ? 'cover-title' : depth === 2 ? 'section-heading' : 'sub-heading';
+      return `<h${depth} id="${id}" class="${cls}">${text}</h${depth}>\n`;
+    },
+  },
+});
 
-// Extract the inner HTML of <main class="main"> ... </main>.
-function extractMainBody(html: string): string {
-  const start = html.indexOf('<main class="main">');
-  const end = html.indexOf('</main>', start);
-  if (start === -1 || end === -1) return '';
-  let inner = html.slice(start + '<main class="main">'.length, end);
-
-  // Strip the legacy back-button (Astro's Base layout already provides one).
-  inner = inner.replace(/<a class="back-btn"[\s\S]*?<\/a>\s*/, '');
-
-  // Strip the surrounding <div class="content-wrap"> open/close — Astro
-  // provides its own wrapper. NOTE: do NOT add a generic `</div>$` strip
-  // here — the legacy content ends with `<div class="footer">...</div>`
-  // and that closing div is required. Stripping it leaves an unclosed
-  // footer div, which makes the browser auto-balance and nest the
-  // sibling <aside class="page-toc"> inside the content (= TOC at the
-  // bottom of the page instead of the right side).
-  inner = inner.replace(/^\s*<div class="content-wrap">/, '');
-  inner = inner.replace(/<\/div>\s*<!--\s*\/content-wrap\s*-->\s*$/, '');
-
-  return inner.trim();
-}
-
-const guideHtml = extractMainBody(raw);
+let guideHtml = marked.parse(md) as string;
+// Tables scroll inside their own wrapper; the body never scrolls sideways.
+guideHtml = guideHtml.replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>');
 ---
 <Base title="Assessment Guide · East Blue">
   <div class="panel active guide-page">
@@ -87,7 +59,7 @@ const guideHtml = extractMainBody(raw);
       <aside class="page-toc" aria-label="On this page">
         <div class="page-toc-label">On this page</div>
         <nav class="page-toc-nav">
-          {TOC_SECTIONS.map((s) => (
+          {toc.map((s) => (
             <a class="page-toc-link" href={`#${s.id}`} data-toc-target={s.id}>{s.label}</a>
           ))}
         </nav>
@@ -97,89 +69,62 @@ const guideHtml = extractMainBody(raw);
 </Base>
 
 <style is:global>
-/* ────────────────────────────────────────────────────────────────────
-   Assessment Guide — legacy design, scoped to `.guide-content`.
-   Source: `eb-ds-assessment-guide.html` (the original design that ships at
-   https://eb-ds.pages.dev/eb-ds-assessment-guide). All selectors are
-   prefixed with `.guide-content` so the styles don't leak.
-   ──────────────────────────────────────────────────────────────────── */
-
-/* Page padding around the panel-layout (content + TOC) */
+/* Assessment Guide — scoped to `.guide-content` so nothing leaks. */
 .guide-page { padding: 40px 0 80px; }
 
-/* Cover — override the global `.cover { display: none }` from global.css line 782 */
-.guide-content .cover {
-  display: block !important;
-  padding: 8px 0 32px;
-  border-bottom: 1px solid var(--sidebar-border);
-  margin-bottom: 36px;
-}
-.guide-content .cover-eyebrow {
-  display: block !important;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #1972F9;
-  margin-bottom: 10px;
-}
 .guide-content .cover-title {
-  display: block !important;
   font-family: var(--font-heading);
   font-size: 28px;
   font-weight: 500;
   color: var(--text);
   line-height: 1.2;
-  margin-bottom: 8px;
+  margin: 0 0 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--sidebar-border);
 }
-.guide-content .cover-subtitle {
-  display: block !important;
-  font-size: 14px;
-  color: var(--muted);
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-/* Sections */
-.guide-content .page-section { margin-bottom: 48px; }
 .guide-content .section-heading {
   font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 600;
   color: var(--text);
   letter-spacing: -0.01em;
-  margin-bottom: 6px;
-}
-.guide-content .section-desc {
-  font-size: 14px;
-  color: var(--muted);
-  margin-bottom: 16px;
-  line-height: 1.65;
+  margin: 40px 0 8px;
 }
 .guide-content .sub-heading {
   font-family: var(--font-heading);
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: 12px;
-  margin-top: 48px;
+  margin: 28px 0 8px;
   letter-spacing: -0.01em;
 }
+.guide-content hr { border: 0; border-top: 1px solid var(--sidebar-border); margin: 40px 0; }
 .guide-content p {
   font-size: 14px;
   color: var(--text-2);
   line-height: 1.65;
-  margin-bottom: 12px;
+  margin: 0 0 12px;
+  max-width: 72ch;
 }
-.guide-content p:last-child { margin-bottom: 0; }
+.guide-content blockquote {
+  margin: 12px 0 16px;
+  padding: 10px 16px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 8px 8px 0;
+}
+.guide-content blockquote p { margin: 0; }
+.guide-content strong { font-weight: 600; color: var(--text); }
+.guide-content a { color: var(--accent); text-decoration: none; }
+.guide-content a:hover { text-decoration: underline; }
 
-/* Tables (override defaults specifically inside .guide-content) */
+/* Tables */
 .guide-content .table-wrap {
-  overflow: hidden;
+  overflow-x: auto;
   border-radius: 12px;
   background: var(--surface);
   border: 1px solid var(--sidebar-border);
-  margin-bottom: 20px;
+  margin: 12px 0 20px;
 }
 .guide-content table {
   width: 100%;
@@ -200,8 +145,6 @@ const guideHtml = extractMainBody(raw);
   white-space: nowrap;
   border-bottom: 0;
 }
-.guide-content thead th:first-child { border-radius: 14px 0 0 0; }
-.guide-content thead th:last-child  { border-radius: 0 14px 0 0; }
 .guide-content tbody td {
   padding: 11px 16px;
   border-top: 1px solid var(--row-border);
@@ -209,14 +152,9 @@ const guideHtml = extractMainBody(raw);
   color: var(--text-2);
 }
 .guide-content tbody tr:first-child td { border-top: 0; }
-.guide-content td.mono { font-family: var(--mono); font-size: 12px; }
-.guide-content td.muted { color: var(--muted); font-size: 12px; }
 .guide-content td strong { font-weight: 600; color: var(--text); }
-.guide-content .col-id { width: 48px; }
-.guide-content .col-md { width: 160px; }
-.guide-content .col-badge { width: 120px; }
 
-/* Badges (legacy palette — softer, matches the deployed design) */
+/* Badges */
 .guide-content .badge {
   display: inline-flex;
   align-items: center;
@@ -235,6 +173,7 @@ const guideHtml = extractMainBody(raw);
 .guide-content .badge-fix         { color: #B45309; background: #FEF3C7; }
 .guide-content .badge-restructure { color: #9333EA; background: #F3E8FF; }
 .guide-content .badge-consolidate { color: #0369A1; background: #E0F2FE; }
+.guide-content .badge-product-layer { color: #6D28D9; background: #EDE9FE; }
 .guide-content .badge-remove      { color: #B91C1C; background: #FEE2E2; }
 .guide-content .badge-pass        { color: #1A7A4A; background: #E6F4ED; }
 .guide-content .badge-partial     { color: #1448A3; background: #EEF3FB; }
@@ -252,7 +191,7 @@ const guideHtml = extractMainBody(raw);
   color: var(--code-fg);
 }
 .guide-content pre {
-  background: #F1F1F4;
+  background: var(--code-bg);
   border: 0;
   border-radius: 12px;
   padding: 16px 20px;
@@ -261,148 +200,25 @@ const guideHtml = extractMainBody(raw);
   font-size: 12px;
   line-height: 1.6;
 }
-[data-theme="dark"] .guide-content pre { background: #262626; }
 .guide-content pre code {
   background: none;
   padding: 0;
   font-weight: 400;
-  color: var(--text-2);
+  color: var(--code-fg);
 }
 
-/* Dep cards */
-.guide-content .dep-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 16px;
-}
-.guide-content .dep-card {
-  background: #F1F1F4;
-  border-radius: 12px;
-  padding: 20px;
-}
-[data-theme="dark"] .guide-content .dep-card { background: #262626; }
-.guide-content .dep-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: capitalize;
-  color: var(--accent);
-  margin-bottom: 6px;
-}
-.guide-content .dep-title {
-  font-family: var(--font-heading);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 6px;
-}
-.guide-content .dep-desc {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.guide-content .dep-desc a { color: var(--accent); text-decoration: none; }
-.guide-content .dep-desc a:hover { text-decoration: underline; }
-
-/* Step cards */
-.guide-content .step-card {
-  background: #F1F1F4;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 12px;
-}
-[data-theme="dark"] .guide-content .step-card { background: #262626; }
-.guide-content .step-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: capitalize;
-  color: var(--accent);
-  margin-bottom: 6px;
-}
-.guide-content .step-title {
-  font-family: var(--font-heading);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 6px;
-}
-.guide-content .step-body {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.guide-content .step-body pre {
-  margin: 8px 0 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-}
-
-/* Pattern items */
-.guide-content .pattern-group { margin-bottom: 24px; }
-.guide-content .pattern-item {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.65;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--row-border);
-}
-.guide-content .pattern-item:last-child { border-bottom: 0; }
-.guide-content .pattern-item strong { color: var(--text); }
-
-/* Infobox */
-.guide-content .infobox {
-  border-radius: 12px;
-  padding: 14px 16px;
-  font-size: 12px;
-  line-height: 1.65;
-  margin-bottom: 16px;
-}
-.guide-content .infobox p { margin-bottom: 6px; font-size: 12px; }
-.guide-content .infobox p:last-child { margin-bottom: 0; }
-.guide-content .infobox-tip  { background: var(--issue-bg);    border: 1px solid var(--issue-border);    color: var(--muted); }
-.guide-content .infobox-warn { background: var(--issue-bg);    border: 1px solid var(--issue-border);    color: var(--muted); }
-.guide-content .infobox-good { background: var(--resolved-bg); border: 1px solid var(--resolved-border); color: var(--muted); }
-
-/* File tree */
-.guide-content .file-tree {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 18px 22px;
-  margin: 12px 0 16px;
-  font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.7;
-  color: var(--text-2);
-}
-.guide-content .file-tree .comment { color: var(--muted); }
-
-/* Footer */
-.guide-content .footer {
-  border-top: 1px solid var(--border);
-  padding-top: 20px;
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-  margin-top: 64px;
-}
-
-/* Lists used at the bottom of the guide */
+/* Lists */
 .guide-content ul,
 .guide-content ol {
   font-size: 14px;
   color: var(--text-2);
   line-height: 1.65;
+  margin: 0 0 12px;
+  padding-left: 22px;
+  max-width: 76ch;
 }
-
-/* td.center utility used in mobile-doc tables */
-.guide-content td.mono.center { text-align: center; }
+.guide-content li { margin-top: 4px; }
 
 /* Entry point to the companion Methodology page */
 .guide-methodology-cta { margin-top: 32px; }
-
-/* TOC styling lives in global.css under .page-toc / .page-toc-link — same as
-   component pages. Nothing to override here. */
 </style>

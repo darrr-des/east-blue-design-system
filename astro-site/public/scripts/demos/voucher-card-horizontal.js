@@ -84,12 +84,6 @@ function _vchRenderPreview(cardStyle, card) {
   el.innerHTML = _vchCard(card.state, card.originalPrice === 'Yes');
 }
 
-function buildSwiftSnippet(cardStyle, card) {
-  return getSnippet(cardStyle, 'swift', card);
-}
-function buildComposeSnippet(cardStyle, card) {
-  return getSnippet(cardStyle, 'compose', card);
-}
 function getSnippet(cardStyle, lang, card) {
   var hasOriginal = card.originalPrice === 'Yes';
   var stateCap = card.state.charAt(0).toUpperCase() + card.state.slice(1);

@@ -213,6 +213,20 @@ function updateSCGDemo() {
 }
 window.updateSCGDemo = updateSCGDemo;
 
+/* The Overview panel's toggles write `_scgDemo` and call
+   `updateSegmentedControlGroupDemo()`; both start off, matching the markup. */
+var _scgDemo = { selected: '1', subtext: 'no', avatars: 'no' };
+window._scgDemo = _scgDemo;
+function updateSegmentedControlGroupDemo() {
+  var el = document.getElementById('scg-demo-preview');
+  if (!el) return;
+  el.innerHTML = _scgRender({
+    hasSubtext: _scgDemo.subtext === 'yes' ? 'true' : 'false',
+    hasSlotContainer: _scgDemo.avatars === 'yes' ? 'true' : 'false'
+  }, 1);
+}
+window.updateSegmentedControlGroupDemo = updateSegmentedControlGroupDemo;
+
 /* ── First paint ────────────────────────────────────────────────────── */
 function _scgInit() {
   updateSCGDemo();
