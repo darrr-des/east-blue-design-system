@@ -55,6 +55,8 @@ When the user types one of these phrases, open the matching guide and follow it 
 
 `Code Review` is a plain-text trigger for the component's Code tab — not the built-in `/code-review` diff review. When ambiguous, ask. The Style tab is retired.
 
+**`Component Update`** → [COMPONENT-UPDATE-GUIDE.md](workflows/build/COMPONENT-UPDATE-GUIDE.md) — the rollout for a component already on the site: Playground + In Context + sweep cleanup in one run, ending in a report for the owner. Mechanical changes only; every judgement call (verdicts, open issues, repointing a moved set, past changelog entries, API names) is reported, not made.
+
 ---
 
 ## Figma Rule — Read-Only

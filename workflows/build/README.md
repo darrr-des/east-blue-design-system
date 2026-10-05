@@ -6,6 +6,7 @@ One build guide per tab. A **build** writes a tab: the first assessment of a com
 |---|---|---|
 | [OVERVIEW-BUILD-GUIDE.md](OVERVIEW-BUILD-GUIDE.md) | `Component Build` | **Overview tab** — verdict box, DS Health, behavior, issues, recommendations, badges |
 | [PLAYGROUND-BUILD-GUIDE.md](PLAYGROUND-BUILD-GUIDE.md) | `Playground Build` | **Playground tab** — generated from Figma by `playground:build`, then the four checks |
+| [COMPONENT-UPDATE-GUIDE.md](COMPONENT-UPDATE-GUIDE.md) | `Component Update` | **An existing component's rollout** — Playground + In Context + sweep cleanup, ending in a report for the owner |
 | [CODE-BUILD-GUIDE.md](CODE-BUILD-GUIDE.md) | `Code Build` | **Code tab** — Installation through Variants Inventory |
 | [CHANGELOG-BUILD-GUIDE.md](CHANGELOG-BUILD-GUIDE.md) | `Changelog Build` | **Changelog tab** — one new entry |
 
