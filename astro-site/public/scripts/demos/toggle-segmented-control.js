@@ -153,17 +153,14 @@ function updateSpecCard(cardStyle, prop, value) {
 window.updateSpecCard = updateSpecCard;
 
 /* ── Overview tab live preview ──────────────────────────────────────── */
-/* The Overview panel still ships a `Selected` control (first / second) that
-   the set does not have — the first segment is active in all three variants.
-   Draw the Figma component and ignore the retired control. */
-/* The Overview panel's handler writes `_tscDemo.selected` before calling this;
-   the component set has no selection axis, so the render does not vary. */
-var _tscDemo = { selected: '1' };
+/* One control, the set's one property: numberOfTabs (2, 3, 4), default 2 as
+   Figma ships it. The first segment is active in all three variants. */
+var _tscDemo = { numberOfTabs: '2' };
 window._tscDemo = _tscDemo;
 
 function updateToggleSegmentedControlDemo() {
   var el = document.getElementById('tsc-demo-preview');
-  if (el) el.innerHTML = _tscRender({ numberOfTabs: '2' }, 1);
+  if (el) el.innerHTML = _tscRender(_tscDemo, 1);
 }
 window.updateToggleSegmentedControlDemo = updateToggleSegmentedControlDemo;
 

@@ -10,8 +10,8 @@
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
@@ -42,7 +42,7 @@
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "Complete 3 × 2 matrix — <code>State</code> (Default / Pressed / Disabled) × <code>Active</code> (<code>true</code>/<code>false</code>), lowercase booleans. Active segments fill brand-blue, inactive carry the brand-blue outline; pressed and disabled shift the shade predictably."
+        "note": "Complete 3 × 2 matrix — State (Default / Pressed / Disabled) × <code>isActive</code>, lowercase booleans. Active segments fill brand-blue, inactive carry the brand-blue outline; the label is edited on the instance."
       },
       {
         "name": "Composable",
@@ -100,6 +100,14 @@
       {
         "headline": "",
         "body": "v1.0: Segment label node renamed from <code>#value</code> to <code>label</code>. (C2)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "Label is a text layer, not a text property: withdrawn — the label is set by overriding the text on the instance, which Figma allows without a property; owner decision, 6 Oct 2026, node 26628:50752 (C4)",
         "tag": {
           "criterion": "",
           "label": ""
@@ -638,9 +646,9 @@
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Naming is fine — each variant is a frame with a single <code>label</code> TEXT child, and the old <code>#value</code> node is gone. The defect is the stroke: it is declared on <strong>all four sides but only the right one carries weight</strong>, so the node reads as a fully outlined button. That is exactly how the previous assessment came to document a \"1.5px brand-blue outline\" that does not render. Declare the three zero-weight sides off."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Each variant is a frame with a single <code>label</code> text layer. The inactive outline is a right-side stroke — 1px right, 0 on the other sides — which is how Figma stores a one-sided border."
       },
       {
         "id": "C2",
@@ -652,16 +660,16 @@
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Fills are internally consistent and reuse the family’s blues, but no <code>segmented-control/*</code> namespace is registered and bindings cannot be read with the Talk To Figma plugin — so the Style tab’s token column is <code>—</code> rather than asserted."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Every value is token-bound: fills <code>bg/color-bg-primary</code> (+ hover, disabled) and <code>bg/color-bg-overlay-light-strong</code>, strokes <code>border/color-border-primary</code> (+ disabled), label colours <code>text/color-text-*</code>, padding <code>space/space-12</code> / <code>space-16</code>, text style <code>Primary/Label/Base</code>."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps cleanly: <code>isActive</code> forwards from the row’s selected index, <code>State</code> derives from the press gesture and the enabled flag. Nothing here needs a property the platforms do not already have."
+        "notes": "Maps cleanly: isActive forwards from the row’s selected index, State derives from the press gesture and the enabled flag, and the label is a plain string set on the instance."
       },
       {
         "id": "C5",
@@ -759,6 +767,43 @@
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "October 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Component Review · node 26628:50752",
+      "rows": [
+        {
+          "body": "<strong>Label is a text layer, not a text property.</strong> Filed here, where the label lives; it was carried as an inherited issue on Segmented Control - Group.",
+          "delta": {
+            "kind": "open",
+            "label": "C4 Open"
+          }
+        },
+        {
+          "body": "<strong>Consistent → partial, verdict Keep → Fix.</strong> The state matrix is complete; the label is the one gap.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Label issue withdrawn; verdict back to Keep.</strong> The label is set by overriding the text on the instance, which Figma allows without a property — owner decision.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4 Withdrawn"
+          }
+        },
+        {
+          "body": "<strong>C1 and C3 → ready; native status Needs Refinement → Ready.</strong> Read over the Figma REST API on 26628:50752: every fill, stroke, padding and the text style is token-bound, and the inactive outline is a standard right-side stroke.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 C3 Resolved"
+          }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "September 2026",

@@ -1,23 +1,23 @@
 {
   "name": "Segmented Control - Group",
   "meta": {
-    "node": "26628:50778",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26628-50778",
-    "description": "A labeled Toggle Segmented Control with optional subtext and a small-avatar group below.",
+    "node": "26628:50786",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26628-50786",
+    "description": "A labeled Segmented Control with a slot below for helper text, avatars or other content.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — hasSubtext is still a variant axis",
-      "text": "Rebuilt with a named <code>Slot Container</code> (three Avatars, shown by <code>hasSlotContainer</code>) and a Subtext Message. Still open: <code>hasSubtext</code> doubles the variants instead of being a boolean, and the header label is not a property."
+      "kind": "keep",
+      "title": "Keep — all four traits pass",
+      "text": "Nothing is open. A header and an exposed Segmented Control over a named <code>Slot Container</code>, shown by <code>hasSlotContainer</code>, that holds helper text, avatars or any content."
     },
     "navGroup": "Toggle",
     "navIconSvg": ""
@@ -27,68 +27,66 @@
     "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/segmented-control-group-in-context.png\" alt=\"Segmented Control Group shown on the GCash Create KKB screen: the Split amount label, an Equally and By Item segmented control, the subtext The total bill will be split equally between, and three avatars JF, D and EM\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"scg-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Selected</span><select class=\"demo-panel-select\" id=\"scg-demo-selected\" onchange=\"_scgDemo.selected=this.value;updateSegmentedControlGroupDemo()\"><option value=\"first\" selected=\"\">First</option><option value=\"second\">Second</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Subtext</span><label class=\"demo-panel-toggle\"><input type=\"checkbox\" id=\"scg-demo-subtext\" onchange=\"_scgDemo.subtext=this.checked?'yes':'no';this.parentElement.classList.toggle('is-on',this.checked);updateSegmentedControlGroupDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Avatars</span><label class=\"demo-panel-toggle\"><input type=\"checkbox\" id=\"scg-demo-avatars\" onchange=\"_scgDemo.avatars=this.checked?'yes':'no';this.parentElement.classList.toggle('is-on',this.checked);updateSegmentedControlGroupDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"scg-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasSlotContainer</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"scg-demo-slot\" checked onchange=\"_scgDemo.hasSlotContainer=this.checked;this.parentElement.classList.toggle(&#39;is-on&#39;,this.checked);updateSegmentedControlGroupDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "Four variants for what should be a single component with two optional slots. Any future trailing content (a count badge, an error message, a help link) requires a new variant."
+        "rating": "pass",
+        "note": "One component: whatever sits under the control — helper text, avatars, a count — goes in the named <code>Slot Container</code>, so no combination needs a variant."
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Composes Toggle - Segmented Control + Subtext Message + Avatar instances. Inherits all 3 sub-components' open issues."
+        "rating": "pass",
+        "note": "Composes the FormGroup Header and Segmented Control instances; their own issues are tracked on their own pages, not carried here."
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "Naming uses positional booleans (<code>subtext=yes|no</code>, <code>avatars=yes|no</code>) instead of slot semantics. Should be <code>subtext?: String</code> + <code>avatars?: [Avatar]</code>."
+        "rating": "pass",
+        "note": "Its one property is clean: <code>hasSlotContainer</code> is a boolean over a named slot. The states live in the Segmented Control Button instances inside."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Built from sub-components but doesn't expose them as slots — consumers can't swap the inner control for a 3-segment variant or use a custom subtext component."
+        "rating": "pass",
+        "note": "The area under the control is a slot consumers fill with any content, and the inner Segmented Control is an exposed nested instance — its <code>numberOfTabs</code> (2, 3, 4) is set from the Group’s own panel."
       }
     ],
     "behavior": [],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Boolean variant matrix instead of named slots.",
-        "body": "<code>subtext × avatars</code> produces 4 variants for a slot-presence question. Replace with named optional slots — Figma Slot architecture supports this directly.",
+        "headline": "",
+        "body": "No way to change avatar count: the avatars sit in a named <code>Slot Container</code>, which takes any number of avatars or other content — checked on node 26628:50778 (C4)",
         "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "Inherits all Toggle - Segmented Control issues.",
-        "body": "No Pressed / Focused / Disabled state, hardcoded 2-segment count, positional <code>first|second</code> naming — all flagged on the parent component and propagate here.",
+        "headline": "",
+        "body": "hasSubtext is a variant axis, not a boolean: the Group is now a single component and <code>hasSubtext</code> is a boolean bound to the Subtext Message — checked on node 26628:50786 (C1)",
         "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "No way to change avatar count.",
-        "body": "Avatar group is baked with exactly 3 avatars. Real consumers may want 1, 2, 5+. Should be a slot accepting <code>avatars: [Avatar]</code>.",
+        "headline": "",
+        "body": "Inherited \"No Focused state\": withdrawn — Segmented Control Button ships Default, Pressed and Disabled by design; on touch screens focus is drawn by the system, so no Focused variant is needed — owner decision, 6 Oct 2026, node 26628:50752 (C5)",
         "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "Inherited \"segment labels are not text properties\": moved to Segmented Control Button, where the label lives — node 26628:50752 (C4)",
+        "tag": {
+          "criterion": "",
+          "label": ""
         }
       }
     ],
+    "open": [],
     "recommendations": [
-      {
-        "headline": "Convert boolean axes to named slots.",
-        "body": "Target API: <code>EBSegmentedControlGroup(label, segments, selectedIndex, subtext?, avatars?)</code>. <code>subtext</code> and <code>avatars</code> become optional content slots driven by data, not variants. Drops Figma variant count from 4 to 1.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Adopt Figma Slot for both subtext and avatars.",
-        "body": "Use Figma's native Slot feature so consumers can instance-swap any Subtext Message variant or any Avatar group composition without detaching.",
-        "tag": "Slot"
-      },
       {
         "headline": "Promote inner control to a data-driven Segmented Control.",
         "body": "Tracked on the Toggle - Segmented Control component — once that ships <code>segments: [Segment]</code>, this group inherits the flexibility automatically.",
@@ -100,7 +98,18 @@
         "tag": "A11y"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Convert boolean axes to named slots.",
+        "body": "Applied — the subtext × avatars boolean axes are gone; the Group is one component and everything under the control goes in the named <code>Slot Container</code> (node 26628:50786).",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Adopt Figma Slot for both subtext and avatars.",
+        "body": "Applied — the <code>Slot Container</code> is a native Figma SLOT, empty by default, that takes a Subtext Message, an Avatar group or any other content without detaching (node 26628:50786).",
+        "tag": "Slot"
+      }
+    ]
   },
   "style": {
     "heading": "Styles",
@@ -572,32 +581,17 @@
       "footnote": ""
     },
     "propertyMapping": {
-      "description": "Read off the property panel of set <code>26628:50778</code>. The nested <code>Segmented Control</code> is listed under <em>Nested instances</em>, not <em>Properties</em> — none of its properties are exposed on the group, so the segments and the selected index have no Figma property behind them.",
+      "description": "Read off the property panel of component <code>26628:50786</code>: one boolean, <code>hasSlotContainer</code>, and one slot, <code>Slot Container</code>. Nothing else is exposed.",
       "rows": [
-        {
-          "figma": "hasSubtext — true, false",
-          "swift": "<code>subtext: String?</code> — omit to hide",
-          "compose": "<code>subtext: String? = null</code>"
-        },
         {
           "figma": "hasSlotContainer — true, false",
           "swift": "presence of the <code>.ebSlotContainer { }</code> trailing closure",
           "compose": "<code>slotContainer: @Composable (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "Slot Container (slot) — ships 3 × Avatar",
+          "figma": "Slot Container (slot) — empty by default; holds helper text, avatars or other content",
           "swift": "<code>.ebSlotContainer { HStack(spacing: 2) { … } }</code>",
           "compose": "<code>slotContainer = { … }</code>"
-        },
-        {
-          "figma": "— no Figma property (the header label)",
-          "swift": "<code>label: String</code>",
-          "compose": "<code>label: String</code>"
-        },
-        {
-          "figma": "— no Figma property (segments and selection, owned by the nested Segmented Control)",
-          "swift": "<code>segments: [String]</code> · <code>selectedIndex: Binding&lt;Int&gt;</code>",
-          "compose": "<code>segments: List&lt;String&gt;</code> · <code>selectedIndex: Int</code>"
         }
       ],
       "filePaths": {
@@ -608,18 +602,18 @@
     "usageSnippets": [
       {
         "subheading": "Label and control",
-        "swift": "<code><span class=\"syn-cmt\">// hasSubtext = false, hasSlotContainer = false — 312 × 62</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span>: <span class=\"syn-punc\">[</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">]</span>,\n    <span class=\"syn-param\">selectedIndex</span>: $selected\n<span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-cmt\">// hasSubtext = false, hasSlotContainer = false — 312 × 62</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span> = <span class=\"syn-kw\">listOf</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">selectedIndex</span> = selected\n<span class=\"syn-punc\">)</span></code>"
+        "swift": "<code><span class=\"syn-cmt\">// hasSlotContainer = false — header and control only, 312 × 62</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span>: <span class=\"syn-punc\">[</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">]</span>,\n    <span class=\"syn-param\">selectedIndex</span>: $selected\n<span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// hasSlotContainer = false — header and control only, 312 × 62</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span> = <span class=\"syn-kw\">listOf</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">selectedIndex</span> = selected\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "With subtext",
-        "swift": "<code><span class=\"syn-cmt\">// hasSubtext = true — adds the 22px Subtext Message row, 312 × 84</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span>: <span class=\"syn-punc\">[</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">]</span>,\n    <span class=\"syn-param\">selectedIndex</span>: $selected,\n    <span class=\"syn-param\">subtext</span>: <span class=\"syn-str\">\"Use this space for your subtext.\"</span>\n<span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-cmt\">// hasSubtext = true — adds the 22px Subtext Message row, 312 × 84</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span> = <span class=\"syn-kw\">listOf</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">selectedIndex</span> = selected,\n    <span class=\"syn-param\">subtext</span> = <span class=\"syn-str\">\"Use this space for your subtext.\"</span>\n<span class=\"syn-punc\">)</span></code>"
+        "swift": "<code><span class=\"syn-cmt\">// hasSlotContainer = true — the subtext goes in the slot, 312 × 102</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span>: <span class=\"syn-punc\">[</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">]</span>,\n    <span class=\"syn-param\">selectedIndex</span>: $selected\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-dot\">.ebSlotContainer</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">EBSubtextMessage</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Use this space for your subtext.\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// hasSlotContainer = true — the subtext goes in the slot, 312 × 102</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span> = <span class=\"syn-kw\">listOf</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">selectedIndex</span> = selected,\n    <span class=\"syn-param\">slotContainer</span> = <span class=\"syn-punc\">{</span>\n        <span class=\"syn-type\">EBSubtextMessage</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Use this space for your subtext.\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "With the slot container",
-        "swift": "<code><span class=\"syn-cmt\">// hasSlotContainer = true — adds the 40px slot. Figma ships it</span>\n<span class=\"syn-cmt\">// holding three 32px Avatars 2px apart, but the contents swap.</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span>: <span class=\"syn-punc\">[</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">]</span>,\n    <span class=\"syn-param\">selectedIndex</span>: $selected\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-dot\">.ebSlotContainer</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">HStack</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">spacing</span>: <span class=\"syn-val\">2</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n        ForEach<span class=\"syn-punc\">(</span>recentContacts<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span>$<span class=\"syn-val\">0</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span></code>",
-        "compose": "<code><span class=\"syn-cmt\">// hasSlotContainer = true — adds the 40px slot. Figma ships it</span>\n<span class=\"syn-cmt\">// holding three 32px Avatars 2px apart, but the contents swap.</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span> = <span class=\"syn-kw\">listOf</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">selectedIndex</span> = selected,\n    <span class=\"syn-param\">slotContainer</span> = <span class=\"syn-punc\">{</span>\n        <span class=\"syn-type\">Row</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">horizontalArrangement</span> = <span class=\"syn-type\">Arrangement</span>.<span class=\"syn-fn\">spacedBy</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">2</span><span class=\"syn-dot\">.dp</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n            recentContacts<span class=\"syn-dot\">.forEach</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n        <span class=\"syn-punc\">}</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+        "swift": "<code><span class=\"syn-cmt\">// hasSlotContainer = true (the default) — Figma ships the slot empty;</span>\n<span class=\"syn-cmt\">// fill it with any content, here an Avatar Group.</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span>: <span class=\"syn-punc\">[</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">]</span>,\n    <span class=\"syn-param\">selectedIndex</span>: $selected\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-dot\">.ebSlotContainer</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">avatars</span>: recentContacts<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// hasSlotContainer = true (the default) — Figma ships the slot empty;</span>\n<span class=\"syn-cmt\">// fill it with any content, here an Avatar Group.</span>\n<span class=\"syn-type\">EBSegmentedControlGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">segments</span> = <span class=\"syn-kw\">listOf</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">selectedIndex</span> = selected,\n    <span class=\"syn-param\">slotContainer</span> = <span class=\"syn-punc\">{</span>\n        <span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">avatars</span> = recentContacts<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -656,11 +650,11 @@
     ],
     "usageGuidelines": [
       {
-        "doText": "Use the group when a segmented control needs a heading — it bundles <code>FormGroup Header</code>, <code>Segmented Control</code> and an optional <code>Subtext Message</code> at a fixed rhythm.",
+        "doText": "Use the group when a segmented control needs a heading — it bundles <code>FormGroup Header</code> and <code>Segmented Control</code> over a <code>Slot Container</code> at a fixed rhythm.",
         "dontText": "Don’t reach for it to get a bare segmented control. With no header to show, use <code>Segmented Control</code> directly — the group always renders its 22px header row."
       },
       {
-        "doText": "Turn on <code>hasSubtext</code> for helper or validation copy under the control; it adds the 22px Subtext Message row and takes the component from 62 to 84.",
+        "doText": "Put helper or validation copy in the <code>Slot Container</code> as a Subtext Message, and turn the slot off with <code>hasSlotContainer</code> when there is nothing to show.",
         "dontText": "Don’t put validation copy in the header. The header is <code>Primary/Label/Light/Small</code> at full-strength <code>#0A2757</code> and reads as a title, not a message."
       },
       {
@@ -678,14 +672,14 @@
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Every part is a named instance — <code>FormGroup Header</code>, <code>Segmented Control</code>, <code>Subtext Message</code> — and the slot is a real <code>SLOT</code> node named <code>Slot Container</code>. The generic wrappers the 1.0.0 assessment flagged are gone."
+        "notes": "Every part is a named instance — <code>FormGroup Header</code>, <code>Segmented Control</code> — and the slot is a real <code>SLOT</code> node named <code>Slot Container</code>."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Names follow the <code>has</code> prefix with lowercase values. But the two behave alike and are built differently: <code>hasSubtext</code> is a <strong>variant</strong> whose values are <code>true</code>/<code>false</code>, while <code>hasSlotContainer</code> is a <strong>boolean property</strong>. Both toggle one row’s presence; one doubles the variant count and the other does not."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One property, <code>hasSlotContainer</code>, a boolean with the <code>has</code> prefix. The old split — <code>hasSubtext</code> as a variant beside a boolean — is gone with the subtext moving into the slot."
       },
       {
         "id": "C3",
@@ -704,9 +698,9 @@
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "The group has no states of its own, which is correct — but the nested <code>Segmented Control</code> is not exposed, so nothing about selection, pressed or disabled can be reached through the group in Figma. Every consumer draws the same two segments with the first one selected."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The group has no states of its own, which is correct. The inner Segmented Control is an exposed nested instance, and its segments carry Default, Pressed and Disabled."
       },
       {
         "id": "C6",
@@ -717,10 +711,10 @@
       }
     ],
     "variants": {
-      "total": 2,
-      "description": "<code>hasSubtext</code> (2) = 2 variants. <code>hasSlotContainer</code> is a boolean property and <code>Slot Container</code> is a <code>SLOT</code> — both change what renders without adding a variant, which is why a component with four visible configurations ships only two. Heights below are with the slot hidden, as Figma ships it; turning it on adds 40.",
+      "total": 1,
+      "description": "No variant properties × 1 component = 1. <code>hasSlotContainer</code> is a boolean and Slot Container is a SLOT — both change what renders without adding a variant. Size below is as Figma ships it, with the empty slot showing.",
       "columns": [
-        "hasSubtext",
+        "Component",
         "Node ID",
         "Size",
         "Parts"
@@ -728,18 +722,10 @@
       "rows": [
         {
           "cells": [
-            "<code>false</code>",
-            "<code>26628:50779</code>",
-            "312 × 62",
-            "Header 22 + Control 40"
-          ]
-        },
-        {
-          "cells": [
-            "<code>true</code>",
+            "Segmented Control - Group",
             "<code>26628:50786</code>",
-            "312 × 84",
-            "Header 22 + Control 40 + Subtext 22"
+            "312 × 102",
+            "Header 22 + Segmented Control 40 + Slot Container 40"
           ]
         }
       ],
@@ -751,6 +737,115 @@
     }
   },
   "changelog": [
+    {
+      "version": "3.0.0",
+      "date": "October 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt as a single component · node 26628:50786",
+      "rows": [
+        {
+          "body": "<strong>Two variants became one component.</strong> The <code>hasSubtext=true|false</code> variant axis is gone; <code>hasSubtext</code> is now a boolean bound to the Subtext Message. The page moved from the deleted set 26628:50778 to 26628:50786.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>DS Health re-rated.</strong> Reusable → pass. Consistent stays partial: the segments still have no Focused state and their labels are not properties.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Inherited \"No Focused state\" withdrawn; Consistent → pass.</strong> The states live in the Segmented Control Button instances — Default, Pressed and Disabled by design.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Withdrawn"
+          }
+        },
+        {
+          "body": "<strong>Inherited label issue moved to Segmented Control Button; Self-contained → pass.</strong> Nothing is open on the Group.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4 Moved"
+          }
+        },
+        {
+          "body": "<strong>The subtext moved into the slot.</strong> <code>hasSubtext</code> and the fixed Subtext Message are gone; the <code>Slot Container</code>, empty by default and shown by <code>hasSlotContainer</code>, now holds helper text, avatars or other content. C2 → ready.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Two recommendations applied.</strong> “Convert boolean axes to named slots” and “Adopt Figma Slot for both subtext and avatars” — both done by the slot rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Live Preview and Usage Snippets follow the slot rebuild.</strong> The preview has one control, <code>hasSlotContainer</code> (on, as Figma ships it), and draws the slot empty; the Selected, Subtext and Avatars controls are gone. The subtext snippet now passes <code>EBSubtextMessage</code> as slot content.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Property Mapping lists only the Figma properties.</strong> The two rows for the header label and the segments, which have no Figma property, are removed; the component exposes <code>hasSlotContainer</code> and <code>Slot Container</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Composable → pass, verdict Fix → Keep.</strong> The inner Segmented Control is an exposed nested instance (<code>isExposedInstance</code>), so its <code>numberOfTabs</code> is set from the Group’s panel — it was never fixed. C5 → ready for the same reason; the states live in its segment buttons.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Component Review against the current set · node 26628:50778",
+      "rows": [
+        {
+          "body": "<strong>No way to change avatar count.</strong> the avatars sit in a named <code>Slot Container</code>, which takes any number of avatars or other content.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Boolean variant matrix instead of named slots.</strong> The avatars moved into a named <code>Slot Container</code>. Still open: hasSubtext is a variant axis, not a boolean.",
+          "delta": {
+            "kind": "partial",
+            "label": "C1 Partial"
+          }
+        },
+        {
+          "body": "<strong>Inherits all Toggle - Segmented Control issues.</strong> Segment count and Pressed / Disabled are fixed in the inner control. Still open: Inherits two Segmented Control issues.",
+          "delta": {
+            "kind": "partial",
+            "label": "C5 Partial"
+          }
+        },
+        {
+          "body": "<strong>DS Health re-rated against node 26628:50778.</strong> Reusable → partial, Consistent → partial, Composable → partial.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "September 2026",

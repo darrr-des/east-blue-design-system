@@ -3,21 +3,21 @@
   "meta": {
     "node": "26628:50765",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26628-50765",
-    "description": "A 2-option segmented control where the selected segment is filled brand-blue and the unselected segment carries a brand-blue outline.",
+    "description": "A segmented control of 2, 3 or 4 segments, where the selected segment is filled brand-blue and the others carry a brand-blue outline.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — selection and labels are not properties yet",
-      "text": "Rebuilt on <code>numberOfTabs</code> (2, 3, 4) with Segmented Control Button segments that fill the width and carry their own states. Still open: the selected segment and each segment label are not component properties."
+      "kind": "keep",
+      "title": "Keep — all four traits pass",
+      "text": "Nothing is open. <code>numberOfTabs</code> gives 2, 3 or 4 text segments by design, each filling the width evenly, built from Segmented Control Button instances with every value token-bound."
     },
     "navGroup": "Toggle",
     "navIconSvg": ""
@@ -27,12 +27,12 @@
     "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/segmented-control-in-context.png\" alt=\"Segmented Control shown on the GCash Autoload screen: two tabs, Repeat selected and Schedule Once unselected, under Set Autoload Schedule with the subtext Schedule recurring load\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tsc-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Selected</span><select class=\"demo-panel-select\" id=\"tsc-demo-selected\" onchange=\"_tscDemo.selected=this.value;updateToggleSegmentedControlDemo()\"><option value=\"first\" selected=\"\">First</option><option value=\"second\">Second</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tsc-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">numberOfTabs</span><select class=\"demo-panel-select\" id=\"tsc-demo-tabs\" onchange=\"_tscDemo.numberOfTabs=this.value;updateToggleSegmentedControlDemo()\"><option value=\"2\" selected=\"\">2</option><option value=\"3\">3</option><option value=\"4\">4</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "Hard-locked to 2 segments. Any consumer needing 3+ segments must detach. A <code>segments: [Segment]</code> data prop would let one component cover every count."
+        "rating": "pass",
+        "note": "<code>numberOfTabs</code> covers 2, 3 and 4 segments, so one component serves every common count."
       },
       {
         "name": "Self-contained",
@@ -41,13 +41,13 @@
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "Treatment is clear (filled selected, outlined unselected) but axis naming <code>selected=first|second</code> is positional. Should be <code>selectedIndex: Int</code> or <code>selected: SegmentID</code> in code."
+        "rating": "pass",
+        "note": "<code>numberOfTabs</code> is a clear, non-positional property. Which segment is active and what each says are set on the segment instances — <code>isActive</code> and the label text."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Each segment's label is baked text. No slot for an icon-prefixed segment or a segment with a trailing count badge."
+        "rating": "pass",
+        "note": "Composes Segmented Control Button instances that fill the width evenly, and nests inside Segmented Control - Group as an exposed instance. Segments are text-only by design."
       }
     ],
     "behavior": [
@@ -67,69 +67,77 @@
       },
       {
         "state": "Pressed",
-        "ios": "na",
-        "android": "na",
-        "property": "Not modeled",
-        "notes": "Need a transient pressed treatment (e.g. 8% darken on bg, segment scale 0.97) for tap feedback."
+        "ios": "yes",
+        "android": "yes",
+        "property": "Segment <code>State=Pressed</code>",
+        "notes": "Each Segmented Control Button carries a Pressed state for the touch-down."
       },
       {
         "state": "Focused (keyboard / a11y)",
         "ios": "na",
         "android": "na",
-        "property": "Not modeled",
-        "notes": "No visible focus ring. Important for accessible web embeds and Android TV."
+        "property": "Drawn by the platform",
+        "notes": "No Focused variant by design — on touch screens the system draws accessibility focus."
       },
       {
         "state": "Disabled",
-        "ios": "na",
-        "android": "na",
-        "property": "Not modeled",
-        "notes": "No disabled state spec'd — a control inside a form needs one."
+        "ios": "yes",
+        "android": "yes",
+        "property": "Segment <code>State=Disabled</code>",
+        "notes": "Each Segmented Control Button carries a Disabled state."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Component locks 2 segments via positional variants.",
-        "body": "<code>selected=first|second</code> means consumers stuck with exactly two segments. List-view toggles, period pickers, and filter chips frequently want 3+ segments. Replace with <code>segments: [Segment]</code> + <code>selectedIndex: Int</code> so one component covers every count.",
+        "headline": "",
+        "body": "Component locks 2 segments via positional variants: <code>numberOfTabs</code> now offers 2, 3 and 4 segments — checked on node 26628:50765 (C1)",
         "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "Positional naming in the selection axis.",
-        "body": "<code>first</code> / <code>second</code> are not semantic — they refer to position, not value. If the segments are reordered, the prop value's meaning shifts. Use <code>selectedIndex: Int</code> (or <code>selected: Segment.ID</code>) so the prop is stable.",
+        "headline": "",
+        "body": "Positional naming in the selection axis: the <code>selected=first|second</code> axis is gone; each segment carries its own <code>isActive</code> — checked on node 26628:50765 (C2)",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "No Pressed / Focused / Disabled state.",
-        "body": "Only Default state is modeled. A toggle control inside a form needs disabled coverage; an accessible web embed needs a keyboard focus ring; tap targets need a transient pressed treatment.",
+        "headline": "",
+        "body": "Equal-width 168 segments are hardcoded: segments are set to Fill and share the width evenly — checked on node 26628:50765 (C1)",
         "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "Segment label is baked text — no icon or count slot.",
-        "body": "Real-world segmented controls often need a leading icon (\"⊞ Grid\" / \"≡ List\") or a trailing count (\"Unread (12)\"). The component doesn't expose slots for either; consumers detach.",
+        "headline": "",
+        "body": "No Focused state: withdrawn — Segmented Control Button ships Default, Pressed and Disabled by design; on touch screens focus is drawn by the system, so no Focused variant is needed — owner decision, 6 Oct 2026, node 26628:50752 (C5)",
         "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "Equal-width 168 segments are hardcoded.",
-        "body": "Total 336 × 40. For 3-segment use cases the math breaks (112 each? 168/n?). A data-driven control would distribute available width across the segment count automatically.",
+        "headline": "",
+        "body": "Segment label is baked text: withdrawn — the label is set by overriding the text on the segment instance, which Figma allows without a property; owner decision, 6 Oct 2026, node 26628:50752 (C4)",
         "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "",
+        "body": "No icon or count slot in a segment: withdrawn — segments are text-only by design; owner decision, 6 Oct 2026. Kept as a recommendation for later (C4)",
+        "tag": {
+          "criterion": "",
+          "label": ""
         }
       }
     ],
+    "open": [],
     "recommendations": [
       {
         "headline": "Promote to a data-driven <code>EBSegmentedControl</code>.",
@@ -137,24 +145,9 @@
         "tag": "Property"
       },
       {
-        "headline": "Rename the selected axis to be data-stable.",
-        "body": "Use <code>selectedIndex: Int</code> (or a <code>selected: SegmentID</code> string) so the value's meaning doesn't shift if segments are reordered.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Add Pressed, Focused, and Disabled state coverage.",
-        "body": "Pressed: subtle darken on bg + 0.97 scale on touch-down. Focused: 2px outline (offset 2) for keyboard nav. Disabled: 40% opacity on the whole row, pointer-events: none.",
-        "tag": "State"
-      },
-      {
         "headline": "Expose leading-icon + trailing-badge slots per segment.",
         "body": "Common segmented-control patterns prefix segments with an icon (\"⊞ Grid\") or append a count badge (\"Unread (12)\"). Both need named slots so consumers don't detach.",
         "tag": "Slot"
-      },
-      {
-        "headline": "Distribute segment width evenly via flex.",
-        "body": "Don't hardcode 168 per segment. Use flex:1 on each so a 3-segment control divides 336 / 3 = 112 each automatically, with no Figma rework needed.",
-        "tag": "Property"
       },
       {
         "headline": "Document the A11y model.",
@@ -162,7 +155,23 @@
         "tag": "A11y"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Rename the selected axis to be data-stable.",
+        "body": "Applied — the positional <code>selected=first|second</code> axis is gone; each segment carries its own <code>isActive</code> (node 26628:50765).",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Add Pressed, Focused, and Disabled state coverage.",
+        "body": "Applied — Pressed and Disabled live in the Segmented Control Button segments; Focused is drawn by the platform, by design (node 26628:50752).",
+        "tag": "State"
+      },
+      {
+        "headline": "Distribute segment width evenly via flex.",
+        "body": "Applied — segments are set to Fill and divide the width exactly: 312 ÷ 2, ÷ 3, ÷ 4 (node 26628:50765).",
+        "tag": "Property"
+      }
+    ]
   },
   "style": {
     "heading": "Styles",
@@ -614,9 +623,9 @@
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "The positional <code>selected=first|second</code> pair is gone and segment widths now divide the control exactly — 312 ÷ 2, ÷ 3, ÷ 4 — so the hardcoded 168 is resolved. What remains is that three tab counts are three hand-built variants rather than one data-driven component: a 5-segment control is expressible in code and not in Figma."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The positional <code>selected=first|second</code> pair is gone and segment widths divide the control exactly — 312 ÷ 2, ÷ 3, ÷ 4. Two to four segments is the intended range — owner decision, 6 Oct 2026; more options call for tabs, chips or a dropdown."
       },
       {
         "id": "C2",
@@ -628,23 +637,23 @@
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "The control owns one colour — the container border; the rest belongs to the nested Segmented Control Button. No <code>segmented-control/*</code> namespace is registered, and bindings cannot be read with the Talk To Figma plugin."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Every value is token-bound: the container border <code>border/color-border-primary</code> and radius <code>radius/radius-2</code>; the segments’ fills, strokes, label colours and the <code>Primary/Label/Base</code> text style come bound from Segmented Control Button."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "The count maps cleanly to a segments array and selection to <code>selectedIndex</code>. Still no leading-icon or trailing-badge slot per segment, so the common \"filter with counts\" pattern cannot be drawn."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The count maps to a <code>segments</code> array and selection to <code>selectedIndex</code>. Segments are text-only by design; an icon or count slot is a recommendation, not a gap."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "The nested Segmented Control Button now carries Default, Pressed and Disabled — but the control does not expose them, and every variant ships the first segment active. So a pressed or disabled segmented control cannot be drawn from this set, even though the pieces exist one level down."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The states live in the Segmented Control Button instances — Default, Pressed and Disabled, with <code>isActive</code> per segment — set on each segment, as on the Group."
       },
       {
         "id": "C6",
@@ -701,6 +710,78 @@
     }
   },
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Component Review against the current set · node 26628:50765",
+      "rows": [
+        {
+          "body": "<strong>Component locks 2 segments via positional variants.</strong> <code>numberOfTabs</code> now offers 2, 3 and 4 segments.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Positional naming in the selection axis.</strong> the <code>selected=first|second</code> axis is gone; each segment carries its own <code>isActive</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Equal-width 168 segments are hardcoded.</strong> segments are set to Fill and share the width evenly.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>No Pressed / Focused / Disabled state.</strong> Pressed and Disabled now come from the Segmented Control Button segments. Still open: No Focused state.",
+          "delta": {
+            "kind": "partial",
+            "label": "C5 Partial"
+          }
+        },
+        {
+          "body": "<strong>DS Health re-rated against node 26628:50765.</strong> Reusable → pass, Consistent → partial.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>\"No Focused state\" withdrawn.</strong> Default, Pressed and Disabled are the intended states; on touch screens focus is drawn by the system.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Withdrawn"
+          }
+        },
+        {
+          "body": "<strong>C3 and C5 → ready; Consistent → pass; label half of the C4 issue withdrawn.</strong> Every value is token-bound (read over the REST API); the states, <code>isActive</code> and the label live on the segment instances — owner decision. Still open: no icon or count slot.",
+          "delta": {
+            "kind": "partial",
+            "label": "C4 Partial"
+          }
+        },
+        {
+          "body": "<strong>C1 → ready: 2–4 segments is the intended range.</strong> Owner decision — more than four options call for tabs, chips or a dropdown.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Keep · Ready.</strong> Segments are text-only by design (owner decision), so the icon/count slot moves from an open issue to a recommendation; Composable → pass, C4 → ready. The description, Live Preview and Behavior table now describe the 2–4-segment set, and three finished recommendations moved to Applied.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4 Withdrawn"
+          }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "September 2026",
