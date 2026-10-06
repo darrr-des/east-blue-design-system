@@ -1,23 +1,23 @@
 {
   "name": "Progress Bar",
   "meta": {
-    "node": "18577:13227",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-13227",
-    "description": "A linear progress indicator showing completion percentage; supports determinate and indeterminate modes.",
+    "node": "4244:187349",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4244-187349",
+    "description": "A linear progress indicator in 10% steps, from 0 to 100. Its track and fill colours come from colour variables.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — collapse 11 percentage variants into one component with a continuous <code>progress</code> value",
-      "text": "Progress is a scalar, not an enum: 11 fixed <code>percentage</code> steps cannot show 37% or 62%. Rebuild as one component with <code>progress: Float</code> (0–1) and a state for determinate, indeterminate, success and error."
+      "kind": "keep",
+      "title": "Keep — all four traits pass",
+      "text": "Nothing is open. <code>Progress</code> steps 0–100 in tens by design; the <code>track</code> and <code>fill</code> are vector lines bound to colour variables, which carry the success and error looks."
     },
     "navGroup": "",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"3\" y=\"14\" width=\"26\" height=\"4\" rx=\"2\" fill=\"#D2E5FF\"/>\n      <rect x=\"3\" y=\"14\" width=\"15\" height=\"4\" rx=\"2\" fill=\"#005CE5\"/>\n    </svg>"
@@ -27,7 +27,7 @@
     "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/progress-bar-in-context.png\" alt=\"Progress Bar component shown on the GCash GCredit screen: under 3,311.00 used out of 10,000.00, a bar filled about one third of the way, above the remaining and total credit limits\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"progress-bar-demo-preview\"><div class=\"eb-preview eb-preview-progress-bar\" role=\"progressbar\" aria-valuenow=\"45\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:280px;\"><span class=\"eb-preview-progress-bar__track\"></span><span class=\"eb-preview-progress-bar__fill\" style=\"width:45.0%;background:#005CE5;\"></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">progress</span><input type=\"range\" id=\"progress-bar-ctrl-progress\" class=\"demo-panel-select demo-panel-input\" min=\"0\" max=\"100\" step=\"1\" value=\"45\" oninput=\"_progressBarUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">value</span><span class=\"demo-panel-value\" id=\"progress-bar-ctrl-value\">45%</span></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties (proposed)</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select id=\"progress-bar-ctrl-state\" class=\"demo-panel-select\" onchange=\"_progressBarUpdate()\"><option value=\"determinate\" selected=\"\">determinate</option><option value=\"indeterminate\">indeterminate</option><option value=\"success\">success</option><option value=\"error\">error</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"progress-bar-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Progress</span><select class=\"demo-panel-select\" id=\"progress-bar-ctrl-progress\" onchange=\"_progressBarUpdate()\"><option value=\"0\" selected=\"\">0</option><option value=\"10\">10</option><option value=\"20\">20</option><option value=\"30\">30</option><option value=\"40\">40</option><option value=\"50\">50</option><option value=\"60\">60</option><option value=\"70\">70</option><option value=\"80\">80</option><option value=\"90\">90</option><option value=\"100\">100</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -36,18 +36,18 @@
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Renders via raster <code>back</code> / <code>front</code> image layers instead of shape layers. Ships 11 PNGs worth of assets for what should be two rectangles."
+        "rating": "pass",
+        "note": "Track and fill are vector lines with token-bound strokes — no raster assets ship with the component."
       },
       {
         "name": "Consistent",
-        "rating": "fail",
-        "note": "Progress modelled as a discrete <code>percentage</code> enum with 11 variants — cannot express 37%, 62%, or any non-decile value. Every other slider-style value in the DS is continuous."
+        "rating": "pass",
+        "note": "<code>Progress</code> steps 0–100 in tens by design, the layers are named <code>track</code> and <code>fill</code>, and colour states come from variables rather than variants."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Fixed 312-px width with 2-px horizontal padding hugs a single canonical layout; doesn't stretch responsively inside a fill container today."
+        "rating": "pass",
+        "note": "The bar fills its container’s width (Fill), so it stretches inside any layout."
       }
     ],
     "behavior": [
@@ -55,102 +55,61 @@
         "state": "Determinate",
         "ios": "yes",
         "android": "yes",
-        "property": "percentage=0…100",
-        "notes": "Fill grows left-to-right in 10% steps today. Should be continuous (0–1)."
+        "property": "<code>Progress=0…100</code>",
+        "notes": "The fill grows left to right in 10% steps."
       },
       {
-        "state": "Indeterminate",
-        "ios": "na",
-        "android": "na",
-        "property": "Not modeled",
-        "notes": "Not modeled in Figma. Native primitives support it out of the box — add a variant so designers can spec it."
-      },
-      {
-        "state": "Success",
-        "ios": "na",
-        "android": "na",
-        "property": "Not modeled",
-        "notes": "Green fill at 100%. Used to confirm the task completed cleanly (file uploaded, verification passed)."
-      },
-      {
-        "state": "Error",
-        "ios": "na",
-        "android": "na",
-        "property": "Not modeled",
-        "notes": "Red fill at the point of failure. Used when the task fails mid-progress (upload retry, network dropped)."
-      },
-      {
-        "state": "Buffered",
-        "ios": "na",
-        "android": "na",
-        "property": "Not modeled",
-        "notes": "Compose supports a secondary buffered fill. Optional — only add if media streaming is a real use case."
+        "state": "Success / Error",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Colour variables",
+        "notes": "Set by the colour variables bound to the track and fill, not by a variant."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Progress is an enum of 10% steps, not a value.",
-        "body": "The Figma component exposes <code>percentage</code> as 11 discrete options (0, 10, 20, …, 100). Consumers can't spec 37% or animate smoothly — they must pick the closest variant. Every scalar value in the DS should be continuous.",
+        "headline": "",
+        "body": "Track and fill are raster PNGs: the <code>back</code> and <code>front</code> layers are vector lines with token-bound strokes; the set has no images — checked on node 18577:13227 (C6)",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "Track and fill are raster PNGs.",
-        "body": "The <code>back</code> and <code>front</code> layers are <code>&lt;img&gt;</code> assets, not shape layers. Blocks token-driven theming, breaks at non-1× resolutions, and ships 11 PNG pairs for what should be two rectangles.",
+        "headline": "",
+        "body": "Progress is an enum of 10% steps, not a value: withdrawn — 10% steps are the intended design; owner decision, 6 Oct 2026 (C2)",
         "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "Layer names are structural (<code>back</code> / <code>front</code>), not semantic.",
-        "body": "Should be <code>Track</code> and <code>Fill</code> to match native parlance and make the inspector readable for handoff.",
+        "headline": "",
+        "body": "Layer names are structural (back / front), not semantic: resolved — the layers are track, fill-container and fill, node 4244:187349 (C1)",
         "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "No indeterminate, success, or error state modeled.",
-        "body": "Native <code>ProgressView</code> and <code>LinearProgressIndicator</code> both support indeterminate natively; product flows (KYC failure, upload retry) need success / error color states. Today Figma has only the determinate-blue variants.",
+        "headline": "",
+        "body": "No indeterminate, success, or error state modeled: withdrawn — states are not variants: success, error and other looks come from the colour variables bound to the track and fill; owner decision, 6 Oct 2026 (C5)",
         "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "Property name <code>percentage</code> reads as a unit, not a ratio.",
-        "body": "Native APIs use <code>progress</code> as a 0–1 <code>Float</code>. Renaming to <code>progress</code> (with a 0–1 range, or 0–100 if kept as integer) aligns the DS with iOS / Compose conventions.",
+        "headline": "",
+        "body": "Property name percentage reads as a unit, not a ratio: resolved — the property is Progress, node 4244:187349 (C2)",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "",
+          "label": ""
         }
       }
     ],
+    "open": [],
     "recommendations": [
-      {
-        "headline": "Collapse 11 percentage variants into a single component with a continuous <code>progress</code> value.",
-        "body": "Delete the <code>percentage = 0 | 10 | … | 100</code> enum. Expose <code>progress: Float</code> (0–1). In Figma, drive the fill width by layout — either a single variant with a layer the designer resizes, or a published component that lives as a native primitive on the dev side. Variant math drops from 11 to 1 (+ state).",
-        "tag": "Property"
-      },
-      {
-        "headline": "Replace raster <code>back</code> / <code>front</code> images with token-bound rectangles.",
-        "body": "Two filled rectangles (or stroked lines) bound to <code>main/progress-bar/color/border-track</code> and <code>main/progress-bar/color/border</code>. Same visual output, theme-able, resolution-independent, no PNG pairs to ship.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Rename layers <code>back</code> → <code>Track</code> and <code>front</code> → <code>Fill</code>.",
-        "body": "Matches native terminology (<code>track</code> / <code>tint</code> in SwiftUI, <code>trackColor</code> / <code>color</code> in Compose) and reads better in the inspector.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Add <code>state</code> variant: determinate / indeterminate / success / error.",
-        "body": "Indeterminate is a looping animation designers should be able to spec. Success (positive green) and error (negative red) cover KYC / upload result states. Token references: <code>main/progress-bar/color/success</code> and <code>main/progress-bar/color/error</code> — add to the collection.",
-        "tag": "State"
-      },
       {
         "headline": "Reuse existing semantic color tokens for success / error.",
         "body": "Don't mint new hex values. Align with Alert / Badge semantic colors (<code>text/positive</code>, <code>text/negative</code>) so the progress fill reads the same as the rest of the system.",
@@ -162,17 +121,28 @@
         "tag": "Composition"
       },
       {
-        "headline": "Make the component width-flexible.",
-        "body": "Today it's locked to 312 px with 2-px horizontal padding. Spec as fill-container so a designer can drop it into any column width.",
-        "tag": "Property"
-      },
-      {
         "headline": "Document accessibility expectations.",
         "body": "<code>role=\"progressbar\"</code>, <code>aria-valuenow</code> / <code>aria-valuemin</code> / <code>aria-valuemax</code> for determinate; announce a localized label for indeterminate (\"Loading…\"). Both native APIs handle this automatically, but the web/hybrid consumer needs the spec.",
         "tag": "A11y"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Replace raster <code>back</code> / <code>front</code> images with token-bound rectangles.",
+        "body": "Applied — track and fill are vector lines bound to colour variables.",
+        "tag": "Asset"
+      },
+      {
+        "headline": "Rename layers <code>back</code> → <code>Track</code> and <code>front</code> → <code>Fill</code>.",
+        "body": "Applied — the layers are track, fill-container and fill (node 4244:187349).",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Make the component width-flexible.",
+        "body": "Applied — the bar is set to Fill and stretches with its container.",
+        "tag": "Property"
+      }
+    ]
   },
   "style": {
     "heading": "Styles",
@@ -536,32 +506,17 @@
       "footnote": ""
     },
     "propertyMapping": {
-      "description": "",
+      "description": "Read off the property panel of set <code>4244:187349</code>: one variant property, <code>Progress</code>.",
       "rows": [
         {
-          "figma": "percentage — 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100",
+          "figma": "Progress — 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100",
           "swift": "<code>progress: Float (0–1)</code>",
-          "compose": "<code>value: Double</code>"
+          "compose": "<code>progress: Float (0f–1f)</code>"
         },
         {
-          "figma": "— no Figma property (state is not modeled)",
-          "swift": "<code>state: determinate | indeterminate | success | error</code>",
-          "compose": "<code>ProgressView()</code> (indeterminate) / <code>.tint(.green / .red)</code>"
-        },
-        {
-          "figma": "back layer — the track, a vector line",
-          "swift": "<code>Track</code> (vector, <code>border-track</code>)",
-          "compose": "<code>.progressViewStyle(.linear)</code>"
-        },
-        {
-          "figma": "front layer — the fill, a vector line",
-          "swift": "<code>Fill</code> (vector, <code>border</code>)",
-          "compose": "<code>.tint(EBColors.progressFill)</code>"
-        },
-        {
-          "figma": "width — 312, fixed",
-          "swift": "fill-container",
-          "compose": "<code>.frame(maxWidth: .infinity)</code>"
+          "figma": "— no Figma property (the track and fill colours, set through colour variables)",
+          "swift": "<code>.tint(Color)</code>",
+          "compose": "<code>color = …, trackColor = …</code>"
         }
       ],
       "filePaths": {
@@ -602,23 +557,23 @@
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Rename <code>back</code> → <code>Track</code>, <code>front</code> → <code>Fill</code>. Otherwise structurally clean."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Layers are named <code>track</code>, <code>fill-container</code> and <code>fill</code>."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>percentage</code> is a discrete enum; should be a continuous <code>progress: Float</code> (0–1)."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Progress</code>, 0–100 in steps of 10 — the intended design."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Track + fill colors bound to <code>main/progress-bar/color/*</code>. Add <code>success</code> / <code>error</code> tokens once states are introduced."
+        "notes": "Track and fill strokes are bound to two library colour variables in all variants. Their names are not in the token database yet, so they read Missing rather than guessed."
       },
       {
         "id": "C4",
@@ -630,126 +585,90 @@
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Missing indeterminate, success, error. Only determinate (in 10% steps) modeled today."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One determinate look in 10% steps by design. Success, error and other states come from the colour variables, not from variants."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Track + fill are raster <code>&lt;img&gt;</code>. Replace with token-bound rectangles or vector strokes."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Track and fill are vector lines with token-bound strokes; no raster assets."
       }
     ],
     "variants": {
       "total": 11,
-      "description": "A single <code>percentage</code> axis with 11 discrete values (<code>0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100</code>) = <strong>11 variants</strong>. The target architecture collapses this axis into a continuous <code>progress</code> value — variant count drops to <strong>1</strong> (plus the new <code>state</code> axis for indeterminate / success / error).",
+      "description": "1 <code>Progress</code> setting × 11 values (0–100 in steps of 10) = 11 variants — the intended design.",
       "columns": [
-        "#",
-        "Node",
-        "percentage",
-        "Fill width",
-        "Layer pair"
+        "Progress",
+        "Node"
       ],
       "rows": [
         {
           "cells": [
-            "1",
-            "<code>27:64947</code>",
-            "<code>0</code>",
-            "0 / 308",
-            "back only (no front rendered)"
-          ]
-        },
-        {
-          "cells": [
-            "2",
-            "<code>27:64949</code>",
-            "<code>10</code>",
-            "~31 / 308",
-            "back + front raster"
-          ]
-        },
-        {
-          "cells": [
-            "3",
-            "<code>27:64953</code>",
-            "<code>20</code>",
-            "~62 / 308",
-            "back + front raster"
-          ]
-        },
-        {
-          "cells": [
-            "4",
-            "<code>27:64957</code>",
-            "<code>30</code>",
-            "~92 / 308",
-            "back + front raster"
-          ]
-        },
-        {
-          "cells": [
-            "5",
-            "<code>27:64961</code>",
-            "<code>40</code>",
-            "~123 / 308",
-            "back + front raster"
-          ]
-        },
-        {
-          "cells": [
-            "6",
-            "<code>27:64965</code>",
-            "<code>50</code>",
-            "~154 / 308",
-            "back + front raster"
-          ]
-        },
-        {
-          "cells": [
-            "7",
-            "<code>27:64969</code>",
-            "<code>60</code>",
-            "~185 / 308",
-            "back + front raster"
-          ]
-        },
-        {
-          "cells": [
-            "8",
-            "<code>27:64973</code>",
-            "<code>70</code>",
-            "~216 / 308",
-            "back + front raster"
-          ]
-        },
-        {
-          "cells": [
-            "9",
-            "<code>27:64977</code>",
-            "<code>80</code>",
-            "~246 / 308",
-            "back + front raster"
+            "0",
+            "4244:187350"
           ]
         },
         {
           "cells": [
             "10",
-            "<code>27:64981</code>",
-            "<code>90</code>",
-            "~277 / 308",
-            "back + front raster"
+            "4244:187352"
           ]
         },
         {
           "cells": [
-            "11",
-            "<code>27:64985</code>",
-            "<code>100</code>",
-            "308 / 308",
-            "back + front raster"
+            "20",
+            "4244:187356"
+          ]
+        },
+        {
+          "cells": [
+            "30",
+            "4244:187360"
+          ]
+        },
+        {
+          "cells": [
+            "40",
+            "4244:187364"
+          ]
+        },
+        {
+          "cells": [
+            "50",
+            "4244:187368"
+          ]
+        },
+        {
+          "cells": [
+            "60",
+            "4244:187372"
+          ]
+        },
+        {
+          "cells": [
+            "70",
+            "4244:187376"
+          ]
+        },
+        {
+          "cells": [
+            "80",
+            "4244:187380"
+          ]
+        },
+        {
+          "cells": [
+            "90",
+            "4244:187384"
+          ]
+        },
+        {
+          "cells": [
+            "100",
+            "4262:190138"
           ]
         }
       ],
@@ -762,17 +681,77 @@
         "rows": [
           {
             "cells": [
-              "percentage",
+              "Progress",
               "0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100",
               "11"
             ]
           }
         ]
       },
-      "collapseLabel": "View full percentage breakdown (11 rows)"
+      "collapseLabel": "View full Progress breakdown (11 rows)"
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "October 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Repointed to the Working File set · node 4244:187349",
+      "rows": [
+        {
+          "body": "<strong>Documented from the Working File set.</strong> The page moved from Sticker Sheet 18577:13227 to 4244:187349: <code>percentage</code> became <code>Progress</code>, and the layers are <code>track</code> / <code>fill</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>10% steps and variable-driven colour states are the intended design.</strong> Owner decision — the enum and missing-state issues are withdrawn, and the matching recommendations dropped.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 C5 Withdrawn"
+          }
+        },
+        {
+          "body": "<strong>Keep · Ready.</strong> Consistent → pass; C1, C2, C3, C5 → ready. Property Mapping, Variants, Behavior and the Live Preview now describe the Working File set.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Component Review against the current set · node 18577:13227",
+      "rows": [
+        {
+          "body": "<strong>Track and fill are raster PNGs.</strong> the <code>back</code> and <code>front</code> layers are vector lines with token-bound strokes; the set has no images.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>DS Health re-rated against node 18577:13227.</strong> Self-contained → pass, Composable → pass.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Consistent re-rated fail → warn, verdict Restructure → Fix.</strong> With the raster assets gone, nothing blocks native implementation outright; the 10% enum and missing states limit handoff, which the guide rates Warn. One warn trait among passes is a Fix verdict.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",
