@@ -17,14 +17,14 @@
     "verdict": {
       "kind": "fix",
       "title": "Fix required before handoff",
-      "text": "Trailing icon uses rectangle placeholder instead of swappable icon instance (C6). Code Connect mappings not yet registered (C7)."
+      "text": "Trailing icon uses a rectangle placeholder instead of a swappable icon instance (C6). Closing it takes a real icon slot on both the leading and trailing containers."
     },
     "navGroup": "Form Elements",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"18\" width=\"80\" height=\"16\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <circle cx=\"30\" cy=\"26\" r=\"3\" fill=\"currentColor\" opacity=\".1\"></circle>\n          <rect x=\"37\" y=\"22\" width=\"12\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <rect x=\"37\" y=\"27\" width=\"20\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <circle cx=\"90\" cy=\"26\" r=\"3\" fill=\"currentColor\" opacity=\".1\"></circle>\n          <rect x=\"20\" y=\"40\" width=\"80\" height=\"16\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <circle cx=\"30\" cy=\"48\" r=\"3\" fill=\"currentColor\" opacity=\".1\"></circle>\n          <rect x=\"37\" y=\"44\" width=\"16\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <rect x=\"37\" y=\"49\" width=\"28\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <circle cx=\"90\" cy=\"48\" r=\"3\" fill=\"currentColor\" opacity=\".1\"></circle>\n          <rect x=\"20\" y=\"62\" width=\"80\" height=\"8\" rx=\"4\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
+    "inContextNote": "How the Labeled Field appears in a real product screen — the Amount row on Scheduled Transfer, with PHP as the label and the amount beside it.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/labeled-field-in-context.png\" alt=\"Labeled Field shown on the GCash Scheduled Transfer screen as the Amount row, with PHP as the label and 0.00 as the value, above the subtext Maximum of PHP 50,000.00\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"lf-demo-preview\"><svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><rect x=\"12\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"24\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle><text x=\"44\" y=\"19\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\" opacity=\"0.7\">Label</text><text x=\"44\" y=\"33\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><rect x=\"260\" y=\"11\" width=\"60\" height=\"24\" rx=\"12\" fill=\"#005CE5\"></rect><text x=\"290\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"11\" font-weight=\"600\" fill=\"#FFFFFF\" text-anchor=\"middle\">Action</text><rect x=\"330\" y=\"11\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#90A8D0\" opacity=\"0.2\"></rect><circle cx=\"342\" cy=\"23\" r=\"4\" fill=\"#90A8D0\" opacity=\"0.5\"></circle></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_lfDemo.state=this.value;updateLabeledFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_lfDemo.filled=this.value;updateLabeledFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
@@ -1603,7 +1603,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1622,58 +1623,43 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>form<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "",
       "rows": [
         {
-          "figma": "isFilled (true/false)",
+          "figma": "isFilled — true, false",
           "swift": "text: Binding&lt;String&gt;",
           "compose": "value: String"
         },
         {
-          "figma": "State = Default",
-          "swift": "—",
-          "compose": "—"
+          "figma": "State — Default, Active, Error, Disabled",
+          "swift": "<code>.focused()</code> Active · <code>.ebError(true)</code> Error · <code>.disabled(true)</code> Disabled",
+          "compose": "<code>interactionSource</code> Active · <code>isError = true</code> Error · <code>enabled = false</code> Disabled"
         },
         {
-          "figma": "State = Active",
-          "swift": ".focused()",
-          "compose": "interactionSource"
-        },
-        {
-          "figma": "State = Error",
-          "swift": ".ebError(true)",
-          "compose": "isError = true"
-        },
-        {
-          "figma": "State = Disabled",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
-        },
-        {
-          "figma": "#label (TEXT)",
+          "figma": "#label (text)",
           "swift": "label: String",
           "compose": "label: String"
         },
         {
-          "figma": "#value (TEXT)",
+          "figma": "#value (text)",
           "swift": "text: Binding&lt;String&gt;",
           "compose": "value: String"
         },
         {
-          "figma": "leading-icon",
+          "figma": "leading-icon (slot)",
           "swift": "leadingIcon: Image?",
           "compose": "leadingIcon: @Composable?"
         },
         {
-          "figma": "trailing-icon",
+          "figma": "trailing-icon (slot)",
           "swift": "trailingIcon: Image?",
           "compose": "trailingIcon: @Composable?"
         },
         {
-          "figma": "action-button",
+          "figma": "action-button (slot)",
           "swift": "action: EBFieldAction?",
           "compose": "action: @Composable?"
         }
@@ -1686,18 +1672,18 @@
     "usageSnippets": [
       {
         "subheading": "Default",
-        "swift": "<span class=\"typ\">EBLabeledField</span>(<span class=\"str\">\"Label\"</span>, <span class=\"prp\">text</span>: $value)\n    .<span class=\"fn\">leadingIcon</span>(Image(<span class=\"str\">\"icon-placeholder\"</span>))\n    .<span class=\"fn\">trailingIcon</span>(Image(<span class=\"str\">\"chevron-right\"</span>))",
-        "compose": "<span class=\"typ\">EBLabeledField</span>(\n    <span class=\"prp\">value</span> = text,\n    <span class=\"prp\">onValueChange</span> = { text = it },\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.Placeholder, <span class=\"kw\">null</span>) },\n    <span class=\"prp\">trailingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.ChevronRight, <span class=\"kw\">null</span>) }\n)"
+        "swift": "<code><span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">text</span>: $value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">leadingIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"icon-placeholder\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">trailingIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"chevron-right\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = text,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">text</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">leadingIcon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Default</span><span class=\"syn-dot\">.Placeholder</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">trailingIcon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Default</span><span class=\"syn-dot\">.ChevronRight</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Error",
-        "swift": "<span class=\"typ\">EBLabeledField</span>(<span class=\"str\">\"Label\"</span>, <span class=\"prp\">text</span>: $value)\n    .<span class=\"fn\">leadingIcon</span>(Image(<span class=\"str\">\"icon-placeholder\"</span>))\n    .<span class=\"fn\">ebError</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBLabeledField</span>(\n    <span class=\"prp\">value</span> = text,\n    <span class=\"prp\">onValueChange</span> = { text = it },\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.Placeholder, <span class=\"kw\">null</span>) },\n    <span class=\"prp\">isError</span> = <span class=\"kw\">true</span>\n)"
+        "swift": "<code><span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">text</span>: $value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">leadingIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"icon-placeholder\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebError</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = text,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">text</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">leadingIcon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Default</span><span class=\"syn-dot\">.Placeholder</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">isError</span> = <span class=\"syn-val\">true</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Disabled",
-        "swift": "<span class=\"typ\">EBLabeledField</span>(<span class=\"str\">\"Label\"</span>, <span class=\"prp\">text</span>: $value)\n    .<span class=\"fn\">leadingIcon</span>(Image(<span class=\"str\">\"icon-placeholder\"</span>))\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBLabeledField</span>(\n    <span class=\"prp\">value</span> = text,\n    <span class=\"prp\">onValueChange</span> = { text = it },\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.Placeholder, <span class=\"kw\">null</span>) },\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
+        "swift": "<code><span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">text</span>: $value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">leadingIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"icon-placeholder\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBLabeledField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = text,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">text</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">leadingIcon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Default</span><span class=\"syn-dot\">.Placeholder</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [

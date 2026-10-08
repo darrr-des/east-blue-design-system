@@ -130,7 +130,10 @@ function _vofMeasureCheck(root) {
 }
 
 /* ── Live preview (Overview tab) ─────────────────────────────────── */
-var _vofDemo = { trailingContent: 'None', size: 'LG', status: 'default' };
+var _vofDemo = { trailingContent: 'None', size: 'LG', status: 'default',
+                 checkmark: true, description: true };
+/* The panel's selects hand back strings; everything else passes booleans. */
+function _vofBool(v) { return v !== false && v !== 'false'; }
 
 function updateViewOnlyFieldDemo() {
   var el = document.getElementById('vof-demo-preview') || document.getElementById('view-only-field-demo-preview');
@@ -138,7 +141,9 @@ function updateViewOnlyFieldDemo() {
   el.innerHTML = _vofBuildSvg({
     trailingContent: _vofDemo.trailingContent, size: _vofDemo.size,
     status: String(_vofDemo.status).toLowerCase(),
-    hasCheckmark: false, hasDescription: true, label: 'Label', value: 'Text'
+    hasCheckmark: _vofBool(_vofDemo.checkmark),
+    hasDescription: _vofBool(_vofDemo.description),
+    label: 'Label', value: 'Text'
   });
   _vofMeasureCheck(el);
 }
@@ -148,7 +153,7 @@ window.updateViewOnlyFieldDemo = updateViewOnlyFieldDemo;
 var _specCards = {
   main: {
     trailingContent: 'None', size: 'LG', status: 'default',
-    hasCheckmark: false, hasDescription: true, label: 'Label', value: 'Text'
+    hasCheckmark: true, hasDescription: true, label: 'Label', value: 'Text'
   }
 };
 window._specCards = _specCards;
