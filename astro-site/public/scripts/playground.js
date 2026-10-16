@@ -188,7 +188,10 @@
     var JUSTIFY = { MIN: 'flex-start', CENTER: 'center', MAX: 'flex-end', SPACE_BETWEEN: 'space-between' };
     var ALIGN = { MIN: 'flex-start', CENTER: 'center', MAX: 'flex-end', BASELINE: 'baseline' };
     function sizeStyle(n, parentN) {
-      var inFlow = parentN && parentN.layout && n.positioning !== 'ABSOLUTE';
+      // A grid frame places its children on tracks the bundle does not carry, so they
+      // keep the x/y Figma resolved them to — the same path "Ignore auto layout" takes.
+      var grid = parentN && parentN.layout && parentN.layout.mode === 'GRID';
+      var inFlow = parentN && parentN.layout && n.positioning !== 'ABSOLUTE' && !grid;
       if (!parentN) {
         return 'position:relative;' +
           (n.sizingH === 'HUG' ? 'width:max-content;' : 'width:' + n.w + 'px;') +
@@ -226,7 +229,12 @@
       var st = sizeStyle(n, parentN);
       if (n.limits) for (var lk in n.limits) st += lk.replace(/([A-Z])/g, '-$1').toLowerCase() + ':' + n.limits[lk] + 'px;';
       var L = n.layout;
-      if (L && !n.text && !n.graphic) {
+      if (L && L.mode === 'GRID' && !n.text && !n.graphic) {
+        // Its children are placed absolutely, so it only needs to be their origin and to
+        // keep the size Figma gives it — a grid that overflows clips, it does not grow.
+        st += 'display:block;padding:' + L.padding.map(function (v) { return v + 'px'; }).join(' ') + ';' +
+          'width:' + n.w + 'px;height:' + n.h + 'px;';
+      } else if (L && !n.text && !n.graphic) {
         var between = L.primary === 'SPACE_BETWEEN';
         st += 'display:flex;flex-direction:' + (L.mode === 'HORIZONTAL' ? 'row' : 'column') + ';' +
           // With "Include strokes in layout", each side's border adds to that side's padding.
@@ -254,7 +262,15 @@
         el.classList.add('pg-n-text');
         // Auto-width text never wraps in Figma; the browser can measure it a fraction wider.
         if (t.autoResize === 'WIDTH_AND_HEIGHT') el.classList.add('pg-n-nowrap');
+        if (t.autoResize === 'TRUNCATE') st += 'overflow:hidden;';
         var span = document.createElement('span');
+        // Figma's "truncate text": the box height is fixed, the copy clips to the lines
+        // that fit and the last one ends in an ellipsis. Without this the text wraps past
+        // its own box and lands on the layer below it.
+        if (t.autoResize === 'TRUNCATE' && n.h && t.lineHeight) {
+          span.setAttribute('style', 'display:-webkit-box;-webkit-box-orient:vertical;' +
+            'overflow:hidden;-webkit-line-clamp:' + Math.max(1, Math.floor(n.h / t.lineHeight)) + ';');
+        }
         if (t.segments) {
           t.segments.forEach(function (sg) {
             var run = document.createElement('span');
@@ -331,11 +347,20 @@
         var r = f.el.getBoundingClientRect();
         f.ax = r.left - r0.left; f.ay = r.top - r0.top; f.w = r.width; f.h = r.height;
       });
-      // Empty slots show Figma's pink placeholder.
+      // An empty slot draws nothing — Figma's own export of a component with an empty
+      // slot shows bare surface, so the preview shows bare surface too. The slot keeps
+      // its box in the layout and stays selectable in the Layers tree; hovering it in
+      // that tree outlines it, which is how you find it. A slot can carry its own
+      // artwork as a flattened SVG or image with no child layers (Carousel Item's Button
+      // chevron) — that is filled, not empty.
       flat.forEach(function (f, i) {
         if (f.n.type !== 'SLOT') return;
-        var empty = !flat.some(function (c, j) { return c.parent === i && isShown(j); });
-        f.el.classList.toggle('is-empty', empty);
+        var draws = f.n.svg != null || !!f.n.image;
+        var empty = !draws && !flat.some(function (c, j) { return c.parent === i && isShown(j); });
+        // data-empty, not a painting class: the emptiness stays in the DOM for the
+        // Layers tree and for anything that wants it later, but nothing is drawn.
+        if (empty) f.el.setAttribute('data-empty', '');
+        else f.el.removeAttribute('data-empty');
       });
     }
     // A text layer bound to a TEXT property shows the property's value. While it still
@@ -764,7 +789,7 @@
         '</div>';
       var rows = [];
       if (L) {
-        rows.push(['Direction', L.mode === 'HORIZONTAL' ? 'Horizontal' : 'Vertical']);
+        rows.push(['Direction', L.mode === 'GRID' ? 'Grid' : L.mode === 'HORIZONTAL' ? 'Horizontal' : 'Vertical']);
         rows.push(['Gap', [[L.primary === 'SPACE_BETWEEN' ? 'Auto' : num(L.gap), L.primary === 'SPACE_BETWEEN' ? null : tokName(L.gapToken)]]]);
         rows.push(['Padding', sides(p, L.paddingTokens)]);
       }

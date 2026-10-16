@@ -272,6 +272,132 @@ body {
 .pb-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0; }
 .pb-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 
+/* ── Inline Text preview — Label and Value are Proxima Soft at 0.25, the
+   Badge label at 0.5, Description and Link BarkAda at 0 (set 4419:24515). */
+.itx-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.itx-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.itx-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Tooltip preview — Header and Button label Proxima Soft at 0.25,
+   Description BarkAda at 0 (set 6295:79647). */
+.tt-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.tt-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Toast preview — Titles Proxima Soft at 0.25 (SM at 0.5), description
+   BarkAda at 0 (set 4915:25141). */
+.ts-md { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.ts-sm { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.ts-sub { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Title Bar - App preview — Title and subtext Proxima Soft at 0.25 / 0.5,
+   Header at 0.221 (set 4784:34355). */
+.tb-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.tb-link { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.tb-header { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.221px; }
+
+/* ── Tab Item preview — the label is Proxima Soft Bold at 0.25 (set 26327:10941). */
+.ti-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Stepper preview — the Circular index is Proxima Soft Bold at 0.25
+   (set 4337:11140). */
+.stp-index { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Inline Message preview — title and reference rows are Proxima Soft,
+   the description BarkAda (set 6420:91212). */
+.im-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0; }
+.im-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.im-name, .im-amount, .im-slot { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Empty State preview — heading and button Proxima Soft at 0.25,
+   description BarkAda (set 26356:13970). */
+.es-heading { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.es-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.es-slot { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Callout (Alert page) preview — title Proxima Soft at 0.25, description
+   BarkAda (set 6663:104524). */
+.co-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.co-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.co-btn { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Service Item preview — Label and New badge are Primary (Proxima
+   Soft), Preamble and Description are Secondary (BarkAda). ─────────── */
+.si-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.si-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.si-pre, .si-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Accordion preview — Label is Primary (Proxima Soft), Description is
+   Secondary (BarkAda). ────────────────────────────────────────────── */
+.acc-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.acc-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Banner preview — preamble, heading and action label are Primary
+   (Proxima Soft); the description is Secondary (BarkAda). ─────────── */
+.bnr-pre { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.bnr-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.bnr-action { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.bnr-blurb { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.bnr-replace { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Visual Popup preview ────────────────────────────────────────── */
+.vp-title, .vp-pre, .vp-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.vp-msg { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Menu Grid preview ───────────────────────────────────────────── */
+.mg-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.mg-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Chip preview — Label and Value are Primary (Proxima Soft). ──── */
+.chip-label, .chip-value { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Chat Composer preview ───────────────────────────────────────── */
+.cc-text { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Action Row preview — every text layer is Proxima Soft. ─────── */
+.ar-label, .ar-cta, .ar-counter { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.ar-desc { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+
+/* ── Generic Card preview — Blurb, Title, Tag and Badge are Primary
+   (Proxima Soft); the description rows are Secondary (BarkAda). ──── */
+.gc-blurb, .gc-title, .gc-tag, .gc-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.gc-label, .gc-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Generic Transaction Card preview ────────────────────────────── */
+.gt-label, .gt-amount, .gt-badge, .gt-initials { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.gt-date { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Bottom Sheet preview ────────────────────────────────────────── */
+.bs-pre, .bs-title, .bs-button { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.bs-msg, .bs-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Avatar preview — initials are Primary (Proxima Soft); tracking is
+   set per size on the element. ────────────────────────────────────── */
+.av-initials { font-family: 'Proxima Soft', system-ui, sans-serif; }
+.avg-initials { font-family: 'Proxima Soft', system-ui, sans-serif; }
+.bdg-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
+.ctr-text { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Button preview — #label is Proxima Soft Bold; tracking is set per
+   size on the SVG text element (0.25, or 0.5 at XSmall). */
+.btn-preview-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Input Field preview — #label is Proxima Soft Semibold at 0.25. */
+.inf-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Labeled Field preview — #label and #value are Proxima Soft Semibold. */
+.lf-text { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Recipient Field preview — both lines are Proxima Soft Semibold;
+   tracking differs (0.5 on the label, 0.25 on the value). */
+.rf-label, .rf-value { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Select Field preview — #value is Proxima Soft Semibold at 0.25. */
+.sf-value { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Checkbox with Label preview ─────────────────────────────────── */
+.ci-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.ci-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
 /* ── Detail Hero preview ─────────────────────────────────────────────
    Title carries 0 tracking, the sender label and value 0.25, and the
    description is BarkAda at 0 — all read off the layers of set
@@ -297,6 +423,8 @@ body {
    dashed placeholders at their measured size because the real footer logos
    are RECTANGLE nodes with IMAGE fills — raster, not vector, so there is
    nothing to reproduce faithfully. */
+.ft-text { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.ft-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
 .ft-placeholder { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 .eb-preview.eb-preview-ft, .eb-preview.eb-preview-mg, .eb-preview.eb-preview-pb { display: block; max-width: 100%; height: auto; font-family: 'Proxima Soft', var(--font-body); }
 /* Footer disclaimer runs — Secondary/Bold/Caption, link run #005CE5 (4227:11087 fills) */
@@ -3317,7 +3445,9 @@ input.demo-panel-input.demo-panel-select,
   font-weight: 500;
   color: var(--muted);
   flex: 0 1 auto;
-  min-width: 0;
+  /* Shrink to the longest word, never through it — "Alignment" was
+     splitting to "Align / ment" beside a long value. */
+  min-width: min-content;
   overflow-wrap: break-word;
 }
 .spec-prop-val {
@@ -7591,7 +7721,7 @@ pre.code-snippet .prp { color: #0369A1; }
     .pg-dash > svg { display: block; width: 100%; height: 100%; overflow: visible; }
     /* Empty slot — Figma's placeholder: pink tint, pink edge, a "+" chip in the middle */
     .pg-n-slot.is-empty { background: rgba(255,36,189,0.10); box-shadow: inset 0 0 0 1px #F24DB8; }
-    .pg-n-slot.is-empty::after { content: '+'; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; border-radius: 4px; background: #F24DB8; color: #FFFFFF; font: 600 13px/16px system-ui, sans-serif; text-align: center; pointer-events: none; }
+    .pg-n-slot.is-empty::after { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; border-radius: 4px; background: linear-gradient(#FFFFFF, #FFFFFF) center / 8px 1.6px no-repeat, linear-gradient(#FFFFFF, #FFFFFF) center / 1.6px 8px no-repeat, #F24DB8; pointer-events: none; }
     .pg-nochrome .pg-n-slot.is-empty { background: none; box-shadow: none; }
     .pg-nochrome .pg-n-slot.is-empty::after { display: none; }
     .pg-none { font-size: 13px; color: #646A78; }
