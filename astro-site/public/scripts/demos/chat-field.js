@@ -120,12 +120,12 @@ function updateSpecCard(cardStyle, prop, value) {
 }
 window.updateSpecCard = updateSpecCard;
 
-/* ── Overview tab shim — the old panel toggled an active flag. ─────── */
+/* ── Overview panel — Figma's two booleans, in the set's order ─────── */
 function updateChatFieldDemo() {
   var el = document.getElementById('cf-demo-preview');
   if (!el) return;
-  var n = document.getElementById('cf-demo-active');
-  el.innerHTML = _ccRender({ isactive: n && n.value === 'true' ? 'true' : 'false', hasvalue: 'false' });
+  var get = function (id) { var n = document.getElementById(id); return n ? n.value : 'false'; };
+  el.innerHTML = _ccRender({ isactive: get('cf-ctrl-isactive'), hasvalue: get('cf-ctrl-hasvalue') });
 }
 window.updateChatFieldDemo = updateChatFieldDemo;
 

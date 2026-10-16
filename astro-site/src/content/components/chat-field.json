@@ -16,18 +16,18 @@
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Keep — all findings resolved",
-      "text": "Rebuilt on node <code>5536:31209</code> in the 2026 Working File, and the restructure has landed in full: renamed <strong>Chat Composer</strong>, rebuilt as a composed pattern around a real <code>Input Field</code> instance, with <code>leadingAction</code> and <code>trailingAction</code> as genuine Figma Slots holding their icon instances directly, both action glyphs vectorised from the shared icon library, and a send control that dims when there is nothing to send. The schema is now <code>isActive</code> × <code>hasValue</code> — two independent booleans carrying the §2 prefix with Title Case values, naming what actually differs between variants rather than the effect that follows. Disabled and error states are scoped out for this release by owner decision. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+      "title": "Keep — rebuilt; scorecard not yet re-rated",
+      "text": "A composed row on node <code>5536:31209</code>: <code>leadingAction</code> and <code>trailingAction</code> are real Slots holding library icon instances around an <code>Input Field</code>, on an <code>isActive</code> × <code>hasValue</code> schema. Closing it needs C1–C6 re-rated against this build."
     },
     "navGroup": "Chat",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Canonical contexts: chat threads, customer-support conversations, peer-to-peer messaging, and comment composers docked to the bottom of a scroll view.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"6\" width=\"100\" height=\"68\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"18\" y=\"14\" width=\"50\" height=\"10\" rx=\"4\" fill=\"currentColor\" opacity=\".08\"></rect>\n          <rect x=\"50\" y=\"28\" width=\"54\" height=\"10\" rx=\"4\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"18\" y=\"42\" width=\"42\" height=\"10\" rx=\"4\" fill=\"currentColor\" opacity=\".08\"></rect>\n          <rect x=\"14\" y=\"60\" width=\"92\" height=\"10\" rx=\"4\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".25\"></rect>\n          <path d=\"M18 65h4M20 63v4\" stroke=\"currentColor\" stroke-width=\"1\" stroke-linecap=\"round\" opacity=\".4\"></path>\n          <path d=\"M98 62l-4 3 4 3-1-3zM94 65l8-3\" stroke=\"currentColor\" stroke-width=\"1\" stroke-linejoin=\"round\" fill=\"none\" opacity=\".5\"></path>\n        </svg>\n      </div>",
+    "inContextNote": "How the Chat Composer appears in a real product screen — pinned to the bottom of a group chat, below a Let’s begin card offering KKB and Send gift.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/chat-field-in-context.png\" alt=\"Chat Composer at the bottom of a GCash group chat: a plus leading action, the placeholder Say hi! and a dimmed send icon, under a card headed Let’s begin with the options KKB, split bill with your friends, and Send gift, give money or vouchers to someone\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"cf-demo-preview\"><svg width=\"360\" height=\"88\" viewBox=\"0 0 360 88\" fill=\"none\"><rect width=\"360\" height=\"88\" fill=\"#FFFFFF\"></rect><rect x=\"12\" y=\"28\" width=\"32\" height=\"32\" fill=\"none\"></rect><path d=\"M28 36v16M20 44h16\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\"></path><rect x=\"52.5\" y=\"18.5\" width=\"247\" height=\"51\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"64\" y=\"50\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Say hi!</text><rect x=\"312\" y=\"28\" width=\"32\" height=\"32\" fill=\"none\"></rect><path d=\"M319 44L339 35L332 55L329 46Z\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linejoin=\"round\" fill=\"none\"></path><path d=\"M319 44L329 46\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">active</span><select class=\"demo-panel-select\" onchange=\"_cfDemo.active=this.value;updateChatFieldDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"cf-demo-preview\"><svg width=\"360\" height=\"88\" viewBox=\"0 0 360 88\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"360\" height=\"88\" fill=\"#FFFFFF\"/><path d=\"M28 28v20 M18 38h20\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\"/><rect x=\"52.5\" y=\"12.5\" width=\"247\" height=\"51\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"/><text class=\"cc-text\" x=\"64\" y=\"38\" font-size=\"16\" font-weight=\"600\" fill=\"#90A8D0\" dominant-baseline=\"central\">Say hi!</text><path d=\"M338 29L318 37l8 3 3 8z\" fill=\"none\" stroke=\"#9BC5FD\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M338 29l-12 11\" stroke=\"#9BC5FD\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isActive</span><select id=\"cf-ctrl-isactive\" class=\"demo-panel-select\" onchange=\"updateChatFieldDemo()\"><option value=\"false\" selected=\"\">False</option><option value=\"true\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasValue</span><select id=\"cf-ctrl-hasvalue\" class=\"demo-panel-select\" onchange=\"updateChatFieldDemo()\"><option value=\"false\" selected=\"\">False</option><option value=\"true\">True</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Slots</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">leadingAction</span><span class=\"demo-panel-value\">Add_Full</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">trailingAction</span><span class=\"demo-panel-value\">Send Message Medium</span></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -460,7 +460,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -479,10 +480,10 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>chat<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths."
+      "footnote": ""
     },
     "propertyMapping": {
-      "description": "",
+      "description": "Figma properties mapped to the intended native parameters. Rows in parentheses are not Figma properties — the text, placeholder and line growth live inside the composed Input Field instance.",
       "rows": [
         {
           "figma": "(text content)",
@@ -490,17 +491,17 @@
           "compose": "value: String"
         },
         {
-          "figma": "active (yes/no)",
+          "figma": "isActive — True, False",
           "swift": "@FocusState",
           "compose": "interactionSource"
         },
         {
-          "figma": "(leading slot)",
+          "figma": "leadingAction (slot)",
           "swift": "leadingAction: () -&gt; Void",
           "compose": "leadingAction: () -&gt; Unit"
         },
         {
-          "figma": "(trailing slot)",
+          "figma": "trailingAction (slot)",
           "swift": "trailingAction: () -&gt; Void",
           "compose": "trailingAction: () -&gt; Unit"
         },
@@ -523,13 +524,13 @@
     "usageSnippets": [
       {
         "subheading": "Inactive composer",
-        "swift": "<span class=\"typ\">EBChatComposer</span>(\n    <span class=\"prp\">placeholder</span>: <span class=\"str\">\"Say hi!\"</span>,\n    <span class=\"prp\">text</span>: $message,\n    <span class=\"prp\">onAttach</span>: { presentAttachSheet() },\n    <span class=\"prp\">onSend</span>:   { send(message) }\n)",
-        "compose": "<span class=\"typ\">EBChatComposer</span>(\n    <span class=\"prp\">value</span> = message,\n    <span class=\"prp\">onValueChange</span> = { message = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Say hi!\"</span>,\n    <span class=\"prp\">onAttach</span> = { presentAttachSheet() },\n    <span class=\"prp\">onSend</span> = { send(message) }\n)"
+        "swift": "<code><span class=\"syn-type\">EBChatComposer</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">placeholder</span>: <span class=\"syn-str\">\"Say hi!\"</span>,\n    <span class=\"syn-param\">text</span>: $message,\n    <span class=\"syn-param\">onAttach</span>: <span class=\"syn-punc\">{</span> presentAttachSheet<span class=\"syn-punc\">(</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">onSend</span>:   <span class=\"syn-punc\">{</span> send<span class=\"syn-punc\">(</span>message<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBChatComposer</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = message,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">message</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Say hi!\"</span>,\n    <span class=\"syn-param\">onAttach</span> = <span class=\"syn-punc\">{</span> presentAttachSheet<span class=\"syn-punc\">(</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">onSend</span> = <span class=\"syn-punc\">{</span> send<span class=\"syn-punc\">(</span>message<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Active with send-disabled",
-        "swift": "<span class=\"typ\">EBChatComposer</span>(\n    <span class=\"prp\">placeholder</span>: <span class=\"str\">\"Say hi!\"</span>,\n    <span class=\"prp\">text</span>: $message,\n    <span class=\"prp\">onAttach</span>: attach,\n    <span class=\"prp\">onSend</span>:   send,\n    <span class=\"prp\">sendEnabled</span>: !message.<span class=\"prp\">isEmpty</span>\n)",
-        "compose": "<span class=\"typ\">EBChatComposer</span>(\n    <span class=\"prp\">value</span> = message,\n    <span class=\"prp\">onValueChange</span> = { message = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Say hi!\"</span>,\n    <span class=\"prp\">onAttach</span> = attach,\n    <span class=\"prp\">onSend</span> = send,\n    <span class=\"prp\">sendEnabled</span> = message.isNotEmpty()\n)"
+        "swift": "<code><span class=\"syn-type\">EBChatComposer</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">placeholder</span>: <span class=\"syn-str\">\"Say hi!\"</span>,\n    <span class=\"syn-param\">text</span>: $message,\n    <span class=\"syn-param\">onAttach</span>: attach,\n    <span class=\"syn-param\">onSend</span>:   send,\n    <span class=\"syn-param\">sendEnabled</span>: !message<span class=\"syn-dot\">.isEmpty</span>\n<span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBChatComposer</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = message,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">message</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Say hi!\"</span>,\n    <span class=\"syn-param\">onAttach</span> = attach,\n    <span class=\"syn-param\">onSend</span> = send,\n    <span class=\"syn-param\">sendEnabled</span> = message.<span class=\"syn-fn\">isNotEmpty</span><span class=\"syn-punc\">(</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -614,7 +615,7 @@
       }
     ],
     "variants": {
-      "total": 2,
+      "total": 4,
       "description": "Single axis: <code>active</code> (no/yes). Both variants are 360×88px.",
       "columns": [
         "active",
