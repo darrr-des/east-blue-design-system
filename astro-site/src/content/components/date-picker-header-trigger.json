@@ -3,7 +3,7 @@
   "meta": {
     "node": "6779:105937",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6779-105937",
-    "description": "The month and year chips in the calendar header. Tapping one switches the calendar to its month or year view. Six versions — three states, with or without a caret.",
+    "description": "Date Picker Header Triggers let people switch the calendar to its month or year view.",
     "badges": [
       {
         "kind": "keep",

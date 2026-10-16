@@ -3,7 +3,7 @@
   "meta": {
     "node": "6788:109823",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6788-109823",
-    "description": "The weekday label above each column of the calendar grid. One component, no versions — it only ever displays text.",
+    "description": "Date Picker Headers label each weekday column in the calendar.",
     "badges": [
       {
         "kind": "keep",

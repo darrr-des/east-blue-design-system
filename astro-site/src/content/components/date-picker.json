@@ -3,7 +3,7 @@
   "meta": {
     "node": "7201:112099",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=7201-112099",
-    "description": "The date field a user actually taps. Eight versions across four states and a filled flag, built on the system's own Dropdown rather than a redrawn field.",
+    "description": "Date Pickers let people choose a date from a calendar.",
     "badges": [
       {
         "kind": "keep",

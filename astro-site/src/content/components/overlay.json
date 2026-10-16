@@ -3,7 +3,7 @@
   "meta": {
     "node": "4465:20631",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4465-20631",
-    "description": "A full-viewport scrim used to dim background content behind sheets, modals, and tooltips. Three strength tiers.",
+    "description": "Overlays dim the screen behind sheets, modals and tooltips to keep focus on them.",
     "badges": [
       {
         "kind": "keep",

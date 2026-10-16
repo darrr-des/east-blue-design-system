@@ -3,7 +3,7 @@
   "meta": {
     "node": "5412:31504",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5412-31504",
-    "description": "A tappable content card — slotted leading icon, a heading with tag and badge, two label-and-description rows, and a slotted trailing chevron.",
+    "description": "Generic Cards let people open an item from a summary card.",
     "badges": [
       {
         "kind": "keep",

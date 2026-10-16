@@ -1,183 +1,77 @@
-/* Auto-extracted from assessment-src/components/visual-popup.html.
- * Powers the live-preview dropdowns/toggles for the visual-popup component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs visual-popup
- */
-/* ── Visual Popup Component JS ────────────────────────────────────── */
-var _vpDemo = { type: 'default' };
+/* Visual Popup — Overview live preview + DEV code.
+ * Figma component set 4120:10317 (2026 Working File). Panel:
+ *   Layout  Centered · Surface
+ *   hasHeader · hasPreamble (Surface) · hasSupportingContent (Centered) · hasCloseButton   booleans
+ *   Image Slot Container · Supporting Content Slot · Action Slot Container   slots
+ * Figma ships the Image and Supporting Content slots empty, so they draw as space; the Action
+ * slot holds a Button. Every size below is read off the set and reflows like its auto-layout.
+ *   Centered 320 wide: Image slot 89 · body padding 24 (title 22/26, message 14/20, supporting slot 40,
+ *     gap 16, 24 below) · 36px button · Close 24 at 284,16.
+ *   Surface 312 wide: #F6F9FD container, padding 16 · heading (preamble 10/10 + 4, title, message 40) +
+ *     Close, gap 14 · 16 · Image slot 280 × 89 (radius 6) · 24 · 36px button. */
+var VP_CLOSE = "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M18.3652 4.36321C18.7166 4.01174 19.2871 4.01174 19.6386 4.36321C19.9897 4.71472 19.9899 5.28531 19.6386 5.63665L13.2753 11.9999L19.6386 18.3632C19.9897 18.7147 19.9899 19.2853 19.6386 19.6367C19.2873 19.988 18.7167 19.9877 18.3652 19.6367L12.0019 13.2734L5.6386 19.6367C5.28726 19.988 4.71667 19.9877 4.36517 19.6367C4.01369 19.2852 4.01369 18.7147 4.36517 18.3632L10.7284 11.9999L4.36517 5.63665C4.01369 5.28518 4.01369 4.71469 4.36517 4.36321C4.71664 4.01174 5.28713 4.01174 5.6386 4.36321L12.0019 10.7265L18.3652 4.36321Z\" fill=\"#445C85\"/></svg>";
+var _vpDemo = { Layout: "Centered", hasHeader: true, hasPreamble: true, hasSupportingContent: true, hasCloseButton: true };
+window._vpDemo = _vpDemo;
 
-/* Image placeholder — soft gradient + mountain/sun icon (Material/Polaris style)
-   x, y, w, h: bounds; r: corner radius; topOnly: round top corners only */
-function _vpImagePlaceholder(x, y, w, h, r, topOnly) {
-  var gid = 'vpph-' + Math.floor(Math.random() * 1e9);
-  var path = topOnly
-    ? 'M' + x + ' ' + (y + h) + ' L' + x + ' ' + (y + r) + ' Q' + x + ' ' + y + ' ' + (x + r) + ' ' + y + ' L' + (x + w - r) + ' ' + y + ' Q' + (x + w) + ' ' + y + ' ' + (x + w) + ' ' + (y + r) + ' L' + (x + w) + ' ' + (y + h) + ' Z'
-    : null;
-  var s = '';
-  // Gradient
-  s += '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EAF2FE"/><stop offset="100%" stop-color="#C9DCF8"/></linearGradient></defs>';
-  // Background
-  if (topOnly) {
-    s += '<path d="' + path + '" fill="url(#' + gid + ')"/>';
+function _vpRender(o) {
+  var F = "font-family:\x27Proxima Soft\x27,system-ui;font-weight:700;", B = "font-family:\x27BarkAda\x27,system-ui;font-weight:500;";
+  var title = function (align) { return "<div style=\"" + F + "font-size:22px;line-height:26px;color:#0A2757;text-align:" + align + ";\">Put the title here</div>"; };
+  var button = function (w) { return "<div style=\"width:" + w + "px;height:36px;border-radius:99px;background:#005CE5;display:flex;align-items:center;justify-content:center;" + F + "font-size:16px;line-height:16px;letter-spacing:0.25px;color:#FFFFFF;\">Label</div>"; };
+  var x = function (left, top) { return o.hasCloseButton ? "<div style=\"position:absolute;left:" + left + "px;top:" + top + "px;width:24px;height:24px;\">" + VP_CLOSE + "</div>" : ""; };
+  var h;
+  if (o.Layout === "Surface") {
+    h = "<div style=\"width:312px;border-radius:6px;background:#FFFFFF;\"><div style=\"border-radius:6px;background:#F6F9FD;padding:16px;\">";
+    h += "<div style=\"position:relative;display:flex;gap:14px;\"><div style=\"width:242px;\">";
+    if (o.hasPreamble) h += "<div style=\"" + F + "font-size:10px;line-height:10px;letter-spacing:0.25px;color:#90A8D0;padding-bottom:4px;\">Preamble</div>";
+    if (o.hasHeader) h += title("left");
+    h += "<div style=\"" + B + "font-size:14px;line-height:20px;height:40px;color:#6780A9;\">Add description here.</div></div>";
+    h += o.hasCloseButton ? "<div style=\"width:24px;height:24px;flex:none;\">" + VP_CLOSE + "</div>" : "";
+    h += "</div><div style=\"height:16px;\"></div><div style=\"height:89px;border-radius:6px;\"></div><div style=\"height:24px;\"></div>" + button(280) + "</div></div>";
   } else {
-    s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + r + '" fill="url(#' + gid + ')"/>';
+    h = "<div style=\"position:relative;width:320px;border-radius:6px;background:#FFFFFF;\"><div style=\"height:89px;\"></div><div style=\"padding:24px;\">";
+    h += "<div style=\"display:flex;flex-direction:column;gap:16px;padding-bottom:24px;\">";
+    if (o.hasHeader) h += title("center");
+    h += "<div style=\"" + B + "font-size:14px;line-height:20px;color:#6780A9;text-align:center;\">Add description here.<br>Add description here.</div>"; /* Figma wraps this placeholder onto two lines at 272px; the browser would fit it on one */
+    if (o.hasSupportingContent) h += "<div style=\"height:40px;\"></div>";
+    h += "</div>" + button(272) + "</div>" + x(284, 16) + "</div>";
   }
-  // Mountain + sun icon (centered)
-  var cx = x + w / 2;
-  var cy = y + h / 2;
-  var iconScale = Math.min(w, h) * 0.18;
-  var iconColor = '#6B8FC8';
-  // Icon frame
-  s += '<rect x="' + (cx - iconScale) + '" y="' + (cy - iconScale * 0.75) + '" width="' + (iconScale * 2) + '" height="' + (iconScale * 1.5) + '" rx="' + (iconScale * 0.18) + '" fill="none" stroke="' + iconColor + '" stroke-width="1.4" opacity=".75"/>';
-  // Sun
-  s += '<circle cx="' + (cx - iconScale * 0.35) + '" cy="' + (cy - iconScale * 0.25) + '" r="' + (iconScale * 0.22) + '" fill="' + iconColor + '" opacity=".75"/>';
-  // Mountains (two triangles)
-  var baseY = cy + iconScale * 0.6;
-  s += '<path d="M' + (cx - iconScale * 0.85) + ' ' + baseY + ' L' + (cx - iconScale * 0.15) + ' ' + (baseY - iconScale * 0.7) + ' L' + (cx + iconScale * 0.25) + ' ' + (baseY - iconScale * 0.25) + ' L' + (cx + iconScale * 0.6) + ' ' + (baseY - iconScale * 0.6) + ' L' + (cx + iconScale * 0.85) + ' ' + baseY + ' Z" fill="' + iconColor + '" opacity=".75"/>';
-  return s;
-}
-
-function _vpBuildSvg(type, ctaLabel) {
-  ctaLabel = ctaLabel || 'Okay';
-  var w, h;
-  if (type === '2cta') { w = 200; h = 270; }
-  else if (type === 'version2') { w = 200; h = 250; }
-  else { w = 200; h = 240; }
-
-  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-
-  if (type === 'version2') {
-    // Version 2: light-gray container only (white outer has zero padding so it's not visible)
-    s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="6" fill="#F6F9FD"/>';
-    // Preamble
-    s += '<text x="20" y="26" fill="#90A8D0" font-size="6" font-weight="700" font-family="\'Proxima Soft\', system-ui">PREAMBLE</text>';
-    // Close icon
-    s += '<g transform="translate(' + (w - 28) + ', 18) " stroke="#6780A9" stroke-width="1.4" stroke-linecap="round"><line x1="0" y1="0" x2="8" y2="8"/><line x1="8" y1="0" x2="0" y2="8"/></g>';
-    // Title
-    s += '<text x="20" y="42" fill="#0A2757" font-size="11" font-weight="700" font-family="\'Proxima Soft\', system-ui">Put the title here</text>';
-    // Description
-    s += '<text x="20" y="56" fill="#6780A9" font-size="7" font-weight="500" font-family="\'BarkAda\', system-ui">Add description here.</text>';
-    s += '<text x="20" y="66" fill="#6780A9" font-size="7" font-weight="500" font-family="\'BarkAda\', system-ui">Add description here.</text>';
-    // Hero image placeholder
-    s += _vpImagePlaceholder(20, 78, w - 40, 100, 6);
-    // CTA
-    s += '<rect x="20" y="' + (h - 36) + '" width="' + (w - 40) + '" height="22" rx="11" fill="#005CE5"/>';
-    s += '<text x="' + (w / 2) + '" y="' + (h - 21) + '" text-anchor="middle" fill="#FFFFFF" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + ctaLabel + '</text>';
-  } else {
-    // Default / 2 CTA: hero on top
-    s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="4" fill="#FFFFFF" stroke="#E5EBF4" stroke-width="0.8"/>';
-    // Hero placeholder (top corners rounded only)
-    s += _vpImagePlaceholder(0, 0, w, 100, 4, true);
-    // Title
-    s += '<text x="' + (w / 2) + '" y="128" text-anchor="middle" fill="#0A2757" font-size="12" font-weight="700" font-family="\'Proxima Soft\', system-ui">Put the title here</text>';
-    // Description
-    s += '<text x="' + (w / 2) + '" y="146" text-anchor="middle" fill="#6780A9" font-size="8" font-weight="500" font-family="\'BarkAda\', system-ui">Add description here.</text>';
-    s += '<text x="' + (w / 2) + '" y="158" text-anchor="middle" fill="#6780A9" font-size="8" font-weight="500" font-family="\'BarkAda\', system-ui">Add description here.</text>';
-    // CTA(s)
-    if (type === '2cta') {
-      // Outline primary + text tertiary
-      s += '<rect x="20" y="180" width="' + (w - 40) + '" height="24" rx="12" fill="#FFFFFF" stroke="#005CE5" stroke-width="2"/>';
-      s += '<text x="' + (w / 2) + '" y="196" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + ctaLabel + '</text>';
-      s += '<text x="' + (w / 2) + '" y="232" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">Cancel</text>';
-    } else {
-      // Single primary
-      s += '<rect x="20" y="190" width="' + (w - 40) + '" height="26" rx="13" fill="#005CE5"/>';
-      s += '<text x="' + (w / 2) + '" y="207" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + ctaLabel + '</text>';
-    }
-  }
-
-  s += '</svg>';
-  return s;
+  return h;
 }
 
 function updateVisualPopupDemo() {
-  var t = document.getElementById('vp-demo-type').value;
-  _vpDemo.type = t;
-  var el = document.getElementById('vp-demo-preview');
-  if (el) el.innerHTML = _vpBuildSvg(t, 'Okay');
+  var g = function (id) { return document.getElementById(id); };
+  ["hasHeader", "hasPreamble", "hasSupportingContent", "hasCloseButton"].forEach(function (k) { var e = g("vp-demo-" + k); if (e) _vpDemo[k] = e.checked; });
+  var l = g("vp-demo-Layout"); if (l) _vpDemo.Layout = l.value;
+  /* As in Figma: hasPreamble exists only on Surface, hasSupportingContent only on Centered. */
+  var pr = g("vp-demo-hasPreamble-row"), sr = g("vp-demo-hasSupportingContent-row");
+  if (pr) pr.style.display = _vpDemo.Layout === "Surface" ? "" : "none";
+  if (sr) sr.style.display = _vpDemo.Layout === "Centered" ? "" : "none";
+  var el = g("vp-demo-preview"); if (el) el.innerHTML = _vpRender(_vpDemo);
 }
+window.updateVisualPopupDemo = updateVisualPopupDemo;
 
-/* ── Visual Popup Spec Cards ──────────────────────────────────────── */
-var _vpSpecCards = {
-  'default':  { type: 'default',  cta: 'Okay' },
-  '2cta':     { type: '2cta',     cta: 'Okay' },
-  'version2': { type: 'version2', cta: 'Okay' }
-};
-
-/* Expose for shared utilities — `switchCodeTab` reads this. */
-var _specCards = _vpSpecCards;
-window._specCards = _specCards;
-
-function buildSwiftSnippet(type, card) {
-  var kind;
-  if (type === 'default')  kind = '.singleCTA';
-  else if (type === '2cta') kind = '.dualCTA';
-  else                      kind = '.dismissible';
-  return 'EBVisualPopup(\n    title: "Put the title here",\n    description: "Add description here.",\n    heroImage: Image("illustration"),\n    primary: EBButton("' + card.cta + '") { /* dismiss */ }\n)\n.ebKind(' + kind + ')';
+/* ── DEV code — component API, as on the Code tab ───────────────────── */
+function buildSwiftSnippet(c) {
+  var a = ["    layout: ." + c.Layout.toLowerCase()];
+  if (c.hasHeader) a.push("    title: \"Put the title here\"");
+  a.push("    message: \"Add description here.\"");
+  if (c.Layout === "Surface" && c.hasPreamble) a.push("    preamble: \"Preamble\"");
+  if (c.hasCloseButton) a.push("    onClose: { }");
+  return "EBVisualPopup(\n" + a.join(",\n") + "\n) {\n    Image(\"popup-art\")\n} actions: {\n    EBButton(\"Label\") { }\n}";
 }
-
-function buildComposeSnippet(type, card) {
-  var kind;
-  if (type === 'default')  kind = 'EBVisualPopupKind.SingleCTA';
-  else if (type === '2cta') kind = 'EBVisualPopupKind.DualCTA';
-  else                      kind = 'EBVisualPopupKind.Dismissible';
-  return 'EBVisualPopup(\n    kind = ' + kind + ',\n    title = "Put the title here",\n    description = "Add description here.",\n    heroImage = painterResource(R.drawable.illustration),\n    primary = { EBButton("' + card.cta + '", onClick = { /* dismiss */ }) }\n)';
+function buildComposeSnippet(c) {
+  var a = ["    layout = EBVisualPopupLayout." + c.Layout];
+  if (c.hasHeader) a.push("    title = \"Put the title here\"");
+  a.push("    message = \"Add description here.\"");
+  if (c.Layout === "Surface" && c.hasPreamble) a.push("    preamble = \"Preamble\"");
+  if (c.hasCloseButton) a.push("    onClose = { }");
+  a.push("    image = { Image(painterResource(R.drawable.popup_art), null) }", "    actions = { EBButton(\"Label\", onClick = { }) }");
+  return "EBVisualPopup(\n" + a.join(",\n") + "\n)";
 }
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
-}
+function getSnippet(k, lang, card) { card = card || _vpDemo; return lang === "swift" ? buildSwiftSnippet(card) : buildComposeSnippet(card); }
 window.getSnippet = getSnippet;
 
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _vpSpecCards[cardStyle];
-  if (!card) return;
-  card[prop] = value;
-
-  /* Update SVG preview — locate by id `vp-preview-${cardStyle}` */
-  var previewEl = document.getElementById('vp-preview-' + cardStyle);
-  if (previewEl) previewEl.innerHTML = _vpBuildSvg(card.type, card.cta);
-
-  /* Update Properties readouts via [data-sp="${cardStyle}-${prop}"] */
-  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
-  if (spEl) spEl.textContent = value;
-
-  /* Update DEV code — locate via [data-code-content="${cardStyle}"]. */
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
-}
-window.updateSpecCard = updateSpecCard;
-
-function _vpInitSpecCards() {
-  Object.keys(_vpSpecCards).forEach(function(key) {
-    var card = _vpSpecCards[key];
-    var el = document.getElementById('vp-preview-' + key);
-    if (el) el.innerHTML = _vpBuildSvg(card.type, card.cta);
-  });
-}
-
-function _vpInit() {
-  updateVisualPopupDemo();
-  _vpInitSpecCards();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _vpInit);
-} else {
-  _vpInit();
-}
-
-/* ── Re-init after Astro view-transition swaps ─────────────── */
-(function(){
-  document.addEventListener('astro:page-load', _vpInit);
-})();
+function _vpInit() { updateVisualPopupDemo(); }
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", _vpInit);
+else _vpInit();
+document.addEventListener("astro:page-load", _vpInit);

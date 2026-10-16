@@ -3,7 +3,7 @@
   "meta": {
     "node": "5947:181504",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5947-181504",
-    "description": "One label-and-value row inside a transaction receipt. Two layouts: stacked when the value runs long, inline when it is short.",
+    "description": "Transaction Receipt Entries show people one detail of a transaction as a label and value.",
     "badges": [
       {
         "kind": "keep",
@@ -16,15 +16,15 @@
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Keep — the smallest piece of the receipt, and it behaves like one",
-      "text": "Two text layers, one setting, no wrapper. <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a> instances it three times through <code>⤷ TransactionSlot</code>, which is the test a primitive has to pass. The inline layout is built the way it should be — <code>#label</code> fills the slack and <code>#value</code> hugs — so a long label pushes the value rather than clipping it. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
+      "title": "Keep — one label-and-value row",
+      "text": "<code>#label</code> and <code>#value</code> with <code>Layout</code> (Stacked, Inline), no wrapper. Inline lets <code>#label</code> fill and <code>#value</code> hug, so a long label pushes the value rather than clipping it."
     },
     "navGroup": "Modal",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "inContextHtml": "",
+    "inContextNote": "How the receipt entry appears in a real product screen — the Date & Time and Amount rows inside a Transaction details receipt.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/modal-transaction-receipt-in-context.png\" alt=\"Modal - Transaction Receipt Entry on two Transaction History screens: inside a Transaction details modal, stacked label-and-value rows read Date &amp; Time, Sep 5, 2026 11:11PM and Amount, -50.00, below Buy Load +639171234567 and above the Reference Number and an Okay button\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"mtre-demo-preview\"><div class=\"eb-preview-mtre-shell\"><div class=\"eb-preview-mtre eb-preview-mtre--stacked\"><div class=\"eb-preview-mtre__label\">Label</div><div class=\"eb-preview-mtre__value\">Put content here</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Layout</span><select id=\"mtre-ctrl-layout\" class=\"demo-panel-select\" onchange=\"_mtreUpdate()\"><option value=\"stacked\" selected=\"\">Stacked</option><option value=\"inline\">Inline</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#label</span><input type=\"text\" id=\"mtre-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_mtreUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#value</span><input type=\"text\" id=\"mtre-ctrl-value\" class=\"demo-panel-select demo-panel-input\" value=\"Put content here\" oninput=\"_mtreUpdate()\"></div></div></div></div>",
@@ -557,7 +557,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -576,7 +577,7 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>modal<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. The artifact is the Modal family: Modal, Modal - Transaction Receipt and this entry all ship in <code>com.eastblue.ds:modal</code> and import <code>com.eastblue.ds.modal.*</code>."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "One property. <code>label</code> and <code>value</code> are the two native parameters with no row here, because <code>#label</code> and <code>#value</code> are text layers rather than component properties — Figma exposes no way to set them but overriding the layer, which is also why Code Connect will have nothing to bind them to. <code>layout</code> is a parameter in both languages rather than a SwiftUI modifier: it decides the arrangement of the two children, not the component's appearance, and the modifier form would have read differently from the Compose signature for no gain.",
@@ -596,12 +597,12 @@
       {
         "subheading": "Stacked — a value that needs to wrap",
         "swift": "<span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Recipient\"</span><span class=\"syn-punc\">,</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Juan dela Cruz · 0917 123 4567\"</span><span class=\"syn-punc\">,</span>\n    layout<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.stacked</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Recipient\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Juan dela Cruz · 0917 123 4567\"</span><span class=\"syn-punc\">,</span>\n    layout <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBEntryLayout</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Stacked</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Recipient\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"Juan dela Cruz · 0917 123 4567\"</span>,\n    <span class=\"syn-param\">layout</span> = <span class=\"syn-type\">EBEntryLayout</span><span class=\"syn-dot\">.Stacked</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Inline — a value that fits on one line",
         "swift": "<span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Reference no.\"</span><span class=\"syn-punc\">,</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"0091 2345 6789\"</span><span class=\"syn-punc\">,</span>\n    layout<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.inline</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Reference no.\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"0091 2345 6789\"</span><span class=\"syn-punc\">,</span>\n    layout <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBEntryLayout</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Inline</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Reference no.\"</span>,\n    <span class=\"syn-param\">value</span> = <span class=\"syn-str\">\"0091 2345 6789\"</span>,\n    <span class=\"syn-param\">layout</span> = <span class=\"syn-type\">EBEntryLayout</span><span class=\"syn-dot\">.Inline</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [

@@ -71,13 +71,27 @@ const shown = (n) => n.visible !== false;
 
 function paints(list, bv) {
   return (list ?? [])
-    .filter((p) => shown(p) && p.type === 'SOLID')
-    .map((p) => ({
-      hex: hex(p.color),
-      // A bound translucent variable arrives as color.a = 1 with the alpha on paint.opacity.
-      alpha: round((p.color.a ?? 1) * (p.opacity ?? 1)),
-      token: token(p.boundVariables?.color),
-    }));
+    .filter((p) => shown(p) && (p.type === 'SOLID' || p.type === 'GRADIENT_LINEAR'))
+    .map((p) => {
+      if (p.type === 'SOLID') return {
+        hex: hex(p.color),
+        // A bound translucent variable arrives as color.a = 1 with the alpha on paint.opacity.
+        alpha: round((p.color.a ?? 1) * (p.opacity ?? 1)),
+        token: token(p.boundVariables?.color),
+      };
+      // A linear gradient keeps Figma's two handles (0–1 in the layer's box) and its stops.
+      // hex / alpha / token are the first stop's, so a reader that knows only solids still works.
+      const stops = p.gradientStops.map((s) => ({
+        hex: hex(s.color),
+        alpha: round((s.color.a ?? 1) * (p.opacity ?? 1)),
+        token: token(s.boundVariables?.color),
+        pos: round(s.position, 4),
+      }));
+      return {
+        ...stops[0], pos: undefined,
+        gradient: { from: p.gradientHandlePositions[0], to: p.gradientHandlePositions[1], stops },
+      };
+    });
 }
 
 const hasText = (n) => n.type === 'TEXT' || (n.children ?? []).some((c) => shown(c) && hasText(c));
@@ -230,8 +244,20 @@ function build(n, parentBox) {
     return node;
   }
 
-  if (isGraphic(n) && !isSimpleShape(n)) {
+  // A rotated layer (Voucher's claim button turns -90°) is drawn by Figma's own export:
+  // the box model here has no rotation, and laying its children out flat breaks it.
+  const rotated = n.type !== 'TEXT' && Math.abs(n.rotation ?? 0) > 0.001;
+  // A mask clips the siblings above it (Voucher's Stub Cutout notches the artwork and rail).
+  // It is exported as a picture; the renderer uses that picture's alpha as a CSS mask.
+  if (n.isMask) node.mask = true;
+  if (n.isMask || rotated || (isGraphic(n) && !isSimpleShape(n))) {
     node.graphic = true;
+    // Figma's export already carries the layer's own opacity and blend (Voucher's Filter is
+    // Darken at 30%, written into the SVG). Applying the opacity again would square it, and a
+    // blend inside an inline SVG only blends within it — so drop the opacity and keep the blend
+    // for the element that holds the artwork.
+    delete node.opacity;
+    if (n.blendMode && !/^(PASS_THROUGH|NORMAL)$/.test(n.blendMode)) node.blend = n.blendMode.toLowerCase().replace(/_/g, '-');
     node.paints = graphicPaints(n);
     // A stroked path draws outside its box — Figma reports a line as 313 × 0. Keep the
     // drawn bounds so the artwork is shown at the size Figma renders it.
@@ -332,6 +358,10 @@ for (let i = 0; i < svgIds.length; i += 40) {
     svgIndex.set(id, svgIndex.get(svg));
   }
 }
+// Figma's SVG export can come back empty for a layer it renders fine (Voucher's rotated
+// Stub Cutout boolean). Fall back to a 2× PNG of the same layer rather than draw nothing.
+const svgMissing = new Set(svgIds.filter((id) => !svgIndex.has(id)));
+pngIds.push(...svgMissing);
 // Image fills, at 2× so they stay sharp.
 const images = [];
 const imgIndex = new Map();
@@ -352,6 +382,7 @@ for (let i = 0; i < pngIds.length; i += 40) {
 }
 
 const attach = (n) => {
+  if (n.graphic && svgMissing.has(n.id) && imgIndex.has(n.id)) n.image = true;
   if (n.image) n.img = imgIndex.get(n.id) ?? null;
   else if (n.graphic) n.svg = svgIndex.get(n.id) ?? null;
   (n.children ?? []).forEach(attach);

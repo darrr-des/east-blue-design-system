@@ -3,7 +3,7 @@
   "meta": {
     "node": "5698:43260",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5698-43260",
-    "description": "The leading marker in a list item — a status icon, a bullet, a square, a number, or a slot for anything else.",
+    "description": "List Item Assets start each list item with an icon, bullet or number.",
     "badges": [
       {
         "kind": "keep",

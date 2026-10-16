@@ -3,7 +3,7 @@
   "meta": {
     "node": "17758:3786",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=17758-3786",
-    "description": "A form field that opens a dropdown of options when tapped — label, value, and chevron.",
+    "description": "Select Fields let people open a list of options and see their choice.",
     "badges": [
       {
         "kind": "fix",

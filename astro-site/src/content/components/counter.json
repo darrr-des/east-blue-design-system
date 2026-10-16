@@ -3,7 +3,7 @@
   "meta": {
     "node": "4675:21497",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4675-21497",
-    "description": "A small numeric badge used to display unread or pending counts on icons and rows.",
+    "description": "Counters show people how many unread or pending items are waiting.",
     "badges": [
       {
         "kind": "keep",

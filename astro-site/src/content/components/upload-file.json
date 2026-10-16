@@ -3,7 +3,7 @@
   "meta": {
     "node": "4853:26511",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4853-26511",
-    "description": "A file-upload field with a tappable upload affordance, file-name display, and progress/error states.",
+    "description": "Upload File fields let people attach a file and see its upload progress.",
     "badges": [
       {
         "kind": "keep",

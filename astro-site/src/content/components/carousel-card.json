@@ -3,7 +3,7 @@
   "meta": {
     "node": "5655:42547",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5655-42547",
-    "description": "A tappable card used inside a horizontally scrolling carousel — banner, title, description, and an optional price. Comes in three versions: Default, With Icon, and Discount.",
+    "description": "Carousel Cards let people browse offers or content in a sideways-scrolling row.",
     "badges": [
       {
         "kind": "keep",

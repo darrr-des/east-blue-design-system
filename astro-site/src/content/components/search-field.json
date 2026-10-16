@@ -3,7 +3,7 @@
   "meta": {
     "node": "4697:18836",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4697-18836",
-    "description": "A search input field with a leading magnifying-glass icon and an optional clear button.",
+    "description": "Search Fields let people find content by typing a search term.",
     "badges": [
       {
         "kind": "keep",

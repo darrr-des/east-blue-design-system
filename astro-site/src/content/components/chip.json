@@ -3,7 +3,7 @@
   "meta": {
     "node": "5595:39596",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5595-39596",
-    "description": "A pill-shaped selector carrying a label and an optional chosen value, with optional leading and trailing icons and a slot for an attached dropdown.",
+    "description": "Chips let people choose an option and see the value they picked.",
     "badges": [
       {
         "kind": "keep",

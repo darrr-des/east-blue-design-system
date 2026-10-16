@@ -3,7 +3,7 @@
   "meta": {
     "node": "26184:2712",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26184-2712",
-    "description": "A form row pairing a Radio Button with a text label. 39 variants across <code>Style</code> (Default/Check) × <code>State</code> (Default/Pressed/Disabled) × <code>Size</code> (Large/Medium/Small) × <code>isSelected</code> × <code>isError</code> — mirroring the Radio Button atom exactly.",
+    "description": "Radio Buttons with Label let people choose one option, described by a text label.",
     "badges": [
       {
         "kind": "keep",
@@ -938,37 +938,42 @@
       "footnote": ""
     },
     "propertyMapping": {
-      "description": "",
+      "description": "Style, State and Size are variant properties and isSelected and isError true/false variant settings, mirroring the Radio Button atom; the label is a text layer.",
       "rows": [
         {
-          "figma": "size=default / large",
-          "swift": "size: EBRadioSize",
-          "compose": ".controlSize(.small/.large)"
+          "figma": "Style — Check, Default",
+          "swift": "<code>.ebRadioStyle(.check / .default)</code>",
+          "compose": "<code>style = EBRadioStyle.Check / Default</code>"
         },
         {
-          "figma": "\"- error\" suffix",
-          "swift": "isError: Bool",
-          "compose": ".ebError(true)"
+          "figma": "State — Default, Pressed, Disabled",
+          "swift": "<code>.disabled(true)</code> for Disabled; Pressed is the press gesture, not a parameter",
+          "compose": "<code>enabled = false</code> for Disabled; Pressed comes from <code>interactionSource</code>"
         },
         {
-          "figma": "—",
-          "swift": "selected: Bool",
-          "compose": "selected: Bool"
+          "figma": "Size — Small, Medium, Large",
+          "swift": "<code>.controlSize(.small / .regular / .large)</code>",
+          "compose": "<code>size = EBRadioSize.Small / Medium / Large</code>"
         },
         {
-          "figma": "—",
-          "swift": "label: String",
-          "compose": "title: String"
+          "figma": "isSelected — false, true",
+          "swift": "<code>isSelected: Bool</code>",
+          "compose": "<code>selected: Boolean</code>"
         },
         {
-          "figma": "—",
-          "swift": "disabled: Bool",
-          "compose": ".disabled(true)"
+          "figma": "isError — false, true",
+          "swift": "<code>.ebInvalid(true)</code>",
+          "compose": "<code>isError = true</code>"
         },
         {
-          "figma": "—",
-          "swift": "onToggle",
-          "compose": "onChange: (Bool) -&gt; Void"
+          "figma": "#label (text layer)",
+          "swift": "<code>EBRadioButtonWithLabel(\"…\", …)</code>",
+          "compose": "<code>label = \"…\"</code>"
+        },
+        {
+          "figma": "— no Figma property (selection callback)",
+          "swift": "<code>onTap: () -&gt; Void</code>",
+          "compose": "<code>onClick: () -&gt; Unit</code>"
         }
       ],
       "filePaths": {
@@ -978,9 +983,14 @@
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<code><span class=\"syn-cmt\">// Default row</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Pay with GCash\"</span>, <span class=\"syn-param\">selected</span>: $selection == <span class=\"syn-dot\">.gcash</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-param\">selection</span> = <span class=\"syn-dot\">.gcash</span>\n<span class=\"syn-punc\">}</span>\n\n<span class=\"syn-cmt\">// Large row with error</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Option A\"</span>, <span class=\"syn-param\">selected</span>: isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebError</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Disabled</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Not available\"</span>, <span class=\"syn-param\">selected</span>: <span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-cmt\">// Default row</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Pay with GCash\"</span>,\n    <span class=\"syn-param\">selected</span> = selection == Option<span class=\"syn-dot\">.Gcash</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">selection</span> = Option<span class=\"syn-dot\">.Gcash</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Large row with error</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Option A\"</span>,\n    <span class=\"syn-param\">selected</span> = isSelected,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBRadioSize</span><span class=\"syn-dot\">.Large</span>,\n    <span class=\"syn-param\">isError</span> = <span class=\"syn-val\">true</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Disabled</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Not available\"</span>,\n    <span class=\"syn-param\">selected</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span></code>"
+        "subheading": "Default",
+        "swift": "<code><span class=\"syn-cmt\">// One option in a single-select group — the whole row is the control</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Pay with GCash\"</span>, <span class=\"syn-param\">isSelected</span>: .<span class=\"syn-fn\">constant</span><span class=\"syn-punc\">(</span>choice == <span class=\"syn-dot\">.gcash</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-dot\">.onTapGesture</span> <span class=\"syn-punc\">{</span> <span class=\"syn-param\">choice</span> = <span class=\"syn-dot\">.gcash</span> <span class=\"syn-punc\">}</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// One option in a single-select group — the whole row is the control</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Pay with GCash\"</span>,\n    <span class=\"syn-param\">selected</span> = choice == Pay<span class=\"syn-dot\">.GCash</span>,\n    <span class=\"syn-param\">onClick</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">choice</span> = Pay<span class=\"syn-dot\">.GCash</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBRadioSize</span><span class=\"syn-dot\">.Large</span>\n<span class=\"syn-punc\">)</span></code>"
+      },
+      {
+        "subheading": "Check",
+        "swift": "<code><span class=\"syn-cmt\">// Checkmark disc — settings and picker rows. Built only as selected.</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Monthly\"</span>, <span class=\"syn-param\">isSelected</span>: $selected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebRadioStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.check</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Checkmark disc — settings and picker rows. Built only as selected.</span>\n<span class=\"syn-type\">EBRadioButtonWithLabel</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Monthly\"</span>,\n    <span class=\"syn-param\">selected</span> = <span class=\"syn-val\">true</span>,\n    <span class=\"syn-param\">onClick</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBRadioStyle</span><span class=\"syn-dot\">.Check</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBRadioSize</span><span class=\"syn-dot\">.Large</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -1010,7 +1020,24 @@
         "android": "48dp minimum"
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Write the label as the option itself — “Pay with GCash”, “Yes”, “No”.",
+        "dontText": "Don’t put helper text in the label; add a Subtext Message under the group instead."
+      },
+      {
+        "doText": "Make the whole row — radio and label — the tap target.",
+        "dontText": "Don’t leave only the radio tappable — at 16–24px it is too small on its own, and the label is part of the control."
+      },
+      {
+        "doText": "Pick the Size that matches the label scale and keep it the same across one group.",
+        "dontText": "Don’t mix Sizes or Styles within a single group of options."
+      },
+      {
+        "doText": "Use isError with State Default or Pressed for a choice the user still has to fix.",
+        "dontText": "Don’t combine Disabled with isError — Figma ships no such variant; show the message elsewhere."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",

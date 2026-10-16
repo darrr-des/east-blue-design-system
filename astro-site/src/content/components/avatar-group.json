@@ -3,7 +3,7 @@
   "meta": {
     "node": "18276:4554",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18276-4554",
-    "description": "Stacked or overlapping avatars used to show participant lists — conversation members, shared documents, collaboration indicators.",
+    "description": "Avatar Groups show people who is part of a conversation, document or activity.",
     "badges": [
       {
         "kind": "keep",
@@ -1087,10 +1087,6 @@
       {
         "doText": "Use Avatar Group for 2–4 participants in a list item, header, or shared-with indicator.",
         "dontText": "Use for counts above 4 without an overflow \"+N\" badge — users can't infer total count from a cluster alone."
-      },
-      {
-        "doText": "Provide a single group-level accessibility label listing all participants.",
-        "dontText": "Let each avatar announce separately — creates VoiceOver/TalkBack noise."
       }
     ],
     "scorecard": [

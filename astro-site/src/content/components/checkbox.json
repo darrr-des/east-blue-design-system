@@ -3,7 +3,7 @@
   "meta": {
     "node": "17143:2464",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=17143-2464",
-    "description": "A selection control for binary and partial choices. 33 variants across isSelected (true/false/indeterminate) × State (Default/Pressed/Focused/Disabled/Error) × Size (Small/Medium/Large).",
+    "description": "Checkboxes let people select one or more options, or show a partial selection.",
     "badges": [
       {
         "kind": "fix",

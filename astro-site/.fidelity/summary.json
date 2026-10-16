@@ -1,0 +1,12 @@
+[
+  {
+    "slug": "modal-transaction-receipt-entry",
+    "v": "Layout=Inline",
+    "pct": 0
+  },
+  {
+    "slug": "modal-transaction-receipt-entry",
+    "v": "Layout=Stacked",
+    "pct": 0
+  }
+]

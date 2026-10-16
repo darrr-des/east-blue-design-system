@@ -3,7 +3,7 @@
   "meta": {
     "node": "5973:70111",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5973-70111",
-    "description": "A 2D grid of Service Item tiles used for top-level service navigation. <code>Column</code> (2–5) sets the tiles across, <code>Row</code> (1–5) the tiles down.",
+    "description": "Menu Grids let people jump to services from a grid of tiles.",
     "badges": [
       {
         "kind": "keep",

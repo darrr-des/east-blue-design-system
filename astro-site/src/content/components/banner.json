@@ -3,7 +3,7 @@
   "meta": {
     "node": "756:82673",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=756-82673",
-    "description": "A neutral-background promotional banner with an image or icon, a text stack (preamble, heading, description), and an optional button link.",
+    "description": "Banners show people a promotion with an image, a short message and an optional link.",
     "badges": [
       {
         "kind": "restructure",
@@ -17,14 +17,14 @@
     "verdict": {
       "kind": "restructure",
       "title": "Restructure — collapse 5 boolean-ish axes into a clean API, add asset/background slots, consolidate with Carousel - Item",
-      "text": "Property names with spaces (<code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code>) don't survive codegen. <code>with link</code> + <code>with button</code> describe mutually exclusive CTAs and should be one <code>action</code> enum. <code>with icon</code> is too narrow — a leading <code>asset</code> slot accepting Icon / Avatar / Illustration / Image is more reusable. <code>Property = Within A Container | Full Width</code> is a padding/layout concern owned by the parent. Background image and chevron should be vector slots. Finally, Banner and Carousel - Item share enough DNA to be one component with carousel behaviour on the container."
+      "text": "<code>with link</code>, <code>with button</code>, <code>with preamble</code> and <code>with icon</code> are yes/no variant axes with spaces in their names. Fold link and button into one action enum, swap <code>with icon</code> for a leading asset slot, and make the background a slot."
     },
     "navGroup": "",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"2\" y=\"8\" width=\"28\" height=\"16\" rx=\"2\" fill=\"#EEF3FB\" stroke=\"#B8CFF8\" stroke-width=\"1\"/>\n      <circle cx=\"8\" cy=\"16\" r=\"4\" fill=\"#005CE5\"/>\n      <rect x=\"14\" y=\"12\" width=\"12\" height=\"2\" rx=\"1\" fill=\"#072592\"/>\n      <rect x=\"14\" y=\"16\" width=\"10\" height=\"1.5\" rx=\"0.75\" fill=\"#6780A9\"/>\n      <rect x=\"14\" y=\"20\" width=\"6\" height=\"1.5\" rx=\"0.75\" fill=\"#005CE5\"/>\n    </svg>"
   },
   "overview": {
-    "inContextNote": "Banner is used in-flow as a promotional callout — typically between sections on a Home or Dashboard screen. \"Within A Container\" leaves horizontal padding on either side so the banner sits as a card; \"Full Width\" bleeds edge-to-edge. The image or icon sits on the opposite side of the text per the position axis.",
-    "inContextHtml": "",
+    "inContextNote": "How the banner appears in real product screens — Set Reminder with a link, a GGives promo with a preamble, Invite friends to GForest with a button, and Pay with GCash full width.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/banner-in-context.png\" alt=\"Banner component shown on four GCash screens: a blue Set Reminder banner with a Remind me link, a pink GGives banner with the preamble GGives and a View Our Partners link, a green Invite friends to GForest banner with an Invite button, and a full-width Pay with GCash banner with a Pay Online preamble and icon\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"bnr-demo-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-left\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Property</span><select id=\"bnr-ctrl-property\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"container\" selected=\"\">Within A Container</option><option value=\"full\">Full Width</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">position</span><select id=\"bnr-ctrl-position\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"left\" selected=\"\">left</option><option value=\"right\">right</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">with preamble</span><select id=\"bnr-ctrl-preamble-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">with icon</span><select id=\"bnr-ctrl-icon-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">action</span><select id=\"bnr-ctrl-action-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"button\" selected=\"\">with button</option><option value=\"link\">with link</option><option value=\"none\">none</option></select></div></div></div></div>",
@@ -1303,7 +1303,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1328,42 +1329,42 @@
       "description": "",
       "rows": [
         {
-          "figma": "<code>Property: Within A Container | Full Width</code>",
+          "figma": "Property — Full Width, Within A Container",
           "swift": "<code>padding: container | none</code> <em>(or drop)</em>",
           "compose": "Parent layout"
         },
         {
-          "figma": "<code>position: left | right</code>",
+          "figma": "position — left, right",
           "swift": "<code>imagePosition: left | right</code>",
           "compose": "<code>imagePosition: .left</code>"
         },
         {
-          "figma": "<code>with preamble</code>",
+          "figma": "with preamble — no, yes",
           "swift": "<code>preamble?: String</code>",
           "compose": "<code>preamble: String?</code>"
         },
         {
-          "figma": "<code>with link</code> + <code>with button</code>",
+          "figma": "with link — no, yes · with button — no, yes",
           "swift": "<code>action: .none | .link | .button</code>",
           "compose": "<code>action: EBBannerAction?</code>"
         },
         {
-          "figma": "<code>with icon</code>",
+          "figma": "with icon — no, yes",
           "swift": "<code>leadingAsset</code> slot",
           "compose": "<code>leadingAsset: () -&gt; AnyView</code>"
         },
         {
-          "figma": "(Banner Asset Placeholder instance)",
+          "figma": "— no Figma property (the Banner Asset Placeholder instance)",
           "swift": "<code>background: Image | Illustration</code> slot",
           "compose": "<code>background: AnyView</code>"
         },
         {
-          "figma": "(raster chevron)",
+          "figma": "— no Figma property (the chevron)",
           "swift": "vector Icon",
           "compose": "Built into <code>.link</code>/<code>.button</code> action"
         },
         {
-          "figma": "(not modeled)",
+          "figma": "— no Figma property (the tap action)",
           "swift": "<code>onTap: () -&gt; Void</code>",
           "compose": "<code>onTap: (() -&gt; Void)?</code>"
         }
@@ -1463,98 +1464,327 @@
       "total": 20,
       "description": "<code>Property</code> (2) × <code>position</code> (2) × <code>with link</code> × <code>with button</code> × <code>with preamble</code> × <code>with icon</code> — if all boolean combinations shipped, 2 × 2 × 2 × 2 × 2 × 2 = 64 variants. The author pruned invalid combos (<code>with link=yes</code> + <code>with button=yes</code>, <code>with icon=yes</code> + <code>with button=yes</code>, etc.) and shipped <strong>20</strong> variants — 10 per <code>Property</code> mode, mirrored across <code>position=left|right</code>.",
       "columns": [
-        "Content shape",
         "Property",
-        "Count",
-        "Example nodes (left · right)"
+        "position",
+        "with link",
+        "with button",
+        "with preamble",
+        "with icon",
+        "Node"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>heading + desc + button</strong>",
             "Within A Container",
-            "2",
-            "<code>756:82659</code> · <code>756:82653</code>"
+            "right",
+            "no",
+            "yes",
+            "no",
+            "no",
+            "756:82653"
           ]
         },
         {
           "cells": [
-            "heading + desc + button",
-            "Full Width",
-            "2",
-            "<code>756:82669</code> · <code>756:82667</code>"
-          ]
-        },
-        {
-          "cells": [
-            "<strong>heading + desc + icon (no action)</strong>",
             "Within A Container",
-            "2",
-            "<code>756:82657</code> · <code>756:82658</code>"
+            "left",
+            "no",
+            "yes",
+            "no",
+            "no",
+            "756:82659"
           ]
         },
         {
           "cells": [
-            "heading + desc + icon (no action)",
             "Full Width",
-            "2",
-            "<code>756:82668</code> · <code>756:82672</code>"
+            "right",
+            "no",
+            "yes",
+            "no",
+            "no",
+            "756:82667"
           ]
         },
         {
           "cells": [
-            "<strong>preamble + heading + desc + button</strong>",
+            "Full Width",
+            "left",
+            "no",
+            "yes",
+            "no",
+            "no",
+            "756:82669"
+          ]
+        },
+        {
+          "cells": [
             "Within A Container",
-            "2",
-            "<code>756:82655</code> · <code>756:82656</code>"
+            "right",
+            "no",
+            "no",
+            "no",
+            "yes",
+            "756:82658"
           ]
         },
         {
           "cells": [
-            "preamble + heading + desc + button",
-            "Full Width",
-            "2",
-            "<code>756:82664</code> · <code>756:82662</code>"
-          ]
-        },
-        {
-          "cells": [
-            "<strong>heading + desc + link</strong>",
             "Within A Container",
-            "2",
-            "<code>756:82654</code> · <code>756:82671</code>"
+            "left",
+            "no",
+            "no",
+            "no",
+            "yes",
+            "756:82657"
           ]
         },
         {
           "cells": [
-            "heading + desc + link",
             "Full Width",
-            "2",
-            "<code>756:82663</code> · <code>756:82670</code>"
+            "right",
+            "no",
+            "no",
+            "no",
+            "yes",
+            "756:82672"
           ]
         },
         {
           "cells": [
-            "<strong>heading + desc (no action)</strong>",
+            "Full Width",
+            "left",
+            "no",
+            "no",
+            "no",
+            "yes",
+            "756:82668"
+          ]
+        },
+        {
+          "cells": [
             "Within A Container",
-            "2",
-            "<code>756:82665</code> · <code>756:82666</code>"
+            "right",
+            "no",
+            "yes",
+            "yes",
+            "no",
+            "756:82656"
           ]
         },
         {
           "cells": [
-            "heading + desc (no action)",
+            "Within A Container",
+            "left",
+            "no",
+            "yes",
+            "yes",
+            "no",
+            "756:82655"
+          ]
+        },
+        {
+          "cells": [
             "Full Width",
-            "2",
-            "<code>756:82661</code> · <code>756:82660</code>"
+            "right",
+            "no",
+            "yes",
+            "yes",
+            "no",
+            "756:82662"
+          ]
+        },
+        {
+          "cells": [
+            "Full Width",
+            "left",
+            "no",
+            "yes",
+            "yes",
+            "no",
+            "756:82664"
+          ]
+        },
+        {
+          "cells": [
+            "Within A Container",
+            "right",
+            "yes",
+            "no",
+            "no",
+            "no",
+            "756:82671"
+          ]
+        },
+        {
+          "cells": [
+            "Within A Container",
+            "left",
+            "yes",
+            "no",
+            "no",
+            "no",
+            "756:82654"
+          ]
+        },
+        {
+          "cells": [
+            "Full Width",
+            "right",
+            "yes",
+            "no",
+            "no",
+            "no",
+            "756:82670"
+          ]
+        },
+        {
+          "cells": [
+            "Full Width",
+            "left",
+            "yes",
+            "no",
+            "no",
+            "no",
+            "756:82663"
+          ]
+        },
+        {
+          "cells": [
+            "Within A Container",
+            "right",
+            "no",
+            "no",
+            "no",
+            "no",
+            "756:82666"
+          ]
+        },
+        {
+          "cells": [
+            "Within A Container",
+            "left",
+            "no",
+            "no",
+            "no",
+            "no",
+            "756:82665"
+          ]
+        },
+        {
+          "cells": [
+            "Full Width",
+            "right",
+            "no",
+            "no",
+            "no",
+            "no",
+            "756:82660"
+          ]
+        },
+        {
+          "cells": [
+            "Full Width",
+            "left",
+            "no",
+            "no",
+            "no",
+            "no",
+            "756:82661"
           ]
         }
       ],
       "summary": {
-        "columns": [],
-        "rows": []
+        "columns": [
+          "Content shape",
+          "Property",
+          "Count",
+          "Example nodes (left · right)"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "<strong>heading + desc + button</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82659</code> · <code>756:82653</code>"
+            ]
+          },
+          {
+            "cells": [
+              "heading + desc + button",
+              "Full Width",
+              "2",
+              "<code>756:82669</code> · <code>756:82667</code>"
+            ]
+          },
+          {
+            "cells": [
+              "<strong>heading + desc + icon (no action)</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82657</code> · <code>756:82658</code>"
+            ]
+          },
+          {
+            "cells": [
+              "heading + desc + icon (no action)",
+              "Full Width",
+              "2",
+              "<code>756:82668</code> · <code>756:82672</code>"
+            ]
+          },
+          {
+            "cells": [
+              "<strong>preamble + heading + desc + button</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82655</code> · <code>756:82656</code>"
+            ]
+          },
+          {
+            "cells": [
+              "preamble + heading + desc + button",
+              "Full Width",
+              "2",
+              "<code>756:82664</code> · <code>756:82662</code>"
+            ]
+          },
+          {
+            "cells": [
+              "<strong>heading + desc + link</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82654</code> · <code>756:82671</code>"
+            ]
+          },
+          {
+            "cells": [
+              "heading + desc + link",
+              "Full Width",
+              "2",
+              "<code>756:82663</code> · <code>756:82670</code>"
+            ]
+          },
+          {
+            "cells": [
+              "<strong>heading + desc (no action)</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82665</code> · <code>756:82666</code>"
+            ]
+          },
+          {
+            "cells": [
+              "heading + desc (no action)",
+              "Full Width",
+              "2",
+              "<code>756:82661</code> · <code>756:82660</code>"
+            ]
+          }
+        ]
       },
-      "collapseLabel": ""
+      "collapseLabel": "View full Property × position × with link × with button × with preamble × with icon breakdown (20 rows)"
     }
   },
   "changelog": [

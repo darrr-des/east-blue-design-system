@@ -3,7 +3,7 @@
   "meta": {
     "node": "5121:4533",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=5121-4533",
-    "description": "A 336-wide voucher tile with a 144px hero image, status row, title, price, and validity period.",
+    "description": "Horizontal Vouchers show people a voucher's image, price and validity in a wide tile.",
     "badges": [
       {
         "kind": "remove",

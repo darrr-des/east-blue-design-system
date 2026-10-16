@@ -3,7 +3,7 @@
   "meta": {
     "node": "18577:14604",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-14604",
-    "description": "Action-list row with a primary label and a secondary description line beneath it.",
+    "description": "Action List rows with a description give people a second line of detail.",
     "badges": [
       {
         "kind": "consolidate",

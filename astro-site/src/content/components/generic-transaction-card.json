@@ -3,7 +3,7 @@
   "meta": {
     "node": "5488:32955",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5488-32955",
-    "description": "A transaction-summary card with merchant info, amount, date, and tappable detail surface.",
+    "description": "Generic Transaction Cards show people a transaction summary they can tap for details.",
     "badges": [
       {
         "kind": "keep",

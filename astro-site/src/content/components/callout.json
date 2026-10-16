@@ -3,28 +3,28 @@
   "meta": {
     "node": "23:179895",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-179895",
-    "description": "A compact attention strip with neutral, info, warning, or danger intent, optional description, and an optional leading icon.",
+    "description": "Callouts give people short contextual help with a title and description.",
     "badges": [
       {
-        "kind": "keep",
-        "label": "Keep"
+        "kind": "consolidate",
+        "label": "Consolidate"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "verdict": {
-      "kind": "keep",
-      "title": "Rebuilt — intent enum and slots landed",
-      "text": "The rebuild resolved every structural issue: renamed to <strong>Callout</strong>, <code>type</code> expanded to a 5-value intent enum (Information / Default / Warning / Error / Success), the redundant <code>label</code> + <code>label size</code> axes collapsed into <code>Content</code> × <code>Size</code>, and real Figma <code>Leading Slot</code> / <code>Trailing Slot</code> added. 45 variants with no invalid cells. Stateless by design — Callout is a display strip; interactivity lives in the Trailing Slot. Only Code Connect registration and the token rename remain."
+      "kind": "consolidate",
+      "title": "Consolidate — merged into Alert",
+      "text": "Use <a href=\"/components/alert\">Alert</a> (node <code>6663:104524</code>) instead: <code>Type</code> Neutral or Information with <code>Style</code> Card covers this strip. Assessment for this pattern lives on the Alert page."
     },
     "navGroup": "",
     "navIconSvg": ""
   },
   "overview": {
     "inContextNote": "Appears beneath form fields, inside modals, or between screen sections — to clarify what happens next, flag a soft warning, or offer supplemental instructions that don't rise to Alert-level severity.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"120\" viewBox=\"0 0 200 120\" fill=\"none\">\n          <rect x=\"12\" y=\"14\" width=\"176\" height=\"22\" rx=\"5\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".25\"></rect>\n          <rect x=\"22\" y=\"22\" width=\"60\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".2\"></rect>\n          <rect x=\"12\" y=\"46\" width=\"176\" height=\"42\" rx=\"5\" fill=\"#E5F1FF\" stroke=\"#D2E5FF\" stroke-width=\"1\"></rect>\n          <rect x=\"22\" y=\"54\" width=\"62\" height=\"3.2\" rx=\"1\" fill=\"#072592\" opacity=\".9\"></rect>\n          <rect x=\"22\" y=\"64\" width=\"156\" height=\"2.4\" rx=\"1\" fill=\"#6780A9\" opacity=\".75\"></rect>\n          <rect x=\"22\" y=\"71\" width=\"130\" height=\"2.4\" rx=\"1\" fill=\"#6780A9\" opacity=\".55\"></rect>\n          <rect x=\"22\" y=\"78\" width=\"96\" height=\"2.4\" rx=\"1\" fill=\"#6780A9\" opacity=\".4\"></rect>\n          <rect x=\"12\" y=\"98\" width=\"176\" height=\"14\" rx=\"3\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
+    "inContextHtml": "",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"cal-demo-preview\"><div style=\"box-sizing:border-box;width:336px;padding:12px;background:#F6F9FD;border:1px solid #E5EBF4;border-radius:6px;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;color:#445C85;margin-bottom:2px;\">Add title here</div><div style=\"font-weight:600;font-size:14px;line-height:20px;letter-spacing:0;color:#6780A9;\">This is the first sentence. This is the second sentence. This is the third sentence. This is the fourth sentence. This is the fifth sentence.</div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><select class=\"demo-panel-select\" onchange=\"_calDemo.label=this.value;updateCalloutDemo()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label size</span><select class=\"demo-panel-select\" onchange=\"_calDemo.labelSize=this.value;updateCalloutDemo()\"><option value=\"small\">small</option><option value=\"default\" selected=\"\">default</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><select class=\"demo-panel-select\" onchange=\"_calDemo.description=this.value;updateCalloutDemo()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select class=\"demo-panel-select\" onchange=\"_calDemo.type=this.value;updateCalloutDemo()\"><option value=\"default\" selected=\"\">default</option><option value=\"information\">information</option></select></div></div></div></div>",
@@ -32,22 +32,22 @@
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Covers the full intent range — Information, Default, Warning, Error, Success — so consumers no longer reach for the heavier Alert just to show a warning. Three sizes (Large / Small / XSmall) and three content shapes (Default / Description Only / Header Only) cover inline use in forms, modals, and flows."
+        "note": "Historical rating from the standalone assessment. This component is merged into Alert — see that page for the current DS Health."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Carries its own container, title, description, and per-intent tokens across all five intents. Both the leading icon and trailing action are now real Figma slots rather than missing affordances."
+        "note": "Historical rating from the standalone assessment. This component is merged into Alert — see that page for the current DS Health."
       },
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "Three orthogonal props — <code>Type</code> × <code>Size</code> × <code>Content</code> = 45 variants with no invalid cells. The old <code>label</code> + <code>label size</code> pair that encoded one concept across two properties is gone, and <code>type</code> is a full intent enum rather than a two-value stub."
+        "note": "Historical rating from the standalone assessment. This component is merged into Alert — see that page for the current DS Health."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Named <code>Leading Slot</code> (24 × 24, radius 99) and <code>Trailing Slot</code> let consumers compose an icon and an inline action without forking the component. Both map to <code>@ViewBuilder</code> / <code>@Composable</code> slots on native."
+        "note": "Historical rating from the standalone assessment. This component is merged into Alert — see that page for the current DS Health."
       }
     ],
     "behavior": [
@@ -157,21 +157,18 @@
           "criterion": "",
           "label": ""
         }
+      },
+      {
+        "headline": "Merged into Alert.",
+        "body": "Confirmed by the component owner — <code>Contextual Help</code> (node <code>23:179895</code>) is consolidated into <a href=\"/components/alert\">Alert</a> (node <code>6663:104524</code>). Its title, description and information styling are Alert's <code>Content</code> and <code>Type</code> with <code>Style</code> Card. This page is kept as a pointer; all assessment for this pattern lives on Alert. (Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
       }
     ],
     "open": [],
-    "recommendations": [
-      {
-        "headline": "Rename <code>main/contextual-help/color/info/*</code> → <code>main/callout/info/*</code>.",
-        "body": "Token names should follow the component name now that the rename has landed. Deliberately deferred until native handoff so consuming files do not churn twice — still outstanding.",
-        "tag": "Token"
-      },
-      {
-        "headline": "Document the Callout vs Alert vs Subtext Message vs Tooltip decision tree.",
-        "body": "Designers conflate these four because the naming overlaps. Publish a one-pager: Subtext (field helper), Callout (inline display strip, soft intent, no CTA), Alert (persistent status block with a title and optional action), Tooltip (transient, anchored). The clearest tell is the action — if it has a CTA or title hierarchy it is an Alert, not a Callout.",
-        "tag": "Docs"
-      }
-    ],
+    "recommendations": [],
     "appliedRecommendations": [
       {
         "headline": "Rename <code>Contextual Help</code> → <code>Callout</code>.",
@@ -962,6 +959,22 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Consolidated into Alert · node 23:179895",
+      "rows": [
+        {
+          "body": "<strong>Merged into Alert.</strong> The owner consolidated this component into <a href=\"/components/alert\">Alert</a> (node <code>6663:104524</code>). Open issues and recommendations removed; the page now points to Alert.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.1",
       "date": "September 2026",

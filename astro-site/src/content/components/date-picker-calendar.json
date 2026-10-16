@@ -3,7 +3,7 @@
   "meta": {
     "node": "6769:105110",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6769-105110",
-    "description": "The calendar surface itself. Three modes — a day grid, a month list and a year list — assembled entirely from Date Picker - Cell and Date Picker - Header instances.",
+    "description": "Date Picker Calendars let people pick a day, month or year.",
     "badges": [
       {
         "kind": "keep",

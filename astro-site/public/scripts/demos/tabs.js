@@ -1,133 +1,86 @@
-/* Auto-extracted from assessment-src/components/tabs.html.
- * Powers the live-preview dropdowns/toggles for the tabs component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs tabs
- */
-/* ── Tabs Component JS ────────────────────────────────────────────── */
-var _tabsDemo = { count: 4, active: 0 };
+/* Tab Group — Overview live preview + DEV code.
+ * Rebuilt from Figma component set 26327:11046 (GCash DS Sticker Sheets v2): a row of Tab Item
+ * instances (each Fill), the first selected. Orientation and Size are passed to every item.
+ * Panel: Orientation · Size · Tabs Count (4, 3, 2). */
 
-function _tabsBuildSvg(count, active) {
-  var tabW = 62;
-  var tabH = 84;
-  var w = count * tabW;
-  var h = tabH;
-  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-  s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="#FFFFFF"/>';
-  for (var i = 0; i < count; i++) {
-    var x = i * tabW;
-    var isActive = i === active;
-    // Icon circle
-    s += '<circle cx="' + (x + tabW / 2) + '" cy="28" r="16" fill="#C2C6CF"/>';
-    // Label
-    s += '<text x="' + (x + tabW / 2) + '" y="60" text-anchor="middle" fill="' + (isActive ? '#005CE5' : '#6780A9') + '" font-size="11" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
-    // Bottom border
-    s += '<rect x="' + x + '" y="' + (h - 2) + '" width="' + tabW + '" height="2" fill="' + (isActive ? '#005CE5' : '#E5EBF4') + '"/>';
+/* ── One Tab Item, drawn from Figma set 26327:10941 ─────────────────────
+ * Horizontal: fixed 97 (Medium) / 102 (Large) wide; container padding 0 12, gap 8;
+ *   Icon Slot 24 · label (Primary/Label/Base 16/16 Medium, Primary/Label/Large 18/18 Large,
+ *   padding 16/16 or 17/15) · counter. Placement=Trailing puts the slot after the label.
+ * Vertical: hugs; container padding 12 0; icon-label padding 0 12, gap 12;
+ *   Icon Slot 32 above a row of label + counter (gap 8).
+ * Bottom stroke 2px, inside the box as in Figma. Figma ships the Icon Slot empty, so it is drawn as space. */
+var TAB_COLOR = {
+  Default:  { on: '#005CE5', off: '#6780A9' },   /* text/color-text-primary · text/color-text-weaker */
+  Hover:    { on: '#2340A9', off: '#6780A9' },   /* text/color-text-primary-hover */
+  Disabled: { on: '#C2CFE5', off: '#C2CFE5' }    /* text/color-text-disabled */
+};
+/* Figma sizes an auto-width text box up to a whole pixel ("Label" is 41, not 40.47). */
+function _tabRoundLabels(el) {
+  if (!el) return;
+  [].forEach.call(el.querySelectorAll('[data-tab-label]'), function (s) { s.style.width = Math.ceil(s.getBoundingClientRect().width) + 'px'; });
+}
+
+var TAB_LINE = { on: '#005CE5', hover: '#2340A9', off: '#E5EBF4' };  /* border/color-border-primary(-hover) · border/color-border-weak */
+
+function _tabItem(o) {
+  var large = o.Size === 'Large', vert = o.Orientation === 'Vertical', sel = o.isSelected;
+  var color = (TAB_COLOR[o.State] || TAB_COLOR.Default)[sel ? 'on' : 'off'];
+  var line = sel ? (o.State === 'Hover' ? TAB_LINE.hover : TAB_LINE.on) : TAB_LINE.off;
+  var font = "font-family:'Proxima Soft',system-ui;font-weight:700;letter-spacing:0.25px;white-space:nowrap;";
+  var label = '<span data-tab-label style="display:inline-block;' + font + 'font-size:' + (large ? 18 : 16) + 'px;line-height:' + (large ? 18 : 16) + 'px;color:' + color + ';">' + o.label + '</span>';
+  var counter = o.hasCounter ? '<span style="flex:none;box-sizing:border-box;width:24px;height:24px;border-radius:99px;background:#EEF2F9;display:flex;align-items:center;justify-content:center;' +
+      font.replace('letter-spacing:0.25px;', '') + 'font-size:14px;line-height:14px;color:#072592;">0</span>' : '';
+  var slot = function (s) { return o.hasIcon ? '<span style="flex:none;width:' + s + 'px;height:' + s + 'px;"></span>' : ''; };
+  var dot = o.hasNotificationDot ? '<span style="position:absolute;width:6px;height:6px;border-radius:50%;background:#D61B2C;' +
+      (vert ? 'right:' + (large ? 4 : 4) + 'px;top:4px;' : 'right:' + (large ? 4 : 4) + 'px;top:' + (large ? 6 : 4) + 'px;') + '"></span>' : '';
+  var h;
+  if (vert) {
+    h = '<div style="position:relative;display:inline-flex;flex-direction:column;align-items:center;padding:12px 12px;gap:12px;box-shadow:inset 0 -2px 0 ' + line + ';box-sizing:border-box;' + (o.fill ? 'flex:1;' : '') + '">' +
+        slot(32) + '<div style="display:flex;align-items:center;gap:8px;height:24px;">' + label + counter + '</div>' + dot + '</div>';
+  } else {
+    var w = large ? 102 : 97;
+    var lab = '<span style="display:flex;align-items:center;padding:' + (large ? '17px 0 15px' : '16px 0') + ';">' + label + '</span>';
+    h = '<div style="position:relative;display:inline-flex;justify-content:center;align-items:center;' + (o.fill ? 'flex:1;min-width:' + w + 'px;' : 'width:' + w + 'px;') +
+        'box-shadow:inset 0 -2px 0 ' + line + ';box-sizing:border-box;"><div style="display:flex;align-items:center;gap:8px;padding:0 12px;">' +
+        (o.Placement === 'Trailing' ? lab + slot(24) : slot(24) + lab) + counter + '</div>' + dot + '</div>';
   }
-  s += '</svg>';
-  return s;
+  return h;
+}
+
+var _tbDemo = { Orientation: 'Vertical', Size: 'Medium', count: '4' };
+window._tbDemo = _tbDemo;
+
+function _tabsRender(o) {
+  var n = parseInt(o.count, 10) || 4, items = '';
+  for (var i = 0; i < n; i++) items += _tabItem({ State: 'Default', Orientation: o.Orientation, Size: o.Size, Placement: 'Leading',
+    isSelected: i === 0, hasIcon: true, hasCounter: false, hasNotificationDot: false, label: 'Label', fill: true });
+  return '<div style="display:inline-flex;align-items:flex-end;">' + items + '</div>';
 }
 
 function updateTabsDemo() {
-  var c = parseInt(document.getElementById('tabs-demo-count').value, 10) || 4;
-  var a = parseInt(document.getElementById('tabs-demo-active').value, 10) || 0;
-  if (a >= c) a = 0;
-  _tabsDemo.count = c;
-  _tabsDemo.active = a;
-  var el = document.getElementById('tabs-demo-preview');
-  if (el) el.innerHTML = _tabsBuildSvg(c, a);
+  var g = function (id) { return document.getElementById(id); };
+  [['tb-demo-orientation', 'Orientation'], ['tb-demo-size', 'Size'], ['tb-demo-count', 'count']].forEach(function (p) { if (g(p[0])) _tbDemo[p[1]] = g(p[0]).value; });
+  var el = g('tb-demo-preview');
+  if (el) { el.innerHTML = _tabsRender(_tbDemo); _tabRoundLabels(el); }
 }
+window.updateTabsDemo = updateTabsDemo;
 
-/* ── Spec card state ──────────────────────────────────────────────── */
-var _specCards = {
-  'tabs-4': { count: 4, active: 0 },
-  'tabs-3': { count: 3, active: 0 },
-  'tabs-2': { count: 2, active: 0 }
-};
-window._specCards = _specCards;
-
-var _tabLabels = ['Tab 1', 'Tab 2', 'Tab 3', 'Tab 4'];
-
-/* ── Code snippet builders ────────────────────────────────────────── */
-function buildSwiftSnippet(type, card) {
-  var cnt = (card && card.count) || 4;
-  var act = (card && card.active) || 0;
-  var lines = [];
-  lines.push('EBTabs(selection: $current) {');
-  for (var i = 0; i < cnt; i++) {
-    lines.push('    EBTabItem("' + _tabLabels[i] + '", value: .' + ['one','two','three','four'][i] + ')');
-  }
-  lines.push('}');
-  if (act > 0) lines.push('// .selectedIndex = ' + act);
-  return lines.join('\n');
+/* ── DEV code — component API, as on the Code tab ───────────────────── */
+function buildSwiftSnippet(c) {
+  var n = parseInt(c.count, 10) || 4, items = [];
+  for (var i = 0; i < n; i++) items.push('    EBTabItem("Label")');
+  return 'EBTabGroup(selection: $selected) {\n' + items.join('\n') + '\n}\n.ebOrientation(.' + c.Orientation.toLowerCase() + ')\n.ebSize(.' + c.Size.toLowerCase() + ')';
 }
-
-function buildComposeSnippet(type, card) {
-  var cnt = (card && card.count) || 4;
-  var act = (card && card.active) || 0;
-  var lines = [];
-  lines.push('EBTabs(selectedIndex = ' + act + ', onTabChange = { }) {');
-  for (var i = 0; i < cnt; i++) {
-    lines.push('    EBTabItem(label = "' + _tabLabels[i] + '")');
-  }
-  lines.push('}');
-  return lines.join('\n');
+function buildComposeSnippet(c) {
+  var n = parseInt(c.count, 10) || 4, items = [];
+  for (var i = 0; i < n; i++) items.push('"Label"');
+  return 'EBTabGroup(\n    items = listOf(' + items.join(', ') + '),\n    selectedIndex = selected,\n    onSelect = { selected = it },\n    orientation = EBTabOrientation.' + c.Orientation + ',\n    size = EBTabSize.' + c.Size + '\n)';
 }
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
-}
+function getSnippet(cardKey, lang, card) { card = card || _tbDemo; return lang === 'swift' ? buildSwiftSnippet(card) : buildComposeSnippet(card); }
 window.getSnippet = getSnippet;
 
-/* ── Spec card update ─────────────────────────────────────────────── */
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
-  if (!card) return;
-  if (prop === 'active') {
-    var idx = parseInt(value, 10);
-    if (isNaN(idx)) idx = 0;
-    if (idx >= card.count) idx = 0;
-    card.active = idx;
-  } else {
-    card[prop] = value;
-  }
-
-  /* Update preview */
-  var el = document.getElementById('tabs-preview-' + cardStyle);
-  if (el) el.innerHTML = _tabsBuildSvg(card.count, card.active);
-
-  /* Update properties text */
-  var spActive = document.querySelector('[data-sp="' + cardStyle + '-active"]');
-  if (spActive) spActive.textContent = _tabLabels[card.active] || 'Tab 1';
-
-  /* Update DEV code */
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
-}
-
-function _tabsInitSpecCards() {
-  Object.keys(_specCards).forEach(function (k) {
-    updateSpecCard(k, 'active', _specCards[k].active);
-  });
-}
-
-function _tabsInit() {
-  if (document.getElementById('tabs-demo-preview')) updateTabsDemo();
-  _tabsInitSpecCards();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _tabsInit);
-} else {
-  _tabsInit();
-}
-document.addEventListener('astro:page-load', _tabsInit);
+function _tbInit() { updateTabsDemo(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateTabsDemo); }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tbInit);
+else _tbInit();
+document.addEventListener('astro:page-load', _tbInit);

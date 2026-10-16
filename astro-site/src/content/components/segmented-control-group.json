@@ -3,7 +3,7 @@
   "meta": {
     "node": "26628:50786",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26628-50786",
-    "description": "A labeled Segmented Control with a slot below for helper text, avatars or other content.",
+    "description": "Segmented Control Groups let people switch between options, with a label and helper content.",
     "badges": [
       {
         "kind": "keep",

@@ -3,7 +3,7 @@
   "meta": {
     "node": "4227:11068",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4227-11068",
-    "description": "A page-bottom region containing partner logos, regulatory disclaimers, and helper links.",
+    "description": "Footers show people partner logos, legal disclaimers and helpful links at a page's end.",
     "badges": [
       {
         "kind": "keep",

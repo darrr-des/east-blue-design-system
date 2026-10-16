@@ -1,232 +1,95 @@
-/* Auto-extracted from assessment-src/components/tab-item.html.
- * Powers the live-preview dropdowns/toggles for the tab-item component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs tab-item
- */
-/* ── Tab Item Component JS ─────────────────────────────────────────── */
-var _tiDemo = { active: 'yes', orient: 'vertical', size: 'small', leadicon: 'no', counter: 'no', dot: 'no' };
+/* Tab Item — Overview live preview + DEV code.
+ * Rebuilt from Figma component set 26327:10941 (GCash DS Sticker Sheets v2).
+ * Panel: hasNotificationDot · hasIcon (on) · hasCounter booleans; Icon Slot slot (no control);
+ * State Default · Hover · Disabled; Orientation; Size Medium · Large; Placement Leading · Trailing; isSelected.
+ * Placement exists only in Horizontal; Hover only when selected; Disabled only when not selected. */
 
-function _tiBuildSvg(opts) {
-  var active = opts.active === 'yes';
-  var vertical = opts.orient === 'vertical';
-  var large = opts.size === 'large';
-  var leadIcon = opts.leadicon === 'yes';
-  var counter = opts.counter === 'yes';
-  var dot = opts.dot === 'yes';
-
-  var labelColor = active ? '#005CE5' : '#6780A9';
-  var borderColor = active ? '#005CE5' : '#E5EBF4';
-  var fontSize = large ? 14 : 12;
-
-  var w, h, s;
-  if (vertical) {
-    w = 72; h = 84;
-    s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-    s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="#FFFFFF"/>';
-    // Icon
-    s += '<circle cx="' + (w / 2) + '" cy="28" r="16" fill="#C2C6CF"/>';
-    // Label
-    s += '<text x="' + (w / 2) + '" y="' + (h - 22) + '" text-anchor="middle" fill="' + labelColor + '" font-size="' + fontSize + '" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
-    // Border
-    s += '<rect x="0" y="' + (h - 2) + '" width="' + w + '" height="2" fill="' + borderColor + '"/>';
-    // Red dot
-    if (dot) s += '<circle cx="' + (w - 8) + '" cy="8" r="3" fill="#D81E1E"/>';
-    s += '</svg>';
-    return s;
-  }
-
-  // Horizontal
-  w = large ? 130 : 120;
-  h = 48;
-  s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-  s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="#FFFFFF"/>';
-  var x = 12;
-  if (leadIcon) {
-    s += '<circle cx="' + (x + 10) + '" cy="' + (h / 2) + '" r="10" fill="#B3B3B3"/>';
-    x += 24;
-  }
-  s += '<text x="' + x + '" y="' + (h / 2 + 5) + '" fill="' + labelColor + '" font-size="' + fontSize + '" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
-  x += 38;
-  if (counter) {
-    s += '<rect x="' + x + '" y="' + (h / 2 - 9) + '" width="22" height="18" rx="9" fill="#ECF1FA"/>';
-    s += '<text x="' + (x + 11) + '" y="' + (h / 2 + 4) + '" text-anchor="middle" fill="#0F3390" font-size="10" font-weight="700" font-family="\'Proxima Soft\', system-ui">0</text>';
-  }
-  s += '<rect x="0" y="' + (h - 2) + '" width="' + w + '" height="2" fill="' + borderColor + '"/>';
-  if (dot) s += '<circle cx="' + (w - 8) + '" cy="8" r="3" fill="#D81E1E"/>';
-  s += '</svg>';
-  return s;
+/* ── One Tab Item, drawn from Figma set 26327:10941 ─────────────────────
+ * Horizontal: fixed 97 (Medium) / 102 (Large) wide; container padding 0 12, gap 8;
+ *   Icon Slot 24 · label (Primary/Label/Base 16/16 Medium, Primary/Label/Large 18/18 Large,
+ *   padding 16/16 or 17/15) · counter. Placement=Trailing puts the slot after the label.
+ * Vertical: hugs; container padding 12 0; icon-label padding 0 12, gap 12;
+ *   Icon Slot 32 above a row of label + counter (gap 8).
+ * Bottom stroke 2px, inside the box as in Figma. Figma ships the Icon Slot empty, so it is drawn as space. */
+var TAB_COLOR = {
+  Default:  { on: '#005CE5', off: '#6780A9' },   /* text/color-text-primary · text/color-text-weaker */
+  Hover:    { on: '#2340A9', off: '#6780A9' },   /* text/color-text-primary-hover */
+  Disabled: { on: '#C2CFE5', off: '#C2CFE5' }    /* text/color-text-disabled */
+};
+/* Figma sizes an auto-width text box up to a whole pixel ("Label" is 41, not 40.47). */
+function _tabRoundLabels(el) {
+  if (!el) return;
+  [].forEach.call(el.querySelectorAll('[data-tab-label]'), function (s) { s.style.width = Math.ceil(s.getBoundingClientRect().width) + 'px'; });
 }
+
+var TAB_LINE = { on: '#005CE5', hover: '#2340A9', off: '#E5EBF4' };  /* border/color-border-primary(-hover) · border/color-border-weak */
+
+function _tabItem(o) {
+  var large = o.Size === 'Large', vert = o.Orientation === 'Vertical', sel = o.isSelected;
+  var color = (TAB_COLOR[o.State] || TAB_COLOR.Default)[sel ? 'on' : 'off'];
+  var line = sel ? (o.State === 'Hover' ? TAB_LINE.hover : TAB_LINE.on) : TAB_LINE.off;
+  var font = "font-family:'Proxima Soft',system-ui;font-weight:700;letter-spacing:0.25px;white-space:nowrap;";
+  var label = '<span data-tab-label style="display:inline-block;' + font + 'font-size:' + (large ? 18 : 16) + 'px;line-height:' + (large ? 18 : 16) + 'px;color:' + color + ';">' + o.label + '</span>';
+  var counter = o.hasCounter ? '<span style="flex:none;box-sizing:border-box;width:24px;height:24px;border-radius:99px;background:#EEF2F9;display:flex;align-items:center;justify-content:center;' +
+      font.replace('letter-spacing:0.25px;', '') + 'font-size:14px;line-height:14px;color:#072592;">0</span>' : '';
+  var slot = function (s) { return o.hasIcon ? '<span style="flex:none;width:' + s + 'px;height:' + s + 'px;"></span>' : ''; };
+  var dot = o.hasNotificationDot ? '<span style="position:absolute;width:6px;height:6px;border-radius:50%;background:#D61B2C;' +
+      (vert ? 'right:' + (large ? 4 : 4) + 'px;top:4px;' : 'right:' + (large ? 4 : 4) + 'px;top:' + (large ? 6 : 4) + 'px;') + '"></span>' : '';
+  var h;
+  if (vert) {
+    h = '<div style="position:relative;display:inline-flex;flex-direction:column;align-items:center;padding:12px 12px;gap:12px;box-shadow:inset 0 -2px 0 ' + line + ';box-sizing:border-box;' + (o.fill ? 'flex:1;' : '') + '">' +
+        slot(32) + '<div style="display:flex;align-items:center;gap:8px;height:24px;">' + label + counter + '</div>' + dot + '</div>';
+  } else {
+    var w = large ? 102 : 97;
+    var lab = '<span style="display:flex;align-items:center;padding:' + (large ? '17px 0 15px' : '16px 0') + ';">' + label + '</span>';
+    h = '<div style="position:relative;display:inline-flex;justify-content:center;align-items:center;' + (o.fill ? 'flex:1;min-width:' + w + 'px;' : 'width:' + w + 'px;') +
+        'box-shadow:inset 0 -2px 0 ' + line + ';box-sizing:border-box;"><div style="display:flex;align-items:center;gap:8px;padding:0 12px;">' +
+        (o.Placement === 'Trailing' ? lab + slot(24) : slot(24) + lab) + counter + '</div>' + dot + '</div>';
+  }
+  return h;
+}
+
+var _tiDemo = { hasNotificationDot: false, hasIcon: true, hasCounter: false, State: 'Default', Orientation: 'Vertical',
+                Size: 'Medium', Placement: 'Leading', isSelected: true, label: 'Label' };
+window._tiDemo = _tiDemo;
 
 function updateTabItemDemo() {
-  _tiDemo.active = document.getElementById('ti-demo-active').value;
-  _tiDemo.orient = document.getElementById('ti-demo-orient').value;
-  _tiDemo.size = document.getElementById('ti-demo-size').value;
-  _tiDemo.leadicon = document.getElementById('ti-demo-leadicon').value;
-  _tiDemo.counter = document.getElementById('ti-demo-counter').value;
-  _tiDemo.dot = document.getElementById('ti-demo-dot').value;
-  var el = document.getElementById('ti-demo-preview');
-  if (el) el.innerHTML = _tiBuildSvg(_tiDemo);
+  var g = function (id) { return document.getElementById(id); };
+  [['ti-demo-dot', 'hasNotificationDot'], ['ti-demo-icon', 'hasIcon'], ['ti-demo-counter', 'hasCounter'], ['ti-demo-selected', 'isSelected']]
+    .forEach(function (p) { if (g(p[0])) _tiDemo[p[1]] = g(p[0]).checked; });
+  [['ti-demo-state', 'State'], ['ti-demo-orientation', 'Orientation'], ['ti-demo-size', 'Size'], ['ti-demo-placement', 'Placement']]
+    .forEach(function (p) { if (g(p[0])) _tiDemo[p[1]] = g(p[0]).value; });
+  /* As in Figma: Hover exists only selected, Disabled only unselected, Placement only Horizontal. */
+  if (_tiDemo.State === 'Hover' && !_tiDemo.isSelected) _tiDemo.State = 'Default';
+  if (_tiDemo.State === 'Disabled' && _tiDemo.isSelected) _tiDemo.State = 'Default';
+  if (g('ti-demo-state')) g('ti-demo-state').value = _tiDemo.State;
+  if (g('ti-demo-placement')) g('ti-demo-placement').disabled = _tiDemo.Orientation === 'Vertical';
+  var el = g('ti-demo-preview');
+  if (el) { el.innerHTML = _tabItem(_tiDemo); _tabRoundLabels(el); }
 }
+window.updateTabItemDemo = updateTabItemDemo;
 
-/* Spec card: render active + inactive side by side */
-function _tiSideBySide(baseOpts) {
-  var act = Object.assign({}, baseOpts, { active: 'yes' });
-  var inact = Object.assign({}, baseOpts, { active: 'no' });
-  return '<div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">' +
-    _tiBuildSvg(act) + _tiBuildSvg(inact) +
-    '</div>';
+/* ── DEV code — component API, as on the Code tab ───────────────────── */
+function buildSwiftSnippet(c) {
+  var l = ['EBTabItem("' + c.label + '", selected: ' + c.isSelected + ')', '    .ebOrientation(.' + c.Orientation.toLowerCase() + ')', '    .ebSize(.' + c.Size.toLowerCase() + ')'];
+  if (c.hasCounter) l.push('    .ebCounter(0)');
+  if (c.hasNotificationDot) l.push('    .ebNotificationDot(true)');
+  if (c.State === 'Disabled') l.push('    .disabled(true)');
+  return l.join('\n');
 }
-
-function _tiInitSpecCards() {
-  var cards = [
-    ['ti-preview-vs', { orient: 'vertical', size: 'small' }],
-    ['ti-preview-vl', { orient: 'vertical', size: 'large' }],
-    ['ti-preview-hs', { orient: 'horizontal', size: 'small', leadicon: 'yes', counter: 'yes' }],
-    ['ti-preview-hl', { orient: 'horizontal', size: 'large', leadicon: 'yes', counter: 'yes' }]
-  ];
-  cards.forEach(function(c) {
-    var el = document.getElementById(c[0]);
-    if (el) el.innerHTML = _tiSideBySide(c[1]);
-  });
+function buildComposeSnippet(c) {
+  var l = ['EBTabItem(', '    label = "' + c.label + '",', '    selected = ' + c.isSelected + ',', '    orientation = EBTabOrientation.' + c.Orientation + ',', '    size = EBTabSize.' + c.Size];
+  if (c.hasCounter) l.push('    counter = 0');
+  if (c.hasNotificationDot) l.push('    showNotificationDot = true');
+  if (c.State === 'Disabled') l.push('    enabled = false');
+  for (var i = 1; i < l.length - 1; i++) if (!/,$/.test(l[i])) l[i] += ',';
+  l.push(')');
+  return l.join('\n');
 }
-
-/* ── Tab Item Spec Cards ────────────────────────────────────────── */
-var _specCards = {
-  vs: { selected: 'true', orient: 'vertical',   size: 'small', leadingIcon: 'false', counter: 'false', redDot: 'false' },
-  vl: { selected: 'true', orient: 'vertical',   size: 'large', leadingIcon: 'false', counter: 'false', redDot: 'false' },
-  hs: { selected: 'true', orient: 'horizontal', size: 'small', leadingIcon: 'true',  counter: 'true',  redDot: 'false' },
-  hl: { selected: 'true', orient: 'horizontal', size: 'large', leadingIcon: 'true',  counter: 'true',  redDot: 'false' }
-};
-window._specCards = _specCards;
-
-function buildSwiftSnippet(type, card) {
-  var sel = card.selected === 'true' ? 'true' : 'false';
-  var orient = card.orient === 'horizontal' ? '.horizontal' : '.vertical';
-  var sizeName = card.size === 'large' ? '.large' : '.small';
-  var lines = ['EBTabItem("Label", value: .one)'];
-  lines.push('    .selected(' + sel + ')');
-  lines.push('    .orientation(' + orient + ')');
-  lines.push('    .size(' + sizeName + ')');
-  if (card.orient === 'horizontal' && card.leadingIcon === 'true') {
-    lines.push('    .leadingIcon(Image("icon"))');
-  }
-  if (card.orient === 'horizontal' && card.counter === 'true') {
-    lines.push('    .counter(0)');
-  }
-  if (card.redDot === 'true') {
-    lines.push('    .showBadge(true)');
-  }
-  return lines.join('\n');
-}
-
-function buildComposeSnippet(type, card) {
-  var sel = card.selected === 'true' ? 'true' : 'false';
-  var orient = card.orient === 'horizontal' ? 'EBTabOrientation.Horizontal' : 'EBTabOrientation.Vertical';
-  var sizeName = card.size === 'large' ? 'EBTabSize.Large' : 'EBTabSize.Small';
-  var lines = ['EBTabItem('];
-  lines.push('    label = "Label",');
-  lines.push('    selected = ' + sel + ',');
-  lines.push('    orientation = ' + orient + ',');
-  lines.push('    size = ' + sizeName);
-  if (card.orient === 'horizontal' && card.leadingIcon === 'true') {
-    lines[lines.length - 1] += ',';
-    lines.push('    leadingIcon = painterResource(R.drawable.icon)');
-  }
-  if (card.orient === 'horizontal' && card.counter === 'true') {
-    lines[lines.length - 1] += ',';
-    lines.push('    counter = 0');
-  }
-  if (card.redDot === 'true') {
-    lines[lines.length - 1] += ',';
-    lines.push('    showBadge = true');
-  }
-  lines.push(')');
-  return lines.join('\n');
-}
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
-}
+function getSnippet(cardKey, lang, card) { card = card || _tiDemo; return lang === 'swift' ? buildSwiftSnippet(card) : buildComposeSnippet(card); }
 window.getSnippet = getSnippet;
 
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
-  if (!card) return;
-  card[prop] = value;
-
-  /* Update preview SVG by cardKey id */
-  var previewMap = {
-    vs: { previewId: 'ti-preview-vs', cardKey: 'ti-spec-vs' },
-    vl: { previewId: 'ti-preview-vl', cardKey: 'ti-spec-vl' },
-    hs: { previewId: 'ti-preview-hs', cardKey: 'ti-spec-hs' },
-    hl: { previewId: 'ti-preview-hl', cardKey: 'ti-spec-hl' }
-  };
-
-  var active = card.selected === 'true' ? 'yes' : 'no';
-  var opts = {
-    active: active,
-    orient: card.orient,
-    size: card.size,
-    leadicon: card.leadingIcon === 'true' ? 'yes' : 'no',
-    counter: card.counter === 'true' ? 'yes' : 'no',
-    dot: card.redDot === 'true' ? 'yes' : 'no'
-  };
-
-  /* Update spec-card-preview wrapper inside the card */
-  var cardEl = document.getElementById('spec-card-' + cardStyle.replace(/^/, ''));
-  /* Use cardKey from data: 'ti-spec-{cardStyle}' */
-  var fullCardEl = document.getElementById('spec-card-ti-spec-' + cardStyle);
-  if (fullCardEl) {
-    var preview = fullCardEl.querySelector('.spec-card-preview');
-    if (preview) preview.innerHTML = _tiBuildSvg(opts);
-  }
-
-  /* Update Properties row — data-sp="${cardStyle}-${prop}" */
-  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
-  if (spEl) {
-    var displayMap = {
-      selected:    { 'true': 'Active', 'false': 'Inactive' },
-      leadingIcon: { 'true': 'true',   'false': 'false' },
-      counter:     { 'true': 'true',   'false': 'false' },
-      redDot:      { 'true': 'true',   'false': 'false' }
-    };
-    var hexEl = spEl.querySelector('.spec-prop-hex');
-    var displayValue = (displayMap[prop] && displayMap[prop][value]) || value;
-    if (hexEl) hexEl.textContent = displayValue;
-    else spEl.textContent = displayValue;
-  }
-
-  /* Colors section is server-rendered from tab-item.ts; Plan A's
-     `_patchSpecCardRows` (assessment.js) handles selected:true/false
-     overrides. Demo no longer rebuilds it. */
-
-  /* Update DEV code — locate via `[data-code-content="${cardStyle}"]`.
-     Always run, even when DEV view is hidden. Use highlightSyntax. */
-  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
-  if (codeEl) {
-    var lang = codeEl.getAttribute('data-lang') || 'swift';
-    var raw = getSnippet(cardStyle, lang, card);
-    codeEl.setAttribute('data-final', raw);
-    codeEl.textContent = raw;
-    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-  }
-}
-
-function _tiInit() {
-  updateTabItemDemo();
-  _tiInitSpecCards();
-  /* Initialize each spec card so preview, properties, and DEV code reflect current state */
-  ['vs', 'vl', 'hs', 'hl'].forEach(function(k) {
-    var card = _specCards[k];
-    ['selected', 'leadingIcon', 'counter', 'redDot'].forEach(function(p) {
-      if (card[p] !== undefined) updateSpecCard(k, p, card[p]);
-    });
-  });
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _tiInit);
-} else {
-  _tiInit();
-}
-
+function _tiInit() { updateTabItemDemo(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateTabItemDemo); }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tiInit);
+else _tiInit();
 document.addEventListener('astro:page-load', _tiInit);

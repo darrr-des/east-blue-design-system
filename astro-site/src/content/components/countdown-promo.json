@@ -3,7 +3,7 @@
   "meta": {
     "node": "5630:36047",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5630-36047",
-    "description": "A promotional card built around a countdown — a line of copy, the timer, a full-width action and a dismiss control. Two levels of emphasis.",
+    "description": "Countdown Promos prompt people to act on an offer before its timer runs out.",
     "badges": [
       {
         "kind": "keep",
@@ -16,15 +16,15 @@
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Keep — the recipe the last review asked for",
-      "text": "All four DS Health traits pass. This card used to live inside <a href=\"/components/countdown\">Countdown</a> as a fourth \"style\", which is what made that component hard to reason about — a promo with copy, a button and a close icon is not a sibling of a timer layout. It is now its own component composing the timer, with the button and the dismiss control as real slots rather than baked instances."
+      "title": "Keep — one open issue on the action bar",
+      "text": "A card that composes <code>Countdown</code> with a title, <code>⤷ ActionSlot</code> and <code>⤷ CloseSlot</code>. Open: the action is a Button - XSmall overridden into a 360 × 24 square bar, so it can’t map to <code>EBButton</code> yet."
     },
     "navGroup": "Countdown",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Runs full-width on the dashboard and on Discover, above the fold, for a campaign with a deadline. High emphasis for a headline promotion, Low for one that sits alongside other cards without shouting.",
-    "inContextHtml": "",
+    "inContextNote": "How the countdown promo appears in real product screens — “Hurry up! Sale ends in:” above Flash Deals on the Promo Page, once with a Show now! bar and once on the blue header.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/countdown-promo-in-context.png\" alt=\"Countdown Promo shown on two GCash Promo Page screens: a white card reading Hurry up! Sale ends in: with a blue 00 days 00 hrs 00 mins 00 secs timer and a Show now! bar, and the same card on the blue header with a light timer and no bar\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"cdp-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Emphasis</span><select id=\"cdp-ctrl-emphasis\" class=\"demo-panel-select\" onchange=\"_cdpUpdate()\"><option value=\"high\" selected>High</option><option value=\"low\">Low</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">headerText</span><input type=\"text\" id=\"cdp-ctrl-header\" class=\"demo-panel-select demo-panel-input\" value=\"Hurry up! Sale ends in:\" oninput=\"_cdpUpdate()\" /></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasCTA</span><select id=\"cdp-ctrl-hascta\" class=\"demo-panel-select\" onchange=\"_cdpUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasCloseButton</span><select id=\"cdp-ctrl-hasclose\" class=\"demo-panel-select\" onchange=\"_cdpUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div></div></div></div>",
@@ -125,7 +125,7 @@
     "open": [
       {
         "headline": "The action bar is a Button pushed out of shape.",
-        "body": "The <code>⤷ ActionSlot</code> holds a <strong>Button - XSmall</strong> overridden away from what Button is: 24px tall against Button’s 26, square against its 99px pill, filling 360 where Button hugs, and on the High card painted <code>#2340A9</code> — Button’s <em>pressed</em> fill — as a resting state. A developer handed <code>action: EBButton?</code> would render a 26px enabled-blue pill, not the full-bleed bar the design shows, so the slot cannot be mapped as it stands. Two ways out, and it needs a decision rather than a fix: either Button gains a full-bleed appearance that this can use, or Promo’s action stops being a Button and becomes its own treatment.",
+        "body": "The <code>⤷ ActionSlot</code> holds a <strong>Button - XSmall</strong> overridden away from what Button is: 24px tall against Button’s 26, square against its 99px pill, filling 360 where Button hugs, and on the High card painted <code>#2340A9</code> — Button’s <em>hover</em> fill — as a resting state. A developer handed <code>action: EBButton?</code> would render a 26px enabled-blue pill, not the full-bleed bar the design shows, so the slot cannot be mapped as it stands. Two ways out, and it needs a decision rather than a fix: either Button gains a full-bleed appearance that this can use, or Promo’s action stops being a Button and becomes its own treatment.",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
@@ -864,7 +864,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -883,10 +884,10 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>countdown<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. The artifact is the Countdown family, not this component: Countdown, Unit and Promo all ship in <code>com.eastblue.ds:countdown</code> and import <code>com.eastblue.ds.countdown.*</code>."
+      "footnote": ""
     },
     "propertyMapping": {
-      "description": "Six properties, in the order the Figma property panel lists them. The deadline is not among them: Figma places a static <a href=\"/components/countdown\">Countdown</a> instance showing <code>00:00:00:00</code>, so nothing in the file states when the promotion ends — natively that is <code>until</code>, and the platform derives the timer from it. Each slot keeps its boolean alongside it rather than being inferred from a nil parameter, so every Figma property traces 1:1 for Code Connect.",
+      "description": "Six properties, in the order the Figma property panel lists them. The deadline is not among them: Figma places a static <a href=\"/components/countdown\">Countdown</a> instance showing <code>00:00:00:00</code>, so nothing in the file states when the promotion ends — natively that is <code>until</code>, and the platform derives the timer from it. Each slot keeps its boolean alongside it rather than being inferred from a nil parameter, so every Figma property traces 1:1 to the API.",
       "rows": [
         {
           "figma": "Emphasis — High, Low",
@@ -928,12 +929,12 @@
       {
         "subheading": "High — a headline promotion",
         "swift": "<span class=\"syn-type\">EBCountdownPromo</span><span class=\"syn-punc\">(</span>\n    headerText<span class=\"syn-punc\">:</span> campaign<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">,</span>\n    until<span class=\"syn-punc\">:</span> campaign<span class=\"syn-punc\">.</span>endsAt<span class=\"syn-punc\">,</span>\n    emphasis<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.high</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCountdownPromo</span><span class=\"syn-punc\">(</span>\n    headerText <span class=\"syn-eq\">=</span> campaign<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">,</span>\n    until <span class=\"syn-eq\">=</span> campaign<span class=\"syn-punc\">.</span>endsAt<span class=\"syn-punc\">,</span>\n    emphasis <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownPromoEmphasis</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">High</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBCountdownPromo</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">headerText</span> = campaign<span class=\"syn-dot\">.headline</span>,\n    <span class=\"syn-param\">until</span> = campaign<span class=\"syn-dot\">.endsAt</span>,\n    <span class=\"syn-param\">emphasis</span> = <span class=\"syn-type\">EBCountdownPromoEmphasis</span><span class=\"syn-dot\">.High</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Low — dismissible, alongside other cards",
         "swift": "<span class=\"syn-type\">EBCountdownPromo</span><span class=\"syn-punc\">(</span>\n    headerText<span class=\"syn-punc\">:</span> voucher<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">,</span>\n    until<span class=\"syn-punc\">:</span> voucher<span class=\"syn-punc\">.</span>expiresAt<span class=\"syn-punc\">,</span>\n    emphasis<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.low</span><span class=\"syn-punc\">,</span>\n    onDismiss<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">{</span> feed<span class=\"syn-punc\">.</span><span class=\"syn-fn\">dismiss</span><span class=\"syn-punc\">(</span>voucher<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCountdownPromo</span><span class=\"syn-punc\">(</span>\n    headerText <span class=\"syn-eq\">=</span> voucher<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">,</span>\n    until <span class=\"syn-eq\">=</span> voucher<span class=\"syn-punc\">.</span>expiresAt<span class=\"syn-punc\">,</span>\n    emphasis <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownPromoEmphasis</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Low</span><span class=\"syn-punc\">,</span>\n    onDismiss <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> feed<span class=\"syn-punc\">.</span><span class=\"syn-fn\">dismiss</span><span class=\"syn-punc\">(</span>voucher<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBCountdownPromo</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">headerText</span> = voucher<span class=\"syn-dot\">.headline</span>,\n    <span class=\"syn-param\">until</span> = voucher<span class=\"syn-dot\">.expiresAt</span>,\n    <span class=\"syn-param\">emphasis</span> = <span class=\"syn-type\">EBCountdownPromoEmphasis</span><span class=\"syn-dot\">.Low</span>,\n    <span class=\"syn-param\">onDismiss</span> = <span class=\"syn-punc\">{</span> feed.<span class=\"syn-fn\">dismiss</span><span class=\"syn-punc\">(</span>voucher<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [

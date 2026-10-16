@@ -3,7 +3,7 @@
   "meta": {
     "node": "5119:1786",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=5119-1786",
-    "description": "A 336×111 horizontal voucher card with text content on the left and a perforated image frame on the right; ships in four state variants (limited, expiring, used, expired).",
+    "description": "Horizontal Voucher Cards show people a voucher and its status in a wide card.",
     "badges": [
       {
         "kind": "remove",

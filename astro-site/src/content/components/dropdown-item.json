@@ -3,7 +3,7 @@
   "meta": {
     "node": "7947:111969",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=7947-111969",
-    "description": "One selectable row inside a Select Group — a leading element, a label with optional supporting text, and an optional trailing badge.",
+    "description": "Select Items let people choose one option from a Select menu.",
     "badges": [
       {
         "kind": "keep",

@@ -3,7 +3,7 @@
   "meta": {
     "node": "5776:37969",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5776-37969",
-    "description": "A full-bleed banner item for a horizontal carousel — background image, heading, description, and a button. 24 versions across size, appearance, top element, and pressed state.",
+    "description": "Carousel Items show people a full-width banner and button inside a carousel.",
     "badges": [
       {
         "kind": "keep",

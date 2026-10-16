@@ -3,7 +3,7 @@
   "meta": {
     "node": "4996:25507",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4996-25507",
-    "description": "A read-only form field showing a label and value; non-interactive.",
+    "description": "View Only Fields show people a value they can read but not change.",
     "badges": [
       {
         "kind": "keep",

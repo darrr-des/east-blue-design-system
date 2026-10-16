@@ -3,7 +3,7 @@
   "meta": {
     "node": "5630:36052",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5630-36052",
-    "description": "A live timer showing how long is left. Three layouts — boxed units, a single bar, or a compact pill — each with a running, nearly-over and finished state.",
+    "description": "Countdowns show people how much time is left.",
     "badges": [
       {
         "kind": "keep",
@@ -17,14 +17,14 @@
     "verdict": {
       "kind": "keep",
       "title": "Keep — restructured exactly as the last review asked",
-      "text": "All four DS Health traits pass. The previous component bundled four presentations into one set and mixed layout into its state setting. The promo card moved out to <a href=\"/components/countdown-promo\">Countdown Promo</a>, every unit became a <a href=\"/components/countdown-unit\">Countdown - Unit</a> instance, and the settings resolved into three that each do one job: <code>Style</code> is the layout, <code>State</code> is how much time is left, and <code>Surface</code> is what it sits on. A finished state exists for the first time."
+      "text": "<code>Style</code> sets the layout (Per, One, Pill), <code>State</code> how much time is left, and <code>Surface</code> what it sits on. Per and One switch each unit with <code>hasDays</code> to <code>hasSeconds</code>; Pill always shows all four."
     },
     "navGroup": "Countdown",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Adds urgency to anything time-limited — a flash sale, a voucher about to lapse, a payment window closing. Per and One sit inline above a call to action; Pill docks inside a card as a small \"ends in\" badge.",
-    "inContextHtml": "",
+    "inContextNote": "How the countdown appears in real product screens — a Pill on the Flash Deals banner, and Per boxes under “Starts in” on the Promo Page.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/countdown-in-context.png\" alt=\"Countdown component shown on two GCash screens: a blue Pill with an alarm icon reading 00d : 00h : 00m : 00s under the Flash Deals! heading, and four Per boxes reading 05 days, 37 hrs, 01 mins and 20 secs under Flash Deals! Starts in on the Promo Page\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"cd-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Style</span><select id=\"cd-ctrl-style\" class=\"demo-panel-select\" onchange=\"_cdUpdate()\"><option value=\"per\" selected=\"\">Per</option><option value=\"one\">One</option><option value=\"pill\">Pill</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"cd-ctrl-state\" class=\"demo-panel-select\" onchange=\"_cdUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"expiring\">Expiring</option><option value=\"expired\">Expired</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Surface</span><select id=\"cd-ctrl-surface\" class=\"demo-panel-select\" onchange=\"_cdUpdate()\"><option value=\"oncolor\" selected=\"\">onColor</option><option value=\"onlight\">onLight</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasSeconds</span><select id=\"cd-ctrl-hassecs\" class=\"demo-panel-select\" onchange=\"_cdUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasMinutes</span><select id=\"cd-ctrl-hasmins\" class=\"demo-panel-select\" onchange=\"_cdUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasHours</span><select id=\"cd-ctrl-hashrs\" class=\"demo-panel-select\" onchange=\"_cdUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDays</span><select id=\"cd-ctrl-hasdays\" class=\"demo-panel-select\" onchange=\"_cdUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div><div class=\"demo-panel-row\" id=\"cd-row-hasicon\"><span class=\"demo-panel-label\">hasLeadingIcon</span><select id=\"cd-ctrl-hasicon\" class=\"demo-panel-select\" onchange=\"_cdUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div></div></div></div>",
@@ -1889,7 +1889,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1908,7 +1909,7 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>countdown<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. The artifact is the Countdown family, not this component: Countdown, Unit and Promo all ship in <code>com.eastblue.ds:countdown</code> and import <code>com.eastblue.ds.countdown.*</code>."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "Nine properties, in the order the Figma property panel lists them. <code>State</code> is the one that is not a parameter: Figma exposes it as a variant because a designer has to pick one to see it, but the platform works it out from the deadline — which is also what the Usage Guidelines ask for. The four unit booleans are independent flags, not a list: switching off <code>hasDays</code> alone is a real combination.",
@@ -1968,17 +1969,17 @@
       {
         "subheading": "Per — one box per unit",
         "swift": "<span class=\"syn-type\">EBCountdown</span><span class=\"syn-punc\">(</span>\n    until<span class=\"syn-punc\">:</span> saleEnds<span class=\"syn-punc\">,</span>\n    style<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.per</span><span class=\"syn-punc\">,</span>\n    surface<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.onColor</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCountdown</span><span class=\"syn-punc\">(</span>\n    until <span class=\"syn-eq\">=</span> saleEnds<span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Per</span><span class=\"syn-punc\">,</span>\n    surface <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownSurface</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">OnColor</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBCountdown</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">until</span> = saleEnds,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBCountdownStyle</span><span class=\"syn-dot\">.Per</span>,\n    <span class=\"syn-param\">surface</span> = <span class=\"syn-type\">EBCountdownSurface</span><span class=\"syn-dot\">.OnColor</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Pill — compact, behind a leading icon",
         "swift": "<span class=\"syn-type\">EBCountdown</span><span class=\"syn-punc\">(</span>\n    until<span class=\"syn-punc\">:</span> saleEnds<span class=\"syn-punc\">,</span>\n    style<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pill</span><span class=\"syn-punc\">,</span>\n    surface<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.onColor</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCountdown</span><span class=\"syn-punc\">(</span>\n    until <span class=\"syn-eq\">=</span> saleEnds<span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Pill</span><span class=\"syn-punc\">,</span>\n    surface <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownSurface</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">OnColor</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBCountdown</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">until</span> = saleEnds,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBCountdownStyle</span><span class=\"syn-dot\">.Pill</span>,\n    <span class=\"syn-param\">surface</span> = <span class=\"syn-type\">EBCountdownSurface</span><span class=\"syn-dot\">.OnColor</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "One — a single bar",
         "swift": "<span class=\"syn-type\">EBCountdown</span><span class=\"syn-punc\">(</span>\n    until<span class=\"syn-punc\">:</span> saleEnds<span class=\"syn-punc\">,</span>\n    style<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.one</span><span class=\"syn-punc\">,</span>\n    surface<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.onColor</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCountdown</span><span class=\"syn-punc\">(</span>\n    until <span class=\"syn-eq\">=</span> saleEnds<span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">One</span><span class=\"syn-punc\">,</span>\n    surface <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownSurface</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">OnColor</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBCountdown</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">until</span> = saleEnds,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBCountdownStyle</span><span class=\"syn-dot\">.One</span>,\n    <span class=\"syn-param\">surface</span> = <span class=\"syn-type\">EBCountdownSurface</span><span class=\"syn-dot\">.OnColor</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [

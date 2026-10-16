@@ -3,7 +3,7 @@
   "meta": {
     "node": "4628:19843",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4628-19843",
-    "description": "A tappable list row with a leading asset slot, label and description, and a trailing chevron with optional counter. Merges the former Action List, Action List with Counter and Action List with Description.",
+    "description": "Action Rows let people open a related screen or task from a list.",
     "badges": [
       {
         "kind": "keep",

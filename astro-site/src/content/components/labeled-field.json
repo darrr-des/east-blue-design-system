@@ -3,7 +3,7 @@
   "meta": {
     "node": "17758:3713",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=17758-3713",
-    "description": "A form field with a label-on-top layout, used for plain text and value inputs.",
+    "description": "Labeled Fields let people enter text, with the label shown above the field.",
     "badges": [
       {
         "kind": "fix",

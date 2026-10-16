@@ -3,7 +3,7 @@
   "meta": {
     "node": "26628:50752",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26628-50752",
-    "description": "A single tappable segment inside a Segmented Control. 6 variants across <code>State</code> (Default / Pressed / Disabled) × <code>Active</code> (true / false). Active segments fill brand-blue; inactive segments carry a brand-blue outline. (Assessed in the 2026 Working File.)",
+    "description": "Segmented Control Buttons let people pick one option inside a Segmented Control.",
     "badges": [
       {
         "kind": "keep",
