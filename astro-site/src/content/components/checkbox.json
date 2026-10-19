@@ -793,16 +793,20 @@
     ],
     "usageGuidelines": [
       {
-        "doText": "Pair with a visible label adjacent to the checkbox. Checkboxes must always have associated text.",
-        "dontText": "Use for a single binary toggle — use Switch/Toggle instead. Checkboxes are for multi-select scenarios."
+        "doText": "Use it when people can select several options, or none.",
+        "dontText": "Don’t use it for a single on/off setting that applies right away — use Toggle."
       },
       {
-        "doText": "Use for multi-select scenarios — forms, filter lists, settings, and select-all patterns.",
-        "dontText": "Use a standalone Checkbox without an accessible label. Pair with CheckboxItem or an adjacent text label for form use."
+        "doText": "Use indeterminate on a “select all” box when only some of the items below it are selected.",
+        "dontText": "Don’t use indeterminate as a third answer for a single option."
       },
       {
-        "doText": "Expand touch area via padding when using Small (16px) size — minimum touch target is 44pt / 48dp.",
-        "dontText": "Omit an accessible label. Use .accessibilityLabel / contentDescription when no visible label is present."
+        "doText": "Pair the box with a label — use Checkbox Item for a labelled row.",
+        "dontText": "Don’t place a bare box beside loose text."
+      },
+      {
+        "doText": "Give the Small (16px) box a touch area of at least 44pt / 48dp.",
+        "dontText": "Don’t shrink the tap area down to the box."
       }
     ],
     "scorecard": [

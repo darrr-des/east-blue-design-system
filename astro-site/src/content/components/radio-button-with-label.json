@@ -1010,7 +1010,24 @@
         "android": "48dp minimum"
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use it when people pick one option from a short list they should see all at once.",
+        "dontText": "Don’t use it when people can pick more than one — use Checkbox Item."
+      },
+      {
+        "doText": "Write the label as the option itself — “Pay with GCash”, “Yes”, “No”.",
+        "dontText": "Don’t put helper text in the label; add a Subtext Message under the group instead."
+      },
+      {
+        "doText": "Keep one Size and one Style across a group.",
+        "dontText": "Don’t mix Sizes or Styles within a single group of options."
+      },
+      {
+        "doText": "Make the whole row — radio and label — the tap target.",
+        "dontText": "Don’t leave only the radio tappable; at 16–24px it is too small on its own."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",

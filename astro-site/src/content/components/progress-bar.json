@@ -552,7 +552,24 @@
         "android": "Native <code>LinearProgressIndicator</code> already respects <code>Animator.getDurationScale</code>."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use it for a known, measurable amount — a credit limit used, steps of a task completed.",
+        "dontText": "Don’t use it for an open-ended wait. The set has no indeterminate state; use a loader instead."
+      },
+      {
+        "doText": "Show the value next to the bar, as GCredit does with ₱3,311.00 of 10,000.00.",
+        "dontText": "Don’t rely on the bar alone to tell people an amount — it carries no text."
+      },
+      {
+        "doText": "Show success or error by switching the track and fill colours.",
+        "dontText": "Don’t invent new colours or ask for a new variant for each status."
+      },
+      {
+        "doText": "Let the bar fill the width of its container.",
+        "dontText": "Don’t give it a fixed width that leaves it short or overflowing on other screens."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
