@@ -73,7 +73,8 @@ const hasCode = !cardless && (
 const hasChangelog = data.changelog.length > 0;
 
 // Figma Preview — local trial on one component before any wider rollout.
-const FIGMA_PREVIEW_SLUGS = new Set(['button']);
+// Off for now: still in testing with the developers. Add 'button' back to try it.
+const FIGMA_PREVIEW_SLUGS = new Set<string>([]);
 const hasFigmaPreview = FIGMA_PREVIEW_SLUGS.has(slug!) && !!data.meta.figmaUrl;
 // Two-line Overview description shown above the Figma Preview.
 const FIGMA_PREVIEW_DESCRIPTIONS: Record<string, string> = {
