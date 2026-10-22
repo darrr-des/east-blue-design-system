@@ -1085,8 +1085,16 @@
     ],
     "usageGuidelines": [
       {
-        "doText": "Use Avatar Group for 2–4 participants in a list item, header, or shared-with indicator.",
-        "dontText": "Use for counts above 4 without an overflow \"+N\" badge — users can't infer total count from a cluster alone."
+        "doText": "Use Avatar Group for 2–4 people in a list item, header or shared-with indicator.",
+        "dontText": "Don’t use it for one person — use Avatar."
+      },
+      {
+        "doText": "Use the overflow layout, with a “+N” badge, when there are more than four people.",
+        "dontText": "Don’t squeeze more than four avatars into the group."
+      },
+      {
+        "doText": "Give the group one accessibility label that lists everyone.",
+        "dontText": "Don’t let each avatar announce separately — it creates VoiceOver and TalkBack noise."
       }
     ],
     "scorecard": [

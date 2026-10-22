@@ -565,15 +565,15 @@
       },
       {
         "doText": "Show the value next to the bar, as GCredit does with ₱3,311.00 of 10,000.00.",
-        "dontText": "Don’t rely on the bar alone to tell the user an amount — it carries no text."
+        "dontText": "Don’t rely on the bar alone to tell people an amount — it carries no text."
       },
       {
-        "doText": "Change the track and fill for success or error through the colour variables bound to them.",
-        "dontText": "Don’t recolour the bar with raw hex values or ask for a new variant per status."
+        "doText": "Show success or error by switching the track and fill colours.",
+        "dontText": "Don’t invent new colours or ask for a new variant for each status."
       },
       {
         "doText": "Let the bar fill the width of its container.",
-        "dontText": "Don’t give it a fixed width that leaves it short or overflowing on other screen sizes."
+        "dontText": "Don’t give it a fixed width that leaves it short or overflowing on other screens."
       }
     ],
     "scorecard": [

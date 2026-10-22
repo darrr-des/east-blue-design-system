@@ -1,12 +1,122 @@
 [
   {
-    "slug": "modal-transaction-receipt-entry",
-    "v": "Layout=Inline",
-    "pct": 0
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=Link, State=Pressed, hasLeadingAsset=False",
+    "pct": 0.91
   },
   {
-    "slug": "modal-transaction-receipt-entry",
-    "v": "Layout=Stacked",
-    "pct": 0
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=Button, State=Pressed, hasLeadingAsset=False",
+    "pct": 0.87
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=Button, State=Pressed, hasLeadingAsset=False",
+    "pct": 0.86
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=None, State=Pressed, hasLeadingAsset=False",
+    "pct": 0.86
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=None, State=Pressed, hasLeadingAsset=True",
+    "pct": 0.79
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=None, State=Pressed, hasLeadingAsset=True",
+    "pct": 0.78
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=None, State=Pressed, hasLeadingAsset=False",
+    "pct": 0.77
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=Button, State=Default, hasLeadingAsset=False",
+    "pct": 0.61
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=Link, State=Default, hasLeadingAsset=False",
+    "pct": 0.57
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=Button, State=Default, hasLeadingAsset=False",
+    "pct": 0.56
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=None, State=Default, hasLeadingAsset=True",
+    "pct": 0.56
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=None, State=Default, hasLeadingAsset=False",
+    "pct": 0.54
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=None, State=Default, hasLeadingAsset=True",
+    "pct": 0.52
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=None, State=Default, hasLeadingAsset=False",
+    "pct": 0.49
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=Link, State=Pressed, hasLeadingAsset=False",
+    "pct": 0.33
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=None, State=Disabled, hasLeadingAsset=False",
+    "pct": 0.28
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=None, State=Disabled, hasLeadingAsset=True",
+    "pct": 0.27
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=None, State=Disabled, hasLeadingAsset=True",
+    "pct": 0.27
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=Link, State=Disabled, hasLeadingAsset=False",
+    "pct": 0.27
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=None, State=Disabled, hasLeadingAsset=False",
+    "pct": 0.26
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=Link, State=Default, hasLeadingAsset=False",
+    "pct": 0.24
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=Link, State=Disabled, hasLeadingAsset=False",
+    "pct": 0.17
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Left, Action=Button, State=Disabled, hasLeadingAsset=False",
+    "pct": 0.09
+  },
+  {
+    "slug": "banner",
+    "v": "imagePosition=Right, Action=Button, State=Disabled, hasLeadingAsset=False",
+    "pct": 0.08
   }
 ]

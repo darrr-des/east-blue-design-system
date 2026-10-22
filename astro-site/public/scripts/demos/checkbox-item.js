@@ -1,19 +1,19 @@
-/* Checkbox with Label (CheckboxItem) — Style tab demo.
+/* Checkbox Item — Style tab demo.
  * Built from Figma component set 17734:161220 (GCash DS Sticker Sheets v2).
  * Offsets, fills and text styles read off get_node_info and
- * get_styled_text_segments; the tick path from get_svg on Checkbox_New.
+ * get_styled_text_segments; the tick path from get_svg on Checkbox.
  *
  * Panel (set 17734:161220):
  *   isSelected · false, true       (variant)
  *   Size       · Small, Medium     (variant)
  * 2 x 2 = 4 variants, all built. The row is 226 wide in the set and holds
- * a Checkbox_New instance beside a label and a description.
+ * a Checkbox instance beside a label and a description.
  *
  *   Small   226 x 34 — a 16 box, label 14/16, description 12/18
  *   Medium  226 x 40 — a 20 box, label 18/22, description 12/18
  * The gap between the box and the text is 8 in both.
  *
- * The set carries no State axis and no Large size, where Checkbox_New has
+ * The set carries no State axis and no Large size, where Checkbox has
  * five States and three Sizes — see the card.
  */
 
@@ -62,12 +62,12 @@ function _ciCap(v) { return v.charAt(0).toUpperCase() + v.slice(1); }
 function buildSwiftSnippet(cardKey, c) {
   return ['EBCheckboxItem(', '    "' + (c.label || 'Label') + '",',
     '    description: "' + (c.description || 'Description') + '",',
-    '    isOn: $isOn,', '    size: .' + c.size, ')'].join('\n');
+    '    isSelected: $isSelected,', '    size: .' + c.size, ')'].join('\n');
 }
 function buildComposeSnippet(cardKey, c) {
   return ['EBCheckboxItem(', '    label = "' + (c.label || 'Label') + '",',
     '    description = "' + (c.description || 'Description') + '",',
-    '    checked = ' + (c.isselected === 'true') + ',', '    onCheckedChange = { checked = it },',
+    '    selected = ' + (c.isselected === 'true') + ',', '    onSelectedChange = { selected = it },',
     '    size = EBCheckboxSize.' + _ciCap(c.size), ')'].join('\n');
 }
 function getSnippet(cardKey, lang, card) {
