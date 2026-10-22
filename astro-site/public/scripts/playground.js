@@ -347,18 +347,18 @@
         var r = f.el.getBoundingClientRect();
         f.ax = r.left - r0.left; f.ay = r.top - r0.top; f.w = r.width; f.h = r.height;
       });
-      // An empty slot draws nothing — Figma's own export of a component with an empty
-      // slot shows bare surface, so the preview shows bare surface too. The slot keeps
-      // its box in the layout and stays selectable in the Layers tree; hovering it in
-      // that tree outlines it, which is how you find it. A slot can carry its own
+      // Empty slots are drawn, the way Figma's own canvas draws them: the Playground is
+      // the authoring view, so a slot waiting to be filled has to be findable. The
+      // nochrome variant turns it off, which is what keeps fidelity comparing against
+      // Figma's export (an export paints nothing there). A slot can carry its own
       // artwork as a flattened SVG or image with no child layers (Carousel Item's Button
-      // chevron) — that is filled, not empty.
+      // chevron) — that is filled, not empty, and must not be painted over.
       flat.forEach(function (f, i) {
         if (f.n.type !== 'SLOT') return;
         var draws = f.n.svg != null || !!f.n.image;
         var empty = !draws && !flat.some(function (c, j) { return c.parent === i && isShown(j); });
-        // data-empty, not a painting class: the emptiness stays in the DOM for the
-        // Layers tree and for anything that wants it later, but nothing is drawn.
+        f.el.classList.toggle('is-empty', empty);
+        // Kept alongside the class so the Layers tree and anything else can read it.
         if (empty) f.el.setAttribute('data-empty', '');
         else f.el.removeAttribute('data-empty');
       });

@@ -50,7 +50,9 @@ function _liaMarker(type) {
     case 'bullet':         return [' eb-preview-lia__marker--narrow eb-preview-lia__marker--bullet', ''];
     case 'square':         return [' eb-preview-lia__marker--narrow eb-preview-lia__marker--square', ''];
     case 'numbered':       return [' eb-preview-lia__marker--number', null];
-    case 'slot':           return [' eb-preview-lia__marker--slot', ''];
+    /* ⤷ IconSlot ships empty, and Figma's export of an empty slot draws
+       nothing — so reserve the 16 × 20 footprint and paint nothing. */
+    case 'slot':           return ['', ''];
     default:               return ['', _liaPendingIcon(_LIA_NEUTRAL)];
   }
 }
