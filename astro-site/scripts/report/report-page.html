@@ -1,0 +1,485 @@
+<style>
+  #dash-root { --dash-gutter: clamp(16px, 4vw, 40px); }
+  .cr { display: flex; flex-direction: column; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+  .cr-head { display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+  .cr-eyebrow { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .06em; text-transform: uppercase; }
+  .cr-title { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem); line-height: 1.15; text-wrap: balance; }
+  .cr-takeaway { margin: 0; max-width: 62ch; font-size: var(--cds-font-size-body); line-height: 1.55; color: var(--color-fg-muted); }
+  .cr-takeaway b, .cr-tile b { font-weight: 600; color: var(--color-fg); }
+
+  .cr-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: var(--cds-gap-md); }
+  .cr-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xs); min-width: 0; }
+  .cr-tile.is-lead { border-color: var(--color-fg-muted); }
+  .cr-tile-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .cr-tile-num { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(2rem, 1.6rem + 1.4vw, 2.75rem); line-height: 1; font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: .35rem; flex-wrap: wrap; }
+  .cr-tile-of { font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); color: var(--color-fg-muted); }
+  .cr-tile-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .cr-meter { height: 6px; border-radius: 3px; background: var(--cds-chart-grid); overflow: hidden; margin-top: var(--cds-gap-xs); }
+  .cr-meter > span { display: block; height: 100%; border-radius: 3px; }
+
+  .cr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); }
+  .cr-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-md); min-width: 0; }
+  .cr-card h2 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+  .cr-card-note { margin: calc(var(--cds-gap-sm) * -1) 0 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; }
+
+  .cr-bars { position: relative; display: flex; flex-direction: column; gap: var(--cds-gap-md); min-height: 9rem; }
+  .cr-bar-row { display: grid; grid-template-columns: minmax(7rem, 9rem) 1fr auto; align-items: center; gap: var(--cds-gap-sm); }
+  .cr-bar-name { font-size: var(--cds-font-size-body); }
+  .cr-bar-track { position: relative; height: 22px; border-radius: 6px; background: var(--cds-chart-grid); overflow: hidden; display: flex; }
+  .cr-bar-seg { height: 100%; }
+  .cr-bar-val { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; white-space: nowrap; min-width: 4.5rem; text-align: right; }
+  .cr-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .cr-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .cr-sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  .cr-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); line-height: 1.5; white-space: nowrap; z-index: 2; }
+  .cr-tip-h { color: var(--cds-text-secondary); }
+
+  .cr-table-wrap { overflow-x: auto; border-top: 1px solid var(--color-border-line); }
+  .cr-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); font-variant-numeric: tabular-nums; }
+  .cr-table th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); padding: var(--cds-pad-sm) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .cr-table th button { all: unset; cursor: pointer; display: inline-flex; gap: .3rem; align-items: center; }
+  .cr-table th button:focus-visible { outline: 2px solid var(--color-fg-muted); outline-offset: 2px; border-radius: 3px; }
+  .cr-table td { padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: middle; }
+  .cr-table tr:last-child td { border-bottom: 0; }
+  .cr-pill { display: inline-flex; align-items: center; gap: .35rem; font-size: var(--cds-font-size-caption); white-space: nowrap; }
+  .cr-pill::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: currentColor; }
+  .cr-pill.r-pass { color: var(--color-ok); }
+  .cr-pill.r-partial, .cr-pill.r-warn { color: var(--color-warn); }
+  .cr-pill.r-fail { color: var(--color-bad); }
+  .cr-pill.s-ready { color: var(--color-ok); }
+  .cr-pill.s-refine { color: var(--color-warn); }
+  .cr-pill.s-rework { color: var(--color-bad); }
+  .cr-pill.s-retiring { color: var(--color-fg-muted); }
+  .cr-pill.r-for-pull-request, .cr-pill.s-for-pull-request { color: var(--color-fg-muted); }
+  .cr-muted { color: var(--color-fg-muted); }
+
+  .cr-tools { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+  .cr-tools input { flex: 1 1 14rem; min-width: 0; font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg); background: var(--color-bg); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-xs) var(--cds-pad-sm); }
+  .cr-chips { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); }
+  .cr-chip { font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); background: transparent; border: 1px solid var(--color-border-line); border-radius: 999px; padding: .25rem .7rem; cursor: pointer; }
+  .cr-chip[aria-pressed="true"] { color: var(--color-fg); border-color: var(--color-fg-muted); background: var(--color-bg); }
+  .cr-chip:focus-visible, .cr-tools input:focus-visible { outline: 2px solid var(--color-fg-muted); outline-offset: 2px; }
+
+  .cr-tabs { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); }
+  .cr-tab { font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); background: transparent; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: var(--cds-pad-sm) var(--cds-pad-sm); cursor: pointer; display: inline-flex; align-items: center; gap: .4rem; }
+  .cr-tab[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .cr-tab:focus-visible { outline: 2px solid var(--color-fg-muted); outline-offset: 2px; border-radius: 3px; }
+  .cr-tab-n { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); background: var(--color-bg); border: 1px solid var(--color-border-line); border-radius: 999px; padding: 0 .45rem; font-variant-numeric: tabular-nums; }
+  .cr-panel { display: flex; flex-direction: column; gap: var(--cds-gap-md); min-width: 0; }
+  .cr-def { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.6; max-width: 70ch; margin: 0; }
+  [data-dash-source-state=empty] { color: transparent; }
+  [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+  .cr-fail { display: flex; align-items: center; justify-content: center; gap: .5rem; min-height: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .cr-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+  @media (max-width: 30rem) { .cr-bar-row { grid-template-columns: 1fr auto; } .cr-bar-track { grid-column: 1 / -1; grid-row: 2; } .cr-hide-sm { display: none; } }
+</style>
+
+<div class="cr">
+  <header class="cr-head" id="summary">
+    <span class="cr-eyebrow">GCash Design System · East Blue assessment</span>
+    <h1 class="cr-title">Component reusability</h1>
+    <p class="cr-takeaway" id="takeaway">
+      <b class="dash-skeleton" data-source="by_scope" data-field="reusable" data-where="scope=checklist">—</b> of
+      <b class="dash-skeleton" data-source="by_scope" data-field="total" data-where="scope=checklist">—</b> components in the current Figma checklists are reusable
+      (<span class="dash-skeleton" data-source="by_scope" data-field="share" data-where="scope=checklist">—</span>).
+      <b class="dash-skeleton" data-source="by_scope" data-field="ready" data-where="scope=checklist">—</b> have a finished assessment.
+      <span id="takeaway-rest"></span>
+      <b class="dash-skeleton" data-source="by_scope" data-field="pr" data-where="scope=site">—</b> components have updates waiting for the pull request to main.
+    </p>
+  </header>
+
+  <section class="cr-tiles" id="tiles" aria-label="Reusable components by group">
+    <div class="cr-tile is-lead">
+      <span class="cr-tile-label">All checklist components</span>
+      <span class="cr-tile-num"><span class="dash-skeleton" data-source="by_scope" data-field="reusable" data-where="scope=checklist">—</span><span class="cr-tile-of">of <span data-source="by_scope" data-field="total" data-where="scope=checklist">—</span></span></span>
+      <span class="cr-tile-note">reusable · <span data-source="by_scope" data-field="share" data-where="scope=checklist">—</span></span>
+      <div class="cr-meter"><span data-meter="checklist"></span></div>
+    </div>
+    <div class="cr-tile">
+      <span class="cr-tile-label">Core Components</span>
+      <span class="cr-tile-num"><span class="dash-skeleton" data-source="by_group" data-field="reusable" data-where="group=Core Components">—</span><span class="cr-tile-of">of <span data-source="by_group" data-field="total" data-where="group=Core Components">—</span></span></span>
+      <span class="cr-tile-note">reusable · <span data-source="by_group" data-field="share" data-where="group=Core Components">—</span></span>
+      <div class="cr-meter"><span data-meter="Core Components"></span></div>
+    </div>
+    <div class="cr-tile">
+      <span class="cr-tile-label">Composites</span>
+      <span class="cr-tile-num"><span class="dash-skeleton" data-source="by_group" data-field="reusable" data-where="group=Composites">—</span><span class="cr-tile-of">of <span data-source="by_group" data-field="total" data-where="group=Composites">—</span></span></span>
+      <span class="cr-tile-note">reusable · <span data-source="by_group" data-field="share" data-where="group=Composites">—</span></span>
+      <div class="cr-meter"><span data-meter="Composites"></span></div>
+    </div>
+    <div class="cr-tile">
+      <span class="cr-tile-label">Patterns</span>
+      <span class="cr-tile-num"><span class="dash-skeleton" data-source="by_group" data-field="reusable" data-where="group=Patterns">—</span><span class="cr-tile-of">of <span data-source="by_group" data-field="total" data-where="group=Patterns">—</span></span></span>
+      <span class="cr-tile-note">reusable · <span data-source="by_group" data-field="share" data-where="group=Patterns">—</span></span>
+      <div class="cr-meter"><span data-meter="Patterns"></span></div>
+    </div>
+  </section>
+
+  <div class="cr-grid">
+    <section class="cr-card" id="by-group">
+      <h2>Reusable by group</h2>
+      <p class="cr-card-note">Each bar is one group's checklist. Filled = rated Pass on Reusable.</p>
+      <div class="cr-bars" id="group-bars" data-source="by_group"></div>
+      <div class="cr-legend" aria-hidden="true">
+        <span><i class="cr-sw" data-sw="pass"></i>Reusable</span>
+        <span><i class="cr-sw" data-sw="review"></i>For pull request</span>
+        <span><i class="cr-sw" data-sw="not"></i>Not yet reusable</span>
+      </div>
+    </section>
+
+    <section class="cr-card" id="assessment-status">
+      <h2>Assessment status</h2>
+      <p class="cr-card-note">Where each component's East Blue assessment stands. Ready means it's finished; Refine and Rework mean follow-ups remain.</p>
+      <div class="cr-bars" id="status-bars" data-source="status_by_group"></div>
+      <div class="cr-legend" aria-hidden="true">
+        <span><i class="cr-sw" data-sw="ready"></i>Ready</span>
+        <span><i class="cr-sw" data-sw="review"></i>For pull request</span>
+        <span><i class="cr-sw" data-sw="refine"></i>Refine</span>
+        <span><i class="cr-sw" data-sw="rework"></i>Rework</span>
+        <span><i class="cr-sw" data-sw="retiring"></i>Retiring</span>
+      </div>
+    </section>
+  </div>
+
+  <section class="cr-card" id="component-tables">
+    <div class="cr-tabs" role="tablist" aria-label="Component lists">
+      <button type="button" role="tab" class="cr-tab" id="tab-all" aria-controls="panel-all" aria-selected="true">All components <span class="cr-tab-n" data-count="all"></span></button>
+      <button type="button" role="tab" class="cr-tab" id="tab-review" aria-controls="panel-review" aria-selected="false">For Pull Request <span class="cr-tab-n" data-count="review"></span></button>
+      <button type="button" role="tab" class="cr-tab" id="tab-recheck" aria-controls="panel-recheck" aria-selected="false">Re-checking <span class="cr-tab-n" data-count="recheck"></span></button>
+      <button type="button" role="tab" class="cr-tab" id="tab-retire" aria-controls="panel-retire" aria-selected="false">Retirement <span class="cr-tab-n" data-count="retire"></span></button>
+    </div>
+
+    <div class="cr-panel" role="tabpanel" id="panel-all" aria-labelledby="tab-all">
+      <p class="cr-card-note">Every component on the East Blue site, including <span data-source="by_scope" data-field="total" data-where="scope=outside">—</span> that are being removed or merged and so aren't in any checklist.</p>
+      <div class="cr-tools">
+        <input id="cr-search" type="search" placeholder="Search components" aria-label="Search components">
+        <div class="cr-chips" id="cr-chips" role="group" aria-label="Filter by group"></div>
+      </div>
+      <div class="cr-table-wrap">
+        <table class="cr-table" id="all-table" data-source="components" data-row-key="component">
+          <thead><tr>
+            <th data-field="component"><button type="button" data-sort="component">Component</button></th>
+            <th data-field="group"><button type="button" data-sort="group">Group</button></th>
+            <th data-field="reusable"><button type="button" data-sort="reusable">Reusable</button></th>
+            <th data-field="status"><button type="button" data-sort="status">Status</button></th>
+            <th data-field="verdict" class="cr-hide-sm"><button type="button" data-sort="verdict">Verdict</button></th>
+            <th data-field="playground" class="cr-hide-sm"><button type="button" data-sort="playground">Playground</button></th>
+            <th data-field="source_file" class="cr-hide-sm"><button type="button" data-sort="source_file">Assessed from</button></th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cr-panel" role="tabpanel" id="panel-review" aria-labelledby="tab-review" hidden>
+      <p class="cr-card-note">Components whose assessment (verdict, status, traits, open issues or Figma node) has changed on the working branch but isn't on the live site yet, plus work held outside the branch. They go live when the pull request to main is merged.</p>
+      <div class="cr-table-wrap">
+        <table class="cr-table" id="review-table" data-source="components" data-row-key="component">
+          <thead><tr>
+            <th data-field="component">Component</th>
+            <th data-field="group" class="cr-hide-sm">Group</th>
+            <th data-field="reusable">Reusable</th>
+            <th data-field="status">Status</th>
+            <th data-field="note" class="cr-hide-sm">Note</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cr-panel" role="tabpanel" id="panel-recheck" aria-labelledby="tab-recheck" hidden>
+      <p class="cr-card-note">Rows marked For Re-Checking or Re-Checking in the Component Reusability Checklists in Figma, with where each stands on the East Blue site. Read from Figma each time the report refreshes.</p>
+      <div class="cr-table-wrap">
+        <table class="cr-table" id="validate-table" data-source="components" data-row-key="component">
+          <thead><tr>
+            <th data-field="component">Component</th>
+            <th data-field="group" class="cr-hide-sm">Group</th>
+            <th data-field="status">Site status</th>
+            <th data-field="criteria_left">Criteria below Ready</th>
+            <th data-field="open_issues" class="cr-hide-sm">Open issues</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cr-panel" role="tabpanel" id="panel-retire" aria-labelledby="tab-retire" hidden>
+      <p class="cr-card-note">Components being removed or merged into another one. Designers should switch to the replacement; these won't be built for native.</p>
+      <div class="cr-table-wrap">
+        <table class="cr-table" id="retire-table" data-source="components" data-row-key="component">
+          <thead><tr>
+            <th data-field="component">Component</th>
+            <th data-field="verdict">Action</th>
+            <th data-field="replaced_by">Replaced by</th>
+            <th data-field="source_file" class="cr-hide-sm">Assessed from</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const RANK = { Pass: 0, 'For Pull Request': 1, Partial: 2, Warn: 3, Fail: 4 };
+  const GROUPS = ['Core Components', 'Composites', 'Patterns'];
+
+  dash.calc('by_group', {
+    inputs: ['components'],
+    title: 'Reusable count per group',
+    description: 'Counts each checklist group’s components and how many are rated Pass on Reusable.',
+    fn: (components) => ['Core Components', 'Composites', 'Patterns'].map((group) => {
+      const rows = components.filter((r) => r.group === group);
+      const reusable = rows.filter((r) => r.reusable === 'Pass').length;
+      const in_review = rows.filter((r) => r.reusable === 'For Pull Request').length;
+      return { group, total: rows.length, reusable, in_review, not_yet: rows.length - reusable - in_review, share: rows.length ? reusable / rows.length : 0 };
+    }),
+  });
+
+  dash.calc('by_scope', {
+    inputs: ['components'],
+    title: 'Reusable count overall',
+    description: 'Totals for all checklist components, for the components outside the checklists, and for the whole site.',
+    fn: (components) => {
+      const inList = components.filter((r) => r.group !== 'Not in checklist');
+      const outside = components.filter((r) => r.group === 'Not in checklist');
+      const row = (scope, rows) => {
+        const reusable = rows.filter((r) => r.reusable === 'Pass').length;
+        return { scope, total: rows.length, reusable, share: rows.length ? reusable / rows.length : 0, ready: rows.filter((r) => r.status === 'Ready').length };
+      };
+      const site = row('site', components);
+      site.pr = components.filter((r) => r.for_pull_request === 'Yes').length;
+      return [row('checklist', inList), row('outside', outside), site];
+    },
+  });
+
+  dash.calc('status_by_group', {
+    inputs: ['components'],
+    title: 'Assessment status per group',
+    description: 'Counts each group’s components by the assessment status the East Blue site shows.',
+    fn: (components) => ['Core Components', 'Composites', 'Patterns'].map((group) => {
+      const rows = components.filter((r) => r.group === group);
+      const n = (s) => rows.filter((r) => r.status === s).length;
+      return { group, total: rows.length, ready: n('Ready'), review: n('For Pull Request'), refine: n('Refine'), rework: n('Rework'), retiring: n('Retiring') };
+    }),
+  });
+
+  const pct = d3.format('.0%');
+  const root = document.querySelector('.cr');
+  const color = { pass: dash.colors[0], not: 'var(--cds-chart-status-critical)', ready: dash.colors[0], review: 'var(--cds-chart-muted)', refine: dash.colors[2], rework: dash.colors[3], retiring: 'var(--cds-chart-muted)' };
+  root.querySelectorAll('[data-sw]').forEach((el) => { el.style.background = color[el.dataset.sw]; });
+
+  const fillMarks = (id, keyField) => {
+    const d = dash.data(id);
+    root.querySelectorAll(`[data-source="${id}"][data-field]`).forEach((el) => {
+      if (d.status !== 'ok') { if (d.status !== 'loading') el.classList.remove('dash-skeleton'); return; }
+      el.classList.remove('dash-skeleton');
+      const [k, v] = (el.dataset.where || '').split('=');
+      const row = d.data.find((r) => String(r[k]) === v);
+      if (!row) { el.textContent = '—'; return; }
+      const val = row[el.dataset.field];
+      el.textContent = el.dataset.field === 'share' ? pct(val) : d3.format(',')(val);
+    });
+  };
+
+  const tip = document.createElement('div');
+  tip.className = 'cr-tip';
+  tip.hidden = true;
+
+  const drawBars = (box, id, segs, labelFn, tipFn) => {
+    const d = dash.data(id);
+    box.replaceChildren();
+    if (d.status === 'error') { box.innerHTML = '<div class="cr-fail">Failed to load</div>'; return; }
+    if (d.status !== 'ok') { box.classList.add('dash-skeleton'); return; }
+    box.classList.remove('dash-skeleton');
+    const max = d3.max(d.data, (r) => r.total) || 1;
+    for (const r of d.data) {
+      const row = document.createElement('div');
+      row.className = 'cr-bar-row';
+      const name = document.createElement('span');
+      name.className = 'cr-bar-name';
+      name.textContent = r.group;
+      const track = document.createElement('div');
+      track.className = 'cr-bar-track';
+      track.style.width = `${(r.total / max) * 100}%`;
+      for (const s of segs) {
+        if (!r[s.field]) continue;
+        const seg = document.createElement('span');
+        seg.className = 'cr-bar-seg';
+        seg.style.width = `${(r[s.field] / r.total) * 100}%`;
+        seg.style.background = color[s.color];
+        track.append(seg);
+      }
+      const val = document.createElement('span');
+      val.className = 'cr-bar-val';
+      val.textContent = labelFn(r);
+      row.append(name, track, val);
+      track.addEventListener('mousemove', (e) => {
+        const b = box.getBoundingClientRect();
+        tip.replaceChildren();
+        const h = document.createElement('div'); h.className = 'cr-tip-h'; h.textContent = r.group; tip.append(h);
+        for (const [sw, text] of tipFn(r)) {
+          const line = document.createElement('div');
+          const i = document.createElement('i'); i.className = 'cr-sw'; i.style.background = color[sw]; i.style.marginRight = '.4rem';
+          line.append(i, document.createTextNode(text)); tip.append(line);
+        }
+        tip.hidden = false;
+        box.append(tip);
+        const x = Math.min(e.clientX - b.left + 12, b.width - tip.offsetWidth);
+        tip.style.left = `${Math.max(0, x)}px`;
+        tip.style.top = `${e.clientY - b.top + 14}px`;
+      });
+      track.addEventListener('mouseleave', () => { tip.hidden = true; });
+      box.append(row);
+    }
+  };
+
+  const pill = (rating) => {
+    const s = document.createElement('span');
+    s.className = `cr-pill r-${String(rating).toLowerCase().replace(/\s+/g, '-')}`;
+    s.textContent = rating;
+    return s;
+  };
+
+  const statusPill = (st) => {
+    const s = document.createElement('span');
+    s.className = `cr-pill s-${String(st).toLowerCase().replace(/\s+/g, '-')}`;
+    s.textContent = st;
+    return s;
+  };
+
+  const fillTable = (table, rows, fields) => {
+    const body = table.tBodies[0];
+    body.replaceChildren();
+    for (const r of rows) {
+      const tr = document.createElement('tr');
+      for (const f of fields) {
+        const td = document.createElement('td');
+        if (f === 'criteria_left' && !r[f]) { td.className = 'cr-muted'; td.textContent = r.status === 'Ready' ? 'None — all six Ready' : 'All six Ready (badge needs updating)'; tr.append(td); continue; }
+        if (f === 'open_issues') td.style.fontVariantNumeric = 'tabular-nums';
+        if (f === 'note' && !r[f]) { td.className = 'cr-muted'; td.textContent = 'Assessment updated on the branch'; tr.append(td); continue; }
+        if (f === 'reusable') td.append(pill(r[f]));
+        else if (f === 'status') td.append(statusPill(r[f]));
+        else td.textContent = r[f];
+        if (f === 'group' && r[f] === 'Not in checklist') td.className = 'cr-muted';
+        const th = table.querySelector(`th[data-field="${f}"]`);
+        if (th && th.classList.contains('cr-hide-sm')) td.classList.add('cr-hide-sm');
+        tr.append(td);
+      }
+      body.append(tr);
+    }
+  };
+
+  const state = { q: '', group: 'All', sort: 'group', dir: 1 };
+  const chips = document.getElementById('cr-chips');
+  ['All', ...GROUPS, 'Not in checklist'].forEach((g) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'cr-chip'; b.textContent = g; b.dataset.group = g;
+    b.setAttribute('aria-pressed', String(g === state.group));
+    b.addEventListener('click', () => { state.group = g; chips.querySelectorAll('.cr-chip').forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.group === g))); drawAll(); });
+    chips.append(b);
+  });
+  document.getElementById('cr-search').addEventListener('input', (e) => { state.q = e.target.value.trim().toLowerCase(); drawAll(); });
+  document.querySelectorAll('#all-table [data-sort]').forEach((b) => b.addEventListener('click', () => {
+    const f = b.dataset.sort; state.dir = state.sort === f ? -state.dir : 1; state.sort = f; drawAll();
+  }));
+
+  const groupOrder = (g) => { const i = GROUPS.indexOf(g); return i < 0 ? 9 : i; };
+  const STATUS_RANK = { Ready: 0, 'For Pull Request': 1, Refine: 2, Rework: 3, Retiring: 4 };
+  const sortVal = (r, f) => f === 'reusable' ? RANK[r[f]] ?? 9 : f === 'status' ? STATUS_RANK[r[f]] ?? 9 : f === 'group' ? groupOrder(r[f]) : String(r[f]).toLowerCase();
+
+  function drawAll() {
+    const d = dash.data('components');
+    const all = document.getElementById('all-table');
+    all.querySelectorAll('th').forEach((th) => {
+      const f = th.dataset.field;
+      th.setAttribute('aria-sort', f === state.sort ? (state.dir > 0 ? 'ascending' : 'descending') : 'none');
+    });
+    if (d.status !== 'ok') { all.tBodies[0].replaceChildren(); return; }
+    let rows = d.data.filter((r) => (state.group === 'All' || r.group === state.group) && (!state.q || Object.values(r).join(' ').toLowerCase().includes(state.q)));
+    rows = rows.slice().sort((a, b) => {
+      const x = sortVal(a, state.sort), y = sortVal(b, state.sort);
+      if (x < y) return -state.dir; if (x > y) return state.dir;
+      return groupOrder(a.group) - groupOrder(b.group) || a.component.localeCompare(b.component);
+    });
+    fillTable(all, rows, ['component', 'group', 'reusable', 'status', 'verdict', 'playground', 'source_file']);
+  }
+
+  const tabs = [...document.querySelectorAll('.cr-tab')];
+  const showTab = (tab, link) => {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (link) dash.setLink(tab.getAttribute('aria-controls'));
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => showTab(t, true));
+    t.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      n.focus(); showTab(n, true);
+    });
+  });
+  const linked = tabs.find((t) => t.getAttribute('aria-controls') === location.hash.slice(1));
+  showTab(linked || tabs[0], false);
+
+  dash.onData(() => {
+    fillMarks('by_group');
+    fillMarks('by_scope');
+
+    const g = dash.data('by_group');
+    const s = dash.data('by_scope');
+    root.querySelectorAll('[data-meter]').forEach((m) => {
+      const key = m.dataset.meter;
+      const src = key === 'checklist' ? s : g;
+      const row = src.status === 'ok' ? src.data.find((r) => (r.group || r.scope) === key) : null;
+      m.style.width = row ? `${row.share * 100}%` : '0';
+      m.style.background = row && row.share === 1 ? 'var(--color-ok)' : dash.colors[0];
+    });
+
+    drawBars(document.getElementById('group-bars'), 'by_group',
+      [{ field: 'reusable', color: 'pass' }, { field: 'in_review', color: 'review' }, { field: 'not_yet', color: 'not' }],
+      (r) => `${r.reusable} of ${r.total}`,
+      (r) => [['pass', `${r.reusable} reusable`], ['review', `${r.in_review} for pull request`], ['not', `${r.not_yet} not yet`]].filter((x) => !/^0 /.test(x[1])));
+    drawBars(document.getElementById('status-bars'), 'status_by_group',
+      [{ field: 'ready', color: 'ready' }, { field: 'review', color: 'review' }, { field: 'refine', color: 'refine' }, { field: 'rework', color: 'rework' }, { field: 'retiring', color: 'retiring' }],
+      (r) => `${r.ready} of ${r.total} ready`,
+      (r) => [['ready', `${r.ready} ready`], ['review', `${r.review} for pull request`], ['refine', `${r.refine} refine`], ['rework', `${r.rework} rework`], ['retiring', `${r.retiring} retiring`]].filter((x) => !/^0 /.test(x[1])));
+
+    const c = dash.data('components');
+    const rest = document.getElementById('takeaway-rest');
+    if (c.status === 'ok') {
+      const nr = c.data.filter((r) => r.group !== 'Not in checklist' && r.reusable !== 'Pass')
+        .sort((a, b) => groupOrder(a.group) - groupOrder(b.group) || RANK[b.reusable] - RANK[a.reusable] || a.component.localeCompare(b.component));
+      const rv = c.data.filter((r) => r.for_pull_request === 'Yes')
+        .sort((a, b) => (a.note ? 0 : 1) - (b.note ? 0 : 1) || groupOrder(a.group) - groupOrder(b.group) || a.component.localeCompare(b.component));
+      fillTable(document.getElementById('review-table'), rv, ['component', 'group', 'reusable', 'status', 'note']);
+      const tv = c.data.filter((r) => r.figma_status === 'For Re-Checking' || r.figma_status === 'Re-Checking')
+        .sort((a, b) => groupOrder(a.group) - groupOrder(b.group) || a.component.localeCompare(b.component));
+      fillTable(document.getElementById('validate-table'), tv, ['component', 'group', 'status', 'criteria_left', 'open_issues']);
+      const rt = c.data.filter((r) => r.status === 'Retiring')
+        .sort((a, b) => a.replaced_by.localeCompare(b.replaced_by) || a.component.localeCompare(b.component));
+      fillTable(document.getElementById('retire-table'), rt, ['component', 'verdict', 'replaced_by', 'source_file']);
+      const counts = { all: c.data.length, review: rv.length, recheck: tv.length, retire: rt.length };
+      document.querySelectorAll('[data-count]').forEach((el) => { el.textContent = counts[el.dataset.count]; });
+      const full = g.status === 'ok' ? g.data.filter((r) => r.not_yet === 0).map((r) => r.group) : [];
+      const names = nr.map((r) => r.component);
+      const list = names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}` : names.join('');
+      const join = (a) => a.length > 1 ? `${a.slice(0, -1).join(', ')} and ${a[a.length - 1]}` : a.join('');
+      const fix = nr.filter((r) => r.reusable !== 'For Pull Request').map((r) => r.component);
+      const rev = nr.filter((r) => r.reusable === 'For Pull Request').map((r) => r.component);
+      rest.textContent = `${full.length ? `Every ${full.join(' and ')} component passes. ` : ''}${fix.length ? `Still to fix: ${join(fix)}. ` : ''}${rev.length ? `Held for a pull request: ${join(rev)}. ` : ''}`;
+    } else {
+      document.getElementById('review-table').tBodies[0].replaceChildren();
+      document.querySelectorAll('[data-count]').forEach((el) => { el.textContent = ''; });
+      document.getElementById('validate-table').tBodies[0].replaceChildren();
+      document.getElementById('retire-table').tBodies[0].replaceChildren();
+      rest.textContent = '';
+    }
+    drawAll();
+  });
+</script>
