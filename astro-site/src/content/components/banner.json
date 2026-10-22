@@ -1,53 +1,53 @@
 {
   "name": "Banner",
   "meta": {
-    "node": "756:82673",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=756-82673",
-    "description": "A neutral-background promotional banner with an image or icon, a text stack (preamble, heading, description), and an optional button link.",
+    "node": "4430:14807",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4430-14807",
+    "description": "Banners show people a promotion with an image, a short message and an optional link.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "fix",
+        "label": "Fix"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — collapse 5 boolean-ish axes into a clean API, add asset/background slots, consolidate with Carousel - Item",
-      "text": "Property names with spaces (<code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code>) don't survive codegen. <code>with link</code> + <code>with button</code> describe mutually exclusive CTAs and should be one <code>action</code> enum. <code>with icon</code> is too narrow — a leading <code>asset</code> slot accepting Icon / Avatar / Illustration / Image is more reusable. <code>Property = Within A Container | Full Width</code> is a padding/layout concern owned by the parent. Background image and chevron should be vector slots. Finally, Banner and Carousel - Item share enough DNA to be one component with carousel behaviour on the container."
+      "kind": "fix",
+      "title": "Fix — hug height, spacers and state layers",
+      "text": "The rebuild replaces five yes / no axes with <code>Action</code>, <code>State</code> and three slots. Open: a fixed 160 height, spacer instances, <code>hasLeadingAsset</code> as a variant, and states drawn with a blended artwork copy."
     },
     "navGroup": "",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"2\" y=\"8\" width=\"28\" height=\"16\" rx=\"2\" fill=\"#EEF3FB\" stroke=\"#B8CFF8\" stroke-width=\"1\"/>\n      <circle cx=\"8\" cy=\"16\" r=\"4\" fill=\"#005CE5\"/>\n      <rect x=\"14\" y=\"12\" width=\"12\" height=\"2\" rx=\"1\" fill=\"#072592\"/>\n      <rect x=\"14\" y=\"16\" width=\"10\" height=\"1.5\" rx=\"0.75\" fill=\"#6780A9\"/>\n      <rect x=\"14\" y=\"20\" width=\"6\" height=\"1.5\" rx=\"0.75\" fill=\"#005CE5\"/>\n    </svg>"
   },
   "overview": {
-    "inContextNote": "Banner is used in-flow as a promotional callout — typically between sections on a Home or Dashboard screen. \"Within A Container\" leaves horizontal padding on either side so the banner sits as a card; \"Full Width\" bleeds edge-to-edge. The image or icon sits on the opposite side of the text per the position axis.",
-    "inContextHtml": "",
+    "inContextNote": "How the banner appears in real product screens — Set Reminder with a link, a GGives promo with a preamble, Invite friends to GForest with a button, and Pay with GCash full width.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/banner-in-context.png\" alt=\"Banner on four GCash screens: Set Reminder with a Remind me link and a photo of a woman with headphones; a GGives banner with the preamble GGives, the title I-GGives mo na yan! and View Our Partners; Invite friends to GForest, full width, with an Invite button and a forest illustration; and Pay with GCash, full width, under the Pay Online header\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"bnr-demo-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-left\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Property</span><select id=\"bnr-ctrl-property\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"container\" selected=\"\">Within A Container</option><option value=\"full\">Full Width</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">position</span><select id=\"bnr-ctrl-position\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"left\" selected=\"\">left</option><option value=\"right\">right</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">with preamble</span><select id=\"bnr-ctrl-preamble-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">with icon</span><select id=\"bnr-ctrl-icon-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">action</span><select id=\"bnr-ctrl-action-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"button\" selected=\"\">with button</option><option value=\"link\">with link</option><option value=\"none\">none</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"bnr-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasPreamble</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"bnr-demo-hasPreamble\" checked onchange=\"this.parentElement.classList.toggle(&#39;is-on&#39;,this.checked);updateBannerDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">imagePosition</span><select class=\"demo-panel-select\" id=\"bnr-demo-imagePosition\" onchange=\"updateBannerDemo()\"><option value=\"Right\" selected>Right</option><option value=\"Left\">Left</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Action</span><select class=\"demo-panel-select\" id=\"bnr-demo-Action\" onchange=\"updateBannerDemo()\"><option value=\"Button\" selected>Button</option><option value=\"None\">None</option><option value=\"Link\">Link</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"bnr-demo-State\" onchange=\"updateBannerDemo()\"><option value=\"Default\" selected>Default</option><option value=\"Pressed\">Pressed</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeadingAsset</span><label class=\"demo-panel-toggle\"><input type=\"checkbox\" id=\"bnr-demo-hasLeadingAsset\" onchange=\"this.parentElement.classList.toggle(&#39;is-on&#39;,this.checked);updateBannerDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Banner reads cleanly across promo, info, and up-sell contexts, but the image asset is an instance of a sibling component (not a declared slot) and the icon variant bakes in a grey placeholder — both force product teams to detach or fork to drop in real artwork."
+        "rating": "pass",
+        "note": "<code>Action</code> (Button, Link, None), <code>hasPreamble</code>, <code>hasLeadingAsset</code> and three slots cover promo, info and up-sell banners without detaching."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Card chrome, text tokens, and colors resolve to <code>main/banner/color/*</code>. But the chevron on the button link is a raster <code>shape_full</code> PNG, and the icon placeholder is a drawn circle — neither is self-contained as a vector instance."
+        "rating": "partial",
+        "note": "Colours, type and radius are bound, and the action is a library <code>Button - XSmall</code>. But Pressed and Disabled are drawn with a blended copy of the artwork, and the card is fixed at 160 tall."
       },
       {
         "name": "Consistent",
-        "rating": "fail",
-        "note": "Five boolean-ish axes with space-separated names (<code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code>) — no other DS component uses spaces in property names. <code>Property = Within A Container | Full Width</code> is a padding concern named like a semantic mode. <code>with link</code> + <code>with button</code> are mutually exclusive but modeled as independent booleans."
+        "rating": "partial",
+        "note": "<code>Action</code>, <code>State</code> and <code>imagePosition</code> are clean, but <code>hasLeadingAsset</code> is a False / True variant, the slots are not in the <code>⤷ …Slot</code> form, and spacer instances carry the rhythm."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Nests cleanly into Home/Dashboard scrollers and maps to iOS <code>HStack</code> / Compose <code>Row</code>. Duplicates ~95% of <a href=\"#\" onclick=\"showPanelById('carousel-item');return false;\">Carousel - Item</a>'s schema — the two should be one component."
+        "rating": "pass",
+        "note": "Artwork, leading asset and icon are real slots, and the action is a <code>Button - XSmall</code> instance rather than a drawn link."
       }
     ],
     "behavior": [
@@ -55,143 +55,184 @@
         "state": "Default",
         "ios": "yes",
         "android": "yes",
-        "property": "Property × position × with link × with button × with preamble × with icon",
-        "notes": "Static banner; whole card is the tap target when an action is present."
+        "property": "State=Default",
+        "notes": "Resting card. With an <code>Action</code> the whole banner is the tap target."
       },
       {
         "state": "Pressed",
-        "ios": "na",
-        "android": "na",
-        "property": "Not built",
-        "notes": "Tappable banner lacks pressed feedback — needs a subtle scale-down or overlay tint."
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Pressed",
+        "notes": "Drawn as a 60% copy of the artwork with a Linear Burn blend, darkening the card. No token; native needs its own pressed treatment."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "A 40% artwork copy washes the card out, and every text layer drops to 47% opacity."
       },
       {
         "state": "Focused",
         "ios": "na",
         "android": "na",
         "property": "Not built",
-        "notes": "Keyboard / D-pad focus ring needed when used in an a11y-first flow."
+        "notes": "No focus treatment in the set."
       },
       {
-        "state": "Within A Container",
-        "ios": "na",
-        "android": "na",
-        "property": "Property=Within A Container",
-        "notes": "12 px outer padding + 8 px corner radius around the banner card. Owned by the parent layout on native — not a component variant."
-      },
-      {
-        "state": "Full Width",
-        "ios": "na",
-        "android": "na",
-        "property": "Property=Full Width",
-        "notes": "No outer padding, no corner radius. Also owned by the parent layout."
+        "state": "Action — Button / Link / None",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Action=Button, Link, None",
+        "notes": "Button is a <code>Button - XSmall</code> text link with a chevron in <code>Icon Slot</code>; Link is the label alone; None has no action row."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
         "headline": "Property names use spaces.",
-        "body": "<code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code> aren't valid identifiers in any native codegen target. Should be camelCase: <code>hasLink</code>, <code>hasAction</code>, <code>hasPreamble</code>, <code>hasLeadingAsset</code>.",
+        "body": "v2.0: <code>with link</code>, <code>with button</code>, <code>with preamble</code> and <code>with icon</code> are gone; the set uses <code>Action</code>, <code>hasPreamble</code> and <code>hasLeadingAsset</code> — checked on node 4430:14807 (C2)",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "<code>Property</code> is a meta-name, not a semantic one.",
-        "body": "Its values (<code>Within A Container</code> / <code>Full Width</code>) describe outer padding and corner radius — a layout concern the parent should own. Rename to <code>padding</code> if kept, or drop the axis entirely and let the consumer control width + padding.",
+        "headline": "Property is a meta-name, not a semantic one.",
+        "body": "v2.0: the <code>Property</code> axis (Within A Container / Full Width) is removed; the banner is one rounded card — checked on node 4430:14807 (C2)",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "<code>with link</code> + <code>with button</code> encode mutually exclusive CTAs as independent booleans.",
-        "body": "Both are text + chevron link styles — the distinction is cosmetic. This schema admits the impossible state <code>with link=yes</code> + <code>with button=yes</code> (excluded by authoring convention, not by the schema). Collapse into one <code>action</code> enum.",
+        "headline": "with link + with button encode mutually exclusive CTAs as independent booleans.",
+        "body": "v2.0: one <code>Action</code> setting — Button, None, Link — so a link and a button can no longer both be on — checked on node 4430:14807 (C2)",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "Container padding modeled as a component variant.",
+        "body": "v2.0: removed with the <code>Property</code> axis; outer padding belongs to the parent layout — checked on node 4430:14807 (C4)",
+        "tag": {
+          "criterion": "",
+          "label": ""
         }
       },
       {
         "headline": "Sparse cartesian variant space.",
-        "body": "5 boolean-ish axes × 2 container modes would yield 64 combinations; only 20 ship. Author manually pruned invalid combos — that logic should live in the schema (enums, mutually exclusive props), not in variant authoring discipline.",
+        "body": "v2.0: 64 possible combinations are now 24 built variants: imagePosition × State × four Action / hasLeadingAsset pairings. The remaining gap is filed below — checked on node 4430:14807 (C1)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "No first-class image slot.",
+        "body": "v2.0: the artwork sits in <code>Asset Slot</code>, a real slot — checked on node 4430:14807 (C4)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "with icon=yes renders a drawn grey circle.",
+        "body": "v2.0: the leading icon is <code>Leading Asset Slot</code>, holding a swappable <code>Placeholder</code> instance — checked on node 4430:14807 (C6)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "Chevron is a raster shape_full PNG.",
+        "body": "v2.0: the arrow is a <code>Chevron Right Small</code> vector instance in <code>Icon Slot</code>, on <code>border/color-border-primary</code> — checked on node 4430:14807 (C6)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "No pressed / focused / disabled states.",
+        "body": "v2.0: <code>State</code> = Default, Pressed, Disabled. Focused is not drawn — see the open state issue — checked on node 4430:14807 (C5)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      }
+    ],
+    "open": [
+      {
+        "headline": "The banner is fixed at 160 tall.",
+        "body": "All 24 variants are 360 × 160 with fixed sizing, so the card cannot grow with its copy and the Link and None variants leave empty space under the text. Set the container to hug its content.",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "No first-class image slot.",
-        "body": "The image is an instance of a separate \"Banner Asset Placeholder\" component — product teams swap via instance-override rather than a declared Figma Slot. Should be a named <code>asset</code> slot accepting an Image, Illustration, or Gradient.",
+        "headline": "Spacer instances carry the vertical rhythm.",
+        "body": "<code>content</code> stacks <code>_space_2</code> (42 across the set) and <code>_space_16</code> (6) instances between its text layers — raw #FF0000 and #7000FF boxes. The layout gap should carry the spacing.",
         "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "<code>with icon=yes</code> renders a drawn grey circle.",
-        "body": "The icon slot is a flat <code>#C2C6CF</code> circle, not a swappable Icon / Avatar / Illustration instance. Can't carry a token-bound color or glyph.",
+        "headline": "A leading asset only exists without an action.",
+        "body": "<code>hasLeadingAsset</code> is a False / True variant, and True is built only with <code>Action=None</code>, so a banner cannot have a leading icon and a Button or Link. Make it a boolean so it combines with every Action.",
         "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Chevron is a raster <code>shape_full</code> PNG.",
-        "body": "The \"learn more\" arrow ships as an <code>&lt;img&gt;</code> asset. Doesn't scale cleanly and can't take a token tint.",
+        "headline": "Slot names do not follow the library form.",
+        "body": "<code>Asset Slot</code>, <code>Leading Asset Slot</code> and <code>Icon Slot</code> use spaces, where Table, Modal and Checkbox Item name theirs <code>⤷ AssetSlot</code>. The set also mixes <code>Container</code> and <code>container</code>.",
         "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No pressed / focused / disabled states.",
-        "body": "The whole banner is tappable but only Default is modeled. Native platforms need pressed (tap feedback) and focused (keyboard/D-pad) at minimum.",
+        "headline": "Pressed and Disabled are drawn with a blended copy of the artwork.",
+        "body": "Each state adds an <code>Overlay</code> frame holding a second copy of the image — 60% with a Linear Burn blend for Pressed, 40% for Disabled, with the text at 47%. No token describes either state, Linear Burn has no SwiftUI or Compose equivalent, and Focused is not drawn.",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Container padding modeled as a component variant.",
-        "body": "<code>Within A Container</code> adds 12 px outer padding and wraps the inner card in a rounded container; <code>Full Width</code> drops both. On native this is a layout-level decision (parent gives Banner its width + padding), not a Figma variant.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
         }
       }
     ],
     "recommendations": [
       {
-        "headline": "Rename space-separated booleans to camelCase.",
-        "body": "<code>with link</code> → <code>hasLink</code>, <code>with button</code> → <code>hasAction</code>, <code>with preamble</code> → <code>hasPreamble</code>, <code>with icon</code> → <code>hasLeadingAsset</code>. Matches the DS-wide naming fix applied to Carousel Item and the Form family.",
-        "tag": "Rename"
+        "headline": "Let the banner hug its content.",
+        "body": "Switch the container from fixed 160 to hug, so long copy grows the card and short copy does not leave a gap.",
+        "tag": "Composition"
       },
       {
-        "headline": "Collapse <code>with link</code> + <code>with button</code> into one <code>action</code> enum.",
-        "body": "<code>action: .none | .link(\"Label\") | .button(\"Label\")</code>. Mutually exclusive CTAs shouldn't be modeled as independent booleans — the schema should make <code>with link=yes + with button=yes</code> unrepresentable.",
+        "headline": "Replace the spacer instances with auto-layout gap.",
+        "body": "Set the gaps on <code>content</code> and delete the <code>_space_2</code> / <code>_space_16</code> instances.",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Make hasLeadingAsset a boolean.",
+        "body": "A boolean property combines with every <code>Action</code>, and drops the variant count from 24 to 18.",
         "tag": "Property"
       },
       {
-        "headline": "Replace <code>with icon</code> boolean with a leading <code>asset</code> slot.",
-        "body": "Accept an Icon, Avatar, Illustration, or Image instance. Native: <code>leadingAsset: @ViewBuilder</code> (SwiftUI) / <code>leadingAsset: @Composable () -&gt; Unit</code> (Compose). Eliminates the rigid icon-only placeholder.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add a <code>background</code> / image slot.",
-        "body": "Replace the \"Banner Asset Placeholder\" instance with a first-class Figma Slot that accepts an Image, Illustration, or Gradient. Native: <code>background: AnyView</code> / <code>background: @Composable () -&gt; Unit</code>.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Rename <code>Property</code> → drop it or make it <code>padding</code>.",
-        "body": "<code>Within A Container</code> vs <code>Full Width</code> is a padding + radius concern owned by the parent layout on native. Either remove the axis entirely (the banner fills whatever width its parent hands it) or rename to <code>padding: .container | .full</code>.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Rename <code>position</code> → <code>imagePosition</code>.",
-        "body": "More specific and self-documenting. Keep as <code>.left | .right</code> enum.",
+        "headline": "Name the slots in the library form.",
+        "body": "<code>⤷ AssetSlot</code>, <code>⤷ LeadingAssetSlot</code>, <code>⤷ IconSlot</code>, matching Table and Modal.",
         "tag": "Rename"
+      },
+      {
+        "headline": "Draw Pressed and Disabled with tokens.",
+        "body": "A token-bound state layer (or the Button family’s pressed and disabled tokens) in place of the blended artwork copy, so both platforms can reproduce them; add Focused if keyboard navigation is in scope.",
+        "tag": "State"
+      },
+      {
+        "headline": "Decide whether a full-width banner is still needed.",
+        "body": "The rebuild dropped the old Full Width option, but the In Context screens still show edge-to-edge banners (Invite friends to GForest, Pay with GCash).",
+        "tag": "Composition"
       },
       {
         "headline": "Consolidate with <a href=\"#\" onclick=\"showPanelById('carousel-item');return false;\">Carousel - Item</a>.",
@@ -199,22 +240,53 @@
         "tag": "Family"
       },
       {
-        "headline": "Vectorize the chevron.",
-        "body": "Swap the raster <code>shape_full</code> for a vector Icon instance — crisp at any scale, token-bound tint.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Add pressed + focused states.",
-        "body": "Pressed: 0.98 scale or 6–8% overlay on tap. Focused: 2 px focus ring at <code>border/focus</code>. Banners are always tappable and need both feedback signals.",
-        "tag": "State"
-      },
-      {
         "headline": "Announce as a single actionable element.",
         "body": "VoiceOver and TalkBack should read <em>preamble + heading + description + action label</em> as one announcement with a button/link role.",
         "tag": "A11y"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Rename space-separated booleans to camelCase.",
+        "body": "v2.0: Applied — <code>hasPreamble</code> and <code>hasLeadingAsset</code>; link and button became <code>Action</code>.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Collapse <code>with link</code> + <code>with button</code> into one <code>action</code> enum.",
+        "body": "v2.0: Applied — <code>Action</code> = Button, None, Link.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Replace <code>with icon</code> boolean with a leading <code>asset</code> slot.",
+        "body": "v2.0: Applied — <code>Leading Asset Slot</code>.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Add a <code>background</code> / image slot.",
+        "body": "v2.0: Applied — <code>Asset Slot</code>.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Rename <code>Property</code> → drop it or make it <code>padding</code>.",
+        "body": "v2.0: Applied — dropped.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Rename <code>position</code> → <code>imagePosition</code>.",
+        "body": "v2.0: Applied — <code>imagePosition</code> = Right, Left.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Vectorize the chevron.",
+        "body": "v2.0: Applied — <code>Chevron Right Small</code> vector instance.",
+        "tag": "Asset"
+      },
+      {
+        "headline": "Add pressed + focused states.",
+        "body": "v2.0: Applied in part — Pressed and Disabled ship; Focused does not.",
+        "tag": "State"
+      }
+    ]
   },
   "style": {
     "heading": "Variants",
@@ -1303,7 +1375,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1325,55 +1398,86 @@
       "footnote": ""
     },
     "propertyMapping": {
-      "description": "",
-      "rows": [
-        {
-          "figma": "<code>Property: Within A Container | Full Width</code>",
-          "swift": "<code>padding: container | none</code> <em>(or drop)</em>",
-          "compose": "Parent layout"
-        },
-        {
-          "figma": "<code>position: left | right</code>",
-          "swift": "<code>imagePosition: left | right</code>",
-          "compose": "<code>imagePosition: .left</code>"
-        },
-        {
-          "figma": "<code>with preamble</code>",
-          "swift": "<code>preamble?: String</code>",
-          "compose": "<code>preamble: String?</code>"
-        },
-        {
-          "figma": "<code>with link</code> + <code>with button</code>",
-          "swift": "<code>action: .none | .link | .button</code>",
-          "compose": "<code>action: EBBannerAction?</code>"
-        },
-        {
-          "figma": "<code>with icon</code>",
-          "swift": "<code>leadingAsset</code> slot",
-          "compose": "<code>leadingAsset: () -&gt; AnyView</code>"
-        },
-        {
-          "figma": "(Banner Asset Placeholder instance)",
-          "swift": "<code>background: Image | Illustration</code> slot",
-          "compose": "<code>background: AnyView</code>"
-        },
-        {
-          "figma": "(raster chevron)",
-          "swift": "vector Icon",
-          "compose": "Built into <code>.link</code>/<code>.button</code> action"
-        },
-        {
-          "figma": "(not modeled)",
-          "swift": "<code>onTap: () -&gt; Void</code>",
-          "compose": "<code>onTap: (() -&gt; Void)?</code>"
-        }
-      ],
+      "description": "<code>imagePosition</code>, <code>Action</code>, <code>State</code> and <code>hasLeadingAsset</code> are variant properties; <code>hasPreamble</code> is a boolean; the artwork, leading asset and action icon are Slots; the preamble, title and blurb are text layers.",
       "filePaths": {
         "swift": "",
         "compose": ""
-      }
+      },
+      "rows": [
+        {
+          "figma": "imagePosition — Right, Left",
+          "swift": "<code>imagePosition: EBBannerImagePosition = .right</code>",
+          "compose": "<code>imagePosition = EBBannerImagePosition.Right</code>"
+        },
+        {
+          "figma": "Action — Button, None, Link",
+          "swift": "<code>action: EBBannerAction = .none</code> <span class=\"muted\">— .button(label) { } / .link(label) { }</span>",
+          "compose": "<code>action: EBBannerAction = EBBannerAction.None</code>"
+        },
+        {
+          "figma": "State — Default, Pressed, Disabled",
+          "swift": "<code>.disabled(true)</code> <span class=\"muted\">— Pressed is the system press</span>",
+          "compose": "<code>enabled = false</code>"
+        },
+        {
+          "figma": "hasLeadingAsset — False, True",
+          "swift": "<code>@ViewBuilder leadingAsset: () -&gt; LeadingAsset</code>",
+          "compose": "<code>leadingAsset: (@Composable () -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "hasPreamble — true, false",
+          "swift": "<code>hasPreamble: Bool = true</code>",
+          "compose": "<code>hasPreamble: Boolean = true</code>"
+        },
+        {
+          "figma": "#preamble (text layer)",
+          "swift": "<code>preamble: String</code>",
+          "compose": "<code>preamble: String</code>"
+        },
+        {
+          "figma": "#title (text layer)",
+          "swift": "<code>title: String</code>",
+          "compose": "<code>title: String</code>"
+        },
+        {
+          "figma": "#blurb (text layer)",
+          "swift": "<code>blurb: String</code>",
+          "compose": "<code>blurb: String</code>"
+        },
+        {
+          "figma": "Asset Slot (slot)",
+          "swift": "<code>@ViewBuilder asset: () -&gt; Asset</code>",
+          "compose": "<code>asset: @Composable () -&gt; Unit</code>"
+        },
+        {
+          "figma": "Leading Asset Slot (slot) — with hasLeadingAsset",
+          "swift": "the <code>leadingAsset</code> builder",
+          "compose": "the <code>leadingAsset</code> lambda"
+        },
+        {
+          "figma": "Icon Slot (slot) — Button action only",
+          "swift": "the chevron drawn by <code>.button</code>",
+          "compose": "the chevron drawn by <code>EBBannerAction.Button</code>"
+        }
+      ]
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "Button",
+        "swift": "<code><span class=\"syn-cmt\">// imagePosition=Right, Action=Button, State=Default</span>\n<span class=\"syn-type\">EBBanner</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">preamble</span>: <span class=\"syn-str\">\"Preamble\"</span>,\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Heading\"</span>,\n    <span class=\"syn-param\">blurb</span>: <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">imagePosition</span>: <span class=\"syn-dot\">.right</span>,\n    <span class=\"syn-param\">action</span>: .<span class=\"syn-fn\">button</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"banner-art\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// imagePosition=Right, Action=Button, State=Default</span>\n<span class=\"syn-type\">EBBanner</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">preamble</span> = <span class=\"syn-str\">\"Preamble\"</span>,\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Heading\"</span>,\n    <span class=\"syn-param\">blurb</span> = <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">imagePosition</span> = <span class=\"syn-type\">EBBannerImagePosition</span><span class=\"syn-dot\">.Right</span>,\n    <span class=\"syn-param\">action</span> = <span class=\"syn-type\">EBBannerAction</span>.<span class=\"syn-fn\">Button</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Button\"</span>, <span class=\"syn-param\">onClick</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">asset</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource<span class=\"syn-punc\">(</span>R<span class=\"syn-dot\">.drawable</span><span class=\"syn-dot\">.banner_art</span><span class=\"syn-punc\">)</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      },
+      {
+        "subheading": "Link",
+        "swift": "<code><span class=\"syn-cmt\">// Action=Link</span>\n<span class=\"syn-type\">EBBanner</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Heading\"</span>,\n    <span class=\"syn-param\">blurb</span>: <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">imagePosition</span>: <span class=\"syn-dot\">.left</span>,\n    <span class=\"syn-param\">action</span>: .<span class=\"syn-fn\">link</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Link\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"banner-art\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Action=Link</span>\n<span class=\"syn-type\">EBBanner</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Heading\"</span>,\n    <span class=\"syn-param\">blurb</span> = <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">imagePosition</span> = <span class=\"syn-type\">EBBannerImagePosition</span><span class=\"syn-dot\">.Left</span>,\n    <span class=\"syn-param\">action</span> = <span class=\"syn-type\">EBBannerAction</span>.<span class=\"syn-fn\">Link</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Link\"</span>, <span class=\"syn-param\">onClick</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">asset</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource<span class=\"syn-punc\">(</span>R<span class=\"syn-dot\">.drawable</span><span class=\"syn-dot\">.banner_art</span><span class=\"syn-punc\">)</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      },
+      {
+        "subheading": "Leading asset, no action",
+        "swift": "<code><span class=\"syn-cmt\">// Action=None, hasLeadingAsset=True</span>\n<span class=\"syn-type\">EBBanner</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">preamble</span>: <span class=\"syn-str\">\"Preamble\"</span>,\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Heading\"</span>,\n    <span class=\"syn-param\">blurb</span>: <span class=\"syn-str\">\"Add description here.\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"banner-art\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span> <span class=\"syn-param\">leadingAsset</span>: <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"product-icon\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Action=None, hasLeadingAsset=True</span>\n<span class=\"syn-type\">EBBanner</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">preamble</span> = <span class=\"syn-str\">\"Preamble\"</span>,\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Heading\"</span>,\n    <span class=\"syn-param\">blurb</span> = <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">asset</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource<span class=\"syn-punc\">(</span>R<span class=\"syn-dot\">.drawable</span><span class=\"syn-dot\">.banner_art</span><span class=\"syn-punc\">)</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">leadingAsset</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource<span class=\"syn-punc\">(</span>R<span class=\"syn-dot\">.drawable</span><span class=\"syn-dot\">.product_icon</span><span class=\"syn-punc\">)</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      }
+    ],
     "accessibility": [
       {
         "requirement": "Whole-card tap target",
@@ -1397,167 +1501,494 @@
       },
       {
         "requirement": "Min touch target",
-        "ios": "360 × (93-176) ≫ 44 pt ✓",
-        "android": "360 × (93-176) ≫ 48 dp ✓"
+        "ios": "360 × 160 ≫ 44 pt ✓",
+        "android": "360 × 160 ≫ 48 dp ✓"
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use Banner for in-flow promo / info callouts between content sections. Keep the heading to 1-2 lines.",
-        "dontText": "Use both a link and a button — action is single-CTA by design."
+        "doText": "Use Banner for a promo or info message between content sections.",
+        "dontText": "Don’t use it for an urgent or blocking message — use Alert or Visual Popup."
       },
       {
-        "doText": "Pick imagePosition based on reading flow — LTR locales usually prefer .left image + right-aligned text.",
-        "dontText": "Stack Banner inside a carousel — compose EBBanner inside EBCarousel instead."
+        "doText": "Give it one Action — a Button, a Link, or none.",
+        "dontText": "Don’t add a second call to action inside the artwork or the copy."
       },
       {
-        "doText": "Use preamble for category context (PROMO, NEW, TIP). Let the parent layout own outer padding.",
-        "dontText": "Bake text into the image — background is decorative only. Don't ship the drawn-circle icon placeholder."
+        "doText": "Keep the heading to one or two lines and the blurb short — the card is 160 tall.",
+        "dontText": "Don’t bake text into the artwork; put it in the heading and blurb."
+      },
+      {
+        "doText": "Use the preamble for context, like the product name (GGives).",
+        "dontText": "Don’t use the preamble as a second heading."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Sparse cartesian — 5 boolean-ish axes × 2 container modes yields 64 combos; 20 ship. Container-padding axis conflates layout with identity."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>container</code> › <code>Asset Slot</code> + <code>content</code> (<code>#preamble</code>, <code>#title</code>, <code>#blurb</code>, <code>learn-more</code>). Fixed at 160 tall, with <code>_space_2</code> / <code>_space_16</code> spacer instances carrying the rhythm."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Property names use spaces (<code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code>). <code>Property</code> is a meta-name. <code>with link</code> + <code>with button</code> encode mutually exclusive CTAs as two booleans."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>Action</code>, <code>State</code> and <code>imagePosition</code> are clean and <code>hasPreamble</code> is a boolean, but <code>hasLeadingAsset</code> is a False / True variant built only with <code>Action=None</code>, and the slots are not in the <code>⤷ …Slot</code> form."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All colors bind to <code>main/banner/color/*</code>; radii to <code>radius/radius-3</code>; spacing to <code>space/space-*</code>; bg to <code>main/banner/color/bg</code>."
+        "notes": "Surface <code>bg/color-bg-main</code>, preamble and title <code>text/color-text-stronger</code>, blurb <code>text/color-text-weaker</code>, action <code>text/color-text-primary</code>, chevron <code>border/color-border-primary</code>; the only raw paints are on the spacer instances."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Image is an instance (not a slot); container-padding axis doesn't map to native; icon-only asset axis is rigid."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Maps to one <code>EBBanner</code> with an <code>action</code> enum and view-builder slots for the artwork and leading asset."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Only Default — no pressed, focused, or disabled for a tappable banner."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Default, Pressed and Disabled exist, but Pressed and Disabled are a blended copy of the artwork with no token, and Focused is not drawn."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Raster <code>shape_full</code> chevron. Drawn grey circle icon placeholder. Image asset is a separate component instance."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The artwork and leading asset are slots, and the chevron is a <code>Chevron Right Small</code> vector instance."
       }
     ],
     "variants": {
-      "total": 20,
-      "description": "<code>Property</code> (2) × <code>position</code> (2) × <code>with link</code> × <code>with button</code> × <code>with preamble</code> × <code>with icon</code> — if all boolean combinations shipped, 2 × 2 × 2 × 2 × 2 × 2 = 64 variants. The author pruned invalid combos (<code>with link=yes</code> + <code>with button=yes</code>, <code>with icon=yes</code> + <code>with button=yes</code>, etc.) and shipped <strong>20</strong> variants — 10 per <code>Property</code> mode, mirrored across <code>position=left|right</code>.",
+      "total": 24,
+      "description": "<code>imagePosition</code> (2) × <code>State</code> (3) × four <code>Action</code> / <code>hasLeadingAsset</code> pairings = <strong>24</strong> variants, all 360 × 160. <code>hasLeadingAsset=True</code> is built only with <code>Action=None</code>.",
       "columns": [
-        "Content shape",
-        "Property",
-        "Count",
-        "Example nodes (left · right)"
+        "imagePosition",
+        "Action",
+        "State",
+        "hasLeadingAsset",
+        "Node"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>heading + desc + button</strong>",
-            "Within A Container",
-            "2",
-            "<code>756:82659</code> · <code>756:82653</code>"
+            "Right",
+            "Button",
+            "Default",
+            "False",
+            "4430:14808"
           ]
         },
         {
           "cells": [
-            "heading + desc + button",
-            "Full Width",
-            "2",
-            "<code>756:82669</code> · <code>756:82667</code>"
+            "Right",
+            "Button",
+            "Pressed",
+            "False",
+            "4430:17360"
           ]
         },
         {
           "cells": [
-            "<strong>heading + desc + icon (no action)</strong>",
-            "Within A Container",
-            "2",
-            "<code>756:82657</code> · <code>756:82658</code>"
+            "Right",
+            "Button",
+            "Disabled",
+            "False",
+            "4430:17444"
           ]
         },
         {
           "cells": [
-            "heading + desc + icon (no action)",
-            "Full Width",
-            "2",
-            "<code>756:82668</code> · <code>756:82672</code>"
+            "Left",
+            "Button",
+            "Default",
+            "False",
+            "4430:14824"
           ]
         },
         {
           "cells": [
-            "<strong>preamble + heading + desc + button</strong>",
-            "Within A Container",
-            "2",
-            "<code>756:82655</code> · <code>756:82656</code>"
+            "Left",
+            "Button",
+            "Pressed",
+            "False",
+            "4430:17938"
           ]
         },
         {
           "cells": [
-            "preamble + heading + desc + button",
-            "Full Width",
-            "2",
-            "<code>756:82664</code> · <code>756:82662</code>"
+            "Left",
+            "Button",
+            "Disabled",
+            "False",
+            "4430:17972"
           ]
         },
         {
           "cells": [
-            "<strong>heading + desc + link</strong>",
-            "Within A Container",
-            "2",
-            "<code>756:82654</code> · <code>756:82671</code>"
+            "Right",
+            "None",
+            "Default",
+            "True",
+            "4430:14840"
           ]
         },
         {
           "cells": [
-            "heading + desc + link",
-            "Full Width",
-            "2",
-            "<code>756:82663</code> · <code>756:82670</code>"
+            "Right",
+            "None",
+            "Pressed",
+            "True",
+            "4430:20404"
           ]
         },
         {
           "cells": [
-            "<strong>heading + desc (no action)</strong>",
-            "Within A Container",
-            "2",
-            "<code>756:82665</code> · <code>756:82666</code>"
+            "Right",
+            "None",
+            "Disabled",
+            "True",
+            "4430:20418"
           ]
         },
         {
           "cells": [
-            "heading + desc (no action)",
-            "Full Width",
-            "2",
-            "<code>756:82661</code> · <code>756:82660</code>"
+            "Left",
+            "None",
+            "Default",
+            "True",
+            "4430:14851"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "None",
+            "Pressed",
+            "True",
+            "4430:20432"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "None",
+            "Disabled",
+            "True",
+            "4430:20446"
+          ]
+        },
+        {
+          "cells": [
+            "Right",
+            "Link",
+            "Default",
+            "False",
+            "4430:14862"
+          ]
+        },
+        {
+          "cells": [
+            "Right",
+            "Link",
+            "Pressed",
+            "False",
+            "4430:20472"
+          ]
+        },
+        {
+          "cells": [
+            "Right",
+            "Link",
+            "Disabled",
+            "False",
+            "4430:20490"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Link",
+            "Default",
+            "False",
+            "4430:14874"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Link",
+            "Pressed",
+            "False",
+            "4430:20508"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "Link",
+            "Disabled",
+            "False",
+            "4430:20526"
+          ]
+        },
+        {
+          "cells": [
+            "Right",
+            "None",
+            "Default",
+            "False",
+            "4430:14886"
+          ]
+        },
+        {
+          "cells": [
+            "Right",
+            "None",
+            "Pressed",
+            "False",
+            "4430:20556"
+          ]
+        },
+        {
+          "cells": [
+            "Right",
+            "None",
+            "Disabled",
+            "False",
+            "4430:20566"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "None",
+            "Default",
+            "False",
+            "4430:14895"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "None",
+            "Pressed",
+            "False",
+            "4430:20576"
+          ]
+        },
+        {
+          "cells": [
+            "Left",
+            "None",
+            "Disabled",
+            "False",
+            "4430:20586"
           ]
         }
       ],
       "summary": {
-        "columns": [],
-        "rows": []
+        "columns": [
+          "Content shape",
+          "Property",
+          "Count",
+          "Example nodes (left · right)"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "<strong>heading + desc + button</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82659</code> · <code>756:82653</code>"
+            ]
+          },
+          {
+            "cells": [
+              "heading + desc + button",
+              "Full Width",
+              "2",
+              "<code>756:82669</code> · <code>756:82667</code>"
+            ]
+          },
+          {
+            "cells": [
+              "<strong>heading + desc + icon (no action)</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82657</code> · <code>756:82658</code>"
+            ]
+          },
+          {
+            "cells": [
+              "heading + desc + icon (no action)",
+              "Full Width",
+              "2",
+              "<code>756:82668</code> · <code>756:82672</code>"
+            ]
+          },
+          {
+            "cells": [
+              "<strong>preamble + heading + desc + button</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82655</code> · <code>756:82656</code>"
+            ]
+          },
+          {
+            "cells": [
+              "preamble + heading + desc + button",
+              "Full Width",
+              "2",
+              "<code>756:82664</code> · <code>756:82662</code>"
+            ]
+          },
+          {
+            "cells": [
+              "<strong>heading + desc + link</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82654</code> · <code>756:82671</code>"
+            ]
+          },
+          {
+            "cells": [
+              "heading + desc + link",
+              "Full Width",
+              "2",
+              "<code>756:82663</code> · <code>756:82670</code>"
+            ]
+          },
+          {
+            "cells": [
+              "<strong>heading + desc (no action)</strong>",
+              "Within A Container",
+              "2",
+              "<code>756:82665</code> · <code>756:82666</code>"
+            ]
+          },
+          {
+            "cells": [
+              "heading + desc (no action)",
+              "Full Width",
+              "2",
+              "<code>756:82661</code> · <code>756:82660</code>"
+            ]
+          }
+        ]
       },
-      "collapseLabel": ""
+      "collapseLabel": "View full Property × position × with link × with button × with preamble × with icon breakdown (20 rows)"
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "October 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Component Review against the Working File rebuild · node 4430:14807",
+      "rows": [
+        {
+          "body": "<strong>Repointed to the rebuild.</strong> The owner chose the 2026 Working File set 4430:14807 (was 756:82673). Five yes / no axes and <code>Property</code> become <code>imagePosition</code>, <code>Action</code>, <code>State</code>, <code>hasLeadingAsset</code>, <code>hasPreamble</code> and three slots — 24 variants.",
+          "delta": {
+            "kind": "partial",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Property names use spaces.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Property is a meta-name, not a semantic one.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>with link + with button encode mutually exclusive CTAs as independent booleans.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Container padding modeled as a component variant.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Sparse cartesian variant space.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>No first-class image slot.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4 Resolved"
+          }
+        },
+        {
+          "body": "<strong>with icon=yes renders a drawn grey circle.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Chevron is a raster shape_full PNG.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>No pressed / focused / disabled states.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Five findings filed.</strong> Fixed 160 height and spacer instances (C1), <code>hasLeadingAsset</code> as a variant and slot naming (C2), and states drawn with a blended artwork copy (C5).",
+          "delta": {
+            "kind": "open",
+            "label": "C1 C2 C5 Open"
+          }
+        },
+        {
+          "body": "<strong>Restructure · Requires Rework → Fix · Needs Refinement.</strong> Reusable and Composable now pass; Self-contained and Consistent are Partial.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Verdict"
+          }
+        },
+        {
+          "body": "<strong>Code tab, Live Preview, Playground and In Context rewritten for the rebuild.</strong>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

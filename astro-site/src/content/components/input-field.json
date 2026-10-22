@@ -3,7 +3,7 @@
   "meta": {
     "node": "17758:3687",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=17758-3687",
-    "description": "A standard form text-input field — label, body, and four interaction states (default, active, error, disabled).",
+    "description": "Input Fields let people type a short piece of text.",
     "badges": [
       {
         "kind": "fix",
@@ -23,8 +23,8 @@
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"20\" width=\"80\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <rect x=\"24\" y=\"25\" width=\"30\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"20\" y=\"42\" width=\"80\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <rect x=\"24\" y=\"47\" width=\"45\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"20\" y=\"62\" width=\"80\" height=\"8\" rx=\"4\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
+    "inContextNote": "How the Input Field appears in a real product screen — the Add Bank Account form, stacking a filled field, a focused one and two still empty.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/input-field-in-context.png\" alt=\"Input Field shown on the GCash Add Bank Account screen for BPI: Nickname filled with Savings, Account Name focused with a blue border reading Andres Bonifacio, and Account Number and Send Receipt to empty with placeholder text\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"inf-demo-preview\"><svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_infDemo.state=this.value;updateInputFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_infDemo.filled=this.value;updateInputFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
@@ -102,7 +102,7 @@
     "recommendations": [
       {
         "headline": "Standardize text layer naming across Form Elements.",
-        "body": "Input Field now uses <code>#label</code>; verify the remaining fields (Labeled, Select, Recipient, View Only) follow the same convention so Code Connect label-slot mapping is uniform.",
+        "body": "Input Field now uses <code>#label</code>; verify the remaining fields (Labeled, Select, Recipient, View Only) follow the same convention so the label slot maps uniformly.",
         "tag": "Rename"
       },
       {
@@ -1552,7 +1552,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1571,35 +1572,20 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>form<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "",
       "rows": [
         {
-          "figma": "isFilled (Yes/No)",
+          "figma": "isFilled — true, false",
           "swift": "text: Binding&lt;String&gt;",
           "compose": "value: String"
         },
         {
-          "figma": "State = Default",
-          "swift": "—",
-          "compose": "—"
-        },
-        {
-          "figma": "State = Active",
-          "swift": ".focused()",
-          "compose": "interactionSource"
-        },
-        {
-          "figma": "State = Error",
-          "swift": ".ebError(true)",
-          "compose": "isError = true"
-        },
-        {
-          "figma": "State = Disabled",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
+          "figma": "State — Default, Active, Error, Disabled",
+          "swift": "<code>.focused()</code> Active · <code>.ebError(true)</code> Error · <code>.disabled(true)</code> Disabled",
+          "compose": "<code>interactionSource</code> Active · <code>isError = true</code> Error · <code>enabled = false</code> Disabled"
         }
       ],
       "filePaths": {
@@ -1610,18 +1596,18 @@
     "usageSnippets": [
       {
         "subheading": "Default",
-        "swift": "<span class=\"typ\">EBInputField</span>(<span class=\"str\">\"Placeholder\"</span>, <span class=\"prp\">text</span>: $value)",
-        "compose": "<span class=\"typ\">EBInputField</span>(\n    <span class=\"prp\">value</span> = text,\n    <span class=\"prp\">onValueChange</span> = { text = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Placeholder\"</span>\n)"
+        "swift": "<code><span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Placeholder\"</span>, <span class=\"syn-param\">text</span>: $value<span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = text,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">text</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Placeholder\"</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Error",
-        "swift": "<span class=\"typ\">EBInputField</span>(<span class=\"str\">\"Placeholder\"</span>, <span class=\"prp\">text</span>: $value)\n    .<span class=\"fn\">ebError</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBInputField</span>(\n    <span class=\"prp\">value</span> = text,\n    <span class=\"prp\">onValueChange</span> = { text = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Placeholder\"</span>,\n    <span class=\"prp\">isError</span> = <span class=\"kw\">true</span>\n)"
+        "swift": "<code><span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Placeholder\"</span>, <span class=\"syn-param\">text</span>: $value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebError</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = text,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">text</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Placeholder\"</span>,\n    <span class=\"syn-param\">isError</span> = <span class=\"syn-val\">true</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Disabled",
-        "swift": "<span class=\"typ\">EBInputField</span>(<span class=\"str\">\"Placeholder\"</span>, <span class=\"prp\">text</span>: $value)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBInputField</span>(\n    <span class=\"prp\">value</span> = text,\n    <span class=\"prp\">onValueChange</span> = { text = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Placeholder\"</span>,\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
+        "swift": "<code><span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Placeholder\"</span>, <span class=\"syn-param\">text</span>: $value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = text,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">text</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Placeholder\"</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [

@@ -9,7 +9,7 @@
 | 1 · Intake | AI asks | Component name + Figma link + channel |
 | 2 · Baseline | AI | Reads the data file, prints the current Overview tab as tables. Nothing changed yet. |
 | 3 · Recheck | AI | Checks each item against the live component, one at a time, and makes the small fixes below |
-| 4 · Validate | Reviewer types `Validate` | AI runs the 8 checks and reports **Done / Partial / Missing / Broken** |
+| 4 · Validate | Reviewer types `Validate` | AI runs the 9 checks and reports **Done / Partial / Missing / Broken** |
 
 Related: [Playground](PLAYGROUND-REVIEW-GUIDE.md) · [Code](CODE-REVIEW-GUIDE.md) · [Changelog](CHANGELOG-REVIEW-GUIDE.md) · shared setup, house rules and reading Figma in the [folder README](../README.md).
 
@@ -24,6 +24,7 @@ Related: [Playground](PLAYGROUND-REVIEW-GUIDE.md) · [Code](CODE-REVIEW-GUIDE.md
 | Re-rate a trait so it agrees with the issue lists | Re-assess the component from scratch |
 | Correct the verdict, badges and nav dot so they agree | |
 | Repoint `meta.node` / `meta.figmaUrl` when the component was rebuilt on a new node | |
+| Rewrite `meta.description` that breaks the description rule (Build guide, *Write the description*) | |
 | Delete a C7 item | |
 
 ---
@@ -126,7 +127,7 @@ The reviewer types `Validate`. The AI runs every check below and reports. **No c
 
 Run `cd astro-site && npm run build` first, then open `http://localhost:4321/components/<slug>` on the Overview tab.
 
-### The 8 checks
+### The 9 checks
 
 | # | Check | How to tell it passed |
 |---|---|---|
@@ -138,6 +139,7 @@ Run `cd astro-site && npm run build` first, then open `http://localhost:4321/com
 | 6 | Every open issue has headline + body + tag | No bare string, no missing tag |
 | 7 | Every recommendation has one of the ten tags | Rename · Property · Slot · State · Token · Asset · Composition · Family · A11y · Docs |
 | 8 | Behavior table present when the component is interactive | Omitted only for display-only components |
+| 9 | Description follows the rule | One sentence of 15 words or fewer, starts with the plural component name, says what it helps people do — no version counts, no markup |
 
 ### Report format
 

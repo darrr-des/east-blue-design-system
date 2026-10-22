@@ -10,8 +10,10 @@ interface Props {
   description: string;
   badges: Badge[];
   verdict?: { kind: string; title: string; text: string };
+  /** The page links to Figma elsewhere (the Figma Preview footer). */
+  hideFigmaLink?: boolean;
 }
-const { name, figmaUrl, description, badges, verdict } = Astro.props;
+const { name, figmaUrl, description, badges, verdict, hideFigmaLink } = Astro.props;
 
 const badgeClass = (kind: string) => {
   const map: Record<string, string> = {
@@ -28,25 +30,33 @@ const badgeClass = (kind: string) => {
   };
   return `badge ${map[kind] || ''}`;
 };
+
+// Keep · Ready needs no verdict box: the two badges already say it all.
+const kinds = badges.map((b) => b.kind);
+const settled = kinds.includes('keep') && kinds.includes('ready');
+const showVerdict = verdict && !settled;
 ---
-<div class="comp-header">
+<div class:list={['comp-header', { 'comp-header--settled': settled }]}>
   <div class="comp-header-body">
     <div class="comp-name">
       <div class="comp-name-badges">
         {badges.map((b) => <span class={badgeClass(b.kind)}>{b.label}</span>)}
       </div>
       <span class="comp-name-title">{name}</span>
-      <a class="comp-figma-link" href={figmaUrl} target="_blank" rel="noopener">
-        Component link
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M7 7h10v10" />
-          <path d="M7 17 17 7" />
-        </svg>
-      </a>
+      {!hideFigmaLink && (
+        <a class="comp-figma-link" href={figmaUrl} target="_blank" rel="noopener">
+          Component link
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 7h10v10" />
+            <path d="M7 17 17 7" />
+          </svg>
+        </a>
+      )}
     </div>
     <p class="comp-desc" set:html={description} />
+    <slot />
   </div>
-  {verdict && (
+  {showVerdict && (
     <div class={`verdict-inline verdict-${verdict.kind}`}>
       <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor" />

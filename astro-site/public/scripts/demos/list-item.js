@@ -77,7 +77,10 @@ function _liRender(opts) {
       h += '<span class="eb-preview-litem__asset' + cls + '">' + inner + '</span>';
     }
     h += '<span class="eb-preview-litem__label">List body with level-' + l + ' style</span>';
-    if (opts.hasTrailing) h += '<span class="eb-preview-litem__trailing"></span>';
+    /* ⤷ TrailingSlot is empty in the set, and Figma's export of an empty slot
+       draws nothing. Reserve TrailingContainer's 16 × 20 and paint nothing, so
+       this agrees with the Playground. */
+    if (opts.hasTrailing) h += '<span style="flex:0 0 auto;width:16px;height:20px;"></span>';
     h += '</div>';
   }
   return h + '</div>';

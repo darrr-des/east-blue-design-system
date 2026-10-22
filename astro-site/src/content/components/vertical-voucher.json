@@ -3,7 +3,7 @@
   "meta": {
     "node": "5119:1635",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=5119-1635",
-    "description": "A 162-wide vertical voucher tile combining a Voucher Asset image with title, description, price, validity, and status badges.",
+    "description": "Vertical Vouchers show people a voucher's image, price and validity in a tall tile.",
     "badges": [
       {
         "kind": "remove",

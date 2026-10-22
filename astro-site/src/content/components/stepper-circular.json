@@ -3,7 +3,7 @@
   "meta": {
     "node": "27:47768",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=27-47768",
-    "description": "A row of numbered circles whose ring arcs indicate progress through a multi-step flow.",
+    "description": "Circular Steppers show people their progress through a multi-step flow with numbered rings.",
     "badges": [
       {
         "kind": "consolidate",

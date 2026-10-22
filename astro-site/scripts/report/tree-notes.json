@@ -1,0 +1,398 @@
+{
+  "east-blue-design-system/": {
+    "d": "Monorepo: the Astro documentation site, the build and review workflows, and the scripts that check them."
+  },
+  "east-blue-design-system/CLAUDE.md": {
+    "d": "Session rules loaded into every run: the trigger phrases (Build + Review per tab, plus Component Update), Rule Zero, the read-only Figma rule, where things live, and git / deploy."
+  },
+  "east-blue-design-system/eb-ds-assessment-guide.md": {
+    "d": "The method: what the scores mean. 4 DS Health traits, ratings, verdicts, criteria C1–C6 (C7 deferred), native status incl. Fix = needs a fix to pass, and GCash patterns. Rendered at /eb-ds-assessment-guide."
+  },
+  "east-blue-design-system/workflows/": {
+    "d": "How an assessment is run. build/ writes a tab, review/ rechecks it. The shared README holds setup, house rules and reading Figma for both."
+  },
+  "east-blue-design-system/workflows/README.md": {
+    "d": "Shared by Build and Review: setup, house rules, reading and editing Figma, run order, field map, status vocabulary (Done / Partial / Missing / Broken) and the decisions log."
+  },
+  "east-blue-design-system/workflows/build/": {
+    "d": "Writing a tab: one build guide per tab, plus the Component Update rollout. Each build ends by running its review guide’s checks."
+  },
+  "east-blue-design-system/workflows/build/README.md": {
+    "d": "Build or review? When to use each, how a build runs, and the build order for a new component."
+  },
+  "east-blue-design-system/workflows/build/COMPONENT-UPDATE-GUIDE.md": {
+    "d": "The rollout for a component already on the site: Playground, In Context and the sweep cleanup in one run. Mechanical changes only; every judgement call is reported for the owner, not made. The first 20 Core Components went through it.",
+    "note": "Component Update"
+  },
+  "east-blue-design-system/workflows/build/COMPONENT-UPDATE-GUIDE.md#intake": {
+    "d": "Component name. The AI finds the page and its Figma set."
+  },
+  "east-blue-design-system/workflows/build/COMPONENT-UPDATE-GUIDE.md#check": {
+    "d": "update:check — is the Figma set live and healthy? Stops if not; update:trace finds a set that moved."
+  },
+  "east-blue-design-system/workflows/build/COMPONENT-UPDATE-GUIDE.md#build": {
+    "d": "Playground, then In Context (update:context exports the screen), then the sweep cleanup (update:tidy)."
+  },
+  "east-blue-design-system/workflows/build/COMPONENT-UPDATE-GUIDE.md#validate": {
+    "d": "Runs every check and writes the report for the owner."
+  },
+  "east-blue-design-system/workflows/build/COMPONENT-UPDATE-GUIDE.md#hand over": {
+    "d": "Commit to your own branch, open a PR to main with the report. Never push to main."
+  },
+  "east-blue-design-system/workflows/build/OVERVIEW-BUILD-GUIDE.md": {
+    "d": "Writes the Overview tab: the six sections, plain-language rules, traits, issues, recommendations, verdict box and badges. Also holds the Property Naming Guidelines.",
+    "note": "Component Build"
+  },
+  "east-blue-design-system/workflows/build/OVERVIEW-BUILD-GUIDE.md#intake": {
+    "d": "Name, Figma link, channel. Creates the data file for a new component."
+  },
+  "east-blue-design-system/workflows/build/OVERVIEW-BUILD-GUIDE.md#read": {
+    "d": "Reads the property panel, layers, tokens, states and assets. Sorts findings into the four decision buckets; asks when something may be intentional."
+  },
+  "east-blue-design-system/workflows/build/OVERVIEW-BUILD-GUIDE.md#write": {
+    "d": "Rates the 4 traits, writes open issues (headline + body + C1–C6 tag), recommendations (ten tags), Behavior, the verdict box, and matching badges."
+  },
+  "east-blue-design-system/workflows/build/OVERVIEW-BUILD-GUIDE.md#validate": {
+    "d": "Runs the {checks:OVERVIEW-REVIEW-GUIDE.md} checks from OVERVIEW-REVIEW-GUIDE.md."
+  },
+  "east-blue-design-system/workflows/build/PLAYGROUND-BUILD-GUIDE.md": {
+    "d": "Generates the Playground from the Figma component set and passes the four checks.",
+    "note": "Playground Build"
+  },
+  "east-blue-design-system/workflows/build/PLAYGROUND-BUILD-GUIDE.md#intake": {
+    "d": "Name + Figma link of the component set, not one variant."
+  },
+  "east-blue-design-system/workflows/build/PLAYGROUND-BUILD-GUIDE.md#build": {
+    "d": "npm run playground:build writes public/playground/<slug>.json. Never hand-edited. Needs FIGMA_ACCESS_TOKEN."
+  },
+  "east-blue-design-system/workflows/build/PLAYGROUND-BUILD-GUIDE.md#check": {
+    "d": "Look at it against Figma, then smoke → reflow → a11y → fidelity. Fidelity reading and known rendering bugs included."
+  },
+  "east-blue-design-system/workflows/build/PLAYGROUND-BUILD-GUIDE.md#validate": {
+    "d": "Runs the {checks:PLAYGROUND-REVIEW-GUIDE.md} checks from PLAYGROUND-REVIEW-GUIDE.md."
+  },
+  "east-blue-design-system/workflows/build/CODE-BUILD-GUIDE.md": {
+    "d": "Writes the Code tab: the seven sections, installation coordinates and the family table, mapping format, component API snippets.",
+    "note": "Code Build"
+  },
+  "east-blue-design-system/workflows/build/CODE-BUILD-GUIDE.md#intake": {
+    "d": "Name, Figma link, channel. Stops on remove / consolidate / product-layer."
+  },
+  "east-blue-design-system/workflows/build/CODE-BUILD-GUIDE.md#read": {
+    "d": "Property worksheet from the Figma panel, slots included, plus the variant total and its multiplier."
+  },
+  "east-blue-design-system/workflows/build/CODE-BUILD-GUIDE.md#write": {
+    "d": "Installation → Property Mapping → Usage Snippets → Accessibility → Usage Guidelines → Scorecard C1–C6 → Variants Inventory. Every change shown previous → new."
+  },
+  "east-blue-design-system/workflows/build/CODE-BUILD-GUIDE.md#validate": {
+    "d": "Runs the {checks:CODE-REVIEW-GUIDE.md} checks from CODE-REVIEW-GUIDE.md."
+  },
+  "east-blue-design-system/workflows/build/CHANGELOG-BUILD-GUIDE.md": {
+    "d": "Writes one new changelog entry. Run last.",
+    "note": "Changelog Build"
+  },
+  "east-blue-design-system/workflows/build/CHANGELOG-BUILD-GUIDE.md#intake": {
+    "d": "Name, Figma link, channel."
+  },
+  "east-blue-design-system/workflows/build/CHANGELOG-BUILD-GUIDE.md#evidence": {
+    "d": "Four sources: git history, Overview moves, live Figma, this session’s runs. All six buckets checked."
+  },
+  "east-blue-design-system/workflows/build/CHANGELOG-BUILD-GUIDE.md#write": {
+    "d": "One entry, newest first, bump sized to the change. Never edits a past entry."
+  },
+  "east-blue-design-system/workflows/build/CHANGELOG-BUILD-GUIDE.md#validate": {
+    "d": "Runs the {checks:CHANGELOG-REVIEW-GUIDE.md} checks from CHANGELOG-REVIEW-GUIDE.md."
+  },
+  "east-blue-design-system/workflows/review/": {
+    "d": "Rechecking a tab that exists: baseline, recheck with small fixes, then the checks. Anything bigger goes to the tab’s build guide."
+  },
+  "east-blue-design-system/workflows/review/OVERVIEW-REVIEW-GUIDE.md": {
+    "d": "Rechecks an existing Overview tab against live Figma. Small fixes only; writing the tab is Component Build.",
+    "note": "Component Review"
+  },
+  "east-blue-design-system/workflows/review/OVERVIEW-REVIEW-GUIDE.md#intake": {
+    "d": "Name, Figma link and plugin channel code. Stops if there is no data file (that is a Component Build)."
+  },
+  "east-blue-design-system/workflows/review/OVERVIEW-REVIEW-GUIDE.md#baseline": {
+    "d": "Prints four tables verbatim from the JSON: Open Issues, Resolved, Design Recos, Applied."
+  },
+  "east-blue-design-system/workflows/review/OVERVIEW-REVIEW-GUIDE.md#recheck": {
+    "d": "Checks each item against live Figma one at a time. Small fixes: move fixed items to Resolved / Applied, add new findings, re-rate traits, sync verdict and badges, delete C7."
+  },
+  "east-blue-design-system/workflows/review/OVERVIEW-REVIEW-GUIDE.md#validate": {
+    "d": "{checks:OVERVIEW-REVIEW-GUIDE.md} checks: build, four traits, verdict matches traits, badges match, no C7, issue shape, reco tags, behavior table, description rule."
+  },
+  "east-blue-design-system/workflows/review/PLAYGROUND-REVIEW-GUIDE.md": {
+    "d": "Rechecks a Playground that already exists. The only fix is a rebuild through Playground Build.",
+    "note": "Playground Review"
+  },
+  "east-blue-design-system/workflows/review/PLAYGROUND-REVIEW-GUIDE.md#intake": {
+    "d": "Name + Figma link of the component set. Stops if public/playground/<slug>.json does not exist (that is a Playground Build)."
+  },
+  "east-blue-design-system/workflows/review/PLAYGROUND-REVIEW-GUIDE.md#baseline": {
+    "d": "Prints set id, variant count, properties, build date and tokens source, then runs playground:drift."
+  },
+  "east-blue-design-system/workflows/review/PLAYGROUND-REVIEW-GUIDE.md#recheck": {
+    "d": "Rebuilds when drift says changed / edited / unbuilt. Lists component findings (C1–C6) for the Overview tab."
+  },
+  "east-blue-design-system/workflows/review/PLAYGROUND-REVIEW-GUIDE.md#validate": {
+    "d": "{checks:PLAYGROUND-REVIEW-GUIDE.md} checks: drift current, data generated, whole set, properties complete, smoke, reflow, a11y, fidelity ≤1%, cross-browser, tokens named, wrong-family tokens, faces, lint, build."
+  },
+  "east-blue-design-system/workflows/review/CODE-REVIEW-GUIDE.md": {
+    "d": "Rechecks an existing Code tab against Figma and the Code Build rules. Type \"Code Tab Review\" if the built-in /code-review diff review fires instead.",
+    "note": "Code Review"
+  },
+  "east-blue-design-system/workflows/review/CODE-REVIEW-GUIDE.md#intake": {
+    "d": "Name, Figma link, channel. Stops on remove / consolidate / product-layer, or if there is no Code tab yet."
+  },
+  "east-blue-design-system/workflows/review/CODE-REVIEW-GUIDE.md#baseline": {
+    "d": "Property worksheet with slots, total variant count and its multiplier, section inventory."
+  },
+  "east-blue-design-system/workflows/review/CODE-REVIEW-GUIDE.md#recheck": {
+    "d": "Compares every section by tier. Small fixes: stale names and counts, mapping format, install coordinates, footnotes, syntax spans, section order. Each shown previous → new."
+  },
+  "east-blue-design-system/workflows/review/CODE-REVIEW-GUIDE.md#validate": {
+    "d": "{checks:CODE-REVIEW-GUIDE.md} checks: section order, planned install at 1.0.0, mapping grouped and complete, no container code, mapping and snippets agree, variant total, no footnotes, syntax spans."
+  },
+  "east-blue-design-system/workflows/review/CHANGELOG-REVIEW-GUIDE.md": {
+    "d": "Rechecks the audit trail: is every change recorded and is history intact?",
+    "note": "Changelog Review"
+  },
+  "east-blue-design-system/workflows/review/CHANGELOG-REVIEW-GUIDE.md#intake": {
+    "d": "Name, Figma link, channel."
+  },
+  "east-blue-design-system/workflows/review/CHANGELOG-REVIEW-GUIDE.md#baseline": {
+    "d": "Prints existing entries, then gathers the evidence the same way Changelog Build does."
+  },
+  "east-blue-design-system/workflows/review/CHANGELOG-REVIEW-GUIDE.md#recheck": {
+    "d": "Compares entries against the evidence. Small fixes: one backfill patch entry for a missed change, newest-first order, restore an edited past entry."
+  },
+  "east-blue-design-system/workflows/review/CHANGELOG-REVIEW-GUIDE.md#validate": {
+    "d": "{checks:CHANGELOG-REVIEW-GUIDE.md} checks: order, bump, Month YYYY date, file and node cited, a row per resolved issue and applied reco, history not rewritten, doc work recorded."
+  },
+  "east-blue-design-system/workflows/review/FRAMEWORK-REFERENCE.md": {
+    "d": "The page with sample content: every section, its expected content, and the situations a reviewer meets."
+  },
+  "east-blue-design-system/workflows/review/FRAMEWORK-AUDIT.md": {
+    "d": "The framework audit, its thirteen decisions and the fix pass."
+  },
+  "east-blue-design-system/astro-site/": {
+    "d": "The static documentation site and every script that measures it."
+  },
+  "east-blue-design-system/astro-site/package.json": {
+    "d": "Defines the npm commands the guides and CI run."
+  },
+  "npm:build": {
+    "d": "astro build. Catches schema breakage. Run after every data edit."
+  },
+  "npm:lint": {
+    "d": "Preview structure + colors-table coverage + Playground lint."
+  },
+  "npm:audit": {
+    "d": "framework-sweep: every component against every guide rule."
+  },
+  "npm:audit:gate": {
+    "d": "Same sweep; exits 1 if any component fails a structural rule."
+  },
+  "npm:check": {
+    "d": "build + audit:gate + lint. What CI runs on every pull request."
+  },
+  "npm:playground:checks": {
+    "d": "smoke → reflow → a11y → fidelity."
+  },
+  "npm:update:check": {
+    "d": "Component Update step: is the page pointing at a live, healthy Figma set?"
+  },
+  "npm:update:trace": {
+    "d": "Finds where a component set lives now when update:check says it moved."
+  },
+  "npm:update:context": {
+    "d": "Exports the \"In Context\" screen frame from Figma as the page’s image."
+  },
+  "npm:update:tidy": {
+    "d": "The mechanical Code-tab sweep fixes: drop the install footnote, add syntax spans."
+  },
+  "east-blue-design-system/astro-site/src/": {
+    "d": "Site source."
+  },
+  "east-blue-design-system/astro-site/src/content/components/": {
+    "d": "The CMS files and the source of truth. One JSON per component ({components})."
+  },
+  "east-blue-design-system/astro-site/src/content/components/<slug>.json": {
+    "d": "The only content file a review run edits. Holds meta, overview, style, code and changelog."
+  },
+  "east-blue-design-system/astro-site/src/content/components/sample-component.json": {
+    "d": "Reference page: the whole framework on sample data, held to all 31 rules. Hidden from nav. Never cite its values."
+  },
+  "east-blue-design-system/astro-site/src/data/": {
+    "d": "Shared databases the reviews match against."
+  },
+  "east-blue-design-system/astro-site/src/data/tokens.json": {
+    "d": "Every library variable. Generated by scripts/tokens/import.mjs, never hand-edited."
+  },
+  "east-blue-design-system/astro-site/src/data/typography.ts": {
+    "d": "DS text-style database and matchLayer(): resolves a text layer to its DS style name."
+  },
+  "east-blue-design-system/astro-site/src/data/colors.ts": {
+    "d": "Color Primitives + Semantics and matchPaint()."
+  },
+  "east-blue-design-system/astro-site/src/data/primitives.ts": {
+    "d": "Space, negative space, radius and elevation from the Primitives collection."
+  },
+  "east-blue-design-system/astro-site/src/data/types.ts": {
+    "d": "The ComponentData schema. Maintainer only; never edited in a review run."
+  },
+  "east-blue-design-system/astro-site/public/": {
+    "d": "Static assets served as-is."
+  },
+  "east-blue-design-system/astro-site/public/scripts/demos/<slug>.js": {
+    "d": "Per-component live preview script. With <slug>.json, the only files a review run may edit."
+  },
+  "east-blue-design-system/astro-site/public/playground/<slug>.json": {
+    "d": "Generated Playground layer data. Output of playground:build."
+  },
+  "east-blue-design-system/astro-site/scripts/": {
+    "d": "The automation."
+  },
+  "east-blue-design-system/astro-site/scripts/audit/": {
+    "d": "Measurement and lint. Reports only, never edits."
+  },
+  "east-blue-design-system/astro-site/scripts/audit/framework-sweep.mjs": {
+    "d": "The measurement: every component × every guide rule. Powers audit, audit:matrix and audit:gate."
+  },
+  "east-blue-design-system/astro-site/scripts/audit/figma-verify.mjs": {
+    "d": "REST read of a node: bound spacing, colour, radius and shadow resolved to token names."
+  },
+  "east-blue-design-system/astro-site/scripts/audit/preview-structure-lint.mjs": {
+    "d": "npm run lint:previews."
+  },
+  "east-blue-design-system/astro-site/scripts/audit/colors-table-coverage.mjs": {
+    "d": "npm run lint:colors."
+  },
+  "east-blue-design-system/astro-site/scripts/audit/playground-lint.mjs": {
+    "d": "npm run lint:playground."
+  },
+  "east-blue-design-system/astro-site/scripts/audit/audit-progress.mjs": {
+    "d": "Spec-card completion report (audit:progress)."
+  },
+  "east-blue-design-system/astro-site/scripts/audit/preview-inventory.mjs": {
+    "d": "Markdown table of every live preview, for the preview-vs-Figma audit."
+  },
+  "east-blue-design-system/astro-site/scripts/audit/antislop-copy-scan.mjs": {
+    "d": "Scans prose fields for patterns the copywriting rules name. Reports only."
+  },
+  "east-blue-design-system/astro-site/scripts/update/": {
+    "d": "The Component Update scripts. Read-only against Figma (file_content:read token)."
+  },
+  "east-blue-design-system/astro-site/scripts/update/check-set.mjs": {
+    "d": "Reads meta.node and asks Figma what is there. Stops at anything that needs a person: a missing node, an empty set.",
+    "note": "update:check"
+  },
+  "east-blue-design-system/astro-site/scripts/update/trace.mjs": {
+    "d": "Given any instance of the component, reports the set it uses — how a moved set is found.",
+    "note": "update:trace"
+  },
+  "east-blue-design-system/astro-site/scripts/update/in-context.mjs": {
+    "d": "Exports an \"In Context – …\" frame from the Working File’s Pipeline page as the page’s In Context image.",
+    "note": "update:context"
+  },
+  "east-blue-design-system/astro-site/scripts/update/tidy-code.mjs": {
+    "d": "The mechanical Code-tab sweep fixes: K9 drops the install footnote, K10 adds syntax spans to every usage snippet.",
+    "note": "update:tidy"
+  },
+  "east-blue-design-system/astro-site/scripts/update/figma.mjs": {
+    "d": "Shared Figma REST helpers for the update scripts. Every call is a read (GET)."
+  },
+  "east-blue-design-system/astro-site/scripts/playground/": {
+    "d": "Build and gate the Playground."
+  },
+  "east-blue-design-system/astro-site/scripts/playground/README.md": {
+    "d": "Script list: what each playground script does and its npm command. The step-by-step build is Playground Build in workflows/build/."
+  },
+  "east-blue-design-system/astro-site/scripts/playground/build.mjs": {
+    "d": "Figma REST → layer tree per variant, tokens resolved, vectors exported as SVG. Needs FIGMA_ACCESS_TOKEN."
+  },
+  "east-blue-design-system/astro-site/scripts/playground/drift.mjs": {
+    "d": "current / may-differ / changed / edited / unbuilt. --deep re-reads and compares hashes."
+  },
+  "east-blue-design-system/astro-site/scripts/playground/smoke.mjs": {
+    "d": "Every control, layer and code language renders with no error or clipping."
+  },
+  "east-blue-design-system/astro-site/scripts/playground/reflow.mjs": {
+    "d": "Every variant × boolean combination obeys Figma auto-layout."
+  },
+  "east-blue-design-system/astro-site/scripts/playground/a11y.mjs": {
+    "d": "Names, WAI-ARIA tree pattern, focus ring, live region."
+  },
+  "east-blue-design-system/astro-site/scripts/playground/fidelity.mjs": {
+    "d": "Figma PNG export vs rendered Playground, pixel for pixel."
+  },
+  "east-blue-design-system/astro-site/scripts/tokens/import.mjs": {
+    "d": "Regenerates src/data/tokens.json from the library variables."
+  },
+  "east-blue-design-system/astro-site/scripts/sync-previews.mjs": {
+    "d": "Captures JS-rendered previews and writes them back into each component JSON."
+  },
+  "east-blue-design-system/astro-site/scripts/export-figma-baselines.mjs": {
+    "d": "Fetches one Figma PNG per component and spec card for visual comparison."
+  },
+  "east-blue-design-system/astro-site/scripts/build-visual-review.mjs": {
+    "d": "Side-by-side HTML of Figma references vs visual baselines."
+  },
+  "east-blue-design-system/screen-normalization/": {
+    "d": "Screen consistency work, separate from component assessment: the Dashboard-baseline guideline, the standard, and the draft token spec they use."
+  },
+  "east-blue-design-system/screen-normalization/eb-screen-normalization-guideline.md": {
+    "d": "How to normalize screens to the Dashboard baseline: process, principles, density profiles, the rules, a per-item checklist, severity and verdict."
+  },
+  "east-blue-design-system/screen-normalization/eb-screen-normalization-standard.md": {
+    "d": "Completes the screen standard: a severity + exception schema for the machine pass, a human review rubric, the combined screen verdict and the radius rules."
+  },
+  "east-blue-design-system/screen-normalization/eb-foundations-tokens.md": {
+    "d": "Foundations tokens as a JSON spec in the W3C Design Tokens format: spacing, layout, typography, colour roles, radius, elevation and the $rules validation checks. Marked as a draft: values are proposals, not read from Figma; tokens.json is the source of truth."
+  },
+  "east-blue-design-system/.github/workflows/": {
+    "d": "CI that runs the automation without a reviewer."
+  },
+  "east-blue-design-system/.github/workflows/check.yml": {
+    "d": "npm ci → build → audit:gate → audit → lint on every pull request and push.",
+    "note": "PR + push"
+  },
+  "east-blue-design-system/.github/workflows/visual-regression.yml": {
+    "d": "Playwright visual tests against the stored baselines.",
+    "note": "PR + push"
+  },
+  "east-blue-design-system/.github/workflows/visual-baselines.yml": {
+    "d": "Regenerates the Linux visual baselines.",
+    "note": "push / manual"
+  },
+  "east-blue-design-system/.github/workflows/playground-fidelity.yml": {
+    "d": "Builds and runs the Playground fidelity check on chromium, firefox and webkit.",
+    "note": "scheduled"
+  },
+  "east-blue-design-system/.github/workflows/main.yml": {
+    "d": "Deploys to production. Why nothing is committed without being told.",
+    "note": "push to main"
+  },
+  "east-blue-design-system/.github/workflows/pages.yml": {
+    "d": "Builds and deploys to GitHub Pages.",
+    "note": "push / manual"
+  },
+  "east-blue-design-system/astro-site/scripts/report/": {
+    "d": "Builds the two status pages from the repo and Figma: the Component Reusability Report data and this Workflow Tree. Read-only against Figma."
+  },
+  "east-blue-design-system/astro-site/scripts/report/component-status.mjs": {
+    "d": "Component Reusability Report data: every component’s rating, status and verdict from its JSON, its group and status from the Figma checklists, and whether it differs from main.",
+    "note": "report:status"
+  },
+  "east-blue-design-system/astro-site/scripts/report/workflow-tree.mjs": {
+    "d": "This tree: guides, npm scripts, automation and CI read from the repo, described from tree-notes.json.",
+    "note": "report:tree"
+  },
+  "east-blue-design-system/astro-site/scripts/report/tree-notes.json": {
+    "d": "The hand-written descriptions this tree shows. A file without a note is described from its own first line."
+  },
+  "npm:report": {
+    "d": "Builds both status pages’ data: report:status then report:tree."
+  }
+}

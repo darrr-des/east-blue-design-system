@@ -76,9 +76,11 @@ function loadCases(): { cards: Case[]; playground: PlaygroundCase[] } {
 const { cards: CASES, playground: PLAYGROUND_CASES } = loadCases();
 
 /* A suite that finds nothing is not a pass: the data moved once and this
-   file reported "No tests found" instead of failing loudly. */
+   file reported "No tests found" instead of failing loudly. Spec cards and
+   Playground variants both count — once every component is on the
+   Playground, spec cards alone are zero. */
 test('visual suite found its cases', () => {
-  expect(CASES.length).toBeGreaterThan(0);
+  expect(CASES.length + PLAYGROUND_CASES.length).toBeGreaterThan(0);
 });
 
 /* Playground variants, on the real component page — the tab boots hidden

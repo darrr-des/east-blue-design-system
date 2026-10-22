@@ -2,7 +2,7 @@
  *
  * Tracks component set 5734:37611 (Table Row) — Role (Header / Content)
  * x State (Default / Disabled). Column count is not a property: the
- * Columns Slot holds however many Table Cell instances you drop in, so
+ * ⤷ ColumnSlot holds however many Table Cell instances you drop in, so
  * the count control here just varies how many cells the preview renders.
  */
 
@@ -50,7 +50,7 @@ function _tableBuildRow(opts) {
   }
   s += '</div>';
 
-  /* Columns Slot — N Table Cell instances */
+  /* ⤷ ColumnSlot — N Table Cell instances */
   s += '<div class="eb-preview-trow__cols">';
   for (var i = 0; i < o.cols; i++) {
     s += '<div class="eb-preview-trow__cell">';
@@ -94,7 +94,7 @@ function buildSwiftSnippet(type, card) {
   lines.push('    role: ' + (isContent ? '.content' : '.header') + ',');
   lines.push('    label: "' + (isContent ? 'Row Title' : 'Header') + '",');
   lines.push('    columns: columns' + (card.hasBorder === 'false' ? ',' : ''));
-  if (card.hasBorder === 'false') lines.push('    showsDivider: false');
+  if (card.hasBorder === 'false') lines.push('    hasBorder: false');
   lines.push(')');
   if (card.state === 'disabled') lines.push('.disabled(true)');
   return lines.join('\n');
@@ -103,7 +103,7 @@ function buildSwiftSnippet(type, card) {
 function buildComposeSnippet(type, card) {
   var isContent = card.role === 'content';
   var tail = [];
-  if (card.hasBorder === 'false') tail.push('    showsDivider = false');
+  if (card.hasBorder === 'false') tail.push('    hasBorder = false');
   if (card.state === 'disabled') tail.push('    enabled = false');
   var lines = ['EBTableRow('];
   lines.push('    role = EBTableRowRole.' + (isContent ? 'Content' : 'Header') + ',');

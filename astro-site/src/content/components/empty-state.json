@@ -3,31 +3,31 @@
   "meta": {
     "node": "26356:13970",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26356-13970",
-    "description": "A centred no-content surface — visual, header (title + description), and an action. 4 variants across <code>Style</code> (Default/Subtle) × <code>VisualType</code> (Icon/Asset), with a <code>Visual Container</code>, <code>Action Container</code> slot, and a token-bound header.",
+    "description": "Empty States tell people why a screen has no content and what to do next.",
     "badges": [
       {
         "kind": "keep",
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Rebuilt — schema and slots landed",
-      "text": "The rebuild collapsed a 7-boolean, 256-combination mess into a clean 2 × 2 — <code>Style</code> (Default/Subtle) × <code>VisualType</code> (Icon/Asset). The duplicate header booleans merged into one header (title + description), <code>color</code> became <code>Style</code>, and the icon, asset, and action are all real Figma slots. The visual slot was unified to a single <code>Visual Container</code> so switching <code>VisualType</code> keeps its content, and <code>visualType</code> was recased to <code>VisualType</code> to match the enum convention. Only Code Connect registration remains."
+      "title": "Keep — a clean 2 × 2 with real slots",
+      "text": "<code>Style</code> × <code>VisualType</code> makes a 2 × 2, <code>hasButton</code> shows or hides the action, and the visual and the action are Figma slots (<code>⤷ VisualSlot</code>, <code>⤷ ActionSlot</code>)."
     },
     "navGroup": "",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Empty State fills a surface where content would normally sit — empty transaction lists, no search results, first-run tabs.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"140\" viewBox=\"0 0 200 140\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"128\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          \n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"20\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"34\" y=\"16\" width=\"132\" height=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"100\" y=\"19\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Transactions</text>\n          \n          <circle cx=\"100\" cy=\"54\" r=\"10\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"60\" y=\"72\" width=\"80\" height=\"20\" rx=\"3\" fill=\"#EEF2F9\"></rect>\n          <text x=\"100\" y=\"102\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"8\" font-weight=\"700\" font-family=\"\\'Proxima Soft\\', system-ui\">No transactions yet</text>\n          <text x=\"100\" y=\"112\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"6\" font-family=\"\\'BarkAda\\', system-ui\">Your transactions will show here.</text>\n          <rect x=\"72\" y=\"118\" width=\"56\" height=\"10\" rx=\"5\" fill=\"#005CE5\"></rect>\n          <text x=\"100\" y=\"126\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Cash In</text>\n        </svg>\n      </div>",
+    "inContextNote": "How the empty state appears in real product screens — a no-results search on My GInsure, and an empty Request Sent tab on Request Money.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/empty-state-in-context.png\" alt=\"Empty State component shown on two GCash screens: a search with no results on My GInsure with a shield-and-magnifier illustration and the title Uh-oh, we can’t seem to find this, and an empty Request Sent tab on Request Money with a wallet illustration and the title It’s quiet in here\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"es-demo-preview\"><svg width=\"300\" height=\"468\" viewBox=\"0 0 300 468\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"468\" rx=\"4\" fill=\"#FFFFFF\"></rect><text x=\"24\" y=\"34\" fill=\"#0A2757\" font-size=\"14\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Header</text><text x=\"24\" y=\"50\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"600\" font-family=\"'BarkAda', system-ui\">Description goes here</text><circle cx=\"150\" cy=\"98\" r=\"20\" fill=\"#C2C6CF\"></circle><rect x=\"0\" y=\"146\" width=\"300\" height=\"170\" fill=\"#EEF2F9\"></rect><text x=\"150\" y=\"346\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"16\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Header</text><text x=\"150\" y=\"366\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"600\" font-family=\"'BarkAda', system-ui\">Description goes here</text><rect x=\"80\" y=\"406\" width=\"140\" height=\"34\" rx=\"17\" fill=\"#005CE5\"></rect><text x=\"150\" y=\"428\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"13\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Current properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">color</span><select class=\"demo-panel-select\" id=\"es-demo-color\" onchange=\"updateEmptyStateDemo()\"><option value=\"white\" selected=\"\">white</option><option value=\"grey-blue\">grey blue</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasIcon</span><select class=\"demo-panel-select\" id=\"es-demo-icon\" onchange=\"updateEmptyStateDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasAsset</span><select class=\"demo-panel-select\" id=\"es-demo-asset\" onchange=\"updateEmptyStateDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasButton</span><select class=\"demo-panel-select\" id=\"es-demo-button\" onchange=\"updateEmptyStateDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"es-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasButton</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"es-demo-button\" checked onchange=\"this.parentElement.classList.toggle('is-on',this.checked);updateEmptyStateDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Style</span><select class=\"demo-panel-select\" id=\"es-demo-style\" onchange=\"updateEmptyStateDemo()\"><option value=\"Default\" selected>Default</option><option value=\"Subtle\">Subtle</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">VisualType</span><select class=\"demo-panel-select\" id=\"es-demo-visual\" onchange=\"updateEmptyStateDemo()\"><option value=\"Icon\" selected>Icon</option><option value=\"Asset\">Asset</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -47,7 +47,7 @@
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Three real Figma slots — a unified <code>Visual Container</code> for the icon or asset, and an <code>Action Container</code> holding a canonical Button instance. Switching <code>VisualType</code> preserves the visual slot content because both types share one slot name."
+        "note": "Two Figma slots — <code>⤷ VisualSlot</code> for the icon or asset, and <code>⤷ ActionSlot</code> holding a Button instance. Both visual types share one slot name, so switching <code>VisualType</code> keeps the slot content."
       }
     ],
     "behavior": [
@@ -130,7 +130,7 @@
       },
       {
         "headline": "",
-        "body": "v2.1: Visual slot unified to a single <code>Visual Container</code> across all four variants (was <code>Icon Container</code> / <code>Asset Container</code>). Switching <code>VisualType</code> on an instance now preserves the slot content, and Code Connect maps one slot instead of two. (C1)",
+        "body": "v2.1: Visual slot unified to a single <code>Visual Container</code> across all four variants (was <code>Icon Container</code> / <code>Asset Container</code>). Switching <code>VisualType</code> on an instance now preserves the slot content. (C1)",
         "tag": {
           "criterion": "",
           "label": ""
@@ -146,13 +146,7 @@
       }
     ],
     "open": [],
-    "recommendations": [
-      {
-        "headline": "Register Code Connect mapping to <code>EBEmptyState</code>.",
-        "body": "Wire <code>Style</code> and <code>VisualType</code> to the SwiftUI / Compose API, and map the <code>Visual Container</code> and <code>Action Container</code> slots to <code>@ViewBuilder</code> / <code>@Composable</code> content slots.",
-        "tag": "Docs"
-      }
-    ],
+    "recommendations": [],
     "appliedRecommendations": [
       {
         "headline": "Collapse to one title + description.",
@@ -794,7 +788,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -819,34 +814,39 @@
       "description": "",
       "rows": [
         {
-          "figma": "color=white/grey blue",
-          "swift": "style: EBEmptyStateStyle",
-          "compose": ".ebStyle(.default/.subtle)"
+          "figma": "Style — Default, Subtle",
+          "swift": "<code>.ebStyle(.default / .subtle)</code>",
+          "compose": "<code>style = EBEmptyStateStyle.Default / Subtle</code>"
         },
         {
-          "figma": "header1 / topHeading",
-          "swift": "title: String",
-          "compose": "title: String"
+          "figma": "VisualType — Icon, Asset",
+          "swift": "<code>icon:</code> or <code>asset:</code> — pass one",
+          "compose": "<code>icon =</code> or <code>asset =</code> — pass one"
         },
         {
-          "figma": "topDescription / description",
-          "swift": "description: String?",
-          "compose": "description: String?"
+          "figma": "⤷ VisualSlot (slot)",
+          "swift": "<code>icon: { Image(…) }</code> / <code>asset: { Image(…) }</code>",
+          "compose": "<code>icon = { Icon(…) }</code> / <code>asset = { Image(…) }</code>"
         },
         {
-          "figma": "hasIcon + icon placeholder",
-          "swift": "Figma Slot → ViewBuilder",
-          "compose": "@ViewBuilder icon"
+          "figma": "#heading (text)",
+          "swift": "<code>title: String</code>",
+          "compose": "<code>title = \"…\"</code>"
         },
         {
-          "figma": "hasAsset + asset placeholder",
-          "swift": "Figma Slot → ViewBuilder",
-          "compose": "@ViewBuilder asset"
+          "figma": "#description (text)",
+          "swift": "<code>description: String?</code>",
+          "compose": "<code>description = \"…\"</code>"
         },
         {
-          "figma": "hasButton + buttonInstance",
-          "swift": "Figma Slot → ViewBuilder",
-          "compose": "@ViewBuilder action"
+          "figma": "hasButton — true, false",
+          "swift": "presence of the <code>action:</code> closure",
+          "compose": "presence of the <code>action =</code> slot"
+        },
+        {
+          "figma": "⤷ ActionSlot (slot) — holds a Button instance",
+          "swift": "<code>action: { EBButton(\"…\") { } }</code>",
+          "compose": "<code>action = { EBButton(\"…\", onClick = { }) }</code>"
         }
       ],
       "filePaths": {
@@ -857,8 +857,8 @@
     "usageSnippets": [
       {
         "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Empty transaction list — icon + title + description + action</span>\n<span class=\"typ\">EBEmptyState</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"No transactions yet\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Your transactions will show up here.\"</span>,\n    <span class=\"prp\">icon</span>: { <span class=\"typ\">Image</span>(systemName: <span class=\"str\">\"tray\"</span>) },\n    <span class=\"prp\">action</span>: { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Cash In\"</span>) { /* ... */ } }\n)\n.<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">default</span>)\n\n<span class=\"cmt\">// Full illustration — asset slot instead of icon</span>\n<span class=\"typ\">EBEmptyState</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"No favorites added\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Tap the heart on any contact to save them here.\"</span>,\n    <span class=\"prp\">asset</span>: { <span class=\"typ\">Image</span>(<span class=\"str\">\"empty-favorites\"</span>).resizable().scaledToFit() }\n)\n.<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">subtle</span>)",
-        "compose": "<span class=\"cmt\">// Empty transaction list — icon + title + description + action</span>\n<span class=\"typ\">EBEmptyState</span>(\n    title = <span class=\"str\">\"No transactions yet\"</span>,\n    description = <span class=\"str\">\"Your transactions will show up here.\"</span>,\n    style = <span class=\"typ\">EBEmptyStateStyle</span>.<span class=\"prp\">Default</span>,\n    icon = { <span class=\"typ\">Icon</span>(painterResource(R.drawable.tray), contentDescription = null) },\n    action = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Cash In\"</span>, onClick = { /* ... */ }) }\n)\n\n<span class=\"cmt\">// Full illustration — asset slot instead of icon</span>\n<span class=\"typ\">EBEmptyState</span>(\n    title = <span class=\"str\">\"No favorites added\"</span>,\n    description = <span class=\"str\">\"Tap the heart on any contact to save them here.\"</span>,\n    style = <span class=\"typ\">EBEmptyStateStyle</span>.<span class=\"prp\">Subtle</span>,\n    asset = { <span class=\"typ\">Image</span>(painterResource(R.drawable.empty_favorites), contentDescription = null) }\n)"
+        "swift": "<code><span class=\"syn-cmt\">// Empty transaction list — icon + title + description + action</span>\n<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"No transactions yet\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Your transactions will show up here.\"</span>,\n    <span class=\"syn-param\">icon</span>: <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"tray\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">action</span>: <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cash In\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> /* ... */ <span class=\"syn-punc\">}</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Full illustration — asset slot instead of icon</span>\n<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"No favorites added\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Tap the heart on any contact to save them here.\"</span>,\n    <span class=\"syn-param\">asset</span>: <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"empty-favorites\"</span><span class=\"syn-punc\">)</span>.<span class=\"syn-fn\">resizable</span><span class=\"syn-punc\">(</span><span class=\"syn-punc\">)</span>.<span class=\"syn-fn\">scaledToFit</span><span class=\"syn-punc\">(</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.subtle</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Empty transaction list — icon + title + description + action</span>\n<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"No transactions yet\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Your transactions will show up here.\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBEmptyStateStyle</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">icon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>painterResource<span class=\"syn-punc\">(</span>R<span class=\"syn-dot\">.drawable</span><span class=\"syn-dot\">.tray</span><span class=\"syn-punc\">)</span>, <span class=\"syn-param\">contentDescription</span> = <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">action</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cash In\"</span>, <span class=\"syn-param\">onClick</span> = <span class=\"syn-punc\">{</span> /* ... */ <span class=\"syn-punc\">}</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Full illustration — asset slot instead of icon</span>\n<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"No favorites added\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"Tap the heart on any contact to save them here.\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBEmptyStateStyle</span><span class=\"syn-dot\">.Subtle</span>,\n    <span class=\"syn-param\">asset</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource<span class=\"syn-punc\">(</span>R<span class=\"syn-dot\">.drawable</span><span class=\"syn-dot\">.empty_favorites</span><span class=\"syn-punc\">)</span>, <span class=\"syn-param\">contentDescription</span> = <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -904,9 +904,9 @@
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Color values don't match tokens; duplicate <code>header</code>/<code>header1</code>; 7 booleans = 256 combos."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Three properties — <code>Style</code>, <code>VisualType</code>, <code>hasButton</code> — and one header; 4 variants."
       },
       {
         "id": "C3",
@@ -932,32 +932,51 @@
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Icon + asset are placeholders. Should be slots."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>⤷ VisualSlot</code> and <code>⤷ ActionSlot</code> are real slots; no placeholders ship as assets."
       }
     ],
     "variants": {
-      "total": 2,
-      "description": "Boolean props (<code>hasIcon</code>, <code>hasAsset</code>, <code>hasButton</code>, <code>header</code>, <code>header1</code>, <code>topDescription</code>, <code>topHeading</code>) multiply the effective prop combinations to 256. After restructure to slot-based API, this collapses to 2 <code>style</code> variants × optional slots — unlimited configurations without variant explosion.",
+      "total": 4,
+      "description": "2 <code>Style</code> values × 2 <code>VisualType</code> values. <code>hasButton</code> shows or hides <code>⤷ ActionSlot</code> and does not multiply the set.",
       "columns": [
-        "color (current)",
-        "Proposed style",
-        "Node ID"
+        "Style",
+        "VisualType",
+        "Size",
+        "Node"
       ],
       "rows": [
         {
           "cells": [
-            "<code>white</code>",
-            "default",
-            "27:169326"
+            "Default",
+            "Icon",
+            "360 × 307",
+            "26356:13971"
           ]
         },
         {
           "cells": [
-            "<code>grey blue</code>",
-            "subtle",
-            "27:169339"
+            "Subtle",
+            "Icon",
+            "360 × 307",
+            "26356:13979"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Asset",
+            "360 × 425",
+            "26356:13987"
+          ]
+        },
+        {
+          "cells": [
+            "Subtle",
+            "Asset",
+            "360 × 425",
+            "26356:13995"
           ]
         }
       ],
@@ -969,6 +988,36 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Scorecard re-rated against the current set · node 26356:13970",
+      "rows": [
+        {
+          "body": "<strong>C2 Requires Rework → Ready.</strong> The 7-boolean, 256-combination schema and the duplicate header are gone.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>C6 Requires Rework → Ready.</strong> The icon and asset are a slot, not placeholders.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Keep · Ready.</strong> All four DS Health traits pass and C1–C6 are ready.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.1",
       "date": "September 2026",

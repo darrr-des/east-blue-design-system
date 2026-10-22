@@ -42,7 +42,7 @@ function _mgBuildSvg(cols, rows) {
 function _mgUpdate() {
   var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
   var el = document.getElementById('mg-demo-preview');
-  if (el) el.innerHTML = _mgBuildSvg(getVal('mg-ctrl-column', '4'), getVal('mg-ctrl-row', '2'));
+  if (el) el.innerHTML = _mgBuildSvg(getVal('mg-ctrl-column', '5'), getVal('mg-ctrl-row', '5'));
 }
 window._mgUpdate = _mgUpdate;
 

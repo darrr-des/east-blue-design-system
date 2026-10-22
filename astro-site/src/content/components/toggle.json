@@ -3,7 +3,7 @@
   "meta": {
     "node": "26510:37625",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26510-37625",
-    "description": "A binary switch. 18 variants across <code>State</code> (Default / Pressed / Disabled) × <code>Size</code> (Large / Medium / Small) × <code>isSelected</code> (true / false). Vector track + thumb, all colors token-bound.",
+    "description": "Toggles let people turn a setting on or off.",
     "badges": [
       {
         "kind": "keep",

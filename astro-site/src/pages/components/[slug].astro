@@ -18,6 +18,7 @@ import UsageGuidelines from '../../components/UsageGuidelines.astro';
 import CriteriaScorecard from '../../components/CriteriaScorecard.astro';
 import VariantsInventory from '../../components/VariantsInventory.astro';
 import Changelog from '../../components/Changelog.astro';
+import FigmaPreview from '../../components/FigmaPreview.astro';
 import { componentMap, componentManifest } from '../../data/components/_index';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -70,6 +71,15 @@ const hasCode = !cardless && (
   (data.code.variants.rows && data.code.variants.rows.length));
 
 const hasChangelog = data.changelog.length > 0;
+
+// Figma Preview — local trial on one component before any wider rollout.
+// Off for now: still in testing with the developers. Add 'button' back to try it.
+const FIGMA_PREVIEW_SLUGS = new Set<string>([]);
+const hasFigmaPreview = FIGMA_PREVIEW_SLUGS.has(slug!) && !!data.meta.figmaUrl;
+// Two-line Overview description shown above the Figma Preview.
+const FIGMA_PREVIEW_DESCRIPTIONS: Record<string, string> = {
+  button: 'Buttons trigger an action when tapped, with a call-to-action label that says what will happen. Large and Medium are the default sizes in the GCash app.',
+};
 ---
 <Base title={`${data.meta.name} — GCash DS Assessment`} activeSlug={data.meta.slug}>
   <div class="panel active" id={`panel-${data.meta.slug}`}>
@@ -82,7 +92,15 @@ const hasChangelog = data.changelog.length > 0;
           description={data.meta.description}
           badges={data.meta.badges}
           verdict={data.meta.verdict}
-        />
+          hideFigmaLink={hasFigmaPreview}
+        >
+          {/* Figma Preview trial: the In Context screens sit under the page description, with no section of their own. */}
+          {hasFigmaPreview && hasContext && (
+            data.overview.inContextHtml
+              ? <div class="ctx-wrap" set:html={withBase(data.overview.inContextHtml)} />
+              : <div class="ctx-wrap"><img class="ctx-img" src={withBase(data.overview.inContextImage)} alt={data.overview.inContextAlt || `${data.meta.name} in context`} /></div>
+          )}
+        </ComponentHeader>
 
         <div data-tab-group={group}>
           <div class="comp-tabs" role="tablist" aria-label="Component tabs">
@@ -95,7 +113,7 @@ const hasChangelog = data.changelog.length > 0;
           {/* ── Overview ───────────────────────────────────────── */}
           {hasOverview && (
             <div class={`comp-tab-content active`} data-tab="usage" role="tabpanel">
-              {hasContext && (
+              {hasContext && !hasFigmaPreview && (
                 <>
                   <div class="sub-heading" id={`${data.meta.slug}-context`} style="margin-top:0">In Context</div>
                   {data.overview.inContextNote && <p class="section-desc" set:html={data.overview.inContextNote} />}
@@ -107,7 +125,18 @@ const hasChangelog = data.changelog.length > 0;
                   )}
                 </>
               )}
-              {data.overview.livePreviewHtml && (
+              {hasFigmaPreview && (
+                <>
+                  <FigmaPreview
+                    figmaUrl={data.meta.figmaUrl}
+                    name={data.meta.name}
+                    headingId={`${data.meta.slug}-preview`}
+                    description={FIGMA_PREVIEW_DESCRIPTIONS[slug!] ?? data.meta.description}
+                    first
+                  />
+                </>
+              )}
+              {!hasFigmaPreview && data.overview.livePreviewHtml && (
                 <>
                   <div class="sub-heading" id={`${data.meta.slug}-preview`} style={hasContext ? undefined : 'margin-top:0'}>Live Preview</div>
                   <div class="demo-panel eb-preview-scope" set:html={withBase(data.overview.livePreviewHtml)} />

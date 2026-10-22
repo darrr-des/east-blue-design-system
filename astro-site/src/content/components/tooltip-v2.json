@@ -3,7 +3,7 @@
   "meta": {
     "node": "70:14908",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=70-14908",
-    "description": "A small floating callout anchored to a target with a directional pointer; ships in eight pointer positions.",
+    "description": "V2 Tooltips give people a short hint pointing to an element.",
     "badges": [
       {
         "kind": "remove",

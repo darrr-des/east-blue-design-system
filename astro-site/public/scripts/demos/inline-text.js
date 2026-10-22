@@ -46,11 +46,13 @@ function _itxRender(opts) {
   var description = opts.description || 'Description goes here';
   var link = opts.link || 'CTA';
   var badge = opts.badge || 'Label';
+  /* hasTrailingElement hides the Trailing Elements instance beside the value. */
+  var hasTrailing = opts.hasTrailingElement !== false;
 
   var html = '<div class="eb-preview eb-preview-itx eb-preview-itx--' + type + '">';
   html += '<div class="eb-preview-itx__main">';
   html += '<p class="eb-preview-itx__label">' + _itxEscape(label) + '</p>';
-  html += '<div class="eb-preview-itx__value-group"><span class="eb-preview-itx__value">' + _itxEscape(value) + '</span>' + _itxTrailing(type, badge) + '</div>';
+  html += '<div class="eb-preview-itx__value-group"><span class="eb-preview-itx__value">' + _itxEscape(value) + '</span>' + (hasTrailing ? _itxTrailing(type, badge) : '') + '</div>';
   html += '</div>';
   if (hasDescription || hasTextLink) {
     html += '<div class="eb-preview-itx__supporting">';
@@ -62,7 +64,8 @@ function _itxRender(opts) {
   return html;
 }
 
-/* ── Overview live preview — the three Figma properties + text slots ── */
+/* ── Overview live preview — the four Figma properties. The copy is set in the text layers
+   (no text properties in Figma), so the preview shows Figma's own placeholder copy. ── */
 function _itxUpdate() {
   var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
   var preview = document.getElementById('itx-demo-preview');
@@ -71,6 +74,7 @@ function _itxUpdate() {
     type:           getVal('itx-ctrl-type', 'copy-icon'),
     hasDescription: getVal('itx-ctrl-hasdescription', 'true'),
     hasTextLink:    getVal('itx-ctrl-hastextlink', 'true'),
+    hasTrailingElement: (function () { var e = document.getElementById('itx-ctrl-hastrailing'); return e ? e.checked : true; })(),
     label:          getVal('itx-ctrl-label', 'Label'),
     value:          getVal('itx-ctrl-value', '0.00'),
     description:    getVal('itx-ctrl-description', 'Description goes here'),

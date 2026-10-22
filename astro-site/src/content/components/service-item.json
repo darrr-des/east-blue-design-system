@@ -3,7 +3,7 @@
   "meta": {
     "node": "4692:21582",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4692-21582",
-    "description": "A service tile — asset slot, label and optional description — used in the home Menu Grid and customizable shortcut surfaces, with an optional New badge and Add or Remove edit overlays.",
+    "description": "Service Items let people open a GCash service from the home menu or shortcuts.",
     "badges": [
       {
         "kind": "keep",
@@ -16,15 +16,15 @@
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Keep — all findings resolved",
-      "text": "Rebuilt on node <code>4692:21582</code> in the 2026 Working File, and every finding from the original assessment has landed. The <code>State=Disbaled</code> typo is corrected, <code>Type</code> is split into <code>Badge</code> and <code>Action</code>, Inactive and Disabled render differently, a <code>Pressed</code> state ships across all eight combinations, description is a real Figma Slot, and layer naming follows §3 and §7 throughout with both slots kebab-cased per §4. Three things are settled as decisions rather than fixes: badges are suppressed during edit mode, so 32 is the complete matrix rather than 32 of 48; the <code>Container</code> frame in the Horizontal variants is what creates the side-by-side layout and is correctly absent from Vertical; and the 12×12 overlay tap target is specified at 44×44pt / 48×48dp with its own accessibility label. The Add and Remove glyph construction is parked as accepted debt in the shared icon source. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+      "title": "Keep — two small fixes left",
+      "text": "<code>Badge</code>, <code>Action</code>, four distinct States and two slots cover the tile. Open: six variants still name the preamble <code>#preamble</code>, and Inactive’s label colour differs between Vertical and Horizontal."
     },
     "navGroup": "",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Used inside the home Menu Grid (the 4×N icon-and-label grid above the bills/transfer shortcuts) and inside the \"Customize your home\" reordering screen, where Add/Remove overlays appear over the icon during edit mode. Vertical orientation is the dominant home-grid usage; horizontal is reserved for list-style surfaces (e.g. the recent-services drawer).",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n      <svg width=\"220\" height=\"130\" viewBox=\"0 0 220 130\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n        <rect x=\"20\" y=\"10\" width=\"180\" height=\"110\" rx=\"6\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".2\"/>\n        <g opacity=\".7\">\n          <circle cx=\"50\"  cy=\"40\" r=\"14\" fill=\"#E6F0FF\" stroke=\"#005CE5\" stroke-width=\"1.5\"/>\n          <text  x=\"50\"  y=\"68\" fill=\"#072592\" font-size=\"7\" font-weight=\"700\" text-anchor=\"middle\" font-family=\"system-ui\">Cash In</text>\n          <circle cx=\"110\" cy=\"40\" r=\"14\" fill=\"#E6F0FF\"/>\n          <rect x=\"120\" y=\"22\" width=\"18\" height=\"10\" rx=\"5\" fill=\"#E11744\"/><text x=\"129\" y=\"30\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" text-anchor=\"middle\" font-family=\"system-ui\">New</text>\n          <text  x=\"110\" y=\"68\" fill=\"#072592\" font-size=\"7\" font-weight=\"700\" text-anchor=\"middle\" font-family=\"system-ui\">Send</text>\n          <circle cx=\"170\" cy=\"40\" r=\"14\" fill=\"#E6F0FF\"/>\n          <circle cx=\"180\" cy=\"30\" r=\"6\" fill=\"#16A34A\"/><text x=\"180\" y=\"33\" fill=\"#FFF\" font-size=\"9\" font-weight=\"700\" text-anchor=\"middle\" font-family=\"system-ui\">+</text>\n          <text  x=\"170\" y=\"68\" fill=\"#072592\" font-size=\"7\" font-weight=\"700\" text-anchor=\"middle\" font-family=\"system-ui\">Bills</text>\n        </g>\n      </svg>\n    </div>",
+    "inContextNote": "How the service item appears in a real product screen — the Send, Load, Transfer, Bills and other tiles on the Wallet tab of the GCash home.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/service-item-in-context.png\" alt=\"Service items on the GCash home Wallet tab: a grid of tiles with icons and labels — Send, Load, Transfer, Bills, GSave, Cards, Tap to Pay and Commute — and an Explore the App row below with GInsure, A+ Rewards, Food Hub, Travel and GForest\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"si-demo-preview\"><div class=\"eb-preview eb-preview-si eb-preview-si--vertical eb-preview-si--default\"><span class=\"eb-preview-si__asset\" aria-hidden=\"true\"></span><span class=\"eb-preview-si__label\">Label</span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"si-ctrl-state\" class=\"demo-panel-select\" onchange=\"_siUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"inactive\">Inactive</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Orientation</span><select id=\"si-ctrl-orientation\" class=\"demo-panel-select\" onchange=\"_siUpdate()\"><option value=\"vertical\" selected=\"\">Vertical</option><option value=\"horizontal\">Horizontal</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Badge</span><select id=\"si-ctrl-badge\" class=\"demo-panel-select\" onchange=\"_siUpdate()\"><option value=\"none\" selected=\"\">None</option><option value=\"new\">New</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Action</span><select id=\"si-ctrl-action\" class=\"demo-panel-select\" onchange=\"_siUpdate()\"><option value=\"none\" selected=\"\">None</option><option value=\"add\">Add</option><option value=\"remove\">Remove</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Label</span><input type=\"text\" id=\"si-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_siUpdate()\"></div></div></div></div>",
@@ -97,7 +97,7 @@
     "resolved": [
       {
         "headline": "<code>State=Disbaled</code> typo corrected.",
-        "body": "v2.0: Rebuilt on node <code>4692:21582</code> in the 2026 Working File. All 32 variants read <code>State=Disabled</code>. The misspelling would have propagated into Code Connect prop names and from there into generated native constants, where it is far more expensive to unwind. (C2 · Rename)",
+        "body": "v2.0: Rebuilt on node <code>4692:21582</code> in the 2026 Working File. All 32 variants read <code>State=Disabled</code>. The misspelling would have propagated into generated native constants, where it is far more expensive to unwind. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
@@ -184,8 +184,36 @@
         }
       }
     ],
-    "open": [],
-    "recommendations": [],
+    "open": [
+      {
+        "headline": "Six variants still name the preamble <code>#preamble</code>.",
+        "body": "Every other variant names it <code>Preamble</code>. The six: <code>4692:21601</code>, <code>4692:21637</code>, <code>4711:18442</code>, <code>4711:18726</code>, <code>4692:21735</code>, <code>4692:21793</code>.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Structure"
+        }
+      },
+      {
+        "headline": "Inactive’s label colour differs by orientation.",
+        "body": "Vertical Inactive paints the label <code>text/color-text-weaker</code> (#6780A9); Horizontal Inactive paints it <code>text/color-text-weakest</code> (#90A8D0). One state should read the same in both layouts.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · States"
+        }
+      }
+    ],
+    "recommendations": [
+      {
+        "headline": "Rename the six <code>#preamble</code> layers to <code>Preamble</code>.",
+        "body": "Matches the other 26 variants.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Use one token for the Inactive label.",
+        "body": "Pick <code>text/color-text-weaker</code> or <code>text/color-text-weakest</code> and apply it in both orientations.",
+        "tag": "Token"
+      }
+    ],
     "appliedRecommendations": []
   },
   "style": {
@@ -1221,7 +1249,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1284,6 +1313,21 @@
           "figma": "Preamble (text, hidden by default)",
           "swift": "<code>.ebPreamble(\"…\")</code>",
           "compose": "<code>preamble = \"…\"</code>"
+        },
+        {
+          "figma": "hasDescription — true, false",
+          "swift": "presence of the description",
+          "compose": "presence of the description"
+        },
+        {
+          "figma": "hasPreamble — true, false",
+          "swift": "presence of the preamble",
+          "compose": "presence of the preamble"
+        },
+        {
+          "figma": "hasBorder — true, false",
+          "swift": "<code>hasBorder: Bool = false</code>",
+          "compose": "<code>hasBorder: Boolean = false</code>"
         }
       ],
       "filePaths": {
@@ -1295,12 +1339,12 @@
       {
         "subheading": "Vertical",
         "swift": "<code><span class=\"syn-type\">EBServiceItem</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">asset</span>: <span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"service\"</span>))\n    .<span class=\"syn-fn\">ebOrientation</span>(<span class=\"syn-dot\">.vertical</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBServiceItem</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">asset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">orientation</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBServiceItemOrientation</span>.Vertical\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBServiceItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">asset</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>…<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">orientation</span> = <span class=\"syn-type\">EBServiceItemOrientation</span><span class=\"syn-dot\">.Vertical</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Horizontal",
         "swift": "<code><span class=\"syn-type\">EBServiceItem</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">asset</span>: <span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"service\"</span>))\n    .<span class=\"syn-fn\">ebOrientation</span>(<span class=\"syn-dot\">.horizontal</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBServiceItem</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">asset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">orientation</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBServiceItemOrientation</span>.Horizontal\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBServiceItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">asset</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>…<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">orientation</span> = <span class=\"syn-type\">EBServiceItemOrientation</span><span class=\"syn-dot\">.Horizontal</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -1349,7 +1393,7 @@
         "criterion": "Layer Structure & Naming",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "<code>Preamble</code>, <code>Asset-Slot</code>, <code>Content</code> › <code>Label</code> / <code>Description-Slot</code>, <code>Border</code> — read on 4692:21583. One variant (4692:21601) still names its preamble text <code>#preamble</code>; the Preamble, Description and Border layers are hidden in every variant."
+        "notes": "Preamble, Asset-Slot, Content › Label / Description-Slot, Border. Six variants still name the preamble <code>#preamble</code>."
       },
       {
         "id": "C2",
@@ -1375,9 +1419,9 @@
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Default, Inactive, Pressed and Disabled built for both orientations, every badge and every action."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Default, Inactive, Pressed and Disabled built for both orientations, every badge and action. Inactive’s label is <code>text/color-text-weaker</code> in Vertical but <code>text/color-text-weakest</code> in Horizontal."
       },
       {
         "id": "C6",
@@ -1747,6 +1791,36 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Component Update · node 4692:21582",
+      "rows": [
+        {
+          "body": "<strong>Two findings filed.</strong> Six variants name the preamble <code>#preamble</code>; Inactive’s label token differs between Vertical and Horizontal.",
+          "delta": {
+            "kind": "open",
+            "label": "C1 · C5 Open"
+          }
+        },
+        {
+          "body": "<strong>Property Mapping completed.</strong> <code>hasDescription</code>, <code>hasPreamble</code> and <code>hasBorder</code> added; <code>hasBorder</code> maps to <code>showsDivider</code>, as on Table.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong><code>hasBorder</code> maps to <code>hasBorder</code>.</strong> API names follow the Figma property name (was <code>showsDivider</code>).",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.2",
       "date": "September 2026",

@@ -3,7 +3,7 @@
   "meta": {
     "node": "5728:37276",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5728-37276",
-    "description": "One row in a list — a leading marker, a filling label, and an optional trailing slot. Three nesting levels set the indent.",
+    "description": "List Items show people one entry in a list, with optional indent levels.",
     "badges": [
       {
         "kind": "keep",
@@ -17,17 +17,17 @@
     "verdict": {
       "kind": "keep",
       "title": "Keep — composes the primitive properly and fills its container",
-      "text": "The April assessment left three recommendations here. Two were taken directly: <code>level</code> became <code>ListLevel</code>, and the trailing slot that was only a suggestion now exists as <code>⤷ TrailingSlot</code> behind a <code>hasTrailing</code> boolean. The third asked for the leading asset to become a Figma Slot; the rebuild kept it as a <a href=\"/components/list-item-asset\">List Item - Asset</a> instance instead, which reaches the same place by a better route — that component now carries its own <code>Type=Slot</code>, so arbitrary 16 × 16 content already has a way in without loosening this row to accept anything. This pass set <code>#label</code> to fill and closed the space in <code>TrailingContainer</code>. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
+      "text": "Holds at three variants: <code>ListLevel</code> 1–3 indents 0, 16 then 32, with <code>hasLeading</code> and <code>hasTrailing</code> as booleans. The marker is a <a href=\"/components/list-item-asset\">List Item - Asset</a> instance. All four traits pass."
     },
     "navGroup": "List",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Shown as three rows so the indent reads against the left edge — a single row tells you nothing about what ListLevel does. Lists appear on terms pages, onboarding steps and task checklists.",
-    "inContextHtml": "",
+    "inContextNote": "How the List Item appears in a real product screen — numbered level-1 steps with indented level-2 bullets under each, on a GCrypto how-to.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/list-item-in-context.png\" alt=\"List Items on a GCash GCrypto screen: numbered steps Set up your GCrypto account and Claim a drop from the collection, each followed by indented bulleted items such as Tap GCrypto on your GCash dashboard and Browse the Curated NFT Collection\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"li-demo-preview\"><div class=\"eb-preview-litem\"><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-1 style</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l2\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-2 style</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l3\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-3 style</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">ListLevel</span><select id=\"li-ctrl-level\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"1\">1</option><option value=\"2\">2</option><option value=\"3\" selected>3</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeading</span><select id=\"li-ctrl-hasleading\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailing</span><select id=\"li-ctrl-hastrailing\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Nested instances</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">List Item - Asset</span><select id=\"li-ctrl-asset\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"pending\">Pending</option><option value=\"pending-notice\">PendingNotice</option><option value=\"check\">Check</option><option value=\"check-positive\">CheckPositive</option><option value=\"bullet\" selected>Bullet</option><option value=\"square\">Square</option><option value=\"numbered\">Numbered</option><option value=\"slot\">Slot</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"li-demo-preview\"><div class=\"eb-preview-litem\"><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-1 style</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">ListLevel</span><select id=\"li-ctrl-level\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"1\" selected>1</option><option value=\"2\">2</option><option value=\"3\">3</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeading</span><select id=\"li-ctrl-hasleading\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailing</span><select id=\"li-ctrl-hastrailing\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Nested instances</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">List Item - Asset</span><select id=\"li-ctrl-asset\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"pending\">Pending</option><option value=\"pending-notice\">PendingNotice</option><option value=\"check\">Check</option><option value=\"check-positive\">CheckPositive</option><option value=\"bullet\" selected>Bullet</option><option value=\"square\">Square</option><option value=\"numbered\">Numbered</option><option value=\"slot\">Slot</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -1046,7 +1046,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1065,7 +1066,7 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>list<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. The artifact is the List family: List, List Item and List Item - Asset all ship in <code>com.eastblue.ds:list</code> and import <code>com.eastblue.ds.list.*</code>."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "Four properties: one enum-shaped variant, two booleans and a slot. Two native parameters have no row because Figma has no property behind them — <code>label</code> is the <code>#label</code> text layer, and <code>marker</code> is the nested <a href=\"/components/list-item-asset\">List Item - Asset</a> instance, which Figma lists under Nested instances rather than Properties. <strong><code>level</code> is an <code>Int</code>, not a three-value enum.</strong> The Figma variant stops at 3 because a variant has to enumerate its values; a real list nests as deep as its content does, and capping the native API at three would bake a tooling limit into the platform. Same shape as <code>hasWeek6 → weeks: Int</code> on Date Picker - Calendar.",
@@ -1100,17 +1101,17 @@
       {
         "subheading": "1 — a flat list",
         "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Delivery fee\"</span><span class=\"syn-punc\">,</span> level<span class=\"syn-punc\">:</span> <span class=\"syn-val\">1</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Delivery fee\"</span><span class=\"syn-punc\">,</span> level <span class=\"syn-eq\">=</span> <span class=\"syn-val\">1</span><span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Delivery fee\"</span>, <span class=\"syn-param\">level</span> = <span class=\"syn-val\">1</span><span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "2 — one level in",
         "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Service charge\"</span><span class=\"syn-punc\">,</span> level<span class=\"syn-punc\">:</span> <span class=\"syn-val\">2</span><span class=\"syn-punc\">,</span> marker<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.square</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Service charge\"</span><span class=\"syn-punc\">,</span> level <span class=\"syn-eq\">=</span> <span class=\"syn-val\">2</span><span class=\"syn-punc\">,</span> marker <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Square</span><span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Service charge\"</span>, <span class=\"syn-param\">level</span> = <span class=\"syn-val\">2</span>, <span class=\"syn-param\">marker</span> = <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-dot\">.Square</span><span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "3 — as deep as the variants go",
         "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Processing\"</span><span class=\"syn-punc\">,</span> level<span class=\"syn-punc\">:</span> <span class=\"syn-val\">3</span><span class=\"syn-punc\">,</span> marker<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.checkPositive</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"chevron.right\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Processing\"</span><span class=\"syn-punc\">,</span> level <span class=\"syn-eq\">=</span> <span class=\"syn-val\">3</span><span class=\"syn-punc\">,</span> marker <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">CheckPositive</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-fn\">Icon</span><span class=\"syn-punc\">(</span>EBIcons<span class=\"syn-punc\">.</span>ChevronRight<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "compose": "<code><span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Processing\"</span>, <span class=\"syn-param\">level</span> = <span class=\"syn-val\">3</span>, <span class=\"syn-param\">marker</span> = <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-dot\">.CheckPositive</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBIcons</span><span class=\"syn-dot\">.ChevronRight</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>"
       }
     ],
     "accessibility": [

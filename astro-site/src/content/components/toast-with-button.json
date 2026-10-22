@@ -3,7 +3,7 @@
   "meta": {
     "node": "27:53205",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=27-53205",
-    "description": "A toast variant with a trailing action button used for undo or in-flight confirmations.",
+    "description": "Toasts with a button let people undo or act on a short confirmation.",
     "badges": [
       {
         "kind": "consolidate",

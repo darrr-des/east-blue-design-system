@@ -272,6 +272,132 @@ body {
 .pb-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0; }
 .pb-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 
+/* ── Inline Text preview — Label and Value are Proxima Soft at 0.25, the
+   Badge label at 0.5, Description and Link BarkAda at 0 (set 4419:24515). */
+.itx-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.itx-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.itx-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Tooltip preview — Header and Button label Proxima Soft at 0.25,
+   Description BarkAda at 0 (set 6295:79647). */
+.tt-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.tt-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Toast preview — Titles Proxima Soft at 0.25 (SM at 0.5), description
+   BarkAda at 0 (set 4915:25141). */
+.ts-md { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.ts-sm { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.ts-sub { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Title Bar - App preview — Title and subtext Proxima Soft at 0.25 / 0.5,
+   Header at 0.221 (set 4784:34355). */
+.tb-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.tb-link { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.tb-header { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.221px; }
+
+/* ── Tab Item preview — the label is Proxima Soft Bold at 0.25 (set 26327:10941). */
+.ti-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Stepper preview — the Circular index is Proxima Soft Bold at 0.25
+   (set 4337:11140). */
+.stp-index { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Inline Message preview — title and reference rows are Proxima Soft,
+   the description BarkAda (set 6420:91212). */
+.im-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0; }
+.im-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.im-name, .im-amount, .im-slot { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Empty State preview — heading and button Proxima Soft at 0.25,
+   description BarkAda (set 26356:13970). */
+.es-heading { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.es-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.es-slot { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Callout (Alert page) preview — title Proxima Soft at 0.25, description
+   BarkAda (set 6663:104524). */
+.co-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.co-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.co-btn { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Service Item preview — Label and New badge are Primary (Proxima
+   Soft), Preamble and Description are Secondary (BarkAda). ─────────── */
+.si-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.si-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.si-pre, .si-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Accordion preview — Label is Primary (Proxima Soft), Description is
+   Secondary (BarkAda). ────────────────────────────────────────────── */
+.acc-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.acc-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Banner preview — preamble, heading and action label are Primary
+   (Proxima Soft); the description is Secondary (BarkAda). ─────────── */
+.bnr-pre { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.bnr-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.bnr-action { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.bnr-blurb { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.bnr-replace { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Visual Popup preview ────────────────────────────────────────── */
+.vp-title, .vp-pre, .vp-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.vp-msg { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Menu Grid preview ───────────────────────────────────────────── */
+.mg-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+.mg-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Chip preview — Label and Value are Primary (Proxima Soft). ──── */
+.chip-label, .chip-value { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Chat Composer preview ───────────────────────────────────────── */
+.cc-text { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Action Row preview — every text layer is Proxima Soft. ─────── */
+.ar-label, .ar-cta, .ar-counter { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.ar-desc { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
+
+/* ── Generic Card preview — Blurb, Title, Tag and Badge are Primary
+   (Proxima Soft); the description rows are Secondary (BarkAda). ──── */
+.gc-blurb, .gc-title, .gc-tag, .gc-badge { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.gc-label, .gc-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Generic Transaction Card preview ────────────────────────────── */
+.gt-label, .gt-amount, .gt-badge, .gt-initials { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.gt-date { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Bottom Sheet preview ────────────────────────────────────────── */
+.bs-pre, .bs-title, .bs-button { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.bs-msg, .bs-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Avatar preview — initials are Primary (Proxima Soft); tracking is
+   set per size on the element. ────────────────────────────────────── */
+.av-initials { font-family: 'Proxima Soft', system-ui, sans-serif; }
+.avg-initials { font-family: 'Proxima Soft', system-ui, sans-serif; }
+.bdg-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
+.ctr-text { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Button preview — #label is Proxima Soft Bold; tracking is set per
+   size on the SVG text element (0.25, or 0.5 at XSmall). */
+.btn-preview-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Input Field preview — #label is Proxima Soft Semibold at 0.25. */
+.inf-label { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Labeled Field preview — #label and #value are Proxima Soft Semibold. */
+.lf-text { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Recipient Field preview — both lines are Proxima Soft Semibold;
+   tracking differs (0.5 on the label, 0.25 on the value). */
+.rf-label, .rf-value { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Select Field preview — #value is Proxima Soft Semibold at 0.25. */
+.sf-value { font-family: 'Proxima Soft', system-ui, sans-serif; }
+
+/* ── Checkbox with Label preview ─────────────────────────────────── */
+.ci-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.ci-desc { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
 /* ── Detail Hero preview ─────────────────────────────────────────────
    Title carries 0 tracking, the sender label and value 0.25, and the
    description is BarkAda at 0 — all read off the layers of set
@@ -297,6 +423,8 @@ body {
    dashed placeholders at their measured size because the real footer logos
    are RECTANGLE nodes with IMAGE fills — raster, not vector, so there is
    nothing to reproduce faithfully. */
+.ft-text { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.ft-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.5px; }
 .ft-placeholder { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
 .eb-preview.eb-preview-ft, .eb-preview.eb-preview-mg, .eb-preview.eb-preview-pb { display: block; max-width: 100%; height: auto; font-family: 'Proxima Soft', var(--font-body); }
 /* Footer disclaimer runs — Secondary/Bold/Caption, link run #005CE5 (4227:11087 fills) */
@@ -1103,6 +1231,7 @@ td code {
   border-bottom: 1px solid var(--border);
   margin-bottom: var(--space-10);
 }
+.comp-header--settled { border-bottom: 0; padding-bottom: 0; }
 .comp-header-body { flex: 1; }
 
 /* ── Verdict inline message ─────────────────────────────────────────── */
@@ -3316,7 +3445,9 @@ input.demo-panel-input.demo-panel-select,
   font-weight: 500;
   color: var(--muted);
   flex: 0 1 auto;
-  min-width: 0;
+  /* Shrink to the longest word, never through it — "Alignment" was
+     splitting to "Align / ment" beside a long value. */
+  min-width: min-content;
   overflow-wrap: break-word;
 }
 .spec-prop-val {
@@ -5361,13 +5492,17 @@ pre.code-snippet .prp { color: #0369A1; }
   min-height: 38px;
   padding: 12px 12px 12px 12px;
   border-radius: 8px;
-  border: 1px solid #E5EBF4;
+  /* Figma's 1px stroke is centre-aligned: half outside, and it adds nothing to the 38px height. */
+  outline: 1px solid #E5EBF4;
+  outline-offset: -0.5px;
   background: #0A2757;
   color: #FFFFFF;
   font-family: 'Proxima Soft', var(--font-body);
 }
+/* Every variant carries the same drop shadow in Figma (4915:25141). */
+.eb-preview-tst { box-shadow: 0 6px 12px -8px rgba(2, 14, 34, 0.16); }
 .eb-preview-tst--light { background: #FFFFFF; color: #0A2757; }                                 /* 4915:25148 */
-.eb-preview-tst--destructive { background: #D61B2C; color: #FFFFFF; border-color: #F4C7C9; }   /* 4915:25154 */
+.eb-preview-tst--destructive { background: #D61B2C; color: #FFFFFF; outline-color: #F4C7C9; }   /* 4915:25154 */
 .eb-preview-tst__icon { width: 24px; height: 24px; flex-shrink: 0; margin: -5px 0; }
 .eb-preview-tst--sm .eb-preview-tst__icon { width: 16px; height: 16px; margin: -1px 0; }
 .eb-preview-tst__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
@@ -5806,7 +5941,8 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-vch {
   position: relative;
   display: flex;
-  background: #FFFFFF;
+  /* Figma: the component has no fill — Content is white and the artwork's notches are cut out. */
+  background: transparent;
   border-radius: 4px;
   overflow: hidden;
   font-family: "BarkAda", system-ui, sans-serif;
@@ -5819,6 +5955,9 @@ pre.code-snippet .prp { color: #0369A1; }
    possible; matching the structure was not, so the preview reproduces
    what each one actually draws. */
 .eb-preview-vch--vertical { flex-direction: column; width: 162px; }
+/* Vertical is a fixed-height card in Figma (Small 278, Large 341); Content fills the rest. */
+.eb-preview-vch--vertical.eb-preview-vch--small { height: 278px; }
+.eb-preview-vch--vertical.eb-preview-vch--large { height: 341px; }
 .eb-preview-vch--horizontal {
   flex-direction: row;
   height: 124px;
@@ -5911,6 +6050,8 @@ pre.code-snippet .prp { color: #0369A1; }
    Figma, so it takes the same ground the notches do — a repeating
    gradient draws the identical picture without a mask. */
 .eb-preview-vch__asset::after {
+  /* The dashed seam is part of Figma's Stub Cutout mask, drawn with the artwork now. */
+  display: none;
   content: "";
   position: absolute;
   z-index: 4;
@@ -5987,6 +6128,7 @@ pre.code-snippet .prp { color: #0369A1; }
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.25px;
+  line-height: 14px;  /* Figma #price 14/14 */
   color: #005CE5;
 }
 /* text/color-text-disabled in every version — both orientations bind the
@@ -5994,6 +6136,7 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-vch__original {
   font-size: 12px;
   font-weight: 500;
+  line-height: 18px;  /* Figma #originalPrice 12/18 */
   color: #C2CFE5;
   text-decoration: line-through;
 }
@@ -6007,7 +6150,8 @@ pre.code-snippet .prp { color: #0369A1; }
 /* ── Badges ─────────────────────────────────────────────────────── */
 .eb-preview-vch__badge {
   align-self: flex-start;
-  padding: 2px 8px;
+  /* Vertical BadgeSlot: 16 tall, padding 3 4 1 4, bg/color-bg-primary. */
+  padding: 3px 4px 1px;
   border-radius: 4px;
   background: #005CE5;
   font-size: 12px;
@@ -6021,7 +6165,7 @@ pre.code-snippet .prp { color: #0369A1; }
   position: absolute;
   top: 9px;
   right: 0;
-  padding: 2px 8px;
+  padding: 4px 8px;  /* Figma ⤷ DiscountSlot badge: 18 tall */
   border-radius: 4px 0 0 4px;
   background: #0A2757;
   font-size: 10px;
@@ -6038,6 +6182,9 @@ pre.code-snippet .prp { color: #0369A1; }
   position: absolute;
   top: 4px;
   left: 0;
+  /* Horizontal BadgeSlot: 18 tall, bg/color-bg-primary. */
+  padding: 3px 4px;
+  background: #005CE5;
   border-radius: 0 4px 4px 0;
   z-index: 3;
 }
@@ -6139,26 +6286,32 @@ pre.code-snippet .prp { color: #0369A1; }
   width: 336px;
   border-radius: 8px;
   overflow: hidden;
-  background: #FFFFFF;
-  border: 1px solid #E5EBF4;
+  /* Figma 5542:32287: no fill and no stroke on the card — each section is white, the notched
+     strip is transparent where it is cut, and the card carries a 0 0 4 #020E22 @ 6% shadow. */
+  background: transparent;
+  box-shadow: 0 0 4px rgba(2, 14, 34, 0.06);
   font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-vdet__header {
+  background: #FFFFFF;
   display: flex;
-  align-items: center;
+  /* Figma Header: top-aligned row, padding 12 16 12 10, gap 8; the 1px bottom stroke is
+     inside, so it does not take space from the 64px row. */
+  align-items: flex-start;
   gap: 8px;
   height: 64px;
-  padding: 0 10px;
-  border-bottom: 1px solid #E5EBF4;
+  padding: 12px 16px 12px 10px;
+  box-sizing: border-box;
+  box-shadow: inset 0 -1px 0 #E5EBF4;
 }
 .eb-preview-vdet__logo {
   flex: 0 0 auto;
+  position: relative;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: #EEF2F9;
 }
+.eb-preview-vdet__logo img { position: absolute; left: 3px; top: 4px; width: 35px; height: 32px; }
 /* Merchant Details is a 202 × 38 column: 4 above the name, then the name
    at 16 and the branch line at 18 with no gap between them. They were
    inline spans, so they ran side by side. */
@@ -6208,8 +6361,10 @@ pre.code-snippet .prp { color: #0369A1; }
   line-height: 12px;
   letter-spacing: 0.5px;
   color: #FFFFFF;
+  /* ⤷ BadgeSlot has 6px top padding: the badge sits at y 18. */
+  margin-top: 6px;
 }
-.eb-preview-vdet__details { padding: 12px 16px; }
+.eb-preview-vdet__details { padding: 12px 16px; background: #FFFFFF; }
 .eb-preview-vdet__title {
   font-size: 18px;
   font-weight: 700;
@@ -6222,7 +6377,7 @@ pre.code-snippet .prp { color: #0369A1; }
    25.6 — the container was 7 too tall before anything else was wrong. */
 .eb-preview-vdet__prices {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 4px;
   height: 18px;
   margin-top: 8px;
@@ -6252,28 +6407,12 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 /* The strip is a notched divider: a hairline with a punch at each end. */
 .eb-preview-vdet__strip { position: relative; height: 16px; }
-.eb-preview-vdet__strip::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  top: 50%;
-  border-top: 1px dashed #E5EBF4;
-}
-.eb-preview-vdet__strip i {
-  position: absolute;
-  top: 0;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #F6F9FD;
-  border: 1px solid #E5EBF4;
-}
-.eb-preview-vdet__strip i:first-child { left: -8px; }
-.eb-preview-vdet__strip i:last-child { right: -8px; }
+.eb-preview-vdet__strip > svg { display: block; }
+.eb-preview-vdet__sep { position: absolute; left: 8px; top: 7px; width: 320px; height: 1px; }
+.eb-preview-vdet__sep svg { display: block; }
 /* Body itself has no padding — the Description insets its own text and
    both terms treatments run the full 336. */
-.eb-preview-vdet__body { padding: 0; }
+.eb-preview-vdet__body { padding: 0; background: #FFFFFF; }
 .eb-preview-vdet__desc {
   padding: 8px 12px 12px;
   color: #445C85;
@@ -7581,8 +7720,11 @@ pre.code-snippet .prp { color: #0369A1; }
     .pg-dash { position: absolute; inset: 0; pointer-events: none; }
     .pg-dash > svg { display: block; width: 100%; height: 100%; overflow: visible; }
     /* Empty slot — Figma's placeholder: pink tint, pink edge, a "+" chip in the middle */
-    .pg-n-slot.is-empty { background: rgba(255,36,189,0.10); box-shadow: inset 0 0 0 1px #F24DB8; }
-    .pg-n-slot.is-empty::after { content: '+'; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; border-radius: 4px; background: #F24DB8; color: #FFFFFF; font: 600 13px/16px system-ui, sans-serif; text-align: center; pointer-events: none; }
+    /* Figma's canvas marks an empty slot with a square box over its footprint, whatever
+       radius the slot itself carries — Menu Grid's Icon slot is radius-round, and Figma
+       still draws it square. The radius returns the moment the slot is filled. */
+    .pg-n-slot.is-empty { background: rgba(255,36,189,0.10); box-shadow: inset 0 0 0 2px #F24DB8; border-radius: 0 !important; }
+    .pg-n-slot.is-empty::after { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; border-radius: 4px; background: linear-gradient(#FFFFFF, #FFFFFF) center / 8px 1.6px no-repeat, linear-gradient(#FFFFFF, #FFFFFF) center / 1.6px 8px no-repeat, #F24DB8; pointer-events: none; }
     .pg-nochrome .pg-n-slot.is-empty { background: none; box-shadow: none; }
     .pg-nochrome .pg-n-slot.is-empty::after { display: none; }
     .pg-none { font-size: 13px; color: #646A78; }

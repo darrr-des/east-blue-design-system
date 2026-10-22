@@ -83,7 +83,7 @@ Then compare **the property panel with a Figma instance of the same variant**: e
 
 ### 3.2 In Context
 
-The screens live on the Working File's **Pipeline [Core Components]** page as frames named `In Context - <Component>` (960 × 430).
+The screens live in the Working File as frames named `In Context - <Component>` (or `Screen Context - …`), 960 × 430 — on the page that matches the checklist the component sits in: **Pipeline [Core Components]**, **Pipeline [Composites]** or **Pipeline [Patterns]**.
 
 ```bash
 npm run update:context -- <slug> <frameId>

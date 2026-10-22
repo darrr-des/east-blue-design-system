@@ -1,33 +1,33 @@
 {
-  "name": "Tabs",
+  "name": "Tab Group",
   "meta": {
-    "node": "26327:11046",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26327-11046",
-    "description": "The Tabs container composes a row of <strong>Tab Item</strong> instances. 12 variants across <code>Orientation</code> (Vertical/Horizontal) × <code>Size</code> (Medium/Large) × <code>Tabs Count</code> (2/3/4).",
+    "node": "8030:120829",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=8030-120829",
+    "description": "Tab Groups let people switch between related views of the same content.",
     "badges": [
       {
         "kind": "keep",
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Rebuilt — container is clean",
-      "text": "Renamed to <strong>Tabs</strong> (plural), disambiguating it from the Tab Item atom, and rebuilt to 12 variants across <code>Orientation</code> × <code>Size</code> × <code>Tabs Count</code>. Every cell is a real Tab Item instance, so atom changes propagate. The fixed <code>Tabs Count</code> axis and the absence of a scrollable variant are both intentional — GCash tabs are capped at 2–4. Only Code Connect registration remains."
+      "title": "Keep — Tab Items in a slot",
+      "text": "<code>Orientation</code> × <code>Size</code> × <code>Tabs Count</code> in 12 variants; the tabs sit in the <code>TabGroup-Wrapper</code> slot as Tab Item instances, so a change to Tab Item reaches every Tab Group."
     },
     "navGroup": "Tabs",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Tabs sit below a Title Bar to switch between screen sections.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"120\" viewBox=\"0 0 200 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"108\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"22\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"34\" y=\"20\" width=\"132\" height=\"8\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"100\" y=\"20\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Title</text>\n          \n          <rect x=\"34\" y=\"34\" width=\"132\" height=\"20\" fill=\"#FFFFFF\"></rect>\n          <rect x=\"34\" y=\"52\" width=\"44\" height=\"2\" fill=\"#005CE5\"></rect>\n          <rect x=\"78\" y=\"52\" width=\"44\" height=\"2\" fill=\"#E5EBF4\"></rect>\n          <rect x=\"122\" y=\"52\" width=\"44\" height=\"2\" fill=\"#E5EBF4\"></rect>\n          <text x=\"56\" y=\"48\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Overview</text>\n          <text x=\"100\" y=\"48\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Details</text>\n          <text x=\"144\" y=\"48\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">History</text>\n          \n          <rect x=\"42\" y=\"62\" width=\"116\" height=\"10\" rx=\"2\" fill=\"currentColor\" opacity=\".07\"></rect>\n          <rect x=\"42\" y=\"76\" width=\"116\" height=\"10\" rx=\"2\" fill=\"currentColor\" opacity=\".07\"></rect>\n          <rect x=\"42\" y=\"90\" width=\"116\" height=\"10\" rx=\"2\" fill=\"currentColor\" opacity=\".07\"></rect>\n        </svg>\n      </div>",
+    "inContextNote": "How tabs appear in real product screens — Badges, Rewards and Challenges on a profile, and Regular, Surf and Load with Freebies on Buy Load.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/tabs-in-context.png\" alt=\"Tabs shown on two GCash screens: a profile for Adam Salvatoré with Badges selected beside Rewards and Challenges, and Buy Load with Regular selected beside Surf, Load with Freebies and a cut-off fourth tab\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tabs-demo-preview\"><svg width=\"248\" height=\"84\" viewBox=\"0 0 248 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"248\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"31\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"31\" y=\"60\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"62\" height=\"2\" fill=\"#005CE5\"></rect><circle cx=\"93\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"93\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"62\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect><circle cx=\"155\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"155\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"124\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect><circle cx=\"217\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"217\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"186\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">tabsCount</span><select class=\"demo-panel-select\" id=\"tabs-demo-count\" onchange=\"updateTabsDemo()\"><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\" selected=\"\">4</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">active</span><select class=\"demo-panel-select\" id=\"tabs-demo-active\" onchange=\"updateTabsDemo()\"><option value=\"0\" selected=\"\">1st</option><option value=\"1\">2nd</option><option value=\"2\">3rd</option><option value=\"3\">4th</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tb-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Orientation</span><select class=\"demo-panel-select\" id=\"tb-demo-orientation\" onchange=\"updateTabsDemo()\"><option value=\"Vertical\" selected>Vertical</option><option value=\"Horizontal\">Horizontal</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" id=\"tb-demo-size\" onchange=\"updateTabsDemo()\"><option value=\"Medium\" selected>Medium</option><option value=\"Large\">Large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Tabs Count</span><select class=\"demo-panel-select\" id=\"tb-demo-count\" onchange=\"updateTabsDemo()\"><option value=\"4\" selected>4</option><option value=\"3\">3</option><option value=\"2\">2</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -42,12 +42,12 @@
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "Named <strong>Tabs</strong> (plural), correctly distinguishing the container from the Tab Item atom. Three orthogonal props — <code>Orientation</code> × <code>Size</code> × <code>Tabs Count</code> = a complete 2 × 2 × 3 matrix with no invalid cells."
+        "note": "Named <strong>Tab Group</strong>, distinct from the Tab Item it holds. Three orthogonal properties — <code>Orientation</code> × <code>Size</code> × <code>Tabs Count</code> — a complete 2 × 2 × 3 matrix with no invalid cells."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Every cell is a real <code>Tab Item</code> INSTANCE, so atom changes propagate automatically. Orientation and Size forward down to the nested items."
+        "note": "The tabs live in the <code>TabGroup-Wrapper</code> slot as real Tab Item instances, so a consumer can swap or reorder them and Tab Item changes propagate."
       }
     ],
     "behavior": [
@@ -123,13 +123,7 @@
       }
     ],
     "open": [],
-    "recommendations": [
-      {
-        "headline": "Register Code Connect mapping to <code>EBTabs</code>.",
-        "body": "Wire <code>Orientation</code>, <code>Size</code>, and <code>Tabs Count</code> to the SwiftUI / Compose API, forwarding orientation and size down to the nested <code>EBTabItem</code> children.",
-        "tag": "Docs"
-      }
-    ],
+    "recommendations": [],
     "appliedRecommendations": [
       {
         "headline": "Rename \"Tab\" → \"Tabs\".",
@@ -330,8 +324,8 @@
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBTabGroup</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBTabGroup</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "cardKey": "tabs-spec-3",
@@ -505,8 +499,8 @@
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBTabGroup</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBTabGroup</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "cardKey": "tabs-spec-2",
@@ -680,11 +674,12 @@
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBTabGroup</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBTabGroup</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
-    "colorsTables": []
+    "colorsTables": [],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -709,36 +704,41 @@
       "description": "",
       "rows": [
         {
-          "figma": "items",
-          "swift": "items: [EBTabItem]",
-          "compose": "items: List&lt;EBTabItem&gt;"
+          "figma": "Orientation — Vertical, Horizontal",
+          "swift": "<code>.ebOrientation(.vertical / .horizontal)</code>",
+          "compose": "<code>orientation = EBTabOrientation.Vertical / Horizontal</code>"
         },
         {
-          "figma": "selectedIndex",
-          "swift": "@Binding selection: Int",
-          "compose": "selectedIndex: Int"
+          "figma": "Size — Medium, Large",
+          "swift": "<code>.ebSize(.medium / .large)</code>",
+          "compose": "<code>size = EBTabSize.Medium / Large</code>"
         },
         {
-          "figma": "onSelect",
-          "swift": "onSelect: (Int) -&gt; Void",
-          "compose": "onSelect: (Int) -&gt; Unit"
+          "figma": "Tabs Count — 4, 3, 2",
+          "swift": "the number of <code>EBTabItem</code> children",
+          "compose": "<code>items</code> — its length"
         },
         {
-          "figma": "scrollable",
-          "swift": ".scrollable(true)",
-          "compose": "scrollable: Boolean"
+          "figma": "isSelected (on the Tab Item instances)",
+          "swift": "<code>selection: Binding<Int></code>",
+          "compose": "<code>selectedIndex</code> · <code>onSelect: (Int) -> Unit</code>"
+        },
+        {
+          "figma": "TabGroup-Wrapper (slot) — holds the Tab Item instances",
+          "swift": "the <code>EBTabItem</code> children",
+          "compose": "<code>items</code> — one entry per tab"
         }
       ],
       "filePaths": {
-        "swift": "ios/Components/Tabs/EBTabs.swift",
-        "compose": "android/components/tabs/EBTabs.kt"
+        "swift": "ios/Components/Tabs/EBTabGroup.swift",
+        "compose": "android/components/tabs/EBTabGroup.kt"
       }
     },
     "usageSnippets": [
       {
         "subheading": "Usage",
-        "swift": "<span class=\"typ\">EBTabs</span>(\n    <span class=\"prp\">items</span>: [\n        <span class=\"typ\">EBTabItem</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Overview\"</span>, <span class=\"prp\">icon</span>: .<span class=\"fn\">image</span>(<span class=\"typ\">Image</span>(<span class=\"str\">\"overview\"</span>))),\n        <span class=\"typ\">EBTabItem</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Details\"</span>),\n        <span class=\"typ\">EBTabItem</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"History\"</span>)\n    ],\n    <span class=\"prp\">selection</span>: $selectedIndex\n)",
-        "compose": "<span class=\"typ\">EBTabs</span>(\n    <span class=\"prp\">items</span> = listOf(\n        <span class=\"typ\">EBTabItem</span>(label = <span class=\"str\">\"Overview\"</span>, icon = painterResource(R.drawable.overview)),\n        <span class=\"typ\">EBTabItem</span>(label = <span class=\"str\">\"Details\"</span>),\n        <span class=\"typ\">EBTabItem</span>(label = <span class=\"str\">\"History\"</span>)\n    ),\n    <span class=\"prp\">selectedIndex</span> = state,\n    <span class=\"prp\">onSelect</span> = { state = it }\n)"
+        "swift": "<code><span class=\"syn-type\">EBTabGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">items</span>: <span class=\"syn-punc\">[</span>\n        <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Overview\"</span>, <span class=\"syn-param\">icon</span>: .<span class=\"syn-fn\">image</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"overview\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>,\n        <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Details\"</span><span class=\"syn-punc\">)</span>,\n        <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"History\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">]</span>,\n    <span class=\"syn-param\">selection</span>: $selectedIndex\n<span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBTabGroup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">items</span> = <span class=\"syn-kw\">listOf</span><span class=\"syn-punc\">(</span>\n        <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Overview\"</span>, <span class=\"syn-param\">icon</span> = painterResource<span class=\"syn-punc\">(</span>R<span class=\"syn-dot\">.drawable</span><span class=\"syn-dot\">.overview</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>,\n        <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Details\"</span><span class=\"syn-punc\">)</span>,\n        <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"History\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">selectedIndex</span> = state,\n    <span class=\"syn-param\">onSelect</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">state</span> = it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -774,14 +774,14 @@
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>Tab 1</code>, <code>Tab 2</code>, ... <code>container</code>, <code>icon-label</code>. Semantic."
+        "notes": "<code>TabGroup-Wrapper</code> slot › Tab Item instances, the same in all 12 variants."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Component named singular \"Tab\"; <code>tabsCount</code> uses string values and shouldn't be a variant at all."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Named Tab Group; <code>Orientation</code>, <code>Size</code> and <code>Tabs Count</code> with Title Case or numeric values, and one slot."
       },
       {
         "id": "C3",
@@ -800,9 +800,9 @@
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Active/inactive covered via Tab Item. No scrollable pattern for 5+ tabs."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Selected, Hover and Disabled live on the Tab Item instances. 2–4 tabs with no scrollable variant, by design."
       },
       {
         "id": "C6",
@@ -813,44 +813,183 @@
       }
     ],
     "variants": {
-      "total": 3,
-      "description": "After the recommended restructure these 3 variants collapse to 1 flexible container accepting a list.",
+      "total": 12,
+      "description": "2 <code>Orientation</code> × 2 <code>Size</code> × 3 <code>Tabs Count</code> = 12 variants.",
       "columns": [
-        "tabsCount",
-        "Width",
-        "Node ID"
+        "Orientation",
+        "Size",
+        "Tabs Count",
+        "Node"
       ],
       "rows": [
         {
           "cells": [
-            "2",
-            "124px",
-            "18482:33259"
-          ]
-        },
-        {
-          "cells": [
-            "3",
-            "186px",
-            "18482:33255"
-          ]
-        },
-        {
-          "cells": [
+            "Vertical",
+            "Medium",
             "4",
-            "248px",
-            "18482:33250"
+            "26327:11047"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Large",
+            "4",
+            "26327:11052"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Large",
+            "4",
+            "26327:11057"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Medium",
+            "4",
+            "26327:11062"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Medium",
+            "3",
+            "26327:11067"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Large",
+            "3",
+            "26327:11071"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Large",
+            "3",
+            "26327:11075"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Medium",
+            "3",
+            "26327:11079"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Medium",
+            "2",
+            "26327:11083"
+          ]
+        },
+        {
+          "cells": [
+            "Vertical",
+            "Large",
+            "2",
+            "26327:11086"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Large",
+            "2",
+            "26327:11089"
+          ]
+        },
+        {
+          "cells": [
+            "Horizontal",
+            "Medium",
+            "2",
+            "26327:11092"
           ]
         }
       ],
       "summary": {
-        "columns": [],
-        "rows": []
+        "columns": [
+          "tabsCount",
+          "Width",
+          "Node ID"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "2",
+              "124px",
+              "18482:33259"
+            ]
+          },
+          {
+            "cells": [
+              "3",
+              "186px",
+              "18482:33255"
+            ]
+          },
+          {
+            "cells": [
+              "4",
+              "248px",
+              "18482:33250"
+            ]
+          }
+        ]
       },
-      "collapseLabel": ""
+      "collapseLabel": "View full Orientation × Size × Tabs Count breakdown (12 rows)"
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "October 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Repointed to Tab Group · node 8030:120829",
+      "rows": [
+        {
+          "body": "<strong>Follows Tab Group in the 2026 Working File.</strong> The owner named the container <strong>Tab Group</strong> (was Tabs, node 26327:11046); its tabs now sit in a <code>TabGroup-Wrapper</code> slot. API renamed <code>EBTabs</code> → <code>EBTabGroup</code>.",
+          "delta": {
+            "kind": "partial",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>C2 Requires Rework → Ready.</strong> The naming question is settled by Tab Group.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>C5 Needs Refinement → Ready.</strong> States live on Tab Item; 2–4 tabs without scrolling is by design.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Playground rebuilt</strong> from node 8030:120829; <strong>Keep · Ready</strong>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.1",
       "date": "September 2026",

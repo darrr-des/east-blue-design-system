@@ -3,7 +3,7 @@
   "meta": {
     "node": "5372:38309",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5372-38309",
-    "description": "The voucher card, in the two shapes the app uses — a portrait tile for grids and a landscape row for lists — across the three states a voucher can be in.",
+    "description": "Vouchers show people an offer they can use, in grids or lists.",
     "badges": [
       {
         "kind": "keep",
@@ -17,17 +17,17 @@
     "verdict": {
       "kind": "keep",
       "title": "Keep — four components collapsed into one",
-      "text": "All four DS Health traits pass. <code>Voucher Card Horizontal</code>, <code>Horizontal Voucher</code>, <code>Vertical Voucher</code> and <code>Voucher Asset</code> are gone; all four are now settings on this one component. <code>AssetSize</code>, <code>Orientation</code> and <code>State</code> each carry one meaning, and the artwork, status badge and discount badge are real slots instead of baked artwork with frozen strings. The two orientations are laid out differently on purpose — they are not the same card rotated."
+      "text": "<code>Orientation</code> × <code>AssetSize</code> × <code>State</code> in 12 variants; five booleans show the optional parts, and the artwork, status badge and discount badge are slots. The copy lives in the text layers."
     },
     "navGroup": "Voucher",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Vertical fills the voucher grid on Discover and in campaign carousels, where cards sit side by side. Horizontal fills the list on My Vouchers, where each row needs room for a description and its own claim action.",
-    "inContextHtml": "",
+    "inContextNote": "How the voucher appears in real product screens — horizontal Starbucks and Jollibee cards in the Voucher Pocket, and vertical Used and Expired cards under a Flash Deals countdown.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/voucher-in-context.png\" alt=\"Vouchers shown on two GCash screens: the Voucher Pocket with horizontal Starbucks Coffee and Jollibee Super Sulit Meal Deal cards, each with a Limited badge and a GET VOUCHER rail, and a Flash Deals section with vertical Tim Hortons Meal Combo and Whole Roasted Chicken Deal cards in their Used and Expired states with 35% off badges\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vch-demo-preview\"><div class=\"eb-preview-vch eb-preview-vch--horizontal eb-preview-vch--small\"><div class=\"eb-preview-vch__content\"><div class=\"eb-preview-vch__details\"><div class=\"eb-preview-vch__title\">Buy Load Pre-seeded SKU Voucher Sample</div><div class=\"eb-preview-vch__prices\"><span class=\"eb-preview-vch__price\">PHP 100.00</span><span class=\"eb-preview-vch__original\">PHP 150.00</span></div></div><div class=\"eb-preview-vch__desc\">This is the description of the voucher.</div><div class=\"eb-preview-vch__validity\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div class=\"eb-preview-vch__asset\"><span class=\"eb-preview-vch__art\"><span class=\"eb-preview-vch__placeholder\">Placeholder image</span></span><span class=\"eb-preview-vch__rail\"><span>GET VOUCHER</span></span><span class=\"eb-preview-vch__badge eb-preview-vch__badge--float\">Limited</span><span class=\"eb-preview-vch__notch eb-preview-vch__notch--a\"></span><span class=\"eb-preview-vch__notch eb-preview-vch__notch--b\"></span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Orientation</span><select id=\"vch-ctrl-orientation\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"horizontal\" selected=\"\">Horizontal</option><option value=\"vertical\">Vertical</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">AssetSize</span><select id=\"vch-ctrl-assetsize\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"small\" selected=\"\">Small</option><option value=\"large\">Large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"vch-ctrl-state\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"used\">Used</option><option value=\"expired\">Expired</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasValidityDate</span><select id=\"vch-ctrl-hasvaliditydate\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select id=\"vch-ctrl-hasdescription\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasBadge</span><select id=\"vch-ctrl-hasbadge\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDiscountBadge</span><select id=\"vch-ctrl-hasdiscountbadge\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasOriginalPrice</span><select id=\"vch-ctrl-hasoriginalprice\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Title</span><input id=\"vch-ctrl-title\" class=\"demo-panel-select demo-panel-input\" type=\"text\" value=\"Buy Load Pre-seeded SKU Voucher Sample\" oninput=\"_vchUpdate()\" /></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><input id=\"vch-ctrl-description\" class=\"demo-panel-select demo-panel-input\" type=\"text\" value=\"This is the description of the voucher.\" oninput=\"_vchUpdate()\" /></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Validity Date</span><input id=\"vch-ctrl-validitydate\" class=\"demo-panel-select demo-panel-input\" type=\"text\" value=\"Validity: Dec 25 2022 - Jan 5 2023\" oninput=\"_vchUpdate()\" /></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Discounted Price</span><input id=\"vch-ctrl-price\" class=\"demo-panel-select demo-panel-input\" type=\"text\" value=\"PHP 100.00\" oninput=\"_vchUpdate()\" /></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Original Price</span><input id=\"vch-ctrl-originalprice\" class=\"demo-panel-select demo-panel-input\" type=\"text\" value=\"PHP 150.00\" oninput=\"_vchUpdate()\" /></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vch-demo-preview\"><div class=\"eb-preview-vch eb-preview-vch--horizontal eb-preview-vch--small\"><div class=\"eb-preview-vch__content\"><div class=\"eb-preview-vch__details\"><div class=\"eb-preview-vch__title\">Buy Load Pre-seeded SKU Voucher Sample</div><div class=\"eb-preview-vch__prices\"><span class=\"eb-preview-vch__price\">PHP 100.00</span><span class=\"eb-preview-vch__original\">PHP 150.00</span></div></div><div class=\"eb-preview-vch__desc\">This is the description of the voucher.</div><div class=\"eb-preview-vch__validity\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div class=\"eb-preview-vch__asset\"><span class=\"eb-preview-vch__art\"><span class=\"eb-preview-vch__placeholder\">Placeholder image</span></span><span class=\"eb-preview-vch__rail\"><span>GET VOUCHER</span></span><span class=\"eb-preview-vch__badge eb-preview-vch__badge--float\">Limited</span><span class=\"eb-preview-vch__notch eb-preview-vch__notch--a\"></span><span class=\"eb-preview-vch__notch eb-preview-vch__notch--b\"></span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Orientation</span><select id=\"vch-ctrl-orientation\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"horizontal\" selected=\"\">Horizontal</option><option value=\"vertical\">Vertical</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">AssetSize</span><select id=\"vch-ctrl-assetsize\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"small\" selected=\"\">Small</option><option value=\"large\">Large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"vch-ctrl-state\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"used\">Used</option><option value=\"expired\">Expired</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasValidityDate</span><select id=\"vch-ctrl-hasvaliditydate\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select id=\"vch-ctrl-hasdescription\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasBadge</span><select id=\"vch-ctrl-hasbadge\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDiscountBadge</span><select id=\"vch-ctrl-hasdiscountbadge\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasOriginalPrice</span><select id=\"vch-ctrl-hasoriginalprice\" class=\"demo-panel-select\" onchange=\"_vchUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -1828,7 +1828,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1847,7 +1848,7 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>voucher<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. The artifact is the Voucher family: all seven members ship in <code>com.eastblue.ds:voucher</code> and import <code>com.eastblue.ds.voucher.*</code>."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "Sixteen properties: three enums, five booleans, five text properties and three slots. <strong>The five booleans are not parameters.</strong> Each one asks whether an optional piece of content is present, so natively the optional itself is the parameter — pass a <code>validityDate</code> and it shows, leave it out and it does not. Adding a separate <code>hasValidityDate</code> alongside <code>validityDate</code> would let a caller ask for a date that is never drawn. <code>hasDiscountBadge</code> carries one further constraint: Horizontal has no <code>⤷ DiscountSlot</code> at all, so the parameter has nothing to act on there.",
@@ -1893,27 +1894,27 @@
           "compose": "<em>derived</em> — <code>originalPrice != null</code>"
         },
         {
-          "figma": "Title (text)",
+          "figma": "#title (text layer)",
           "swift": "<code>title: String</code>",
           "compose": "<code>title: String</code>"
         },
         {
-          "figma": "Description (text)",
+          "figma": "#description (text layer)",
           "swift": "<code>description: String?</code>",
           "compose": "<code>description: String? = null</code>"
         },
         {
-          "figma": "Validity Date (text)",
+          "figma": "#validity (text layer)",
           "swift": "<code>validityDate: String?</code>",
           "compose": "<code>validityDate: String? = null</code>"
         },
         {
-          "figma": "Discounted Price (text)",
+          "figma": "#price (text layer)",
           "swift": "<code>price: String</code>",
           "compose": "<code>price: String</code>"
         },
         {
-          "figma": "Original Price (text)",
+          "figma": "#originalPrice (text layer)",
           "swift": "<code>originalPrice: String?</code>",
           "compose": "<code>originalPrice: String? = null</code>"
         },
@@ -1942,17 +1943,17 @@
       {
         "subheading": "Horizontal — a list row with its claim rail",
         "swift": "<span class=\"syn-type\">EBVoucher</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Buy Load Pre-seeded SKU Voucher Sample\"</span><span class=\"syn-punc\">,</span>\n    price<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 100.00\"</span><span class=\"syn-punc\">,</span>\n    originalPrice<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 150.00\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"This is the description of the voucher.\"</span><span class=\"syn-punc\">,</span>\n    validityDate<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Validity: Dec 25 2022 - Jan 5 2023\"</span><span class=\"syn-punc\">,</span>\n    orientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.horizontal</span><span class=\"syn-punc\">,</span>\n    assetSize<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.small</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBVoucherAsset</span><span class=\"syn-punc\">(</span>image<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"voucher-hero\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBVoucher</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Buy Load Pre-seeded SKU Voucher Sample\"</span><span class=\"syn-punc\">,</span>\n    price <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 100.00\"</span><span class=\"syn-punc\">,</span>\n    originalPrice <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 150.00\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is the description of the voucher.\"</span><span class=\"syn-punc\">,</span>\n    validityDate <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Validity: Dec 25 2022 - Jan 5 2023\"</span><span class=\"syn-punc\">,</span>\n    orientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Horizontal</span><span class=\"syn-punc\">,</span>\n    assetSize <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherAssetSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Small</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBVoucherAsset</span><span class=\"syn-punc\">(</span>image <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"voucher-hero\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "compose": "<code><span class=\"syn-type\">EBVoucher</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Buy Load Pre-seeded SKU Voucher Sample\"</span>,\n    <span class=\"syn-param\">price</span> = <span class=\"syn-str\">\"PHP 100.00\"</span>,\n    <span class=\"syn-param\">originalPrice</span> = <span class=\"syn-str\">\"PHP 150.00\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"This is the description of the voucher.\"</span>,\n    <span class=\"syn-param\">validityDate</span> = <span class=\"syn-str\">\"Validity: Dec 25 2022 - Jan 5 2023\"</span>,\n    <span class=\"syn-param\">orientation</span> = <span class=\"syn-type\">EBVoucherOrientation</span><span class=\"syn-dot\">.Horizontal</span>,\n    <span class=\"syn-param\">assetSize</span> = <span class=\"syn-type\">EBVoucherAssetSize</span><span class=\"syn-dot\">.Small</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">EBVoucherAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">image</span> = <span class=\"syn-str\">\"voucher-hero\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>"
       },
       {
         "subheading": "Vertical — a grid card with a discount badge",
         "swift": "<span class=\"syn-type\">EBVoucher</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Buy Load Pre-seeded SKU Voucher Sample\"</span><span class=\"syn-punc\">,</span>\n    price<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 100.00\"</span><span class=\"syn-punc\">,</span>\n    originalPrice<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 150.00\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"This is the description of the voucher.\"</span><span class=\"syn-punc\">,</span>\n    validityDate<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Validity: Dec 25 2022 - Jan 5 2023\"</span><span class=\"syn-punc\">,</span>\n    orientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.vertical</span><span class=\"syn-punc\">,</span>\n    assetSize<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.large</span><span class=\"syn-punc\">,</span>\n    discountBadge<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"35% off\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBVoucherAsset</span><span class=\"syn-punc\">(</span>image<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"voucher-hero\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBVoucher</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Buy Load Pre-seeded SKU Voucher Sample\"</span><span class=\"syn-punc\">,</span>\n    price <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 100.00\"</span><span class=\"syn-punc\">,</span>\n    originalPrice <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 150.00\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is the description of the voucher.\"</span><span class=\"syn-punc\">,</span>\n    validityDate <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Validity: Dec 25 2022 - Jan 5 2023\"</span><span class=\"syn-punc\">,</span>\n    orientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Vertical</span><span class=\"syn-punc\">,</span>\n    assetSize <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherAssetSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Large</span><span class=\"syn-punc\">,</span>\n    discountBadge <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"35% off\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBVoucherAsset</span><span class=\"syn-punc\">(</span>image <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"voucher-hero\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "compose": "<code><span class=\"syn-type\">EBVoucher</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Buy Load Pre-seeded SKU Voucher Sample\"</span>,\n    <span class=\"syn-param\">price</span> = <span class=\"syn-str\">\"PHP 100.00\"</span>,\n    <span class=\"syn-param\">originalPrice</span> = <span class=\"syn-str\">\"PHP 150.00\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"This is the description of the voucher.\"</span>,\n    <span class=\"syn-param\">validityDate</span> = <span class=\"syn-str\">\"Validity: Dec 25 2022 - Jan 5 2023\"</span>,\n    <span class=\"syn-param\">orientation</span> = <span class=\"syn-type\">EBVoucherOrientation</span><span class=\"syn-dot\">.Vertical</span>,\n    <span class=\"syn-param\">assetSize</span> = <span class=\"syn-type\">EBVoucherAssetSize</span><span class=\"syn-dot\">.Large</span>,\n    <span class=\"syn-param\">discountBadge</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"35% off\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">EBVoucherAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">image</span> = <span class=\"syn-str\">\"voucher-hero\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>"
       },
       {
         "subheading": "Vertical — a voucher that has been used",
         "swift": "<span class=\"syn-type\">EBVoucher</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Buy Load Pre-seeded SKU Voucher Sample\"</span><span class=\"syn-punc\">,</span>\n    price<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 100.00\"</span><span class=\"syn-punc\">,</span>\n    originalPrice<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 150.00\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"This is the description of the voucher.\"</span><span class=\"syn-punc\">,</span>\n    validityDate<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Validity: Dec 25 2022 - Jan 5 2023\"</span><span class=\"syn-punc\">,</span>\n    orientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.vertical</span><span class=\"syn-punc\">,</span>\n    assetSize<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.small</span><span class=\"syn-punc\">,</span>\n    state<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.used</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBVoucherAsset</span><span class=\"syn-punc\">(</span>image<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"voucher-hero\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBVoucher</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Buy Load Pre-seeded SKU Voucher Sample\"</span><span class=\"syn-punc\">,</span>\n    price <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 100.00\"</span><span class=\"syn-punc\">,</span>\n    originalPrice <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 150.00\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is the description of the voucher.\"</span><span class=\"syn-punc\">,</span>\n    validityDate <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Validity: Dec 25 2022 - Jan 5 2023\"</span><span class=\"syn-punc\">,</span>\n    orientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Vertical</span><span class=\"syn-punc\">,</span>\n    assetSize <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherAssetSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Small</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Used</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBVoucherAsset</span><span class=\"syn-punc\">(</span>image <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"voucher-hero\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "compose": "<code><span class=\"syn-type\">EBVoucher</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Buy Load Pre-seeded SKU Voucher Sample\"</span>,\n    <span class=\"syn-param\">price</span> = <span class=\"syn-str\">\"PHP 100.00\"</span>,\n    <span class=\"syn-param\">originalPrice</span> = <span class=\"syn-str\">\"PHP 150.00\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"This is the description of the voucher.\"</span>,\n    <span class=\"syn-param\">validityDate</span> = <span class=\"syn-str\">\"Validity: Dec 25 2022 - Jan 5 2023\"</span>,\n    <span class=\"syn-param\">orientation</span> = <span class=\"syn-type\">EBVoucherOrientation</span><span class=\"syn-dot\">.Vertical</span>,\n    <span class=\"syn-param\">assetSize</span> = <span class=\"syn-type\">EBVoucherAssetSize</span><span class=\"syn-dot\">.Small</span>,\n    <span class=\"syn-param\">state</span> = <span class=\"syn-type\">EBVoucherState</span><span class=\"syn-dot\">.Used</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">EBVoucherAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">image</span> = <span class=\"syn-str\">\"voucher-hero\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>"
       }
     ],
     "accessibility": [
@@ -2004,7 +2005,7 @@
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Three enums with clean values, five booleans all on the <code>has*</code> prefix, and five text properties named for what they hold. The one wrinkle is that <code>hasDiscountBadge</code> exists on both orientations while only Vertical has a <code>⤷ DiscountSlot</code> for it to act on."
+        "notes": "Three enums with clean values, five booleans all on the <code>has*</code> prefix, and no text properties — the copy is set in the <code>#title</code>, <code>#description</code>, <code>#price</code>, <code>#originalPrice</code> and <code>#validity</code> layers. The one wrinkle is that <code>hasDiscountBadge</code> exists on both orientations while only Vertical has a <code>⤷ DiscountSlot</code> for it to act on."
       },
       {
         "id": "C3",
@@ -2201,6 +2202,36 @@
     }
   },
   "changelog": [
+    {
+      "version": "2.2.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Component Update · node 5372:38309",
+      "rows": [
+        {
+          "body": "<strong>Badge token unified in Figma.</strong> The vertical BadgeSlot badge used <code>bg/brand-bg-primary</code> (#1972F9) while horizontal used <code>bg/color-bg-primary</code>; both now use <code>bg/color-bg-primary</code> (#005CE5).",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Text properties removed in Figma.</strong> The copy lives in the <code>#title</code>, <code>#description</code>, <code>#price</code>, <code>#originalPrice</code> and <code>#validity</code> layers; Property Mapping and the Live Preview follow.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Playground, In Context and Live Preview.</strong> The preview draws Figma’s own artwork (notch mask, rotated claim button, state filters). Playground fidelity on the three horizontal variants (1.16–1.4%, text anti-aliasing) accepted by the owner.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "2.1.0",
       "date": "September 2026",

@@ -32,5 +32,11 @@ export default defineConfig({
   // Vite's dependency pre-bundler cannot resolve Astro's virtual
   // `astro:env/server` that the Keystatic API route imports; serve that
   // module through Astro's own pipeline instead.
-  vite: cms ? { optimizeDeps: { exclude: ['@keystatic/astro/api'] }, ssr: { noExternal: ['@keystatic/astro'] } } : {},
+  vite: {
+    ...(cms ? { optimizeDeps: { exclude: ['@keystatic/astro/api'] }, ssr: { noExternal: ['@keystatic/astro'] } } : {}),
+    // The dev server must not watch test output: a visual run writes thousands of screenshots,
+    // reports and baselines, and each write made the watcher rescan until macOS's per-process
+    // file limit (10,240) ran out and `npm run dev` died with EMFILE. Dev-only; the build is unaffected.
+    server: { watch: { ignored: ['**/tests/**', '**/.fidelity/**', '**/dist/**', '**/.astro/**'] } },
+  },
 });

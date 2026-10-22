@@ -30,6 +30,9 @@ function violations(layers) {
     if (!F.shown || !F.layout || F.text || F.graphic) continue;
     const L = F.layout;
     const horiz = L.mode === 'HORIZONTAL';
+    // Figma's Grid auto layout places children in rows and columns, not one
+    // stack, so the gap and hug rules below don't apply; the padding rule does.
+    const grid = L.mode === 'GRID';
     const sw = F.strokesInLayout && F.strokeWeights ? F.strokeWeights : [0, 0, 0, 0];
     const [pt, pr, pb, pl] = L.padding.map((v, k) => v + sw[k]);
     const kids = layers.filter((c) => c.parent === F.i && c.shown && !c.absolute && (c.w > 0 || c.h > 0));
@@ -40,7 +43,7 @@ function violations(layers) {
     kids.sort((a, b) => start(a) - start(b));
 
     // gap
-    if (L.primary !== 'SPACE_BETWEEN') {
+    if (!grid && L.primary !== 'SPACE_BETWEEN') {
       for (let k = 1; k < kids.length; k++) {
         const g = start(kids[k]) - (start(kids[k - 1]) + size(kids[k - 1]));
         if (Math.abs(g - L.gap) > TOL) out.push(`${F.name}: gap ${kids[k - 1].name} → ${kids[k].name} is ${g.toFixed(2)}, Figma says ${L.gap}`);
@@ -65,11 +68,11 @@ function violations(layers) {
     const mainHug = (horiz ? F.sizingH : F.sizingV) === 'HUG';
     const crossHug = (horiz ? F.sizingV : F.sizingH) === 'HUG';
     const gaps = L.primary === 'SPACE_BETWEEN' ? 0 : L.gap * (kids.length - 1);
-    if (mainHug && !L.wrap) {
+    if (mainHug && !L.wrap && !grid) {
       const want = clampMain((horiz ? pl + pr : pt + pb) + kids.reduce((s, c) => s + size(c), 0) + gaps);
       if (Math.abs(size(F) - want) > TOL) out.push(`${F.name}: Hug ${horiz ? 'width' : 'height'} is ${size(F).toFixed(2)}, content needs ${want.toFixed(2)}`);
     }
-    if (crossHug && !L.wrap) {
+    if (crossHug && !L.wrap && !grid) {
       const want = clampCross((horiz ? pt + pb : pl + pr) + Math.max(...kids.map(cross)));
       if (Math.abs(cross(F) - want) > TOL) out.push(`${F.name}: Hug ${horiz ? 'height' : 'width'} is ${cross(F).toFixed(2)}, content needs ${want.toFixed(2)}`);
     }

@@ -154,8 +154,8 @@ function _getCheckboxSnippet(cardType, lang, size, state) {
 
   if (lang === 'swift') {
     var base = isChk
-      ? 'EBCheckbox(isOn: .constant(true))\n    .controlSize(' + sw + ')'
-      : 'EBCheckbox(isOn: $isSelected)\n    .controlSize(' + sw + ')';
+      ? 'EBCheckbox(isSelected: .constant(true))\n    .controlSize(' + sw + ')'
+      : 'EBCheckbox(isSelected: $isSelected)\n    .controlSize(' + sw + ')';
     if (st === 'Disabled') base += '\n    .disabled(true)';
     if (st === 'Error') base += '\n    .ebError(true)';
     if (st === 'Focused') base += '\n    .focused()';
@@ -166,7 +166,7 @@ function _getCheckboxSnippet(cardType, lang, size, state) {
   var extra = '';
   if (st === 'Disabled') extra = ',\n    enabled = false';
   if (st === 'Error') extra = ',\n    isError = true';
-  return 'EBCheckbox(\n    checked = ' + chkVal + ',\n    onCheckedChange = { isSelected = it },\n    size = EBCheckboxSize.' + co + extra + '\n)';
+  return 'EBCheckbox(\n    selected = ' + chkVal + ',\n    onSelectedChange = { isSelected = it },\n    size = EBCheckboxSize.' + co + extra + '\n)';
 }
 
 function _cbInit() {

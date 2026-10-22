@@ -3,11 +3,11 @@
   "meta": {
     "node": "17143:2464",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=17143-2464",
-    "description": "A selection control for binary and partial choices. 33 variants across isSelected (true/false/indeterminate) × State (Default/Pressed/Focused/Disabled/Error) × Size (Small/Medium/Large).",
+    "description": "Checkboxes let people select one or more options, or show a partial selection.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "ready",
@@ -15,11 +15,11 @@
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — Reusable and Composable are partial",
-      "text": "All five interaction states and indeterminate exist across three sizes. The control is icon-only by design, so label composition depends on CheckboxItem."
+      "kind": "keep",
+      "title": "Keep — a complete icon-only checkbox",
+      "text": "<code>State</code> (Default, Pressed, Focused, Disabled, Error) × <code>isSelected</code> (true, false, indeterminate) × <code>Size</code> (Small, Medium, Large) — 33 variants. The label comes from Checkbox Item."
     },
-    "navGroup": "",
+    "navGroup": "Checkbox",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"4\" y=\"8\" width=\"10\" height=\"10\" rx=\"2\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"/>\n      <rect x=\"18\" y=\"8\" width=\"10\" height=\"10\" rx=\"2\" fill=\"#1972F9\"/>\n      <path d=\"M21 13.5 L22.5 15 L25.5 11.5\" stroke=\"white\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"/>\n      <rect x=\"4\" y=\"22\" width=\"6\" height=\"1.5\" rx=\"0.75\" fill=\"#C5D5E8\"/>\n      <rect x=\"13\" y=\"22\" width=\"8\" height=\"1.5\" rx=\"0.75\" fill=\"#C5D5E8\"/>\n      <rect x=\"24\" y=\"22\" width=\"4\" height=\"1.5\" rx=\"0.75\" fill=\"#C5D5E8\"/>\n    </svg>"
   },
   "overview": {
@@ -31,8 +31,8 @@
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "All 5 interaction states and indeterminate defined across 3 sizes (C5 resolved). Checkbox is icon-only by design — <code>CheckboxItem</code> compound component provides label + description pairing."
+        "rating": "pass",
+        "note": "All 5 interaction states and indeterminate across 3 sizes. The box is icon-only by design — the label and description come from Checkbox Item (<code>Checkbox Item</code>), the platform pattern on both iOS and Android."
       },
       {
         "name": "Self-contained",
@@ -46,8 +46,8 @@
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Nests in form layouts, list rows, and select-all patterns. Indeterminate state defined. <code>CheckboxItem</code> compound component wraps Checkbox + Label + Description for accessible form groups."
+        "rating": "pass",
+        "note": "Nests in form layouts, list rows and select-all patterns, with indeterminate defined. <code>Checkbox Item</code> wraps the box with a label and description for accessible form groups."
       }
     ],
     "behavior": [
@@ -130,7 +130,7 @@
     "open": [],
     "recommendations": [
       {
-        "headline": "<code>CheckboxItem</code> compound component created.",
+        "headline": "<code>Checkbox Item</code> compound component created.",
         "body": "Composes Checkbox + Label (<code>Proxima Soft Bold</code>) + Description (<code>BarkAda Medium</code>). 4 variants: <code>isSelected</code> (true/false) × <code>Size</code> (Small 14px label / Medium 18px label). Node: <code>17734:161220</code>. <span class=\"tag-fixed\">Created</span>",
         "tag": "Docs"
       }
@@ -367,7 +367,7 @@
           }
         ],
         "swift": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>isSelected<span class=\"syn-punc\">: </span>$checked<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    checked <span class=\"syn-eq\">=</span> checked<span class=\"syn-punc\">,</span>\n    onCheckedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
         "cardKey": "cb-spec-checked",
@@ -598,7 +598,7 @@
           }
         ],
         "swift": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>isSelected<span class=\"syn-punc\">: </span>$checked<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    checked <span class=\"syn-eq\">=</span> checked<span class=\"syn-punc\">,</span>\n    onCheckedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [
@@ -728,8 +728,8 @@
         },
         {
           "figma": "isSelected — false, true, indeterminate",
-          "swift": "<code>isOn: Binding&lt;Bool&gt;</code> · indeterminate <code>toggleIndeterminate</code>",
-          "compose": "<code>checked: Boolean</code> · indeterminate <code>TriStateCheckbox</code>"
+          "swift": "<code>isSelected: Binding&lt;Bool&gt;</code> · indeterminate <code>toggleIndeterminate</code>",
+          "compose": "<code>selected: Boolean</code> · indeterminate <code>TriStateCheckbox</code>"
         },
         {
           "figma": "Size — Small, Medium, Large",
@@ -745,28 +745,28 @@
     "usageSnippets": [
       {
         "subheading": "Unchecked",
-        "swift": "<code><span class=\"syn-cmt\">// Unchecked (default state)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isOn</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Small size</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isOn</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.mini</span><span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-cmt\">// Unchecked (default state)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">checked</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Small size</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">checked</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Small</span>\n<span class=\"syn-punc\">)</span></code>"
+        "swift": "<code><span class=\"syn-cmt\">// Unchecked (default state)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isSelected</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Small size</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isSelected</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.mini</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Unchecked (default state)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">selected</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onSelectedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Small size</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">selected</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onSelectedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Small</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Checked",
-        "swift": "<code><span class=\"syn-cmt\">// Checked (selected state)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isOn</span>: .<span class=\"syn-fn\">constant</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Bound to state</span>\n@State private <span class=\"syn-kw\">var</span> <span class=\"syn-param\">isChecked</span> = <span class=\"syn-val\">true</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isOn</span>: $isChecked<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-cmt\">// Checked (selected state)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">checked</span> = <span class=\"syn-val\">true</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Bound to state</span>\n<span class=\"syn-kw\">var</span> isChecked by remember <span class=\"syn-punc\">{</span> mutableStateOf<span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">checked</span> = isChecked,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isChecked</span> = it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+        "swift": "<code><span class=\"syn-cmt\">// Checked (selected state)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isSelected</span>: .<span class=\"syn-fn\">constant</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Bound to state</span>\n@State private <span class=\"syn-kw\">var</span> <span class=\"syn-param\">isSelected</span> = <span class=\"syn-val\">true</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isSelected</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Checked (selected state)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">selected</span> = <span class=\"syn-val\">true</span>,\n    <span class=\"syn-param\">onSelectedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Bound to state</span>\n<span class=\"syn-kw\">var</span> isSelected by remember <span class=\"syn-punc\">{</span> mutableStateOf<span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">selected</span> = isSelected,\n    <span class=\"syn-param\">onSelectedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Indeterminate",
-        "swift": "<code><span class=\"syn-cmt\">// Indeterminate (partial selection)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isOn</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">toggleIndeterminate</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "swift": "<code><span class=\"syn-cmt\">// Indeterminate (partial selection)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isSelected</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">toggleIndeterminate</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
         "compose": "<code><span class=\"syn-cmt\">// Indeterminate (partial selection)</span>\nTriStateCheckbox<span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">state</span> = ToggleableState<span class=\"syn-dot\">.Indeterminate</span>,\n    <span class=\"syn-param\">onClick</span> = <span class=\"syn-punc\">{</span> /* cycle state */ <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">modifier</span> = <span class=\"syn-type\">Modifier</span>.<span class=\"syn-fn\">size</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Disabled",
-        "swift": "<code><span class=\"syn-cmt\">// Disabled unchecked</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isOn</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Disabled checked</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isOn</span>: .<span class=\"syn-fn\">constant</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-cmt\">// Disabled unchecked</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">checked</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span><span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Disabled checked</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">checked</span> = <span class=\"syn-val\">true</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span><span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span></code>"
+        "swift": "<code><span class=\"syn-cmt\">// Disabled unchecked</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isSelected</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Disabled checked</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isSelected</span>: .<span class=\"syn-fn\">constant</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Disabled unchecked</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">selected</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onSelectedChange</span> = <span class=\"syn-punc\">{</span><span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Disabled selected</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">selected</span> = <span class=\"syn-val\">true</span>,\n    <span class=\"syn-param\">onSelectedChange</span> = <span class=\"syn-punc\">{</span><span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Error",
-        "swift": "<code><span class=\"syn-cmt\">// Error state (form validation)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isOn</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebError</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
-        "compose": "<code><span class=\"syn-cmt\">// Error state (form validation)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">checked</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onCheckedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">isError</span> = <span class=\"syn-val\">true</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span></code>"
+        "swift": "<code><span class=\"syn-cmt\">// Error state (form validation)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">isSelected</span>: $isSelected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.regular</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebError</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Error state (form validation)</span>\n<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">selected</span> = <span class=\"syn-val\">false</span>,\n    <span class=\"syn-param\">onSelectedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isSelected</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">isError</span> = <span class=\"syn-val\">true</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBCheckboxSize</span><span class=\"syn-dot\">.Medium</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -822,7 +822,7 @@
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>isSelected</code> now uses <code>true/false</code> — corrected in Figma. Maps directly to Swift <code>Bool</code> / Kotlin <code>Boolean</code>. <code>indeterminate</code> property is a C5 concern (missing state variant)."
+        "notes": "<code>isSelected</code> uses true, false and indeterminate — a tri-state value rather than a <code>Bool</code>, which C4 maps to <code>TriStateCheckbox</code>. <code>State</code> and <code>Size</code> are PascalCase with Title Case values."
       },
       {
         "id": "C3",
@@ -836,7 +836,7 @@
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to <code>Toggle(.checkbox)</code> / <code>Checkbox</code>. Indeterminate maps to <code>TriStateCheckbox</code>. Label pairing via <code>CheckboxItem</code> compound component."
+        "notes": "Maps to <code>Toggle(.checkbox)</code> / <code>Checkbox</code>. Indeterminate maps to <code>TriStateCheckbox</code>. Label pairing via <code>Checkbox Item</code> compound component."
       },
       {
         "id": "C5",
@@ -1166,6 +1166,36 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.6.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Traits re-rated and API renamed · node 17143:2464",
+      "rows": [
+        {
+          "body": "<strong>Reusable and Composable Partial → Pass.</strong> Owner decision: an icon-only box is the intended design, and the label pairing is Checkbox Item (<code>Checkbox Item</code>, 17734:161220).",
+          "delta": {
+            "kind": "resolved",
+            "label": "Traits"
+          }
+        },
+        {
+          "body": "<strong>API renamed to the Figma name.</strong> <code>isOn</code> / <code>checked</code> became <code>isSelected</code> (Swift) and <code>selected</code> + <code>onSelectedChange</code> (Compose), matching the Radio pages. The set is now named <code>Checkbox</code> in Figma (was <code>Checkbox_New</code>).",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Fix · Ready → Keep · Ready.</strong> Every trait passes, C1–C6 are Ready and no issues are open.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Verdict"
+          }
+        }
+      ]
+    },
     {
       "version": "1.5.0",
       "date": "March 2026",

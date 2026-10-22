@@ -10,8 +10,10 @@
  * Every child is top-anchored at y 24 inside the fixed 100 px frame.
  */
 
-var SH_W = 360, SH_H = 100;
-var SH_PAD = 24;
+var SH_W = 360;
+/* Root is sizingV HUG with padding [24, 24, 16, 24] and a 1px inside bottom border
+   (4363:11466). Height follows the tallest child, so the surface never has a fixed one. */
+var SH_PAD = 24, SH_PAD_BOTTOM = 16;
 var SH_GAP = 16;                  /* leading → content → trailing */
 var SH_LEADING = 46;              /* LeadingMedia › Image-Slot */
 var SH_STACK_GAP = 2;             /* Preamble → DescriptionRow */
@@ -24,8 +26,20 @@ var SH_EDIT_PATH = 'M14.2621 6.0363C15.6199 4.74442 17.7543 4.79689 19.0483 6.15
 
 function _shOn(v) { return String(v) !== 'false'; }
 
+/* HeaderContent is a VERTICAL stack, gap 2: Preamble 14 · Title 26 · Description 18.
+   The row height is the tallest of it, the 46 leading media and the trailing media. */
+function _shHeight(card) {
+  var content = (_shOn(card.hasPreamble) ? SH_PREAMBLE_H + SH_STACK_GAP : 0) +
+                SH_TITLE_H +
+                (_shOn(card.hasDescription) ? SH_DESC_H : 0);
+  var t = SH_TRAILING[card.trailingmedia] || SH_TRAILING['none'];
+  var row = Math.max(content, _shOn(card.hasLeadingMedia) ? SH_LEADING : 0, t.h || 0);
+  return SH_PAD + row + SH_PAD_BOTTOM;
+}
+
 function _shRender(card, scale) {
   scale = scale || 1;
+  var SH_H = _shHeight(card);
   var x = SH_PAD, y = SH_PAD;
   var out = '<svg class="eb-preview eb-preview-sh" width="' + (SH_W * scale) + '" height="' + (SH_H * scale) + '" viewBox="0 0 ' + SH_W + ' ' + SH_H + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
   out += '<rect width="' + SH_W + '" height="' + SH_H + '" fill="' + SH_COLOR.surface + '"/>';

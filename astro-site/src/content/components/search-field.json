@@ -3,7 +3,7 @@
   "meta": {
     "node": "4697:18836",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4697-18836",
-    "description": "A search input field with a leading magnifying-glass icon and an optional clear button.",
+    "description": "Search Fields let people find content by typing a search term.",
     "badges": [
       {
         "kind": "keep",
@@ -17,14 +17,14 @@
     "verdict": {
       "kind": "keep",
       "title": "Keep — all findings resolved",
-      "text": "Rebuilt on node <code>4697:18836</code> in the 2026 Working File and confirmed a standalone primitive. <code>State = Default | Focused | Error | Disabled</code>, the leading glyph is a library icon instance, the trailing slot holds real <code>Close</code> / <code>Error</code> icons and appears only where it does something, every layer carries a semantic name, and colors come from the shared generic token scale. The banded top/bottom border and the constant container chrome are both intentional — this is a full-width element above content, not a field inside a form stack. <code>Error</code> on the <code>State</code> axis is now a documented system-wide exception recorded in §6 of the Property Naming Guidelines rather than a per-component argument, and the filled-but-unfocused state is derived from value presence in code instead of doubling the variant set. Native search semantics, the keyboard contract and the accessibility requirements are all documented. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+      "text": "Four states on a 360 × 56 frame, with a Label text property, a hasClearButton boolean and a shared icon instance for the leading glyph. Closing C3 takes focused, error and disabled token sub-modes; C5 takes a filled-but-unfocused state."
     },
     "navGroup": "Form Elements",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <line x1=\"18\" y1=\"22\" x2=\"102\" y2=\"22\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".2\"></line>\n          <line x1=\"18\" y1=\"38\" x2=\"102\" y2=\"38\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".2\"></line>\n          <circle cx=\"26\" cy=\"30\" r=\"3\" stroke=\"currentColor\" stroke-width=\"1\" fill=\"none\" opacity=\".35\"></circle>\n          <rect x=\"34\" y=\"29\" width=\"30\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".2\"></rect>\n          <rect x=\"20\" y=\"50\" width=\"80\" height=\"6\" rx=\"3\" fill=\"currentColor\" opacity=\".08\"></rect>\n          <rect x=\"20\" y=\"60\" width=\"60\" height=\"6\" rx=\"3\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
+    "inContextNote": "How the Search Field appears in a real product screen — filtering the bank list on Bank Transfer, empty with its placeholder showing.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/search-field-in-context.png\" alt=\"Search Field at the top of the GCash Bank Transfer screen, empty with a magnifier icon and the placeholder Search, above a list of banks beginning with Bank of the Philippine Islands and BDO Unibank\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"srf-demo-preview\"><svg width=\"360\" height=\"56\" viewBox=\"0 0 360 56\" fill=\"none\"><rect x=\"0\" y=\"0\" width=\"360\" height=\"56\" fill=\"#FFFFFF\"></rect><line x1=\"0\" y1=\"0.5\" x2=\"360\" y2=\"0.5\" stroke=\"rgba(246,249,253,0.8)\" stroke-width=\"1\"></line><line x1=\"0\" y1=\"55.5\" x2=\"360\" y2=\"55.5\" stroke=\"rgba(246,249,253,0.8)\" stroke-width=\"1\"></line><g transform=\"translate(22,16)\" opacity=\"0.8\"><circle cx=\"10\" cy=\"10\" r=\"7\" stroke=\"#6780A9\" stroke-width=\"2\" fill=\"none\"></circle><line x1=\"15.5\" y1=\"15.5\" x2=\"20.5\" y2=\"20.5\" stroke=\"#6780A9\" stroke-width=\"2\" stroke-linecap=\"round\"></line></g><text x=\"54\" y=\"32\" font-family=\"BarkAda, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" fill-opacity=\"0.5\">Search</text><circle cx=\"324\" cy=\"28\" r=\"12\" fill=\"#6780A9\"></circle></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select class=\"demo-panel-select\" onchange=\"_srfDemo.state=this.value;updateSearchFieldDemo()\"><option value=\"default\">default</option><option value=\"filled\">filled</option></select></div></div></div></div>",
@@ -608,7 +608,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -627,28 +628,28 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>form<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "",
       "rows": [
         {
-          "figma": "State = Default | Disabled | Focused | Error",
+          "figma": "State — Default, Disabled, Focused, Error",
           "swift": ".ebState(.default) · .disabled(true) · @FocusState",
           "compose": "state = EBFieldState.Default · enabled = false · interactionSource"
         },
         {
-          "figma": "Label <em>(text)</em>",
+          "figma": "Label (text)",
           "swift": "EBSearchField(placeholder:)",
           "compose": "placeholder: String"
         },
         {
-          "figma": "hasClearButton <em>(boolean)</em>",
+          "figma": "hasClearButton — True, False",
           "swift": ".ebClearButton(_ show: Bool)",
           "compose": "hasClearButton: Boolean"
         },
         {
-          "figma": "— <em>no Figma property</em>",
+          "figma": "No Figma property",
           "swift": "text: Binding&lt;String&gt;",
           "compose": "query: String + onQueryChange: (String) -&gt; Unit"
         }
@@ -661,23 +662,23 @@
     "usageSnippets": [
       {
         "subheading": "Standalone search field",
-        "swift": "<span class=\"typ\">EBSearchField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query)\n    .<span class=\"fn\">ebState</span>(<span class=\"dot\">.default</span>)\n    .<span class=\"prp\">onSubmit</span> { runSearch(query) }",
-        "compose": "<span class=\"typ\">EBSearchField</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>,\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">onSearch</span> = { runSearch(query) }\n)"
+        "swift": "<code><span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Search\"</span>, <span class=\"syn-param\">text</span>: $query<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-dot\">.onSubmit</span> <span class=\"syn-punc\">{</span> runSearch<span class=\"syn-punc\">(</span>query<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Search\"</span>,\n    <span class=\"syn-param\">query</span> = query,\n    <span class=\"syn-param\">onQueryChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">query</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">onSearch</span> = <span class=\"syn-punc\">{</span> runSearch<span class=\"syn-punc\">(</span>query<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Without the clear button",
-        "swift": "<span class=\"typ\">EBSearchField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query)\n    .<span class=\"fn\">ebClearButton</span>(<span class=\"kw\">false</span>)",
-        "compose": "<span class=\"typ\">EBSearchField</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>,\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">hasClearButton</span> = <span class=\"kw\">false</span>\n)"
+        "swift": "<code><span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Search\"</span>, <span class=\"syn-param\">text</span>: $query<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebClearButton</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">false</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Search\"</span>,\n    <span class=\"syn-param\">query</span> = query,\n    <span class=\"syn-param\">onQueryChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">query</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">hasClearButton</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Error state",
-        "swift": "<span class=\"typ\">EBSearchField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query)\n    .<span class=\"fn\">ebState</span>(<span class=\"dot\">.error</span>)",
-        "compose": "<span class=\"typ\">EBSearchField</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>,\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">state</span> = <span class=\"typ\">EBFieldState</span>.Error\n)"
+        "swift": "<code><span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Search\"</span>, <span class=\"syn-param\">text</span>: $query<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Search\"</span>,\n    <span class=\"syn-param\">query</span> = query,\n    <span class=\"syn-param\">onQueryChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">query</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">state</span> = <span class=\"syn-type\">EBFieldState</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Disabled",
-        "swift": "<span class=\"typ\">EBSearchField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBSearchField</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>,\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
+        "swift": "<code><span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Search\"</span>, <span class=\"syn-param\">text</span>: $query<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Search\"</span>,\n    <span class=\"syn-param\">query</span> = query,\n    <span class=\"syn-param\">onQueryChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">query</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [

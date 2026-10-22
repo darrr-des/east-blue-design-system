@@ -3,7 +3,7 @@
   "meta": {
     "node": "18431:2822",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18431-2822",
-    "description": "The calendar surface that hosts the Day/Month/Year picker grids.",
+    "description": "Date Picker Groups let people pick a day, month or year in one calendar.",
     "badges": [
       {
         "kind": "remove",

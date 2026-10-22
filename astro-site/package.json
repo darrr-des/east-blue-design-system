@@ -33,7 +33,10 @@
     "update:check": "node scripts/update/check-set.mjs",
     "update:trace": "node scripts/update/trace.mjs",
     "update:context": "node scripts/update/in-context.mjs",
-    "update:tidy": "node scripts/update/tidy-code.mjs"
+    "update:tidy": "node scripts/update/tidy-code.mjs",
+    "report:status": "node scripts/report/component-status.mjs",
+    "report:tree": "node scripts/report/workflow-tree.mjs",
+    "report": "npm run report:status && npm run report:tree"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.5",

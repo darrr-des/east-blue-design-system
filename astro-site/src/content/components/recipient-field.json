@@ -3,7 +3,7 @@
   "meta": {
     "node": "17758:3867",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=17758-3867",
-    "description": "A form field showing a selected recipient — avatar, name, and contact identifier.",
+    "description": "Recipient Fields show people the recipient they selected, with their name and contact.",
     "badges": [
       {
         "kind": "fix",
@@ -23,8 +23,8 @@
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"5\" width=\"100\" height=\"70\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"28\" y=\"18\" font-size=\"6\" fill=\"currentColor\" opacity=\".3\" font-family=\"system-ui\">Send Money</text>\n          <rect x=\"18\" y=\"24\" width=\"84\" height=\"24\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".2\"></rect>\n          <rect x=\"24\" y=\"29\" width=\"22\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".12\"></rect>\n          <rect x=\"24\" y=\"35\" width=\"35\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <circle cx=\"86\" cy=\"36\" r=\"4\" fill=\"currentColor\" opacity=\".08\"></circle>\n          <circle cx=\"96\" cy=\"36\" r=\"4\" fill=\"currentColor\" opacity=\".08\"></circle>\n          <rect x=\"18\" y=\"54\" width=\"84\" height=\"12\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".12\"></rect>\n          <rect x=\"24\" y=\"59\" width=\"40\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n        </svg>\n      </div>",
+    "inContextNote": "How the Recipient Field appears in a real product screen — the Send to row on Express Send, number above name, with contacts and QR actions trailing.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/recipient-field-in-context.png\" alt=\"Recipient Field shown on two GCash Express Send screens: on the right, Send to holds +63917 1234567 above Andre Bonifacio with contacts and QR scan icons trailing; on the left the same field is disabled, its number and name masked\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"rf-demo-preview\"><svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_rfDemo.state=this.value;updateRecipientFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_rfDemo.filled=this.value;updateRecipientFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
@@ -1540,7 +1540,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1559,50 +1560,35 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>form<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "",
       "rows": [
         {
-          "figma": "isFilled (true/false)",
+          "figma": "isFilled — true, false",
           "swift": "text: Binding&lt;String&gt;",
           "compose": "value: String"
         },
         {
-          "figma": "#label",
+          "figma": "#label (text)",
           "swift": "label: String",
           "compose": "label: String"
         },
         {
-          "figma": "#text-placeholder",
+          "figma": "#value (text)",
           "swift": "placeholder: String",
           "compose": "placeholder: String"
         },
         {
-          "figma": "icon-group (2x icons)",
+          "figma": "icon-group (slot, 2 icons)",
           "swift": "trailingIcons: [Image]",
           "compose": "trailingIcons: @Composable"
         },
         {
-          "figma": "State = Default",
-          "swift": "—",
-          "compose": "—"
-        },
-        {
-          "figma": "State = Active",
-          "swift": ".focused()",
-          "compose": "interactionSource"
-        },
-        {
-          "figma": "State = Error",
-          "swift": ".ebError(true)",
-          "compose": "isError = true"
-        },
-        {
-          "figma": "State = Disabled",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
+          "figma": "State — Default, Active, Error, Disabled",
+          "swift": "<code>.focused()</code> Active · <code>.ebError(true)</code> Error · <code>.disabled(true)</code> Disabled",
+          "compose": "<code>interactionSource</code> Active · <code>isError = true</code> Error · <code>enabled = false</code> Disabled"
         }
       ],
       "filePaths": {
@@ -1613,18 +1599,18 @@
     "usageSnippets": [
       {
         "subheading": "Default",
-        "swift": "<span class=\"typ\">EBRecipientField</span>(\n    <span class=\"prp\">label</span>: <span class=\"str\">\"Mobile Number\"</span>,\n    <span class=\"prp\">text</span>: $recipientNumber,\n    <span class=\"prp\">placeholder</span>: <span class=\"str\">\"Enter number or name\"</span>,\n    <span class=\"prp\">trailingIcons</span>: [\n        <span class=\"typ\">Image</span>(systemName: <span class=\"str\">\"person.crop.circle\"</span>),\n        <span class=\"typ\">Image</span>(systemName: <span class=\"str\">\"qrcode.viewfinder\"</span>)\n    ]\n)",
-        "compose": "<span class=\"typ\">EBRecipientField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Mobile Number\"</span>,\n    <span class=\"prp\">value</span> = recipientNumber,\n    <span class=\"prp\">onValueChange</span> = { recipientNumber = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Enter number or name\"</span>,\n    <span class=\"prp\">trailingIcons</span> = {\n        <span class=\"typ\">IconButton</span>(onClick = onContactsClick) {\n            <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.Person, <span class=\"str\">\"Contacts\"</span>)\n        }\n        <span class=\"typ\">IconButton</span>(onClick = onScanClick) {\n            <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.QrCode, <span class=\"str\">\"Scan QR\"</span>)\n        }\n    }\n)"
+        "swift": "<code><span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Mobile Number\"</span>,\n    <span class=\"syn-param\">text</span>: $recipientNumber,\n    <span class=\"syn-param\">placeholder</span>: <span class=\"syn-str\">\"Enter number or name\"</span>,\n    <span class=\"syn-param\">trailingIcons</span>: <span class=\"syn-punc\">[</span>\n        <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"person.crop.circle\"</span><span class=\"syn-punc\">)</span>,\n        <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"qrcode.viewfinder\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">]</span>\n<span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Mobile Number\"</span>,\n    <span class=\"syn-param\">value</span> = recipientNumber,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">recipientNumber</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Enter number or name\"</span>,\n    <span class=\"syn-param\">trailingIcons</span> = <span class=\"syn-punc\">{</span>\n        IconButton<span class=\"syn-punc\">(</span><span class=\"syn-param\">onClick</span> = onContactsClick<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n            <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Default</span><span class=\"syn-dot\">.Person</span>, <span class=\"syn-str\">\"Contacts\"</span><span class=\"syn-punc\">)</span>\n        <span class=\"syn-punc\">}</span>\n        IconButton<span class=\"syn-punc\">(</span><span class=\"syn-param\">onClick</span> = onScanClick<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n            <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Default</span><span class=\"syn-dot\">.QrCode</span>, <span class=\"syn-str\">\"Scan QR\"</span><span class=\"syn-punc\">)</span>\n        <span class=\"syn-punc\">}</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Error",
-        "swift": "<span class=\"typ\">EBRecipientField</span>(\n    <span class=\"prp\">label</span>: <span class=\"str\">\"Mobile Number\"</span>,\n    <span class=\"prp\">text</span>: $recipientNumber,\n    <span class=\"prp\">placeholder</span>: <span class=\"str\">\"Enter number or name\"</span>\n)\n.<span class=\"fn\">ebError</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBRecipientField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Mobile Number\"</span>,\n    <span class=\"prp\">value</span> = recipientNumber,\n    <span class=\"prp\">onValueChange</span> = { recipientNumber = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Enter number or name\"</span>,\n    <span class=\"prp\">isError</span> = <span class=\"kw\">true</span>\n)"
+        "swift": "<code><span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Mobile Number\"</span>,\n    <span class=\"syn-param\">text</span>: $recipientNumber,\n    <span class=\"syn-param\">placeholder</span>: <span class=\"syn-str\">\"Enter number or name\"</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebError</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Mobile Number\"</span>,\n    <span class=\"syn-param\">value</span> = recipientNumber,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">recipientNumber</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Enter number or name\"</span>,\n    <span class=\"syn-param\">isError</span> = <span class=\"syn-val\">true</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Disabled",
-        "swift": "<span class=\"typ\">EBRecipientField</span>(\n    <span class=\"prp\">label</span>: <span class=\"str\">\"Mobile Number\"</span>,\n    <span class=\"prp\">text</span>: $recipientNumber,\n    <span class=\"prp\">placeholder</span>: <span class=\"str\">\"Enter number or name\"</span>\n)\n.<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBRecipientField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Mobile Number\"</span>,\n    <span class=\"prp\">value</span> = recipientNumber,\n    <span class=\"prp\">onValueChange</span> = { recipientNumber = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Enter number or name\"</span>,\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
+        "swift": "<code><span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span>: <span class=\"syn-str\">\"Mobile Number\"</span>,\n    <span class=\"syn-param\">text</span>: $recipientNumber,\n    <span class=\"syn-param\">placeholder</span>: <span class=\"syn-str\">\"Enter number or name\"</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Mobile Number\"</span>,\n    <span class=\"syn-param\">value</span> = recipientNumber,\n    <span class=\"syn-param\">onValueChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">recipientNumber</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">placeholder</span> = <span class=\"syn-str\">\"Enter number or name\"</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [

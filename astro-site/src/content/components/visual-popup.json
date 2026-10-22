@@ -1,135 +1,134 @@
 {
   "name": "Visual Popup",
   "meta": {
-    "node": "18477:23788",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18477-23788",
-    "description": "An illustrated centered popup used for promos, success moments, and notable announcements.",
+    "node": "4120:10317",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4120-10317",
+    "description": "Visual Popups show people promos, tutorials and announcements with an illustration.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Open issues remain",
-      "text": "Variant naming mixes paradigms — <code>Default</code> / <code>2 CTA</code> / <code>Version 2</code> (C2). Hero image is a raster placeholder with \"Replace me\" overlay instead of a swappable image slot (C6). No destructive/error/loading state coverage (C5). Code Connect mappings not registered (C7)."
+      "kind": "keep",
+      "title": "Keep — two layouts, four booleans, three slots",
+      "text": "<code>Layout</code> (Centered, Surface), four <code>has…</code> booleans and three slots replace the old <code>Type</code>. Each text layer has its own name, and auto-layout carries the spacing."
     },
     "navGroup": "",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Visual Popup overlays the app surface to confirm critical actions or onboard users to a new feature.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"180\" height=\"120\" viewBox=\"0 0 180 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          \n          <rect x=\"34\" y=\"6\" width=\"112\" height=\"108\" rx=\"10\" fill=\"#0A2757\" opacity=\".18\"></rect>\n          <rect x=\"34\" y=\"6\" width=\"112\" height=\"108\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          \n          <rect x=\"50\" y=\"22\" width=\"80\" height=\"80\" rx=\"4\" fill=\"#FFFFFF\"></rect>\n          \n          <rect x=\"50\" y=\"22\" width=\"80\" height=\"34\" rx=\"4\" fill=\"#005CE5\" opacity=\".25\"></rect>\n          <text x=\"90\" y=\"42\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\" opacity=\".6\">Hero image</text>\n          \n          <rect x=\"58\" y=\"62\" width=\"64\" height=\"3\" rx=\"1.5\" fill=\"#0A2757\" opacity=\".85\"></rect>\n          \n          <rect x=\"62\" y=\"69\" width=\"56\" height=\"2\" rx=\"1\" fill=\"#6780A9\"></rect>\n          <rect x=\"68\" y=\"73\" width=\"44\" height=\"2\" rx=\"1\" fill=\"#6780A9\"></rect>\n          \n          <rect x=\"58\" y=\"84\" width=\"64\" height=\"10\" rx=\"5\" fill=\"#005CE5\"></rect>\n          <text x=\"90\" y=\"91\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"4.5\" font-weight=\"700\" font-family=\"system-ui\">Okay</text>\n        </svg>\n      </div>",
+    "inContextNote": "How the visual popup appears in real product screens — a Surface tutorial, “QR Code and Barcode Tutorial — Cash In!”, and a Centered promo, “Protect What Matters Most”.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/visual-popup-in-context.png\" alt=\"Visual Popup shown on two GCash screens: a Surface popup with the preamble QR Code and Barcode Tutorial, the title Cash In!, a description, a phone illustration and carousel dots; and a Centered popup with a photo of a worker in a hard hat, the title Protect What Matters Most, a description about OFW Insurance and a Get Insured Today! button\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vp-demo-preview\"><svg width=\"200\" height=\"240\" viewBox=\"0 0 200 240\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"200\" height=\"240\" rx=\"4\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"0.8\"></rect><defs><linearGradient id=\"vpph-337330137\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#EAF2FE\"></stop><stop offset=\"100%\" stop-color=\"#C9DCF8\"></stop></linearGradient></defs><path d=\"M0 100 L0 4 Q0 0 4 0 L196 0 Q200 0 200 4 L200 100 Z\" fill=\"url(#vpph-337330137)\"></path><rect x=\"82\" y=\"36.5\" width=\"36\" height=\"27\" rx=\"3.2399999999999998\" fill=\"none\" stroke=\"#6B8FC8\" stroke-width=\"1.4\" opacity=\".75\"></rect><circle cx=\"93.7\" cy=\"45.5\" r=\"3.96\" fill=\"#6B8FC8\" opacity=\".75\"></circle><path d=\"M84.7 60.8 L97.3 48.199999999999996 L104.5 56.3 L110.8 50 L115.3 60.8 Z\" fill=\"#6B8FC8\" opacity=\".75\"></path><text x=\"100\" y=\"128\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"12\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Put the title here</text><text x=\"100\" y=\"146\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-weight=\"500\" font-family=\"'BarkAda', system-ui\">Add description here.</text><text x=\"100\" y=\"158\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-weight=\"500\" font-family=\"'BarkAda', system-ui\">Add description here.</text><rect x=\"20\" y=\"190\" width=\"160\" height=\"26\" rx=\"13\" fill=\"#005CE5\"></rect><text x=\"100\" y=\"207\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Okay</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"vp-demo-type\" onchange=\"updateVisualPopupDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"2cta\">2 CTA</option><option value=\"version2\">Version 2</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vp-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasCloseButton</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"vp-demo-hasCloseButton\" checked onchange=\"this.parentElement.classList.toggle(&#39;is-on&#39;,this.checked);updateVisualPopupDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\" id=\"vp-demo-hasSupportingContent-row\"><span class=\"demo-panel-label\">hasSupportingContent</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"vp-demo-hasSupportingContent\" checked onchange=\"this.parentElement.classList.toggle(&#39;is-on&#39;,this.checked);updateVisualPopupDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasHeader</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"vp-demo-hasHeader\" checked onchange=\"this.parentElement.classList.toggle(&#39;is-on&#39;,this.checked);updateVisualPopupDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\" id=\"vp-demo-hasPreamble-row\"><span class=\"demo-panel-label\">hasPreamble</span><label class=\"demo-panel-toggle is-on\"><input type=\"checkbox\" id=\"vp-demo-hasPreamble\" checked onchange=\"this.parentElement.classList.toggle(&#39;is-on&#39;,this.checked);updateVisualPopupDemo()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Layout</span><select class=\"demo-panel-select\" id=\"vp-demo-Layout\" onchange=\"updateVisualPopupDemo()\"><option value=\"Centered\" selected>Centered</option><option value=\"Surface\">Surface</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Three layouts cover info modals, confirmation prompts (single + dual CTA), and onboarding popups (Version 2). Fixed 320 / 312 px width fits standard mobile dialog patterns."
+        "note": "Two layouts cover image-led announcements (Centered) and tutorial or carousel popups (Surface); booleans and slots fit each to the content."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Carries its own bg (<code>main/modal-popup/color/bg</code>), <code>Shadow/Depth 0</code>, <code>radius/radius-2</code>, and 24px padding. Composes Button instances rather than redefining button styles."
+        "note": "Carries its own white surface, radius 6, padding and type; the close is a DS <code>Close</code> instance and the action a library Button."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Variant naming mixes three paradigms: <code>Default</code> (generic), <code>2 CTA</code> (count), <code>Version 2</code> (version). Native enums need a single semantic axis — e.g. <code>single-cta</code> / <code>dual-cta</code> / <code>dismissible</code>. <span class=\"tag-open tag-c2\">C2</span>"
+        "rating": "pass",
+        "note": "<code>Layout</code> is one clean axis, the booleans follow <code>has…</code>, and each text layer has its own name: <code>#preamble</code>, <code>#title</code>, <code>#message</code>."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "All CTAs are real Button instances. Close icon (V2) is a vector instance. Hero image is the only non-component child — see C6."
+        "note": "Three slots — <code>Image Slot Container</code>, <code>Supporting Content Slot</code> and <code>Action Slot Container</code> — let a product team swap the artwork, add content and set the buttons without detaching."
       }
     ],
     "behavior": [
       {
-        "state": "Single CTA",
+        "state": "Centered",
         "ios": "yes",
         "android": "yes",
-        "property": "Type=Default",
-        "notes": "Hero (180px) + title + description + primary CTA. Use for info or single-action confirm."
+        "property": "Layout=Centered",
+        "notes": "Image slot on top (89 tall, empty by default), centred title and message, optional supporting slot, Button in the action slot; Close at the top right."
       },
       {
-        "state": "Dual CTA",
+        "state": "Surface",
         "ios": "yes",
         "android": "yes",
-        "property": "Type=2 CTA",
-        "notes": "Adds a secondary outline + tertiary text button below primary. Use for cancel/confirm pairs."
+        "property": "Layout=Surface",
+        "notes": "#F6F9FD card: preamble, title and message beside the Close, then the image slot (radius 6) and the action Button."
       },
       {
-        "state": "Dismissible (V2)",
+        "state": "Dismiss",
         "ios": "yes",
         "android": "yes",
-        "property": "Type=Version 2",
-        "notes": "Preamble label + title with close icon + content-first layout. Use for onboarding/tutorial popups."
-      },
-      {
-        "state": "Destructive / Error / Loading",
-        "ios": "na",
-        "android": "na",
-        "property": "—",
-        "notes": "No variants for destructive confirms or async/loading states. <span class=\"tag-open tag-c5\">C5</span>"
+        "property": "hasCloseButton",
+        "notes": "A 24px DS Close instance, <code>text/color-text-weak</code>."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Variant naming mixes paradigms.",
-        "body": "<code>Default</code> (generic), <code>2 CTA</code> (count), and <code>Version 2</code> (version) can't coexist as one enum. Collapse to a single semantic axis: <code>single-cta</code> / <code>dual-cta</code> / <code>dismissible</code>.",
+        "headline": "",
+        "body": "Variant naming mixes paradigms: the rebuild replaces <code>Type</code> (Default / 2 CTA / Version 2) with <code>Layout</code> = Centered, Surface — checked on node 4120:10317 (C2)",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "No destructive / error / loading state coverage.",
-        "body": "Engineers must improvise these for \"Cancel transaction?\", error confirms, and async submit flows.",
+        "headline": "",
+        "body": "Hero image is a raster placeholder with \"Replace me\" overlay: the hero is an empty <code>Image Slot Container</code> slot — checked on node 4120:10317 (C6)",
         "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
+          "criterion": "",
+          "label": ""
         }
       },
       {
-        "headline": "Hero image is a raster placeholder with \"Replace me\" overlay.",
-        "body": "Should be a swappable Image slot (component instance) so product teams override per-popup without editing the master.",
+        "headline": "Surface spacer instances removed.",
+        "body": "The two <code>_space_16</code> instances are deleted. The Surface <code>container</code> gap is now <code>space/space-16</code>, and <code>Action Slot Container</code> takes a <code>space/space-8</code> top padding, so the action still sits 24 below the image. The render is unchanged. (C1)",
         "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "Surface preamble renamed <code>#preamble</code>.",
+        "body": "The preamble text layer was <code>#message</code>, the same name as the description; <code>#message</code> now names the description only. (C1)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "No interaction states — Visual Popup is a container.",
+        "body": "Closed by owner decision. Visual Popup does not need destructive, error or loading states; C5 is Not Applicable. (C5)",
+        "tag": {
+          "criterion": "",
+          "label": ""
         }
       }
     ],
-    "recommendations": [
+    "open": [],
+    "recommendations": [],
+    "appliedRecommendations": [
       {
-        "headline": "Collapse <code>Type</code> to one semantic enum.",
-        "body": "Values: <code>single-cta</code>, <code>dual-cta</code>, <code>dismissible</code>. Eliminates the version/count/default mix and maps cleanly to an <code>EBVisualPopupKind</code> enum.",
-        "tag": "Property"
+        "headline": "Replace the spacer instances with auto-layout gap.",
+        "body": "v2.1: Applied — container gap <code>space/space-16</code> plus a <code>space/space-8</code> top padding on <code>Action Slot Container</code>; both <code>_space_16</code> instances deleted.",
+        "tag": "Composition"
       },
       {
-        "headline": "Replace the raster <code>Modals Asset</code> with a swappable Image slot.",
-        "body": "A component placeholder that product teams can instance-swap with their illustration — matches the pattern Avatar uses for its <code>image</code> type.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add a <code>destructive</code> mode.",
-        "body": "Whether as a boolean or a <code>kind=destructive</code> variant — lets destructive confirms (Cancel / Logout / Delete) use red CTAs without bespoke overrides.",
-        "tag": "State"
-      },
-      {
-        "headline": "Add a <code>loading</code> state for the primary CTA.",
-        "body": "Async submits in popups currently have no documented affordance — reuse the planned Button loading state rather than invent a new pattern.",
-        "tag": "State"
+        "headline": "Rename the Surface preamble <code>#preamble</code>.",
+        "body": "v2.1: Applied — <code>#message</code> now names the description only.",
+        "tag": "Rename"
       }
-    ],
-    "appliedRecommendations": []
+    ]
   },
   "style": {
     "heading": "Styles",
@@ -891,7 +890,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -913,32 +913,47 @@
       "footnote": ""
     },
     "propertyMapping": {
-      "description": "",
+      "description": "Layout is a variant property; hasHeader, hasPreamble, hasSupportingContent and hasCloseButton are booleans; the image, supporting content and actions are Slots; the title and message are text layers.",
       "rows": [
         {
-          "figma": "Type=Default",
-          "swift": ".ebKind(.singleCTA)",
-          "compose": "kind = EBVisualPopupKind.SingleCTA"
+          "figma": "Layout — Centered, Surface",
+          "swift": "<code>layout: .centered / .surface</code>",
+          "compose": "<code>layout = EBVisualPopupLayout.Centered / Surface</code>"
         },
         {
-          "figma": "Type=2 CTA",
-          "swift": ".ebKind(.dualCTA)",
-          "compose": "kind = EBVisualPopupKind.DualCTA"
+          "figma": "hasHeader — true, false · #title (text layer)",
+          "swift": "<code>title: String?</code>",
+          "compose": "<code>title: String?</code>"
         },
         {
-          "figma": "Type=Version 2",
-          "swift": ".ebKind(.dismissible)",
-          "compose": "kind = EBVisualPopupKind.Dismissible"
+          "figma": "#message (text layer)",
+          "swift": "<code>message: String</code>",
+          "compose": "<code>message: String</code>"
         },
         {
-          "figma": "Hero image (raster)",
-          "swift": "heroImage: Image",
-          "compose": "heroImage: Painter"
+          "figma": "hasPreamble — true, false (Surface)",
+          "swift": "<code>preamble: String?</code>",
+          "compose": "<code>preamble: String?</code>"
         },
         {
-          "figma": "CTA buttons",
-          "swift": "primary / secondary / tertiary: EBButton",
-          "compose": "primary / secondary / tertiary: @Composable"
+          "figma": "hasCloseButton — true, false",
+          "swift": "<code>onClose: (() -> Void)?</code>",
+          "compose": "<code>onClose: (() -> Unit)?</code>"
+        },
+        {
+          "figma": "Image Slot Container (slot)",
+          "swift": "the trailing <code>{ Image(…) }</code> content",
+          "compose": "<code>image = { … }</code>"
+        },
+        {
+          "figma": "hasSupportingContent — true, false · Supporting Content Slot (Centered)",
+          "swift": "<code>supportingContent: (() -> some View)?</code>",
+          "compose": "<code>supportingContent: (@Composable () -> Unit)?</code>"
+        },
+        {
+          "figma": "Action Slot Container (slot)",
+          "swift": "<code>actions: { EBButton(…) }</code>",
+          "compose": "<code>actions = { EBButton(…) }</code>"
         }
       ],
       "filePaths": {
@@ -948,9 +963,14 @@
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Default — single CTA</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Cash In Successful\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"₱500.00 added to your wallet.\"</span>,\n    <span class=\"prp\">heroImage</span>: <span class=\"typ\">Image</span>(<span class=\"str\">\"cash-in-success\"</span>),\n    <span class=\"prp\">primary</span>: <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Okay\"</span>) { /* dismiss */ }\n)\n.<span class=\"fn\">ebKind</span>(.<span class=\"prp\">singleCTA</span>)\n\n<span class=\"cmt\">// 2 CTA — confirm/cancel</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Cancel transaction?\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"This cannot be undone.\"</span>,\n    <span class=\"prp\">heroImage</span>: <span class=\"typ\">Image</span>(<span class=\"str\">\"warning-illustration\"</span>),\n    <span class=\"prp\">primary</span>: <span class=\"typ\">EBOutlinedButton</span>(<span class=\"str\">\"Confirm\"</span>) { /* confirm */ },\n    <span class=\"prp\">secondary</span>: <span class=\"typ\">EBTextButton</span>(<span class=\"str\">\"Go Back\"</span>) { /* dismiss */ }\n)\n.<span class=\"fn\">ebKind</span>(.<span class=\"prp\">dualCTA</span>)\n\n<span class=\"cmt\">// Version 2 — onboarding with close icon</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">preamble</span>: <span class=\"str\">\"NEW\"</span>,\n    <span class=\"prp\">title</span>: <span class=\"str\">\"Save your receipts\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Tap any transaction to save its receipt.\"</span>,\n    <span class=\"prp\">heroImage</span>: <span class=\"typ\">Image</span>(<span class=\"str\">\"receipt-tutorial\"</span>),\n    <span class=\"prp\">primary</span>: <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Got it\"</span>) { /* dismiss */ },\n    <span class=\"prp\">onClose</span>: { /* dismiss */ }\n)\n.<span class=\"fn\">ebKind</span>(.<span class=\"prp\">dismissible</span>)",
-        "compose": "<span class=\"cmt\">// Default — single CTA</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">kind</span> = <span class=\"typ\">EBVisualPopupKind</span>.<span class=\"prp\">SingleCTA</span>,\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Cash In Successful\"</span>,\n    <span class=\"prp\">description</span> = <span class=\"str\">\"₱500.00 added to your wallet.\"</span>,\n    <span class=\"prp\">heroImage</span> = painterResource(R.drawable.cash_in_success),\n    <span class=\"prp\">primary</span> = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Okay\"</span>, onClick = { /* dismiss */ }) }\n)\n\n<span class=\"cmt\">// 2 CTA — confirm/cancel</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">kind</span> = <span class=\"typ\">EBVisualPopupKind</span>.<span class=\"prp\">DualCTA</span>,\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Cancel transaction?\"</span>,\n    <span class=\"prp\">description</span> = <span class=\"str\">\"This cannot be undone.\"</span>,\n    <span class=\"prp\">heroImage</span> = painterResource(R.drawable.warning),\n    <span class=\"prp\">primary</span> = { <span class=\"typ\">EBOutlinedButton</span>(<span class=\"str\">\"Confirm\"</span>, onClick = { /* confirm */ }) },\n    <span class=\"prp\">secondary</span> = { <span class=\"typ\">EBTextButton</span>(<span class=\"str\">\"Go Back\"</span>, onClick = { /* dismiss */ }) }\n)\n\n<span class=\"cmt\">// Version 2 — onboarding with close icon</span>\n<span class=\"typ\">EBVisualPopup</span>(\n    <span class=\"prp\">kind</span> = <span class=\"typ\">EBVisualPopupKind</span>.<span class=\"prp\">Dismissible</span>,\n    <span class=\"prp\">preamble</span> = <span class=\"str\">\"NEW\"</span>,\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Save your receipts\"</span>,\n    <span class=\"prp\">description</span> = <span class=\"str\">\"Tap any transaction to save its receipt.\"</span>,\n    <span class=\"prp\">heroImage</span> = painterResource(R.drawable.receipt_tutorial),\n    <span class=\"prp\">primary</span> = { <span class=\"typ\">EBButton</span>(<span class=\"str\">\"Got it\"</span>, onClick = { /* dismiss */ }) },\n    <span class=\"prp\">onClose</span> = { /* dismiss */ }\n)"
+        "subheading": "Centered",
+        "swift": "<code><span class=\"syn-cmt\">// Layout=Centered</span>\n<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">layout</span>: <span class=\"syn-dot\">.centered</span>,\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Put the title here\"</span>,\n    <span class=\"syn-param\">message</span>: <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">onClose</span>: <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"popup-art\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span> <span class=\"syn-param\">actions</span>: <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Layout=Centered</span>\n<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">layout</span> = <span class=\"syn-type\">EBVisualPopupLayout</span><span class=\"syn-dot\">.Centered</span>,\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Put the title here\"</span>,\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">onClose</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">image</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource<span class=\"syn-punc\">(</span>R<span class=\"syn-dot\">.drawable</span><span class=\"syn-dot\">.popup_art</span><span class=\"syn-punc\">)</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">actions</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">onClick</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      },
+      {
+        "subheading": "Surface",
+        "swift": "<code><span class=\"syn-cmt\">// Layout=Surface</span>\n<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">layout</span>: <span class=\"syn-dot\">.surface</span>,\n    <span class=\"syn-param\">title</span>: <span class=\"syn-str\">\"Put the title here\"</span>,\n    <span class=\"syn-param\">message</span>: <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">preamble</span>: <span class=\"syn-str\">\"Preamble\"</span>,\n    <span class=\"syn-param\">onClose</span>: <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"popup-art\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span> <span class=\"syn-param\">actions</span>: <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Layout=Surface</span>\n<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">layout</span> = <span class=\"syn-type\">EBVisualPopupLayout</span><span class=\"syn-dot\">.Surface</span>,\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Put the title here\"</span>,\n    <span class=\"syn-param\">message</span> = <span class=\"syn-str\">\"Add description here.\"</span>,\n    <span class=\"syn-param\">preamble</span> = <span class=\"syn-str\">\"Preamble\"</span>,\n    <span class=\"syn-param\">onClose</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">image</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource<span class=\"syn-punc\">(</span>R<span class=\"syn-dot\">.drawable</span><span class=\"syn-dot\">.popup_art</span><span class=\"syn-punc\">)</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">actions</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">onClick</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-punc\">}</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -978,25 +998,24 @@
         "requirement": "Tap targets",
         "ios": "CTAs use Button which meets HIG 44pt",
         "android": "CTAs meet Material 48dp"
-      },
-      {
-        "requirement": "Destructive role",
-        "ios": "Currently undefined — needs <code>role: .destructive</code> when state lands",
-        "android": "Currently undefined — needs Button destructive colors when state lands"
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Use Visual Popup for critical confirms, success states with celebration, and onboarding moments — places where the hero image adds emotional weight.",
-        "dontText": "Use for inline form errors or transient notifications — those belong in Toast, Banner, or inline error patterns, not a blocking modal."
+        "doText": "Use Centered for an image-led announcement or promo, with the artwork in the Image slot.",
+        "dontText": "Don’t use Centered for step-by-step tutorials — Surface carries the preamble and room for a carousel."
       },
       {
-        "doText": "Use the Default variant when the popup has one obvious next step (Okay, Got it, Continue).",
-        "dontText": "Use 2 CTA when one button is clearly more important than the other — that's still a Default with the secondary action elsewhere."
+        "doText": "Use Surface for tutorials and guided content, with the step name in the preamble.",
+        "dontText": "Don’t stretch Surface into a long article; link out instead."
       },
       {
-        "doText": "Use Version 2 (with close icon) only for onboarding/tutorial popups where the user can dismiss without taking action.",
-        "dontText": "Add a close icon to confirm/destructive popups — forces the user to consciously choose the CTA."
+        "doText": "Keep one clear action in the Action slot, with Close for dismissal.",
+        "dontText": "Don’t stack competing primary buttons in the Action slot."
+      },
+      {
+        "doText": "Show the close button whenever the popup can be dismissed without acting.",
+        "dontText": "Don’t hide the close button on a promo — the user must always have a way out."
       }
     ],
     "scorecard": [
@@ -1005,21 +1024,21 @@
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Semantic names: <code>Modals Asset</code>, <code>body</code>, <code>header</code>, <code>CTA - Base Button Group</code>, <code>Close</code>."
+        "notes": "Centered: Image Slot Container › body › body container (#title, #message, Supporting Content Slot) › Action Slot Container, Close. Surface: container › heading (#preamble, #title, #message, Close) › Image Slot Container › Action Slot Container, spaced by auto-layout gap."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Property values mix paradigms: <code>Default</code> / <code>2 CTA</code> / <code>Version 2</code>. Should be one semantic axis."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Layout</code> = Centered, Surface; four <code>has…</code> booleans; three named slots."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All colors, spacing, radii, shadow, and typography bound to tokens."
+        "notes": "Surface <code>bg/color-bg-main</code> and <code>bg/color-bg</code>, title <code>text/color-text</code>, message <code>text/color-text-weaker</code>, preamble <code>text/color-text-weakest</code>, Close <code>text/color-text-weak</code>; the Button is a library instance."
       },
       {
         "id": "C4",
@@ -1031,54 +1050,42 @@
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No destructive, error, or loading variants. Close affordance only on Version 2."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Visual Popup is a container and carries no interaction states (owner decision). Its Close and action <code>Button_New</code> are library instances."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Hero is a flat raster placeholder with \"Replace me\" overlay. Should be a swappable Image slot."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The image is an empty <code>Image Slot Container</code> slot, not a raster; the Close is a DS vector instance."
       }
     ],
     "variants": {
-      "total": 3,
-      "description": "",
+      "total": 2,
+      "description": "1 <code>Layout</code> setting × 2 values; the booleans and slots do not multiply the set.",
       "columns": [
-        "Type",
-        "Width",
-        "Hero",
-        "CTAs",
-        "Node ID"
+        "Layout",
+        "Size",
+        "Uses",
+        "Node"
       ],
       "rows": [
         {
           "cells": [
-            "Default",
-            "320px",
-            "320 × 180 (raster)",
-            "1 primary",
-            "18477:23789"
+            "Centered",
+            "320 × 335",
+            "hasHeader, hasSupportingContent, hasCloseButton",
+            "4120:10318"
           ]
         },
         {
           "cells": [
-            "2 CTA",
-            "320px",
-            "320 × 180 (raster)",
-            "1 outline + 1 text",
-            "18477:23797"
-          ]
-        },
-        {
-          "cells": [
-            "Version 2",
-            "312px",
-            "280 × 180 (raster, in container)",
-            "1 primary + close icon",
-            "18477:23806"
+            "Surface",
+            "312 × 277",
+            "hasPreamble, hasHeader, hasCloseButton",
+            "4120:10339"
           ]
         }
       ],
@@ -1090,6 +1097,73 @@
     }
   },
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "C1 fixes applied in Figma · C5 ruled Not Applicable · node 4120:10317",
+      "rows": [
+        {
+          "body": "<strong>C1 Needs Refinement → Ready.</strong> The two <code>_space_16</code> spacers in Surface are replaced by auto-layout spacing (gap <code>space/space-16</code>, <code>space/space-8</code> top padding on the action slot), and the preamble is renamed <code>#preamble</code>. Consistent Partial → Pass.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>C5 Requires Rework → Not Applicable.</strong> Owner decision: Visual Popup does not need interaction states. With C1 Ready and every trait passing, Fix · Requires Rework → Keep · Ready.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "October 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Component Review against the Working File rebuild · node 4120:10317",
+      "rows": [
+        {
+          "body": "<strong>Repointed to the rebuild.</strong> The owner selected node 4120:10317 (was the assessed copy 18477:23788). <code>Type</code> is replaced by <code>Layout</code> = Centered, Surface, with four booleans and three slots.",
+          "delta": {
+            "kind": "partial",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Variant naming mixes paradigms.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Hero image is a raster placeholder with \"Replace me\" overlay.</strong> Resolved by the rebuild.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Two findings filed (C1).</strong> Spacer instances and a duplicate <code>#message</code> name in Surface. Consistent Warn → Partial.",
+          "delta": {
+            "kind": "open",
+            "label": "C1 Open"
+          }
+        },
+        {
+          "body": "<strong>Code tab, Live Preview, Playground and In Context rewritten for the rebuild.</strong>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

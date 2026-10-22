@@ -3,7 +3,7 @@
   "meta": {
     "node": "4244:187349",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4244-187349",
-    "description": "A linear progress indicator in 10% steps, from 0 to 100. Its track and fill colours come from colour variables.",
+    "description": "Progress Bars show people how far a task or process has gone.",
     "badges": [
       {
         "kind": "keep",
@@ -524,7 +524,13 @@
         "compose": ""
       }
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "Default",
+        "swift": "<code><span class=\"syn-cmt\">// Progress=30 — 30% of the credit limit used</span>\n<span class=\"syn-type\">EBProgressBar</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">progress</span>: <span class=\"syn-val\">0.3</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">accessibilityLabel</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Credit used\"</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Progress=30 — 30% of the credit limit used</span>\n<span class=\"syn-type\">EBProgressBar</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">progress</span> = <span class=\"syn-val\">0</span>.3f,\n    <span class=\"syn-param\">modifier</span> = <span class=\"syn-type\">Modifier</span><span class=\"syn-dot\">.semantics</span> <span class=\"syn-punc\">{</span> <span class=\"syn-param\">contentDescription</span> = <span class=\"syn-str\">\"Credit used\"</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
+      }
+    ],
     "accessibility": [
       {
         "requirement": "Progress role",
