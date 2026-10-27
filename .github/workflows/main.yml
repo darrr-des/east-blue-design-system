@@ -24,4 +24,11 @@ jobs:
             git pull origin main
             cd astro-site
             npm ci
+            # The build replaces dist/ and renames every file in dist/_astro/.
+            # Keep the previous build's files so pages a browser cached before
+            # this deploy still find their CSS and JS; drop copies older than 30 days.
+            mkdir -p ../.astro-keep
+            [ -d dist/_astro ] && cp -a dist/_astro/. ../.astro-keep/
+            find ../.astro-keep -type f -mtime +30 -delete
             npm run build
+            cp -an ../.astro-keep/. dist/_astro/
