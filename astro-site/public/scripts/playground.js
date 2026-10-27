@@ -86,8 +86,19 @@
     // moment the tab is shown.
     if (window.ResizeObserver && $('pg-canvas')) {
       if (window.__pgResize) window.__pgResize.disconnect();
-      window.__pgResize = new ResizeObserver(function () { readLayout(); if (flat.length) renderSelection(); });
+      window.__pgResize = new ResizeObserver(function () { snapCanvas(); readLayout(); if (flat.length) renderSelection(); });
       window.__pgResize.observe($('pg-canvas'));
+      if ($('pg-canvas').parentElement) window.__pgResize.observe($('pg-canvas').parentElement);
+    }
+    // The stage centres the component, which lands an odd-sized one on a half pixel and blurs
+    // every edge and glyph. Figma draws on whole pixels: nudge the canvas onto the grid.
+    function snapCanvas() {
+      var c = $('pg-canvas'); if (!c) return;
+      c.style.left = ''; c.style.top = '';
+      var r = c.getBoundingClientRect();
+      var dx = Math.round(r.left) - r.left, dy = Math.round(r.top) - r.top;
+      if (Math.abs(dx) > 0.01) c.style.left = dx + 'px';
+      if (Math.abs(dy) > 0.01) c.style.top = dy + 'px';
     }
 
     // Not every combination of properties exists as a variant. As in Figma: keep the value
@@ -108,9 +119,26 @@
     }
 
     // ── Preview: every layer drawn from the Figma layer data ──
-    function paintBg(fills) {
+    // Figma's gradient runs between two handles in the layer's box; CSS runs along an angle
+    // through the centre with a fixed length. Project each stop onto the CSS line so the
+    // colours land exactly where Figma puts them.
+    function cssGradient(g, w, h) {
+      var x0 = g.from.x * w, y0 = g.from.y * h, dx = g.to.x * w - x0, dy = g.to.y * h - y0;
+      var len = Math.sqrt(dx * dx + dy * dy) || 1, ux = dx / len, uy = dy / len;
+      var L = Math.abs(w * ux) + Math.abs(h * uy) || 1;
+      var deg = Math.atan2(ux, -uy) * 180 / Math.PI;
+      var stops = g.stops.map(function (s) {
+        var px = x0 + s.pos * dx - w / 2, py = y0 + s.pos * dy - h / 2;
+        return rgba(s) + ' ' + Math.round(((px * ux + py * uy) / L + 0.5) * 10000) / 100 + '%';
+      });
+      return 'linear-gradient(' + Math.round(deg * 100) / 100 + 'deg,' + stops.join(',') + ')';
+    }
+    function paintBg(fills, n) {
       if (!fills || !fills.length) return '';
-      return 'background:' + fills.slice().reverse().map(function (f) { var c = rgba(f); return 'linear-gradient(' + c + ',' + c + ')'; }).join(',') + ';';
+      return 'background:' + fills.slice().reverse().map(function (f) {
+        if (f.gradient) return cssGradient(f.gradient, n.w, n.h);
+        var c = rgba(f); return 'linear-gradient(' + c + ',' + c + ')';
+      }).join(',') + ';';
     }
     function dashedStroke(n) {
       var w = n.strokeWeights[0], c = rgba(n.strokes[n.strokes.length - 1]);
@@ -160,7 +188,10 @@
     var JUSTIFY = { MIN: 'flex-start', CENTER: 'center', MAX: 'flex-end', SPACE_BETWEEN: 'space-between' };
     var ALIGN = { MIN: 'flex-start', CENTER: 'center', MAX: 'flex-end', BASELINE: 'baseline' };
     function sizeStyle(n, parentN) {
-      var inFlow = parentN && parentN.layout && n.positioning !== 'ABSOLUTE';
+      // A grid frame places its children on tracks the bundle does not carry, so they
+      // keep the x/y Figma resolved them to — the same path "Ignore auto layout" takes.
+      var grid = parentN && parentN.layout && parentN.layout.mode === 'GRID';
+      var inFlow = parentN && parentN.layout && n.positioning !== 'ABSOLUTE' && !grid;
       if (!parentN) {
         return 'position:relative;' +
           (n.sizingH === 'HUG' ? 'width:max-content;' : 'width:' + n.w + 'px;') +
@@ -198,7 +229,12 @@
       var st = sizeStyle(n, parentN);
       if (n.limits) for (var lk in n.limits) st += lk.replace(/([A-Z])/g, '-$1').toLowerCase() + ':' + n.limits[lk] + 'px;';
       var L = n.layout;
-      if (L && !n.text && !n.graphic) {
+      if (L && L.mode === 'GRID' && !n.text && !n.graphic) {
+        // Its children are placed absolutely, so it only needs to be their origin and to
+        // keep the size Figma gives it — a grid that overflows clips, it does not grow.
+        st += 'display:block;padding:' + L.padding.map(function (v) { return v + 'px'; }).join(' ') + ';' +
+          'width:' + n.w + 'px;height:' + n.h + 'px;';
+      } else if (L && !n.text && !n.graphic) {
         var between = L.primary === 'SPACE_BETWEEN';
         st += 'display:flex;flex-direction:' + (L.mode === 'HORIZONTAL' ? 'row' : 'column') + ';' +
           // With "Include strokes in layout", each side's border adds to that side's padding.
@@ -213,6 +249,7 @@
       if (n.ellipse) st += 'border-radius:50%;';
       if (n.radius) st += 'border-radius:' + n.radius.map(function (r) { return r + 'px'; }).join(' ') + ';';
       if (n.opacity !== undefined) st += 'opacity:' + n.opacity + ';';
+      if (n.blend) st += 'mix-blend-mode:' + n.blend + ';';
       if (n.clip) st += 'overflow:hidden;';
       if (n.text) {
         var t = n.text;
@@ -225,7 +262,15 @@
         el.classList.add('pg-n-text');
         // Auto-width text never wraps in Figma; the browser can measure it a fraction wider.
         if (t.autoResize === 'WIDTH_AND_HEIGHT') el.classList.add('pg-n-nowrap');
+        if (t.autoResize === 'TRUNCATE') st += 'overflow:hidden;';
         var span = document.createElement('span');
+        // Figma's "truncate text": the box height is fixed, the copy clips to the lines
+        // that fit and the last one ends in an ellipsis. Without this the text wraps past
+        // its own box and lands on the layer below it.
+        if (t.autoResize === 'TRUNCATE' && n.h && t.lineHeight) {
+          span.setAttribute('style', 'display:-webkit-box;-webkit-box-orient:vertical;' +
+            'overflow:hidden;-webkit-line-clamp:' + Math.max(1, Math.floor(n.h / t.lineHeight)) + ';');
+        }
         if (t.segments) {
           t.segments.forEach(function (sg) {
             var run = document.createElement('span');
@@ -266,14 +311,31 @@
           art.innerHTML = D.svgs[n.svg];
         }
       } else {
-        st += paintBg(n.fills) + shadows(n);
+        st += paintBg(n.fills, n) + shadows(n);
         if (n.strokes && n.strokeWeights && n.strokeDashes) el.appendChild(dashedStroke(n));
       }
       if (n.type === 'SLOT') el.classList.add('pg-n-slot');
       el.setAttribute('style', st);
       if (n.textProp) applyText(flat[i]);
       parentEl.appendChild(el);
-      (n.children || []).forEach(function (c) { build(c, el, n, i, depth + 1); });
+      var kidEls = (n.children || []).map(function (c) { return build(c, el, n, i, depth + 1); });
+      // Figma masks: a mask layer clips every sibling drawn after it and is not drawn itself.
+      // Its exported picture's alpha becomes a CSS mask on each of those siblings, placed at
+      // the mask's position relative to the sibling.
+      (n.children || []).forEach(function (m, k) {
+        if (!m.mask) return;
+        var src = m.img != null ? D.images[m.img] : m.svg != null ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(D.svgs[m.svg]) : null;
+        kidEls[k].style.opacity = '0';
+        if (!src) return;
+        for (var j = k + 1; j < kidEls.length; j++) {
+          var sb = n.children[j], ms = kidEls[j].style;
+          var pos = (m.x - sb.x) + 'px ' + (m.y - sb.y) + 'px', size = m.w + 'px ' + m.h + 'px';
+          ms.webkitMaskImage = ms.maskImage = 'url("' + src + '")';
+          ms.webkitMaskSize = ms.maskSize = size;
+          ms.webkitMaskPosition = ms.maskPosition = pos;
+          ms.webkitMaskRepeat = ms.maskRepeat = 'no-repeat';
+        }
+      });
       return el;
     }
     // Where each layer actually is, after the browser has laid it out — the overlays follow it.
@@ -285,11 +347,20 @@
         var r = f.el.getBoundingClientRect();
         f.ax = r.left - r0.left; f.ay = r.top - r0.top; f.w = r.width; f.h = r.height;
       });
-      // Empty slots show Figma's pink placeholder.
+      // Empty slots are drawn, the way Figma's own canvas draws them: the Playground is
+      // the authoring view, so a slot waiting to be filled has to be findable. The
+      // nochrome variant turns it off, which is what keeps fidelity comparing against
+      // Figma's export (an export paints nothing there). A slot can carry its own
+      // artwork as a flattened SVG or image with no child layers (Carousel Item's Button
+      // chevron) — that is filled, not empty, and must not be painted over.
       flat.forEach(function (f, i) {
         if (f.n.type !== 'SLOT') return;
-        var empty = !flat.some(function (c, j) { return c.parent === i && isShown(j); });
+        var draws = f.n.svg != null || !!f.n.image;
+        var empty = !draws && !flat.some(function (c, j) { return c.parent === i && isShown(j); });
         f.el.classList.toggle('is-empty', empty);
+        // Kept alongside the class so the Layers tree and anything else can read it.
+        if (empty) f.el.setAttribute('data-empty', '');
+        else f.el.removeAttribute('data-empty');
       });
     }
     // A text layer bound to a TEXT property shows the property's value. While it still
@@ -632,6 +703,7 @@
       // coordinates, which readLayout() takes relative to the root, are unchanged.
       canvas.appendChild(overlay);
       applyBooleans();
+      snapCanvas();
       readLayout();
       state.sel = 0;
       if (!prevPath) state.picked = false;
@@ -717,7 +789,7 @@
         '</div>';
       var rows = [];
       if (L) {
-        rows.push(['Direction', L.mode === 'HORIZONTAL' ? 'Horizontal' : 'Vertical']);
+        rows.push(['Direction', L.mode === 'GRID' ? 'Grid' : L.mode === 'HORIZONTAL' ? 'Horizontal' : 'Vertical']);
         rows.push(['Gap', [[L.primary === 'SPACE_BETWEEN' ? 'Auto' : num(L.gap), L.primary === 'SPACE_BETWEEN' ? null : tokName(L.gapToken)]]]);
         rows.push(['Padding', sides(p, L.paddingTokens)]);
       }
@@ -760,6 +832,13 @@
         : 'Color(red: ' + ch(p.hex, 0) + ', green: ' + ch(p.hex, 1) + ', blue: ' + ch(p.hex, 2) + (p.alpha < 1 ? ', opacity: ' + p.alpha : '') + ')';
     };
     var hexNote = function (p) { return p.hex + (p.alpha < 1 ? ' @' + Math.round(p.alpha * 100) + '%' : ''); };
+    // A gradient's handles are 0–1 in the layer's box: UnitPoint in SwiftUI, a fraction of size in Compose.
+    var swFill = function (p) {
+      if (!p.gradient) return swColor(p);
+      var g = p.gradient;
+      return 'LinearGradient(stops: [' + g.stops.map(function (s) { return '.init(color: ' + swColor(s) + ', location: ' + num(s.pos) + ')'; }).join(', ') +
+        '], startPoint: UnitPoint(x: ' + num(g.from.x) + ', y: ' + num(g.from.y) + '), endPoint: UnitPoint(x: ' + num(g.to.x) + ', y: ' + num(g.to.y) + '))';
+    };
     function kind(n) {
       if (n.text) return 'Text';
       if (n.graphic) return 'Image';
@@ -818,7 +897,7 @@
       var fh = n.sizingV === 'FILL' ? 'maxHeight: .infinity' : n.sizingV === 'HUG' ? null : 'height: ' + num(n.h);
       if (fw || fh) m.push('.frame(' + [fw, fh].filter(Boolean).join(', ') + ')');
       var r = n.radius ? n.radius[0] : 0, rTok = n.radiusTokens && tokName(n.radiusTokens[0]);
-      (n.fills || []).forEach(function (f) { m.push('.background(' + swColor(f) + ')' + cm(hexNote(f))); });
+      (n.fills || []).forEach(function (f) { m.push('.background(' + swFill(f) + ')' + cm(hexNote(f))); });
       if (r) m.push('.clipShape(RoundedRectangle(cornerRadius: ' + num(r) + '))' + cm(rTok));
       if (n.strokes) {
         var st = n.strokes[0];
@@ -870,7 +949,12 @@
       var r = n.radius ? n.radius[0] : 0, rTok = n.radiusTokens && tokName(n.radiusTokens[0]);
       var shape = r ? 'RoundedCornerShape(' + num(r) + '.dp)' : null;
       (n.effects || []).forEach(function (e) { mods.push('.shadow(' + num(e.blur / 2) + '.dp' + (shape ? ', ' + shape : '') + ')' + cm(n.effectStyle || 'shadow')); });
-      (n.fills || []).forEach(function (f) { mods.push('.background(Color(' + argb(f) + ')' + (shape ? ', ' + shape : '') + ')' + cm([tokName(f.token), rTok].filter(Boolean).join(' · '))); });
+      (n.fills || []).forEach(function (f) {
+        var g = f.gradient;
+        var paint = g ? 'Brush.linearGradient(' + g.stops.map(function (s) { return num(s.pos) + 'f to Color(' + argb(s) + ')'; }).join(', ') +
+          ', start = Offset(' + num(g.from.x * n.w) + 'f, ' + num(g.from.y * n.h) + 'f), end = Offset(' + num(g.to.x * n.w) + 'f, ' + num(g.to.y * n.h) + 'f))' : 'Color(' + argb(f) + ')';
+        mods.push('.background(' + paint + (shape ? ', ' + shape : '') + ')' + cm([tokName(f.token), rTok].filter(Boolean).join(' · ')));
+      });
       if (n.strokes) { var st = n.strokes[0]; mods.push('.border(' + num(n.strokeWeights[0]) + '.dp, Color(' + argb(st) + ')' + (shape ? ', ' + shape : '') + ')' + cm(tokName(st.token))); }
       var L = n.layout, kids = kidsOf(i);
       if (L) {
@@ -942,7 +1026,8 @@
     // ── Highlight matching for Typography and Colors rows ──
     function paintsOf(n) {
       if (n.graphic) return n.paints || [];
-      var out = (n.fills || []).concat(n.strokes || []);
+      var out = [];
+      (n.fills || []).concat(n.strokes || []).forEach(function (p) { out = out.concat(p.gradient ? p.gradient.stops : [p]); });
       if (n.text && n.text.segments) n.text.segments.forEach(function (sg) { if (sg.fills) out = out.concat(sg.fills); });
       return out;
     }

@@ -51,3 +51,6 @@ skills-lock.json
 # (bun executable + local clone of claude-talk-to-figma-mcp), so it
 # cannot be shared. Each machine keeps its own.
 .mcp.json
+
+# fidelity.mjs screenshot output
+astro-site/.fidelity/

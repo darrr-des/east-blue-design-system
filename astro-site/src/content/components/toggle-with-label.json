@@ -3,7 +3,7 @@
   "meta": {
     "node": "26510:37680",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26510-37680",
-    "description": "A toggle paired with a label and an optional subtext message, in a single row. 18 variants mirroring the Toggle atom — <code>State</code> (Default / Pressed / Disabled) × <code>Size</code> (Large / Medium / Small) × <code>isSelected</code> (true / false) — nesting the Toggle instance plus a <code>#label</code> and a composed <code>Subtext Message</code>.",
+    "description": "Toggles with Label let people turn a labeled setting on or off.",
     "badges": [
       {
         "kind": "keep",

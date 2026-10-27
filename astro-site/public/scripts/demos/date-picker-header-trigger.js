@@ -72,14 +72,14 @@ function _dphtUpdate() {
   if (!preview) return;
   preview.innerHTML = _dphtRender({
     state: getVal('dpht-ctrl-state', 'default'),
-    caret: getVal('dpht-ctrl-caret', 'true') === 'true',
+    caret: getVal('dpht-ctrl-caret', 'false') === 'true',
     text: getVal('dpht-ctrl-text', 'Label')
   });
 }
 window._dphtUpdate = _dphtUpdate;
 
 /* ── Style tab spec card ─────────────────────────────────────────── */
-var _specCards = { default: { state: 'default', caret: 'true', text: 'Label' } };
+var _specCards = { default: { state: 'default', caret: 'false', text: 'Label' } };
 window._specCards = _specCards;
 
 function updateSpecCard(cardKey, prop, value) {

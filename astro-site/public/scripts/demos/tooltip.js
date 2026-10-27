@@ -26,7 +26,11 @@ var TT_APPEARANCE = {
 var TT_TEXT_H = { header: 23, description: 18, both: 45 };
 
 function _ttTextHeight(text) { return TT_TEXT_H[text] || TT_TEXT_H.both; }
-function _ttContainerHeight(text) { return TT_PAD + Math.max(TT_ASSET, _ttTextHeight(text)) + TT_GAP + TT_ACTION_H + TT_PAD; }
+/* hasLeadingAsset off drops the 46px slot (Details then hugs the text); hasAction off drops
+   the ⤷ ActionSlot row and its 16px gap. hasArrow only hides the pointer — it is absolutely
+   positioned, so the root keeps its 12px pointer padding, as in Figma. */
+function _ttDetailsHeight(o) { return o.hasLeadingAsset === false ? _ttTextHeight(o.text) : Math.max(TT_ASSET, _ttTextHeight(o.text)); }
+function _ttContainerHeight(o) { return TT_PAD + _ttDetailsHeight(o) + (o.hasAction === false ? 0 : TT_GAP + TT_ACTION_H) + TT_PAD; }
 
 function _ttPointer(placement, c, cH) {
   var b = TT_POINTER_BLEED, t;
@@ -41,21 +45,25 @@ function _ttBuildSvg(opts) {
   var text = opts.text || 'both', placement = opts.placement || 'top', appearance = opts.appearance || 'opaque';
   var c = TT_APPEARANCE[appearance] || TT_APPEARANCE.opaque;
   var vertical = placement === 'top' || placement === 'bottom';
-  var cH = _ttContainerHeight(text), detailsH = Math.max(TT_ASSET, _ttTextHeight(text));
+  var cH = _ttContainerHeight(opts), detailsH = _ttDetailsHeight(opts);
+  var esc = function (v) { return String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+  var header = esc(opts.header == null ? 'Header' : opts.header), description = esc(opts.description == null ? 'Description goes here' : opts.description);
   var w = vertical ? TT_W : TT_W + 12, h = vertical ? cH + 12 : cH;
   var ox = placement === 'left' ? 12 : 0, oy = placement === 'top' ? 12 : 0;
-  var textX = ox + TT_PAD + TT_ASSET + TT_ASSET_GAP;
+  var textX = ox + TT_PAD + (opts.hasLeadingAsset === false ? 0 : TT_ASSET + TT_ASSET_GAP);
   var detailsY = oy + TT_PAD, textY = detailsY + (detailsH - _ttTextHeight(text)) / 2;
   var font = "'Proxima Soft', system-ui, sans-serif", descFont = "'BarkAda', system-ui, sans-serif";
 
-  var s = '<svg class="eb-preview eb-preview-tt" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  /* Translucent is the whole component at 80% layer opacity in Figma (the fills stay solid). */
+  var s = '<svg class="eb-preview eb-preview-tt" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg"' + (appearance === 'translucent' ? ' opacity="0.8"' : '') + '>';
   s += '<rect x="' + (ox + 0.5) + '" y="' + (oy + 0.5) + '" width="' + (TT_W - 1) + '" height="' + (cH - 1) + '" rx="' + TT_RADIUS + '" fill="' + c.bg + '" stroke="' + c.border + '"/>';
-  s += _ttPointer(placement, c, cH);
-  s += '<rect x="' + (ox + TT_PAD) + '" y="' + detailsY + '" width="' + TT_ASSET + '" height="' + TT_ASSET + '" rx="23" fill="' + c.asset + '"/>';
-  if (text !== 'description') s += '<text x="' + textX + '" y="' + (textY + 17) + '" fill="' + c.header + '" font-size="18" font-weight="700" letter-spacing="0.25" font-family="' + font + '">Header</text>';
-  if (text !== 'header') s += '<text x="' + textX + '" y="' + (text === 'both' ? textY + 40 : textY + 13) + '" fill="' + c.description + '" fill-opacity="' + c.descriptionOpacity + '" font-size="12" font-weight="600" font-family="' + descFont + '">Description goes here</text>';
-  s += '<g transform="translate(' + (ox + TT_W - TT_PAD - TT_CLOSE) + ', ' + (detailsY - 3.5) + ')"><path d="' + TT_CLOSE_PATH + '" fill="' + c.close + '"/></g>';
-  var by = detailsY + detailsH + TT_GAP, bx = ox + TT_W - TT_PAD - TT_BTN_W;
+  if (opts.hasArrow !== false) s += _ttPointer(placement, c, cH);
+  if (opts.hasLeadingAsset !== false) s += '<rect x="' + (ox + TT_PAD) + '" y="' + detailsY + '" width="' + TT_ASSET + '" height="' + TT_ASSET + '" rx="23" fill="' + c.asset + '"/>';
+  if (text !== 'description') s += '<text x="' + textX + '" y="' + (textY + 17) + '" fill="' + c.header + '" font-size="18" font-weight="700" letter-spacing="0.25" font-family="' + font + '">' + header + '</text>';
+  if (text !== 'header') s += '<text x="' + textX + '" y="' + (text === 'both' ? textY + 40 : textY + 13) + '" fill="' + c.description + '" fill-opacity="' + c.descriptionOpacity + '" font-size="12" font-weight="600" font-family="' + descFont + '">' + description + '</text>';
+  if (opts.hasDismiss !== false) s += '<g transform="translate(' + (ox + TT_W - TT_PAD - TT_CLOSE) + ', ' + (detailsY - 3.5) + ')"><path d="' + TT_CLOSE_PATH + '" fill="' + c.close + '"/></g>';
+  if (opts.hasAction === false) return s + '</svg>';
+  var by = detailsY + detailsH + TT_GAP, bx = ox + TT_W - TT_PAD - 3 - TT_BTN_W;  /* ⤷ ActionSlot has 3px right padding */
   s += '<rect x="' + bx + '" y="' + by + '" width="' + TT_BTN_W + '" height="' + TT_ACTION_H + '" rx="' + TT_BTN_RADIUS + '" ry="' + TT_BTN_RADIUS + '" fill="#005CE5"/>';
   s += '<text x="' + (bx + TT_BTN_W / 2) + '" y="' + (by + 19) + '" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="700" letter-spacing="0.25" font-family="' + font + '">Next</text>';
   return s + '</svg>';
@@ -66,7 +74,10 @@ function _ttUpdate() {
   var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
   var el = document.getElementById('tt-demo-preview');
   if (!el) return;
-  el.innerHTML = _ttBuildSvg({ text: getVal('tt-ctrl-text', 'both'), placement: getVal('tt-ctrl-placement', 'top'), appearance: getVal('tt-ctrl-appearance', 'opaque') });
+  var on = function (id) { var e = document.getElementById(id); return e ? e.checked : true; };
+  el.innerHTML = _ttBuildSvg({ text: getVal('tt-ctrl-text', 'both'), placement: getVal('tt-ctrl-placement', 'top'), appearance: getVal('tt-ctrl-appearance', 'opaque'),
+    hasDismiss: on('tt-ctrl-dismiss'), hasArrow: on('tt-ctrl-arrow'), hasAction: on('tt-ctrl-action'), hasLeadingAsset: on('tt-ctrl-asset'),
+    header: getVal('tt-ctrl-header', 'Header'), description: getVal('tt-ctrl-description', 'Description goes here') });
 }
 window._ttUpdate = _ttUpdate;
 

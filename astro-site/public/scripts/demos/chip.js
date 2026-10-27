@@ -70,13 +70,70 @@ function _chipBuildHtml(opts) {
   return html;
 }
 
-/* Overview — live demo */
+/* ── Overview live preview — component set 5595:39596 ────────────────
+ * Read off the Playground bundle, which is generated from that set.
+ *
+ *   pill        height 32, radius 99, padding-left 4 with a leading icon
+ *               else 14, padding-right 14, gap 4 before the content row
+ *   ContentRow  gap 8 between Label, Value and the trailing chevron
+ *   LeadingIcon 24 x 24 — the ⤷ Leading-Icon swap's default
+ *               "icon-placeholder", a #D7E0EF circle
+ *   Label/Value Proxima Soft 700 16/16, letter-spacing 0.25
+ *   TrailingIcon 16 x 16 Chevron Down
+ *
+ * The 2px Default border is painted as an inset shadow: Figma keeps the
+ * stroke out of layout, so a CSS border would shrink the 32px box.
+ *
+ * State drives every colour (tokens named for the handoff):
+ *   Default   no fill · border/color-border #D7E0EF · text/color-text-weaker
+ *   Pressed   bg/color-bg-primary #005CE5 · text/color-text-inverse
+ *   Disabled  bg/color-bg-inverse-weaker #EEF2F9 · text/color-text-disabled
+ */
+var CHIP_STATE = {
+  'default':  { bg: 'transparent', ring: '#D7E0EF', label: '#6780A9', value: '#005CE5', chevron: '#7E96BE', chevronOpacity: 1 },
+  'pressed':  { bg: '#005CE5',     ring: null,      label: '#FFFFFF', value: '#FFFFFF', chevron: '#F6F9FD', chevronOpacity: 0.72 },
+  'disabled': { bg: '#EEF2F9',     ring: null,      label: '#C2CFE5', value: '#9BC5FD', chevron: '#C2CFE5', chevronOpacity: 1 }
+};
+
+function _chipOn(v) { return v === true || v === 'true' || v === 'True'; }
+
+function _chipChevron(c) {
+  return '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:block;flex:none;">' +
+    '<path d="M4.5 6.5L8 10L11.5 6.5" stroke="' + c.chevron + '" stroke-opacity="' + c.chevronOpacity +
+    '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+function _chipRender(opts) {
+  var o = opts || {};
+  var c = CHIP_STATE[(o.state || 'default')] || CHIP_STATE['default'];
+  var lead = _chipOn(o.hasLeadingIcon), trail = _chipOn(o.hasTrailingIcon), val = _chipOn(o.hasValue);
+  var type = "font-family:'Proxima Soft',system-ui,sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;white-space:nowrap;";
+
+  var h = '<div style="display:inline-flex;align-items:center;box-sizing:border-box;height:32px;' +
+    'padding:0 14px 0 ' + (lead ? 4 : 14) + 'px;gap:4px;border-radius:99px;background:' + c.bg + ';' +
+    (c.ring ? 'box-shadow:inset 0 0 0 2px ' + c.ring + ';' : '') + '">';
+
+  if (lead) h += '<div style="width:24px;height:24px;border-radius:50%;background:#D7E0EF;flex:none;"></div>';
+
+  h += '<div style="display:flex;align-items:center;gap:8px;">';
+  h += '<span style="' + type + 'color:' + c.label + ';">Label</span>';
+  if (val) h += '<span style="' + type + 'color:' + c.value + ';">Value</span>';
+  if (trail) h += _chipChevron(c);
+  h += '</div></div>';
+  return h;
+}
+
+/* Overview — live demo. Figma's four variant properties, in the set's order. */
 function updateChipDemo() {
-  _chipDemo.style = document.getElementById('chip-demo-style').value;
-  _chipDemo.leading = document.getElementById('chip-demo-leading').value;
-  _chipDemo.trailing = document.getElementById('chip-demo-trailing').value;
   var el = document.getElementById('chip-demo-preview');
-  if (el) el.innerHTML = _chipBuildHtml(Object.assign({ label: 'Filter Name' }, _chipDemo));
+  if (!el) return;
+  var get = function (id, fb) { var n = document.getElementById(id); return n ? n.value : fb; };
+  el.innerHTML = _chipRender({
+    hasValue:        get('chip-ctrl-hasvalue', 'False'),
+    state:           get('chip-ctrl-state', 'default'),
+    hasLeadingIcon:  get('chip-ctrl-hasleadingicon', 'True'),
+    hasTrailingIcon: get('chip-ctrl-hastrailingicon', 'True')
+  });
 }
 
 /* Style — per-spec-card live preview + readout */

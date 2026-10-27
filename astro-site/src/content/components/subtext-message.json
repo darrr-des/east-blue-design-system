@@ -3,7 +3,7 @@
   "meta": {
     "node": "26715:17362",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26715-17362",
-    "description": "A small caption rendered beneath form fields for helper text or validation messages. 8 variants across <code>Status</code> (Default / Success / Error / Disabled) × <code>Size</code> (Small / Default), each with a leading status icon and a <code>#message</code> plus trailing <code>#label</code>. (Assessed in the 2026 Working File.)",
+    "description": "Subtext Messages give people help or validation feedback below a form field.",
     "badges": [
       {
         "kind": "keep",

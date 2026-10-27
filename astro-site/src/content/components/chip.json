@@ -3,7 +3,7 @@
   "meta": {
     "node": "5595:39596",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5595-39596",
-    "description": "A pill-shaped selector carrying a label and an optional chosen value, with optional leading and trailing icons and a slot for an attached dropdown.",
+    "description": "Chips let people choose an option and see the value they picked.",
     "badges": [
       {
         "kind": "keep",
@@ -16,18 +16,18 @@
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Keep — all findings resolved",
-      "text": "Rebuilt on node <code>5595:39596</code> in the 2026 Working File, and every recommendation from the previous assessment has landed. Two overlapping components are consolidated into one 24-variant set — <code>hasValue</code> × <code>State</code> × <code>hasLeadingIcon</code> × <code>hasTrailingIcon</code> — with a property schema following §1, §2 and §5, identical layer naming across all 24 variants on the §3 vocabulary, Pressed and Disabled states with properly muted disabled text, the <code>offset</code> frames and colored <code>_space_*</code> spacers removed, and <code>dropdown group</code> replaced by a real <code>Dropdown-Slot</code>. Scope is confirmed dropdown-only, so <code>Pressed</code> means finger-down rather than doubling as a selection; the leading <code>Placeholder</code> is a deliberate swap target; and the 80% pressed-label opacity is the same intentional treatment confirmed elsewhere in the system. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+      "title": "Keep — rebuilt; Code tab still on the old set",
+      "text": "One 24-variant set on node <code>5595:39596</code>: <code>hasValue</code> × <code>State</code> × <code>hasLeadingIcon</code> × <code>hasTrailingIcon</code>, with a real <code>Dropdown-Slot</code> and swappable leading and trailing icons. Closing it needs the scorecard and Property Mapping re-read against this set."
     },
     "navGroup": "",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          \n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"18\" rx=\"4\" fill=\"#1972F9\" opacity=\".6\"></rect>\n          <text x=\"60\" y=\"19\" text-anchor=\"middle\" fill=\"white\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Vouchers</text>\n          \n          <rect x=\"16\" y=\"32\" width=\"22\" height=\"8\" rx=\"4\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"42\" y=\"32\" width=\"22\" height=\"8\" rx=\"4\" fill=\"#EEF2F9\"></rect>\n          <rect x=\"68\" y=\"32\" width=\"22\" height=\"8\" rx=\"4\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"0.8\"></rect>\n          \n          <rect x=\"18\" y=\"48\" width=\"84\" height=\"10\" rx=\"2\" fill=\"currentColor\" opacity=\".07\"></rect>\n          <rect x=\"18\" y=\"60\" width=\"84\" height=\"6\" rx=\"3\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
+    "inContextNote": "How the Chip appears in a real product screen — as filter rows on two screens: transaction-history filters, and GInsure policy categories with leading icons and counts.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/chip-in-context.png\" alt=\"Chips as filters on two GCash screens: a Transaction history request screen with All selected beside Pending, Completed and Cancelled; and a GInsure My GInsure tab with Health 3 selected beside Lifestyle 3 and Personal, each with a leading icon and a count\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"chip-demo-preview\"><div style=\"display:inline-flex;align-items:center;height:36px;padding:0 16px 0 6px;background:#005CE5;border:none;border-radius:99px;box-sizing:border-box;font-family:'Proxima Soft', system-ui, sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;\"><div style=\"width:24px;height:24px;border-radius:50%;background:#C2C6CF;flex-shrink:0;margin-right:4px;\"></div><span style=\"color:#FFFFFF;white-space:nowrap;\">Filter Name</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"margin-left:8px;flex-shrink:0;\"><path d=\"M4 4l8 8M12 4l-8 8\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">style</span><select class=\"demo-panel-select\" id=\"chip-demo-style\" onchange=\"updateChipDemo()\"><option value=\"filled\" selected=\"\">filled</option><option value=\"light\">light</option><option value=\"outline\">outline</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">leading</span><select class=\"demo-panel-select\" id=\"chip-demo-leading\" onchange=\"updateChipDemo()\"><option value=\"none\">none</option><option value=\"avatar\" selected=\"\">avatar</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">trailing</span><select class=\"demo-panel-select\" id=\"chip-demo-trailing\" onchange=\"updateChipDemo()\"><option value=\"none\">none</option><option value=\"close\" selected=\"\">close</option><option value=\"chevron\">chevron</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"chip-demo-preview\"><div style=\"display:inline-flex;align-items:center;box-sizing:border-box;height:32px;padding:0 14px 0 4px;gap:4px;border-radius:99px;background:#005CE5;\"><div style=\"width:24px;height:24px;border-radius:50%;background:#D7E0EF;flex:none;\"></div><div style=\"display:flex;align-items:center;gap:8px;\"><span style=\"font-family:'Proxima Soft',system-ui,sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;white-space:nowrap;color:#FFFFFF;\">Label</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\" style=\"display:block;flex:none;\"><path d=\"M4.5 6.5L8 10L11.5 6.5\" stroke=\"#F6F9FD\" stroke-opacity=\"0.72\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasValue</span><select id=\"chip-ctrl-hasvalue\" class=\"demo-panel-select\" onchange=\"updateChipDemo()\"><option value=\"False\" selected=\"\">False</option><option value=\"True\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"chip-ctrl-state\" class=\"demo-panel-select\" onchange=\"updateChipDemo()\"><option value=\"pressed\" selected=\"\">Pressed</option><option value=\"disabled\">Disabled</option><option value=\"default\">Default</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeadingIcon</span><select id=\"chip-ctrl-hasleadingicon\" class=\"demo-panel-select\" onchange=\"updateChipDemo()\"><option value=\"False\">False</option><option value=\"True\" selected=\"\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailingIcon</span><select id=\"chip-ctrl-hastrailingicon\" class=\"demo-panel-select\" onchange=\"updateChipDemo()\"><option value=\"True\" selected=\"\">True</option><option value=\"False\">False</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Slots &amp; swaps</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">⤷ Leading-Icon</span><span class=\"demo-panel-value\">Placeholder</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">⤷ Trailing-Icon</span><span class=\"demo-panel-value\">Chevron Down</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Dropdown-Slot</span><span class=\"demo-panel-value\">Empty</span></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -1125,7 +1125,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1147,7 +1148,7 @@
       "footnote": ""
     },
     "propertyMapping": {
-      "description": "",
+      "description": "Figma properties mapped to the intended native parameters. Rows whose Figma cell is a bare name (style, label, onTap / onClose) are native concerns the set does not expose as a property.",
       "rows": [
         {
           "figma": "style",
@@ -1155,17 +1156,17 @@
           "compose": "style = EBChipStyle.*"
         },
         {
-          "figma": "leading",
+          "figma": "hasLeadingIcon — False, True",
           "swift": "leading: EBChipLeading?",
           "compose": "leading: @Composable (() -&gt; Unit)?"
         },
         {
-          "figma": "trailing",
+          "figma": "hasTrailingIcon — True, False",
           "swift": "trailing: EBChipTrailing?",
           "compose": "trailing: EBChipTrailing?"
         },
         {
-          "figma": "selectedValue",
+          "figma": "hasValue — False, True",
           "swift": "selectedValue: String?",
           "compose": "selectedValue: String?"
         },
@@ -1188,8 +1189,8 @@
     "usageSnippets": [
       {
         "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Applied filter — brand fill, avatar + close</span>\n<span class=\"typ\">EBChip</span>(<span class=\"str\">\"Filter Name\"</span>,\n    <span class=\"prp\">leading</span>: .<span class=\"fn\">avatar</span>(<span class=\"typ\">EBAvatar</span>(<span class=\"prp\">initials</span>: <span class=\"str\">\"DM\"</span>)),\n    <span class=\"prp\">trailing</span>: .<span class=\"prp\">close</span>,\n    <span class=\"prp\">onRemove</span>: { /* remove filter */ })\n.<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">filled</span>)\n\n<span class=\"cmt\">// Inactive filter — light, label only</span>\n<span class=\"typ\">EBChip</span>(<span class=\"str\">\"Category\"</span>)\n    .<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">light</span>)\n\n<span class=\"cmt\">// Dropdown trigger with selected value</span>\n<span class=\"typ\">EBChip</span>(<span class=\"str\">\"Sort by\"</span>,\n    <span class=\"prp\">selectedValue</span>: <span class=\"str\">\"Conservative first\"</span>,\n    <span class=\"prp\">trailing</span>: .<span class=\"prp\">chevron</span>,\n    <span class=\"prp\">action</span>: { /* open dropdown */ })\n.<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">light</span>)",
-        "compose": "<span class=\"cmt\">// Applied filter — brand fill, avatar + close</span>\n<span class=\"typ\">EBChip</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Filter Name\"</span>,\n    <span class=\"prp\">style</span> = <span class=\"typ\">EBChipStyle</span>.<span class=\"prp\">Filled</span>,\n    <span class=\"prp\">leading</span> = { <span class=\"typ\">EBAvatar</span>(initials = <span class=\"str\">\"DM\"</span>) },\n    <span class=\"prp\">trailing</span> = <span class=\"typ\">EBChipTrailing</span>.<span class=\"prp\">Close</span>,\n    <span class=\"prp\">onRemove</span> = { /* remove filter */ }\n)\n\n<span class=\"cmt\">// Inactive filter — light, label only</span>\n<span class=\"typ\">EBChip</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Category\"</span>,\n    <span class=\"prp\">style</span> = <span class=\"typ\">EBChipStyle</span>.<span class=\"prp\">Light</span>\n)\n\n<span class=\"cmt\">// Dropdown trigger with selected value</span>\n<span class=\"typ\">EBChip</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Sort by\"</span>,\n    <span class=\"prp\">selectedValue</span> = <span class=\"str\">\"Conservative first\"</span>,\n    <span class=\"prp\">style</span> = <span class=\"typ\">EBChipStyle</span>.<span class=\"prp\">Light</span>,\n    <span class=\"prp\">trailing</span> = <span class=\"typ\">EBChipTrailing</span>.<span class=\"prp\">Chevron</span>,\n    <span class=\"prp\">onClick</span> = { /* open dropdown */ }\n)"
+        "swift": "<code><span class=\"syn-cmt\">// Applied filter — brand fill, avatar + close</span>\n<span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Filter Name\"</span>,\n    <span class=\"syn-param\">leading</span>: .<span class=\"syn-fn\">avatar</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">initials</span>: <span class=\"syn-str\">\"DM\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">trailing</span>: <span class=\"syn-dot\">.close</span>,\n    <span class=\"syn-param\">onRemove</span>: <span class=\"syn-punc\">{</span> /* remove filter */ <span class=\"syn-punc\">}</span><span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.filled</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Inactive filter — light, label only</span>\n<span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Category\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.light</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Dropdown trigger with selected value</span>\n<span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Sort by\"</span>,\n    <span class=\"syn-param\">selectedValue</span>: <span class=\"syn-str\">\"Conservative first\"</span>,\n    <span class=\"syn-param\">trailing</span>: <span class=\"syn-dot\">.chevron</span>,\n    <span class=\"syn-param\">action</span>: <span class=\"syn-punc\">{</span> /* open dropdown */ <span class=\"syn-punc\">}</span><span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.light</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Applied filter — brand fill, avatar + close</span>\n<span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Filter Name\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBChipStyle</span><span class=\"syn-dot\">.Filled</span>,\n    <span class=\"syn-param\">leading</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBAvatar</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">initials</span> = <span class=\"syn-str\">\"DM\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBChipTrailing</span><span class=\"syn-dot\">.Close</span>,\n    <span class=\"syn-param\">onRemove</span> = <span class=\"syn-punc\">{</span> /* remove filter */ <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Inactive filter — light, label only</span>\n<span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Category\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBChipStyle</span><span class=\"syn-dot\">.Light</span>\n<span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cmt\">// Dropdown trigger with selected value</span>\n<span class=\"syn-type\">EBChip</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Sort by\"</span>,\n    <span class=\"syn-param\">selectedValue</span> = <span class=\"syn-str\">\"Conservative first\"</span>,\n    <span class=\"syn-param\">style</span> = <span class=\"syn-type\">EBChipStyle</span><span class=\"syn-dot\">.Light</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBChipTrailing</span><span class=\"syn-dot\">.Chevron</span>,\n    <span class=\"syn-param\">onClick</span> = <span class=\"syn-punc\">{</span> /* open dropdown */ <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -1278,94 +1279,317 @@
       }
     ],
     "variants": {
-      "total": 0,
-      "description": "",
+      "total": 24,
+      "description": "2 <code>hasValue</code> × 3 <code>State</code> × 2 <code>hasLeadingIcon</code> × 2 <code>hasTrailingIcon</code> = <strong>24 versions</strong>, all built — a complete grid with no gaps.",
       "columns": [
-        "Source",
-        "Style",
-        "Leading",
-        "Trailing",
-        "Node ID"
+        "hasValue",
+        "State",
+        "hasLeadingIcon",
+        "hasTrailingIcon",
+        "Node"
       ],
       "rows": [
         {
           "cells": [
-            "Filter",
-            "Filled (primary)",
-            "Avatar",
-            "Close",
-            "18336:22244"
+            "False",
+            "Pressed",
+            "True",
+            "True",
+            "5595:39597"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Filled (primary)",
-            "—",
-            "—",
-            "18336:22253"
+            "False",
+            "Pressed",
+            "True",
+            "False",
+            "5595:39607"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Light",
-            "Avatar",
-            "Close",
-            "18336:22257"
+            "False",
+            "Pressed",
+            "False",
+            "True",
+            "5595:39614"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Light",
-            "—",
-            "—",
-            "18336:22266"
+            "False",
+            "Pressed",
+            "False",
+            "False",
+            "5595:39621"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Outline",
-            "Avatar",
-            "Close",
-            "18336:22270"
+            "False",
+            "Disabled",
+            "True",
+            "True",
+            "5595:39625"
           ]
         },
         {
           "cells": [
-            "Filter",
-            "Outline",
-            "—",
-            "—",
-            "18336:22279"
+            "False",
+            "Disabled",
+            "True",
+            "False",
+            "5595:39635"
           ]
         },
         {
           "cells": [
-            "Filter w/ Dropdown",
-            "Light",
-            "—",
-            "Chevron",
-            "18336:22292"
+            "False",
+            "Disabled",
+            "False",
+            "True",
+            "5595:39642"
           ]
         },
         {
           "cells": [
-            "Filter w/ Dropdown",
-            "Light (w/ selected value)",
-            "—",
-            "Chevron",
-            "18336:22284"
+            "False",
+            "Disabled",
+            "False",
+            "False",
+            "5595:39649"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Default",
+            "True",
+            "True",
+            "5595:39653"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Default",
+            "True",
+            "False",
+            "5595:39663"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Default",
+            "False",
+            "True",
+            "5595:39670"
+          ]
+        },
+        {
+          "cells": [
+            "False",
+            "Default",
+            "False",
+            "False",
+            "5595:39677"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Pressed",
+            "True",
+            "True",
+            "5595:39681"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Pressed",
+            "True",
+            "False",
+            "5595:39693"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Pressed",
+            "False",
+            "True",
+            "5595:39702"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Pressed",
+            "False",
+            "False",
+            "5595:39711"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Disabled",
+            "True",
+            "True",
+            "5595:39717"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Disabled",
+            "True",
+            "False",
+            "5595:39729"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Disabled",
+            "False",
+            "True",
+            "5595:39738"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Disabled",
+            "False",
+            "False",
+            "5595:39747"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Default",
+            "True",
+            "True",
+            "5595:39753"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Default",
+            "True",
+            "False",
+            "5595:39765"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Default",
+            "False",
+            "True",
+            "5595:39774"
+          ]
+        },
+        {
+          "cells": [
+            "True",
+            "Default",
+            "False",
+            "False",
+            "5595:39783"
           ]
         }
       ],
       "summary": {
-        "columns": [],
-        "rows": []
+        "columns": [
+          "Source",
+          "Style",
+          "Leading",
+          "Trailing",
+          "Node ID"
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Filter",
+              "Filled (primary)",
+              "Avatar",
+              "Close",
+              "18336:22244"
+            ]
+          },
+          {
+            "cells": [
+              "Filter",
+              "Filled (primary)",
+              "—",
+              "—",
+              "18336:22253"
+            ]
+          },
+          {
+            "cells": [
+              "Filter",
+              "Light",
+              "Avatar",
+              "Close",
+              "18336:22257"
+            ]
+          },
+          {
+            "cells": [
+              "Filter",
+              "Light",
+              "—",
+              "—",
+              "18336:22266"
+            ]
+          },
+          {
+            "cells": [
+              "Filter",
+              "Outline",
+              "Avatar",
+              "Close",
+              "18336:22270"
+            ]
+          },
+          {
+            "cells": [
+              "Filter",
+              "Outline",
+              "—",
+              "—",
+              "18336:22279"
+            ]
+          },
+          {
+            "cells": [
+              "Filter w/ Dropdown",
+              "Light",
+              "—",
+              "Chevron",
+              "18336:22292"
+            ]
+          },
+          {
+            "cells": [
+              "Filter w/ Dropdown",
+              "Light (w/ selected value)",
+              "—",
+              "Chevron",
+              "18336:22284"
+            ]
+          }
+        ]
       },
-      "collapseLabel": ""
+      "collapseLabel": "View full hasValue × State × hasLeadingIcon × hasTrailingIcon breakdown (24 rows)"
     }
   },
   "changelog": [

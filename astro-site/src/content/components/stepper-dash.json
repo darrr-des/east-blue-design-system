@@ -3,7 +3,7 @@
   "meta": {
     "node": "18649:5223",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18649-5223",
-    "description": "A flat segmented progress indicator — a row of rounded dashes where filled dashes mark current and earlier steps.",
+    "description": "Dash Steppers show people their progress through a multi-step flow as a row of dashes.",
     "badges": [
       {
         "kind": "consolidate",

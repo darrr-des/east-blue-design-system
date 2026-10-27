@@ -3,7 +3,7 @@
   "meta": {
     "node": "26628:50765",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26628-50765",
-    "description": "A segmented control of 2, 3 or 4 segments, where the selected segment is filled brand-blue and the others carry a brand-blue outline.",
+    "description": "Segmented Control Toggles let people switch between two to four options.",
     "badges": [
       {
         "kind": "keep",

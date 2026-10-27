@@ -1,0 +1,476 @@
+---
+// Overview section: a live Figma embed of the component's node — read-only,
+// served by Figma. Layout follows the Working File frame 11622:24880.
+// File name, page name and last-edited time are read at build time from the
+// Figma REST API (FIGMA_ACCESS_TOKEN, read-only). Anything it cannot read is
+// left out, never guessed.
+interface Props {
+  figmaUrl: string;
+  name: string;
+  headingId: string;
+  description: string;
+  first?: boolean;
+}
+
+const { figmaUrl, name, headingId, description, first } = Astro.props;
+
+const match = figmaUrl.match(/figma\.com\/(design|file)\/([^/?]+)\/([^?]*)/);
+const fileKey = match?.[2];
+const nodeId = match ? new URL(figmaUrl).searchParams.get('node-id') : null;
+const urlFileName = match ? decodeURIComponent(match[3]).replace(/-+/g, ' ').trim() : '';
+
+type FigmaMeta = { fileName: string; pageName: string | null; lastModified: string | null };
+const cache: Map<string, Promise<any>> =
+  ((globalThis as any).__ebFigmaMeta ??= new Map());
+
+function cached<T>(k: string, load: () => Promise<T>): Promise<T> {
+  if (!cache.has(k)) cache.set(k, load());
+  return cache.get(k)!;
+}
+
+// The node's own last-updated date — when the component (set) was last
+// published to the library. Needs library_content:read on the token; one
+// request per file, shared by every component in it.
+async function readPublishedUpdate(key: string, node: string): Promise<string | null> {
+  const token = import.meta.env.FIGMA_ACCESS_TOKEN;
+  if (!token) return null;
+  const id = node.replace('-', ':');
+  for (const kind of ['component_sets', 'components']) {
+    const list = await cached(`${key}:${kind}`, async () => {
+      try {
+        const res = await fetch(`https://api.figma.com/v1/files/${key}/${kind}`, {
+          headers: { 'X-Figma-Token': token },
+          signal: AbortSignal.timeout(20000),
+        });
+        if (!res.ok) return [];
+        return (await res.json()).meta?.[kind] ?? [];
+      } catch {
+        return [];
+      }
+    });
+    const hit = list.find((c: any) => c.node_id === id);
+    if (hit?.updated_at) return hit.updated_at;
+  }
+  return null;
+}
+
+async function readFigmaMeta(key: string, node: string): Promise<FigmaMeta | null> {
+  const token = import.meta.env.FIGMA_ACCESS_TOKEN;
+  if (!token) return null;
+  try {
+    // ?ids + depth=2 returns every page, but only the page that holds the
+    // node carries children — that page is the badge.
+    const res = await fetch(
+      `https://api.figma.com/v1/files/${key}?ids=${encodeURIComponent(node.replace('-', ':'))}&depth=2`,
+      { headers: { 'X-Figma-Token': token }, signal: AbortSignal.timeout(20000) },
+    );
+    if (!res.ok) return null;
+    const j = await res.json();
+    const page = (j.document?.children ?? []).find((p: any) => p.children?.length);
+    return {
+      fileName: j.name,
+      pageName: page ? page.name.trim() : null,
+      // The component's own date, never the whole file's.
+      lastModified: await readPublishedUpdate(key, node),
+    };
+  } catch {
+    return null;
+  }
+}
+
+let meta: FigmaMeta | null = null;
+if (fileKey && nodeId) {
+  meta = await cached(`${fileKey}:${nodeId}`, () => readFigmaMeta(fileKey, nodeId));
+}
+const fileName = meta?.fileName ?? urlFileName;
+
+const embedSrc = fileKey
+  ? `https://embed.figma.com/design/${fileKey}?${new URLSearchParams({
+      ...(nodeId ? { 'node-id': nodeId } : {}),
+      'embed-host': 'eastblue',
+      'footer': 'false',
+      'page-selector': 'false',
+    })}`
+  : null;
+const helpId = `fp-help-${fileKey}-${nodeId}`;
+---
+{embedSrc && (
+  <>
+    <div class:list={['sub-heading', 'fp-heading', { 'fp-first': first }]} id={headingId}>Overview</div>
+    <p class="fp-desc">{description}</p>
+
+    <section class="fp-card" aria-label={`Figma preview of ${name}`}>
+      <header class="fp-head">
+        <span class="fp-title">
+          <svg class="fp-logo" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/>
+            <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/>
+            <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/>
+            <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/>
+            <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/>
+          </svg>
+          Figma Preview
+        </span>
+        <button class="fp-info" type="button" popovertarget={helpId} aria-label="Can't see the preview?">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.75"/>
+            <path d="M12 10.75v5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+            <circle cx="12" cy="7.6" r="1.1" fill="currentColor"/>
+          </svg>
+        </button>
+        <div class="fp-help" id={helpId} popover>
+          <p class="fp-help-title">Can't see the preview?</p>
+          <ol class="fp-help-steps">
+            <li><strong>Log in.</strong> Use the <em>Log in</em> button inside the preview, with the Figma account that has access to this file.</li>
+            <li><strong>Still asking you to log in?</strong> Your browser is blocking Figma's cookies on other sites. Allow them for this site, then reload:
+              <ul>
+                <li><strong>Chrome</strong>: click the eye icon in the address bar → <em>Allow third-party cookies</em>.</li>
+                <li><strong>Brave</strong>: click the lion (Shields) icon → turn off <em>Block cross-site cookies</em>.</li>
+                <li><strong>Safari</strong>: Settings → Privacy → untick <em>Prevent cross-site tracking</em>.</li>
+                <li><strong>Firefox</strong>: click the shield icon → turn off <em>Enhanced Tracking Protection</em> for this site.</li>
+              </ul>
+            </li>
+            <li><strong>See “Request access”?</strong> Your Figma account isn't on this file. Open the file from the link below the preview and request access from the file owner.</li>
+          </ol>
+        </div>
+      </header>
+
+      <div class="fp-canvas-wrap">
+        <div class="fp-canvas" data-fp-canvas>
+          <iframe src={embedSrc} title={`${name} — Figma embed`} loading="lazy" allowfullscreen></iframe>
+          <div class="fp-loading" aria-hidden="true">
+            <svg class="fp-loading-logo" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/>
+              <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/>
+              <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/>
+              <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/>
+              <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/>
+            </svg>
+            <span class="fp-loading-text">Loading Figma preview…</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="fp-foot">
+        <a class="fp-file-link" href={figmaUrl} target="_blank" rel="noopener" aria-label={`Open ${name} in Figma`}>
+          <span class="fp-file">{fileName}</span>
+          {meta?.pageName && <span class="fp-page">{meta.pageName}</span>}
+        </a>
+        {meta?.lastModified && (
+          <time class="fp-edited" datetime={meta.lastModified} data-fp-edited>Edited</time>
+        )}
+      </footer>
+    </section>
+  </>
+)}
+
+<script>
+  // "Edited N days ago" is worked out in the reader's browser, so a built
+  // page never goes stale.
+  function stampEdited() {
+    document.querySelectorAll<HTMLTimeElement>('[data-fp-edited]').forEach((el) => {
+      const then = new Date(el.dateTime);
+      if (isNaN(+then)) return;
+      const days = Math.floor((Date.now() - +then) / 86400000);
+      el.textContent = days <= 0 ? 'Edited today' : `Edited ${days} day${days === 1 ? '' : 's'} ago`;
+      el.title = `Last updated in the Figma library: ${then.toLocaleString()}`;
+    });
+  }
+  stampEdited();
+  document.addEventListener('astro:page-load', stampEdited);
+
+  // Loading panel: covers the canvas until Figma has drawn it. Figma's embed
+  // loads, restarts itself, then draws — the frame's load event comes before
+  // the drawing, so the panel waits for the frame to go quiet (no load and no
+  // message from Figma for QUIET ms) before fading out.
+  const QUIET = 2500;
+  const timers = new WeakMap<HTMLElement, number>();
+  const ready = (canvas: HTMLElement) => canvas.setAttribute('data-fp-ready', '');
+  const settle = (canvas: HTMLElement, wait = QUIET) => {
+    clearTimeout(timers.get(canvas));
+    timers.set(canvas, window.setTimeout(() => ready(canvas), wait));
+  };
+  function watchCanvas() {
+    document.querySelectorAll<HTMLElement>('[data-fp-canvas]:not([data-fp-ready])').forEach((canvas) => {
+      const frame = canvas.querySelector('iframe');
+      if (!frame || canvas.dataset.fpWatched) return;
+      canvas.dataset.fpWatched = '1';
+      frame.addEventListener('load', () => settle(canvas));
+      // Never leave the panel up for good if Figma is slow or blocked.
+      window.setTimeout(() => ready(canvas), 15000);
+    });
+  }
+  // Any message from Figma's frame means it is still busy; one that says the
+  // file has loaded lifts the panel straight away.
+  window.addEventListener('message', (e) => {
+    if (!/^https:\/\/([a-z]+\.)?figma\.com$/.test(e.origin)) return;
+    const canvas = [...document.querySelectorAll<HTMLElement>('[data-fp-canvas]')]
+      .find((c) => c.querySelector('iframe')?.contentWindow === e.source);
+    if (!canvas || canvas.hasAttribute('data-fp-ready')) return;
+    const type = typeof e.data === 'object' && e.data ? String(e.data.type ?? '') : String(e.data);
+    if (import.meta.env.DEV) console.debug('[fp] Figma message:', type || e.data);
+    settle(canvas, /INITIAL_LOAD|LOADED|NEW_STATE/i.test(type) ? 300 : QUIET);
+  });
+  watchCanvas();
+  document.addEventListener('astro:page-load', watchCanvas);
+
+  // Place the help popover under its (i) button; close it when the page scrolls.
+  document.addEventListener('toggle', (e) => {
+    const pop = e.target as HTMLElement;
+    if (!pop.classList?.contains('fp-help') || !pop.matches(':popover-open')) return;
+    const btn = document.querySelector<HTMLElement>(`[popovertarget="${pop.id}"]`);
+    if (!btn) return;
+    const r = btn.getBoundingClientRect();
+    const left = Math.max(16, Math.min(r.right - pop.offsetWidth, window.innerWidth - pop.offsetWidth - 16));
+    pop.style.top = `${r.bottom + 8}px`;
+    pop.style.left = `${left}px`;
+  }, true);
+  window.addEventListener('scroll', () => {
+    document.querySelectorAll<HTMLElement>('.fp-help:popover-open').forEach((p) => p.hidePopover());
+  }, { passive: true });
+</script>
+
+<style>
+  /* Values from Working File frame 11622:24880. */
+  .fp-heading,
+  .fp-desc,
+  .fp-card {
+    --fp-title-fg: #0A2757;    /* text/color-text */
+    --fp-file-fg: #445C85;     /* text/color-text-weak */
+    --fp-edited-fg: #90A8D0;   /* text/color-text-weakest */
+    --fp-badge-bg: #E5F1FF;    /* bg/color-bg-info-weakest */
+    --fp-badge-fg: #005CE5;    /* text/color-text-primary */
+    --fp-canvas-bg: #EAEBEE;
+    --fp-card-bg: #F9F9F9;
+  }
+  :global([data-theme="dark"]) .fp-card {
+    --fp-title-fg: var(--text);
+    --fp-file-fg: var(--muted);
+    --fp-edited-fg: var(--muted);
+    --fp-badge-bg: var(--accent-light);
+    --fp-badge-fg: var(--accent);
+    --fp-canvas-bg: var(--thead-bg);
+    --fp-card-bg: var(--surface);
+  }
+
+  .fp-heading {
+    font-family: 'HeyMeow Rnd', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 51.2px;
+    letter-spacing: -0.32px;
+    margin-bottom: 0;
+  }
+  .fp-heading.fp-first { margin-top: 0; }
+  .fp-desc {
+    margin: 0 0 11px;
+    font-family: 'BarkAda', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 26.4px;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .fp-card {
+    background: var(--fp-card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+
+  .fp-head,
+  .fp-foot {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0 12px;
+  }
+  .fp-head { justify-content: space-between; }
+  .fp-logo { flex: none; }
+  .fp-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Proxima Soft', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: 0.25px;
+    color: var(--fp-title-fg);
+  }
+  .fp-info {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    color: var(--fp-file-fg);
+    cursor: pointer;
+  }
+  .fp-info:hover,
+  .fp-info:focus-visible { color: var(--fp-badge-fg); background: var(--fp-badge-bg); }
+
+  .fp-canvas-wrap { padding: 0 12px; }
+  .fp-canvas {
+    position: relative;
+    height: 508px;
+    background: var(--fp-canvas-bg);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  /* 1px bleed on every side so the canvas colour never shows as a hairline
+     between Figma's own grey and the rounded edge. */
+  .fp-canvas iframe {
+    position: absolute;
+    inset: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    border: 0;
+  }
+  .fp-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--fp-canvas-bg);
+    color: var(--fp-edited-fg);
+    transition: opacity 0.3s ease, visibility 0.3s;
+  }
+  .fp-loading::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+    background-size: 200% 100%;
+    animation: fp-shimmer 1.6s ease-in-out infinite;
+  }
+  :global([data-theme="dark"]) .fp-loading::before {
+    background-image: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.06) 50%, transparent 70%);
+  }
+  .fp-loading-logo {
+    color: #000000;
+    animation: fp-pulse 1.6s ease-in-out infinite;
+  }
+  :global([data-theme="dark"]) .fp-loading-logo { color: #FFFFFF; }
+  .fp-loading-text {
+    font-family: 'Proxima Soft', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0.25px;
+    color: var(--fp-file-fg);
+  }
+  [data-fp-ready] .fp-loading {
+    opacity: 0;
+    visibility: hidden;
+  }
+  @keyframes fp-shimmer {
+    from { background-position: 150% 0; }
+    to { background-position: -50% 0; }
+  }
+  @keyframes fp-pulse {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fp-loading::before,
+    .fp-loading-logo { animation: none; }
+  }
+
+  .fp-foot {
+    justify-content: space-between;
+    gap: 16px;
+    padding-right: 15px;
+  }
+  .fp-file-link {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    color: var(--fp-title-fg);
+    text-decoration: none;
+  }
+  .fp-file {
+    font-family: 'Proxima Soft', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0.25px;
+    color: var(--fp-file-fg);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .fp-page {
+    flex: none;
+    margin-left: 16px;
+    padding: 6px;
+    border-radius: 6px;
+    background: var(--fp-badge-bg);
+    font-family: 'Proxima Soft', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0.25px;
+    color: var(--fp-badge-fg);
+    white-space: nowrap;
+  }
+  .fp-file-link:hover { text-decoration: none; }
+  .fp-file-link:focus-visible { outline: 2px solid var(--fp-badge-fg); outline-offset: 4px; border-radius: 6px; }
+  .fp-edited {
+    flex: none;
+    font-family: 'BarkAda', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 15px;
+    color: var(--fp-edited-fg);
+    white-space: nowrap;
+    cursor: default;
+  }
+
+  .fp-help {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    width: min(340px, calc(100vw - 32px));
+    padding: 16px;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+    font-size: var(--text-md);
+    line-height: 1.5;
+  }
+  .fp-help-title {
+    margin: 0 0 8px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+  .fp-help-steps {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 8px;
+  }
+  .fp-help-steps ul {
+    margin: 6px 0 0;
+    padding-left: 16px;
+    display: grid;
+    gap: 4px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .fp-canvas { height: 420px; }
+    .fp-edited { display: none; }
+  }
+</style>

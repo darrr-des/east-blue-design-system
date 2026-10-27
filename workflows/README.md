@@ -190,7 +190,23 @@ npm run lint       # preview structure + colors-table coverage
 npm run audit      # every component against every guide rule
 npm run check      # build + structural gate + lint — what CI runs on every pull request
 npm run dev        # → http://localhost:4321
+npm run report     # rebuild the two status pages' data (below)
 ```
+
+## The two status pages
+
+Two pages for the team are generated from the repo, never edited by hand:
+
+| Page | Data | Built by |
+|---|---|---|
+| [Component Reusability Report](https://claude.ai/artifact/5FG3J1VdXz47XVw8LfVGBW) | `.reports/component-status.csv` | `npm run report:status` — every component's JSON, the Figma Component Reusability Checklists (read-only), and a comparison with `main` |
+| [East Blue Workflow Tree](https://claude.ai/artifact/1SkDqw4rgLVR8UMfUAsYQP) | `.reports/workflow-tree.json` | `npm run report:tree` — the guides, npm scripts, `scripts/` and `.github/workflows` |
+
+**Refresh both after every commit or merge on the working branch:** run `npm run report`, then republish — upload the CSV to the report and point its `components` dataset at it, and publish `scripts/report/tree-page.html` to the tree with `workflow-tree.json` beside it. The page sources live in `scripts/report/`.
+
+- **For Pull Request** lists components whose assessment (node, verdict, badges, traits, open issues, C1–C6) differs from `main`. Work held outside the branch — a colleague re-validating a component — goes in `scripts/report/overrides.json` with a note; remove the entry once that work is merged.
+- **Re-checking** lists the checklist rows tagged For Re-Checking or Re-Checking in Figma.
+- A tree entry is described by `scripts/report/tree-notes.json`; a new file with no note is described from its own first line, and the script names it so a note can be added.
 
 ---
 

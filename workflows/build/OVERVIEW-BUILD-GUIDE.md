@@ -9,7 +9,7 @@
 | 1 · Intake | AI asks | Component name + Figma link + channel |
 | 2 · Read | AI | Reads the live component and, if one exists, the data file. Reports what it found. Nothing written yet. |
 | 3 · Write | AI | Writes the Overview tab to the rules in this file |
-| 4 · Validate | Reviewer types `Validate` | AI runs the 8 checks in [OVERVIEW-REVIEW-GUIDE.md](../review/OVERVIEW-REVIEW-GUIDE.md) |
+| 4 · Validate | Reviewer types `Validate` | AI runs the 9 checks in [OVERVIEW-REVIEW-GUIDE.md](../review/OVERVIEW-REVIEW-GUIDE.md) |
 
 Related: [Playground](PLAYGROUND-BUILD-GUIDE.md) · [Code](CODE-BUILD-GUIDE.md) · [Changelog](CHANGELOG-BUILD-GUIDE.md) · rechecking an existing Overview tab: `Component Review`. Shared setup, house rules and reading Figma: [workflows/README.md](../README.md). What traits, verdicts and C1–C6 mean: [eb-ds-assessment-guide.md](../../eb-ds-assessment-guide.md).
 
@@ -109,7 +109,26 @@ Write **only the Overview-tab content** of `<slug>.json`.
 | `overview.resolved` / `overview.appliedRecommendations` | Empty on a first build; they fill when a review moves items in |
 | `overview.behavior` | **Required** when the component is interactive; **omitted** when it is display-only |
 | `meta.verdict` | The verdict box, per section 0 above |
-| `meta.node` · `meta.figmaUrl` · `meta.description` | Point at the component set you read |
+| `meta.node` · `meta.figmaUrl` | Point at the component set you read |
+| `meta.description` | One sentence on what the component is for — see *Write the description* below |
+
+## Write the description
+
+`meta.description` shows in two places: the card on the components grid and the header of the component page. It answers one question — **what does this help people do?** — the way Material, Apple and Atlassian write theirs.
+
+**The formula:** **[Component, plural] [verb] people [task or outcome].** Keep the name even though the title sits above it — Material does the same, and the sentence must read on its own wherever it appears.
+
+| Rule | Do | Don't |
+|---|---|---|
+| Say the purpose, not the looks | "Alerts tell people about a status, warning or error that stays on screen." | "A persistent status surface with intent, title and description." |
+| One sentence, **15 words or fewer** | Add a second sentence only to tell it apart from a close sibling | Lists of versions, sizes, slots or counts — the page already shows them |
+| Start with the component name, plural | "Tooltips…", "Amount Text Fields…" | "Let people…" (no subject), "A …", "This component…", "Used to…", "…are used to…" |
+| Use an active verb | let · show · tell · give · help · guide · prompt · ask · introduce · dim | is · provides functionality · supports |
+| Say **people** | "let people choose…" | "users", "the user" |
+| Name a GCash flow only when it tells siblings apart | "Amount Text Fields let people enter a peso amount." | "…in Send Money, Cash-In and Pay Bills." on a component that isn't flow-specific |
+| No markup | Plain text | `<code>`, property names, node IDs |
+
+Every verdict gets the same formula — a `remove` or `consolidate` component is described by what it does; the verdict badge already flags its status.
 
 **Nothing on Code Connect.** C7 does not exist on the page. If a finding is about Code Connect, do not file it.
 
@@ -136,7 +155,7 @@ The build catches schema breakage; it does **not** catch stale prose — read th
 
 # Phase 4 — `Validate`
 
-The reviewer types `Validate`. The AI runs **the 8 checks in [OVERVIEW-REVIEW-GUIDE.md](../review/OVERVIEW-REVIEW-GUIDE.md)** and reports in that guide's format. No content is edited during validation.
+The reviewer types `Validate`. The AI runs **the 9 checks in [OVERVIEW-REVIEW-GUIDE.md](../review/OVERVIEW-REVIEW-GUIDE.md)** and reports in that guide's format. No content is edited during validation.
 
 ---
 

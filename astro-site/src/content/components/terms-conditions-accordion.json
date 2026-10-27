@@ -3,7 +3,7 @@
   "meta": {
     "node": "5119:5447",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=5119-5447",
-    "description": "A specialized accordion used inside voucher details to disclose terms and conditions.",
+    "description": "Terms & Conditions Accordions let people expand a voucher's terms and conditions.",
     "badges": [
       {
         "kind": "remove",

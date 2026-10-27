@@ -3,7 +3,7 @@
   "meta": {
     "node": "5879:41278",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5879-41278",
-    "description": "The general-purpose dialog — an optional illustration, a centred title and description, and one or two actions.",
+    "description": "Modals ask people to confirm or act on something before they continue.",
     "badges": [
       {
         "kind": "keep",
@@ -16,15 +16,15 @@
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Keep — the restructure the first assessment asked for has happened",
-      "text": "The April assessment flagged this component for carrying two unrelated things in one set: a general-purpose dialog and a transaction receipt. It recommended splitting them and extracting <code>EBTransactionReceipt</code>. That is exactly what the 2026 rebuild did — the receipt layouts are now <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a>, and what remains here is the dialog on its own. The <code>_space_*</code> spacer rectangles are gone, the hardcoded placeholder circle is a real <code>⤷ IconSlot</code>, and the mixed-casing enums are one clean <code>ActionOrientation</code>. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
+      "title": "Keep — the general-purpose dialog",
+      "text": "An optional <code>⤷ IconSlot</code>, <code>#title</code>, <code>#description</code> and a <code>⤷ ActionSlot</code> of <code>Button_New</code>, with <code>ActionOrientation</code> (Vertical, Horizontal), <code>hasIcon</code> and <code>hasDescription</code>. Every colour is bound."
     },
     "navGroup": "Modal",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "inContextHtml": "",
+    "inContextNote": "How the modal appears in real product screens — onboarding and error prompts with an illustration, a title, a message and stacked actions.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/modal-in-context.png\" alt=\"Modal on three GCash screens: Welcome to GCash Jr.! with a two-children illustration and the actions View requirements and Continue to verification; Welcome to GCash! with a waving-hand illustration and Verify now and Cancel; and Oops. something went wrong! with no illustration and Get help and Later\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"mdl-demo-preview\"><div class=\"eb-preview-mdl eb-preview-mdl--vertical\"><div class=\"eb-preview-mdl__content\"><div class=\"eb-preview-mdl__icon\"><span>Icon</span></div><div class=\"eb-preview-mdl__title\">Put the title here</div><div class=\"eb-preview-mdl__description\">Add description here.<br>Add description here.</div></div><div class=\"eb-preview-mdl__actions\"><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--filled\">Label</div><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--outlined\">Label</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">ActionOrientation</span><select id=\"mdl-ctrl-actions\" class=\"demo-panel-select\" onchange=\"_mdlUpdate()\"><option value=\"vertical\" selected=\"\">Vertical</option><option value=\"horizontal\">Horizontal</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasIcon</span><select id=\"mdl-ctrl-hasicon\" class=\"demo-panel-select\" onchange=\"_mdlUpdate()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#title</span><input type=\"text\" id=\"mdl-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"Put the title here\" oninput=\"_mdlUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#description</span><input type=\"text\" id=\"mdl-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Add description here. Add description here.\" oninput=\"_mdlUpdate()\"></div></div></div></div>",
@@ -815,7 +815,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -834,7 +835,7 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>modal<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. The artifact is the Modal family: this component, <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a> and <a href=\"/components/modal-transaction-receipt-entry\">its Entry</a> all ship in <code>com.eastblue.ds:modal</code> and import <code>com.eastblue.ds.modal.*</code>."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "Five properties, in the order the Figma property panel lists them. <code>title</code> and <code>description</code> have no rows because <code>#title</code> and <code>#description</code> are text layers rather than component properties — a designer sets them by overriding the layer. Each boolean keeps its own parameter beside the slot it gates rather than the slot being inferred from a nil, so every Figma property traces 1:1 for Code Connect. <code>actionOrientation</code> is a parameter in both languages rather than a SwiftUI modifier: it changes the layout of the action area, not the component’s appearance.",
@@ -874,12 +875,12 @@
       {
         "subheading": "Vertical — two full-width actions stacked",
         "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Delete this recipient?\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"You can add them again at any time.\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.vertical</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Delete this recipient?\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"You can add them again at any time.\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Vertical</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Delete this recipient?\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"You can add them again at any time.\"</span>,\n    <span class=\"syn-param\">actionOrientation</span> = <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-dot\">.Vertical</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Horizontal — two short actions side by side",
         "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Delete this recipient?\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"You can add them again at any time.\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.horizontal</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Delete this recipient?\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"You can add them again at any time.\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Horizontal</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Delete this recipient?\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"You can add them again at any time.\"</span>,\n    <span class=\"syn-param\">actionOrientation</span> = <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-dot\">.Horizontal</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [

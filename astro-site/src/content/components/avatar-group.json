@@ -3,7 +3,7 @@
   "meta": {
     "node": "18276:4554",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18276-4554",
-    "description": "Stacked or overlapping avatars used to show participant lists — conversation members, shared documents, collaboration indicators.",
+    "description": "Avatar Groups show people who is part of a conversation, document or activity.",
     "badges": [
       {
         "kind": "keep",

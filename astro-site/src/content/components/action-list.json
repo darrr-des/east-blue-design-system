@@ -3,7 +3,7 @@
   "meta": {
     "node": "4628:19843",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4628-19843",
-    "description": "A tappable list row with a leading asset slot, label and description, and a trailing chevron with optional counter. Merges the former Action List, Action List with Counter and Action List with Description.",
+    "description": "Action Rows let people open a related screen or task from a list.",
     "badges": [
       {
         "kind": "keep",
@@ -17,14 +17,14 @@
     "verdict": {
       "kind": "keep",
       "title": "Keep — all findings resolved",
-      "text": "Rebuilt on node <code>4628:19843</code> in the 2026 Working File and renamed <strong>Action Row</strong>, merging the three former Action List siblings into <code>TrailingContent</code> (2) × <code>State</code> (4) × <code>Density</code> (2) = 16 variants, plus a <code>hasDescription</code> boolean. Interaction states now exist where there were none, the leading asset and counter are real Figma Slots, and layer and property naming matches the conventions the rest of the family settled on. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+      "text": "TrailingContent CTA, Counter × State × Density gives 16 variants, with six booleans, two text properties and three slots. Closing C1 takes one structure for the Loading variants; C3 one Description colour across both trailing types."
     },
     "navGroup": "Action List",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Action-list rows stack inside Settings / Profile / Help menus. A typical screen mixes variants with/without description and with/without trailing counter.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"120\" viewBox=\"0 0 200 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"108\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"20\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"34\" y=\"16\" width=\"132\" height=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"100\" y=\"19\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Settings</text>\n          \n          <circle cx=\"44\" cy=\"38\" r=\"3\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"50\" y=\"35\" width=\"40\" height=\"5\" rx=\"1\" fill=\"#0A2757\"></rect>\n          <text x=\"146\" y=\"40\" fill=\"#005CE5\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">View</text>\n          <path d=\"M158 37l2 2-2 2\" stroke=\"#005CE5\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path>\n          \n          <circle cx=\"44\" cy=\"54\" r=\"3\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"50\" y=\"51\" width=\"52\" height=\"5\" rx=\"1\" fill=\"#005CE5\" opacity=\".9\"></rect>\n          <rect x=\"146\" y=\"50\" width=\"10\" height=\"7\" rx=\"3.5\" fill=\"#EEF2F9\"></rect>\n          <text x=\"151\" y=\"56\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"4.5\" font-weight=\"700\" font-family=\"system-ui\">3</text>\n          \n          <circle cx=\"44\" cy=\"70\" r=\"3\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"50\" y=\"67\" width=\"36\" height=\"5\" rx=\"1\" fill=\"#0A2757\"></rect>\n          <rect x=\"50\" y=\"74\" width=\"60\" height=\"3\" rx=\"1\" fill=\"#6780A9\"></rect>\n          <path d=\"M158 69l2 2-2 2\" stroke=\"#0A2757\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path>\n          \n          <rect x=\"40\" y=\"90\" width=\"8\" height=\"8\" rx=\"4\" fill=\"#EEF2F9\"></rect>\n          <rect x=\"52\" y=\"91\" width=\"80\" height=\"5\" rx=\"1\" fill=\"#EEF2F9\"></rect>\n          <rect x=\"146\" y=\"91\" width=\"14\" height=\"5\" rx=\"1\" fill=\"#EEF2F9\"></rect>\n        </svg>\n      </div>",
+    "inContextNote": "How the Action Row appears in a real product screen — stacked settings rows on Data and Personalization and on a card screen, with toggles, a badge and chevrons.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/action-list-in-context.png\" alt=\"Action Row stacked on two GCash screens: Data Processing, Profiling &amp; Analytics and Promos &amp; Rewards with illustrations, descriptions and toggles; and Lock Card, Set PIN with an Update PIN badge, and Deactivate Card with chevrons\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"arow-demo-preview\"><div class=\"eb-preview eb-preview-arow eb-preview-arow--cta eb-preview-arow--compact\"><span class=\"eb-preview-arow__asset\" aria-hidden=\"true\"></span><div class=\"eb-preview-arow__text\"><p class=\"eb-preview-arow__label\">Label</p><p class=\"eb-preview-arow__description\">description</p></div><div class=\"eb-preview-arow__trailing\"><span class=\"eb-preview-arow__cta\">CTA</span><svg class=\"eb-preview-arow__chevron\" viewBox=\"0 0 32 32\" fill=\"none\" aria-hidden=\"true\"><path d=\"M13 23L20 16L13 9\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">TrailingContent</span><select id=\"arow-ctrl-trailing\" class=\"demo-panel-select\" onchange=\"_arowUpdate()\"><option value=\"cta\" selected=\"\">CTA</option><option value=\"counter\">Counter</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"arow-ctrl-state\" class=\"demo-panel-select\" onchange=\"_arowUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option><option value=\"loading\">Loading</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select id=\"arow-ctrl-density\" class=\"demo-panel-select\" onchange=\"_arowUpdate()\"><option value=\"compact\" selected=\"\">Compact</option><option value=\"expanded\">Expanded</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select id=\"arow-ctrl-hasdescription\" class=\"demo-panel-select\" onchange=\"_arowUpdate()\"><option value=\"true\" selected=\"\">True</option><option value=\"false\">False</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Label</span><input type=\"text\" id=\"arow-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_arowUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><input type=\"text\" id=\"arow-ctrl-description\" class=\"demo-panel-select demo-panel-input\" value=\"description\" oninput=\"_arowUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">CTA label</span><input type=\"text\" id=\"arow-ctrl-cta\" class=\"demo-panel-select demo-panel-input\" value=\"CTA\" oninput=\"_arowUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Count</span><input type=\"text\" id=\"arow-ctrl-count\" class=\"demo-panel-select demo-panel-input\" value=\"0\" oninput=\"_arowUpdate()\"></div></div></div></div>",
@@ -162,7 +162,7 @@
       },
       {
         "headline": "Skeleton loader retained as authored.",
-        "body": "v2.3: Closed by owner decision — the Loading variants keep their skeleton geometry as built, including the repeated <code>trailing icon</code> and <code>line</code> rectangle names. These are internal placeholder shapes with no property surface and no override target, so their names never reach a consumer or a Code Connect mapping — the same reasoning applied to View Only Field's wrapper frames. (C1)",
+        "body": "v2.3: Closed by owner decision — the Loading variants keep their skeleton geometry as built, including the repeated <code>trailing icon</code> and <code>line</code> rectangle names. These are internal placeholder shapes with no property surface and no override target, so their names never reach a consumer or a generated native mapping — the same reasoning applied to View Only Field's wrapper frames. (C1)",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
@@ -1263,7 +1263,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1323,7 +1324,7 @@
           "compose": "<code>EBActionRowTrailing.Counter(0)</code>"
         },
         {
-          "figma": "Label (text)",
+          "figma": "Title (text)",
           "swift": "<code>EBActionRow(\"Label\", …)</code>",
           "compose": "<code>label = \"…\"</code>"
         },
@@ -1342,12 +1343,12 @@
       {
         "subheading": "CTA",
         "swift": "<code><span class=\"syn-type\">EBActionRow</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"description\"</span>)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"placeholder\"</span>))\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.cta</span>(<span class=\"syn-str\">\"CTA\"</span>))\n    .<span class=\"syn-fn\">ebDensity</span>(<span class=\"syn-dot\">.compact</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBActionRow</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"description\"</span>,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowTrailing</span>.Cta(<span class=\"syn-str\">\"CTA\"</span>),\n    <span class=\"syn-param\">density</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowDensity</span>.Compact\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBActionRow</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"description\"</span>,\n    <span class=\"syn-param\">leadingAsset</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>…<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBActionRowTrailing</span>.<span class=\"syn-fn\">Cta</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"CTA\"</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">density</span> = <span class=\"syn-type\">EBActionRowDensity</span><span class=\"syn-dot\">.Compact</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Counter",
         "swift": "<code><span class=\"syn-type\">EBActionRow</span>(<span class=\"syn-str\">\"Label\"</span>, <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"description\"</span>)\n    .<span class=\"syn-fn\">ebLeadingAsset</span>(<span class=\"syn-type\">Image</span>(<span class=\"syn-str\">\"placeholder\"</span>))\n    .<span class=\"syn-fn\">ebTrailing</span>(<span class=\"syn-dot\">.counter</span>(0))\n    .<span class=\"syn-fn\">ebDensity</span>(<span class=\"syn-dot\">.compact</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBActionRow</span>(\n    <span class=\"syn-param\">label</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">description</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"description\"</span>,\n    <span class=\"syn-param\">leadingAsset</span> <span class=\"syn-eq\">=</span> { <span class=\"syn-type\">Icon</span>(…) },\n    <span class=\"syn-param\">trailing</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowTrailing</span>.Counter(0),\n    <span class=\"syn-param\">density</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionRowDensity</span>.Compact\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBActionRow</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">label</span> = <span class=\"syn-str\">\"Label\"</span>,\n    <span class=\"syn-param\">description</span> = <span class=\"syn-str\">\"description\"</span>,\n    <span class=\"syn-param\">leadingAsset</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>…<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">trailing</span> = <span class=\"syn-type\">EBActionRowTrailing</span>.<span class=\"syn-fn\">Counter</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">0</span><span class=\"syn-punc\">)</span>,\n    <span class=\"syn-param\">density</span> = <span class=\"syn-type\">EBActionRowDensity</span><span class=\"syn-dot\">.Compact</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [

@@ -61,12 +61,23 @@ function _stpUpdate() {
   var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
   var preview = document.getElementById('stp-demo-preview');
   if (!preview) return;
+  var type = getVal('stp-ctrl-type', 'bullet');
   preview.innerHTML = _stpRender({
-    type:    getVal('stp-ctrl-type', 'bullet'),
+    type:    type,
     steps:   getVal('stp-ctrl-steps', '3'),
     current: getVal('stp-ctrl-current', '1'),
     status:  getVal('stp-ctrl-status', 'current')
   });
+  /* hasLabel (Circular only): label-container is a 68 × 16 row at y 45, padding 2 0, holding
+     #label "Step 1 of 10" — Primary/Label/Fine 12/12 +0.5, text/color-text-weakest. It sits
+     below the 45 × 45 component, outside its bounds, exactly as Figma places it; the copy is
+     the same fixed string in every Circular variant. */
+  var lab = document.getElementById('stp-ctrl-haslabel'), row = document.getElementById('stp-ctrl-haslabel-row');
+  if (row) row.style.display = type === 'circular' ? '' : 'none';
+  if (type === 'circular' && lab && lab.checked) {
+    preview.innerHTML = '<div style="position:relative;display:inline-block;line-height:0">' + preview.innerHTML + '<span style="position:absolute;left:0;top:45px;width:68px;height:16px;padding:2px 0;box-sizing:border-box;display:flex;align-items:center;' +
+      'font-family:\'Proxima Soft\',system-ui;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;color:#90A8D0;white-space:nowrap;">Step 1 of 10</span></div>';
+  }
 }
 window._stpUpdate = _stpUpdate;
 

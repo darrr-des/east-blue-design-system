@@ -3,7 +3,7 @@
   "meta": {
     "node": "4915:25141",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4915-25141",
-    "description": "A transient bottom-anchored message for confirmations and inline alerts, with optional leading icon, description and trailing action. Auto-dismisses after a short delay.",
+    "description": "Toasts briefly tell people an action happened, then disappear on their own.",
     "badges": [
       {
         "kind": "keep",
@@ -16,15 +16,15 @@
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Keep — documentation gaps only",
-      "text": "Rebuilt on node <code>4915:25141</code> in the 2026 Working File as <code>Appearance</code> × <code>Theme</code> × <code>Size</code> × three <code>has*</code> booleans, authored as a sparse 22-variant set. The family restructure is complete: Toast and Toast - With Button are merged, the overloaded <code>theme</code> axis is split, every variant value follows §5, layer naming is clean, and the description and trailing action are real Figma Slots composing shared components. All four DS Health traits pass. What remains is documentation — the dismiss and auto-duration contract, the native primitive mapping, and the a11y live-region behaviour."
+      "title": "Keep — one icon-library item left",
+      "text": "<code>Appearance</code> × <code>Theme</code> × <code>Size</code> with three True/False settings in 22 variants; the description and action are slots. Left: the library icons carry a <code>shape_full</code> boolean shape, fixed in the icon library."
     },
     "navGroup": "Toast",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Toasts float over the app screen — not inline with content. Success toasts confirm completed actions (\"Transfer sent\"), pending toasts acknowledge background work (\"Uploading…\"), and error toasts surface failures that don't block the flow. They auto-dismiss after ~3 seconds unless swiped.",
-    "inContextHtml": "",
+    "inContextNote": "How the toast appears in a real product screen — “Scheduled transfer has been removed” over the scheduled-transfer form, as a dark Default toast and as a Destructive one.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/toast-in-context.png\" alt=\"Toast shown twice on a GCash scheduled-transfer screen: a dark navy toast with a check icon and a red toast with an x icon, both reading Scheduled transfer has been removed, above the Add New Schedule link\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"toast-demo-preview\"><div class=\"eb-preview eb-preview-tst eb-preview-tst--default eb-preview-tst--dark eb-preview-tst--md\"><svg class=\"eb-preview-tst__icon\" viewBox=\"0 7 24 24\" aria-hidden=\"true\"><path d=\"M12.002 10.0996C16.9171 10.0998 20.9023 14.0848 20.9023 19C20.9021 23.915 16.917 27.9002 12.002 27.9004C7.08675 27.9004 3.10177 23.9152 3.10156 19C3.10156 14.0847 7.08662 10.0996 12.002 10.0996ZM12.002 11.9004C8.08073 11.9004 4.90234 15.0788 4.90234 19C4.90255 22.921 8.08086 26.0996 12.002 26.0996C15.9229 26.0994 19.1014 22.9209 19.1016 19C19.1016 15.0789 15.923 11.9006 12.002 11.9004ZM15.4004 16.3301C15.7703 15.9982 16.3399 16.0287 16.6719 16.3984C17.0034 16.7683 16.9731 17.338 16.6035 17.6699L11.0312 22.6699C10.6717 22.9923 10.1218 22.9731 9.78516 22.627L7.35645 20.127C7.01016 19.7704 7.01849 19.2008 7.375 18.8545C7.73153 18.5082 8.30114 18.5165 8.64746 18.873L10.4727 20.752L15.4004 16.3301Z\" fill=\"currentColor\"/></svg><div class=\"eb-preview-tst__text\"><p class=\"eb-preview-tst__title\">Add the popup message here</p></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Appearance</span><select id=\"toast-ctrl-appearance\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"destructive\">Destructive</option><option value=\"pending\">Pending</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Theme</span><select id=\"toast-ctrl-theme\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"dark\" selected=\"\">Dark</option><option value=\"light\">Light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select id=\"toast-ctrl-size\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"md\" selected=\"\">MD</option><option value=\"sm\">SM</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeadingIcon</span><select id=\"toast-ctrl-hasleadingicon\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"true\" selected=\"\">True</option><option value=\"false\">False</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailingAction</span><select id=\"toast-ctrl-hastrailingaction\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"false\" selected=\"\">False</option><option value=\"true\">True</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select id=\"toast-ctrl-hasdescription\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"false\" selected=\"\">False</option><option value=\"true\">True</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Title</span><input type=\"text\" id=\"toast-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"Add the popup message here\" oninput=\"_toastUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><input type=\"text\" id=\"toast-ctrl-description\" class=\"demo-panel-select demo-panel-input\" value=\"Add description here.\" oninput=\"_toastUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Action label</span><input type=\"text\" id=\"toast-ctrl-action\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_toastUpdate()\"></div></div></div></div>",
@@ -42,7 +42,7 @@
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "<code>Appearance</code> and <code>Theme</code> are separate axes, <code>Size</code> uses the standard <code>MD | SM</code> scale, the three <code>has*</code> booleans carry correct verb prefixes and are genuine Figma booleans, and every variant value is Title Cased per §5."
+        "note": "Appearance and Theme are separate settings, Size uses the standard MD | SM scale, the three has* settings carry verb prefixes with True / False values, and every value is Title Case per §5."
       },
       {
         "name": "Composable",
@@ -190,6 +190,14 @@
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Icon layers keep the icon component’s name.",
+        "body": "Closed by owner decision. In the SM variants the icon instance sits directly in ToastRow, so its layer is the icon component’s own name — <code>Close</code> on 4915:25181, <code>Checkmark (Circular)</code> on 4915:25192, <code>Information</code> on 4915:25200 and 4915:25205. Renaming it would break the link to the icon’s name; the MD variants wrap the same instance in a <code>LeadingIcon</code> frame. (C1)",
+        "tag": {
+          "criterion": "",
+          "label": ""
         }
       }
     ],
@@ -1736,7 +1744,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1815,17 +1824,17 @@
       {
         "subheading": "Default",
         "swift": "<code><span class=\"syn-type\">EBToast</span>(<span class=\"syn-str\">\"Add the popup message here\"</span>)\n    .<span class=\"syn-fn\">ebAppearance</span>(<span class=\"syn-dot\">.default</span>)\n    .<span class=\"syn-fn\">ebTheme</span>(<span class=\"syn-dot\">.dark</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.md</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBToast</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span>.Default,\n    <span class=\"syn-param\">theme</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastTheme</span>.Dark,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastSize</span>.MD\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Default</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Dark</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Destructive",
         "swift": "<code><span class=\"syn-type\">EBToast</span>(<span class=\"syn-str\">\"Add the popup message here\"</span>)\n    .<span class=\"syn-fn\">ebAppearance</span>(<span class=\"syn-dot\">.destructive</span>)\n    .<span class=\"syn-fn\">ebTheme</span>(<span class=\"syn-dot\">.dark</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.md</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBToast</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span>.Destructive,\n    <span class=\"syn-param\">theme</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastTheme</span>.Dark,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastSize</span>.MD\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Destructive</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Dark</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Pending",
         "swift": "<code><span class=\"syn-type\">EBToast</span>(<span class=\"syn-str\">\"Add the popup message here\"</span>)\n    .<span class=\"syn-fn\">ebAppearance</span>(<span class=\"syn-dot\">.pending</span>)\n    .<span class=\"syn-fn\">ebTheme</span>(<span class=\"syn-dot\">.dark</span>)\n    .<span class=\"syn-fn\">ebSize</span>(<span class=\"syn-dot\">.md</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBToast</span>(\n    <span class=\"syn-param\">title</span> <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span>.Pending,\n    <span class=\"syn-param\">theme</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastTheme</span>.Dark,\n    <span class=\"syn-param\">size</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastSize</span>.MD\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Add the popup message here\"</span>,\n    <span class=\"syn-param\">appearance</span> = <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-dot\">.Pending</span>,\n    <span class=\"syn-param\">theme</span> = <span class=\"syn-type\">EBToastTheme</span><span class=\"syn-dot\">.Dark</span>,\n    <span class=\"syn-param\">size</span> = <span class=\"syn-type\">EBToastSize</span><span class=\"syn-dot\">.MD</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -1877,9 +1886,9 @@
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "<code>ToastRow</code> › <code>LeadingIcon</code> / <code>TextContent</code> › <code>Title</code> on 4915:25142. Two variants slip: 4915:25240 names its title <code>#content</code> and 4915:25232 names it <code>LeadingIcon</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "ToastRow › LeadingIcon / TextContent › Title in every variant. The SM variants place the icon instance directly, so the layer carries the icon component’s own name (<code>Close</code>, <code>Checkmark (Circular)</code>, <code>Information</code>) — kept by owner decision."
       },
       {
         "id": "C2",
@@ -1914,7 +1923,7 @@
         "criterion": "Asset & Icon Quality",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "The Checkmark (Circular), Close and Information icons are icon-library instances that each carry a <code>shape_full</code> BOOLEAN_OPERATION — flatten them in the icon library."
+        "notes": "The <code>Close</code>, <code>Checkmark (Circular)</code>, <code>Information</code> and <code>Add_Full</code> icon-library instances each carry a <code>shape_full</code> BOOLEAN_OPERATION (<code>Information</code> also a <code>Union</code>) — flatten them in the icon library."
       }
     ],
     "variants": {
@@ -2230,6 +2239,43 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Figma fixes re-checked · node 4915:25141",
+      "rows": [
+        {
+          "body": "<strong>Title layers renamed.</strong> 4915:25232, 4915:25240 and 4915:25250 now name the title <code>Title</code>, like the other 19 variants.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Shadow and stroke made consistent.</strong> All 22 variants carry the <code>app/shadow/shadow</code> effect style (0 6 12, spread −8, #020E22 at 16%, variable-bound) and a 1px centre stroke; the double stroke on 4915:25240 is gone.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Icon layer names kept by owner decision.</strong> The SM variants’ icon layers carry the icon component’s own name.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Ready"
+          }
+        },
+        {
+          "body": "<strong>C6 note completed.</strong> <code>Add_Full</code> also carries a <code>shape_full</code> boolean shape, and <code>Information</code> a <code>Union</code>.",
+          "delta": {
+            "kind": "partial",
+            "label": "C6 Open"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.2",
       "date": "September 2026",

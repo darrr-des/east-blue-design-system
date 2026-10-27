@@ -3,7 +3,7 @@
   "meta": {
     "node": "7831:111593",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=7831-111593",
-    "description": "One slice of a countdown — a number and the unit it counts. Stacked for the boxed and bar layouts, inline for the pill.",
+    "description": "Countdown Units show people one part of a countdown, such as hours or minutes.",
     "badges": [
       {
         "kind": "keep",
@@ -17,14 +17,14 @@
     "verdict": {
       "kind": "keep",
       "title": "Keep — the piece every countdown is built from",
-      "text": "All four DS Health traits pass. <a href=\"/components/countdown\">Countdown</a> assembles four of these in all three of its layouts, so the number and its label are drawn one way everywhere. <code>Layout = Stacked | Inline</code> covers both arrangements the system needs: the number above its label in the boxed and bar styles, and the two side by side in the pill. Colour comes from whatever places it — see the note on that in Countdown."
+      "text": "<code>Layout</code> Stacked puts the number above its label, Inline sets them side by side. <code>Value</code> and <code>UnitLabel</code> are text properties, and <code>hasUnitLabel</code> hides the label in Stacked."
     },
     "navGroup": "Countdown",
     "navIconSvg": ""
   },
   "overview": {
-    "inContextNote": "Never used on its own. Four instances sit inside every Countdown, one per unit, and the layout that holds them decides whether they stack or run inline.",
-    "inContextHtml": "",
+    "inContextNote": "How the countdown unit appears in real product screens — each part of the Flash Deals pill, and each box under “Starts in” on the Promo Page, is one unit.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/countdown-unit-in-context.png\" alt=\"Countdown units shown on two GCash screens: the 00d, 00h, 00m and 00s parts of a blue pill under Flash Deals!, and four boxes reading 05 days, 37 hrs, 01 mins and 20 secs under Flash Deals! Starts in on the Promo Page\" >",
     "inContextImage": "",
     "inContextAlt": "",
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"cdu-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Layout</span><select id=\"cdu-ctrl-layout\" class=\"demo-panel-select\" onchange=\"_cduUpdate()\"><option value=\"stacked\" selected>Stacked</option><option value=\"inline\">Inline</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Value</span><input type=\"text\" id=\"cdu-ctrl-time\" class=\"demo-panel-select demo-panel-input\" value=\"00\" oninput=\"_cduUpdate()\" /></div><div class=\"demo-panel-row\" id=\"cdu-row-unit\"><span class=\"demo-panel-label\">UnitLabel</span><input type=\"text\" id=\"cdu-ctrl-unit\" class=\"demo-panel-select demo-panel-input\" value=\"days\" oninput=\"_cduUpdate()\" /></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasUnitLabel</span><select id=\"cdu-ctrl-hasunit\" class=\"demo-panel-select\" onchange=\"_cduUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div></div></div></div>",
@@ -591,7 +591,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -610,7 +611,7 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>countdown<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. The artifact is the Countdown family, not this component: Unit, Promo and Countdown itself all ship in <code>com.eastblue.ds:countdown</code> and import <code>com.eastblue.ds.countdown.*</code>. In practice a team places a Countdown rather than a Unit; this is the piece it renders."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "Four properties, in the order the Figma property panel lists them. One shape difference is deliberate and worth knowing: Figma exposes <code>UnitLabel</code> as free text because a designer has to type something to see it, but the native parameter is an enum the platform localises. The string in Figma is what that enum renders in English — passing a string through would put <code>days</code> in front of every user regardless of locale, which is what the Accessibility and Usage Guidelines sections both argue against.",
@@ -645,12 +646,12 @@
       {
         "subheading": "Stacked — the boxed and bar styles",
         "swift": "<span class=\"syn-type\">EBCountdownUnit</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> 0<span class=\"syn-punc\">,</span>\n    unit<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.days</span><span class=\"syn-punc\">,</span>\n    layout<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.stacked</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCountdownUnit</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> 0<span class=\"syn-punc\">,</span>\n    unit <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTimeUnit</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Days</span><span class=\"syn-punc\">,</span>\n    layout <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownUnitLayout</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Stacked</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBCountdownUnit</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = <span class=\"syn-val\">0</span>,\n    <span class=\"syn-param\">unit</span> = <span class=\"syn-type\">EBTimeUnit</span><span class=\"syn-dot\">.Days</span>,\n    <span class=\"syn-param\">layout</span> = <span class=\"syn-type\">EBCountdownUnitLayout</span><span class=\"syn-dot\">.Stacked</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Inline — the pill",
         "swift": "<span class=\"syn-type\">EBCountdownUnit</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> 0<span class=\"syn-punc\">,</span>\n    unit<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.days</span><span class=\"syn-punc\">,</span>\n    layout<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.inline</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCountdownUnit</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> 0<span class=\"syn-punc\">,</span>\n    unit <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTimeUnit</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Days</span><span class=\"syn-punc\">,</span>\n    layout <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCountdownUnitLayout</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Inline</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<code><span class=\"syn-type\">EBCountdownUnit</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">value</span> = <span class=\"syn-val\">0</span>,\n    <span class=\"syn-param\">unit</span> = <span class=\"syn-type\">EBTimeUnit</span><span class=\"syn-dot\">.Days</span>,\n    <span class=\"syn-param\">layout</span> = <span class=\"syn-type\">EBCountdownUnitLayout</span><span class=\"syn-dot\">.Inline</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
