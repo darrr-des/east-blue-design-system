@@ -1,166 +1,128 @@
-/* Empty State — Style tab demo.
- * Rebuilt from Figma component set 26356:13970 (Sticker Sheets v2).
- * Offsets and fills read off get_node_info; the slot placeholders from
- * get_svg; checked against export_node_as_image.
+/* Empty State — Overview live preview + DEV code.
+ * Rebuilt from Figma component set 26356:13970 (GCash DS Sticker Sheets v2).
+ * Every size, colour and font below is read off the set — nothing derived.
  *
- * Panel (set 26356:13970, from the property-panel screenshot):
- *   Style      · Default, Subtle   (variant)
- *   VisualType · Icon, Asset       (variant)
- *   hasButton  · True              (boolean)
- * Slots (no control): ⤷ VisualSlot (4 items) · ⤷ ActionSlot (4 items)
+ * Panel:
+ *   hasButton    ◉ boolean · true        (shows ⤷ ActionSlot)
+ *   Style        Default · Subtle
+ *   VisualType   Icon · Asset
+ *   ⤷ VisualSlot / ⤷ ActionSlot  slots — no control
  *
- * 2 x 2 = 4 variants, all built. The frame hugs its stack, which the
- * measured heights confirm exactly:
- *   Icon  — 48 + VisualSlot 64 + Header 97 + ActionSlot 50 + 48 = 307
- *   Asset — 24 + VisualSlot 230 + Header 97 + ActionSlot 50 + 24 = 425
- * so hasButton=False removes the 50px ActionSlot.
+ * Icon variants hug their content (padding 48 top/bottom). Asset variants are
+ * a fixed 425 tall (padding 24) and ⤷ VisualSlot is set to Fill, so hiding the
+ * action gives its 50px to the visual.
  */
 
 var ES_W = 360;
-var ES_BG = { 'default': '#FFFFFF', 'subtle': '#F6F9FD' };
-var ES_NODES = {
-  'default|icon': '26356:13971', 'subtle|icon': '26356:13979',
-  'default|asset': '26356:13987', 'subtle|asset': '26356:13995'
+var ES_HEADER_H = 97;   /* Header frame: padding 24, #heading 23 + gap 8 + #description 18 */
+var ES_ACTION_H = 50;   /* ⤷ ActionSlot: Button - Large/Medium, 312 × 50, padding 0 24 */
+var ES_COLOR = {
+  bgDefault:   '#FFFFFF',  /* bg/color-bg-main */
+  bgSubtle:    '#F6F9FD',  /* bg/color-bg */
+  heading:     '#0A2757',  /* text/color-text */
+  description: '#6780A9',  /* text/color-text-weaker */
+  button:      '#005CE5',  /* bg/color-bg-primary */
+  buttonLabel: '#FFFFFF',  /* text/color-text-inverse */
+  slot:        '#9F3DFB'   /* Slot Block placeholder */
 };
-var ES_SLOT = '#9F3DFB';
-var ES_ARROW = 'M29.4922 27.3926C31.6016 27.3926 32.6562 28.2422 32.6562 30.3691V33.1934L32.6152 34.418L33.4297 33.5039L34.7539 32.1738C34.8535 32.0742 34.9941 32.0098 35.1523 32.0098C35.457 32.0098 35.6855 32.2441 35.6855 32.5605C35.6855 32.7012 35.6328 32.8359 35.5156 32.959L32.5156 35.9707C32.4043 36.0879 32.252 36.1523 32.0996 36.1523C31.9473 36.1523 31.7949 36.0879 31.6836 35.9707L28.6836 32.959C28.5664 32.8359 28.5078 32.7012 28.5078 32.5605C28.5078 32.2441 28.7363 32.0098 29.0469 32.0098C29.1992 32.0098 29.3398 32.0742 29.4395 32.1738L30.7695 33.5039L31.584 34.4238L31.5371 33.1934L31.543 30.4395C31.5488 28.9629 30.9043 28.4941 29.4629 28.4941C29.2227 28.4941 29.0527 28.5117 28.8594 28.5117C28.5371 28.5117 28.3086 28.3066 28.3086 27.9785C28.3086 27.6445 28.5605 27.4805 28.8066 27.4395C29 27.4043 29.2285 27.3926 29.4922 27.3926Z';
 
-/* Stack geometry per VisualType. */
-var ES_GEO = {
-  icon:  { pad: 48, vx: 148, vw: 64,  vh: 64,  vr: 4 },
-  asset: { pad: 24, vx: 0,   vw: 360, vh: 230, vr: 0 }
-};
-var ES_HEADER_H = 97, ES_ACTION_H = 50;
+function _esBuildSvg(opts) {
+  var asset = opts.VisualType === 'Asset';
+  var btn = opts.hasButton !== false;
+  var pad = asset ? 24 : 48;
+  var visW = asset ? ES_W : 64;
+  var visH = asset ? 425 - pad * 2 - ES_HEADER_H - (btn ? ES_ACTION_H : 0) : 64;
+  var H = asset ? 425 : pad * 2 + visH + ES_HEADER_H + (btn ? ES_ACTION_H : 0);
+  var y = pad;
+  var s = '<svg width="' + ES_W + '" height="' + H + '" viewBox="0 0 ' + ES_W + ' ' + H +
+          '" xmlns="http://www.w3.org/2000/svg">';
+  s += '<rect width="' + ES_W + '" height="' + H + '" fill="' +
+       (opts.Style === 'Subtle' ? ES_COLOR.bgSubtle : ES_COLOR.bgDefault) + '"/>';
 
-function _esOn(v, def) { return v == null ? def : v === 'true'; }
-function _esHeight(c) {
-  var g = ES_GEO[c.visualtype] || ES_GEO.icon;
-  return g.pad + g.vh + ES_HEADER_H + (_esOn(c.hasbutton, true) ? ES_ACTION_H : 0) + g.pad;
-}
-
-function _esRender(c) {
-  c = c || {};
-  var style = c.style || 'default', type = c.visualtype || 'icon';
-  var g = ES_GEO[type], H = _esHeight(c), btn = _esOn(c.hasbutton, true);
-  var s = '<svg width="' + ES_W + '" height="' + H + '" viewBox="0 0 ' + ES_W + ' ' + H + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-  s += '<rect width="' + ES_W + '" height="' + H + '" fill="' + ES_BG[style] + '"/>';
-
-  /* ⤷ VisualSlot — ships a Slot Block placeholder: 9% fill, 4/4 dash. */
-  var vy = g.pad, rx = g.vr ? g.vr - 0.5 : 0;
-  s += '<rect x="' + (g.vx + 0.5) + '" y="' + (vy + 0.5) + '" width="' + (g.vw - 1) + '" height="' + (g.vh - 1) +
-       '" rx="' + rx + '" fill="' + ES_SLOT + '" fill-opacity="0.09"/>';
-  s += '<rect x="' + (g.vx + 0.5) + '" y="' + (vy + 0.5) + '" width="' + (g.vw - 1) + '" height="' + (g.vh - 1) +
-       '" rx="' + rx + '" stroke="' + ES_SLOT + '" stroke-dasharray="4 4"/>';
-  if (type === 'icon') {
-    s += '<g transform="translate(' + g.vx + ' ' + vy + ')"><path d="' + ES_ARROW + '" fill="' + ES_SLOT + '"/></g>';
+  /* ⤷ VisualSlot — Figma ships the Slot Block placeholder: 9% purple fill,
+     1px dashed (4 4) inside stroke. */
+  var vx = (ES_W - visW) / 2;
+  s += '<rect x="' + (vx + 0.5) + '" y="' + (y + 0.5) + '" width="' + (visW - 1) + '" height="' + (visH - 1) +
+       '" fill="' + ES_COLOR.slot + '" fill-opacity="0.09" stroke="' + ES_COLOR.slot + '" stroke-dasharray="4 4"/>';
+  if (asset) {
+    s += '<text x="' + (ES_W / 2) + '" y="' + (y + visH / 2 - 2) + '" text-anchor="middle" fill="' + ES_COLOR.slot +
+         '" font-size="14" font-weight="700" font-family="\'Proxima Soft\', system-ui">🖼 Insert Asset here ⤵</text>';
+    s += '<text x="' + (ES_W / 2) + '" y="' + (y + visH / 2 + 12) + '" text-anchor="middle" fill="' + ES_COLOR.slot +
+         '" font-size="8" font-weight="500" font-family="\'BarkAda\', system-ui">Remove this placeholder when you insert custom content.</text>';
   } else {
-    s += '<text class="es-slot" x="180" y="' + (vy + g.vh / 2 - 6) + '" font-size="12" font-weight="700" fill="' + ES_SLOT +
-         '" text-anchor="middle" dominant-baseline="central">Insert Asset here</text>';
-    s += '<text class="es-desc" x="180" y="' + (vy + g.vh / 2 + 10) + '" font-size="8" font-weight="500" fill="' + ES_SLOT +
-         '" fill-opacity="0.62" text-anchor="middle" dominant-baseline="central">Remove this placeholder when you insert custom content.</text>';
+    s += '<text x="' + (ES_W / 2) + '" y="' + (y + visH / 2) + '" text-anchor="middle" dominant-baseline="central" fill="' +
+         ES_COLOR.slot + '" font-size="12">⤵</text>';
   }
+  y += visH;
 
-  /* Header — 24px inset, heading 23 tall, 8px, description 18 tall */
-  var hy = vy + g.vh;
-  s += '<text class="es-heading" x="180" y="' + (hy + 24 + 11.5) + '" font-size="18" font-weight="700" fill="#0A2757"' +
-       ' text-anchor="middle" dominant-baseline="central">Header</text>';
-  s += '<text class="es-desc" x="180" y="' + (hy + 55 + 9) + '" font-size="12" font-weight="600" fill="#6780A9"' +
-       ' text-anchor="middle" dominant-baseline="central">Description goes here</text>';
+  /* Header — #heading Primary/Headlines/Block, #description Secondary/Bold/Caption */
+  s += '<text x="' + (ES_W / 2) + '" y="' + (y + 24 + 17) + '" text-anchor="middle" fill="' + ES_COLOR.heading +
+       '" font-size="18" font-weight="700" letter-spacing="0.25" font-family="\'Proxima Soft\', system-ui">Header</text>';
+  s += '<text x="' + (ES_W / 2) + '" y="' + (y + 55 + 13) + '" text-anchor="middle" fill="' + ES_COLOR.description +
+       '" font-size="12" font-weight="600" font-family="\'BarkAda\', system-ui">Description goes here</text>';
+  y += ES_HEADER_H;
 
-  /* ⤷ ActionSlot — Button - Large/Medium, 312 × 50 at x 24 */
+  /* ⤷ ActionSlot — Button - Large/Medium, radius 99, #label Primary/Label/Large */
   if (btn) {
-    var ay = hy + ES_HEADER_H;
-    s += '<rect x="24" y="' + ay + '" width="312" height="50" rx="25" fill="#005CE5"/>';
-    s += '<text class="es-heading" x="180" y="' + (ay + 25) + '" font-size="18" font-weight="700" fill="#FFFFFF"' +
-         ' text-anchor="middle" dominant-baseline="central">Label</text>';
+    s += '<rect x="24" y="' + y + '" width="312" height="50" rx="25" fill="' + ES_COLOR.button + '"/>';
+    s += '<text x="' + (ES_W / 2) + '" y="' + (y + 25) + '" text-anchor="middle" dominant-baseline="central" fill="' +
+         ES_COLOR.buttonLabel + '" font-size="18" font-weight="700" letter-spacing="0.25" font-family="\'Proxima Soft\', system-ui">Label</text>';
   }
   return s + '</svg>';
 }
 
-/* ── Per-card state — Figma's default variant ──────────────────────── */
-var _specCards = { main: { style: 'default', visualtype: 'icon', hasbutton: 'true' } };
-window._specCards = _specCards;
-function _esCap(v) { return v.charAt(0).toUpperCase() + v.slice(1); }
+/* ── Overview tab live preview ──────────────────────────────────────── */
+var _esDemo = { hasButton: true, Style: 'Default', VisualType: 'Icon' };
+window._esDemo = _esDemo;
 
-/* ── DEV code ───────────────────────────────────────────────────────── */
-function buildSwiftSnippet(cardKey, c) {
-  var l = ['EBEmptyState(', '    heading: "Header",', '    description: "Description goes here",',
-           '    style: .' + c.style, ')', '.ebVisual(.' + c.visualtype + ') { Image("empty") }'];
-  if (_esOn(c.hasbutton, true)) l.push('.ebAction("Label") { retry() }');
-  return l.join('\n');
-}
-function buildComposeSnippet(cardKey, c) {
-  var l = ['EBEmptyState(', '    heading = "Header",', '    description = "Description goes here",',
-           '    style = EBEmptyStateStyle.' + _esCap(c.style) + ',',
-           '    visualType = EBEmptyStateVisual.' + _esCap(c.visualtype) + ',',
-           '    visual = { Image(painterResource(R.drawable.empty), null) },'];
-  if (_esOn(c.hasbutton, true)) { l.push('    actionLabel = "Label",'); l.push('    onAction = { retry() },'); }
-  l[l.length - 1] = l[l.length - 1].replace(/,$/, '');
-  l.push(')');
-  return l.join('\n');
-}
-function getSnippet(cardKey, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
-}
-window.getSnippet = getSnippet;
-
-/* ── Control handler ────────────────────────────────────────────────── */
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
-  if (!card) return;
-  card[prop] = value;
-
-  var host = document.getElementById('empty-state-spec-' + cardStyle);
-  if (host) host.innerHTML = _esRender(card);
-
-  ['style', 'visualtype', 'hasbutton'].forEach(function (a) {
-    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
-    if (el) el.textContent = a === 'hasbutton' ? (card[a] === 'true' ? 'True' : 'False') : _esCap(card[a]);
-  });
-  var size = ES_W + ' × ' + _esHeight(card);
-  var sizeEl = document.querySelector('[data-sp="' + cardStyle + '-size-readout"]');
-  if (sizeEl) sizeEl.textContent = size;
-  var nodeEl = document.querySelector('[data-sp="' + cardStyle + '-variantNode"]');
-  if (nodeEl) nodeEl.textContent = ES_NODES[card.style + '|' + card.visualtype] + ' · ' + size;
-
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
-}
-window.updateSpecCard = updateSpecCard;
-
-/* ── Overview tab shim — the old panel had colour / icon / asset / button. */
 function updateEmptyStateDemo() {
+  var b = document.getElementById('es-demo-button');
+  var st = document.getElementById('es-demo-style');
+  var vt = document.getElementById('es-demo-visual');
+  if (b) _esDemo.hasButton = b.checked;
+  if (st) _esDemo.Style = st.value;
+  if (vt) _esDemo.VisualType = vt.value;
   var el = document.getElementById('es-demo-preview');
-  if (!el) return;
-  var v = function (id) { var n = document.getElementById(id); return n ? n.value : null; };
-  var colour = v('es-demo-color');
-  el.innerHTML = _esRender({
-    style: colour && /grey|subtle/i.test(colour) ? 'subtle' : 'default',
-    visualtype: v('es-demo-asset') === 'yes' ? 'asset' : 'icon',
-    hasbutton: v('es-demo-button') === 'no' ? 'false' : 'true'
-  });
+  if (el) el.innerHTML = _esBuildSvg(_esDemo);
 }
 window.updateEmptyStateDemo = updateEmptyStateDemo;
 
-/* ── First paint ────────────────────────────────────────────────────── */
-function _esInit() {
-  updateEmptyStateDemo();
-  Object.keys(_specCards).forEach(function (k) {
-    var host = document.getElementById('empty-state-spec-' + k);
-    if (host) host.innerHTML = _esRender(_specCards[k]);
-  });
+/* ── DEV code — component API, as on the Code tab ───────────────────── */
+function buildSwiftSnippet(card) {
+  var lines = ['EBEmptyState(', '    title: "Header",', '    description: "Description goes here",'];
+  lines.push(card.VisualType === 'Asset'
+    ? '    asset: { Image("empty-illustration").resizable().scaledToFit() }'
+    : '    icon: { Image(systemName: "tray") }');
+  if (card.hasButton !== false) {
+    lines[lines.length - 1] += ',';
+    lines.push('    action: { EBButton("Label") { } }');
+  }
+  lines.push(')', '.ebStyle(.' + (card.Style === 'Subtle' ? 'subtle' : 'default') + ')');
+  return lines.join('\n');
 }
+
+function buildComposeSnippet(card) {
+  var lines = ['EBEmptyState(', '    title = "Header",', '    description = "Description goes here",',
+               '    style = EBEmptyStateStyle.' + (card.Style === 'Subtle' ? 'Subtle' : 'Default') + ','];
+  lines.push(card.VisualType === 'Asset'
+    ? '    asset = { Image(painterResource(R.drawable.empty_illustration), contentDescription = null) }'
+    : '    icon = { Icon(painterResource(R.drawable.tray), contentDescription = null) }');
+  if (card.hasButton !== false) {
+    lines[lines.length - 1] += ',';
+    lines.push('    action = { EBButton("Label", onClick = { }) }');
+  }
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(cardStyle, lang, card) {
+  card = card || _esDemo;
+  return lang === 'swift' ? buildSwiftSnippet(card) : buildComposeSnippet(card);
+}
+window.getSnippet = getSnippet;
+
+/* ── First paint ────────────────────────────────────────────────────── */
+function _esInit() { updateEmptyStateDemo(); }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _esInit);
 else _esInit();
 document.addEventListener('astro:page-load', _esInit);

@@ -3,7 +3,7 @@
   "meta": {
     "node": "12874:42180",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=12874-42180",
-    "description": "The 32×32 selectable day cell rendered inside the Date Picker calendar grid.",
+    "description": "Date Picker Items let people pick a single day in the calendar grid.",
     "badges": [
       {
         "kind": "remove",

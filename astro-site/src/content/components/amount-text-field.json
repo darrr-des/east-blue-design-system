@@ -3,7 +3,7 @@
   "meta": {
     "node": "4602:18144",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4602-18144",
-    "description": "A display-style numeric input for PHP amount entry in Send Money, Cash-In, and top-up flows. Sits on a single underline, with a label above and supporting text below. Two sizes × four interaction states.",
+    "description": "Amount Text Fields let people enter a peso amount.",
     "badges": [
       {
         "kind": "keep",

@@ -86,8 +86,19 @@
     // moment the tab is shown.
     if (window.ResizeObserver && $('pg-canvas')) {
       if (window.__pgResize) window.__pgResize.disconnect();
-      window.__pgResize = new ResizeObserver(function () { readLayout(); if (flat.length) renderSelection(); });
+      window.__pgResize = new ResizeObserver(function () { snapCanvas(); readLayout(); if (flat.length) renderSelection(); });
       window.__pgResize.observe($('pg-canvas'));
+      if ($('pg-canvas').parentElement) window.__pgResize.observe($('pg-canvas').parentElement);
+    }
+    // The stage centres the component, which lands an odd-sized one on a half pixel and blurs
+    // every edge and glyph. Figma draws on whole pixels: nudge the canvas onto the grid.
+    function snapCanvas() {
+      var c = $('pg-canvas'); if (!c) return;
+      c.style.left = ''; c.style.top = '';
+      var r = c.getBoundingClientRect();
+      var dx = Math.round(r.left) - r.left, dy = Math.round(r.top) - r.top;
+      if (Math.abs(dx) > 0.01) c.style.left = dx + 'px';
+      if (Math.abs(dy) > 0.01) c.style.top = dy + 'px';
     }
 
     // Not every combination of properties exists as a variant. As in Figma: keep the value
@@ -108,9 +119,26 @@
     }
 
     // ── Preview: every layer drawn from the Figma layer data ──
-    function paintBg(fills) {
+    // Figma's gradient runs between two handles in the layer's box; CSS runs along an angle
+    // through the centre with a fixed length. Project each stop onto the CSS line so the
+    // colours land exactly where Figma puts them.
+    function cssGradient(g, w, h) {
+      var x0 = g.from.x * w, y0 = g.from.y * h, dx = g.to.x * w - x0, dy = g.to.y * h - y0;
+      var len = Math.sqrt(dx * dx + dy * dy) || 1, ux = dx / len, uy = dy / len;
+      var L = Math.abs(w * ux) + Math.abs(h * uy) || 1;
+      var deg = Math.atan2(ux, -uy) * 180 / Math.PI;
+      var stops = g.stops.map(function (s) {
+        var px = x0 + s.pos * dx - w / 2, py = y0 + s.pos * dy - h / 2;
+        return rgba(s) + ' ' + Math.round(((px * ux + py * uy) / L + 0.5) * 10000) / 100 + '%';
+      });
+      return 'linear-gradient(' + Math.round(deg * 100) / 100 + 'deg,' + stops.join(',') + ')';
+    }
+    function paintBg(fills, n) {
       if (!fills || !fills.length) return '';
-      return 'background:' + fills.slice().reverse().map(function (f) { var c = rgba(f); return 'linear-gradient(' + c + ',' + c + ')'; }).join(',') + ';';
+      return 'background:' + fills.slice().reverse().map(function (f) {
+        if (f.gradient) return cssGradient(f.gradient, n.w, n.h);
+        var c = rgba(f); return 'linear-gradient(' + c + ',' + c + ')';
+      }).join(',') + ';';
     }
     function dashedStroke(n) {
       var w = n.strokeWeights[0], c = rgba(n.strokes[n.strokes.length - 1]);
@@ -221,6 +249,7 @@
       if (n.ellipse) st += 'border-radius:50%;';
       if (n.radius) st += 'border-radius:' + n.radius.map(function (r) { return r + 'px'; }).join(' ') + ';';
       if (n.opacity !== undefined) st += 'opacity:' + n.opacity + ';';
+      if (n.blend) st += 'mix-blend-mode:' + n.blend + ';';
       if (n.clip) st += 'overflow:hidden;';
       if (n.text) {
         var t = n.text;
@@ -282,14 +311,31 @@
           art.innerHTML = D.svgs[n.svg];
         }
       } else {
-        st += paintBg(n.fills) + shadows(n);
+        st += paintBg(n.fills, n) + shadows(n);
         if (n.strokes && n.strokeWeights && n.strokeDashes) el.appendChild(dashedStroke(n));
       }
       if (n.type === 'SLOT') el.classList.add('pg-n-slot');
       el.setAttribute('style', st);
       if (n.textProp) applyText(flat[i]);
       parentEl.appendChild(el);
-      (n.children || []).forEach(function (c) { build(c, el, n, i, depth + 1); });
+      var kidEls = (n.children || []).map(function (c) { return build(c, el, n, i, depth + 1); });
+      // Figma masks: a mask layer clips every sibling drawn after it and is not drawn itself.
+      // Its exported picture's alpha becomes a CSS mask on each of those siblings, placed at
+      // the mask's position relative to the sibling.
+      (n.children || []).forEach(function (m, k) {
+        if (!m.mask) return;
+        var src = m.img != null ? D.images[m.img] : m.svg != null ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(D.svgs[m.svg]) : null;
+        kidEls[k].style.opacity = '0';
+        if (!src) return;
+        for (var j = k + 1; j < kidEls.length; j++) {
+          var sb = n.children[j], ms = kidEls[j].style;
+          var pos = (m.x - sb.x) + 'px ' + (m.y - sb.y) + 'px', size = m.w + 'px ' + m.h + 'px';
+          ms.webkitMaskImage = ms.maskImage = 'url("' + src + '")';
+          ms.webkitMaskSize = ms.maskSize = size;
+          ms.webkitMaskPosition = ms.maskPosition = pos;
+          ms.webkitMaskRepeat = ms.maskRepeat = 'no-repeat';
+        }
+      });
       return el;
     }
     // Where each layer actually is, after the browser has laid it out — the overlays follow it.
@@ -657,6 +703,7 @@
       // coordinates, which readLayout() takes relative to the root, are unchanged.
       canvas.appendChild(overlay);
       applyBooleans();
+      snapCanvas();
       readLayout();
       state.sel = 0;
       if (!prevPath) state.picked = false;
@@ -785,6 +832,13 @@
         : 'Color(red: ' + ch(p.hex, 0) + ', green: ' + ch(p.hex, 1) + ', blue: ' + ch(p.hex, 2) + (p.alpha < 1 ? ', opacity: ' + p.alpha : '') + ')';
     };
     var hexNote = function (p) { return p.hex + (p.alpha < 1 ? ' @' + Math.round(p.alpha * 100) + '%' : ''); };
+    // A gradient's handles are 0–1 in the layer's box: UnitPoint in SwiftUI, a fraction of size in Compose.
+    var swFill = function (p) {
+      if (!p.gradient) return swColor(p);
+      var g = p.gradient;
+      return 'LinearGradient(stops: [' + g.stops.map(function (s) { return '.init(color: ' + swColor(s) + ', location: ' + num(s.pos) + ')'; }).join(', ') +
+        '], startPoint: UnitPoint(x: ' + num(g.from.x) + ', y: ' + num(g.from.y) + '), endPoint: UnitPoint(x: ' + num(g.to.x) + ', y: ' + num(g.to.y) + '))';
+    };
     function kind(n) {
       if (n.text) return 'Text';
       if (n.graphic) return 'Image';
@@ -843,7 +897,7 @@
       var fh = n.sizingV === 'FILL' ? 'maxHeight: .infinity' : n.sizingV === 'HUG' ? null : 'height: ' + num(n.h);
       if (fw || fh) m.push('.frame(' + [fw, fh].filter(Boolean).join(', ') + ')');
       var r = n.radius ? n.radius[0] : 0, rTok = n.radiusTokens && tokName(n.radiusTokens[0]);
-      (n.fills || []).forEach(function (f) { m.push('.background(' + swColor(f) + ')' + cm(hexNote(f))); });
+      (n.fills || []).forEach(function (f) { m.push('.background(' + swFill(f) + ')' + cm(hexNote(f))); });
       if (r) m.push('.clipShape(RoundedRectangle(cornerRadius: ' + num(r) + '))' + cm(rTok));
       if (n.strokes) {
         var st = n.strokes[0];
@@ -895,7 +949,12 @@
       var r = n.radius ? n.radius[0] : 0, rTok = n.radiusTokens && tokName(n.radiusTokens[0]);
       var shape = r ? 'RoundedCornerShape(' + num(r) + '.dp)' : null;
       (n.effects || []).forEach(function (e) { mods.push('.shadow(' + num(e.blur / 2) + '.dp' + (shape ? ', ' + shape : '') + ')' + cm(n.effectStyle || 'shadow')); });
-      (n.fills || []).forEach(function (f) { mods.push('.background(Color(' + argb(f) + ')' + (shape ? ', ' + shape : '') + ')' + cm([tokName(f.token), rTok].filter(Boolean).join(' · '))); });
+      (n.fills || []).forEach(function (f) {
+        var g = f.gradient;
+        var paint = g ? 'Brush.linearGradient(' + g.stops.map(function (s) { return num(s.pos) + 'f to Color(' + argb(s) + ')'; }).join(', ') +
+          ', start = Offset(' + num(g.from.x * n.w) + 'f, ' + num(g.from.y * n.h) + 'f), end = Offset(' + num(g.to.x * n.w) + 'f, ' + num(g.to.y * n.h) + 'f))' : 'Color(' + argb(f) + ')';
+        mods.push('.background(' + paint + (shape ? ', ' + shape : '') + ')' + cm([tokName(f.token), rTok].filter(Boolean).join(' · ')));
+      });
       if (n.strokes) { var st = n.strokes[0]; mods.push('.border(' + num(n.strokeWeights[0]) + '.dp, Color(' + argb(st) + ')' + (shape ? ', ' + shape : '') + ')' + cm(tokName(st.token))); }
       var L = n.layout, kids = kidsOf(i);
       if (L) {
@@ -967,7 +1026,8 @@
     // ── Highlight matching for Typography and Colors rows ──
     function paintsOf(n) {
       if (n.graphic) return n.paints || [];
-      var out = (n.fills || []).concat(n.strokes || []);
+      var out = [];
+      (n.fills || []).concat(n.strokes || []).forEach(function (p) { out = out.concat(p.gradient ? p.gradient.stops : [p]); });
       if (n.text && n.text.segments) n.text.segments.forEach(function (sg) { if (sg.fills) out = out.concat(sg.fills); });
       return out;
     }

@@ -3,7 +3,7 @@
   "meta": {
     "node": "7947:111630",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=7947-111630",
-    "description": "The menu surface a Select opens — a rounded card wrapping a slot of Select Items, with optional dividers between them.",
+    "description": "Select Groups show people the list of options a Select opens.",
     "badges": [
       {
         "kind": "keep",

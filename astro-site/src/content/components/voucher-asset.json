@@ -3,7 +3,7 @@
   "meta": {
     "node": "5119:1664",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=5119-1664",
-    "description": "A ticket-shaped image clipped into a notched frame, used as the visual on voucher placements.",
+    "description": "Voucher Assets show the image on a voucher, clipped into a ticket shape.",
     "badges": [
       {
         "kind": "remove",

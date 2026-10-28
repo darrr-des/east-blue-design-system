@@ -3,7 +3,7 @@
   "meta": {
     "node": "18577:14637",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-14637",
-    "description": "Action-list row with a 32px leading icon, label, trailing chevron, and a trailing Counter pill.",
+    "description": "Action List rows with a counter show people how many items wait behind a row.",
     "badges": [
       {
         "kind": "consolidate",

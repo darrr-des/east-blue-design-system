@@ -3,11 +3,11 @@
   "meta": {
     "node": "18482:28972",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-28972",
-    "description": "A small label used to flag status, counts, or category — supports multiple intents and densities.",
+    "description": "Badges help people spot a status, count or category at a glance.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "ready",
@@ -15,9 +15,9 @@
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — Consistent is partial",
-      "text": "Consistent is partial: the <code>Negative</code> and <code>Muted</code> Heavy Dashboard containers carry a hardcoded 0.9 opacity instead of a token. Bind it to close. The <code>State</code> values now match the token names."
+      "kind": "keep",
+      "title": "Keep — all four traits pass",
+      "text": "<code>State</code> × <code>Level</code> × <code>Type</code> in 68 variants, every fill bound to a badge token. The hardcoded 0.9 opacity on the Negative and Muted Heavy Dashboard badges is gone."
     },
     "navGroup": "",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      \n      <rect x=\"2\" y=\"5\" width=\"28\" height=\"10\" rx=\"5\" fill=\"#005CE5\"/>\n      <text x=\"16\" y=\"12\" text-anchor=\"middle\" fill=\"white\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n      \n      <rect x=\"4\" y=\"19\" width=\"24\" height=\"10\" rx=\"5\" fill=\"#E5F1FF\"/>\n      <text x=\"16\" y=\"26\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n    </svg>",
@@ -42,8 +42,8 @@
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "Token naming follows DS convention (<code>main/badge/{semantic}/{level}/</code>), and the State values match the token names (Information, Positive, Notice, Negative, Muted). One issue: the Negative/Heavy and Muted/Heavy Dashboard containers have a hardcoded <code>opacity: 0.9</code>."
+        "rating": "pass",
+        "note": "Token naming follows DS convention (main/badge/{semantic}/{level}/), the State values match the token names (Information, Positive, Notice, Negative, Muted), and every container is at full opacity with a bound fill."
       },
       {
         "name": "Composable",
@@ -72,6 +72,14 @@
       {
         "headline": "",
         "body": "State property values renamed to match token semantic names across all 60 affected variants: <code>Info</code> → <code>Information</code>, <code>Success</code> → <code>Positive</code>, <code>Warning</code> → <code>Notice</code>, <code>Danger</code> → <code>Negative</code>, <code>Disabled</code> → <code>Muted</code>. Figma State values now align 1:1 with token namespace — cleaner native mapping, no translation layer needed. <span class=\"tag-fixed\">C2 Fixed</span>",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "Hardcoded 0.9 opacity removed.",
+        "body": "The <code>container</code> layers of State=Negative and State=Muted (Level=Heavy, Type=Dashboard — 18482:29123, 18482:29141) carried a raw 0.9 opacity; both are now at 100%, so the colour comes from the bound fill alone. (C3)",
         "tag": {
           "criterion": "",
           "label": ""
@@ -2673,14 +2681,14 @@
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Clean enum properties: State, Level, Type. Minor: State names don't match token semantic names."
+        "notes": "Clean enum properties: State, Level, Type, with State values that match the token names."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All colors bound to <code>main/badge/</code> tokens. Note: 2 variants have hardcoded <code>opacity: 0.90</code>."
+        "notes": "All colours bound to main/badge/ tokens, and every container is at full opacity."
       },
       {
         "id": "C4",
@@ -3329,6 +3337,29 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.2.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Component Update · node 18482:28972",
+      "rows": [
+        {
+          "body": "<strong>Hardcoded opacity removed in Figma.</strong> The Negative and Muted Heavy Dashboard containers are back at 100%. Consistent Partial → Pass; verdict Fix → Keep.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Keep · Ready.</strong> All four DS Health traits pass and C1–C6 are ready or not applicable. The out-of-date C2 note (State names vs token names) corrected.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "April 2026",

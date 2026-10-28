@@ -3,7 +3,7 @@
   "meta": {
     "node": "18414:5854",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18414-5854",
-    "description": "The 100×32 selectable cell used inside the Month and Year views of Date Picker - Group.",
+    "description": "Month and Year Picker Items let people pick a month or year in the calendar.",
     "badges": [
       {
         "kind": "remove",

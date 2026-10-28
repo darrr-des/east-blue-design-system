@@ -109,9 +109,7 @@ function updateSpecCard(cardStyle, prop, value) {
 window.updateSpecCard = updateSpecCard;
 
 /* ── Overview tab live preview ──────────────────────────────────────── */
-/* The Overview panel still ships a `State` control (determinate /
-   indeterminate / success / error) that the set does not have. Read the
-   progress value it offers and draw the Figma component. */
+/* One control, the set's one property: Progress (0–100 in steps of 10). */
 function _progressBarUpdate() {
   var g = function (id) { var n = document.getElementById(id); return n ? n.value : null; };
   var progress = g('progress-bar-ctrl-progress') || g('progress-bar-ctrl-value') || '0';

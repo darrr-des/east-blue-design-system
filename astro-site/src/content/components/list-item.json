@@ -3,7 +3,7 @@
   "meta": {
     "node": "5728:37276",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5728-37276",
-    "description": "One row in a list — a leading marker, a filling label, and an optional trailing slot. Three nesting levels set the indent.",
+    "description": "List Items show people one entry in a list, with optional indent levels.",
     "badges": [
       {
         "kind": "keep",

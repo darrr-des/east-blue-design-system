@@ -3,7 +3,7 @@
   "meta": {
     "node": "16870:9288",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=16870-9288",
-    "description": "A disclosure row that expands to reveal content. Supports optional leading icon and description via boolean visibility properties. Reduced from 24 to 6 variants (Type × State) with color tokens fully connected.",
+    "description": "Accordions let people show or hide extra content within a row.",
     "badges": [
       {
         "kind": "keep",
@@ -17,7 +17,7 @@
     "verdict": {
       "kind": "keep",
       "title": "Keep — all four traits pass",
-      "text": "Type drives collapsed and expanded, leadingIcon and description are booleans, and the content body is a slot. Nothing open."
+      "text": "<code>Type</code> drives collapsed and expanded, <code>Leading Icon</code> and <code>Description</code> are booleans, and the content body is a slot. Nothing open."
     },
     "navGroup": "",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      \n      <rect x=\"2\" y=\"2\" width=\"28\" height=\"10\" rx=\"2\" fill=\"#EEF3FB\" stroke=\"#B8CFF8\" stroke-width=\"1\"/>\n      \n      <rect x=\"6\" y=\"6\" width=\"14\" height=\"2\" rx=\"1\" fill=\"#7AAAE0\"/>\n      \n      <path d=\"M23 6.5 L25.5 8 L23 9.5\" stroke=\"#0056D6\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"/>\n\n      \n      <rect x=\"2\" y=\"14\" width=\"28\" height=\"16\" rx=\"2\" fill=\"#F4F7FB\" stroke=\"#B8CFF8\" stroke-width=\"1\"/>\n      \n      <rect x=\"6\" y=\"17\" width=\"14\" height=\"2\" rx=\"1\" fill=\"#7AAAE0\"/>\n      \n      <path d=\"M23 19.5 L25.5 18 L23 16.5\" stroke=\"#0056D6\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\" transform=\"rotate(90 24 18)\"/>\n      \n      <rect x=\"6\" y=\"22\" width=\"18\" height=\"1.5\" rx=\"0.75\" fill=\"#C5D5E8\"/>\n      <rect x=\"6\" y=\"25.5\" width=\"13\" height=\"1.5\" rx=\"0.75\" fill=\"#C5D5E8\"/>\n    </svg>"
@@ -1154,7 +1154,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1173,38 +1174,33 @@
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>accordion<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths. API shape is final — native implementation is pending."
+      "footnote": ""
     },
     "propertyMapping": {
       "description": "Every row maps a Figma component property to its native equivalent.",
       "rows": [
         {
-          "figma": "<code>Type=Collapsed</code>",
-          "swift": "<code>isExpanded: false</code>",
-          "compose": "<code>isExpanded = false</code>"
+          "figma": "Type — Collapsed, Expanded",
+          "swift": "<code>isExpanded: false / true</code>",
+          "compose": "<code>isExpanded = false / true</code>"
         },
         {
-          "figma": "<code>Type=Expanded</code>",
-          "swift": "<code>isExpanded: true</code>",
-          "compose": "<code>isExpanded = true</code>"
+          "figma": "State — Default, Disabled, Pressed",
+          "swift": "Disabled <code>.disabled(true)</code>",
+          "compose": "Disabled <code>enabled = false</code>"
         },
         {
-          "figma": "<code>State=Disabled</code>",
-          "swift": "<code>.disabled(true)</code>",
-          "compose": "<code>enabled = false</code>"
-        },
-        {
-          "figma": "<code>leadingIcon=true</code>",
+          "figma": "Leading Icon — true, false",
           "swift": "<code>leadingIcon: Image?</code>",
           "compose": "<code>leadingIcon: @Composable (() -> Unit)?</code>"
         },
         {
-          "figma": "<code>description=true</code>",
+          "figma": "Description — true, false",
           "swift": "<code>description: String?</code>",
           "compose": "<code>description: String?</code>"
         },
         {
-          "figma": "<code>Content-Body (SLOT)</code>",
+          "figma": "Content-Body (slot)",
           "swift": "<code>content: () -> some View</code>",
           "compose": "<code>content: @Composable () -> Unit</code>"
         }
@@ -1217,8 +1213,8 @@
     "usageSnippets": [
       {
         "subheading": "Basic Accordion",
-        "swift": "<span class=\"cmt\">// Basic</span>\n<span class=\"typ\">EBAccordion</span>(<span class=\"str\">\"Settings\"</span>, <span class=\"prp\">isExpanded</span>: $isExpanded) {\n    <span class=\"typ\">Text</span>(<span class=\"str\">\"Content goes here\"</span>)\n}\n\n<span class=\"cmt\">// With leading icon</span>\n<span class=\"typ\">EBAccordion</span>(<span class=\"str\">\"Settings\"</span>,\n    <span class=\"prp\">isExpanded</span>: $isExpanded,\n    <span class=\"prp\">leadingIcon</span>: <span class=\"typ\">Image</span>(<span class=\"prp\">systemName</span>: <span class=\"str\">\"gear\"</span>)\n) {\n    <span class=\"typ\">Text</span>(<span class=\"str\">\"Content\"</span>)\n}\n\n<span class=\"cmt\">// With description</span>\n<span class=\"typ\">EBAccordion</span>(<span class=\"str\">\"Settings\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"Manage your preferences\"</span>,\n    <span class=\"prp\">isExpanded</span>: $isExpanded\n) {\n    <span class=\"typ\">Text</span>(<span class=\"str\">\"Content\"</span>)\n}\n\n<span class=\"cmt\">// Disabled</span>\n<span class=\"typ\">EBAccordion</span>(<span class=\"str\">\"Settings\"</span>, <span class=\"prp\">isExpanded</span>: $isExpanded) {\n    <span class=\"typ\">Text</span>(<span class=\"str\">\"Content\"</span>)\n}\n.<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"cmt\">// Basic</span>\n<span class=\"typ\">EBAccordion</span>(\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Settings\"</span>,\n    <span class=\"prp\">isExpanded</span> = isExpanded,\n    <span class=\"prp\">onExpandedChange</span> = { isExpanded = it }\n) {\n    <span class=\"typ\">Text</span>(<span class=\"str\">\"Content goes here\"</span>)\n}\n\n<span class=\"cmt\">// With leading icon</span>\n<span class=\"typ\">EBAccordion</span>(\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Settings\"</span>,\n    <span class=\"prp\">isExpanded</span> = isExpanded,\n    <span class=\"prp\">onExpandedChange</span> = { isExpanded = it },\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.<span class=\"prp\">Filled</span>.<span class=\"prp\">Settings</span>, <span class=\"kw\">null</span>) }\n) {\n    <span class=\"typ\">Text</span>(<span class=\"str\">\"Content\"</span>)\n}\n\n<span class=\"cmt\">// Disabled</span>\n<span class=\"typ\">EBAccordion</span>(\n    <span class=\"prp\">title</span> = <span class=\"str\">\"Settings\"</span>,\n    <span class=\"prp\">isExpanded</span> = isExpanded,\n    <span class=\"prp\">onExpandedChange</span> = {},\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n) {\n    <span class=\"typ\">Text</span>(<span class=\"str\">\"Content\"</span>)\n}"
+        "swift": "<code><span class=\"syn-cmt\">// Basic</span>\n<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Settings\"</span>, <span class=\"syn-param\">isExpanded</span>: $isExpanded<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Content goes here\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>\n\n<span class=\"syn-cmt\">// With leading icon</span>\n<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Settings\"</span>,\n    <span class=\"syn-param\">isExpanded</span>: $isExpanded,\n    <span class=\"syn-param\">leadingIcon</span>: <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-param\">systemName</span>: <span class=\"syn-str\">\"gear\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Content\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>\n\n<span class=\"syn-cmt\">// With description</span>\n<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Settings\"</span>,\n    <span class=\"syn-param\">description</span>: <span class=\"syn-str\">\"Manage your preferences\"</span>,\n    <span class=\"syn-param\">isExpanded</span>: $isExpanded\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Content\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>\n\n<span class=\"syn-cmt\">// Disabled</span>\n<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Settings\"</span>, <span class=\"syn-param\">isExpanded</span>: $isExpanded<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Content\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>\n.<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-val\">true</span><span class=\"syn-punc\">)</span></code>",
+        "compose": "<code><span class=\"syn-cmt\">// Basic</span>\n<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Settings\"</span>,\n    <span class=\"syn-param\">isExpanded</span> = isExpanded,\n    <span class=\"syn-param\">onExpandedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isExpanded</span> = it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Content goes here\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>\n\n<span class=\"syn-cmt\">// With leading icon</span>\n<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Settings\"</span>,\n    <span class=\"syn-param\">isExpanded</span> = isExpanded,\n    <span class=\"syn-param\">onExpandedChange</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-param\">isExpanded</span> = it <span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">leadingIcon</span> = <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-dot\">.Settings</span>, <span class=\"syn-val\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Content\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>\n\n<span class=\"syn-cmt\">// Disabled</span>\n<span class=\"syn-type\">EBAccordion</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">title</span> = <span class=\"syn-str\">\"Settings\"</span>,\n    <span class=\"syn-param\">isExpanded</span> = isExpanded,\n    <span class=\"syn-param\">onExpandedChange</span> = <span class=\"syn-punc\">{</span><span class=\"syn-punc\">}</span>,\n    <span class=\"syn-param\">enabled</span> = <span class=\"syn-val\">false</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Content\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>"
       }
     ],
     "accessibility": [

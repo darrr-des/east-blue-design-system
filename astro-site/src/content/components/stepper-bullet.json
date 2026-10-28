@@ -3,31 +3,31 @@
   "meta": {
     "node": "4337:11140",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4337-11140",
-    "description": "A progress indicator for multi-step flows, in bullet, circular and dash forms. Merges the former Stepper - Bullet, Stepper - Circular and Stepper - Dash.",
+    "description": "Steppers show people where they are in a multi-step flow.",
     "badges": [
       {
         "kind": "keep",
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Keep — all findings resolved",
-      "text": "Rebuilt on node <code>4337:11140</code> in the 2026 Working File as a single <strong>Stepper</strong>, merging the former Bullet, Circular and Dash components into <code>Type</code> × <code>Steps</code> × <code>Current</code> × <code>Status</code>. Step count is a property rather than sibling components, the ordinal position enum is now an integer, Status states exist where the originals had almost none, property naming follows the guidelines throughout, and the step markers are vectors. The full 2–10 range, the per-Type Status coverage and horizontal-only orientation are all deliberate. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+      "title": "Keep — one Stepper for bullet, circular and dash",
+      "text": "<code>Type</code> × <code>Steps</code> × <code>Current</code> × <code>Status</code> in 225 variants replaces three components; step count and position are integers, and the markers are vectors."
     },
     "navGroup": "Stepper",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <circle cx=\"9\" cy=\"16\" r=\"2.5\" fill=\"#005CE5\"/>\n      <circle cx=\"16\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n      <circle cx=\"23\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n    </svg>"
   },
   "overview": {
-    "inContextNote": "Stepper - Bullet appears at the top or bottom of multi-step flows — most commonly paginated onboarding, swipeable carousels of tutorial cards, and photo galleries where the user needs a minimal position indicator without numerical labels.",
-    "inContextHtml": "",
+    "inContextNote": "How the stepper appears in real product screens — a 10-step Dash showing “1 of 10” on GBonds Registration, and a Circular ring on the GLoan Application review step.",
+    "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/stepper-bullet-in-context.png\" alt=\"Stepper shown on two GCash screens: a ten-segment dash stepper with the first segment filled above 1 of 10 and Review your information on GBonds Registration, and a circular ring showing 1 beside Review your Personal Information on GLoan Application\" >",
     "inContextImage": "",
     "inContextAlt": "",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"stp-demo-preview\"><div class=\"eb-preview eb-preview-stp eb-preview-stp--bullet eb-preview-stp--current\"><span class=\"eb-preview-stp__dot is-on\"></span><span class=\"eb-preview-stp__dot\"></span><span class=\"eb-preview-stp__dot\"></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"stp-ctrl-type\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"bullet\" selected=\"\">Bullet</option><option value=\"circular\">Circular</option><option value=\"dash\">Dash</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Steps</span><select id=\"stp-ctrl-steps\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"2\">2</option><option value=\"3\" selected=\"\">3</option><option value=\"4\">4</option><option value=\"5\">5</option><option value=\"6\">6</option><option value=\"7\">7</option><option value=\"8\">8</option><option value=\"9\">9</option><option value=\"10\">10</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Current</span><select id=\"stp-ctrl-current\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"0\">0</option><option value=\"1\" selected=\"\">1</option><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\">4</option><option value=\"5\">5</option><option value=\"6\">6</option><option value=\"7\">7</option><option value=\"8\">8</option><option value=\"9\">9</option><option value=\"10\">10</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Status</span><select id=\"stp-ctrl-status\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"current\" selected=\"\">Current</option><option value=\"completed\">Completed</option><option value=\"upcoming\">Upcoming</option><option value=\"error\">Error</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"stp-demo-preview\"><div class=\"eb-preview eb-preview-stp eb-preview-stp--bullet eb-preview-stp--current\"><span class=\"eb-preview-stp__dot is-on\"></span><span class=\"eb-preview-stp__dot\"></span><span class=\"eb-preview-stp__dot\"></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"stp-ctrl-type\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"bullet\" selected=\"\">Bullet</option><option value=\"circular\">Circular</option><option value=\"dash\">Dash</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Steps</span><select id=\"stp-ctrl-steps\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"2\">2</option><option value=\"3\" selected=\"\">3</option><option value=\"4\">4</option><option value=\"5\">5</option><option value=\"6\">6</option><option value=\"7\">7</option><option value=\"8\">8</option><option value=\"9\">9</option><option value=\"10\">10</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Current</span><select id=\"stp-ctrl-current\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"0\">0</option><option value=\"1\" selected=\"\">1</option><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\">4</option><option value=\"5\">5</option><option value=\"6\">6</option><option value=\"7\">7</option><option value=\"8\">8</option><option value=\"9\">9</option><option value=\"10\">10</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Status</span><select id=\"stp-ctrl-status\" class=\"demo-panel-select\" onchange=\"_stpUpdate()\"><option value=\"current\" selected=\"\">Current</option><option value=\"completed\">Completed</option><option value=\"upcoming\">Upcoming</option><option value=\"error\">Error</option></select></div><div class=\"demo-panel-row\" id=\"stp-ctrl-haslabel-row\" style=\"display:none\"><span class=\"demo-panel-label\">hasLabel</span><label class=\"demo-panel-toggle\"><input type=\"checkbox\" id=\"stp-ctrl-haslabel\" onchange=\"this.parentElement.classList.toggle(&#39;is-on&#39;,this.checked);_stpUpdate()\"/><span class=\"demo-panel-toggle__track\"><span class=\"demo-panel-toggle__thumb\"></span></span></label></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -166,6 +166,22 @@
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Circular’s label sits below the component on purpose.",
+        "body": "Closed by owner decision. <code>label-container</code> is placed at y 45, outside the 45 × 45 Circular frame, and <code>hasLabel</code> shows it without growing the component. (C1)",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
+      },
+      {
+        "headline": "Label is placeholder copy.",
+        "body": "Closed by owner decision. <code>Label</code> reads “Step 1 of 10” in every Circular variant as a placeholder, overridden on the instance; it is not a text property. (C1)",
+        "tag": {
+          "criterion": "",
+          "label": ""
         }
       }
     ],
@@ -1842,7 +1858,8 @@
           }
         ]
       }
-    ]
+    ],
+    "playground": true
   },
   "code": {
     "installation": {
@@ -1887,14 +1904,19 @@
           "compose": "<code>status = EBStepperStatus.Completed / Upcoming / Error</code>"
         },
         {
-          "figma": "#index (text, Circular)",
-          "swift": "Drawn from <code>current</code> — no parameter",
-          "compose": "Drawn from <code>current</code> — no parameter"
+          "figma": "hasLabel — true, false (Circular)",
+          "swift": "<code>hasLabel: Bool = false</code>",
+          "compose": "<code>hasLabel: Boolean = false</code>"
         },
         {
-          "figma": "#label (text, Circular)",
-          "swift": "<code>.ebLabel(\"Step 1 of 10\")</code> — the layer sits outside the 45 × 45 frame in Figma",
-          "compose": "<code>label = \"Step 1 of 10\"</code>"
+          "figma": "Index (text layer, Circular)",
+          "swift": "drawn from <code>current</code> — no parameter",
+          "compose": "drawn from <code>current</code> — no parameter"
+        },
+        {
+          "figma": "Label (text layer, Circular) — placeholder “Step 1 of 10”",
+          "swift": "<code>label: String?</code>",
+          "compose": "<code>label: String?</code>"
         }
       ],
       "filePaths": {
@@ -1906,17 +1928,17 @@
       {
         "subheading": "Bullet",
         "swift": "<code><span class=\"syn-type\">EBStepper</span>(<span class=\"syn-param\">steps</span>: 3, <span class=\"syn-param\">current</span>: 1)\n    .<span class=\"syn-fn\">ebType</span>(<span class=\"syn-dot\">.bullet</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBStepper</span>(\n    <span class=\"syn-param\">steps</span> <span class=\"syn-eq\">=</span> 3,\n    <span class=\"syn-param\">current</span> <span class=\"syn-eq\">=</span> 1,\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperType</span>.Bullet\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBStepper</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">steps</span> = <span class=\"syn-val\">3</span>,\n    <span class=\"syn-param\">current</span> = <span class=\"syn-val\">1</span>,\n    <span class=\"syn-param\">type</span> = <span class=\"syn-type\">EBStepperType</span><span class=\"syn-dot\">.Bullet</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Circular",
         "swift": "<code><span class=\"syn-type\">EBStepper</span>(<span class=\"syn-param\">steps</span>: 3, <span class=\"syn-param\">current</span>: 1)\n    .<span class=\"syn-fn\">ebType</span>(<span class=\"syn-dot\">.circular</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBStepper</span>(\n    <span class=\"syn-param\">steps</span> <span class=\"syn-eq\">=</span> 3,\n    <span class=\"syn-param\">current</span> <span class=\"syn-eq\">=</span> 1,\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperType</span>.Circular\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBStepper</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">steps</span> = <span class=\"syn-val\">3</span>,\n    <span class=\"syn-param\">current</span> = <span class=\"syn-val\">1</span>,\n    <span class=\"syn-param\">type</span> = <span class=\"syn-type\">EBStepperType</span><span class=\"syn-dot\">.Circular</span>\n<span class=\"syn-punc\">)</span></code>"
       },
       {
         "subheading": "Dash",
         "swift": "<code><span class=\"syn-type\">EBStepper</span>(<span class=\"syn-param\">steps</span>: 3, <span class=\"syn-param\">current</span>: 1)\n    .<span class=\"syn-fn\">ebType</span>(<span class=\"syn-dot\">.dash</span>)</code>",
-        "compose": "<code><span class=\"syn-type\">EBStepper</span>(\n    <span class=\"syn-param\">steps</span> <span class=\"syn-eq\">=</span> 3,\n    <span class=\"syn-param\">current</span> <span class=\"syn-eq\">=</span> 1,\n    <span class=\"syn-param\">type</span> <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperType</span>.Dash\n)</code>"
+        "compose": "<code><span class=\"syn-type\">EBStepper</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">steps</span> = <span class=\"syn-val\">3</span>,\n    <span class=\"syn-param\">current</span> = <span class=\"syn-val\">1</span>,\n    <span class=\"syn-param\">type</span> = <span class=\"syn-type\">EBStepperType</span><span class=\"syn-dot\">.Dash</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
     "accessibility": [
@@ -1963,9 +1985,9 @@
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Circular’s <code>label-container</code> sits below the 45 × 45 frame and never renders; <code>#index</code> and <code>#label</code> keep the <code>#</code> sigil; Bullet dots are eight layers all named <code>ellipse</code>. Dash segments are <code>1st</code> … <code>10th</code> — read on 4365:12137, 4337:11205, 4695:22253."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Bullet dots and Dash segments are named <code>1st</code> … <code>10th</code>; Circular holds <code>Stepper</code> › <code>Index</code> + <code>ring</code>, and <code>label-container</code> › <code>Label</code> below the 45 × 45 frame by design."
       },
       {
         "id": "C2",
@@ -4300,6 +4322,43 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "October 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Component Update · node 4337:11140",
+      "rows": [
+        {
+          "body": "<strong>C1 Needs Refinement → Ready.</strong> Bullet dots renamed from <code>ellipse</code> to <code>1st</code> … <code>10th</code> (matching Dash); <code>#index</code> / <code>#label</code> renamed <code>Index</code> / <code>Label</code>; the half-connected <code>Index</code> text property (1 of 55 variants) removed.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Two owner decisions recorded.</strong> The label sits below the Circular frame by design, and its copy is a placeholder.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Playground, In Context, <code>hasLabel</code> preview and Property Mapping added.</strong>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Keep · Ready.</strong> All four DS Health traits pass and C1–C6 are ready.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.2",
       "date": "September 2026",

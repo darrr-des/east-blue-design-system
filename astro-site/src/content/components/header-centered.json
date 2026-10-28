@@ -3,7 +3,7 @@
   "meta": {
     "node": "4368:12839",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4368-12839",
-    "description": "A header variant with the title centered, optional leading and trailing actions on either side.",
+    "description": "Page Banners show people a centered page title with actions on either side.",
     "badges": [
       {
         "kind": "keep",

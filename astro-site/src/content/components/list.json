@@ -3,7 +3,7 @@
   "meta": {
     "node": "18482:34737",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-34737",
-    "description": "A frame containing 8 hardcoded List Item instances stacked with an 8px gap. No component properties, no variants. Functions as a layout example on the sticker sheet rather than a reusable component.",
+    "description": "Lists show people a stack of related items.",
     "badges": [
       {
         "kind": "remove",

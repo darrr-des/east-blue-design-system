@@ -3,7 +3,7 @@
   "meta": {
     "node": "4781:35856",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4781-35856",
-    "description": "A multi-line text input for longer-form entry — label, body, and character counter.",
+    "description": "Text Areas let people enter longer text across multiple lines.",
     "badges": [
       {
         "kind": "keep",

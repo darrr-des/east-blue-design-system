@@ -26,37 +26,76 @@ var _VCH_TEXT = {
   originalprice: 'PHP 150.00'
 };
 
-/* The artwork panel. Its default content is a #F6F9FD rectangle under a
-   raster placeholder image — the grey in that image is the one colour on
-   the component bound to no token. Used and Expired lay a filter over it;
-   both keep the notch. */
-/* The claim rail lives inside the asset, not on top of it: the 96 wide
-   panel is a 68 image plus a 28 rail, and the two notches are punched at
-   the seam between them. Drawing the rail as an overlay is what put the
-   badge and the notches on the wrong edges and centred the placeholder
-   underneath the rail. */
+/* The artwork panel is drawn from Figma's own layer data for the chosen variant
+   (public/playground/voucher.json — the data the Playground uses): the placeholder image,
+   the claim rail with its rotated button, the Stub Cutout mask that punches the notches and
+   the dashed seam, and the Used / Expired filter. Each variant carries different artwork,
+   so it is not redrawn in CSS. The badges float over it and stay HTML. */
+var _vchData = null, _vchLoading = false;
+function _vchRgba(p) {
+  var h = p.hex.replace('#', ''), a = p.alpha == null ? 1 : p.alpha;
+  return 'rgba(' + parseInt(h.slice(0, 2), 16) + ',' + parseInt(h.slice(2, 4), 16) + ',' + parseInt(h.slice(4, 6), 16) + ',' + a + ')';
+}
+function _vchArtNode(n, D, style) {
+  if (n.hidden) return '';
+  var st = 'position:absolute;left:' + n.x + 'px;top:' + n.y + 'px;width:' + n.w + 'px;height:' + n.h + 'px;' + (style || '');
+  if (n.mask) st += 'opacity:0;';
+  else if (n.opacity != null) st += 'opacity:' + n.opacity + ';';
+  if (n.blend) st += 'mix-blend-mode:' + n.blend + ';';
+  if (n.graphic) {
+    if (n.img != null) return '<img alt="" src="' + D.images[n.img] + '" style="' + st + '">';
+    if (n.svg != null) return '<div style="' + st + '">' + D.svgs[n.svg].replace(/<svg /, '<svg style="display:block;width:100%;height:100%" ') + '</div>';
+    return '';
+  }
+  /* Figma stacks fills bottom-up (the Used rail is white under 40% overlay): draw them all. */
+  var fills = (n.fills || []).map(_vchRgba).reverse().map(function (c) { return 'linear-gradient(' + c + ',' + c + ')'; });
+  var h = '<div style="' + st + (fills.length ? 'background:' + fills.join(',') + ';' : '') +
+    (n.radius ? 'border-radius:' + n.radius.join('px ') + 'px;' : '') + (n.clip ? 'overflow:hidden;' : '') + '">';
+  var kids = n.children || [], mask = null;
+  kids.forEach(function (c) {
+    var extra = '';
+    if (mask) {
+      var src = mask.img != null ? D.images[mask.img] : null;
+      if (src) {
+        var pos = (mask.x - c.x) + 'px ' + (mask.y - c.y) + 'px', size = mask.w + 'px ' + mask.h + 'px';
+        extra = '-webkit-mask-image:url(' + src + ');mask-image:url(' + src + ');-webkit-mask-size:' + size + ';mask-size:' + size +
+          ';-webkit-mask-position:' + pos + ';mask-position:' + pos + ';-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;';
+      }
+    }
+    h += _vchArtNode(c, D, extra);
+    if (c.mask) mask = c;
+  });
+  return h + '</div>';
+}
+function _vchArt(o) {
+  if (!_vchData) return '';
+  var cap = function (v) { return v.charAt(0).toUpperCase() + v.slice(1); };
+  var name = 'Orientation=' + cap(o.orientation) + ', AssetSize=' + cap(o.assetsize) + ', State=' + cap(o.state);
+  var v = _vchData.variants.filter(function (x) { return x.name === name; })[0];
+  if (!v) return '';
+  var find = function (n) { if (n.name === 'Voucher Asset') return n; for (var i = 0; i < (n.children || []).length; i++) { var f = find(n.children[i]); if (f) return f; } return null; };
+  var a = find(v.tree);
+  if (!a) return '';
+  var copy = {}; for (var k in a) copy[k] = a[k];
+  copy.x = 0; copy.y = 0;
+  var h = _vchArtNode(copy, _vchData, '');
+  /* Used / Expired: a Filter layer sits over the artwork at the component level. */
+  (v.tree.children || []).forEach(function (c) {
+    if (c.name !== 'Filter') return;
+    var f = {}; for (var k in c) f[k] = c[k];
+    f.x = c.x - a.x; f.y = c.y - a.y;
+    h += _vchArtNode(f, _vchData, '');
+  });
+  return h;
+}
+
 function _vchAsset(o) {
   var horizontal = o.orientation === 'horizontal';
-  var h = '<div class="eb-preview-vch__asset">';
-  h += '<span class="eb-preview-vch__art">';
-  h += '<span class="eb-preview-vch__placeholder">Placeholder image</span>';
-  /* The root carries the state class; the filter only needs to exist. */
-  if (o.state !== 'default') h += '<span class="eb-preview-vch__filter"></span>';
-  h += '</span>';
-  if (horizontal) {
-    h += '<span class="eb-preview-vch__rail"><span>GET VOUCHER</span></span>';
-    /* BadgeSlot floats at the artwork's top-left in horizontal. */
-    if (o.hasbadge) {
-      h += '<span class="eb-preview-vch__badge eb-preview-vch__badge--float">' +
-           _vchBadgeLabel[o.state] + '</span>';
-    }
-  }
-  h += '<span class="eb-preview-vch__notch eb-preview-vch__notch--a"></span>';
-  h += '<span class="eb-preview-vch__notch eb-preview-vch__notch--b"></span>';
+  var h = '<div class="eb-preview-vch__asset">' + _vchArt(o);
+  /* BadgeSlot floats at the artwork's top-left in horizontal. */
+  if (horizontal && o.hasbadge) h += '<span class="eb-preview-vch__badge eb-preview-vch__badge--float">' + _vchBadgeLabel[o.state] + '</span>';
   /* DiscountSlot rides on the artwork, and only in vertical. */
-  if (!horizontal && o.hasdiscountbadge) {
-    h += '<span class="eb-preview-vch__discount">35% off</span>';
-  }
+  if (!horizontal && o.hasdiscountbadge) h += '<span class="eb-preview-vch__discount">35% off</span>';
   return h + '</div>';
 }
 
@@ -153,7 +192,13 @@ function _vchRead() {
 
 function _vchUpdate() {
   var el = document.getElementById('vch-demo-preview');
-  if (el) el.innerHTML = _vchRender(_vchRead());
+  if (!el) return;
+  el.innerHTML = _vchRender(_vchRead());
+  if (_vchData || _vchLoading) return;
+  _vchLoading = true;
+  var pg = document.getElementById('pg-data');
+  fetch((pg && pg.getAttribute('data-src')) || '/playground/voucher.json').then(function (r) { return r.json(); })
+    .then(function (d) { _vchData = d; _vchUpdate(); if (typeof _vchRefreshCards === 'function') _vchRefreshCards(); });
 }
 window._vchUpdate = _vchUpdate;
 

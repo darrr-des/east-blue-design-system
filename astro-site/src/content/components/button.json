@@ -3,7 +3,7 @@
   "meta": {
     "node": "17104:184842",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=17104-184842",
-    "description": "Used to trigger an action when tapped. The button's Call to Action describes the action that will occur. The Large/Medium Buttons are the default size for the GCash app.",
+    "description": "Buttons let people take an action with a single tap.",
     "badges": [
       {
         "kind": "keep",

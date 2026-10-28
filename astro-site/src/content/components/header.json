@@ -3,7 +3,7 @@
   "meta": {
     "node": "4363:11467",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4363-11467",
-    "description": "A section-level heading row with preamble, title, counter, description, and optional leading and trailing media.",
+    "description": "Section Headers introduce a section of content with a title and supporting details.",
     "badges": [
       {
         "kind": "keep",

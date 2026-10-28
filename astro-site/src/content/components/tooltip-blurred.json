@@ -3,7 +3,7 @@
   "meta": {
     "node": "49:335349",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=49-335349",
-    "description": "A dark, translucent directional tooltip with a backdrop blur, for use over photographic or high-contrast content.",
+    "description": "Blurred Tooltips give people a hint that stays readable over photos and busy backgrounds.",
     "badges": [
       {
         "kind": "remove",

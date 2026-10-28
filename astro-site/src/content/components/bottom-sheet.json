@@ -3,7 +3,7 @@
   "meta": {
     "node": "5304:32717",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5304-32717",
-    "description": "The bottom-anchored sheet surface — a drag handle, a slotted header, an optional subtitle, and content and footer slots a consumer fills.",
+    "description": "Bottom Sheets show people extra content or actions in a panel at the screen's bottom.",
     "badges": [
       {
         "kind": "keep",

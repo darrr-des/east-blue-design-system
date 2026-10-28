@@ -3,7 +3,7 @@
   "meta": {
     "node": "5943:41825",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5943-41825",
-    "description": "The one selectable cell used everywhere in the picker — day numbers in the calendar grid, and month and year labels in the header views. 16 versions.",
+    "description": "Date Picker Cells let people pick a single day, month or year in the calendar.",
     "badges": [
       {
         "kind": "keep",

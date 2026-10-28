@@ -132,7 +132,15 @@ for (const slug of run) {
     const oursPng = await page.screenshot({ fullPage: true, clip: { x: box.x - off.l, y: box.y + scrollY - off.t, width: off.w, height: off.h } });
 
     const W = Math.round(off.w * SCALE), Hh = Math.round(off.h * SCALE);
-    const norm = (buf) => sharp(buf).flatten({ background: STAGE }).resize(W, Hh, { fit: 'fill' }).ensureAlpha().raw().toBuffer();
+    // Crop or pad to W × Hh — never stretch. Figma's export of a fractional render box (text
+    // overhang makes Countdown - Unit 16.25 tall) can be a row larger than the screenshot, and
+    // stretching one to the other smears every glyph; the shift search below absorbs the offset.
+    const norm = async (buf) => {
+      const m = await sharp(buf).metadata();
+      return sharp(buf).flatten({ background: STAGE })
+        .extend({ right: Math.max(0, W - m.width), bottom: Math.max(0, Hh - m.height), background: STAGE })
+        .extract({ left: 0, top: 0, width: W, height: Hh }).ensureAlpha().raw().toBuffer();
+    };
     const [a, b] = await Promise.all([norm(figPng), norm(oursPng)]);
     // Fractional sizes round differently in Figma's export and the screenshot: allow the two
     // images to sit up to 2 device pixels apart, and score the best alignment. A real

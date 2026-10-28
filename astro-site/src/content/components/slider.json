@@ -3,7 +3,7 @@
   "meta": {
     "node": "6802:105580",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6802-105580",
-    "description": "A horizontal slider — a filled track, a knob, and an optional percentage tooltip that rides above it.",
+    "description": "Sliders let people pick a value by dragging along a track.",
     "badges": [
       {
         "kind": "keep",

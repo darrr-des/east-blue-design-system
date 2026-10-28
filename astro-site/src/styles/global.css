@@ -1231,6 +1231,7 @@ td code {
   border-bottom: 1px solid var(--border);
   margin-bottom: var(--space-10);
 }
+.comp-header--settled { border-bottom: 0; padding-bottom: 0; }
 .comp-header-body { flex: 1; }
 
 /* ── Verdict inline message ─────────────────────────────────────────── */
@@ -5491,13 +5492,17 @@ pre.code-snippet .prp { color: #0369A1; }
   min-height: 38px;
   padding: 12px 12px 12px 12px;
   border-radius: 8px;
-  border: 1px solid #E5EBF4;
+  /* Figma's 1px stroke is centre-aligned: half outside, and it adds nothing to the 38px height. */
+  outline: 1px solid #E5EBF4;
+  outline-offset: -0.5px;
   background: #0A2757;
   color: #FFFFFF;
   font-family: 'Proxima Soft', var(--font-body);
 }
+/* Every variant carries the same drop shadow in Figma (4915:25141). */
+.eb-preview-tst { box-shadow: 0 6px 12px -8px rgba(2, 14, 34, 0.16); }
 .eb-preview-tst--light { background: #FFFFFF; color: #0A2757; }                                 /* 4915:25148 */
-.eb-preview-tst--destructive { background: #D61B2C; color: #FFFFFF; border-color: #F4C7C9; }   /* 4915:25154 */
+.eb-preview-tst--destructive { background: #D61B2C; color: #FFFFFF; outline-color: #F4C7C9; }   /* 4915:25154 */
 .eb-preview-tst__icon { width: 24px; height: 24px; flex-shrink: 0; margin: -5px 0; }
 .eb-preview-tst--sm .eb-preview-tst__icon { width: 16px; height: 16px; margin: -1px 0; }
 .eb-preview-tst__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
@@ -5936,7 +5941,8 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-vch {
   position: relative;
   display: flex;
-  background: #FFFFFF;
+  /* Figma: the component has no fill — Content is white and the artwork's notches are cut out. */
+  background: transparent;
   border-radius: 4px;
   overflow: hidden;
   font-family: "BarkAda", system-ui, sans-serif;
@@ -5949,6 +5955,9 @@ pre.code-snippet .prp { color: #0369A1; }
    possible; matching the structure was not, so the preview reproduces
    what each one actually draws. */
 .eb-preview-vch--vertical { flex-direction: column; width: 162px; }
+/* Vertical is a fixed-height card in Figma (Small 278, Large 341); Content fills the rest. */
+.eb-preview-vch--vertical.eb-preview-vch--small { height: 278px; }
+.eb-preview-vch--vertical.eb-preview-vch--large { height: 341px; }
 .eb-preview-vch--horizontal {
   flex-direction: row;
   height: 124px;
@@ -6041,6 +6050,8 @@ pre.code-snippet .prp { color: #0369A1; }
    Figma, so it takes the same ground the notches do — a repeating
    gradient draws the identical picture without a mask. */
 .eb-preview-vch__asset::after {
+  /* The dashed seam is part of Figma's Stub Cutout mask, drawn with the artwork now. */
+  display: none;
   content: "";
   position: absolute;
   z-index: 4;
@@ -6117,6 +6128,7 @@ pre.code-snippet .prp { color: #0369A1; }
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.25px;
+  line-height: 14px;  /* Figma #price 14/14 */
   color: #005CE5;
 }
 /* text/color-text-disabled in every version — both orientations bind the
@@ -6124,6 +6136,7 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-vch__original {
   font-size: 12px;
   font-weight: 500;
+  line-height: 18px;  /* Figma #originalPrice 12/18 */
   color: #C2CFE5;
   text-decoration: line-through;
 }
@@ -6137,7 +6150,8 @@ pre.code-snippet .prp { color: #0369A1; }
 /* ── Badges ─────────────────────────────────────────────────────── */
 .eb-preview-vch__badge {
   align-self: flex-start;
-  padding: 2px 8px;
+  /* Vertical BadgeSlot: 16 tall, padding 3 4 1 4, bg/color-bg-primary. */
+  padding: 3px 4px 1px;
   border-radius: 4px;
   background: #005CE5;
   font-size: 12px;
@@ -6151,7 +6165,7 @@ pre.code-snippet .prp { color: #0369A1; }
   position: absolute;
   top: 9px;
   right: 0;
-  padding: 2px 8px;
+  padding: 4px 8px;  /* Figma ⤷ DiscountSlot badge: 18 tall */
   border-radius: 4px 0 0 4px;
   background: #0A2757;
   font-size: 10px;
@@ -6168,6 +6182,9 @@ pre.code-snippet .prp { color: #0369A1; }
   position: absolute;
   top: 4px;
   left: 0;
+  /* Horizontal BadgeSlot: 18 tall, bg/color-bg-primary. */
+  padding: 3px 4px;
+  background: #005CE5;
   border-radius: 0 4px 4px 0;
   z-index: 3;
 }
@@ -6269,26 +6286,32 @@ pre.code-snippet .prp { color: #0369A1; }
   width: 336px;
   border-radius: 8px;
   overflow: hidden;
-  background: #FFFFFF;
-  border: 1px solid #E5EBF4;
+  /* Figma 5542:32287: no fill and no stroke on the card — each section is white, the notched
+     strip is transparent where it is cut, and the card carries a 0 0 4 #020E22 @ 6% shadow. */
+  background: transparent;
+  box-shadow: 0 0 4px rgba(2, 14, 34, 0.06);
   font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-vdet__header {
+  background: #FFFFFF;
   display: flex;
-  align-items: center;
+  /* Figma Header: top-aligned row, padding 12 16 12 10, gap 8; the 1px bottom stroke is
+     inside, so it does not take space from the 64px row. */
+  align-items: flex-start;
   gap: 8px;
   height: 64px;
-  padding: 0 10px;
-  border-bottom: 1px solid #E5EBF4;
+  padding: 12px 16px 12px 10px;
+  box-sizing: border-box;
+  box-shadow: inset 0 -1px 0 #E5EBF4;
 }
 .eb-preview-vdet__logo {
   flex: 0 0 auto;
+  position: relative;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: #EEF2F9;
 }
+.eb-preview-vdet__logo img { position: absolute; left: 3px; top: 4px; width: 35px; height: 32px; }
 /* Merchant Details is a 202 × 38 column: 4 above the name, then the name
    at 16 and the branch line at 18 with no gap between them. They were
    inline spans, so they ran side by side. */
@@ -6338,8 +6361,10 @@ pre.code-snippet .prp { color: #0369A1; }
   line-height: 12px;
   letter-spacing: 0.5px;
   color: #FFFFFF;
+  /* ⤷ BadgeSlot has 6px top padding: the badge sits at y 18. */
+  margin-top: 6px;
 }
-.eb-preview-vdet__details { padding: 12px 16px; }
+.eb-preview-vdet__details { padding: 12px 16px; background: #FFFFFF; }
 .eb-preview-vdet__title {
   font-size: 18px;
   font-weight: 700;
@@ -6352,7 +6377,7 @@ pre.code-snippet .prp { color: #0369A1; }
    25.6 — the container was 7 too tall before anything else was wrong. */
 .eb-preview-vdet__prices {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 4px;
   height: 18px;
   margin-top: 8px;
@@ -6382,28 +6407,12 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 /* The strip is a notched divider: a hairline with a punch at each end. */
 .eb-preview-vdet__strip { position: relative; height: 16px; }
-.eb-preview-vdet__strip::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  top: 50%;
-  border-top: 1px dashed #E5EBF4;
-}
-.eb-preview-vdet__strip i {
-  position: absolute;
-  top: 0;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #F6F9FD;
-  border: 1px solid #E5EBF4;
-}
-.eb-preview-vdet__strip i:first-child { left: -8px; }
-.eb-preview-vdet__strip i:last-child { right: -8px; }
+.eb-preview-vdet__strip > svg { display: block; }
+.eb-preview-vdet__sep { position: absolute; left: 8px; top: 7px; width: 320px; height: 1px; }
+.eb-preview-vdet__sep svg { display: block; }
 /* Body itself has no padding — the Description insets its own text and
    both terms treatments run the full 336. */
-.eb-preview-vdet__body { padding: 0; }
+.eb-preview-vdet__body { padding: 0; background: #FFFFFF; }
 .eb-preview-vdet__desc {
   padding: 8px 12px 12px;
   color: #445C85;

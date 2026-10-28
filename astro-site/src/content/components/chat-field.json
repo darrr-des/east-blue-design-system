@@ -3,7 +3,7 @@
   "meta": {
     "node": "5536:31209",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5536-31209",
-    "description": "A message composer that arranges a leading action slot, a composed Input Field and a trailing send slot into one row.",
+    "description": "Chat Composers let people type and send a message.",
     "badges": [
       {
         "kind": "keep",

@@ -3,7 +3,7 @@
   "meta": {
     "node": "26184:2588",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26184-2588",
-    "description": "A circular radio control for single-select groups. 39 variants across <code>Style</code> (Default/Check) × <code>State</code> (Default/Pressed/Disabled) × <code>Size</code> (Large/Medium/Small) × <code>isSelected</code> × <code>isError</code>.",
+    "description": "Radio Buttons let people choose one option from a set.",
     "badges": [
       {
         "kind": "keep",

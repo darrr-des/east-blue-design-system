@@ -3,7 +3,7 @@
   "meta": {
     "node": "4368:12856",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4368-12856",
-    "description": "A card hero introducing a transaction or recipient — avatar, title, separator, label-value row and description, on a brand or default surface.",
+    "description": "Detail Heroes introduce people to a transaction or recipient with its key details.",
     "badges": [
       {
         "kind": "keep",

@@ -1,175 +1,86 @@
-/* Tabs — Style tab demo.
- * Rebuilt from Figma component set 26327:11046 (Sticker Sheets v2).
- * Sizes read off get_node_info on all 12 variants; what draws checked
- * against export_node_as_image.
- *
- * Panel (set 26327:11046, from the property-panel screenshot):
- *   Orientation · Vertical, Horizontal
- *   Size        · Medium, Large
- *   Tabs Count  · 4, 3, 2
- *
- * 2 x 2 x 3 = 12 variants, all built. There is no active-tab property:
- * the first Tab Item is the selected one in every variant.
- *
- * In Figma each cell is a Tab Item at its hug width, laid flush with no
- * gap, so the group narrows with the count — 4 x 97 = 388, 3 x 97 = 291,
- * 2 x 102 = 204.
- *
- * PREVIEW DEVIATION (asked for): the card draws every count at the 4-tab
- * width and shares it between the cells, so the group stays the same size
- * while the count changes. Figma's own widths are what the Layout rows and
- * the Variants inventory report.
- */
+/* Tab Group — Overview live preview + DEV code.
+ * Rebuilt from Figma component set 26327:11046 (GCash DS Sticker Sheets v2): a row of Tab Item
+ * instances (each Fill), the first selected. Orientation and Size are passed to every item.
+ * Panel: Orientation · Size · Tabs Count (4, 3, 2). */
 
-var TBS_ITEM_W = { 'vertical|medium': 65, 'vertical|large': 70, 'horizontal|medium': 97, 'horizontal|large': 102 };
-var TBS_H = { 'vertical|medium': 92, 'vertical|large': 92, 'horizontal|medium': 48, 'horizontal|large': 50 };
-
-var TBS_NODES = {
-  'vertical|medium|4': '26327:11047', 'vertical|large|4': '26327:11052',
-  'horizontal|large|4': '26327:11057', 'horizontal|medium|4': '26327:11062',
-  'vertical|medium|3': '26327:11067', 'vertical|large|3': '26327:11071',
-  'horizontal|large|3': '26327:11075', 'horizontal|medium|3': '26327:11079',
-  'vertical|medium|2': '26327:11083', 'vertical|large|2': '26327:11086',
-  'horizontal|large|2': '26327:11089', 'horizontal|medium|2': '26327:11092'
+/* ── One Tab Item, drawn from Figma set 26327:10941 ─────────────────────
+ * Horizontal: fixed 97 (Medium) / 102 (Large) wide; container padding 0 12, gap 8;
+ *   Icon Slot 24 · label (Primary/Label/Base 16/16 Medium, Primary/Label/Large 18/18 Large,
+ *   padding 16/16 or 17/15) · counter. Placement=Trailing puts the slot after the label.
+ * Vertical: hugs; container padding 12 0; icon-label padding 0 12, gap 12;
+ *   Icon Slot 32 above a row of label + counter (gap 8).
+ * Bottom stroke 2px, inside the box as in Figma. Figma ships the Icon Slot empty, so it is drawn as space. */
+var TAB_COLOR = {
+  Default:  { on: '#005CE5', off: '#6780A9' },   /* text/color-text-primary · text/color-text-weaker */
+  Hover:    { on: '#2340A9', off: '#6780A9' },   /* text/color-text-primary-hover */
+  Disabled: { on: '#C2CFE5', off: '#C2CFE5' }    /* text/color-text-disabled */
 };
-
-/* Tab Item colours — selected is the first cell, the rest are unselected. */
-var TBS_SELECTED = { label: '#005CE5', rule: '#005CE5' };
-var TBS_REST = { label: '#6780A9', rule: '#E5EBF4' };
-
-function _tbsKey(card) { return card.orientation + '|' + card.size + '|' + card.count; }
-function _tbsNode(card) { return TBS_NODES[_tbsKey(card)]; }
-function _tbsItemW(card) { return TBS_ITEM_W[card.orientation + '|' + card.size]; }
-function _tbsHeight(card) { return TBS_H[card.orientation + '|' + card.size]; }
-function _tbsWidth(card) { return _tbsItemW(card) * Number(card.count); }
-/* Preview only — the 4-tab width, shared between however many cells. */
-function _tbsBaseW(card) { return _tbsItemW(card) * 4; }
-function _tbsCellW(card) { return _tbsBaseW(card) / Number(card.count); }
-
-/* One Tab Item cell, drawn at its measured geometry: 12 padding, an 8 gap,
-   a 24 (horizontal) or 32 (vertical) Icon Slot that ships empty, the label
-   and a 2px underline. */
-function _tbsCell(card, x, selected) {
-  var vert = card.orientation === 'vertical', med = card.size === 'medium';
-  var w = _tbsCellW(card), h = _tbsHeight(card);
-  var c = selected ? TBS_SELECTED : TBS_REST;
-  var labelW = med ? 41 : 46, fs = med ? 16 : 18, iconS = vert ? 32 : 24;
-  /* Content is centred in the shared cell; in Figma it is packed to the
-     12px leading edge of a hug-width cell. */
-  var contentW = vert ? Math.max(iconS, labelW) : iconS + 8 + labelW;
-  var left = x + (w - contentW) / 2;
-  var labelX = vert ? left + (contentW - labelW) / 2 : left + iconS + 8;
-  var labelCy = vert ? (12 + iconS + 12 + (med ? 12 : 13)) : h / 2;
-  var iconX = vert ? left + (contentW - iconS) / 2 : left;
-  var iconY = vert ? 12 : (h - iconS) / 2;
-
-  var s = '<rect x="' + (iconX + 0.5) + '" y="' + (iconY + 0.5) + '" width="' + (iconS - 1) + '" height="' + (iconS - 1) +
-          '" rx="' + (iconS / 2) + '" stroke="#C2CFE5" stroke-dasharray="3 2"/>';
-  s += '<text class="ti-label" x="' + (labelX + labelW / 2) + '" y="' + labelCy + '" font-size="' + fs +
-       '" font-weight="700" fill="' + c.label + '" text-anchor="middle" dominant-baseline="central">Label</text>';
-  s += '<rect x="' + x + '" y="' + (h - 2) + '" width="' + w + '" height="2" fill="' + c.rule + '"/>';
-  return s;
-}
-
-function _tbsRender(card) {
-  var n = Number(card.count), w = _tbsBaseW(card), h = _tbsHeight(card), iw = _tbsCellW(card);
-  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-  s += '<rect width="' + w + '" height="' + h + '" fill="#FFFFFF"/>';
-  for (var i = 0; i < n; i++) s += _tbsCell(card, i * iw, i === 0);
-  return s + '</svg>';
-}
-
-/* ── Per-card state — Figma's default variant ──────────────────────── */
-var _specCards = {
-  main: { orientation: 'vertical', size: 'medium', count: '4' }
-};
-window._specCards = _specCards;
-var TBS_AXES = ['orientation', 'size', 'count'];
-function _tbsCap(v) { return v.charAt(0).toUpperCase() + v.slice(1); }
-
-/* ── DEV code ───────────────────────────────────────────────────────── */
-function buildSwiftSnippet(cardKey, c) {
-  return 'EBTabs(selection: $tab) {\n' +
-    Array.apply(null, Array(Number(c.count))).map(function (_, i) {
-      return '    EBTabItem("Label").tag(' + i + ')';
-    }).join('\n') +
-    '\n}\n    .ebOrientation(.' + c.orientation + ')\n    .ebControlSize(.' + c.size + ')';
-}
-function buildComposeSnippet(cardKey, c) {
-  return 'EBTabs(\n' +
-    '    selectedIndex = selected,\n' +
-    '    labels = listOf(' + Array.apply(null, Array(Number(c.count))).map(function () { return '"Label"'; }).join(', ') + '),\n' +
-    '    orientation = EBTabOrientation.' + _tbsCap(c.orientation) + ',\n' +
-    '    size = EBTabSize.' + _tbsCap(c.size) + ',\n' +
-    '    onSelect = { selected = it }\n)';
-}
-function getSnippet(cardKey, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
-}
-window.getSnippet = getSnippet;
-
-/* ── Control handler ────────────────────────────────────────────────── */
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
-  if (!card) return;
-  card[prop] = value;
-
-  var host = document.getElementById('tabs-spec-' + cardStyle);
-  if (host) host.innerHTML = _tbsRender(card);
-
-  TBS_AXES.forEach(function (a) {
-    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
-    if (el) el.textContent = a === 'count' ? card[a] : _tbsCap(card[a]);
-  });
-  var sizeEl = document.querySelector('[data-sp="' + cardStyle + '-size-readout"]');
-  if (sizeEl) sizeEl.textContent = _tbsWidth(card) + ' × ' + _tbsHeight(card);
-  var itemEl = document.querySelector('[data-sp="' + cardStyle + '-item-readout"]');
-  if (itemEl) itemEl.textContent = _tbsItemW(card) + ' × ' + _tbsHeight(card) + ' each, flush';
-  var prevEl = document.querySelector('[data-sp="' + cardStyle + '-preview-readout"]');
-  if (prevEl) prevEl.textContent = 'Drawn at the 4-tab width, ' + _tbsBaseW(card) + ' — ' + (Math.round(_tbsCellW(card) * 100) / 100) + ' per cell';
-  var nodeEl = document.querySelector('[data-sp="' + cardStyle + '-variantNode"]');
-  if (nodeEl) nodeEl.textContent = _tbsNode(card) + ' · ' + _tbsWidth(card) + ' × ' + _tbsHeight(card);
-
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
-  }
-}
-window.updateSpecCard = updateSpecCard;
-
-/* ── Overview tab shim ───────────────────────────────────────────────
-   The Overview still carries the retired count / active-tab panel; Figma
-   has no active-tab property, so the first cell is always the selected
-   one and the control only changes the count. */
-function updateTabsDemo() {
-  var el = document.getElementById('tabs-demo-preview');
+/* Figma sizes an auto-width text box up to a whole pixel ("Label" is 41, not 40.47). */
+function _tabRoundLabels(el) {
   if (!el) return;
-  var count = document.getElementById('tabs-demo-count');
-  el.innerHTML = _tbsRender({ orientation: 'horizontal', size: 'medium', count: count ? count.value : '4' });
+  [].forEach.call(el.querySelectorAll('[data-tab-label]'), function (s) { s.style.width = Math.ceil(s.getBoundingClientRect().width) + 'px'; });
+}
+
+var TAB_LINE = { on: '#005CE5', hover: '#2340A9', off: '#E5EBF4' };  /* border/color-border-primary(-hover) · border/color-border-weak */
+
+function _tabItem(o) {
+  var large = o.Size === 'Large', vert = o.Orientation === 'Vertical', sel = o.isSelected;
+  var color = (TAB_COLOR[o.State] || TAB_COLOR.Default)[sel ? 'on' : 'off'];
+  var line = sel ? (o.State === 'Hover' ? TAB_LINE.hover : TAB_LINE.on) : TAB_LINE.off;
+  var font = "font-family:'Proxima Soft',system-ui;font-weight:700;letter-spacing:0.25px;white-space:nowrap;";
+  var label = '<span data-tab-label style="display:inline-block;' + font + 'font-size:' + (large ? 18 : 16) + 'px;line-height:' + (large ? 18 : 16) + 'px;color:' + color + ';">' + o.label + '</span>';
+  var counter = o.hasCounter ? '<span style="flex:none;box-sizing:border-box;width:24px;height:24px;border-radius:99px;background:#EEF2F9;display:flex;align-items:center;justify-content:center;' +
+      font.replace('letter-spacing:0.25px;', '') + 'font-size:14px;line-height:14px;color:#072592;">0</span>' : '';
+  var slot = function (s) { return o.hasIcon ? '<span style="flex:none;width:' + s + 'px;height:' + s + 'px;"></span>' : ''; };
+  var dot = o.hasNotificationDot ? '<span style="position:absolute;width:6px;height:6px;border-radius:50%;background:#D61B2C;' +
+      (vert ? 'right:' + (large ? 4 : 4) + 'px;top:4px;' : 'right:' + (large ? 4 : 4) + 'px;top:' + (large ? 6 : 4) + 'px;') + '"></span>' : '';
+  var h;
+  if (vert) {
+    h = '<div style="position:relative;display:inline-flex;flex-direction:column;align-items:center;padding:12px 12px;gap:12px;box-shadow:inset 0 -2px 0 ' + line + ';box-sizing:border-box;' + (o.fill ? 'flex:1;' : '') + '">' +
+        slot(32) + '<div style="display:flex;align-items:center;gap:8px;height:24px;">' + label + counter + '</div>' + dot + '</div>';
+  } else {
+    var w = large ? 102 : 97;
+    var lab = '<span style="display:flex;align-items:center;padding:' + (large ? '17px 0 15px' : '16px 0') + ';">' + label + '</span>';
+    h = '<div style="position:relative;display:inline-flex;justify-content:center;align-items:center;' + (o.fill ? 'flex:1;min-width:' + w + 'px;' : 'width:' + w + 'px;') +
+        'box-shadow:inset 0 -2px 0 ' + line + ';box-sizing:border-box;"><div style="display:flex;align-items:center;gap:8px;padding:0 12px;">' +
+        (o.Placement === 'Trailing' ? lab + slot(24) : slot(24) + lab) + counter + '</div>' + dot + '</div>';
+  }
+  return h;
+}
+
+var _tbDemo = { Orientation: 'Vertical', Size: 'Medium', count: '4' };
+window._tbDemo = _tbDemo;
+
+function _tabsRender(o) {
+  var n = parseInt(o.count, 10) || 4, items = '';
+  for (var i = 0; i < n; i++) items += _tabItem({ State: 'Default', Orientation: o.Orientation, Size: o.Size, Placement: 'Leading',
+    isSelected: i === 0, hasIcon: true, hasCounter: false, hasNotificationDot: false, label: 'Label', fill: true });
+  return '<div style="display:inline-flex;align-items:flex-end;">' + items + '</div>';
+}
+
+function updateTabsDemo() {
+  var g = function (id) { return document.getElementById(id); };
+  [['tb-demo-orientation', 'Orientation'], ['tb-demo-size', 'Size'], ['tb-demo-count', 'count']].forEach(function (p) { if (g(p[0])) _tbDemo[p[1]] = g(p[0]).value; });
+  var el = g('tb-demo-preview');
+  if (el) { el.innerHTML = _tabsRender(_tbDemo); _tabRoundLabels(el); }
 }
 window.updateTabsDemo = updateTabsDemo;
 
-/* ── First paint ────────────────────────────────────────────────────── */
-function _tbsInit() {
-  updateTabsDemo();
-  ['2', '3', '4'].forEach(function (n) {
-    var host = document.getElementById('tabs-preview-tabs-' + n);
-    if (host) host.innerHTML = _tbsRender({ orientation: 'horizontal', size: 'medium', count: n });
-  });
-  Object.keys(_specCards).forEach(function (k) {
-    var host = document.getElementById('tabs-spec-' + k);
-    if (host) host.innerHTML = _tbsRender(_specCards[k]);
-  });
+/* ── DEV code — component API, as on the Code tab ───────────────────── */
+function buildSwiftSnippet(c) {
+  var n = parseInt(c.count, 10) || 4, items = [];
+  for (var i = 0; i < n; i++) items.push('    EBTabItem("Label")');
+  return 'EBTabGroup(selection: $selected) {\n' + items.join('\n') + '\n}\n.ebOrientation(.' + c.Orientation.toLowerCase() + ')\n.ebSize(.' + c.Size.toLowerCase() + ')';
 }
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tbsInit);
-else _tbsInit();
-document.addEventListener('astro:page-load', _tbsInit);
+function buildComposeSnippet(c) {
+  var n = parseInt(c.count, 10) || 4, items = [];
+  for (var i = 0; i < n; i++) items.push('"Label"');
+  return 'EBTabGroup(\n    items = listOf(' + items.join(', ') + '),\n    selectedIndex = selected,\n    onSelect = { selected = it },\n    orientation = EBTabOrientation.' + c.Orientation + ',\n    size = EBTabSize.' + c.Size + '\n)';
+}
+function getSnippet(cardKey, lang, card) { card = card || _tbDemo; return lang === 'swift' ? buildSwiftSnippet(card) : buildComposeSnippet(card); }
+window.getSnippet = getSnippet;
+
+function _tbInit() { updateTabsDemo(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateTabsDemo); }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tbInit);
+else _tbInit();
+document.addEventListener('astro:page-load', _tbInit);

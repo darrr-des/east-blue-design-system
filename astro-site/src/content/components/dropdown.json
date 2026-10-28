@@ -3,7 +3,7 @@
   "meta": {
     "node": "7947:111865",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=7947-111865",
-    "description": "A trigger field that opens a menu of options — composes Select Field for the trigger and Select Group for the menu.",
+    "description": "Selects let people choose one option from a list.",
     "badges": [
       {
         "kind": "keep",
