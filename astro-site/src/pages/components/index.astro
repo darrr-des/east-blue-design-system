@@ -8,6 +8,7 @@ type CompCard = {
   name: string;
   description: string;
   navGroup?: string;
+  coverImage?: string;
   badges: { kind: string; label: string }[];
 };
 
@@ -22,6 +23,7 @@ for (const item of navManifest) {
     name: data.meta?.name || item.slug,
     description: data.meta?.description || '',
     navGroup: data.meta?.navGroup,
+    coverImage: data.meta?.coverImage,
     badges: data.meta?.badges || [],
   });
   openTotal += (data.overview?.open || []).length;
@@ -125,7 +127,7 @@ function verdictTone(kind?: string): string {
             const v = verdictBadge(c.badges);
             return (
               <a class="cmp-card" href={url(`/components/${c.slug}`)}>
-                <div class="cmp-card-image" aria-hidden="true"></div>
+                <div class="cmp-card-image" aria-hidden="true" style={c.coverImage ? `background-image:url(${url(c.coverImage)})` : undefined}></div>
                 {v && (
                   <span class={`cmp-card-badge cmp-card-badge--${verdictTone(v.kind)}`}>{v.label}</span>
                 )}
@@ -151,7 +153,7 @@ function verdictTone(kind?: string): string {
                   const v = verdictBadge(c.badges);
                   return (
                     <a class="cmp-card" href={url(`/components/${c.slug}`)}>
-                      <div class="cmp-card-image" aria-hidden="true"></div>
+                      <div class="cmp-card-image" aria-hidden="true" style={c.coverImage ? `background-image:url(${url(c.coverImage)})` : undefined}></div>
                       {v && (
                         <span class={`cmp-card-badge cmp-card-badge--${verdictTone(v.kind)}`}>{v.label}</span>
                       )}
@@ -174,7 +176,7 @@ function verdictTone(kind?: string): string {
                 const v = verdictBadge(c.badges);
                 return (
                   <a class="cmp-card" href={url(`/components/${c.slug}`)}>
-                    <div class="cmp-card-image" aria-hidden="true"></div>
+                    <div class="cmp-card-image" aria-hidden="true" style={c.coverImage ? `background-image:url(${url(c.coverImage)})` : undefined}></div>
                     {v && (
                       <span class={`cmp-card-badge cmp-card-badge--${verdictTone(v.kind)}`}>{v.label}</span>
                     )}
@@ -438,6 +440,11 @@ function verdictTone(kind?: string): string {
       height: 200px;
       flex-shrink: 0;
       background: var(--card-image-bg);
+      /* A component with meta.coverImage paints it here; the rest keep the flat
+         placeholder. The art is 410 × 200 in Figma, the same height as the slot. */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       border-radius: 12px 12px 0 0;
       position: relative;
     }

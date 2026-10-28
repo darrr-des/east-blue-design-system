@@ -20,7 +20,8 @@
       "text": "Three styles, five sizes and four appearance modes, all token-bound, with slot nodes for icon and label. Nothing open."
     },
     "navGroup": "",
-    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      \n      <rect x=\"2\" y=\"8\" width=\"28\" height=\"10\" rx=\"5\" fill=\"#005CE5\"/>\n      \n      <rect x=\"9\" y=\"12\" width=\"14\" height=\"2\" rx=\"1\" fill=\"white\" opacity=\"0.9\"/>\n      \n      <rect x=\"2\" y=\"21\" width=\"28\" height=\"8\" rx=\"4\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\"/>\n      <rect x=\"10\" y=\"24\" width=\"12\" height=\"2\" rx=\"1\" fill=\"#005CE5\" opacity=\"0.8\"/>\n    </svg>"
+    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      \n      <rect x=\"2\" y=\"8\" width=\"28\" height=\"10\" rx=\"5\" fill=\"#005CE5\"/>\n      \n      <rect x=\"9\" y=\"12\" width=\"14\" height=\"2\" rx=\"1\" fill=\"white\" opacity=\"0.9\"/>\n      \n      <rect x=\"2\" y=\"21\" width=\"28\" height=\"8\" rx=\"4\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\"/>\n      <rect x=\"10\" y=\"24\" width=\"12\" height=\"2\" rx=\"1\" fill=\"#005CE5\" opacity=\"0.8\"/>\n    </svg>",
+    "coverImage": "/assets/previews/button-cover.png"
   },
   "overview": {
     "inContextNote": "How the button appears in real product screens — Link Physical Card and More Info on a card sheet, Add a Card under the card options, Select this amount on GLoan, and Pay Loan on a due-date card.",
@@ -1968,19 +1969,27 @@
     "usageGuidelines": [
       {
         "doText": "Use one Filled button per screen area as the primary action. Pair with Outline or Text for secondary.",
-        "dontText": "Place two filled buttons side by side — they compete for attention and neither reads as primary."
+        "dontText": "Place two filled buttons side by side — they compete for attention and neither reads as primary.",
+        "doImage": "/assets/previews/button-g1-do.png",
+        "dontImage": "/assets/previews/button-g1-dont.png"
       },
       {
         "doText": "Use Destructive appearance for irreversible actions (delete, remove). Always pair with a confirmation.",
-        "dontText": "Use Destructive for actions that are simply \"negative\" but reversible (dismiss, close, decline)."
+        "dontText": "Use Destructive for actions that are simply \"negative\" but reversible (dismiss, close, decline).",
+        "doImage": "/assets/previews/button-g2-do.png",
+        "dontImage": "/assets/previews/button-g2-dont.png"
       },
       {
         "doText": "Use White appearance on brand-colored or dark surfaces (hero banners, promotional cards).",
-        "dontText": "Use White appearance on a white background — the button disappears. Use Default or Subtle instead."
+        "dontText": "Use White appearance on a white background — the button disappears. Use Default or Subtle instead.",
+        "doImage": "/assets/previews/button-g3-do.png",
+        "dontImage": "/assets/previews/button-g3-dont.png"
       },
       {
         "doText": "Use Text style for inline or low-emphasis actions (Learn more, View terms, Skip).",
-        "dontText": "Use Text style for primary form submission — it lacks the visual weight to signal the main action."
+        "dontText": "Use Text style for primary form submission — it lacks the visual weight to signal the main action.",
+        "doImage": "/assets/previews/button-g4-do.png",
+        "dontImage": "/assets/previews/button-g4-dont.png"
       }
     ],
     "scorecard": [

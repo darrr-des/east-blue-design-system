@@ -63,7 +63,7 @@ export function fromJson(slug, j) {
       slug, name: j.name, node: m.node, figmaUrl: m.figmaUrl, description: m.description,
       badges: m.badges || [],
       verdict: m.verdict?.kind ? { kind: m.verdict.kind, title: m.verdict.title, text: m.verdict.text } : undefined,
-      navGroup: str(m.navGroup), navIconSvg: str(m.navIconSvg),
+      navGroup: str(m.navGroup), navIconSvg: str(m.navIconSvg), coverImage: str(m.coverImage),
     }),
     overview: drop({
       inContextNote: str(o.inContextNote), inContextHtml: str(o.inContextHtml),

@@ -49,7 +49,8 @@ const hasOverview =
   data.overview.resolved.length ||
   data.overview.open.length ||
   data.overview.recommendations.length ||
-  data.overview.appliedRecommendations?.length;
+  data.overview.appliedRecommendations?.length ||
+  data.code.usageGuidelines.length;
 
 // A component the system is retiring (remove / consolidate / product-layer)
 // has no Style or Code tab: its Overview points at the canonical sibling.
@@ -65,7 +66,6 @@ const hasCode = !cardless && (
   data.code.propertyMapping.rows.length ||
   data.code.usageSnippets.length ||
   data.code.accessibility.length ||
-  data.code.usageGuidelines.length ||
   data.code.scorecard.length ||
   (data.code.variants.rows && data.code.variants.rows.length));
 
@@ -124,6 +124,9 @@ const hasChangelog = data.changelog.length > 0;
                   <div class="sub-heading" id={`${data.meta.slug}-behavior`}>Behavior</div>
                   <BehaviorTable rows={data.overview.behavior} />
                 </>
+              )}
+              {data.code.usageGuidelines.length > 0 && (
+                <UsageGuidelines slug={data.meta.slug} pairs={data.code.usageGuidelines} />
               )}
               {(data.overview.open.length > 0 || data.overview.resolved.length > 0) && (
                 <>
@@ -210,7 +213,6 @@ const hasChangelog = data.changelog.length > 0;
               {data.code.propertyMapping.rows.length > 0 && <PropertyMapping slug={data.meta.slug} data={data.code.propertyMapping} />}
               {data.code.usageSnippets.length > 0 && <UsageSnippets slug={data.meta.slug} items={data.code.usageSnippets} />}
               {data.code.accessibility.length > 0 && <AccessibilityTable slug={data.meta.slug} rows={data.code.accessibility} />}
-              {data.code.usageGuidelines.length > 0 && <UsageGuidelines slug={data.meta.slug} pairs={data.code.usageGuidelines} />}
               {data.code.scorecard.length > 0 && <CriteriaScorecard slug={data.meta.slug} rows={data.code.scorecard} />}
               {data.code.variants.rows && data.code.variants.rows.length > 0 && <VariantsInventory slug={data.meta.slug} data={data.code.variants} />}
             </div>

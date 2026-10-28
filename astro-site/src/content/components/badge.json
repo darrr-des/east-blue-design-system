@@ -20,7 +20,8 @@
       "text": "Consistent is partial: the <code>Negative</code> and <code>Muted</code> Heavy Dashboard containers carry a hardcoded 0.9 opacity instead of a token. Bind it to close. The <code>State</code> values now match the token names."
     },
     "navGroup": "",
-    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      \n      <rect x=\"2\" y=\"5\" width=\"28\" height=\"10\" rx=\"5\" fill=\"#005CE5\"/>\n      <text x=\"16\" y=\"12\" text-anchor=\"middle\" fill=\"white\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n      \n      <rect x=\"4\" y=\"19\" width=\"24\" height=\"10\" rx=\"5\" fill=\"#E5F1FF\"/>\n      <text x=\"16\" y=\"26\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n    </svg>"
+    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      \n      <rect x=\"2\" y=\"5\" width=\"28\" height=\"10\" rx=\"5\" fill=\"#005CE5\"/>\n      <text x=\"16\" y=\"12\" text-anchor=\"middle\" fill=\"white\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n      \n      <rect x=\"4\" y=\"19\" width=\"24\" height=\"10\" rx=\"5\" fill=\"#E5F1FF\"/>\n      <text x=\"16\" y=\"26\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n    </svg>",
+    "coverImage": "/assets/previews/badge-cover.png"
   },
   "overview": {
     "inContextNote": "How the badge appears in real product screens — status labels on loan accounts (Late, Due Today, Almost Due), Paid markers on a payment history, and small labels in the app (Update PIN, HELP, New).",
@@ -2642,15 +2643,21 @@
     "usageGuidelines": [
       {
         "doText": "Use semantic states that match the content meaning (Positive for completed, Negative for failed, Notice for pending).",
-        "dontText": "Use badges for interactive elements -- badges are display-only status indicators."
+        "dontText": "Use badges for interactive elements -- badges are display-only status indicators.",
+        "doImage": "/assets/previews/badge-g1-do.png",
+        "dontImage": "/assets/previews/badge-g1-dont.png"
       },
       {
         "doText": "Use Heavy level for primary status indicators and Light/Medium for secondary or supporting context.",
-        "dontText": "Use multiple Heavy badges in the same row -- visual noise. Use one Heavy + rest Light/Medium."
+        "dontText": "Use multiple Heavy badges in the same row -- visual noise. Use one Heavy + rest Light/Medium.",
+        "doImage": "/assets/previews/badge-g2-do.png",
+        "dontImage": "/assets/previews/badge-g2-dont.png"
       },
       {
         "doText": "Match badge Type to context: Default for general, Voucher for promos, Transaction for history, Dashboard for summaries.",
-        "dontText": "Mix badge Types within the same list or group."
+        "dontText": "Mix badge Types within the same list or group.",
+        "doImage": "/assets/previews/badge-g3-do.png",
+        "dontImage": "/assets/previews/badge-g3-dont.png"
       }
     ],
     "scorecard": [
