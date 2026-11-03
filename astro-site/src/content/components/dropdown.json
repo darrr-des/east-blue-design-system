@@ -20,7 +20,8 @@
       "text": "All four DS Health traits pass. One finding is open: the drawn peso sign is an unflattened boolean shape — flatten it to close. Having no pressed state is correct: a form field shows interaction by expanding."
     },
     "navGroup": "Select",
-    "navIconSvg": ""
+    "navIconSvg": "",
+    "coverImage": "/assets/previews/dropdown-cover.png"
   },
   "overview": {
     "inContextNote": "How the select appears in real product screens — Province, City and Barangay selects on a Register address form, closed with placeholders and open on Province to show the list of provinces.",
@@ -1691,19 +1692,27 @@
     "usageGuidelines": [
       {
         "doText": "Use Select when the value comes from a fixed, known list.",
-        "dontText": "Don't use it for free text or for a list long enough to need searching."
+        "dontText": "Don’t use it for free text or for a list long enough to need searching.",
+        "doImage": "/assets/previews/dropdown-g1-do.png",
+        "dontImage": "/assets/previews/dropdown-g1-dont.png"
       },
       {
         "doText": "Leave room below the trigger for the menu to open.",
-        "dontText": "Don't assume the menu fits inside the trigger's 46px box — it overlays what is beneath it."
+        "dontText": "Don’t assume the menu fits inside the trigger’s 46px box - it overlays what is beneath it.",
+        "doImage": "/assets/previews/dropdown-g2-do.png",
+        "dontImage": "/assets/previews/dropdown-g2-dont.png"
       },
       {
         "doText": "Pair Error with a message the form owns.",
-        "dontText": "Don't rely on the red border alone — it reaches nobody using a screen reader."
+        "dontText": "Don’t rely on the red border alone - it reaches nobody using a screen reader.",
+        "doImage": "/assets/previews/dropdown-g3-do.png",
+        "dontImage": "/assets/previews/dropdown-g3-dont.png"
       },
       {
         "doText": "Pick the currency Type deliberately and document which one.",
-        "dontText": "Don't mix PesoSignVector and PesoSignText across one form; they differ subtly enough to look like a mistake."
+        "dontText": "Don’t mix PesoSignVector and PesoSignText across one form; they differ subtly enough to look like a mistake.",
+        "doImage": "/assets/previews/dropdown-g4-do.png",
+        "dontImage": "/assets/previews/dropdown-g4-dont.png"
       }
     ],
     "scorecard": [

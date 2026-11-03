@@ -20,7 +20,8 @@
       "text": "All four DS Health traits pass and nothing is open. <code>BorderType</code> and its values and the <code>⤷ SelectionSlot</code> follow the naming guidelines, and the Scrollbar frame is intentional."
     },
     "navGroup": "Select",
-    "navIconSvg": ""
+    "navIconSvg": "",
+    "coverImage": "/assets/previews/dropdown-item-group-cover.png"
   },
   "overview": {
     "inContextNote": "How the select group appears in real product screens — the list of options that opens under an expanded Select (the GCredit limit on Account Details), next to a closed Select on Scheduled Transfer.",
@@ -1176,19 +1177,27 @@
     "usageGuidelines": [
       {
         "doText": "Let the group own the dividers between rows.",
-        "dontText": "Don't add dividers inside a Select Item — BorderType already places them."
+        "dontText": "Don't add dividers inside a Select Item — BorderType already places them.",
+        "doImage": "/assets/previews/dropdown-item-group-g1-do.png",
+        "dontImage": "/assets/previews/dropdown-item-group-g1-dont.png"
       },
       {
         "doText": "Re-apply density when you replace the slot's contents.",
-        "dontText": "Don't assume swapped-in rows inherit the group's density — they don't, in Figma."
+        "dontText": "Don't assume swapped-in rows inherit the group's density — they don't, in Figma.",
+        "doImage": "/assets/previews/dropdown-item-group-g2-do.png",
+        "dontImage": "/assets/previews/dropdown-item-group-g2-dont.png"
       },
       {
         "doText": "Use None when the rows already read as separate cards.",
-        "dontText": "Don't stack dividers against a row that draws its own border."
+        "dontText": "Don't stack dividers against a row that draws its own border.",
+        "doImage": "/assets/previews/dropdown-item-group-g3-do.png",
+        "dontImage": "/assets/previews/dropdown-item-group-g3-dont.png"
       },
       {
         "doText": "Show the Label when a list has genuine sections.",
-        "dontText": "Don't use it as a title for the whole menu — that belongs on the Select."
+        "dontText": "Don't use it as a title for the whole menu — that belongs on the Select.",
+        "doImage": "/assets/previews/dropdown-item-group-g4-do.png",
+        "dontImage": "/assets/previews/dropdown-item-group-g4-dont.png"
       }
     ],
     "scorecard": [

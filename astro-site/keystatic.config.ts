@@ -120,6 +120,7 @@ export default config({
           }, { label: 'Verdict box' }),
           navGroup: text('Family (navGroup)'),
           navIconSvg: html('Nav icon SVG'),
+          coverImage: text('Cover image path (card on /components)'),
         }, { label: 'Meta' }),
         overview: fields.object({
           inContextNote: html('In Context — note'),
@@ -169,7 +170,7 @@ export default config({
           }, { label: 'Property mapping' }),
           usageSnippets: fields.array(fields.object({ subheading: text('Subheading'), swift: html('SwiftUI'), compose: html('Compose') }), { label: 'Usage snippets', itemLabel: (p) => p.fields.subheading.value }),
           accessibility: fields.array(fields.object({ requirement: text('Requirement'), ios: html('iOS'), android: html('Android') }), { label: 'Accessibility', itemLabel: (p) => p.fields.requirement.value }),
-          usageGuidelines: fields.array(fields.object({ doText: html('Do'), dontText: html("Don't") }), { label: 'Usage guidelines (1–4 pairs)', itemLabel: (p) => p.fields.doText.value }),
+          usageGuidelines: fields.array(fields.object({ doText: html('Do'), dontText: html("Don't"), doImage: text('Do — sample image path'), dontImage: text("Don't — sample image path") }), { label: 'Usage guidelines (1–4 pairs)', itemLabel: (p) => p.fields.doText.value }),
           scorecard: fields.array(fields.object({
             id: fields.select({ label: 'ID', options: CRITERIA.filter((c) => c.value), defaultValue: 'C1' }),
             criterion: text('Criterion'),

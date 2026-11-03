@@ -20,7 +20,8 @@
       "text": "All four DS Health traits pass and nothing is open. Disabled and Pressed sit on their own <code>State</code> axis, the flag is a vector from the Flags Library, and <code>Type</code> reads <code>Icon</code>, <code>PesoSignVector</code>, <code>Flag</code> and <code>PesoSignText</code>."
     },
     "navGroup": "Select",
-    "navIconSvg": ""
+    "navIconSvg": "",
+    "coverImage": "/assets/previews/dropdown-item-cover.png"
   },
   "overview": {
     "inContextNote": "How the select item appears in real product screens — country rows with flags in the Express Send country code list, and peso amount rows in a GLoan loan amount list with the chosen amount highlighted.",
@@ -2222,19 +2223,27 @@
     "usageGuidelines": [
       {
         "doText": "Pick one Density for a whole list.",
-        "dontText": "Don't mix densities inside one Select Group — the rows stop scanning as a column."
+        "dontText": "Don't mix densities inside one Select Group — the rows stop scanning as a column.",
+        "doImage": "/assets/previews/dropdown-item-g1-do.png",
+        "dontImage": "/assets/previews/dropdown-item-g1-dont.png"
       },
       {
         "doText": "Use Flag when the option is a country and the flag identifies it.",
-        "dontText": "Don't rely on the flag alone — the country name belongs in the label for screen readers."
+        "dontText": "Don't rely on the flag alone — the country name belongs in the label for screen readers.",
+        "doImage": "/assets/previews/dropdown-item-g2-do.png",
+        "dontImage": "/assets/previews/dropdown-item-g2-dont.png"
       },
       {
         "doText": "Keep the label short enough to sit on one line.",
-        "dontText": "Don't push detail into the label when Supporting Text is the place for it."
+        "dontText": "Don't push detail into the label when Supporting Text is the place for it.",
+        "doImage": "/assets/previews/dropdown-item-g3-do.png",
+        "dontImage": "/assets/previews/dropdown-item-g3-dont.png"
       },
       {
         "doText": "Let the group own the dividers between rows.",
-        "dontText": "Don't add a divider inside the row — Select Group's BorderType already places them."
+        "dontText": "Don't add a divider inside the row — Select Group's BorderType already places them.",
+        "doImage": "/assets/previews/dropdown-item-g4-do.png",
+        "dontImage": "/assets/previews/dropdown-item-g4-dont.png"
       }
     ],
     "scorecard": [

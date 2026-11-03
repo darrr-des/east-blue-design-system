@@ -20,7 +20,8 @@
       "text": "All four DS Health traits pass and nothing is open. <code>State</code> and <code>hasLimit</code> follow the naming guidelines, every layer has a semantic name, and <code>Count</code> and <code>Limit</code> are text properties."
     },
     "navGroup": "",
-    "navIconSvg": ""
+    "navIconSvg": "",
+    "coverImage": "/assets/previews/counter-cover.png"
   },
   "overview": {
     "inContextNote": "How the counter appears in real product screens — a limit counter (10 / 10) beside the Send to list in Express Send, and a count (2) beside the People section when splitting a bill.",
@@ -703,15 +704,21 @@
     "usageGuidelines": [
       {
         "doText": "Use the single integer for how-many counts — unread, pending, notifications.",
-        "dontText": "Don’t use the single integer for progress against a capacity."
+        "dontText": "Don’t use the single integer for progress against a capacity.",
+        "doImage": "/assets/previews/counter-g1-do.png",
+        "dontImage": "/assets/previews/counter-g1-dont.png"
       },
       {
         "doText": "Use hasLimit for slots used against a capacity — \"3 / 10 beneficiaries\".",
-        "dontText": "Don’t let count exceed limit; clamp it in code."
+        "dontText": "Don’t let count exceed limit; clamp it in code.",
+        "doImage": "/assets/previews/counter-g2-do.png",
+        "dontImage": "/assets/previews/counter-g2-dont.png"
       },
       {
         "doText": "Keep maxDisplay at 99 so the pill stays two digits plus the glyph.",
-        "dontText": "Don’t show four-digit counts — \"999+\" is the widest the pill should get."
+        "dontText": "Don’t show four-digit counts — \"999+\" is the widest the pill should get.",
+        "doImage": "/assets/previews/counter-g3-do.png",
+        "dontImage": "/assets/previews/counter-g3-dont.png"
       }
     ],
     "scorecard": [
