@@ -1,0 +1,14 @@
+# Caching rules for the live site (Apache).
+#
+# Every build renames the CSS and JS in /_astro/ and deletes the old files. If a
+# browser keeps an old copy of a page, that page asks for files that are gone
+# and renders unstyled. So pages are always rechecked with the server, while
+# the renamed /_astro/ files, which never change once built, are cached for good.
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <If "%{REQUEST_URI} =~ m#^/_astro/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>

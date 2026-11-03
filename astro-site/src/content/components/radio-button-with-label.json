@@ -1026,7 +1026,7 @@
         "dontText": "Don’t use it when people can pick more than one — use Checkbox Item."
       },
       {
-        "doText": "Write the label as the option itself — “Pay with GCash”, “Yes”, “No”.",
+        "doText": "Write the label as the option itself — \"Pay with GCash\", \"Yes\", \"No\".",
         "dontText": "Don’t put helper text in the label; add a Subtext Message under the group instead."
       },
       {
@@ -1035,7 +1035,7 @@
       },
       {
         "doText": "Make the whole row — radio and label — the tap target.",
-        "dontText": "Don’t leave only the radio tappable; at 16–24px it is too small on its own."
+        "dontText": "Don't leave only the radio tappable — at 16–24px it is too small on its own, and the label is part of the control."
       }
     ],
     "scorecard": [

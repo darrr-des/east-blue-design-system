@@ -1102,7 +1102,7 @@
         "dontText": "Don't use one where an exact figure matters; a field is faster and more accurate."
       },
       {
-        "doText": "Leave 23px of clearance above when the tooltip is on.",
+        "doText": "Leave 24px of clearance above when the tooltip is on.",
         "dontText": "Don't place it directly under other content — the bubble sits outside the component's box."
       },
       {

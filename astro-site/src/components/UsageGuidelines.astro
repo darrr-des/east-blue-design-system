@@ -17,14 +17,16 @@
  */
 import type { GuidelinePair } from '../data/types';
 import { url } from '../lib/url';
+import { guidelineImage } from '../lib/public-asset';
 interface Props { slug: string; pairs: GuidelinePair[]; }
 const { slug, pairs } = Astro.props;
 
 /* One flat list of cards, Do then Don't, so the grid fills row by row the way
-   Figma's does. */
+   Figma's does. Art comes from the JSON's doImage/dontImage when set, else from
+   the assets/guidelines/<slug>-<n>-<side>.png convention. */
 const cards = pairs.flatMap((p, i) => [
-  { kind: 'do' as const, label: 'Do', text: p.doText, image: p.doImage, key: `${i}-do` },
-  { kind: 'dont' as const, label: 'Don’t', text: p.dontText, image: p.dontImage, key: `${i}-dont` },
+  { kind: 'do' as const, label: 'Do', text: p.doText, image: p.doImage ? url(p.doImage) : guidelineImage(slug, i + 1, 'do'), key: `${i}-do` },
+  { kind: 'dont' as const, label: 'Don’t', text: p.dontText, image: p.dontImage ? url(p.dontImage) : guidelineImage(slug, i + 1, 'dont'), key: `${i}-dont` },
 ]);
 ---
 <div class="sub-heading" id={`${slug}-guidelines`}>Usage Guidelines</div>
@@ -34,7 +36,7 @@ const cards = pairs.flatMap((p, i) => [
       <div class="ug-study">
         <div class={`ug-top ug-top--${c.kind}`}>{c.label}</div>
         <div class="ug-sample">
-          {c.image && <img src={url(c.image)} alt="" loading="lazy" />}
+          {c.image && <img src={c.image} alt="" loading="lazy" />}
         </div>
       </div>
       <p class="ug-desc" set:html={c.text} />

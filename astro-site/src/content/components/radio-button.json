@@ -1114,7 +1114,7 @@
     ],
     "usageGuidelines": [
       {
-        "doText": "Use <code>Style=Check</code> for single-select list rows — settings pickers, option lists, and full-width choice rows where the checkmark reads as \"this one is chosen\" (the iOS picker convention).",
+        "doText": "Use <code>Check</code> for single-select list rows — settings pickers, option lists, and full-width choice rows where the checkmark reads as \"this one is chosen\" (the iOS picker convention).",
         "dontText": "Don't use <code>Style=Check</code> in a form where real Checkboxes appear alongside it — the two become visually indistinguishable. Use <code>Style=Default</code> (filled dot) there; the dot is the universal single-select affordance."
       },
       {
