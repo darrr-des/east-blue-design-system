@@ -32,6 +32,7 @@ export interface ComponentMeta {
   verdict?: VerdictInline;
   navGroup?: string;          // family this component belongs to (e.g. "Avatar", "Form Elements")
   navIconSvg?: string;        // optional 32×32 thumbnail SVG markup for sidebar
+  coverImage?: string;        // optional card image for the /components grid, e.g. /assets/previews/<slug>-cover.png
 }
 
 // ── DS Health trait ────────────────────────────────────────────────────
@@ -270,6 +271,9 @@ export interface AccessibilityRow {
 export interface GuidelinePair {
   doText: string;
   dontText: string;
+  /** Optional sample art, as Figma's "Dos and Dont" cards carry it (374 × 216). */
+  doImage?: string;
+  dontImage?: string;
 }
 
 // ── Code tab: Criteria scorecard ──────────────────────────────────────

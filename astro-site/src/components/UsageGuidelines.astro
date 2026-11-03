@@ -1,12 +1,104 @@
 ---
+/*
+ * Usage Guidelines — the "Dos and Dont" cards, laid out as Figma has them
+ * (2026 Working File, [FOR EXPORT] Avatar › Container 12674:30751).
+ *
+ *   Container   two columns, 16px gaps both ways
+ *   card        374 × 322 in Figma — here it fills its column and keeps the
+ *               sample's 374 : 216 ratio, so it scales with the content width
+ *   Top         30 tall, radius 12 12 4 4, padding 8 / 8 / 6 / 12; #12AF80 for
+ *               Do and #D61B2C for Don't, label Proxima Soft Bold 16/16 at
+ *               0.25 tracking in white
+ *   Sample      374 × 216 on #EEF2F9, radius 4 4 12 12 — the slot Figma fills
+ *               with the study, clipped. A pair without art keeps the panel.
+ *               Bar and sample sit 4 apart and round away from that gap.
+ *   #description  BarkAda Medium 14/20 in text/color-text-weak #445C85,
+ *               16 below the study, inset 2
+ */
 import type { GuidelinePair } from '../data/types';
+import { url } from '../lib/url';
 interface Props { slug: string; pairs: GuidelinePair[]; }
 const { slug, pairs } = Astro.props;
+
+/* One flat list of cards, Do then Don't, so the grid fills row by row the way
+   Figma's does. */
+const cards = pairs.flatMap((p, i) => [
+  { kind: 'do' as const, label: 'Do', text: p.doText, image: p.doImage, key: `${i}-do` },
+  { kind: 'dont' as const, label: 'Don’t', text: p.dontText, image: p.dontImage, key: `${i}-dont` },
+]);
 ---
 <div class="sub-heading" id={`${slug}-guidelines`}>Usage Guidelines</div>
-{pairs.map((p) => (
-  <div class="guideline-row">
-    <div class="guideline-do"><h4>Do</h4><p>{p.doText}</p></div>
-    <div class="guideline-dont"><h4>Don't</h4><p>{p.dontText}</p></div>
-  </div>
-))}
+<div class="ug-grid">
+  {cards.map((c) => (
+    <div class="ug-card">
+      <div class="ug-study">
+        <div class={`ug-top ug-top--${c.kind}`}>{c.label}</div>
+        <div class="ug-sample">
+          {c.image && <img src={url(c.image)} alt="" loading="lazy" />}
+        </div>
+      </div>
+      <p class="ug-desc" set:html={c.text} />
+    </div>
+  ))}
+</div>
+
+<style>
+  .ug-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .ug-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .ug-study {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ug-top {
+    /* Figma: radius 12 12 4 4, padding 8 / 8 / 6 / 12 — 8 + 16 + 6 hugs to 30. */
+    border-radius: 12px 12px 4px 4px;
+    padding: 8px 8px 6px 12px;
+    font-family: 'Proxima Soft', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0.25px;
+    color: #FFFFFF;
+  }
+  .ug-top--do   { background: #12AF80; }
+  .ug-top--dont { background: #D61B2C; }
+  .ug-sample {
+    /* The mirror of the bar: radius 4 4 12 12, so the two round away from the
+       4px gap between them. */
+    border-radius: 4px 4px 12px 12px;
+    background: #EEF2F9;
+    aspect-ratio: 374 / 216;
+    overflow: hidden;
+  }
+  .ug-sample img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ug-desc {
+    margin: 16px 0 0;
+    padding: 0 2px;
+    font-family: 'BarkAda', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: #445C85;
+  }
+
+  /* One column once two 374-wide cards no longer fit side by side. */
+  @media (max-width: 820px) {
+    .ug-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

@@ -20,7 +20,8 @@
       "text": "A <code>Checkbox</code> instance beside a label and an optional description, with <code>isSelected</code>, <code>Size</code> (Small, Medium, Large) and <code>hasDescription</code>. States come from the nested Checkbox. One open recommendation: expose that Checkbox in the panel."
     },
     "navGroup": "Checkbox",
-    "navIconSvg": ""
+    "navIconSvg": "",
+    "coverImage": "/assets/previews/checkbox-item-cover.png"
   },
   "overview": {
     "inContextNote": "How the checkbox with label appears in real product screens — consent rows above a Confirm or Submit button.",
@@ -624,20 +625,22 @@
     ],
     "usageGuidelines": [
       {
-        "doText": "Use it when people can pick any number of options, each with its own label.",
-        "dontText": "Don’t use it to pick one option from several — use Radio Button with Label."
+        "doText": "Use this when a checkbox needs a label — It wires the two together.",
+        "dontText": "Don’t place a bare Checkbox beside loose text; the row stops being one control.",
+        "doImage": "/assets/previews/checkbox-item-g1-do.png",
+        "dontImage": "/assets/previews/checkbox-item-g1-dont.png"
       },
       {
         "doText": "Use Medium in forms and Small in dense lists.",
-        "dontText": "Don’t mix Small and Medium rows in one list."
+        "dontText": "Don’t expect a large — the set ships two sizes where Checkbox ships three.",
+        "doImage": "/assets/previews/checkbox-item-g2-do.png",
+        "dontImage": "/assets/previews/checkbox-item-g2-dont.png"
       },
       {
-        "doText": "Keep the label short and put extra detail in the description, on one line.",
-        "dontText": "Don’t put the full legal text of a consent in the description — link to it."
-      },
-      {
-        "doText": "Let the whole row toggle the box.",
-        "dontText": "Don’t make only the 16 or 20 box tappable."
+        "doText": "Keep the description to one line at this width.",
+        "dontText": "Don’t use the description for the legal text of a consent — link it instead.",
+        "doImage": "/assets/previews/checkbox-item-g3-do.png",
+        "dontImage": "/assets/previews/checkbox-item-g3-dont.png"
       }
     ],
     "scorecard": [
