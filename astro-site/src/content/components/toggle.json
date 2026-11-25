@@ -10,8 +10,8 @@
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
@@ -766,9 +766,9 @@
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Fills are consistent across all three sizes and the knob shadow is a single shared effect. But bindings cannot be read with the Talk To Figma plugin, and the paths the previous record asserted sat against three wrong hexes — the default-off track, the disabled-off track and the disabled knob — so nothing here is carried forward as verified."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All 36 visible fills and strokes across the 18 variants are bound to variables, including the default-off track, the disabled-off track and the disabled knob. Read through the Figma REST API."
       },
       {
         "id": "C4",
@@ -1047,6 +1047,22 @@
     }
   },
   "changelog": [
+    {
+      "version": "2.2.2",
+      "date": "November 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Token check · Keep · Ready · node 26510:37625",
+      "rows": [
+        {
+          "body": "<strong>Token binding verified</strong>: all 36 visible fills and strokes across the 18 variants are bound to variables.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Fixed"
+          }
+        }
+      ]
+    },
     {
       "version": "2.2.1",
       "date": "September 2026",
