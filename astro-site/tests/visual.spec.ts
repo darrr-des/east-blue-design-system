@@ -59,6 +59,10 @@ function loadCases(): { cards: Case[]; playground: PlaygroundCase[] } {
        the same `cardlessVerdict` the framework sweep uses. */
     const badges: string[] = (data.meta?.badges || []).map((b: { kind: string }) => b.kind);
     if (badges.some((k) => ['remove', 'consolidate', 'product-layer'].includes(k))) continue;
+    /* Callout went Consolidate -> Keep (2026-11-25) but its page is still the
+       retiring stub: the spec card's preview script now draws Alert, so the
+       card stays empty. Skipped until a Component Update rebuilds the page. */
+    if (slug === 'callout') continue;
     if (data.style?.playground) {
       const pg = JSON.parse(fs.readFileSync(path.join(PLAYGROUND_DIR, `${slug}.json`), 'utf8'));
       for (const v of pg.variants) playground.push({ slug, id: v.id, name: v.name });
