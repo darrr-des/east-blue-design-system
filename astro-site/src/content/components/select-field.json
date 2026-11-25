@@ -17,7 +17,7 @@
     "verdict": {
       "kind": "fix",
       "title": "Fix required before handoff",
-      "text": "Peso sign uses BOOLEAN_OPERATION instead of vector (C6). Flag uses raster IMAGE fill (C6). These block clean native mapping."
+      "text": "The peso sign and the flag are vectors in all 8 variants, so C6 is resolved. Fix stays while Reusable is Partial: the field is tied to the Philippine peso and flag. Closing C3 needs a Dev Mode check that the colours are token-bound."
     },
     "navGroup": "Form Elements",
     "navIconSvg": ""
@@ -41,8 +41,8 @@
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "<code>isFilled</code> now uses <code>true/false</code> (C2 fixed). Peso sign still uses <code>shape_full</code> BOOLEAN_OPERATION instead of a clean vector (C6)."
+        "rating": "pass",
+        "note": "<code>isFilled</code> uses <code>true/false</code> (C2), and the peso sign and flag are vectors (C6), in line with the sibling fields."
       },
       {
         "name": "Composable",
@@ -109,16 +109,6 @@
     "open": [],
     "recommendations": [
       {
-        "headline": "Flatten the Peso Sign <code>shape_full</code> BOOLEAN_OPERATION.",
-        "body": "Boolean-operation paths render inconsistently across SVG export and native platforms. Replace with a single flattened vector path.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Use a vector flag asset.",
-        "body": "The Philippine flag is currently a raster IMAGE fill. Swap to a vector from the DS icon library so it stays crisp across DPIs and platforms.",
-        "tag": "Asset"
-      },
-      {
         "headline": "Generalize to multi-currency.",
         "body": "Expose currency symbol and flag as configurable slots so the field can support other currencies (USD, EUR, SGD) without creating a new component per currency.",
         "tag": "Property"
@@ -129,7 +119,18 @@
         "tag": "Slot"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Flatten the Peso Sign <code>shape_full</code> BOOLEAN_OPERATION.",
+        "body": "Applied: the peso sign is a single vector path in all 8 variants.",
+        "tag": "Asset"
+      },
+      {
+        "headline": "Use a vector flag asset.",
+        "body": "Applied: the flag is four vector paths in all 8 variants, no raster fill.",
+        "tag": "Asset"
+      }
+    ]
   },
   "style": {
     "heading": "Styles",
@@ -1659,11 +1660,11 @@
     "usageGuidelines": [
       {
         "doText": "Use Select Field for currency amount selection where the peso sign and flag indicator provide essential context for the user.",
-        "dontText": "Use Select Field for free-text entry — use Input Field instead. Select Field is for predefined selection only."
+        "dontText": "Don’t use Select Field for free-text entry. Use Input Field instead. Select Field is for predefined selection only."
       },
       {
         "doText": "Show error state with a helper text message below the field explaining the validation issue (e.g. \"Minimum amount is 1.00\").",
-        "dontText": "Hide the peso sign or flag — these are essential visual cues that distinguish this field from a generic dropdown."
+        "dontText": "Don’t hide the peso sign or flag. These are essential visual cues that distinguish this field from a generic dropdown."
       }
     ],
     "scorecard": [
@@ -1705,9 +1706,9 @@
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Peso sign uses <code>shape_full</code> BOOLEAN_OPERATION (not a vector). Flag uses raster IMAGE fill."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The peso sign is a single vector (<code>icon-peso</code>) and the flag is four vectors (<code>icon-flag</code>) in all 8 variants. No raster fills or boolean operations."
       }
     ],
     "variants": {

@@ -6,8 +6,8 @@
     "description": "Input Fields let people type a short piece of text.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -15,9 +15,9 @@
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix required before handoff",
-      "text": "isFilled uses Yes/No instead of true/false (C2). Property naming blocks direct Swift Bool / Kotlin Boolean mapping."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "All four DS Health traits pass and nothing is open. Eight variants, State × <code>isFilled</code> (true/false). Closing C3 needs a Dev Mode check that the colours are token-bound."
     },
     "navGroup": "Form Elements",
     "navIconSvg": ""
@@ -31,8 +31,8 @@
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Works across any text input context. Single-line only — no multi-line or textarea variant. No size variants (fixed 46px height)."
+        "rating": "pass",
+        "note": "Works across any single-line text input context. Multi-line entry belongs to Text Area, so the one fixed 46px height is not a reuse gap."
       },
       {
         "name": "Self-contained",
@@ -1630,11 +1630,11 @@
     "usageGuidelines": [
       {
         "doText": "Pair with a visible label above or inside the field. Use placeholder text to hint at expected input format.",
-        "dontText": "Use placeholder text as the only label — it disappears on focus and fails accessibility."
+        "dontText": "Never use placeholder text as the only label. It disappears on focus and fails accessibility."
       },
       {
         "doText": "Show error state with a helper text message below the field explaining what needs to be corrected.",
-        "dontText": "Use Input Field for selection — use Select Field instead. Input Field is for free-text entry only."
+        "dontText": "Don’t use Input Field for selection. Use Select Field instead. Input Field is for free-text entry only."
       }
     ],
     "scorecard": [

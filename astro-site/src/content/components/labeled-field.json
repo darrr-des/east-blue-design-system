@@ -31,8 +31,8 @@
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Works across form contexts requiring labeled inputs with icons. Single-line only — no multi-line variant. Fixed 46px height with no size options."
+        "rating": "pass",
+        "note": "Works across form contexts that need a labeled single-line input with icons. Multi-line entry belongs to Text Area, so the one fixed 46px height is not a reuse gap."
       },
       {
         "name": "Self-contained",
@@ -1711,11 +1711,11 @@
     "usageGuidelines": [
       {
         "doText": "Use Labeled Field when the input needs a persistent label above the value, a leading icon for context, and an optional action button.",
-        "dontText": "Use Labeled Field for simple text entry — use Input Field instead. Labeled Field is for complex form rows with icon context."
+        "dontText": "Don’t use Labeled Field for simple text entry. Use Input Field instead. Labeled Field is for complex form rows with icon context."
       },
       {
         "doText": "Provide meaningful icons in the leading and trailing slots — they help users identify the field purpose at a glance.",
-        "dontText": "Leave the icon placeholders as-is in production — always swap in a contextual icon or hide the slot."
+        "dontText": "Never leave the icon placeholders as-is in production. Always swap in a contextual icon or hide the slot."
       }
     ],
     "scorecard": [
