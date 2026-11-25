@@ -94,7 +94,14 @@ for (const { slug, id, name } of PLAYGROUND_CASES) {
     const root = page.locator('.pg-canvas > .pg-n').first();
     await expect(root).toBeAttached();
     await expect(page.locator('.pg-layer[aria-level="1"] .pg-lname').first()).toHaveText(name);
-    const shot = { maxDiffPixels: 0, threshold: 0, animations: 'disabled' as const };
+    /* Overlay's blurred scrim renders one of two ways on the Linux runner, and a
+       recapture just catches the other (Strength=Weak differs by 5,695 px, about
+       2%, in both directions). It alone may differ by up to 3%: enough to absorb
+       the blur, still far below a real change to the scrim. Everything else stays
+       pixel-exact. */
+    const shot = slug === 'overlay'
+      ? { maxDiffPixelRatio: 0.03, threshold: 0, animations: 'disabled' as const }
+      : { maxDiffPixels: 0, threshold: 0, animations: 'disabled' as const };
     const file = [slug, 'playground', `${sanitize(name)}.png`];
     /* A component whose box is zero in one dimension still draws: Progress Bar is
        a 312 × 0 frame of stroked zero-height lines, so all of it is stroke spilling
