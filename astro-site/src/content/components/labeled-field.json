@@ -6,18 +6,18 @@
     "description": "Labeled Fields let people enter text, with the label shown above the field.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix required before handoff",
-      "text": "Trailing icon uses a rectangle placeholder instead of a swappable icon instance (C6). Closing it takes a real icon slot on both the leading and trailing containers."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "All four DS Health traits pass and nothing is open. Eight variants, State × <code>isFilled</code>, with two icon SLOTs, <code>Leading Slot Icon</code> and <code>Trailing Icon Slot</code>, and four booleans for the icons, the label and the link button. Every visible colour is bound to a variable."
     },
     "navGroup": "Form Elements",
     "navIconSvg": ""
@@ -41,13 +41,13 @@
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "Boolean naming and casing fixed (C2 resolved): <code>isFilled</code> now uses <code>true/false</code> and property renamed to <code>State</code>. Action button layer renamed to <code>action-button</code> (C1 resolved)."
+        "rating": "pass",
+        "note": "<code>isFilled</code> uses <code>true/false</code> and <code>State</code> is capitalised (C2); the action button layer is <code>action-button</code> (C1)."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Nests in form layouts. However, <code>trailing-icon</code> uses a rectangle placeholder instead of a swappable icon instance (C6), limiting icon customization at the consumer level."
+        "rating": "pass",
+        "note": "Nests in form layouts. Both icons are SLOTs (<code>Leading Slot Icon</code>, <code>Trailing Icon Slot</code>), so consumers drop in any icon without detaching."
       }
     ],
     "behavior": [
@@ -107,7 +107,7 @@
       },
       {
         "headline": "",
-        "body": "Trailing icon uses shared Placeholder component instance — swappable by design. Internal RECTANGLE is the default visual, replaced by designers when consuming the component <span class=\"tag-fixed\">C6 Closed</span>",
+        "body": "Leading and trailing icons replaced with SLOTs, <code>Leading Slot Icon</code> and <code>Trailing Icon Slot</code>, across all 8 variants <span class=\"tag-fixed\">C6 Fixed</span>",
         "tag": {
           "criterion": "",
           "label": ""
@@ -122,17 +122,18 @@
         "tag": "Slot"
       },
       {
-        "headline": "Replace <code>trailing-icon</code> placeholder with a swappable icon instance.",
-        "body": "The current <code>icon-placeholder</code> RECTANGLE blocks designers from overriding the trailing icon without detaching. Follow the instance-swap pattern used elsewhere in the DS.",
-        "tag": "Slot"
-      },
-      {
         "headline": "Add a <code>helperText</code> slot.",
         "body": "Validation messages and hint copy are handled externally today — a first-class slot keeps the form anatomy self-contained.",
         "tag": "Slot"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Replace <code>trailing-icon</code> placeholder with a swappable icon instance.",
+        "body": "Applied: the leading and trailing icons are SLOTs, <code>Leading Slot Icon</code> and <code>Trailing Icon Slot</code>, across all 8 variants.",
+        "tag": "Slot"
+      }
+    ]
   },
   "style": {
     "heading": "Styles",
@@ -1736,9 +1737,9 @@
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Colors appear correct but token binding not verified."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All 38 visible fills and strokes across the 8 variants are bound to variables, and all text layers use text styles."
       },
       {
         "id": "C4",
@@ -1757,9 +1758,9 @@
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "<code>trailing-icon</code> uses <code>icon-placeholder</code> RECTANGLE — not a swappable icon instance."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The leading and trailing icons are SLOTs (<code>Leading Slot Icon</code>, <code>Trailing Icon Slot</code>) that take any vector icon instance. No placeholders remain."
       }
     ],
     "variants": {
@@ -1836,6 +1837,29 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.3.0",
+      "date": "November 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Icon slots · Keep · Ready · node 17758:3713",
+      "rows": [
+        {
+          "body": "<strong>Icons are SLOTs</strong>: the Placeholder instances are replaced with <code>Leading Slot Icon</code> and <code>Trailing Icon Slot</code> across all 8 variants.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Fixed"
+          }
+        },
+        {
+          "body": "<strong>Token binding verified</strong>: all 38 visible fills and strokes are bound to variables.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Fixed"
+          }
+        }
+      ]
+    },
     {
       "version": "1.2.0",
       "date": "March 2026",

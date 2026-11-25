@@ -10,14 +10,14 @@
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
       "kind": "keep",
       "title": "Keep — all findings resolved",
-      "text": "All four DS Health traits pass and nothing is open. Eight variants, State × <code>isFilled</code> (true/false). Closing C3 needs a Dev Mode check that the colours are token-bound."
+      "text": "All four DS Health traits pass and nothing is open. Eight variants, State × <code>isFilled</code> (true/false). Every colour is bound to a variable and every text layer uses a text style, so all six native criteria are Ready."
     },
     "navGroup": "Form Elements",
     "navIconSvg": ""
@@ -1655,9 +1655,9 @@
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Colors appear correct but token binding not verified."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All 22 visible fills and strokes across the 8 variants are bound to variables, and all 8 text layers use text styles."
       },
       {
         "id": "C4",
@@ -1755,6 +1755,29 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.2.0",
+      "date": "November 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Re-check · Keep · Ready · node 17758:3687",
+      "rows": [
+        {
+          "body": "<strong>Token binding verified</strong>: all 22 visible fills and strokes are bound to variables and all 8 text layers use text styles.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Fixed"
+          }
+        },
+        {
+          "body": "<strong>Reusable re-rated Pass</strong>: single-line entry is its purpose; multi-line belongs to Text Area. All four traits pass, so the verdict moves to Keep.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Reusable Fixed"
+          }
+        }
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "March 2026",
