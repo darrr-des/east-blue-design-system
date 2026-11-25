@@ -1223,15 +1223,15 @@
     "usageGuidelines": [
       {
         "doText": "Use style=filled for applied/active filters, style=light for inactive filters and dropdown triggers, style=outline when the surface beneath is already light gray.",
-        "dontText": "Mix filled and light chips in the same filter row without intent — it signals \"one filter is selected,\" so using both styles for unrelated reasons misleads the user."
+        "dontText": "Avoid mixing filled and light chips in the same filter row without intent. Filled signals \"one filter is selected,\" so using both styles for unrelated reasons misleads the user."
       },
       {
         "doText": "Pair the close affordance with applied filters so users can remove them with a single tap.",
-        "dontText": "Add a close icon to dropdown-trigger chips — the chevron already indicates the tap behavior; a close icon implies removal instead of picking."
+        "dontText": "Don’t add a close icon to dropdown-trigger chips. The chevron already indicates the tap behavior, and a close icon implies removal instead of picking."
       },
       {
         "doText": "Keep the chip label to one or two words. Use selectedValue to show the picked option separately.",
-        "dontText": "Stretch chips to fill width — they're meant to fit their content. If a control needs full width, use a Button or Select Field instead."
+        "dontText": "Don’t stretch chips to fill the width. They're meant to fit their content. If a control needs full width, use a Button or Select Field instead."
       }
     ],
     "scorecard": [

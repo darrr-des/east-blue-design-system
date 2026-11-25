@@ -881,11 +881,11 @@
     "usageGuidelines": [
       {
         "doText": "Use EBTitleBar as the top-level navigation element on every screen. Keep the title short and descriptive.",
-        "dontText": "Nest a title bar inside scrollable content or use it as a section header within a page -- use a section heading component instead."
+        "dontText": "Don’t nest a title bar inside scrollable content or use it as a section header within a page. Use a section heading component instead."
       },
       {
         "doText": "Use the title block for high-level section headers like \"My Wallet\" or \"Dashboard\" where the large text reinforces the current context.",
-        "dontText": "Show both trailing icon and leading control simultaneously -- they occupy the same trailing slot. Use one or the other."
+        "dontText": "Don’t show both a trailing icon and a leading control at once. They occupy the same trailing slot, so use one or the other."
       }
     ],
     "scorecard": [

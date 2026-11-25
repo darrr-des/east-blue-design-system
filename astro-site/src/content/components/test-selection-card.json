@@ -2200,15 +2200,15 @@
     "usageGuidelines": [
       {
         "doText": "Use Type=Option when the rows are mutually exclusive, so the radio carries the selection.",
-        "dontText": "Do not use Type=Default for a single-choice list; its selected border is the only cue and it shifts the layout."
+        "dontText": "Don’t use Type=Default for a single-choice list; its selected border is the only cue and it shifts the layout."
       },
       {
         "doText": "Keep the label to one line. Its box is 165px wide on Default and 180px on Cards.",
-        "dontText": "Do not rely on the Badge layer to mark a row — it draws in none of the 30 variants."
+        "dontText": "Don’t rely on the Badge layer to mark a row — it draws in none of the 30 variants."
       },
       {
         "doText": "Pair an error border with a message under the list.",
-        "dontText": "Do not show error and selection at once and expect both to read; the error border replaces the selected one."
+        "dontText": "Don’t show error and selection at once and expect both to read; the error border replaces the selected one."
       }
     ],
     "scorecard": [

@@ -881,15 +881,15 @@
     "usageGuidelines": [
       {
         "doText": "Use for free-form responses expected to exceed one line — feedback, comments, messages, notes.",
-        "dontText": "Use for short structured inputs (name, phone, code) — Input Field's single-line default is more appropriate and faster to fill."
+        "dontText": "Don’t use Text Area for short structured inputs (name, phone, code). Input Field's single-line default is more appropriate and faster to fill."
       },
       {
         "doText": "Turn `hasSubtext` off when there is nothing useful to say — an empty subtext row still reserves 22px and pushes the layout down.",
-        "dontText": "Turn `hasLabel` off to save space in a form — a field without a visible label leaves screen-reader users with only the placeholder, which disappears on focus."
+        "dontText": "Never turn `hasLabel` off to save space in a form. A field without a visible label leaves screen-reader users with only the placeholder, which disappears on focus."
       },
       {
         "doText": "Pair with a visible label above the field and a helper-text row below for character counts or format hints.",
-        "dontText": "Expect the field to be manually resizable — the desktop resize handle was removed in v2.2 because it had no touch equivalent. The field grows with its content within the platform's lineLimit / maxLines."
+        "dontText": "Don’t expect the field to be manually resizable. The desktop resize handle was removed in v2.2 because it had no touch equivalent. The field grows with its content within the platform's lineLimit / maxLines."
       }
     ],
     "scorecard": [

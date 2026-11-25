@@ -966,15 +966,15 @@
     "usageGuidelines": [
       {
         "doText": "Use Select when the options are a known, fixed list the user picks one of.",
-        "dontText": "Do not use it for free text with suggestions — that is a search field, and the menu here does not filter."
+        "dontText": "Don’t use it for free text with suggestions — that is a search field, and the menu here does not filter."
       },
       {
         "doText": "Pick one peso Type per product surface and stay with it.",
-        "dontText": "Do not mix PesoSignVector and PesoSignText on the same screen; the mark is a different shape and the difference is visible."
+        "dontText": "Don’t mix PesoSignVector and PesoSignText on the same screen; the mark is a different shape and the difference is visible."
       },
       {
         "doText": "Pass the options in through the menu slot.",
-        "dontText": "Do not detach the Select Group instance to hardcode options — the slot exists precisely so you do not have to."
+        "dontText": "Don’t detach the Select Group instance to hardcode options — the slot exists precisely so you do not have to."
       }
     ],
     "scorecard": [

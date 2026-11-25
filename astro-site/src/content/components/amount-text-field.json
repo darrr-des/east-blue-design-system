@@ -10,14 +10,14 @@
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
       "kind": "keep",
       "title": "Keep — all findings resolved",
-      "text": "Eight variants — Size LG/MD × State Default, Focused, Disabled, Error — with four booleans for the label, the subtext and both currency affordances. All four traits pass. Closing C3 needs a Dev Mode check that the colours are token-bound."
+      "text": "Eight variants — Size LG/MD × State Default, Focused, Disabled, Error — with four booleans for the label, the subtext and both currency affordances. All four traits pass. Every colour is bound to a variable, so all native criteria are Ready."
     },
     "navGroup": "Form Elements",
     "navIconSvg": ""
@@ -801,11 +801,11 @@
     "usageGuidelines": [
       {
         "doText": "Use .decimalPad / KeyboardType.Decimal so users can enter fractional pesos without switching keyboards.",
-        "dontText": "Use Amount Text Field for phone numbers, account numbers, or non-currency numerics — it hard-codes the peso glyph and currency formatting."
+        "dontText": "Don’t use Amount Text Field for phone numbers, account numbers or other non-currency numbers. It hard-codes the peso glyph and currency formatting."
       },
       {
         "doText": "Pair Large size with a label above and a hint subtext below for hero entry screens (Send Money, Cash-In).",
-        "dontText": "Drop the peso glyph on Default size to \"save space\" — the glyph is the primary signal that the input expects currency."
+        "dontText": "Don’t drop the peso glyph on Default size to \"save space\". The glyph is the primary signal that the input expects currency."
       }
     ],
     "scorecard": [
@@ -826,9 +826,9 @@
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Colors moved from the component-scoped namespace to the shared generic scale. Bindings are not readable through the review tooling, so the token paths on the Style tab are indicative and need a Dev Mode confirmation."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All 48 visible fills and strokes across the 8 variants are bound to variables, and every text layer uses a text style. Read through the Figma REST API."
       },
       {
         "id": "C4",
@@ -935,6 +935,22 @@
     }
   },
   "changelog": [
+    {
+      "version": "2.7",
+      "date": "November 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Token check · Keep · Ready · node 4602:18144",
+      "rows": [
+        {
+          "body": "<strong>Token binding verified</strong>: all 48 visible fills and strokes are bound to variables and every text layer uses a text style.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Fixed"
+          }
+        }
+      ]
+    },
     {
       "version": "2.6",
       "date": "September 2026",

@@ -30,6 +30,8 @@ def find_all(n, pred, out):
 
 sec = get(f'https://api.figma.com/v1/files/{FILE}/nodes?ids={section}')['nodes'][section]['document']
 cover = find(sec, lambda n: n['type'] == 'FRAME' and n['name'].startswith('Cover Image'))
+# Some sections have no "Cover Image - X" frame: the same art is named Component Image.
+cover = cover or find(sec, lambda n: n['type'] == 'FRAME' and n['name'] == 'Component Image')
 cards = find_all(sec, lambda n: n['type'] == 'INSTANCE' and n['name'] == 'Dos and Dont' and n.get('visible', True), [])
 cards.sort(key=lambda n: (round(n['absoluteBoundingBox']['y']), n['absoluteBoundingBox']['x']))
 

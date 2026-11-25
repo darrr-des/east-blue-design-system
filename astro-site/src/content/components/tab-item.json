@@ -1303,11 +1303,11 @@
     "usageGuidelines": [
       {
         "doText": "Use vertical orientation when tabs have icons + short labels (iconic nav). Use horizontal when labels are longer or icons aren't semantically needed.",
-        "dontText": "Mix orientations within the same Tabs container."
+        "dontText": "Don’t mix orientations within the same Tabs container."
       },
       {
         "doText": "Use counter for numeric indicators (unread counts, items). Use showBadge for \"new / unseen\" indicators where the count is unimportant.",
-        "dontText": "Stack counter + red-dot on the same tab — the counter already communicates \"there's something here.\""
+        "dontText": "Avoid stacking a counter and a red dot on the same tab. The counter already communicates \"there's something here.\""
       }
     ],
     "scorecard": [

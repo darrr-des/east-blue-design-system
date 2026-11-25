@@ -1077,15 +1077,15 @@
     "usageGuidelines": [
       {
         "doText": "Use Inline Text for a label and its value on a detail or receipt screen.",
-        "dontText": "Do not use it for editable values — it is display only, with a link or copy action at most."
+        "dontText": "Don’t use it for editable values — it is display only, with a link or copy action at most."
       },
       {
         "doText": "Use Type=Copy Icon when the user is likely to paste the value elsewhere, such as a reference number.",
-        "dontText": "Do not add a copy icon to a value that cannot be pasted usefully, like a status."
+        "dontText": "Don’t add a copy icon to a value that cannot be pasted usefully, like a status."
       },
       {
         "doText": "Keep the description to one line of context for the value.",
-        "dontText": "Do not put instructions in the description; it reads at caption size and below the contrast minimum today."
+        "dontText": "Don’t put instructions in the description; it reads at caption size and below the contrast minimum today."
       }
     ],
     "scorecard": [

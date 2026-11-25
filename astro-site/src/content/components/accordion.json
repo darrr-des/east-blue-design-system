@@ -1252,15 +1252,15 @@
     "usageGuidelines": [
       {
         "doText": "Use Accordion for progressive disclosure — hiding secondary content until the user needs it.",
-        "dontText": "Nest Accordions more than one level deep — it creates confusing navigation."
+        "dontText": "Don’t nest Accordions more than one level deep. It creates confusing navigation."
       },
       {
         "doText": "Use description text for context that helps users decide whether to expand.",
-        "dontText": "Put critical information inside collapsed Accordions — users may miss it."
+        "dontText": "Never put critical information inside a collapsed Accordion. Users may miss it."
       },
       {
         "doText": "Use leadingIcon to reinforce the section's topic — gears for settings, bell for notifications.",
-        "dontText": "Use Accordion for content the user needs to compare side-by-side — use tabs instead."
+        "dontText": "Don’t use Accordion for content the user needs to compare side by side. Use tabs instead."
       }
     ],
     "scorecard": [

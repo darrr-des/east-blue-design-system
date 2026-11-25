@@ -838,11 +838,11 @@
     "usageGuidelines": [
       {
         "doText": "Use Inline Message as the final surface of a transaction flow — confirm, failure recovery, or pending processing. Include the reference number so users can escalate if needed.",
-        "dontText": "Use it for transient notifications — use Toast instead. Inline Message is persistent and occupies the screen."
+        "dontText": "Don’t use Inline Message for transient notifications. Use Toast instead. Inline Message is persistent and occupies the screen."
       },
       {
         "doText": "Let users tap the download icon to save a PDF receipt or share the reference number. Makes customer support escalations easier.",
-        "dontText": "Include the download affordance on the Loading variant — there's nothing to download until the transaction completes."
+        "dontText": "Don’t include the download affordance on the Loading variant. There's nothing to download until the transaction completes."
       }
     ],
     "scorecard": [

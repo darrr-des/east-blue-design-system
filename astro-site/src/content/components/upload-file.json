@@ -1158,15 +1158,15 @@
     "usageGuidelines": [
       {
         "doText": "Use the thumbnail slot for image uploads (ID photos, receipts) so users can verify the correct file was picked.",
-        "dontText": "Show a generic thumbnail placeholder as the final state — either show the real thumbnail or use the plain uploaded state with just the filename."
+        "dontText": "Don’t leave a generic thumbnail placeholder as the final state. Either show the real thumbnail or use the plain uploaded state with just the filename."
       },
       {
         "doText": "Always pair the default state with subtext listing accepted formats and size limits so users don't discover constraints only via error state.",
-        "dontText": "Let users attempt uploads silently only to show an error — preempt format / size violations on the client side."
+        "dontText": "Don’t let users attempt uploads only to show an error. Preempt format and size violations on the client side."
       },
       {
         "doText": "Use the error state for client-side validation failures (size, format). Show a specific error message indicating what needs to change.",
-        "dontText": "Use the error state for network failures during upload — those are transient. Show a toast or retry affordance instead."
+        "dontText": "Don’t use the error state for network failures during upload. Those are transient, so show a toast or retry affordance instead."
       }
     ],
     "scorecard": [

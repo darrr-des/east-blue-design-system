@@ -886,11 +886,11 @@
     "usageGuidelines": [
       {
         "doText": "Use for first-run, no-results, and \"nothing here yet\" surfaces. Always include a primary action when the user can take a step to fill the empty state.",
-        "dontText": "Use as an error surface — use Inline Message (error type) or a Toast. Empty State assumes the absence of content is expected, not a failure."
+        "dontText": "Don’t use Empty State as an error surface. Use Inline Message (error type) or a Toast. Empty State assumes the absence of content is expected, not a failure."
       },
       {
         "doText": "Pick either icon or illustration. Don't stack both — the duplication adds visual noise without adding meaning.",
-        "dontText": "Leave the description blank — a one-line context sentence (\"Your transactions will show up here\") teaches the user what the feature does."
+        "dontText": "Don’t leave the description blank. A one-line context sentence (\"Your transactions will show up here\") teaches the user what the feature does."
       }
     ],
     "scorecard": [

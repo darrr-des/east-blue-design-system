@@ -6,18 +6,18 @@
     "description": "Recipient Fields show people the recipient they selected, with their name and contact.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix required before handoff",
-      "text": "Both trailing icons are non-swappable rectangles (C6). This blocks direct native property mapping for icon slots."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "All four DS Health traits pass and nothing is open. Eight variants, State × <code>isFilled</code>, with two SLOTs, <code>Icon Slot 1</code> and <code>Icon Slot 2</code>, for the trailing actions. Every colour is bound to a variable."
     },
     "navGroup": "Form Elements",
     "navIconSvg": ""
@@ -31,8 +31,8 @@
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Specific to recipient/contact entry in money transfer flows (Send Money, Pay Bills). Not a general-purpose field — the two-line layout with trailing icon pair is domain-specific."
+        "rating": "pass",
+        "note": "A two-line field with two trailing icon slots. Recipient entry in Send Money and Pay Bills is its main use, and because both icons are SLOTs, any trailing action can be dropped in."
       },
       {
         "name": "Self-contained",
@@ -41,13 +41,13 @@
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "<code>isFilled</code> now uses <code>true/false</code> (C2 fixed). Value layer renamed to <code>#value</code> (C1 fixed) — now consistent with sibling fields."
+        "rating": "pass",
+        "note": "<code>isFilled</code> uses <code>true/false</code> (C2) and the value layer is <code>#value</code> (C1), consistent with the sibling fields."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Trailing icons are <code>icon-placeholder</code> RECTANGLEs (C6) — not swappable icon instances. Cannot compose different icon actions (phonebook, scan QR) without editing the component."
+        "rating": "pass",
+        "note": "The two trailing icons are SLOTs (<code>Icon Slot 1</code>, <code>Icon Slot 2</code>), so phonebook, scan QR or any other action composes in without editing the component."
       }
     ],
     "behavior": [
@@ -99,7 +99,7 @@
       },
       {
         "headline": "",
-        "body": "Both trailing icons use shared Placeholder component instances — swappable by design. Internal RECTANGLE is the default visual, replaced by designers when consuming the component <span class=\"tag-fixed\">C6 Closed</span>",
+        "body": "Both trailing icons replaced with SLOTs, <code>Icon Slot 1</code> and <code>Icon Slot 2</code>, across all 8 variants <span class=\"tag-fixed\">C6 Fixed</span>",
         "tag": {
           "criterion": "",
           "label": ""
@@ -108,11 +108,6 @@
     ],
     "open": [],
     "recommendations": [
-      {
-        "headline": "Replace icon placeholders with swappable icon instances.",
-        "body": "The two <code>icon-placeholder</code> RECTANGLEs block instance-swap — phonebook, scan-QR, and other trailing actions can't be dropped in without detaching the master.",
-        "tag": "Slot"
-      },
       {
         "headline": "Document the 56px height rationale.",
         "body": "Recipient Field is taller than the standard 46px form fields because of the two-line label + value layout. Call this out in the DS guidelines so it's not mistaken for a design error.",
@@ -124,7 +119,13 @@
         "tag": "Slot"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Replace icon placeholders with swappable icon instances.",
+        "body": "Applied: both trailing icons are SLOTs, <code>Icon Slot 1</code> and <code>Icon Slot 2</code>, across all 8 variants.",
+        "tag": "Slot"
+      }
+    ]
   },
   "style": {
     "heading": "Styles",
@@ -1638,11 +1639,11 @@
     "usageGuidelines": [
       {
         "doText": "Use Recipient Field for contact/number entry in money transfer flows (Send Money, Pay Bills, Buy Load). The two-line layout with trailing icons is purpose-built for this context.",
-        "dontText": "Use Recipient Field for general text input — use Input Field or Labeled Field instead. The 56px height and icon slots add unnecessary weight for simple text entry."
+        "dontText": "Don’t use Recipient Field for general text input. Use Input Field or Labeled Field instead. The 56px height and icon slots add unnecessary weight for simple text entry."
       },
       {
         "doText": "Provide meaningful trailing icons (e.g. contacts picker, QR scanner) that match the field's purpose. Both slots should have distinct actions.",
-        "dontText": "Leave icon placeholders as-is in production — they are design placeholders only. Always replace with real icon instances before handoff."
+        "dontText": "Never leave icon placeholders as-is in production. They are design placeholders only. Always replace them with real icon instances before handoff."
       }
     ],
     "scorecard": [
@@ -1663,9 +1664,9 @@
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Colors appear correct but token binding not verified. Icon placeholders use hardcoded #C2C6CF."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All 46 visible fills and strokes across the 8 variants are bound to variables, and all text layers use text styles."
       },
       {
         "id": "C4",
@@ -1684,9 +1685,9 @@
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Both trailing icons are <code>icon-placeholder</code> RECTANGLEs — not swappable icon instances."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Both trailing icons are SLOTs (<code>Icon Slot 1</code>, <code>Icon Slot 2</code>) that take any vector icon instance. No placeholders, raster fills or boolean operations."
       }
     ],
     "variants": {
@@ -1763,6 +1764,29 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.3.0",
+      "date": "November 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Icon slots · Keep · Ready · node 17758:3867",
+      "rows": [
+        {
+          "body": "<strong>Icons are SLOTs</strong>: the two Placeholder instances are replaced with <code>Icon Slot 1</code> and <code>Icon Slot 2</code> across all 8 variants, so any trailing action drops in.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Fixed"
+          }
+        },
+        {
+          "body": "<strong>Token binding verified</strong>: all 46 visible fills and strokes are bound to variables.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Fixed"
+          }
+        }
+      ]
+    },
     {
       "version": "1.2.0",
       "date": "March 2026",

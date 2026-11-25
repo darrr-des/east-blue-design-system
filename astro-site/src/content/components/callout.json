@@ -6,18 +6,18 @@
     "description": "Callouts give people short contextual help with a title and description.",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "na",
-        "label": "Not Applicable"
+        "kind": "rework",
+        "label": "Requires Rework"
       }
     ],
     "verdict": {
-      "kind": "consolidate",
-      "title": "Consolidate — merged into Alert",
-      "text": "Use <a href=\"/components/alert\">Alert</a> (node <code>6663:104524</code>) instead: <code>Type</code> Neutral or Information with <code>Style</code> Card covers this strip. Assessment for this pattern lives on the Alert page."
+      "kind": "keep",
+      "title": "Keep — being merged into Alert",
+      "text": "Kept while it is merged into <a href=\"/components/alert\">Alert</a>. All four traits pass, but five native criteria are at Rework: the Contextual Help name, overlapping label properties, no icons and no states."
     },
     "navGroup": "",
     "navIconSvg": ""
@@ -803,15 +803,15 @@
     "usageGuidelines": [
       {
         "doText": "Use Callout for soft, inline guidance — a flow hint, a policy reminder, a \"this is what happens next\" note.",
-        "dontText": "Use Callout for page-level critical messages — reach for Alert when the severity warrants a dismissible banner."
+        "dontText": "Don’t use Callout for page-level critical messages. Reach for Alert when the severity warrants a dismissible banner."
       },
       {
         "doText": "Pair intent colour with a leading icon. Every intent ships a default (info-circle, check-circle, warning-triangle, error-circle).",
-        "dontText": "Rely on colour alone to communicate severity — fails WCAG 1.4.1 and breaks for colour-blind users."
+        "dontText": "Never rely on colour alone to communicate severity. It fails WCAG 1.4.1 and breaks for colour-blind users."
       },
       {
         "doText": "Put a single TextButton in the trailing action slot when the callout opens a sheet or links to docs.",
-        "dontText": "Nest a full filled Button — it overweights the callout. If the call to action is primary, it belongs outside the callout."
+        "dontText": "Avoid nesting a full filled Button. It overweights the callout. If the call to action is primary, it belongs outside the callout."
       }
     ],
     "scorecard": [
@@ -959,6 +959,22 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.2.0",
+      "date": "November 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Verdict Consolidate → Keep · node 23:179895",
+      "rows": [
+        {
+          "body": "<strong>Kept while it is merged into Alert.</strong> The owner moved the verdict from Consolidate to Keep. The Figma set was re-read: C1, C2, C4, C5 and C6 are still at Rework, so the badge is Requires Rework.",
+          "delta": {
+            "kind": "open",
+            "label": "Verdict"
+          }
+        }
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "October 2026",

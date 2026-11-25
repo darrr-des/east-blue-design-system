@@ -6,18 +6,18 @@
     "description": "Select Fields let people open a list of options and see their choice.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix required before handoff",
-      "text": "Peso sign uses BOOLEAN_OPERATION instead of vector (C6). Flag uses raster IMAGE fill (C6). These block clean native mapping."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "All four DS Health traits pass and nothing is open. Eight variants, State × <code>isFilled</code>. The leading element is a swappable Leading Element instance (Peso Sign by default) and the flag sits in the <code>Flag Container</code> SLOT, so other currencies drop in. Every colour except the flag artwork is bound to a variable."
     },
     "navGroup": "Form Elements",
     "navIconSvg": ""
@@ -31,8 +31,8 @@
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Currency/amount selection pattern used across Send Money, Buy Load, Pay Bills, and other GCash flows. Tightly coupled to Philippine peso — not generalizable to other currencies without modification."
+        "rating": "pass",
+        "note": "Currency and amount selection across Send Money, Buy Load, Pay Bills and other flows. The peso sign is a Leading Element instance whose Type swaps to Icon, Text, Flag or Slot, and the flag is a SLOT, so other currencies drop in without a new component."
       },
       {
         "name": "Self-contained",
@@ -41,8 +41,8 @@
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "<code>isFilled</code> now uses <code>true/false</code> (C2 fixed). Peso sign still uses <code>shape_full</code> BOOLEAN_OPERATION instead of a clean vector (C6)."
+        "rating": "pass",
+        "note": "<code>isFilled</code> uses <code>true/false</code> (C2), and the leading element and flag follow the shared Leading Element and SLOT patterns."
       },
       {
         "name": "Composable",
@@ -56,7 +56,7 @@
         "ios": "yes",
         "android": "yes",
         "property": "State=Default",
-        "notes": "Gray #D7E0EF border, white bg. Peso sign #183462."
+        "notes": "Gray #D7E0EF border, white bg. Peso sign #0A2757."
       },
       {
         "state": "Active (Focused)",
@@ -77,7 +77,7 @@
         "ios": "yes",
         "android": "yes",
         "property": "State=Disabled",
-        "notes": "#EEF2F9 bg, border hidden. Peso sign #7E96BE."
+        "notes": "#EEF2F9 bg, border hidden. Peso sign #C2CFE5."
       }
     ],
     "resolved": [
@@ -104,32 +104,41 @@
           "criterion": "",
           "label": ""
         }
+      },
+      {
+        "headline": "",
+        "body": "Peso sign moved into a swappable Leading Element instance and the flag into the <code>Flag Container</code> SLOT across all 8 variants <span class=\"tag-fixed\">Reusable Fixed</span>",
+        "tag": {
+          "criterion": "",
+          "label": ""
+        }
       }
     ],
     "open": [],
     "recommendations": [
-      {
-        "headline": "Flatten the Peso Sign <code>shape_full</code> BOOLEAN_OPERATION.",
-        "body": "Boolean-operation paths render inconsistently across SVG export and native platforms. Replace with a single flattened vector path.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Use a vector flag asset.",
-        "body": "The Philippine flag is currently a raster IMAGE fill. Swap to a vector from the DS icon library so it stays crisp across DPIs and platforms.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Generalize to multi-currency.",
-        "body": "Expose currency symbol and flag as configurable slots so the field can support other currencies (USD, EUR, SGD) without creating a new component per currency.",
-        "tag": "Property"
-      },
       {
         "headline": "Add a <code>helperText</code> slot.",
         "body": "Error state has no accompanying text guidance today — add a slot for validation messages consistent with the other form fields.",
         "tag": "Slot"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Flatten the Peso Sign <code>shape_full</code> BOOLEAN_OPERATION.",
+        "body": "Applied: the peso sign is a single vector path in all 8 variants.",
+        "tag": "Asset"
+      },
+      {
+        "headline": "Use a vector flag asset.",
+        "body": "Applied: the flag is four vector paths in all 8 variants, no raster fill.",
+        "tag": "Asset"
+      },
+      {
+        "headline": "Generalize to multi-currency.",
+        "body": "Applied: the leading element is a swappable Leading Element instance (Icon, Peso Sign, Text - Peso Sign, Flag, Text or Slot) and the flag is the <code>Flag Container</code> SLOT.",
+        "tag": "Property"
+      }
+    ]
   },
   "style": {
     "heading": "Styles",
@@ -1659,11 +1668,11 @@
     "usageGuidelines": [
       {
         "doText": "Use Select Field for currency amount selection where the peso sign and flag indicator provide essential context for the user.",
-        "dontText": "Use Select Field for free-text entry — use Input Field instead. Select Field is for predefined selection only."
+        "dontText": "Don’t use Select Field for free-text entry. Use Input Field instead. Select Field is for predefined selection only."
       },
       {
         "doText": "Show error state with a helper text message below the field explaining the validation issue (e.g. \"Minimum amount is 1.00\").",
-        "dontText": "Hide the peso sign or flag — these are essential visual cues that distinguish this field from a generic dropdown."
+        "dontText": "Don’t hide the peso sign or flag. These are essential visual cues that distinguish this field from a generic dropdown."
       }
     ],
     "scorecard": [
@@ -1672,7 +1681,7 @@
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Semantic layer names: <code>container</code>, <code>peso-sign</code>, <code>text-container</code>, <code>flag-container</code>, <code>Chevron Down</code>."
+        "notes": "Semantic layer names: container, peso-sign, text-container, <code>Flag Container</code>, Chevron Down."
       },
       {
         "id": "C2",
@@ -1684,9 +1693,9 @@
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Colors appear correct but token binding not fully verified."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Every visible fill and stroke is bound to a variable except the flag, which is fixed national-flag artwork. The peso sign uses <code>text/color-text</code>, and <code>text/color-text-disabled</code> when Disabled."
       },
       {
         "id": "C4",
@@ -1705,9 +1714,9 @@
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Peso sign uses <code>shape_full</code> BOOLEAN_OPERATION (not a vector). Flag uses raster IMAGE fill."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The peso sign is a Leading Element instance (Type=Peso Sign, a vector) and the flag sits in the <code>Flag Container</code> SLOT as vectors. No raster fills or boolean operations."
       }
     ],
     "variants": {
@@ -1784,6 +1793,36 @@
     }
   },
   "changelog": [
+    {
+      "version": "1.2.0",
+      "date": "November 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Swappable currency · Keep · Ready · node 17758:3786",
+      "rows": [
+        {
+          "body": "<strong>Peso sign and flag swappable</strong>: the peso sign is a Leading Element instance (Type=Peso Sign) and the flag sits in the <code>Flag Container</code> SLOT across all 8 variants.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Reusable Fixed"
+          }
+        },
+        {
+          "body": "<strong>Vectors only</strong>: the peso sign and flag are vectors; no raster fills or boolean operations remain.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Fixed"
+          }
+        },
+        {
+          "body": "<strong>Peso sign bound to tokens</strong>: <code>text/color-text</code>, and <code>text/color-text-disabled</code> when Disabled. The flag keeps its fixed national colours.\n          <span class=\"tag-fixed\">Fixed</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Fixed"
+          }
+        }
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "March 2026",
