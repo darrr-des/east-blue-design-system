@@ -711,11 +711,11 @@
     "usageGuidelines": [
       {
         "doText": "Use Search Field for free-text query input that filters or retrieves results. Show the clear (X) button only when the field has content.",
-        "dontText": "Use Search Field for destinations that don't actually filter or search. Use Input Field for generic text entry."
+        "dontText": "Don’t use Search Field for destinations that don't actually filter or search. Use Input Field for generic text entry."
       },
       {
         "doText": "Pair with a results region below the field and announce result counts to assistive tech when the query updates.",
-        "dontText": "Ship the placeholder circle in the trailing slot — always swap to a real Clear / Cancel icon before publishing a screen."
+        "dontText": "Never ship the placeholder circle in the trailing slot. Always swap to a real Clear / Cancel icon before publishing a screen."
       }
     ],
     "scorecard": [

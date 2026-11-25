@@ -803,15 +803,15 @@
     "usageGuidelines": [
       {
         "doText": "Use Callout for soft, inline guidance — a flow hint, a policy reminder, a \"this is what happens next\" note.",
-        "dontText": "Use Callout for page-level critical messages — reach for Alert when the severity warrants a dismissible banner."
+        "dontText": "Don’t use Callout for page-level critical messages. Reach for Alert when the severity warrants a dismissible banner."
       },
       {
         "doText": "Pair intent colour with a leading icon. Every intent ships a default (info-circle, check-circle, warning-triangle, error-circle).",
-        "dontText": "Rely on colour alone to communicate severity — fails WCAG 1.4.1 and breaks for colour-blind users."
+        "dontText": "Never rely on colour alone to communicate severity. It fails WCAG 1.4.1 and breaks for colour-blind users."
       },
       {
         "doText": "Put a single TextButton in the trailing action slot when the callout opens a sheet or links to docs.",
-        "dontText": "Nest a full filled Button — it overweights the callout. If the call to action is primary, it belongs outside the callout."
+        "dontText": "Avoid nesting a full filled Button. It overweights the callout. If the call to action is primary, it belongs outside the callout."
       }
     ],
     "scorecard": [

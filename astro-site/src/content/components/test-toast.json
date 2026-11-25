@@ -1716,15 +1716,15 @@
     "usageGuidelines": [
       {
         "doText": "Use Toast for a short, non-blocking confirmation of something that just happened.",
-        "dontText": "Do not use it for errors the user must resolve before continuing — that needs an Alert or an inline error."
+        "dontText": "Don’t use it for errors the user must resolve before continuing — that needs an Alert or an inline error."
       },
       {
         "doText": "Add an action only when it undoes or retries the thing just done.",
-        "dontText": "Do not put navigation in a toast; it disappears before most users reach it."
+        "dontText": "Don’t put navigation in a toast; it disappears before most users reach it."
       },
       {
         "doText": "Keep the message to one line at 312 wide.",
-        "dontText": "Do not rely on the description for anything important; it is 10px and below the contrast minimum on two tones."
+        "dontText": "Don’t rely on the description for anything important; it is 10px and below the contrast minimum on two tones."
       }
     ],
     "scorecard": [

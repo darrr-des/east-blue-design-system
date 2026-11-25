@@ -761,11 +761,11 @@
     "usageGuidelines": [
       {
         "doText": "Use 2–4 tabs for primary navigation within a screen. Tabs should represent peer sections of equal importance.",
-        "dontText": "Use tabs for sequential flows (Step 1 / Step 2 / Step 3) — use a Stepper component instead."
+        "dontText": "Don’t use tabs for sequential flows (Step 1 / Step 2 / Step 3). Use a Stepper component instead."
       },
       {
         "doText": "Keep tab labels short (one or two words). If labels exceed 12 characters, use icons only or switch to vertical orientation.",
-        "dontText": "Nest Tabs inside Tabs — creates navigation ambiguity and accessibility issues."
+        "dontText": "Never nest Tabs inside Tabs. It creates navigation ambiguity and accessibility issues."
       }
     ],
     "scorecard": [

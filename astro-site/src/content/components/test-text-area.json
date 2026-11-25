@@ -875,15 +875,15 @@
     "usageGuidelines": [
       {
         "doText": "Use Text Area when the answer runs past one line — a message, a reason, an address.",
-        "dontText": "Do not use it for a single short value; Input Field is the one-line control and keeps the counter off screen."
+        "dontText": "Don’t use it for a single short value; Input Field is the one-line control and keeps the counter off screen."
       },
       {
         "doText": "Set a limit the user can actually reach, and show the counter from the start.",
-        "dontText": "Do not hide the counter until the limit is close — the user has already written past it by then."
+        "dontText": "Don’t hide the counter until the limit is close — the user has already written past it by then."
       },
       {
         "doText": "Write the helper line as the rule the field enforces.",
-        "dontText": "Do not repeat the label in the helper line; it is the only place the limit and format can be explained."
+        "dontText": "Don’t repeat the label in the helper line; it is the only place the limit and format can be explained."
       }
     ],
     "scorecard": [

@@ -794,19 +794,19 @@
     "usageGuidelines": [
       {
         "doText": "Use dark-initials as default when no photo is available.",
-        "dontText": "Use image type with placeholder -- use initials instead.",
+        "dontText": "Don’t use the image type with a placeholder. Use initials instead.",
         "doImage": "/assets/previews/avatar-g1-do.png",
         "dontImage": "/assets/previews/avatar-g1-dont.png"
       },
       {
         "doText": "Match avatar size to context (20px in dense lists, 90px in profiles).",
-        "dontText": "Mix initials types in the same context.",
+        "dontText": "Avoid mixing initials types in the same context.",
         "doImage": "/assets/previews/avatar-g2-do.png",
         "dontImage": "/assets/previews/avatar-g2-dont.png"
       },
       {
         "doText": "Always pass 2-letter initials (first + last).",
-        "dontText": "Show single-letter or empty initials.",
+        "dontText": "Never show single-letter or empty initials.",
         "doImage": "/assets/previews/avatar-g3-do.png",
         "dontImage": "/assets/previews/avatar-g3-dont.png"
       }

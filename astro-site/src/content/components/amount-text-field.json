@@ -801,11 +801,11 @@
     "usageGuidelines": [
       {
         "doText": "Use .decimalPad / KeyboardType.Decimal so users can enter fractional pesos without switching keyboards.",
-        "dontText": "Use Amount Text Field for phone numbers, account numbers, or non-currency numerics — it hard-codes the peso glyph and currency formatting."
+        "dontText": "Don’t use Amount Text Field for phone numbers, account numbers or other non-currency numbers. It hard-codes the peso glyph and currency formatting."
       },
       {
         "doText": "Pair Large size with a label above and a hint subtext below for hero entry screens (Send Money, Cash-In).",
-        "dontText": "Drop the peso glyph on Default size to \"save space\" — the glyph is the primary signal that the input expects currency."
+        "dontText": "Don’t drop the peso glyph on Default size to \"save space\". The glyph is the primary signal that the input expects currency."
       }
     ],
     "scorecard": [

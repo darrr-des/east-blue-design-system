@@ -2651,19 +2651,19 @@
     "usageGuidelines": [
       {
         "doText": "Use semantic states that match the content meaning (Positive for completed, Negative for failed, Notice for pending).",
-        "dontText": "Use badges for interactive elements -- badges are display-only status indicators.",
+        "dontText": "Don’t use badges for interactive elements. Badges are display-only status indicators.",
         "doImage": "/assets/previews/badge-g1-do.png",
         "dontImage": "/assets/previews/badge-g1-dont.png"
       },
       {
         "doText": "Use Heavy level for primary status indicators and Light/Medium for secondary or supporting context.",
-        "dontText": "Use multiple Heavy badges in the same row -- visual noise. Use one Heavy + rest Light/Medium.",
+        "dontText": "Avoid using multiple Heavy badges in the same row. It creates visual noise, so use one Heavy and keep the rest Light or Medium.",
         "doImage": "/assets/previews/badge-g2-do.png",
         "dontImage": "/assets/previews/badge-g2-dont.png"
       },
       {
         "doText": "Match badge Type to context: Default for general, Voucher for promos, Transaction for history, Dashboard for summaries.",
-        "dontText": "Mix badge Types within the same list or group.",
+        "dontText": "Don’t mix badge Types within the same list or group.",
         "doImage": "/assets/previews/badge-g3-do.png",
         "dontImage": "/assets/previews/badge-g3-dont.png"
       }

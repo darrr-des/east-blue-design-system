@@ -1638,11 +1638,11 @@
     "usageGuidelines": [
       {
         "doText": "Use Recipient Field for contact/number entry in money transfer flows (Send Money, Pay Bills, Buy Load). The two-line layout with trailing icons is purpose-built for this context.",
-        "dontText": "Use Recipient Field for general text input — use Input Field or Labeled Field instead. The 56px height and icon slots add unnecessary weight for simple text entry."
+        "dontText": "Don’t use Recipient Field for general text input. Use Input Field or Labeled Field instead. The 56px height and icon slots add unnecessary weight for simple text entry."
       },
       {
         "doText": "Provide meaningful trailing icons (e.g. contacts picker, QR scanner) that match the field's purpose. Both slots should have distinct actions.",
-        "dontText": "Leave icon placeholders as-is in production — they are design placeholders only. Always replace with real icon instances before handoff."
+        "dontText": "Never leave icon placeholders as-is in production. They are design placeholders only. Always replace them with real icon instances before handoff."
       }
     ],
     "scorecard": [

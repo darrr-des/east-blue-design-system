@@ -795,7 +795,7 @@
       },
       {
         "doText": "Write the condition into the message — \"Enter 11 digits, starting with 09\". Use <code>Default</code> for ambient hints and <code>Success</code> for meaningful post-validation confirmation.",
-        "dontText": "Don’t rely on the icon to say which status this is. All four statuses ship the same <code>Checkmark (Circular)</code> glyph, recoloured."
+        "dontText": "Don’t rely on the icon to say which status this is. All four statuses ship the same <code>Checkmark (Circular)</code> glyph, recolored."
       },
       {
         "doText": "Turn <code>hasTrailingLabel</code> on for a right-aligned counter or unit that belongs with the message — it shares the message’s colour and type style.",

@@ -563,11 +563,11 @@
     "usageGuidelines": [
       {
         "doText": "Dock the composer to the bottom of the chat scroll view with the keyboard inset, and let the field auto-grow within lineLimit(1...5) / maxLines = 5.",
-        "dontText": "Use Chat Field for single-line structured inputs (name, phone, amount). Use Input Field or the typed form-element sibling instead."
+        "dontText": "Don’t use Chat Field for single-line structured inputs (name, phone, amount). Use Input Field or the typed form-element sibling instead."
       },
       {
         "doText": "Dim the trailing send icon when the field is empty. Reflects system chat conventions (iMessage, WhatsApp, Messenger) and prevents empty-send.",
-        "dontText": "Swap the plus icon for unrelated actions (navigation, close). Leading slot is reserved for content-entry affordances: attach, camera, mic, emoji."
+        "dontText": "Don’t swap the plus icon for unrelated actions (navigation, close). The leading slot is reserved for content-entry affordances: attach, camera, mic, emoji."
       }
     ],
     "scorecard": [

@@ -921,11 +921,11 @@
     "usageGuidelines": [
       {
         "doText": "Use View Only Field to display verified or system-set data (phone number, email, account status) where the user shouldn't edit directly.",
-        "dontText": "Use for editable input — use Input Field, Labeled Field, or Select Field instead. Read-only fields imply the value is final or managed elsewhere."
+        "dontText": "Don’t use View Only Field for editable input. Use Input Field, Labeled Field or Select Field instead. Read-only fields imply the value is final or managed elsewhere."
       },
       {
         "doText": "Use the with Icon variant with a pencil to indicate the field can be edited in a separate screen — provides a clear tap target.",
-        "dontText": "Rely on the icon alone without an accessibility label — screen readers need to announce the trailing action's purpose."
+        "dontText": "Never rely on the icon alone without an accessibility label. Screen readers need to announce the trailing action's purpose."
       }
     ],
     "scorecard": [
